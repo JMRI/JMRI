@@ -50,7 +50,7 @@ import java.util.Comparator;
  * than 1 because it's the longer number. A version that does not compare
  * leading zeros is forthcoming.
  */
-public class AlphanumComparator implements Comparator {
+public final class AlphanumComparator implements Comparator<String> {
 
     private final boolean isDigit(char ch) {
         return ch >= 48 && ch <= 57;
@@ -74,9 +74,10 @@ public class AlphanumComparator implements Comparator {
     }
 
     @Override
-    public int compare(Object o1, Object o2) {
-        String s1 = o1.toString();
-        String s2 = o2.toString();
+    //public int compare(Object o1, Object o2) {
+    public int compare(String s1, String s2) {
+        //String s1 = o1.toString();
+        //String s2 = o2.toString();
         int length1 = s1.length();
         int length2 = s2.length();
 

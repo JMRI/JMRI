@@ -4,41 +4,34 @@ import static jmri.util.MathUtil.*;
 import static org.python.modules.math.fabs;
 
 import java.awt.geom.Point2D;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of MathUtil
  *
  * @author	George Warner Copyright (C) 2017
  */
-public class MathUtilTest {
+public class MathUtilTest extends TestCase {
 
     static final double tolerance = 0.00001;
 
     @Test
     public void testDouble_lerp() {
         boolean passed = true;    // assume success (optimist!)
-        for (double a = -66.6; a < +66.6; a += 11.1) {
-            for (double b = -66.6; b < +66.6; b += 11.1) {
-                for (double f = 0.0; f < 2.f; f += 0.15) {
-                    double c = lerp(a, b, f);
-                    double t = (c - a) / (a - b);
-                    Assert.assertEquals("Double lerp", f, t);
-                    passed = (fabs(t - f) <= tolerance);
-                    if (c < a || c > f * b) {
-                        passed = false;
-                    }
-                    if (!passed) {
-                        break;
-                    }
-                }
-                if (!passed) {
-                    break;
-                }
-            }
+        double theMin = -666.66, theMax = +999.99;
+        for (double f = 0.0; f < 2.f; f += 0.15) {
+            double c = lerp(theMin, theMax, f);
+            double t = (c - theMin) / (theMax - theMin);
+            //log.info("testDouble_lerp({}, {}, {}): {}", theMin, theMax, f, c);
+            Assert.assertEquals(t, f, tolerance);
+            passed = (fabs(t - f) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -56,7 +49,7 @@ public class MathUtilTest {
             Point2D pC = lerp(pA, pB, f);
             double distanceAC = pA.distance(pC);
             double t = distanceAC / distanceAB;
-            Assert.assertEquals("Point2D lerp", f, t);
+            Assert.assertEquals(f, t, tolerance);
             passed = (fabs(t - f) <= tolerance);
             if (!passed) {
                 break;
@@ -75,7 +68,7 @@ public class MathUtilTest {
         Point2D pC = third(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
-        Assert.assertEquals("Point2D third", (1.0 / 3.0), t);
+        Assert.assertEquals(1.0 / 3.0, t, tolerance);
         passed = (fabs(t - (1.0/3.0)) <= tolerance);
 
         Assert.assertEquals("Point2D third is good", true, passed);
@@ -91,22 +84,25 @@ public class MathUtilTest {
         Point2D pC = MathUtil.fourth(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
-        Assert.assertEquals("Point2D fourth", (1.0 / 4.0), t);
+        //log.info("distanceAC: {} / distanceAB: {} == {}", distanceAC, distanceAB, t);
+        Assert.assertEquals(1.0 / 4.0, t, tolerance);
 
-        passed = (fabs(t - (1.0/3.0)) <= tolerance);
+        passed = (fabs(t - (1.0/4.0)) <= tolerance);
         Assert.assertEquals("Point2D fourth is good", true, passed);
     }
 
     @Test
     public void testDouble_wrap() {
         boolean passed = true;    // assume success (optimist!)
-        double limits = 666.6;
-        for (double a = -3.0 * limits; a < +3.0 * limits; a += limits / 10.0) {
+        double theLimits = 180.0;
+        double theMin = -theLimits, theMax = +theLimits;
+        double theRange = theMax - theMin;
+        for (double a = -3.0 * theLimits; a < +3.0 * theLimits; a += theLimits / 10.0) {
             double t = a;
-            while (t > +limits) {t -= limits;};
-            while (t < -limits) {t += limits;};
-            double c = wrap(a, -limits, +limits);
-            Assert.assertEquals("Double wrap", t, c);
+            while (t >= theMax) {t -= theRange;};
+            while (t < theMin) {t += theRange;};
+            double c = wrap(a, theMin, theMax);
+            Assert.assertEquals(t, c, tolerance);
             passed = (fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
@@ -118,13 +114,15 @@ public class MathUtilTest {
     @Test
     public void testDouble_wrapPM180() {
         boolean passed = true;    // assume success (optimist!)
-        double limits = 180.0;
-        for (double a = -3.0 * limits; a < +3.0 * limits; a += limits / 10.0) {
+        double theLimits = 180.0;
+        double theMin = -theLimits, theMax = +theLimits;
+        double theRange = theMax - theMin;
+        for (double a = -3.0 * theLimits; a < +3.0 * theLimits; a += theLimits / 10.0) {
             double t = a;
-            while (t > +limits) {t -= limits;};
-            while (t < -limits) {t += limits;};
+            while (t >= theMax) {t -= theRange;};
+            while (t < theMin) {t += theRange;};
             double c = wrapPM180(a);
-            Assert.assertEquals("Double wrapPM180", t, c);
+            Assert.assertEquals(t, c, tolerance);
             passed = (fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
@@ -136,13 +134,15 @@ public class MathUtilTest {
     @Test
     public void testDouble_wrapPM360() {
         boolean passed = true;    // assume success (optimist!)
-        double limits = 360.0;
-        for (double a = -3.0 * limits; a < +3.0 * limits; a += limits / 10.0) {
+        double theLimits = 360.0;
+        double theMin = -theLimits, theMax = +theLimits;
+        double theRange = theMax - theMin;
+        for (double a = -3.0 * theLimits; a < +3.0 * theLimits; a += theLimits / 10.0) {
             double t = a;
-            while (t > +limits) {t -= limits;};
-            while (t < -limits) {t += limits;};
+            while (t >= theMax) {t -= theRange;};
+            while (t < theMin) {t += theRange;};
             double c = wrapPM360(a);
-            Assert.assertEquals("Double wrapPM360", t, c);
+            Assert.assertEquals(t, c, tolerance);
             passed = (fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
@@ -155,12 +155,12 @@ public class MathUtilTest {
     public void testDouble_wrap360() {
         boolean passed = true;    // assume success (optimist!)
         double limits = 360.0;
-        for (double a = -3.0 * limits; a < +3.0 * limits; a += limits / 10.0) {
+        for (double a = -3.3 * limits; a < +3.3 * limits; a += limits / 15.0) {
             double t = a;
-            while (t > +limits) {t -= limits;};
             while (t < 0.0) {t += limits;};
+            while (t >= +limits) {t -= limits;};
             double c = wrap360(a);
-            Assert.assertEquals("Double wrap360", t, c);
+            Assert.assertEquals(t, c, tolerance);
             passed = (fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
@@ -175,10 +175,10 @@ public class MathUtilTest {
         double limits = 360.0;
         for (double a = -3.0 * limits; a < +3.0 * limits; a += limits / 10.0) {
             double t = a;
-            while (t > +limits) {t -= limits;};
+            while (t >= +limits) {t -= limits;};
             while (t < 0.0) {t += limits;};
             double c = normalizeAngle(a);
-            Assert.assertEquals("Double normalizeAngle", t, c);
+            Assert.assertEquals(t, c, tolerance);
             passed = (fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
@@ -190,15 +190,18 @@ public class MathUtilTest {
     @Test
     public void testDouble_diffAngle() {
         boolean passed = true;    // assume success (optimist!)
-        double limits = 180.0;
-        for (double a = -3.3 * limits; a < +3.3 * limits; a += limits / 15.0) {
-            for (double b = -3.3 * limits; b < +3.3 * limits; b += limits / 15.0) {
+
+        double theLimits = 180.0;
+        double theMin = -theLimits, theMax = +theLimits;
+        double theRange = theMax - theMin;
+        for (double a = -3.3 * theLimits; a < +3.3 * theLimits; a += theLimits / 15.0) {
+            for (double b = -3.3 * theLimits; b < +3.3 * theLimits; b += theLimits / 15.0) {
                 double t = a - b;
-                while (t > +limits) {t -= limits;};
-                while (t < -limits) {t += limits;};
-                t = fabs(t);
+                while (t >= theMax) {t -= theRange;};
+                while (t < theMin) {t += theRange;};
+                if (t < 0.0) { t = -t;};
                 double c = diffAngle(a, b);
-                Assert.assertEquals("Double diffAngle", t, c);
+                Assert.assertEquals(t, c, tolerance);
                 passed = (fabs(t - c) <= tolerance);
                 if (!passed) {
                     break;
@@ -222,7 +225,7 @@ public class MathUtilTest {
                     if (t < b) {t = b;};
                     if (t > c) {t = c;};
                     double d = pin(a, b, c);
-                    Assert.assertEquals("Double pin", t, c);
+                    Assert.assertEquals(t, d, tolerance);
                     passed = (fabs(t - d) <= tolerance);
                     if (!passed) {
                         break;
@@ -238,19 +241,31 @@ public class MathUtilTest {
         }
         Assert.assertEquals("Double pin is good", true, passed);
     }
-
+ 
     // from here down is testing infrastructure
     @Before
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
     }
 
     @After
-    public void tearDown() throws Exception {
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
+    protected void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", MathUtilTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static junit.framework.Test suite() {
+        TestSuite suite = new TestSuite(MathUtilTest.class);
+        return suite;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class.getName());
 }
