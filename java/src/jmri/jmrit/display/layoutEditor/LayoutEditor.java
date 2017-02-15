@@ -1219,16 +1219,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             JPanel vTop10Panel = new JPanel();
             vTop10Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            JLabel blockNameLabel = new JLabel(blockNameString);
-            blockNameLabel.setFont(layoutFont);
-            vTop10Panel.add(blockNameLabel);
+            JLabel blockNameLabel1 = new JLabel(blockNameString);
+            blockNameLabel1.setFont(layoutFont);
+            vTop10Panel.add(blockNameLabel1);
             vTop10Panel.add(blockIDComboBox);
             vTop10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop10Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop10Panel);
 
             JPanel vTop11Panel = new JPanel();
             vTop11Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop11Panel.add(blockNameLabel);
+            JLabel blockNameLabel2 = new JLabel(blockNameString);
+            blockNameLabel2.setFont(layoutFont);
+            vTop11Panel.add(blockNameLabel2);
             vTop11Panel.add(blockSensorLabel);
             vTop11Panel.add(blockSensorComboBox);
             vTop11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop11Panel.getPreferredSize().height));
