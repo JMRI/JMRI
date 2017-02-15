@@ -94,16 +94,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(mouseEvent);
     }
 
-    void doVerticalToolBar(JPanel panel) {
-        panel.setLayout(new FlowLayout());
-        mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonVerticalToolBar"));
-        mouseEvent.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isToolBarVertical());
-        mouseEvent.addItemListener((ItemEvent e) -> {
-            InstanceManager.getDefault(GuiLafPreferencesManager.class).setVerticalToolBar(mouseEvent.isSelected());
-        });
-        panel.add(mouseEvent);
-    }
-
     void doLAF(JPanel panel) {
         // find L&F definitions
         panel.setLayout(new FlowLayout());
