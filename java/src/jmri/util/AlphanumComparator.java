@@ -31,7 +31,7 @@ import java.util.Comparator;
  * Andre Bogus, and David Koelle
  *
  * To convert to use Templates (Java 1.5+):
- *   - Change "implements Comparator" to "implements Comparator<String>"
+ *   - Change "implements Comparator" to "implements Comparator\<String\>"
  *   - Change "compare(Object o1, Object o2)" to "compare(String s1, String s2)"
  *   - Remove the type checking and casting in compare().
  *
@@ -42,7 +42,7 @@ import java.util.Comparator;
  * Note: this code compares numbers one at a time if those numbers are in
  * chunks of the same size. For example, when comparing abc123 to abc184,
  * 123 and 184 are the same size, so their values are compared digit-by-
- * digit: 1=1, 2<8. This was done to solve the problem of numeric chunks
+ * digit: 1 = 1, 2 \< 8. This was done to solve the problem of numeric chunks
  * that are too large to fit in range of values allowed by the programming
  * language for a particular datatype: in Java, an int is limited to
  * 2147483647. The problem with this approach is doesn't properly handle
