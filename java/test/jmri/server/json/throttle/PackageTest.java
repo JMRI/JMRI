@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    JsonThrottleServiceFactoryTest.class
+    JsonThrottleServiceFactoryTest.class,
+    JsonThrottleManagerTest.class
 })
 public class PackageTest {
 }

@@ -56,7 +56,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     private int blkNum = 1;
 
     /**
-     * Method to create a new LayoutBlock if the LayoutBlock does not exist
+     * Method to create a new LayoutBlock if the LayoutBlock does not exist.
      * Returns null if a LayoutBlock with the same systemName or userName
      * already exists, or if there is trouble creating a new LayoutBlock. Note
      * that since the userName is used to address LayoutBlocks, the user name
@@ -1636,7 +1636,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     /**
      * Method to return the block that a given bean object (Sensor, SignalMast
-     * or SignalHead) is protecting
+     * or SignalHead) is protecting.
      * <P>
      * @param nb    NamedBean
      * @param panel - panel that this bean is on
@@ -2056,7 +2056,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     private boolean warnConnectivity = true;
 
     /**
-     * Controls switching off incompatible block connectivity messages
+     * Controls switching off incompatible block connectivity messages.
      * <P>
      * Warnings are always on when program starts up. Once stopped by the user,
      * these messages may not be switched on again until program restarts.
@@ -2227,7 +2227,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     /**
      * Return the sensor used to indicate if the routing protocol has stabilised
-     * or not
+     * or not.
      */
     public Sensor getStabilisedSensor() {
         if (namedStabilisedIndicator == null) {
@@ -2244,7 +2244,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     }
 
     /**
-     * Returns true if the layout block routing protocol has stabilised
+     * Returns true if the layout block routing protocol has stabilised.
      */
     public boolean routingStablised() {
         return stabilised;

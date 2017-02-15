@@ -110,7 +110,9 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     static JPanel glassPane = new JPanel();
 
-    //Method to get delay between issuing Turnout commands
+    /**
+     * Delay between issuing Turnout commands
+     */
     public int turnoutSetDelay = 0;
 
     public EntryExitPairs() {
@@ -287,9 +289,11 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     /**
-     * This method will generate the point details, given a known source and
-     * layout panel.
-     *
+     * Generate the point details, given a known source and
+     * Layout Editor panel.
+     * @param source Origin of movement
+     * @param panel  A Layout Editor panel
+     * @return A PointDetails object
      */
     public PointDetails providePoint(NamedBean source, LayoutEditor panel) {
         PointDetails sourcePoint = getPointDetails(source, panel);
@@ -497,7 +501,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     /**
-     * Returns a point if already exists, or creates a new one if not.
+     * Return a point if it already exists, or create a new one if not.
      */
     private PointDetails providePoint(LayoutBlock source, List<LayoutBlock> protecting, LayoutEditor panel) {
         PointDetails sourcePoint = getPointDetails(source, protecting, panel);
@@ -686,7 +690,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     /*
-     * Returns either an existing point, or creates a new one as required.
+     * Return either an existing point, or create a new one as required.
      */
     PointDetails getPointDetails(LayoutBlock source, List<LayoutBlock> destination, LayoutEditor panel) {
         PointDetails newPoint = new PointDetails(source, destination);
@@ -702,7 +706,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return newPoint;
     }
 
-    //No point in have multiple copies of what is the same thing.
+    //No point can have multiple copies of what is the same thing.
     static ArrayList<PointDetails> pointDetails = new ArrayList<PointDetails>();
 
     public String getPointAsString(NamedBean obj, LayoutEditor panel) {
@@ -854,7 +858,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     /**
      * Discover all possible valid source and destination signalmasts past pairs
-     * on all layout editor panels.
+     * on all Layout Editor panels.
      */
     public void automaticallyDiscoverEntryExitPairs(LayoutEditor editor, int interlockType) throws JmriException {
         //This is almost a duplicate of that in the DefaultSignalMastLogicManager

@@ -606,7 +606,7 @@ function processPanelXML($returnedData, $success, $xhr) {
     $('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel)').bind(UPEVENT, $handleClick);
 
     //hook up mouseup state change function to multisensor (special handling)
-    $('.clickable.multisensoricon').bind(UPEVENT, $handleMultiClick);
+    $('.clickable.multisensoricon').bind('click', $handleMultiClick);
 
     //hook up mouseup function to linkinglabel (special handling)
     $('.clickable.linkinglabel').bind(UPEVENT, $handleLinkingLabelClick);
@@ -644,9 +644,11 @@ function $handleMultiClick(e) {
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
     var $widget = $gWidgets[this.id];
-    var clickX = e.pageX - $(this).parent().offset().left - this.offsetLeft;  //get click location on widget
-    var clickY = e.pageY - $(this).parent().offset().top - this.offsetTop;
-//find if we want to increment or decrement
+    var clickX = (e.offsetX || e.pageX - $(e.target).offset().left); //get click position on the widget
+    var clickY = (e.offsetY || e.pageY - $(e.target).offset().top );   
+    jmri.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
+
+    //increment or decrement based on where the click occurred on image
     var dec = false;
     if ($widget.updown == "true") {
         if (clickY > this.height / 2)
