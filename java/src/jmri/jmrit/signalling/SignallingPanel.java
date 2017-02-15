@@ -56,7 +56,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Create a JFrame to configure Signal Mast Logic Pairs (Source + Destination Masts)
+ * Create a JFrame to configure Signal Mast Logic Pairs (Source + Destination Masts).
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  * @author	Egbert Broerse Copyright (C) 2017
@@ -97,7 +97,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Create and fill in the JPanel to configure Signal Mast Logic
+     * Create and fill in the JPanel to configure Signal Mast Logic.
      * @param source Bean of Source Signal Mast
      * @param dest Bean of Destination Signal Mast
      * @param frame Name for the enclosing JFrame
@@ -378,7 +378,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JPanel p2xb = new JPanel();
 
     /**
-     * Compose GUI for setting up Blocks tab for an SML
+     * Compose GUI for setting up Blocks tab for an SML.
      */
     JPanel buildBlocksPanel() {
         JPanel blockPanel = new JPanel();
@@ -505,7 +505,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JPanel p2xa = new JPanel();
 
     /**
-     * Compose GUI for setting up the Turnouts tab for an SML
+     * Compose GUI for setting up the Turnouts tab for an SML.
      */
     JPanel buildTurnoutPanel() {
         JPanel turnoutPanel = new JPanel();
@@ -632,7 +632,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Compose GUI for setting up the Sensors tab for an SML
+     * Compose GUI for setting up the Sensors tab for an SML.
      */
     JPanel buildSensorPanel() {
         JPanel sensorPanel = new JPanel();
@@ -711,7 +711,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JPanel p2xsm = new JPanel();
 
     /**
-     * Compose GUI for setting up the Signal Masts tab for an SML
+     * Compose GUI for setting up the Signal Masts tab for an SML.
      */
     JPanel buildSignalMastPanel() {
         JPanel SignalMastPanel = new JPanel();
@@ -820,7 +820,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
     /**
-     * Update changes in SML when Update button is pressed in the Edit Logic - Add Logic pane
+     * Update changes in SML when Update button is pressed in the Edit Logic - Add Logic pane.
      */
     void updatePressed(ActionEvent e) {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
@@ -952,6 +952,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     private boolean destOK = true; // false indicates destMast and sourceMast are identical
 
+    /**
+     * When Apply button is pressed, call updatePressed and afterwards close the edit pane.
+     */
     void applyPressed(ActionEvent e) {
         updatePressed(e); // store edits
         if (destOK) { // enable user to correct configuration if warned the destMast in incorrect by skipping pane closing
@@ -959,9 +962,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-        /**
-         * Clean up when Cancel button is pressed
-         */
+    /**
+     * Clean up when Cancel button is pressed.
+     */
     void cancelPressed(ActionEvent e) {
         jFrame.setVisible(false);
         jFrame.dispose();
@@ -993,7 +996,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     private static int[] blockInputModeValues = new int[]{Block.UNOCCUPIED, Block.OCCUPIED};
 
     /**
-     * Create new lists of Beans configured as part of an SML
+     * Create new lists of control items configured as part of an SML.
      */
     void initializeIncludedList() {
         _includedManualBlockList = new ArrayList<ManualBlockList>();
@@ -1063,7 +1066,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    // to free resources when no longer used
+    /**
+     * Free up resources when no longer used.
+     */
     @Override
     public void dispose() {
     }
@@ -1263,7 +1268,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * A series of List to store all SML properties during Edit.
+     * A series of Lists to store all SML properties during Edit.
      */
     private class ManualBlockList extends SignalMastElement {
 
@@ -1524,6 +1529,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         /**
          * Provide a table cell renderer looking like a JComboBox
          * as an editor/renderer for the manual tables on all except the Masts tab.
+         * <p>
+         * This is a lightweight version of the {@link jmri.jmrit.beantable.RowComboBoxPanel}
+         * RowComboBox cell editor class, some of the hashtables not needed here since we only need
+         * identical options for all rows in a colomn.
+         * {@see AspectComboBoxPanel} for a full application with row specific comboBox choices.
          */
         public class StateComboBoxPanel extends RowComboBoxPanel {
 
@@ -1548,19 +1558,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
 
         // Methods to display STATE_COLUMN ComboBox in tables
-        // Derived from the SignalMastJTable class (deprecated since 4.5.5):
         // All row values are in terms of the Model, not the Table as displayed.
-
-//        /**
-//         * Clear the old aspect comboboxes and force them to be rebuilt
-//         * @param row Index of the signal mast (in TableDataModel) to be rebuilt in the Hashtables
-//         */
-//        public void clearStateVector(int row) {
-//            boxMap.remove(this.getValueAt(row, SNAME_COLUMN));
-//            editorMap.remove(this.getValueAt(row, SNAME_COLUMN));
-//        }
-
-        // Hashtables for Editors; none used for Renderers)
+        // Hashtables for Editors; none used for Renderers
 
         /**
          * Provide a static JComboBox element to display inside the JPanel CellEditor.
@@ -1574,29 +1573,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             editCombo.addItem(Bundle.getMessage("None"));
             return editCombo;
         }
-
-        //       Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
-
-//        /**
-//         * Holds a Hashtable of valid aspects per signal mast
-//         * used by getAspectEditorBox()
-//         * @param row Index number (in TableDataModel)
-//         * @return The Vector of valid aspect names for this mast to show in the JComboBox
-//         */
-//        Vector<String> getStateVector(int row) {
-//            Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SNAME_COLUMN));
-//            if (comboaspects == null) {
-//                // create a new one with right aspects
-//                Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
-//                        .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN)).getValidAspects();
-//                comboaspects = v;
-//                boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
-//            }
-//            return comboaspects;
-//        }
-//
-//        Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
-
         // end of methods to display STATE_COLUMN ComboBox
 
         public static final int SNAME_COLUMN = 0;
@@ -1605,6 +1581,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public static final int STATE_COLUMN = 3;
     }
 
+    /**
+     * TableModel for selecting SML control Blocks and Block Set To State.
+     */
     class BlockModel extends TableModel {
 
         BlockModel() {
@@ -1717,6 +1696,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     }
 
+    /**
+     * TableModel for selecting SML control Turnouts and Turnout Set To State.
+     */
     class TurnoutModel extends TableModel {
 
         TurnoutModel() {
@@ -1803,7 +1785,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Set up table for selecting Sensors and Sensor State
+     * TableModel for selecting SML control Sensors and Sensor Set To State.
      */
     class SensorModel extends TableModel {
 
@@ -2003,6 +1985,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         /**
          * A row specific Aspect combobox cell editor/renderer.
+         * <p>
+         * This is a full version of the {@link jmri.jmrit.beantable.RowComboBoxPanel}
+         * RowComboBox cell editor class, including all hashtables and row specific comboBox choices.
+         * {@see StateComboBoxPanel} for a light weight application with identical options for all rows in a colomn.
          */
         public class AspectComboBoxPanel extends RowComboBoxPanel {
 
@@ -2039,7 +2025,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             editorMap.remove(this.getValueAt(row, SNAME_COLUMN));
         }
 
-        // Hashtables for Editors; none used for Renderers)
+        // Hashtables for Editors; none used for Renderers
 
         /**
          * Provide a JComboBox element to display inside the JPanel CellEditor.
@@ -2081,6 +2067,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         // end of methods to display STATE_COLUMN (Aspect) ComboBox
 
         /**
+         * Create a compact control Signal Mast table.
          * @deprecated since 4.5.7, use {@link #getAspectEditorBox(int) }
          */
         @Deprecated
@@ -2162,7 +2149,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * A series of autoTableModels to display - but not edit - configurations on the Tabs
+     * A series of autoTableModels to display - but not edit - configurations on the Edit SML Tabs
      * that are autogenerated from layout Editor information.
      */
     abstract class AutoTableModel extends AbstractTableModel implements PropertyChangeListener {
@@ -2216,6 +2203,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         public static final int STATE_COLUMN = 2;
     }
 
+    /**
+     * TableModel to display - but not edit - Auto Layout Blocks on the Edit SML Blocks Tab.
+     */
     class AutoBlockModel extends AutoTableModel {
 
         AutoBlockModel() {
@@ -2293,6 +2283,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * TableModel to display - but not edit - Auto Turnouts on the Edit SML Turnouts Tab.
+     */
     class AutoTurnoutModel extends AutoTableModel {
 
         AutoTurnoutModel() {
@@ -2328,6 +2321,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    /**
+     * TableModel to display - but not edit - Auto Signal Masts on the Edit SML Signal Masts Tab.
+     */
     class AutoMastModel extends AutoTableModel {
 
         AutoMastModel() {
@@ -2364,6 +2360,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
+     * Class to provide a cell editor with a drop down list of signal mast aspects.
      * @deprecated since 4.7.1, use {@link SignalMastModel#getAspectEditorBox(int)}
      */
     @Deprecated
@@ -2375,6 +2372,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
+     * Class to provide a cell renderer looking like a drop down list showing the current value.
      * @deprecated since 4.7.1, use {@link SignalMastModel#getAspectEditorBox(int)}
      */
     @Deprecated

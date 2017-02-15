@@ -143,8 +143,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
 
     /**
      * Respond to the Discover button being pressed.
-     * Checks whether AdvancedRouting is turned on and any Layout Editor Panels
-     * are present. For each LE Panel, calls discoverSignallingDest()
+     * Check whether AdvancedRouting is turned on and any Layout Editor Panels
+     * are present. For each LE Panel, call discoverSignallingDest()
      * {@link jmri.SignalMastLogicManager#discoverSignallingDest(SignalMast, LayoutEditor)}
      * @param e The button event
      */

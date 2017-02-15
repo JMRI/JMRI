@@ -22,6 +22,11 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
     JButton sendButton;
     AddEntryExitPairPanel nxPanel;
 
+    /**
+     * Create and set an AddEntryExitPairFrame on a given LE panel.
+     *
+     * @param panel the LE panel on which to create the NX frame
+     */
     public void initComponents(LayoutEditor panel) throws Exception {
         // the following code sets the frame's initial state
 
