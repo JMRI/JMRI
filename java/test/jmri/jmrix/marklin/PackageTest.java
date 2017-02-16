@@ -15,7 +15,10 @@ import org.slf4j.LoggerFactory;
    MarklinConnectionTypeListTest.class,
    MarklinSystemConnectionMemoTest.class,
    MarklinTrafficControllerTest.class,
-   MarklinPortControllerTest.class
+   MarklinPortControllerTest.class,
+   MarklinConstantsTest.class,
+   MarklinMessageTest.class,
+   MarklinReplyTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin package

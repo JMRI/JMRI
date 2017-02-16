@@ -1,4 +1,4 @@
-package jmri.jmrix;
+package jmri.jmrix.marklin;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,12 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SystemsMenuTest {
+public class MarklinMessageTest {
 
     @Test
-    @Ignore("needs system connection memos setup for some connections")
     public void testCTor() {
-        SystemsMenu t = new SystemsMenu();
+        MarklinMessage t = new MarklinMessage();
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +33,6 @@ public class SystemsMenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SystemsMenuTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinMessageTest.class.getName());
 
 }
