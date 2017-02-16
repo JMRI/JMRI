@@ -25,7 +25,7 @@ public interface Sensor extends NamedBean {
     // states are parameters; both closed and thrown is possible!
     public static final int ACTIVE = 0x02;
     public static final int INACTIVE = 0x04;
-
+    
     /**
      * Known state on layout is a bound parameter
      *

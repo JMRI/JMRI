@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.util.MathUtil.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -941,9 +943,7 @@ public class LayoutSlip extends LayoutTurnout {
         g2.draw(new Line2D.Double(A, third(A, C)));
         g2.draw(new Line2D.Double(C, third(C, A)));
 
-        if (state == STATE_AC
-                || state == STATE_BD
-                || state == UNKNOWN) {
+        if (state == STATE_AC || state == STATE_BD || state == UNKNOWN) {
             g2.draw(new Line2D.Double(A, third(A, D)));
 
             g2.draw(new Line2D.Double(D, third(D, A)));
