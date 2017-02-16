@@ -5,7 +5,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 /**
- * Frame for Signal Logic Source Mast status
+ * Frame for Signal Logic Source Mast status.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */

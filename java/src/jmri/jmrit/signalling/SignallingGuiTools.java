@@ -18,7 +18,7 @@ public class SignallingGuiTools {
 
     /**
      * Display a message to the user asking them to
-     * confirm if they wish to update the signal mast logic from the old signal
+     * confirm they wish to update the Signal Mast Logic from the old signal
      * mast to the new one.
      */
     static public void updateSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
@@ -39,8 +39,8 @@ public class SignallingGuiTools {
     }
 
     /**
-     * Display a message to the user asking them to confirm if they wish to update
-     * the signal mast logic for swapping two signal masts over.
+     * Display a message to the user asking them to confirm they wish to update
+     * the Signal Mast Logic by swapping two signal masts.
      */
     static public void swapSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
         Object[] options = {Bundle.getMessage("ButtonUpdate"),
@@ -61,7 +61,7 @@ public class SignallingGuiTools {
 
     /**
      * Display a message to the user asking them to
-     * confirm if they wish to remove the signal mast logic for a given signal.
+     * confirm they wish to remove the Signal Mast Logic for a given signal.
      */
     static public boolean removeSignalMastLogic(JmriJFrame frame, SignalMast mast) {
         Object[] options = {rb.getString("RemoveButton"),
@@ -84,8 +84,8 @@ public class SignallingGuiTools {
 
     /**
      * Display a message to the user asking them to
-     * confirm if they wish to remove the signal mast logic for a given signal.
-     * This is the same as removeSignalMastLogic, but with altered text.
+     * confirm they wish to remove the Signal Mast Logic for a given Signal Mast.
+     * This is the same as removeSignalMastLogic, but with different text.
      */
     static public void removeAlreadyAssignedSignalMastLogic(JmriJFrame frame, SignalMast mast) {
         Object[] options = {rb.getString("RemoveButton"),

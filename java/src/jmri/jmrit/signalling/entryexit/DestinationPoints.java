@@ -299,8 +299,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if (manager.isRouteStacked(this, false)) {
             manager.cancelStackedRoute(this, false);
         }
-        /*We put the setting of the route into a seperate thread and put a glass pane infront of the layout editor,
-         the swing thread for flash the icons to carry on as without interuption */
+        /* We put the setting of the route into a seperate thread and put a glass pane in front of the layout editor.
+         The swing thread for flashing the icons will carry on without interuption. */
         final ArrayList<Color> realColorStd = new ArrayList<Color>();
         final ArrayList<Color> realColorXtra = new ArrayList<Color>();
         final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>();
@@ -341,8 +341,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
                     ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
 
-                    //This for loop was after the if statement
-                    //Last block in the route is the one that we are protecting at the last sensor/signalmast
+                    // This for loop was after the if statement
+                    // Last block in the route is the one that we are protecting at the last sensor/signalmast
                     for (int i = 0; i < routeDetails.size(); i++) {
                         //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
                         if (at == null && isSignalLogicDynamic()) {
