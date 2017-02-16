@@ -32,7 +32,7 @@
 var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
-var systemNames = {};   // associative array of array of elements indexed by systemName
+var whereUsed = {};   // associative array of array of elements indexed by systemName or userName
 var occupancyNames = {};   // associative array of array of elements indexed by occupancysensor name
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
@@ -337,10 +337,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
                                         jmri.getSensor($widget["systemName"]);
-                                        if (!($widget.systemName in systemNames)) {  //set where-used for this new sensor
-                                            systemNames[$widget.systemName] = new Array();
+                                        if (!($widget.systemName in whereUsed)) {  //set where-used for this new sensor
+                                            whereUsed[$widget.systemName] = new Array();
                                         }
-                                        systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
+                                        whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
                                         $widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
                                         $widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
                                         $widget['icon4'] = "/web/images/transparent_1x1.png"; //set non-actives to transparent image
@@ -585,12 +585,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                         });
                         break;
                 }
-                //keep track of names for later conversion from username to systemname
+                //add widgetid to whereused array to support updates
                 if ($widget.systemName) {
-                    if (!($widget.systemName in systemNames)) {
-                        systemNames[$widget.systemName] = new Array();
+                    if (!($widget.systemName in whereUsed)) {
+                        whereUsed[$widget.systemName] = new Array();
                     }
-                    systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
+                    whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
                 }
                 //store occupancy sensor where-used
                 if ($widget.occupancysensor && $gWidgets[$widget.id]) {
@@ -1623,21 +1623,21 @@ var $drawAllIconWidgets = function() {
 };
 
 function updateWidgets(name, state, data) {
-    //if systemName not in systemNames list, replace userName with systemName
-	if (!systemNames[name] && name != data.userName) {
-//		jmri.log("replacing userName " + data.userName + " with systemName " + name);    	
-		if (systemNames[data.userName]) {  										  //if found by userName
-			systemNames[name] = systemNames[data.userName];  //copy entry over
-			delete systemNames[data.userName];  							 //delete old one
-		}
-    }
-	//update all widgets based on the element that changed 
-    if (systemNames[name]) {
-        $.each(systemNames[name], function(index, widgetId) {
+	//update all widgets based on the element that changed, using systemname 
+    if (whereUsed[name]) {
+        $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state);
         });
 //    } else {
 //    	jmri.log("system name " + name + " not found, can't set state to " + state);
+    }
+	//update all widgets based on the element that changed, using username
+    if (whereUsed[data.userName]) {
+        $.each(whereUsed[data.userName], function(index, widgetId) {
+            $setWidgetState(widgetId, state);
+        });
+//    } else {
+//    	jmri.log("userName " + name + " not found, can't set state to " + state);
     }
 }
 
