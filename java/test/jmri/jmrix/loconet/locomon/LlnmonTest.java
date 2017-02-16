@@ -54,12 +54,12 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x2E, 0x7d, 0x01, 0x04});
-        assertEquals(" in H", 
+        assertEquals("another in H", 
                 "Transponder address 1(short) present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n",
                 f.displayMessage(l));
         
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x7D, 0x03, 0x00, 0x00, 0x00, 0x2D});
-        assertEquals(" in H", 
+        assertEquals("find loco 3(short)", 
                 "Transponding Find query for loco address 3(short).\n",
                 f.displayMessage(l));
         
@@ -70,18 +70,43 @@ public class LlnmonTest extends TestCase {
         
         jmri.jmrix.loconet.LnReporter r = (jmri.jmrix.loconet.LnReporter) lnrm.provideReporter("LR19");
         
-        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
-        assertEquals(" in H", 
-                "Transponder Find report: address 3(short) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x14, 0x00, 0x7F});
+        assertEquals("Transponding no reporter user name", 
+                "Transponder Find report: address 3(short) present at LR21 (BDL16x Board 2 RX4 zone C).\n",
                 f.displayMessage(l));
         
         r.setUserName("AUserName");
 
-
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
-        assertEquals(" in H", 
+        assertEquals("Transponding in B, with reporter user name", 
                 "Transponder Find report: address 3(short) present at LR19 (AUserName) (BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x01, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
+        assertEquals("Transponding Bad Message 1", 
+                "Unable to parse LocoNet message.\ncontents: E5 09 01 7D 03 00 12 00 7F\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x00, 0x04, 0x00, 0x00, 0x00, 0x2D});
+        assertEquals("find loco 4 (long)", 
+                "Transponding Find query for loco address 4.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x16, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR23 (BDL16x Board 2 RX4 zone D).\n",
+                f.displayMessage(l));
+        
+        assertNotNull("reporter Got Created", lnrm.getBySystemName("LR23"));
+
+        assertNull("reporter is Not Yet Created", lnrm.getBySystemName("LR25"));
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x18, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR25 (BDL16x Board 2 RX4 zone E).\n",
+                f.displayMessage(l));
+        assertNotNull("reporter Created", lnrm.getBySystemName("LR25"));
+        
+        
         
     }
     
