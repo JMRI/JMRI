@@ -2147,8 +2147,6 @@ public class Llnmon {
                         reporterSystemName,
                         section,
                         zone);
-                    
-                
             }
             default: {
                 break;
@@ -2669,7 +2667,7 @@ public class Llnmon {
         // get system and user names
         String sensorSystemName = locoNetSensorPrefix + contactNum;
         String sensorUserName = "";
-        Sensor sensor = sensorManager.getBySystemName(sensorSystemName);
+        Sensor sensor = sensorManager.provideSensor(sensorSystemName);
         sensorUserName = "";
         if (sensor != null) {
             String uname = sensor.getUserName();
@@ -2719,7 +2717,7 @@ public class Llnmon {
         turnoutSystemName = locoNetTurnoutPrefix
                 + SENSOR_ADR(sn1, sn2);
         
-        Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+        Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
         if (turnout != null) {
             String uname = turnout.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
@@ -2760,7 +2758,7 @@ public class Llnmon {
         turnoutSystemName = locoNetTurnoutPrefix
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
 
-        Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+        Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
         if (turnout != null) {
             String uname = turnout.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
@@ -2787,7 +2785,7 @@ public class Llnmon {
         String turnoutUserName = "";
         turnoutSystemName = locoNetTurnoutPrefix
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
-        Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+        Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
         String uname = "";
         if (turnout != null) {
             uname = turnout.getUserName();
@@ -2954,7 +2952,7 @@ public class Llnmon {
             String turnoutUserName = "";
             turnoutSystemName = locoNetTurnoutPrefix
                     + SENSOR_ADR(l.getElement(1), l.getElement(2));
-            Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
+            Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
             if (turnout != null) {
                 String uname = turnout.getUserName();
                 if ((uname != null) && (!uname.isEmpty())) {
