@@ -959,7 +959,64 @@
       </enumChoice>
       <enumChoice choice="F19 off=Fade">
         <choice>F19</choice>
-      </enumChoice>  
+      </enumChoice>
+      <enumChoice choice="F1 on=Fade" value="101">
+        <choice>F1 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F2 on=Fade">
+        <choice>F2 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F3 on=Fade">
+        <choice>F3 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F4 on=Fade">
+        <choice>F4 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F5 on=Fade">
+        <choice>F5 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F6 on=Fade">
+        <choice>F6 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F7 on=Fade">
+        <choice>F7 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F8 on=Fade">
+        <choice>F8 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F9 on=Fade">
+        <choice>F9 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F10 on=Fade">
+        <choice>F10 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F11 on=Fade">
+        <choice>F11 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F12 on=Fade">
+        <choice>F12 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F13 on=Fade">
+        <choice>F13 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F14 on=Fade">
+        <choice>F14 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F15 on=Fade">
+        <choice>F15 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F16 on=Fade">
+        <choice>F16 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F17 on=Fade">
+        <choice>F17 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F18 on=Fade">
+        <choice>F18 Off</choice>
+      </enumChoice>
+      <enumChoice choice="F19 on=Fade">
+        <choice>F19 Off</choice>
+      </enumChoice>
     </enumVal>
     <label>Mute key</label>
     <label xml:lang="it">Tasto Tacitazione</label>
