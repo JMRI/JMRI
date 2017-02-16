@@ -150,14 +150,16 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
                     return(r);
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
 
             case DCCppConstants.THROTTLE_REPLY:
                 if (s.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 log.debug("Throttle Reply: {}", r.toString());
                 r._nDataChars = r.toString().length();
@@ -176,7 +178,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
                     // Do nothing.  Constructor has already done the work
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
@@ -189,7 +192,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.OUTPUT_LIST_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
@@ -199,7 +203,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 return(r);
@@ -208,7 +213,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.TRACK_POWER_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 return(r);
@@ -217,7 +223,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 return(r);
@@ -226,7 +233,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.WRITE_EEPROM_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 return(r);
@@ -235,7 +243,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.FREE_MEMORY_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 return(r);
@@ -245,7 +254,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 return(r);
@@ -257,7 +267,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.SENSOR_DEF_REPLY_REGEX;
                 } else {
-                    return(null);
+                    //return(null);
+                    return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
                 return(r);
@@ -270,7 +281,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 r.myRegex = DCCppConstants.MADC_SUCCESS_REPLY_REGEX;
                 return(r);
             default:
-                return(null);
+                    //return(null);
+                    return(new DCCppReply());
         }
     }
 
