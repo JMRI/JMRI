@@ -57,6 +57,14 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceNetworkPortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NcePortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.nce.consist.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceBinaryCommandTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceCmdStationMemoryTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceMessageCheckTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceUSBTest.class));
+
         return suite;
     }
 
