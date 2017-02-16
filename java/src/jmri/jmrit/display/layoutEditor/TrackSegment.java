@@ -75,7 +75,6 @@ public class TrackSegment extends LayoutTrack {
     private int type2 = 0;
     private boolean dashed = false;
     private boolean mainline = false;
-    private boolean hidden = false;
     private boolean arc = false;
     private boolean flip = false;
     private double angle = 0.0D;
@@ -179,14 +178,6 @@ public class TrackSegment extends LayoutTrack {
 
     public void setDashed(boolean dash) {
         dashed = dash;
-    }
-
-    public boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(boolean hide) {
-        hidden = hide;
     }
 
     public boolean getMainline() {
@@ -563,6 +554,7 @@ public class TrackSegment extends LayoutTrack {
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
             // add dashed choice
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
@@ -575,6 +567,7 @@ public class TrackSegment extends LayoutTrack {
             panel31.add(new JLabel(rb.getString("Style") + " : "));
             panel31.add(dashedBox);
             contentPane.add(panel31);
+
             // add mainline choice
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
@@ -586,12 +579,14 @@ public class TrackSegment extends LayoutTrack {
             mainlineBox.setToolTipText(rb.getString("MainlineToolTip"));
             panel32.add(mainlineBox);
             contentPane.add(panel32);
+
             // add hidden choice
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
             panel33.add(hiddenBox);
             contentPane.add(panel33);
+
             // setup block name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
@@ -602,7 +597,9 @@ public class TrackSegment extends LayoutTrack {
             blockNameComboBox.setSelectedIndex(-1);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
+
             contentPane.add(panel2);
+
             if ((getArc()) && (getCircle())) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
@@ -613,9 +610,11 @@ public class TrackSegment extends LayoutTrack {
                 contentPane.add(panel20);
                 arcField.setText("" + getAngle());
             }
+
             // set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
+
             // Edit Block
             panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             segmentEditBlock.addActionListener(new ActionListener() {
@@ -682,7 +681,7 @@ public class TrackSegment extends LayoutTrack {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockNameComboBox.getEditor().getItem();
+        String newName = blockNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -746,7 +745,7 @@ public class TrackSegment extends LayoutTrack {
             needsRedraw = true;
         }
         // check if Block changed
-        String newName = (String) blockNameComboBox.getEditor().getItem();
+        String newName = blockNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -1120,7 +1119,7 @@ public class TrackSegment extends LayoutTrack {
 
 
     public void drawDashed(Graphics2D g2, boolean mainline) {
-        if ((!getHidden()) && getDashed() && (mainline == getMainline())) {
+        if ((!isHidden()) && getDashed() && (mainline == getMainline())) {
             LayoutBlock b = getLayoutBlock();
             if (b != null) {
                 g2.setColor(b.getBlockColor());
@@ -1162,7 +1161,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void drawSolid(Graphics2D g2, boolean isMainline) {
-        if ((!getHidden()) && (!getDashed()) && (isMainline == getMainline())) {
+        if ((!isHidden()) && (!getDashed()) && (isMainline == getMainline())) {
             LayoutBlock b = getLayoutBlock();
             if (b != null) {
                 g2.setColor(b.getBlockColor());

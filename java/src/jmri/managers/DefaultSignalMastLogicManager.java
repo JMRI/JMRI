@@ -24,18 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * Default implementation of a SignalMastLogicManager.
+ * @see jmri.SignalMastLogicManager
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
@@ -84,8 +74,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     ArrayList<SignalMastLogic> signalMastLogic = new ArrayList<SignalMastLogic>();
-
     //Hashtable<SignalMast, ArrayList<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, ArrayList<SignalMastLogic>>();
+
     @Override
     public void replaceSignalMast(SignalMast oldMast, SignalMast newMast) {
         if (oldMast == null || newMast == null) {
@@ -127,9 +117,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     }
 
-    /**
-     * Gather a list of all the signal mast logics, by destination signal mast
-     */
     @Override
     public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
         ArrayList<SignalMastLogic> list = new ArrayList<SignalMastLogic>();
@@ -141,11 +128,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return list;
     }
 
-    /**
-     * Returns an arraylist of signalmastlogic
-     *
-     * @return An ArrayList of SignalMast logics
-     */
     @Override
     public ArrayList<SignalMastLogic> getSignalMastLogicList() {
         return signalMastLogic;
@@ -154,8 +136,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     @Override
     public boolean isSignalMastUsed(SignalMast mast) {
         if (getSignalMastLogic(mast) != null) {
-            /*Although the we might have it registered as a source, it may not have
-             any valid destination, so therefore it can be returned as not in use */
+            /* Although we might have it registered as a source, it may not have
+             any valid destination, so therefore it can be returned as not in use. */
             if (getSignalMastLogic(mast).getDestinationList().size() != 0) {
                 return true;
             }
@@ -166,12 +148,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return false;
     }
 
-    /**
-     * Remove a destination mast from the signalmast logic
-     *
-     * @param sml  The signalmast logic of the source signal
-     * @param dest The destination mast
-     */
     @Override
     public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest) {
         if (sml.removeDestination(dest)) {
@@ -179,9 +155,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
-    /**
-     * Completely remove the signalmast logic.
-     */
     @Override
     public void removeSignalMastLogic(SignalMastLogic sml) {
         if (sml == null) {
@@ -194,9 +167,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("length", null, Integer.valueOf(signalMastLogic.size()));
     }
 
-    /*
-     * Procedure for completely remove a signalmast out of all the logics
-     */
     @Override
     public void removeSignalMast(SignalMast mast) {
         if (mast == null) {
@@ -210,6 +180,12 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         removeSignalMastLogic(getSignalMastLogic(mast));
     }
 
+    /**
+     * Disable the use of info from the Layout Editor Panels to configure
+     * a Signal Mast Logic for a specific Signal Mast.
+     *
+     * @param mast The Signal Mast for which LE info is to be disabled
+     */
     @Override
     public void disableLayoutEditorUse(SignalMast mast) {
         SignalMastLogic source = getSignalMastLogic(mast);
@@ -228,7 +204,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
-     *
      */
     protected void registerSelf() {
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -237,8 +212,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
-    // abstract methods to be extended by subclasses
-    // to free resources when no longer used
+    // Abstract methods to be extended by subclasses:
+
     @Override
     public void dispose() {
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -249,8 +224,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     /**
-     * Used to initialise all the signalmast logics. primarily used after
-     * loading.
+     * Initialise all the Signal Mast Logics. Primarily used after
+     * loading a configuration.
      */
     @Override
     public void initialise() {
@@ -384,8 +359,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     boolean runWhenStablised = false;
 
     /**
-     * Discover valid destination signalmasts for a given source signal on a
-     * given layout editor panel.
+     * Discover valid destination Signal Masts for a given source Signal Mast on a
+     * given Layout Editor Panel.
      *
      * @param source Source SignalMast
      * @param layout Layout Editor panel to check.
@@ -401,7 +376,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
-            throw new JmriException("routing not stablised");
+            throw new JmriException("routing not stabilised");
         }
         try {
             validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST));
@@ -441,8 +416,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     /**
-     * Discover all possible valid source and destination signalmasts past pairs
-     * on all layout editor panels.
+     * Discover all possible valid source + destination signal mast pairs
+     * on all Layout Editor Panels.
      */
     @Override
     public void automaticallyDiscoverSignallingPairs() throws JmriException {
@@ -488,6 +463,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("autoGenerateComplete", null, null);
     }
 
+    /**
+     * Populate Sections of type SIGNALMASTLOGIC used with Layout Editor with Signal Mast attributes
+     * as stored in Signal Mast Logic.
+     */
     public void generateSection() {
         SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
         for (NamedBean nb : sm.getNamedBeanList()) {
@@ -550,7 +529,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
             StringBuilder message = new StringBuilder();
             boolean found = false;
             message.append(Bundle.getMessage("VetoFoundInSignalMastLogic"));
@@ -559,7 +538,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                 try {
                     signalMastLogic.get(i).vetoableChange(evt);
                 } catch (java.beans.PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
+                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //NOI18N
                         throw e;
                     }
                     found = true;

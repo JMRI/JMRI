@@ -44,9 +44,10 @@ public abstract class AbstractTurnoutTestBase {
     @Test
     public void testCreate() {
         // initial commanded state when created must be UNKNOWN
-        Assert.assertEquals("initial commanded state", Turnout.UNKNOWN, t.getCommandedState());
-        // initial commanded state when created must be UNKNOWN
+        Assert.assertEquals("initial commanded state 1", Turnout.UNKNOWN, t.getCommandedState());
+        // initial known state when created must be UNKNOWN
         Assert.assertEquals("initial known state", Turnout.UNKNOWN, t.getKnownState());
+        Assert.assertEquals("initial commanded state 2", Turnout.UNKNOWN, t.getState());
     }
 
     @Test
@@ -83,7 +84,10 @@ public abstract class AbstractTurnoutTestBase {
     public void testCommandClosed() throws InterruptedException {
         t.setCommandedState(Turnout.CLOSED);
         // check
-        Assert.assertEquals("commanded state", jmri.Turnout.CLOSED, t.getCommandedState());
+        Assert.assertEquals("commanded state 1", Turnout.CLOSED, t.getCommandedState());
+        ((AbstractTurnout)t).setKnownStateToCommanded();
+        Assert.assertEquals("commanded state 2", Turnout.CLOSED, t.getState());
+        Assert.assertEquals("commanded state 3", "Closed", t.describeState(t.getState()));
         checkClosedMsgSent();
     }
 
@@ -91,7 +95,10 @@ public abstract class AbstractTurnoutTestBase {
     public void testCommandThrown() throws InterruptedException {
         t.setCommandedState(Turnout.THROWN);
         // check
-        Assert.assertEquals("commanded state", jmri.Turnout.THROWN, t.getCommandedState());
+        Assert.assertEquals("commanded state 1", Turnout.THROWN, t.getCommandedState());
+        ((AbstractTurnout)t).setKnownStateToCommanded();
+        Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
+        Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
         checkThrownMsgSent();
     }
 

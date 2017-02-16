@@ -29,7 +29,7 @@
     <div id="mainContent">
       <h1>JMRI: Signal Mast Logic</h1>
 
-      <p class="subtitle">Information on Signal Mast Logic</p>
+      <h2>Introduction to SML</h2>
 
       <div class="para">
         JMRI Signal Mast Logic allows you to build up a set of
@@ -43,12 +43,12 @@
         and the state that they must be in for the source Signal
         Mast to be released from a "Danger" or "Stop" Aspect.</p>
 
+        <h3>SML Example 1</h3>
         <p><img src="images/logic1.png" width="437" height=
-        "92"><br>
-        Example 1</p>
+        "92"><</p>
 
-        <p>In the example above, you have a source Signal Mast
-        SM20, there are then two destination Signal Masts: SM22 and
+        <p>In this first example, you have a source Signal Mast
+        SM20, and two destination Signal Masts: SM22 and
         SM23.<br>
         The logic behind signaling pair SM20 to SM23 is that Blocks
         2 &amp; 3 must be unoccupied, and Turnout IT1 must be set
@@ -63,14 +63,14 @@
         the other, without any other other Signal Mast in-between
         in the same direction.</p>
 
+        <h3>SML Example 2</h3>
         <p><img src="images/logic2.png" width="511" height=
-        "93"><br>
-        Example 2</p>
+        "93"></p>
 
-        <p>In the example above, a Signal Mast Logic from SM20 to
+        <p>In this second example, a Signal Mast Logic from SM20 to
         SM24 would be invalid as SM23 is in between the two. You
         would have to create two separate Signal Mast Logics, one
-        as above for SM20 to SM23, the second for SM23 to SM24.</p>
+        as in example 1 for SM20 to SM23, the second for SM23 to SM24.</p>
         <hr>
 
         <p>Which Aspect our source Signal Mast displays after being
@@ -190,9 +190,9 @@
         a block boundary exists you will be given the option to
         "Set Signal Mast..."</p>
 
+        <h3>SML Example 3</h3>
         <p><img src="images/popup.png" height="316" width=
-        "300"><br>
-        Example 3</p>
+        "300"></p>
 
         <p>You will then be presented with a fresh window that
         allows you to enter in the name of the Signal Mast that
@@ -217,8 +217,9 @@
         and choosing "Add icon". <a name="autologic" id=
         "autologic"></a></p>
 
-        <h3>Generate Signal Mast Logic</h3>Signal Mast Logic can
-        automatically be generated in three different ways:
+        <h3>Generate Signal Mast Logic</h3>
+        <p>Signal Mast Logic can automatically be generated in three
+          different ways:</p>
 
         <ul>
           <li>The first method is to build it on a Signal Mast by
@@ -248,31 +249,38 @@
           Head and Layout Editor steps and go right to creating the
           Signal Mast as a single entry and the hardware handles
           all of the LED/lamp lighting, etc.</li>
-        </ul><!-- JMRI groups message -->
-        Access to configuring Signal Mast Logic can be done from
-        three different locations:
+        </ul>
+        <p>You manually add new Signal Mast Logic pairs with the
+          "Add..." button at the bottom of the Signal Mast Logic
+          table or the "Add Logic" button at the bottom of the Signal
+          Mast Logic Pairs pane, both of which take you to the
+          <a href=
+          "../../../package/jmri/jmrit/beantable/AddEditSignalingLogic.shtml">
+            "Add Edit Signal Mast Logic" pane</a>.</p>
+
+
+        <h3>Changing Signal Mast Logic</h3>
+        <!-- JMRI groups message -->
+        Configuration of an existing Signal Mast Logic can be accessed
+        from three different locations:
 
         <ul>
           <li>In the <a href=
           "../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">
           Signal Mast Logic Table</a> there is an Edit button for
-          each Signal Mast Logic pair</li>
+          each Signal Mast Logic pair.</li>
 
-          <li>From the <a href=
+          <li>In the <a href=
           "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
-          Signal Mast Table</a>, there is an Edit Logic button for
+          Signal Mast Table</a>, there is an "Edit Logic" button for
           each Signal Mast, wich opens a window from which you can
           select one of the Signalling Pairs set for this Signal
           Mast.</li>
 
-          <li>From the pop-up menu that appears when you
+          <li>In the pop-up menu that appears when you
           right-click on a Signal Mast Icon on a Layout Editor
-          panel, there is a menu item for Signal Mast Logic</li>
-        </ul>You manually add new Signal Mast Logic pairs with the
-        "Add..." button at the bottom of each of the subsequent
-        tables, which takes you to the <a href=
-        "../../../package/jmri/jmrit/beantable/AddEditSignalingLogic.shtml">
-        "Add Edit Signal Mast Logic" window</a>.
+          Panel, using the Signal Mast Logic menu item.</li>
+        </ul>
 
         <p>Back to the <a href="index.shtml#tools">Signaling main
         help page</a>. <!--#include virtual="/Footer" --></p>

@@ -40,8 +40,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SectionTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalGroupTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.SignalMastLogicTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TransitTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TransitSectionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TransitSectionActionTest.class));
@@ -57,7 +58,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.progdebugger.PackageTest.suite());
         suite.addTest(jmri.configurexml.PackageTest.suite());
         suite.addTest(jmri.implementation.PackageTest.suite());
-        suite.addTest(jmri.managers.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.managers.PackageTest.class));
         suite.addTest(jmri.jmrix.PackageTest.suite());
         suite.addTest(jmri.jmrit.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.swing.PackageTest.class));
@@ -74,6 +75,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProgReadExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProgWriteExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TimebaseRateExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.spi.PackageTest.class));
         return suite;
     }
 
