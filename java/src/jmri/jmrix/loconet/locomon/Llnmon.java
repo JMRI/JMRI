@@ -423,7 +423,7 @@ public class Llnmon {
      * @return String representation
      */
     protected String format(LocoNetMessage l) {
-
+        String result;
 
         /*
          * 2 Byte MESSAGE OPCODES
@@ -521,7 +521,6 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_ACK: {
-                String result;
                 result = interpretOpcSwAck(l);
                 if (result.length() > 0) {
                     return result;
@@ -537,7 +536,6 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_STATE: {
-                String result;
                 result = interpretOpcSwState(l);
                 if (result.length() > 0) {
                     return result;
@@ -554,7 +552,6 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_RQ_SL_DATA: {
-                String result;
                 result = interpretOpcRqSlData(l);
                 if (result.length() > 0) {
                     return result;
@@ -582,7 +579,6 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_MOVE_SLOTS: {
-                String result;
                 result = interpretOpcMoveSlots(l);
                 if (result.length() > 0) {
                     return result;
@@ -630,7 +626,6 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_CONSIST_FUNC: {
-                String result;
                 result = interpretOpcConsistFunc(l);
                 if (result.length() > 0) {
                     return result;
@@ -663,7 +658,6 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LONG_ACK: {
-                String result;
                 result = interpretLongAck(l);
                 if (result.length() > 0) {
                     return result;
@@ -693,7 +687,6 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_INPUT_REP: {
-                String result;
                 result = interpretOpcInputRep(l);
                 if (result.length() > 0) {
                     return result;
@@ -733,7 +726,6 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_REP: {
-                String result;
                 result = interpretOpcSwRep(l);
                 if (result.length() > 0) {
                     return result;
@@ -762,7 +754,6 @@ public class Llnmon {
              * Page 13 special form LocoNet interrogate.
              */
             case LnConstants.OPC_SW_REQ: {
-                String result;
                 result = interpretOpcSwReq(l);
                 if (result.length() > 0) {
                     return result;
@@ -776,7 +767,6 @@ public class Llnmon {
              * Page 10 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LOCO_SND: {
-                String result;
                 result = interpretOpcLocoSnd(l);
                 if (result.length() > 0) {
                     return result;
@@ -790,7 +780,6 @@ public class Llnmon {
              * Page 10 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LOCO_DIRF: {
-                String result;
                 result = interpretOpcLocoDirf(l);
                 if (result.length() > 0) {
                     return result;
@@ -804,7 +793,6 @@ public class Llnmon {
              * Page 10 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_LOCO_SPD: {
-                String result;
                 result = interpretOpcLocoSpd(l);
                 if (result.length() > 0) {
                     return result;
@@ -822,7 +810,6 @@ public class Llnmon {
              */
 
             case LnConstants.OPC_PANEL_QUERY: {
-                String result;
                 result = interpretOpcPanelQuery(l);
                 if (result.length() > 0) {
                     return result;
@@ -840,33 +827,12 @@ public class Llnmon {
              * is not necessarily the name used by Digitrax.
              */
             case LnConstants.OPC_PANEL_RESPONSE: {
-                switch (l.getElement(1)) {
-
-                    case 0x12: {
-                        // Bit 3 (0x08 in hex) is set by every UR-92 we've ever captured.
-                        // The hypothesis is this indicates duplex enabled, but this has
-                        // not been confirmed with Digitrax.
-                        return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR92",
-                                l.getElement(3) & 0x07,
-                                ((l.getElement(3) & 0x08) == 0x08
-                                        ? Bundle.getMessage("LN_MSG_HELPER_D7_UR92_DUPLEX")
-                                        : ""));
-                    }
-                    case 0x17: {
-                        return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR90",
-                                l.getElement(3) & 0x07);
-                    }
-                    case 0x1F: {
-                        return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR91",
-                                l.getElement(3) & 0x07);
-                    }
-                    default: {
-                        forceHex = true;
-                        return Bundle.getMessage("LN_MSG_OPC_D5_TETHERLESS_UNKNOWN",
-                         Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                 StringUtil.twoHexFromInt( l.getElement(1))));
-                    }
+                result = interpretOpcPanelResponse(l);
+                if (result.length() > 0) {
+                    return result;
                 }
+                break;
+
             } // case LnConstants.OPC_PANEL_RESPONSE
 
             /*
@@ -880,7 +846,6 @@ public class Llnmon {
              * performed by Al Silverstein, and corrections added by B. Milhaupt.
              */
             case LnConstants.OPC_MULTI_SENSE: {
-                String result;
                 result = interpretOpcMultiSense(l);
                 if (result.length() > 0) {
                     return result;
@@ -969,7 +934,6 @@ public class Llnmon {
              */
             case LnConstants.OPC_WR_SL_DATA:
             case LnConstants.OPC_SL_RD_DATA: {
-                String result;
                 result = interpretOpcWrSlDataOpcSlRdData(l);
                 if (result.length() > 0) {
                     return result;
@@ -980,7 +944,6 @@ public class Llnmon {
 
             case LnConstants.OPC_ALM_WRITE:
             case LnConstants.OPC_ALM_READ: {
-                String message;
 
                 if (l.getElement(1) == 0x10) {
                     // ALM read and write messages
@@ -1010,10 +973,8 @@ public class Llnmon {
                                     StringUtil.twoHexFromInt(l.getElement(13))),
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(14))));
-                } else {
-                    forceHex = true;
-                    return Bundle.getMessage("LN_MSG_ALM_READ_OR_WRITE_UNDECODED");
-                }
+                } 
+                break;
             } // case LnConstants.OPC_ALM_READ
 
             /*
@@ -1030,7 +991,6 @@ public class Llnmon {
              * B. Milhaupt.
              */
             case LnConstants.OPC_PEER_XFER: {
-                String result;
                 result = interpretOpcPeerXfer(l);
                 if (result.length() > 0) {
                     return result;
@@ -1039,466 +999,44 @@ public class Llnmon {
             } // case LnConstants.OPC_PEER_XFER
 
             case LnConstants.OPC_LISSY_UPDATE: {
-                /*
-                 * OPC_LISSY_UPDATE   0xE4
-                 *
-                 * LISSY is an automatic train detection system made by Uhlenbrock.
-                 * All documentation appears to be in German.
-                 *
-                 */
-                switch (l.getElement(1)) {
-                    case 0x08: // Format LISSY message
-                        int unit = (l.getElement(4) & 0x7F);
-                        int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                        switch (l.getElement(2)) {
-                            case 0x00:
-                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                                // OPC_LISSY_REP
-                                return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
-                                        unit,
-                                        Integer.toString(address),
-                                        ((l.getElement(3) & 0x20) == 0
-                                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                            case 0x01:
-                                // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                                // OPC_WHEELCNT_REP
-                                int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                                return Bundle.getMessage("LN_MSG_LISSY_WHEEL_REPORT_LOCO_MOVEMENT",
-                                        unit, wheelCount,
-                                        ((l.getElement(3) & 0x20) == 0
-                                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case 0x0A: // Format special message
-                        int element = l.getElement(2) * 128 + l.getElement(3);
-                        int stat1 = l.getElement(5);
-                        int stat2 = l.getElement(6);
-                        String status;
-                        switch (stat1 & 0x30) {
-                            case 0x30:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_BOTH_RES");
-                                break;
-                            case 0x10:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_AX_RES");
-                                break;
-                            case 0x20:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_XA_RES");
-                                break;
-                            default:
-                                status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_NO_RES");
-                                break;
-                        }
-
-                        return Bundle.getMessage("LN_MSG_SE_REPORT",
-                                (element + 1), element,
-                                l.getElement(7), l.getElement(8),
-                                status,
-                                Bundle.getMessage(((stat2 & 0x01) != 0)
-                                        ? "LN_MSG_SWITCH_STATE_THROWN"
-                                        : "LN_MSG_SWITCH_STATE_CLOSED"),
-                                Bundle.getMessage(((stat1 & 0x01) != 0)
-                                        ? "LN_MSG_SE_REPORT_HELPER_OCCUPIED"
-                                        : "LN_MSG_SE_REPORT_HELPER_UNOCCUPIED"));
-                    case 0x09:
-                        if (l.getElement(4) == 0x00) {
-                            forceHex = true;
-                            return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW");
-                        }
-                        break;
-                    default:
-                        break;
+                result = interpretOpcLissyUpdate(l);
+                if (result.length() > 0) {
+                    return result;
                 }
                 break;
             } // case LnConstants.OPC_LISSY_UPDATE
 
-            /*
-             * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
-             *                         ; Follow on message: LACK
-             *                         ; <0xED>,<0B>,<7F>,<REPS>,<DHI>,<IM1>,<IM2>,
-             *                         ;        <IM3>,<IM4>,<IM5>,<CHK>
-             *                         ;   <DHI>=<0,0,1,IM5.7-IM4.7,IM3.7,IM2.7,IM1.7>
-             *                         ;   <REPS>  D4,5,6=#IM bytes,
-             *                         ;           D3=0(reserved);
-             *                         ;           D2,1,0=repeat CNT
-             *                         ; IF Not limited MASTER then
-             *                         ;   LACK=<B4>,<7D>,<7F>,<chk> if CMD ok
-             *                         ; IF limited MASTER then Lim Masters respond
-             *                         ;   with <B4>,<7E>,<lim adr>,<chk>
-             *                         ; IF internal buffer BUSY/full respond
-             *                         ;   with <B4>,<7D>,<0>,<chk>
-             *                         ;   (NOT IMPLEMENTED IN DT200)
-             *
-             * This sends a raw NMRA packet across the LocoNet.
-             *
-             * Page 11 of LocoNet Personal Edition v1.0.
-             *
-             * Decodes for the F9-F28 functions taken from the NMRA standards and
-             * coded by Leo Bicknell.
-             */
             case LnConstants.OPC_IMM_PACKET: {
-                // sendPkt = (sendPktMsg *) msgBuf;
-                int val7f = l.getElement(2);
-                /* fixed value of 0x7f */
-
-                int reps = l.getElement(3);
-                /* repeat count */
-
-                int dhi = l.getElement(4);
-                /* high bits of data bytes */
-
-                int im1 = l.getElement(5);
-                int im2 = l.getElement(6);
-                int im3 = l.getElement(7);
-                int im4 = l.getElement(8);
-                int im5 = l.getElement(9);
-                int mobileDecoderAddress = -999;
-                int nmraInstructionType = -999;
-                int nmraSubInstructionType = -999;
-                int playableWhistleLevel = -999;
-
-                // see if it really is a 'Send Packet' as defined in LocoNet PE
-                if (val7f == 0x7f) {
-                    int len = ((reps & 0x70) >> 4);
-                    // duplication of packet data as packetInt was deemed necessary
-                    // due to issues with msBit loss when converting from "byte" to
-                    // integral forms
-                    byte[] packet = new byte[len];
-                    int[] packetInt = new int[len];
-                    packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-                    packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-                    if (len >= 2) {
-                        packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                        packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                    }
-                    if (len >= 3) {
-                        packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
-                        packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
-                    }
-                    if (len >= 4) {
-                        packet[3] = (byte) (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
-                        packetInt[3] = (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
-                    }
-                    if (len >= 5) {
-                        packet[4] = (byte) (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
-                        packetInt[4] = (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
-                    }
-
-                    int address;
-                    // compute some information which is useful for decoding
-                    // the "Playable" whistle message
-                    // Information reverse-engineered by B. Milhaupt and used with permission
-                    if ((packetInt[0] & 0x80) == 0x0) {
-                        // immediate packet addresses a 7-bit multi-function (mobile) decoder
-                        mobileDecoderAddress = packetInt[0];
-                        nmraInstructionType = (packetInt[1] & 0xE) >> 5;
-                        nmraSubInstructionType = (packetInt[1] & 0x1f);
-                        if ((nmraSubInstructionType == 0x1d) && (packetInt[2] == 0x7f)) {
-                            playableWhistleLevel = packetInt[3];
-                        }
-                    } else if ((packetInt[0] & 0xC0) == 0xC0) {
-                        // immediate packet addresses a 14-bit multi-function (mobile) decoder
-                        mobileDecoderAddress = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
-                        nmraInstructionType = (packetInt[2] & 0xE0) >> 5;
-                        nmraSubInstructionType = (packetInt[2] & 0x1f);
-                        if ((nmraSubInstructionType == 0x1d) && (packetInt[3] == 0x7f)) {
-                            playableWhistleLevel = packetInt[4];
-                        }
-                    } else {
-                        // immediate packet not addressed to a multi-function (mobile) decoder
-                    }
-                    if ((mobileDecoderAddress >= 0)
-                            && (nmraInstructionType == 1)
-                            && (nmraSubInstructionType == 0x1D)) {
-                        // the "Playable" whistle message
-                        // Information reverse-engineered by B. Milhaupt and used with permission
-                        return Bundle.getMessage("LN_MSG_PLAYABLE_WHISTLE_CONTROL",
-                                mobileDecoderAddress,
-                                playableWhistleLevel,
-                                (reps & 0x7));
-                    }
-
-                    // F9-F28 w/a long address.
-                    if ((packetInt[0] & 0xC0) == 0xC0) {
-                        address = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
-
-                        if ((packetInt[2] & 0xFF) == 0xDF) {
-                            // Functions 21-28
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28",
-                                    Integer.toString(address),
-                                    Bundle.getMessage(((packetInt[3] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[3] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else if ((packetInt[2] & 0xFF) == 0xDE) {
-                            // Functions 13-20
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20",
-                                    Integer.toString(address),
-                                    Bundle.getMessage((((packetInt[3] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x10) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x20) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x40) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[3] & 0x80) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else if ((packetInt[2] & 0xF0) == 0xA0) {
-                            // Functions 9-12
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12",
-                                    Integer.toString(address),
-                                    Bundle.getMessage((((packetInt[2] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[2] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[2] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage((((packetInt[2] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else {
-                            // Unknown
-                                                /*
-                     * We use this two places below, so we generate it once here.
-                     * That seems wrong, but what we really need is to be able to
-                     * decode any NMRA packet here, which is a lot more work!
-                     */
-                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
-                            ((reps & 0x70) >> 4),
-                            (reps & 0x07),
-                            reps,
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(dhi)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im1)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im2)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im3)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im4)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im5)),
-                            NmraPacket.format(packet));
-                        }
-                    } else { // F9-F28 w/a short address.
-                        address = packetInt[0];
-                        if ((packetInt[1] & 0xFF) == 0xDF) {
-                            // Functions 21-28
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28",
-                                    address,
-                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-
-                        } else if ((packetInt[1] & 0xFF) == 0xDE) {
-                            // Functions 13-20
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20",
-                                    address,
-                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else if ((packetInt[1] & 0xF0) == 0xA0) {
-                            // Functions 9-12
-                            return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12",
-                                    address,
-                                    Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                                    Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-                        } else {
-                            // Unknown
-                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
-                            ((reps & 0x70) >> 4),
-                            (reps & 0x07),
-                            reps,
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(dhi)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im1)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im2)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im3)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im4)),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(im5)),
-                            NmraPacket.format(packet));
-                        }
-                    } // else { // F9-F28 w/a short address.
-                } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
-                        && l.getElement(6) != 0x5E && l.getElement(10) == 0x70 && l.getElement(11) == 0x00 && l.getElement(15) == 0x10) {
-                    // Uhlenbrock IB-COM / Intellibox I and II read or write CV value on programming track
-                    String cv = Integer.toString(l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7));
-                    int val = l.getElement(9) + 16 * (l.getElement(5) & 0x08);
-                    switch (l.getElement(6)) {
-                        case 0x6C:
-                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_REG_MODE_FROM_PT", cv);
-                        case 0x6D:
-                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_REG_MODE_FROM_PT", cv);
-                        case 0x6E:
-                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_PAGED_MODE_FROM_PT", cv);
-                        case 0x6F:
-                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_PAGED_MODE_FROM_PT", cv);
-                        case 0x71:
-                            return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_DIRECT_BYTE_MODE_FROM_PT",
-                                    cv, val);
-                        case 0x70: // observed on Intellibox II, even though it does not work on IB-COM
-                        case 0x72:
-                            return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_DIRECT_BYTE_MODE_FROM_PT", cv);
-                    }
-                    return Bundle.getMessage("LN_MSG_UHLEN_CV_OPERATION_UNKNOWN", cv, val);
-                } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
-                        && l.getElement(6) == 0x5E) {
-                    // Uhlenbrock IB-COM / Intellibox I and II write CV value on main track
-                    int addr = l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7);
-                    String cv = Integer.toString(l.getElement(11) * 256 + ((l.getElement(5) & 0x08) << 4) + l.getElement(9));
-                    int val = ((l.getElement(10) & 0x02) << 6) + l.getElement(12);
-                    return Bundle.getMessage("LN_MSG_UHLEN_CV_OPS_MODE_WRITE",
-                            addr, cv, val);
-                } else {
-                    /* Hmmmm... */
-                    forceHex = true;
-                    return Bundle.getMessage("LN_MSG_UHLEN_SEND_PKT_IMM_UNDEFINED",
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(val7f)));
+                result = interpretOpcImmPacket(l);
+                if (result.length() > 0) {
+                    return result;
                 }
+                break;
             } // case LnConstants.OPC_IMM_PACKET
 
             case LnConstants.RE_OPC_PR3_MODE: {
-                /*
-                 * Sets the operating mode of the PR3 device, if present.
-                 *
-                 * Information reverse-engineered by B. Milhaupt and used with permission
-                 */
-
-                if ((l.getElement(1) == 0x10) && ((l.getElement(2) & 0x7c) == 0)
-                        && (l.getElement(3) == 0) && (l.getElement(4) == 0)) {
-                    // set PR3 mode of operation, where LS 2 bits of byte 2 are encoded as:
-                    //	0x00	Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
-                    //  0x01	Set the PR3 to decoder programming track mode
-                    //  0x03	Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
-
-                    switch (l.getElement(2) & 0x3) {
-                        case 0x00: {
-                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
-                        }
-                        case 0x01: {
-                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
-                        }
-                        case 0x03: {
-                            return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LN_MSG_SET_PR3_MODE_LOCONET_IF_WITH_TERM");
-                        }
-                        default: {
-                            break;
-                        }
-                    }
+                result = interpretOpcPr3Mode(l);
+                if (result.length() > 0) {
+                    return result;
                 }
                 break;
             }
 
             case LnConstants.RE_OPC_IB2_F9_F12: {
-                // Intellibox-II function control message for mobile decoder F9 thru F12.
-                int slot = l.getElement(1);
-                int funcs = l.getElement(2);
-                return Bundle.getMessage("LN_MSG_INTELLIBOX_SLOT_SET_F9_TO_F12",
-                        slot,
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F9_MASK)  != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F10_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F11_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                        Bundle.getMessage(((funcs & LnConstants.RE_IB2_F12_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
-
+                result = interpretIb2F9_to_F12(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
             } // case LnConstants.RE_OPC_IB2_F8_F12
 
             case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
-                // Intellibox function control message for mobile decoder F0-F28 (IB-I) and F13-F28 (IB-II)
-                if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                        && ((l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN)
-                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F13_F19_TOKEN)
-                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F21_F27_TOKEN))) {
-                    // Intellibox-I function control message for mobile decoder F5 thru F27 except F12 and F20
-                    // Intellibox-II function control message for mobile decoder F13 thru F27 except F20
-                    // Note: Intellibox-II documentation implies capability to control
-                    // MANY more functions.  This capability may be extended by
-                    // additional tokens in element 3, including the special-case encoding
-                    // for the "eighth bit" as handled in the following case, below,
-                    // for F12, F20 & F28
-                    int funcOffset = 5 + 8 * (l.getElement(3) - LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN);
-                    String encodingType;
-                    if (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN) {
-                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB1");
-                    } else {
-                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB2");
-                    }
-                    String funcInfo[] = new String[7];
-                    int mask = 1;
-                    for (int i = 0; i < 7; i++) {
-                        // handle 7 bits of data
-                        funcInfo[i] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
-                                funcOffset+i,
-                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
-                                        ? "LN_MSG_FUNC_ON"
-                                        : "LN_MSG_FUNC_OFF"));
-                        mask *= 2;
-                    }
-                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL",
-                            encodingType, l.getElement(2), funcInfo[0],
-                            funcInfo[1], funcInfo[2], funcInfo[3],
-                            funcInfo[4], funcInfo[5], funcInfo[6]);
-                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                        & (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN)) {
-                    // Special-case for F12, F20 and F28, since the tokens from the previous case
-                    // can only encode 7 bits of data in element(4).
-                    return Bundle.getMessage("LN_MSG_INTELLIBOX_SPECIAL_FUNC_CTL",
-                            l.getElement(2),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F12_MASK) != 0)
-                                    ? "LN_MSG_FUNC_ON"
-                                    : "LN_MSG_FUNC_OFF"),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F20_MASK) != 0)
-                                    ? "LN_MSG_FUNC_ON"
-                                    : "LN_MSG_FUNC_OFF"),
-                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F28_MASK) != 0)
-                                    ? "LN_MSG_FUNC_ON"
-                                    : "LN_MSG_FUNC_OFF"));
-                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                    & (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
-                    // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
-                    String funcInfo[] = new String[7];
-                    funcInfo[0] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
-                            0,
-                            (l.getElement(4) & LnConstants.RE_IB1_F0_MASK) == 0 ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                                        : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-                    int mask = 1;
-                    for (int i = 0; i < 4; i++) {
-                        // handle 7 bits of data
-                        funcInfo[i+1] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
-                                i+1,
-                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
-                                        ? "LN_MSG_FUNC_ON"
-                                        : "LN_MSG_FUNC_OFF"));
-                        mask *= 2;
-                    }
-                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_F0_TO_F4",
-                            l.getElement(2),
-                            funcInfo[0], funcInfo[1], funcInfo[2], funcInfo[3],
-                            funcInfo[4]);
+                result = interpretIb2Special(l);
+                if (result.length() > 0) {
+                    return result;
                 }
                 break;
-                // Because the usage of other tokens in message element(3) are not yet
-                // understood, let execution fall thru to the "default" case
+                
             }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
 
             //$FALL-THROUGH$
@@ -2593,28 +2131,24 @@ public class Llnmon {
                 String reporterSystemName = locoNetReporterPrefix
                         + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
 
-                Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                String reporterUserName = "";
-                if (reporter != null) {
-                    String uname = reporter.getUserName();
-                    if ((uname != null) && (!uname.isEmpty())) {
-                        reporterUserName = "(" + uname + ")";
-                        return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_USERNAME",
-                                locoAddr,
-                                reporterSystemName,
-                                reporterUserName,
-                                section,
-                                zone);
-                    } else {
-                        return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_UNKNOWN_USERNAME",
-                                locoAddr,
-                                reporterSystemName,
-                                section,
-                                zone);
+                Reporter reporter = reporterManager.provideReporter(reporterSystemName);
+                
+                String uname = reporter.getUserName();
+                if ((uname != null) && (!uname.isEmpty())) {
+                    return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_USERNAME",
+                            locoAddr,
+                            reporterSystemName,
+                            uname,
+                            section,
+                            zone);
                     }
-                }
-                return Bundle.getMessage("LN_MSG_TRANSP_REPORT_UNKNOWN_REPORTER_UNKNOWN_USERNAME",
-                        locoAddr, section, zone);
+                return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_UNKNOWN_USERNAME",
+                        locoAddr,
+                        reporterSystemName,
+                        section,
+                        zone);
+                    
+                
             }
             default: {
                 break;
@@ -3038,7 +2572,7 @@ public class Llnmon {
                 reporterSystemName = locoNetReporterPrefix
                         + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
-                Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
+                Reporter reporter = reporterManager.provideReporter(reporterSystemName);
                 reporterUserName = "";
                 if (reporter != null) {
                     String uname = reporter.getUserName();
@@ -4178,8 +3712,6 @@ public class Llnmon {
                 int snd = l.getElement(10); // Sound 1-4 / F5-F8
                 String [] sndf5_8 = interpretF5_F8toStrings(snd);
 
-                String logString;
-
                 String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
                 return Bundle.getMessage(((command == LnConstants.OPC_WR_SL_DATA)
                     ? "LN_MSG_SLOT_LOCO_INFO_WRITE"
@@ -4206,13 +3738,504 @@ public class Llnmon {
                                         StringUtil.twoHexFromInt(ss2))),
                         Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
                                 idString(id1, id2) ));
+    }
+    
+    private String interpretOpcPanelResponse(LocoNetMessage l) {
+        switch (l.getElement(1)) {
+            case 0x12: {
+                // Bit 3 (0x08 in hex) is set by every UR-92 we've ever captured.
+                // The hypothesis is this indicates duplex enabled, but this has
+                // not been confirmed with Digitrax.
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR92",
+                        l.getElement(3) & 0x07,
+                        ((l.getElement(3) & 0x08) == 0x08
+                                ? Bundle.getMessage("LN_MSG_HELPER_D7_UR92_DUPLEX")
+                                : ""));
+            }
+            case 0x17: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR90",
+                        l.getElement(3) & 0x07);
+            }
+            case 0x1F: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR91",
+                        l.getElement(3) & 0x07);
+            }
+            default: {
+                return "";
+            }
+        }    
+    }
+    
+    private String interpretOpcLissyUpdate(LocoNetMessage l) {
+        /*
+         * OPC_LISSY_UPDATE   0xE4
+         *
+         * LISSY is an automatic train detection system made by Uhlenbrock.
+         * All documentation appears to be in German.
+         *
+         */
+        switch (l.getElement(1)) {
+            case 0x08: // Format LISSY message
+                int unit = (l.getElement(4) & 0x7F);
+                int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                switch (l.getElement(2)) {
+                    case 0x00:
+                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                        // OPC_LISSY_REP
+                        return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
+                                unit,
+                                Integer.toString(address),
+                                ((l.getElement(3) & 0x20) == 0
+                                        ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
+                                        : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
+                    case 0x01:
+                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
+                        // OPC_WHEELCNT_REP
+                        int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                        return Bundle.getMessage("LN_MSG_LISSY_WHEEL_REPORT_LOCO_MOVEMENT",
+                                unit, Integer.toString(wheelCount),
+                                ((l.getElement(3) & 0x20) == 0
+                                        ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
+                                        : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
+                    default:
+                        break;
+                }
+                break;
 
+            case 0x0A: // Format special message
+                int element = l.getElement(2) * 128 + l.getElement(3);
+                int stat1 = l.getElement(5);
+                int stat2 = l.getElement(6);
+                String status;
+                switch (stat1 & 0x30) {
+                    case 0x30:
+                        status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_BOTH_RES");
+                        break;
+                    case 0x10:
+                        status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_AX_RES");
+                        break;
+                    case 0x20:
+                        status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_XA_RES");
+                        break;
+                    default:
+                        status = Bundle.getMessage("LN_MSG_SE_REPORT_HELPER_NO_RES");
+                        break;
+                }
+
+                return Bundle.getMessage("LN_MSG_SE_REPORT",
+                        (element + 1), element,
+                        l.getElement(7), l.getElement(8),
+                        status,
+                        Bundle.getMessage(((stat2 & 0x01) != 0)
+                                ? "LN_MSG_SWITCH_STATE_THROWN"
+                                : "LN_MSG_SWITCH_STATE_CLOSED"),
+                        Bundle.getMessage(((stat1 & 0x01) != 0)
+                                ? "LN_MSG_SE_REPORT_HELPER_OCCUPIED"
+                                : "LN_MSG_SE_REPORT_HELPER_UNOCCUPIED"));
+            case 0x09:
+                if (l.getElement(4) == 0x00) {
+                    forceHex = true;
+                    return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW");
+                }
+                break;
+            default:
+                break;
+        }
+        return "";
+    }
+    
+    private String interpretOpcImmPacket(LocoNetMessage l) {
+        /*
+         * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
+         *                         ; Follow on message: LACK
+         *                         ; <0xED>,<0B>,<7F>,<REPS>,<DHI>,<IM1>,<IM2>,
+         *                         ;        <IM3>,<IM4>,<IM5>,<CHK>
+         *                         ;   <DHI>=<0,0,1,IM5.7-IM4.7,IM3.7,IM2.7,IM1.7>
+         *                         ;   <REPS>  D4,5,6=#IM bytes,
+         *                         ;           D3=0(reserved);
+         *                         ;           D2,1,0=repeat CNT
+         *                         ; IF Not limited MASTER then
+         *                         ;   LACK=<B4>,<7D>,<7F>,<chk> if CMD ok
+         *                         ; IF limited MASTER then Lim Masters respond
+         *                         ;   with <B4>,<7E>,<lim adr>,<chk>
+         *                         ; IF internal buffer BUSY/full respond
+         *                         ;   with <B4>,<7D>,<0>,<chk>
+         *                         ;   (NOT IMPLEMENTED IN DT200)
+         *
+         * This sends a raw NMRA packet across the LocoNet.
+         *
+         * Page 11 of LocoNet Personal Edition v1.0.
+         *
+         * Decodes for the F9-F28 functions taken from the NMRA standards and
+         * coded by Leo Bicknell.
+         */
+        // sendPkt = (sendPktMsg *) msgBuf;
+        int val7f = l.getElement(2);
+        /* fixed value of 0x7f */
+
+        int reps = l.getElement(3);
+        /* repeat count */
+
+        int dhi = l.getElement(4);
+        /* high bits of data bytes */
+
+        int im1 = l.getElement(5);
+        int im2 = l.getElement(6);
+        int im3 = l.getElement(7);
+        int im4 = l.getElement(8);
+        int im5 = l.getElement(9);
+        int mobileDecoderAddress = -999;
+        int nmraInstructionType = -999;
+        int nmraSubInstructionType = -999;
+        int playableWhistleLevel = -999;
+
+        // see if it really is a 'Send Packet' as defined in LocoNet PE
+        if (val7f == 0x7f) {
+            int len = ((reps & 0x70) >> 4);
+            if (len < 2) {
+                return ""; // no valid NMRA packets of less than 2 bytes.
+            }
+            // duplication of packet data as packetInt was deemed necessary
+            // due to issues with msBit loss when converting from "byte" to
+            // integral forms
+            byte[] packet = new byte[len];
+            int[] packetInt = new int[len];
+            packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
+            packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
+            if (len >= 2) {
+                packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+                packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+            }
+            if (len >= 3) {
+                packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
+                packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
+            }
+            if (len >= 4) {
+                packet[3] = (byte) (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
+                packetInt[3] = (im4 + ((dhi & 0x08) != 0 ? 0x80 : 0));
+            }
+            if (len >= 5) {
+                packet[4] = (byte) (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
+                packetInt[4] = (im5 + ((dhi & 0x10) != 0 ? 0x80 : 0));
+            }
+
+            int address;
+            // compute some information which is useful for decoding
+            // the "Playable" whistle message
+            // Information reverse-engineered by B. Milhaupt and used with permission
+            if ((packetInt[0] & 0x80) == 0x0) {
+                // immediate packet addresses a 7-bit multi-function (mobile) decoder
+                mobileDecoderAddress = packetInt[0];
+                nmraInstructionType = (packetInt[1] & 0xE) >> 5;
+                nmraSubInstructionType = (packetInt[1] & 0x1f);
+                if ((nmraSubInstructionType == 0x1d) && (packetInt[2] == 0x7f)) {
+                    playableWhistleLevel = packetInt[3];
+                }
+            } else if ((packetInt[0] & 0xC0) == 0xC0) {
+                // immediate packet addresses a 14-bit multi-function (mobile) decoder
+                mobileDecoderAddress = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
+                nmraInstructionType = (packetInt[2] & 0xE0) >> 5;
+                nmraSubInstructionType = (packetInt[2] & 0x1f);
+                if ((nmraSubInstructionType == 0x1d) && (packetInt[3] == 0x7f)) {
+                    playableWhistleLevel = packetInt[4];
+                }
+            } else {
+                // immediate packet not addressed to a multi-function (mobile) decoder
+            }
+            if ((mobileDecoderAddress >= 0)
+                    && (nmraInstructionType == 1)
+                    && (nmraSubInstructionType == 0x1D)) {
+                // the "Playable" whistle message
+                // Information reverse-engineered by B. Milhaupt and used with permission
+                return Bundle.getMessage("LN_MSG_PLAYABLE_WHISTLE_CONTROL",
+                        mobileDecoderAddress,
+                        playableWhistleLevel,
+                        (reps & 0x7));
+            }
+            
+            // F9-F28 w/a long address.
+            if ((packetInt[0] & 0xC0) == 0xC0) {
+                address = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
+
+                if ((packetInt[2] & 0xFF) == 0xDF) {
+                    // Functions 21-28
+                    return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28",
+                            Integer.toString(address),
+                            Bundle.getMessage(((packetInt[3] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[3] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[3] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[3] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[3] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[3] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[3] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[3] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                } else if ((packetInt[2] & 0xFF) == 0xDE) {
+                    // Functions 13-20
+                    return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20",
+                            Integer.toString(address),
+                            Bundle.getMessage((((packetInt[3] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[3] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[3] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[3] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[3] & 0x10) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[3] & 0x20) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[3] & 0x40) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[3] & 0x80) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                } else if ((packetInt[2] & 0xF0) == 0xA0) {
+                    // Functions 9-12
+                    return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12",
+                            Integer.toString(address),
+                            Bundle.getMessage((((packetInt[2] & 0x01) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[2] & 0x02) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[2] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage((((packetInt[2] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                } else {
+                    // Unknown
+                                        /*
+                * We use this two places below, so we generate it once here.
+                * That seems wrong, but what we really need is to be able to
+                * decode any NMRA packet here, which is a lot more work!
+                */
+               return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
+                       ((reps & 0x70) >> 4),
+                       (reps & 0x07),
+                       reps,
+                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                               StringUtil.twoHexFromInt(dhi)),
+                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                               StringUtil.twoHexFromInt(im1)),
+                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                               StringUtil.twoHexFromInt(im2)),
+                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                               StringUtil.twoHexFromInt(im3)),
+                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                               StringUtil.twoHexFromInt(im4)),
+                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                               StringUtil.twoHexFromInt(im5)),
+                       NmraPacket.format(packet));
+                }
+            } else { // F9-F28 w/a short address.
+                address = packetInt[0];
+                if ((packetInt[1] & 0xFF) == 0xDF) {
+                    // Functions 21-28
+                    return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F21_TO_F28",
+                            address,
+                            Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+
+                } else if ((packetInt[1] & 0xFF) == 0xDE) {
+                    // Functions 13-20
+                    return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F13_TO_F20",
+                            address,
+                            Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x10) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x20) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x40) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x80) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                } else if ((packetInt[1] & 0xF0) == 0xA0) {
+                    // Functions 9-12
+                    return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12",
+                            address,
+                            Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                } else {
+                    // Unknown
+            return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
+                    ((reps & 0x70) >> 4),
+                    (reps & 0x07),
+                    reps,
+                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                            StringUtil.twoHexFromInt(dhi)),
+                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                            StringUtil.twoHexFromInt(im1)),
+                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                            StringUtil.twoHexFromInt(im2)),
+                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                            StringUtil.twoHexFromInt(im3)),
+                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                            StringUtil.twoHexFromInt(im4)),
+                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                            StringUtil.twoHexFromInt(im5)),
+                    NmraPacket.format(packet));
+                }
+            } // else { // F9-F28 w/a short address.
+        } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
+                && l.getElement(6) != 0x5E && l.getElement(10) == 0x70 && l.getElement(11) == 0x00 && l.getElement(15) == 0x10) {
+            // Uhlenbrock IB-COM / Intellibox I and II read or write CV value on programming track
+            String cv = Integer.toString(l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7));
+            int val = l.getElement(9) + 16 * (l.getElement(5) & 0x08);
+            switch (l.getElement(6)) {
+                case 0x6C:
+                    return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_REG_MODE_FROM_PT", cv);
+                case 0x6D:
+                    return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_REG_MODE_FROM_PT", cv);
+                case 0x6E:
+                    return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_PAGED_MODE_FROM_PT", cv);
+                case 0x6F:
+                    return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_PAGED_MODE_FROM_PT", cv);
+                case 0x71:
+                    return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_DIRECT_BYTE_MODE_FROM_PT",
+                            cv, val);
+                case 0x70: // observed on Intellibox II, even though it does not work on IB-COM
+                case 0x72:
+                    return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_DIRECT_BYTE_MODE_FROM_PT", cv);
+            }
+            return Bundle.getMessage("LN_MSG_UHLEN_CV_OPERATION_UNKNOWN", cv, val);
+        } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
+                && l.getElement(6) == 0x5E) {
+            // Uhlenbrock IB-COM / Intellibox I and II write CV value on main track
+            int addr = l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7);
+            String cv = Integer.toString(l.getElement(11) * 256 + ((l.getElement(5) & 0x08) << 4) + l.getElement(9));
+            int val = ((l.getElement(10) & 0x02) << 6) + l.getElement(12);
+            return Bundle.getMessage("LN_MSG_UHLEN_CV_OPS_MODE_WRITE",
+                    addr, cv, val);
+        } else {
+            /* Hmmmm... */
+            forceHex = true;
+            return Bundle.getMessage("LN_MSG_UHLEN_SEND_PKT_IMM_UNDEFINED",
+                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                            StringUtil.twoHexFromInt(val7f)));
+        }
 
     }
+    
+    private String interpretOpcPr3Mode(LocoNetMessage l) {
+        /*
+         * Sets the operating mode of the PR3 device, if present.
+         *
+         * Information reverse-engineered by B. Milhaupt and used with permission
+         */
 
-    private static String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
-    private static String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
-    private static String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
+        if ((l.getElement(1) == 0x10) && ((l.getElement(2) & 0x7c) == 0)
+                && (l.getElement(3) == 0) && (l.getElement(4) == 0)) {
+            // set PR3 mode of operation, where LS 2 bits of byte 2 are encoded as:
+            //	0x00	Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
+            //  0x01	Set the PR3 to decoder programming track mode
+            //  0x03	Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
+
+            switch (l.getElement(2) & 0x3) {
+                case 0x00: {
+                    return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
+                }
+                case 0x01: {
+                    return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
+                }
+                case 0x03: {
+                    return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LN_MSG_SET_PR3_MODE_LOCONET_IF_WITH_TERM");
+                }
+                default: {
+                    break;
+                }
+            }
+        }
+        return "";
+
+    }
+    
+    private String interpretIb2Special(LocoNetMessage l) {
+                // Intellibox function control message for mobile decoder F0-F28 (IB-I) and F13-F28 (IB-II)
+                if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
+                        && ((l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN)
+                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F13_F19_TOKEN)
+                        || (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F21_F27_TOKEN))) {
+                    // Intellibox-I function control message for mobile decoder F5 thru F27 except F12 and F20
+                    // Intellibox-II function control message for mobile decoder F13 thru F27 except F20
+                    // Note: Intellibox-II documentation implies capability to control
+                    // MANY more functions.  This capability may be extended by
+                    // additional tokens in element 3, including the special-case encoding
+                    // for the "eighth bit" as handled in the following case, below,
+                    // for F12, F20 & F28
+                    int funcOffset = 5 + 8 * (l.getElement(3) - LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN);
+                    String encodingType;
+                    if (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN) {
+                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB1");
+                    } else {
+                        encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB2");
+                    }
+                    String funcInfo[] = new String[7];
+                    int mask = 1;
+                    for (int i = 0; i < 7; i++) {
+                        // handle 7 bits of data
+                        funcInfo[i] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
+                                funcOffset+i,
+                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
+                                        ? "LN_MSG_FUNC_ON"
+                                        : "LN_MSG_FUNC_OFF"));
+                        mask *= 2;
+                    }
+                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL",
+                            encodingType, l.getElement(2), funcInfo[0],
+                            funcInfo[1], funcInfo[2], funcInfo[3],
+                            funcInfo[4], funcInfo[5], funcInfo[6]);
+                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
+                        & (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN)) {
+                    // Special-case for F12, F20 and F28, since the tokens from the previous case
+                    // can only encode 7 bits of data in element(4).
+                    return Bundle.getMessage("LN_MSG_INTELLIBOX_SPECIAL_FUNC_CTL",
+                            l.getElement(2),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F12_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F20_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"),
+                            Bundle.getMessage(((l.getElement(4) & LnConstants.RE_IB2_SPECIAL_F28_MASK) != 0)
+                                    ? "LN_MSG_FUNC_ON"
+                                    : "LN_MSG_FUNC_OFF"));
+                } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
+                    & (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
+                    // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
+                    String funcInfo[] = new String[7];
+                    funcInfo[0] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
+                            0,
+                            (l.getElement(4) & LnConstants.RE_IB1_F0_MASK) == 0 ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                                        : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+                    int mask = 1;
+                    for (int i = 0; i < 4; i++) {
+                        // handle 7 bits of data
+                        funcInfo[i+1] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
+                                i+1,
+                                Bundle.getMessage(((l.getElement(4) & mask) != 0)
+                                        ? "LN_MSG_FUNC_ON"
+                                        : "LN_MSG_FUNC_OFF"));
+                        mask *= 2;
+                    }
+                    return Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_F0_TO_F4",
+                            l.getElement(2),
+                            funcInfo[0], funcInfo[1], funcInfo[2], funcInfo[3],
+                            funcInfo[4]);
+                }
+                // Because the usage of other tokens in message element(3) are not yet
+                // understood, let execution fall thru to the "default" case
+                return "";
+    }
+    
+    private String interpretIb2F9_to_F12(LocoNetMessage l) {
+        // Intellibox-II function control message for mobile decoder F9 thru F12.
+        int slot = l.getElement(1);
+        int funcs = l.getElement(2);
+        return Bundle.getMessage("LN_MSG_INTELLIBOX_SLOT_SET_F9_TO_F12",
+                slot,
+                Bundle.getMessage(((funcs & LnConstants.RE_IB2_F9_MASK)  != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                Bundle.getMessage(((funcs & LnConstants.RE_IB2_F10_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                Bundle.getMessage(((funcs & LnConstants.RE_IB2_F11_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                Bundle.getMessage(((funcs & LnConstants.RE_IB2_F12_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+    }
+
+    private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
+    private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
+    private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
     private final static Logger log = LoggerFactory.getLogger(Llnmon.class.getName());
 
 }
