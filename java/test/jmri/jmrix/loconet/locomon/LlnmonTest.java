@@ -49,11 +49,40 @@ public class LlnmonTest extends TestCase {
         assertEquals(" in G", "Transponder address 1056 present at LR173 () (BDL16x Board ID 11 RX4 zone G).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x2E, 0x08, 0x20, 0x04});
-        assertEquals(" in H", "Transponder address 1056 present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n", f.displayMessage(l));
+        assertEquals(" in H", 
+                "Transponder address 1056 present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n",
+                f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x2E, 0x7d, 0x01, 0x04});
-        assertEquals(" in H", "Transponder address 1(short) present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n", f.displayMessage(l));
+        assertEquals(" in H", 
+                "Transponder address 1(short) present at LR47 () (BDL16x Board ID 3 RX4 zone H).\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x7D, 0x03, 0x00, 0x00, 0x00, 0x2D});
+        assertEquals(" in H", 
+                "Transponding Find query for loco address 3(short).\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
+        assertEquals(" in H", 
+                "Transponder Find report: address 3(short) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
+                f.displayMessage(l));
+        
+        jmri.jmrix.loconet.LnReporter r = (jmri.jmrix.loconet.LnReporter) lnrm.provideReporter("LR19");
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
+        assertEquals(" in H", 
+                "Transponder Find report: address 3(short) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
+                f.displayMessage(l));
+        
+        r.setUserName("AUserName");
 
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
+        assertEquals(" in H", 
+                "Transponder Find report: address 3(short) present at LR19 (AUserName) (BDL16x Board 2 RX4 zone B).\n",
+                f.displayMessage(l));
+        
     }
     
     public void testALM() {
@@ -347,16 +376,28 @@ public class LlnmonTest extends TestCase {
                 , f.displayMessage(l));
     }
 
-    public void testLissy1() {
+    public void testLissy() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
-
-        assertEquals("Lissy message 1", "Lissy 1 IR Report: Loco 8501 moving south\n", f.displayMessage(l));
+        assertEquals("Lissy message test 1", "Lissy 1 IR Report: Loco 8501 moving south\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x40, 0x01, 0x42, 0x35, 0x25});
+        assertEquals("Lissy message test 2", "Lissy 1 IR Report: Loco 8501 moving north\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xE4, 0x09, 0x00, 0x69, 0x00, 0x01, 0x18, 0x00, 0x62});
+        assertEquals("Unrecognized Signal State report (typically sent by CML SIGM10, SIGM20).\ncontents: E4 09 00 69 00 01 18 00 62\n", f.displayMessage(l));
+        
     }
-
-    public void testLissy2() {
-        LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x40, 0x01, 0x42, 0x35, 0x25});
-
-        assertEquals("Lissy message 2", "Lissy 1 IR Report: Loco 8501 moving north\n", f.displayMessage(l));
+    
+    public void testOpcAnalogIO() {
+        LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x01, 0x03, 0x32, 0x11, 0x35});
+        assertEquals("OpcAnalogIO message test 1", "Lissy 3 Wheel Report: 6417 wheels moving north\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x21, 0x55, 0x01, 0x00, 0x35});
+        assertEquals("OpcAnalogIO message test ", "Lissy 85 Wheel Report: 128 wheels moving south\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x02, 0x21, 0x55, 0x01, 0x00, 0x35});
+        assertEquals("Unable to parse LocoNet message.\ncontents: E4 08 02 21 55 01 00 35\n", f.displayMessage(l));
+   
     }
 
 
@@ -558,7 +599,7 @@ public class LlnmonTest extends TestCase {
 
        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x12, 0x00, 0x7F});
         assertEquals(" basic Transponding Test 05",
-                "Transponder Find report: address 3(short) present at BDL16x Board 2 RX4 zone B.\n",
+                "Transponder Find report: address 3(short) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x00, 0x12, 0x7D, 0x03, 0x43});
@@ -747,6 +788,45 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x07, 0x4F, 0x2D, 0x28, 0x00, 0x00, 0x1F});
         assertEquals(" Immediate Packet test 03", "Send packet immediate: Locomotive 4013 set F9=Off, F10=Off, F11=Off, F12=On.\n",
             f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x44, 0x01, 0x42, 0x23, 0x24, 0x05, 0x06, 0x1F});
+        assertEquals(" Immediate Packet test 04", 
+                "Send packet immediate: 4 bytes, repeat count 4(68)\n\tDHI=0x01, IM1=0x42, IM2=0x23, IM3=0x24, IM4=0x05, IM5=0x06\n\tpacket: C2 23 24 05 .\n",
+            f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x07, 0x4F, 0x2D, 0x28, 0x00, 0x00, 0x1F});
+        assertEquals(" Immediate Packet test 05", 
+                "Send packet immediate: Locomotive 4013 set F9=Off, F10=Off, F11=Off, F12=On.\n",
+            f.displayMessage(l));
+                
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x05, 0x4B, 0x6D, 0x2C, 0x00, 0x00, 0x5D});
+        assertEquals(" Immediate Packet test 06", 
+                "Send packet immediate: Locomotive 2925 set F9=Off, F10=Off, F11=On, F12=On.\n",
+            f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x43, 0x07, 0x4F, 0x2D, 0x5E, 0x08, 0x00, 0x16});
+        assertEquals(" Immediate Packet test 06", 
+                "Send packet immediate: Locomotive 4013 set F13=Off, F14=Off, F15=Off, F16=On, F17=Off, F18=Off, F19=Off, F20=Off.\n",
+            f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x43, 0x07, 0x4C, 0x0F, 0x5F, 0x08, 0x00, 0x36});
+        assertEquals(" Immediate Packet test 06", 
+                "Send packet immediate: Locomotive 3215 set F21=Off, F22=Off, F23=Off, F24=On, F25=Off, F26=Off, F27=Off, F28=Off.\n",
+            f.displayMessage(l));
+        
+
+                
+    }
+    
+    public void testPlayableWhistleMessages() {
+        LocoNetMessage l;
+/*
+        l = new LocoNetMessage(new int[] {0xEd, 0x0b, 0x7f, 0x44, 0x00, 0x3c, 0x3d, 0x7c, 0x00, 0x00, 0x00});
+        assertEquals("Playable Whistle test 01", "Send packet immediate: Locomotive 4013 set F13=Off, F14=Off, F15=Off, F16=On, F17=Off, F18=Off, F19=Off, F20=Off.\n",
+                f.displayMessage(l));
+
+*/
+        // TODO : add some "playable whistle" message testing
     }
 
     public void testBasicTurnoutControlMessages() {
