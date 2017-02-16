@@ -1,10 +1,8 @@
 package jmri;
 
 /**
- * SignalGroup.java
- * <P>
- * The Signal Group is used to represent European subsidiary signals that would
- * be sited with a signal mast. Such subsidiary signals would be used to
+ * Signal Groups are used to represent European subsidary signals that would
+ * be sited with a signal mast. Such subsidary signals would be used to
  * indicated routes, junctions and allowable speeds. Each such
  * route/junction/speed would be represented by a single output signal (head),
  * that is either Off or On. Within the group only one such signal head would be

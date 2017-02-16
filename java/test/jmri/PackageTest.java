@@ -58,7 +58,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.progdebugger.PackageTest.suite());
         suite.addTest(jmri.configurexml.PackageTest.suite());
         suite.addTest(jmri.implementation.PackageTest.suite());
-        suite.addTest(jmri.managers.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.managers.PackageTest.class));
         suite.addTest(jmri.jmrix.PackageTest.suite());
         suite.addTest(jmri.jmrit.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.swing.PackageTest.class));

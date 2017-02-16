@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   Z21PacketGenActionTest.class,
-   Z21PacketGenFrameTest.class
+   PacketGenActionTest.class,
+   PacketGenFrameTest.class
 })
 /**
  * Tests for the jmri.jmrix.roco.z21.swing.packetgen package.
