@@ -2580,7 +2580,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private double zoomIn() {
-        double newScale;
+        double newScale = _paintScale;
         if (true) {
             newScale *= 1.25;
         } else
@@ -2595,7 +2595,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private double zoomOut() {
-        double newScale;
+        double newScale = _paintScale;
         if (true) {
             newScale /= 1.25;
         } else
