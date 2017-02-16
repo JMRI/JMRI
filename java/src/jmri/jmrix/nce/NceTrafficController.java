@@ -54,11 +54,31 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     @Override
     public void sendPacket(byte[] packet, int count) {
         NceMessage m;
+
+        boolean isUsb = ((getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB
+                || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+                || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+                || getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN));
+
         if (NmraPacket.isAccSignalDecoderPkt(packet)) {
             // intercept NMRA signal cmds
             int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
             int aspect = packet[2];
             m = NceMessage.createAccySignalMacroMessage(this, 5, addr, aspect);
+        } else if (isUsb && NmraPacket.isAccDecoderPktOpsMode(packet)) {
+            // intercept NMRA accessory decoder ops programming cmds to USB systems
+            int accyAddr = NmraPacket.getAccDecoderPktOpsModeAddress(packet);
+            int cvAddr = (((0x03 & packet[2]) << 8) | (0xFF & packet[3])) + 1;
+            int cvData = (0xFF & packet[4]);
+            log.debug("isAccDecoderPktOpsMode(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
+            m = NceMessage.createAccDecoderPktOpsMode(this, accyAddr, cvAddr, cvData);
+        } else if (isUsb && NmraPacket.isAccDecoderPktOpsModeLegacy(packet)) {
+            // intercept NMRA accessory decoder ops programming cmds to USB systems
+            int accyAddr = NmraPacket.getAccDecoderPktOpsModeLegacyAddress(packet);
+            int cvData = (0xFF & packet[3]);
+            int cvAddr = (((0x03 & packet[1]) << 8) | (0xFF & packet[2])) + 1;
+            log.debug("isAaccDecoderPktOpsModeLegacy(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
+            m = NceMessage.createAccDecoderPktOpsMode(this, accyAddr, cvAddr, cvData);
         } else {
             m = NceMessage.sendPacketMessage(this, packet);
         }
