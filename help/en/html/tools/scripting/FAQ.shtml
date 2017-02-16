@@ -151,13 +151,13 @@
         look like "LT12". You'll see those occasionally, but that's
         something different from the variable names in a script
         file.</p>
-      </div><a name="windows" id="windows"></a>
+      </div>
 
       <h2><a name="windows" id="windows">Can a script access the
       JMRI application windows?</a></h2>
 
       <div class="para">
-        <a name="windows" id="windows">Your scripts can change the
+        Your scripts can change the
         properties of all the main JMRI windows. They're all
         jmri.util.JmriJFrame objects, so they have all the various
         methods of a Swing JFrame. For example, this code
