@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
    RaspberryPiSystemConnectionMemoTest.class,
    RaspberryPiSensorManagerTest.class,
    RaspberryPiTurnoutManagerTest.class,
-   jmri.jmrix.pi.configurexml.PackageTest.class
+   jmri.jmrix.pi.configurexml.PackageTest.class,
+   RaspberryPiConnectionTypeListTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package
