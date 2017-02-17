@@ -5,6 +5,7 @@ import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import org.junit.After;
 import org.junit.Assume;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +14,14 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008
  */
-public class SerialMonTest {
+public class SerialMonFrameTest {
+
+    @Test
+    public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SerialMonFrame t = new SerialMonFrame();
+        Assert.assertNotNull("exists",t);
+    }
 
     @Test
     public void testDisplay() throws Exception {
