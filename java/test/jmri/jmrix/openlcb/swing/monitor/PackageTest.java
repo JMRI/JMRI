@@ -6,7 +6,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     MonitorFrameTest.class,
-    MonitorFrameDemo.class
+    MonitorFrameDemo.class,
+    MonitorActionTest.class,
+    MonitorPaneTest.class
 })
 
 /**
