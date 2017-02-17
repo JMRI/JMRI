@@ -11,7 +11,9 @@ import org.junit.runners.Suite;
    Dcc4PcReporterManagerTest.class,
    Dcc4PcSystemConnectionMemoTest.class,
    Dcc4PcPortControllerTest.class,
-   Dcc4PcTrafficControllerTest.class
+   Dcc4PcTrafficControllerTest.class,
+   Dcc4PcConnectionTypeListTest.class,
+   Dcc4PcReplyTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package
