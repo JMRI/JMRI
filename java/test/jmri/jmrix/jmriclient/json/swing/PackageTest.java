@@ -26,6 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.jmriclient.json.swing.PackageTest");  // no tests in this class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JsonPacketGenFrameTest.class));
 
         return suite;
     }
