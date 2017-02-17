@@ -100,9 +100,13 @@ public class ProgrammerFacadeSelector {
 
             } else if (fname.equals("Ops Mode Accessory Programming")) {
                 if (programmer instanceof AddressedProgrammer) {  // create if relevant to current mode, otherwise silently ignore
+                    String addrType="decoder";
+                    if (!parameters.isEmpty()) {
+                        addrType = parameters.get(0).getText();
+                    }
 
                     jmri.implementation.AccessoryOpsModeProgrammerFacade pf
-                            = new jmri.implementation.AccessoryOpsModeProgrammerFacade((AddressedProgrammer) programmer);
+                            = new jmri.implementation.AccessoryOpsModeProgrammerFacade((AddressedProgrammer) programmer, addrType);
 
                     log.debug("new programmer " + pf);
                     programmer = pf; // to go around and see if there are more

@@ -302,6 +302,9 @@ public class NmraPacket {
 
         int lowAddr = addr & 0x3F;
         int highAddr = ((~addr) >> 6) & 0x07;
+//        log.info("addr = {} active = {} outputChannel = {} cvNum = {} data = {}", addr, active, outputChannel, cvNum, data);
+//        log.info("hex lowAddr = {} highAddr = {}", String.format("%H", lowAddr), String.format("%H", highAddr));
+//        log.info("lowAddr = {} highAddr = {}", lowAddr, highAddr);
 
         int lowCVnum = (cvNum - 1) & 0xFF;
         int highCVnum = ((cvNum - 1) >> 8) & 0x03;
@@ -431,6 +434,97 @@ public class NmraPacket {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Determine if a packet is an Basic Accessory Decoder Packet address for
+     * operations mode programming.
+     * <p>
+     * This inverts the computation done by the {@link #accDecoderPktOpsMode}
+     * method.
+     * <p>
+     * Currently used by {@link jmri.jmrix.nce.NceTrafficController#sendPacket}
+     */
+    public static boolean isAccDecoderPktOpsMode(byte[] packet) {
+        if (packet.length != 5 && packet.length != 6) {
+            return false;   // allow ECC to be present or not
+        }
+        if ((packet[0] & 0xC0) != 0x80) {
+            return false;
+        }
+        if ((packet[1] & 0x88) != 0x88) {
+            return false;
+        }
+        if ((packet[2] & 0xFC) != 0xEC) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Determine if a packet is an Legacy Accessory Decoder Packet address for
+     * operations mode programming.
+     * <p>
+     * This inverts the computation done by the
+     * {@link #accDecoderPktOpsModeLegacy} method.
+     * <p>
+     * Currently used by {@link jmri.jmrix.nce.NceTrafficController#sendPacket}
+     */
+    public static boolean isAccDecoderPktOpsModeLegacy(byte[] packet) {
+        if (packet.length != 4 && packet.length != 5) {
+            return false;   // allow ECC to be present or not
+        }
+        if ((packet[0] & 0xC0) != 0x80) {
+            return false;
+        }
+        if ((packet[1] & 0x8C) != 0x0C) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Recover the decoder address from an Legacy Accessory Decoder Packet Ops
+     * Mode Packet.
+     * <p>
+     */
+    public static int getAccDecPktOpsModeLegacyAddress(byte[] packet) {
+        int midAddr = packet[0] & 0x3f;
+        int hiAddr = ((~packet[1]) & 0x70) >> 4;
+
+        return (hiAddr << 6 | midAddr);
+    }
+
+    /**
+     * Recover the equivalent accessory address from an Legacy Accessory Decoder
+     * Packet Ops Mode Packet.
+     * <p>
+     * Currently used by {@link jmri.jmrix.nce.NceTrafficController#sendPacket}
+     */
+    public static int getAccDecoderPktOpsModeLegacyAddress(byte[] packet) {
+        int midAddr = packet[0] & 0x3f;
+        int hiAddr = ((~packet[1]) & 0x70) >> 4;
+
+        int boardAddr = (hiAddr << 6 | midAddr) - 1;
+
+//        return ((boardAddr << 2)) + 1;
+        return ((boardAddr << 2)) + 1;
+    }
+
+    /**
+     * Recover the 1-based output address from an Basic Accessory Decoder Packet
+     * Ops Mode Packet.
+     * <p>
+     * Currently used by {@link jmri.jmrix.nce.NceTrafficController#sendPacket}
+     */
+    public static int getAccDecoderPktOpsModeAddress(byte[] packet) {
+        int midAddr = packet[0] & 0x3f;
+        int lowAddr = (packet[1] & 0x06) >> 1;
+        int hiAddr = ((~packet[1]) & 0x70) >> 4;
+
+        int boardAddr = (hiAddr << 6 | midAddr) - 1;
+
+        return ((boardAddr << 2) | lowAddr) + 1;
     }
 
     /**
