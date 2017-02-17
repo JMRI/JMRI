@@ -928,8 +928,6 @@ public class LlnmonTest extends TestCase {
                 "Sensor LS2 () is High.  (BDL16 # 1, DS2; DS54/DS64/SE8c # 1, SwiA/S1/DS02).\n",
                 f.displayMessage(l));
     }
-    
-    
 
     public void testTurnoutSensorStateMessages() {
         LocoNetMessage l;
@@ -3037,6 +3035,216 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
 }
+    public void testPeerXfer20DuplexQuery() {
+        LocoNetMessage l;
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex receiver query",
+                "Query Duplex Receivers.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x10, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex receiver query",
+                "Duplex Receiver Response.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x01, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex receiver query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex channel query",
+                "Query Duplex Channel.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x00, 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex channel set",
+                "Set Duplex Channel to 128.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x00, 1,1,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex channel set",
+                "Set Duplex Channel to 129.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x00, 0,0x40,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex channel set",
+                "Set Duplex Channel to 64.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x10, 0, 1,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex channel reply",
+                "Reported Duplex Channel is 1.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x10, 1, 0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex channel reply",
+                "Reported Duplex Channel is 128.\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x02, 0x09, 1, 0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex bogus request",
+                "Unable to parse LocoNet message.\ncontents: E5 14 02 09 01 00 00 00 00 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex name query",
+                "Query Duplex Group Name.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to Fade2Blk.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x01,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to "
+                        + (char) 0xc6
+                        + "ade2Blk.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x02,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to F"
+                        + (char) 0xe1
+                        + "de2Blk.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x04,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to Fa"
+                        + (char) 0xe4
+                        + "e2Blk.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x08,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to Fad"
+                        + (char) 0xe5
+                        + "2Blk.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x00,0x46,0x61,0x64,0x65,0x01,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to Fade"
+                        + (char) 0xb2
+                        + "Blk.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x00,0x46,0x61,0x64,0x65,0x02,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to Fade2"
+                        + (char) 0xc2
+                        + "lk.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x00,0x46,0x61,0x64,0x65,0x04,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to Fade2B"
+                        + (char) 0xEc
+                        + "k.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x00, 0x00,0x46,0x61,0x64,0x65,0x08,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme set",
+                "Set Duplex Group Name to Fade2Bl"
+                        + (char) 0xEb
+                        + ".\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Blk\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x01,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\""
+                        + (char) 0xc6
+                        + "ade2Blk\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x02,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"F"
+                        + (char) 0xe1
+                        + "de2Blk\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x04,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fa"
+                        + (char) 0xe4
+                        + "e2Blk\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x08,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fad"
+                        + (char) 0xe5
+                        + "2Blk\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x01,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade"
+                        + (char) 0xb2
+                        + "Blk\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x02,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2"
+                        + (char) 0xC2
+                        + "lk\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x04,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2B"
+                        + (char) 0xec
+                        + "k\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x08,0x32,0x42,0x6c,0x6b,0,0,0,0,0,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Bl"
+                        + (char) 0xeb
+                        + "\", Password=00000000, Channel=0, ID=0.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,0,0x2f,0x63,0x3,5,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Blk\", Password=020F0603, Channel=3, ID=5.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,1,0x2f,0x63,0x3,5,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Blk\", Password=0A0F0603, Channel=3, ID=5.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,2,0x2f,0x63,0x3,5,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Blk\", Password=020F0E03, Channel=3, ID=5.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,4,0x2f,0x63,0x3,5,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Blk\", Password=020F0603, Channel=131, ID=5.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,8,0x2f,0x63,0x3,5,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Blk\", Password=020F0603, Channel=3, ID=133.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x03, 0x10, 0x00,0x46,0x61,0x64,0x65,0x00,0x32,0x42,0x6c,0x6b,8,0x2f,0x63,0x3,5,0x7f});
+        assertEquals("duplex nzme report",
+                "Reported Duplex Group Name=\"Fade2Blk\", Password=020F0603, Channel=3, ID=133.\n",
+                f.displayMessage(l));
+
+    }
 
     // from here down is testing infrastructure
     public LlnmonTest(String s) {
