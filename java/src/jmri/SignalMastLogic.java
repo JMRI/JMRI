@@ -213,7 +213,7 @@ public interface SignalMastLogic {
     /**
      * Get the comment set on this SML.
      *
-     * @param dest the mast to get the comment from
+     * @param destination the mast to get the comment from
      * @return the comment or an empty string
      */
     @Nonnull
@@ -362,12 +362,10 @@ public interface SignalMastLogic {
     public boolean isBlockIncluded(Block block, SignalMast destination);
 
     /**
-     * Returns true if a given control Signal Mast is used as a destination mast
-     * in this Signal Mast Logic.
+     * Check if signal mast is a destination signal mast in one of the logics
      *
-     * @param dest The Signal Mast to be checked
-     * @return whether the mast is set up as a destination Signal Mast in one of
-     *         the logics
+     * @param destination controlled signal mast
+     * @return true if destination is a destination mast in this object
      */
     public boolean isDestinationValid(SignalMast destination);
 
@@ -481,8 +479,8 @@ public interface SignalMastLogic {
     /**
      * Set the comment for this SML.
      *
-     * @param comment Text to add as comment
-     * @param dest    The destination Signal Mast
+     * @param comment     text to add as comment
+     * @param destination signal mast to add comment to
      */
     public void setComment(String comment, SignalMast destination);
 
