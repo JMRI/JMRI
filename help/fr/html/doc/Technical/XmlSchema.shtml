@@ -87,7 +87,7 @@
       <p>Beaucoup de classes descendent de
       jmri.configurexml.XmAdapter: (<a href=
       "http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">voir
-      JavaDoc</a>)</p>
+      Javadoc</a>)</p>
 
       <p>Par convention, fournir des &eacute;l&eacute;ments
       &lt;xsd:appinfo&gt;&lt;xsd:annotation&gt; contenant le nom de

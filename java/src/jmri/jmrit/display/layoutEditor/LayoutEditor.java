@@ -159,6 +159,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private ButtonGroup itemGroup = null;
 
     // top row of radio buttons
+    private JLabel turnoutLabel = new JLabel();
     private JRadioButton turnoutRHButton = new JRadioButton(rb.getString("RightHandAbbreviation"));
     private JRadioButton turnoutLHButton = new JRadioButton(rb.getString("LeftHandAbbreviation"));
     private JRadioButton turnoutWYEButton = new JRadioButton(rb.getString("WYEAbbreviation"));
@@ -180,6 +181,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JPanel rotationPanel = new JPanel();
 
     // 2nd row of radio buttons
+    private JLabel trackLabel = new JLabel();
     private JRadioButton levelXingButton = new JRadioButton(rb.getString("LevelCrossing"));
     private JRadioButton trackButton = new JRadioButton(rb.getString("TrackSegment"));
 
@@ -188,19 +190,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JCheckBox mainlineTrack = new JCheckBox(rb.getString("MainlineBox"));
     private JCheckBox dashedLine = new JCheckBox(rb.getString("Dashed"));
 
-    private JLabel blockNameLabel = null;
+    private JLabel blockNameLabel = new JLabel();
     private JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
+    private JLabel blockSensorNameLabel = new JLabel();
     private JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
     private JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DISPLAYNAME);
 
     // 3rd row of radio buttons (and any associated text fields)
+    private JLabel nodesLabel = new JLabel();
     private JRadioButton endBumperButton = new JRadioButton(rb.getString("EndBumper"));
     private JRadioButton anchorButton = new JRadioButton(rb.getString("Anchor"));
     private JRadioButton edgeButton = new JRadioButton(rb.getString("EdgeConnector"));
 
+    private JLabel labelsLabel = new JLabel();
     private JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
     private JTextField textLabelTextField = new JTextField(8);
 
@@ -504,9 +509,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // zoom
     private double maxZoom = 6.0;
     private double minZoom = 0.25;
-    private double stepUnderOne = 0.25;
-    private double stepOverOne = 0.5;
-    private double stepOverTwo = 1.0;
+    private double stepUnderOne = 0.25; // when the zoom is less than 1
+    private double stepOverOne = 0.5;   // when the zoom is greater than 1
+    private double stepOverTwo = 1.0;   // when the zoom is greater than 2
 
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<String, Integer>();
@@ -672,6 +677,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 log.debug("blockPanel is " + (e ? "enabled" : "disabled"));
                 blockNameLabel.setEnabled(e);
                 blockIDComboBox.setEnabled(e);
+                blockSensorNameLabel.setEnabled(e);
                 blockSensorLabel.setEnabled(e);
                 blockSensorComboBox.setEnabled(e);
 
@@ -730,12 +736,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         String turnoutNameString = Bundle.getMessage("Name");
         JLabel turnoutNameLabel = new JLabel(turnoutNameString);
+        turnoutNamePanel.add(turnoutNameLabel);
+
         turnoutNameComboBox.setEditable(true);
         turnoutNameComboBox.getEditor().setItem("");
         turnoutNameComboBox.setSelectedIndex(-1);
         turnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
-
-        turnoutNamePanel.add(turnoutNameLabel);
         turnoutNamePanel.add(turnoutNameComboBox);
 
         extraTurnoutNameComboBox.setEnabled(false);
@@ -1017,83 +1023,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         super.setTargetPanelSize(width, height);
         setSize(screenDim.width, screenDim.height);
 
-        layoutFont = turnoutNameLabel.getFont();
-
-        {
-            // calculate the largest font size that will fill the current screen
-            // (without scrollbars)
-            // font size 13 ==> min screen width = 1592 pixels
-            // font size 8 ==> min screen width = 1132 pixels
-            // (1592 - 1132) / (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
-            // 1592 - (13 * 92) ==> 396 pixels
-            // therefore:
-            float newFontSize = (float) Math.floor(((screenDim.width - 396.f) / 92.f) - 0.5f);
-            newFontSize = Math.max(newFontSize, 9.f);   // but not smaller than this!
-            log.info("Font size: " + newFontSize);
-            layoutFont = layoutFont.deriveFont(newFontSize);
-
-            anchorButton.setFont(layoutFont);
-            blockContentsButton.setFont(layoutFont);
-            blockSensorLabel.setFont(layoutFont);
-            changeIconsButton.setFont(layoutFont);
-            doubleXoverButton.setFont(layoutFont);
-            edgeButton.setFont(layoutFont);
-            endBumperButton.setFont(layoutFont);
-            extraTurnoutLabel.setFont(layoutFont);
-            extraTurnoutNameComboBox.setFont(layoutFont);
-            iconLabelButton.setFont(layoutFont);
-            layoutDoubleSlipButton.setFont(layoutFont);
-            layoutSingleSlipButton.setFont(layoutFont);
-            levelXingButton.setFont(layoutFont);
-            lhXoverButton.setFont(layoutFont);
-            memoryButton.setFont(layoutFont);
-            multiSensorButton.setFont(layoutFont);
-            rhXoverButton.setFont(layoutFont);
-            sensorButton.setFont(layoutFont);
-            sensorComboBox.setFont(layoutFont);
-            signalButton.setFont(layoutFont);
-            signalHeadComboBox.setFont(layoutFont);
-            signalMastButton.setFont(layoutFont);
-            signalMastComboBox.setFont(layoutFont);
-            textLabelButton.setFont(layoutFont);
-            textLabelTextField.setFont(layoutFont);
-            textMemoryComboBox.setFont(layoutFont);
-            trackButton.setFont(layoutFont);
-            turnoutLHButton.setFont(layoutFont);
-            turnoutNameComboBox.setFont(layoutFont);
-            turnoutNameLabel.setFont(layoutFont);
-            turnoutRHButton.setFont(layoutFont);
-            turnoutWYEButton.setFont(layoutFont);
-
-            for (Component c : locationPanel.getComponents()) {
-                c.setFont(layoutFont);
-            }
-
-            for (Component c : extraTurnoutPanel.getComponents()) {
-                c.setFont(layoutFont);
-            }
-
-            for (Component c : helpBar.getComponents()) {
-                c.setFont(layoutFont);
-            }
-
-            for (Component c : rotationPanel.getComponents()) {
-                c.setFont(layoutFont);
-            }
-
-            for (Component c : trackSegmentPropertiesPanel.getComponents()) {
-                c.setFont(layoutFont);
-            }
-
-            for (Component c : turnoutNamePanel.getComponents()) {
-                c.setFont(layoutFont);
-            }
-
-            for (Component c : zoomPanel.getComponents()) {
-                c.setFont(layoutFont);
-            }
-        }
-
         setupToolbar();
 
         // register the resulting panel for later configuration
@@ -1119,20 +1048,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             public void run() {
                 // initialize preferences
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                    Object prefsProp = prefsMgr.getProperty(getWindowFrameRef(), "toolBarSide");
-                    ///log.info("{}.toolBarSide is {}", getWindowFrameRef(), prefsProp);
+                    String windowFrameRef = getWindowFrameRef();
+                    Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
+                    //log.info("{}.toolBarSide is {}", windowFrameRef, prefsProp);
                     if (prefsProp != null) {
                         eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
                         setToolBarSide(newToolBarSide);
                     }
 
-                    boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".showHelpBar");
-                    ///log.info("{}.showHelpBar is {}", getWindowFrameRef(), prefsShowHelpBar);
+                    boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
+                    //log.info("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
                     setShowHelpBar(prefsShowHelpBar);
 
-                    boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn");
-                    ///log.info("{}.antialiasingOn is {}", getWindowFrameRef(), prefsAntialiasingOn);
+                    boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
+                    //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
                     setAntialiasingOn(prefsAntialiasingOn);
+
+                    Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                    //log.info("{}.prefsWindowLocation is {}", windowFrameRef, prefsWindowLocation);
+                    Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                    //log.info("{}.prefsWindowSize is {}", windowFrameRef, prefsWindowSize);
+
+                    if (prefsWindowLocation != null && prefsWindowSize != null &&
+                            prefsWindowSize.width >= 640 && prefsWindowSize.height >= 480) {
+                        // note: panel width & height comes from the saved (xml) panel (file) on disk
+                        setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
+                                prefsWindowLocation.x, prefsWindowLocation.y,
+                                panelWidth, panelHeight);
+                        setAntialiasingOn(prefsAntialiasingOn);
+                    }
                 });
             }
         });
@@ -1159,6 +1103,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 
         if (toolBarIsVertical) {
+            JPanel vTop1TitlePanel = new JPanel();
+            vTop1TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ":");
+            vTop1TitlePanel.add(turnoutLabel);
+            vTop1TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1TitlePanel.getPreferredSize().height));
+            editToolBarPanel.add(vTop1TitlePanel);
+
             JPanel vTop1Panel = new JPanel();
             vTop1Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             vTop1Panel.add(turnoutLHButton);
@@ -1205,6 +1156,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             vTop7Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop7Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop7Panel);
 
+            JPanel vTop8TitlePanel = new JPanel();
+            vTop8TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            trackLabel = new JLabel(rb.getString("Track") + ":");
+            vTop8TitlePanel.add(trackLabel);
+            vTop8TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8TitlePanel.getPreferredSize().height));
+            editToolBarPanel.add(vTop8TitlePanel);
+
             JPanel vTop8Panel = new JPanel();
             vTop8Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             vTop8Panel.add(levelXingButton);
@@ -1219,8 +1177,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             JPanel vTop10Panel = new JPanel();
             vTop10Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            JLabel blockNameLabel = new JLabel(blockNameString);
-            blockNameLabel.setFont(layoutFont);
+            blockNameLabel = new JLabel(blockNameString);
             vTop10Panel.add(blockNameLabel);
             vTop10Panel.add(blockIDComboBox);
             vTop10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop10Panel.getPreferredSize().height));
@@ -1228,11 +1185,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             JPanel vTop11Panel = new JPanel();
             vTop11Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop11Panel.add(blockNameLabel);
+            blockSensorNameLabel = new JLabel(blockNameString);
+            vTop11Panel.add(blockSensorNameLabel);
             vTop11Panel.add(blockSensorLabel);
             vTop11Panel.add(blockSensorComboBox);
             vTop11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop11Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop11Panel);
+
+            JPanel vTop12TitlePanel = new JPanel();
+            vTop12TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            nodesLabel = new JLabel(rb.getString("Nodes") + ":");
+            vTop12TitlePanel.add(nodesLabel);
+            vTop12TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12TitlePanel.getPreferredSize().height));
+            editToolBarPanel.add(vTop12TitlePanel);
 
             JPanel vTop12Panel = new JPanel();
             vTop12Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -1246,6 +1211,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             vTop13Panel.add(edgeButton);
             vTop13Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop13Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop13Panel);
+
+            JPanel vTop14TitlePanel = new JPanel();
+            vTop14TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            labelsLabel = new JLabel(rb.getString("Labels") + ":");
+            vTop14TitlePanel.add(labelsLabel);
+            vTop14TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14TitlePanel.getPreferredSize().height));
+            editToolBarPanel.add(vTop14TitlePanel);
 
             JPanel vTop14Panel = new JPanel();
             vTop14Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -1315,8 +1287,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // first row buttons
             JPanel hTop1Panel = new JPanel();
             hTop1Panel.setLayout(new BoxLayout(hTop1Panel, BoxLayout.LINE_AXIS));
-            JLabel turnoutLabel = new JLabel("    " + Bundle.getMessage("BeanNameTurnout") + ": ");
-            turnoutLabel.setFont(layoutFont);
+            turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ": ");
             hTop1Panel.add(turnoutLabel);
             hTop1Panel.add(turnoutRHButton);
             hTop1Panel.add(turnoutLHButton);
@@ -1330,7 +1301,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // first row properties
             JPanel turnoutPropertiesPanel = new JPanel();
-            turnoutPropertiesPanel.add(turnoutNamePanel);
+            //turnoutPropertiesPanel.add(turnoutNamePanel);
             turnoutPropertiesPanel.add(extraTurnoutPanel);
             turnoutPropertiesPanel.add(rotationPanel);
             hTop1Panel.add(turnoutPropertiesPanel);
@@ -1340,8 +1311,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // second row buttons
             JPanel hTop2Panel = new JPanel();
             hTop2Panel.setLayout(new BoxLayout(hTop2Panel, BoxLayout.LINE_AXIS));
-            JLabel trackLabel = new JLabel("    " + rb.getString("Track") + ":  ");
-            trackLabel.setFont(layoutFont);
+            trackLabel = new JLabel(rb.getString("Track") + ":  ");
             hTop2Panel.add(trackLabel);
             hTop2Panel.add(levelXingButton);
             hTop2Panel.add(trackButton);
@@ -1351,7 +1321,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             JPanel blockPropertiesPanel = new JPanel();
             blockNameLabel = new JLabel("    " + blockNameString);
-            blockNameLabel.setFont(layoutFont);
             blockPropertiesPanel.add(blockNameLabel);
             blockPropertiesPanel.add(blockIDComboBox);
             blockPropertiesPanel.add(blockSensorLabel);
@@ -1370,15 +1339,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JPanel hTop3Panel = new JPanel();
             hTop3Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
             //hTop3Panel.setLayout(new BoxLayout(hTop3Panel, BoxLayout.LINE_AXIS));
-            JLabel nodesLabel = new JLabel("    " + rb.getString("Nodes") + ":  ");
-            nodesLabel.setFont(layoutFont);
+            nodesLabel = new JLabel(rb.getString("Nodes") + ":  ");
+
             hTop3Panel.add(nodesLabel);
             hTop3Panel.add(endBumperButton);
             hTop3Panel.add(anchorButton);
             hTop3Panel.add(edgeButton);
             hTop3Panel.add(Box.createHorizontalGlue());
-            JLabel labelsLabel = new JLabel("    " + rb.getString("Labels") + ":  ");
-            labelsLabel.setFont(layoutFont);
+            labelsLabel = new JLabel("    " + rb.getString("Labels") + ":  ");
             hTop3Panel.add(labelsLabel);
             hTop3Panel.add(Box.createHorizontalGlue());
             hTop3Panel.add(textLabelButton);
@@ -1465,7 +1433,88 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         helpBarPanel.setVisible(isEditable() && showHelpBar);
         editToolBarContainer.setVisible(isEditable());
+
+        setFontSize();
+
     }    // setupToolbar()
+
+    private void setFontSize() {
+        // calculate the largest font size that will fill the current window
+        // (without scrollbars)
+        // font size 13 ==> min windowWidth width = 1592 pixels
+        // font size 8 ==> min windowWidth width = 1132 pixels
+        // (1592 - 1132) / (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
+        // 1592 - (13 * 92) ==> 396 pixels
+        // therefore:
+        float newFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
+        newFontSize = Math.max(newFontSize, 9.f);   // but not smaller than this!
+        log.info("Font size: " + newFontSize);
+        layoutFont = zoomLabel.getFont();
+        layoutFont = layoutFont.deriveFont(newFontSize);
+
+        anchorButton.setFont(layoutFont);
+        blockContentsButton.setFont(layoutFont);
+        blockNameLabel.setFont(layoutFont);
+        blockSensorLabel.setFont(layoutFont);
+        blockSensorNameLabel.setFont(layoutFont);
+        changeIconsButton.setFont(layoutFont);
+        doubleXoverButton.setFont(layoutFont);
+        edgeButton.setFont(layoutFont);
+        endBumperButton.setFont(layoutFont);
+        iconLabelButton.setFont(layoutFont);
+        labelsLabel.setFont(layoutFont);
+        layoutDoubleSlipButton.setFont(layoutFont);
+        layoutSingleSlipButton.setFont(layoutFont);
+        levelXingButton.setFont(layoutFont);
+        lhXoverButton.setFont(layoutFont);
+        memoryButton.setFont(layoutFont);
+        multiSensorButton.setFont(layoutFont);
+        nodesLabel.setFont(layoutFont);
+        rhXoverButton.setFont(layoutFont);
+        sensorButton.setFont(layoutFont);
+        sensorComboBox.setFont(layoutFont);
+        signalButton.setFont(layoutFont);
+        signalHeadComboBox.setFont(layoutFont);
+        signalMastButton.setFont(layoutFont);
+        signalMastComboBox.setFont(layoutFont);
+        textLabelButton.setFont(layoutFont);
+        textLabelTextField.setFont(layoutFont);
+        textMemoryComboBox.setFont(layoutFont);
+        trackButton.setFont(layoutFont);
+        trackLabel.setFont(layoutFont);
+        turnoutLabel.setFont(layoutFont);
+        turnoutLHButton.setFont(layoutFont);
+        turnoutRHButton.setFont(layoutFont);
+        turnoutWYEButton.setFont(layoutFont);
+
+        for (Component c : locationPanel.getComponents()) {
+            c.setFont(layoutFont);
+        }
+
+        for (Component c : extraTurnoutPanel.getComponents()) {
+            c.setFont(layoutFont);
+        }
+
+        for (Component c : helpBar.getComponents()) {
+            c.setFont(layoutFont);
+        }
+
+        for (Component c : rotationPanel.getComponents()) {
+            c.setFont(layoutFont);
+        }
+
+        for (Component c : trackSegmentPropertiesPanel.getComponents()) {
+            c.setFont(layoutFont);
+        }
+
+        for (Component c : turnoutNamePanel.getComponents()) {
+            c.setFont(layoutFont);
+        }
+
+        for (Component c : zoomPanel.getComponents()) {
+            c.setFont(layoutFont);
+        }
+    }
 
     @Override
     protected void init(String name) {
@@ -2355,11 +2404,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
         String zoomInAccelerator = rb.getString("zoomInAccelerator");
         //log.info("zoomInAccelerator: " + zoomInAccelerator);
-        if (zoomInAccelerator.equals("EQUALS")) {
-            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier | ActionEvent.SHIFT_MASK));
-        } else {
-            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
-        }
+        zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
         zoomMenu.add(zoomInItem);
         ActionListener pressedZoomInActionListener = new ActionListener() {
             @Override
@@ -2535,7 +2580,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private double zoomIn() {
-        double newScale;
+        double newScale = _paintScale;
+        if (true) {
+            newScale *= 1.25;
+        } else
         if (_paintScale < 1.0) {
             newScale = _paintScale + stepUnderOne;
         } else if (_paintScale < 2.0) {
@@ -2547,7 +2595,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private double zoomOut() {
-        double newScale;
+        double newScale = _paintScale;
+        if (true) {
+            newScale /= 1.25;
+        } else
         if (_paintScale > 2.0) {
             newScale = _paintScale - stepOverTwo;
         } else if (_paintScale > 1.0) {
@@ -3549,8 +3600,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Point pt = getLocationOnScreen();
         upperLeftX = pt.x;
         upperLeftY = pt.y;
+
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+            String windowFrameRef = getWindowFrameRef();
+            prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
+            prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
+        });
+
         log.debug("setCurrentPositionAndSize Position - " + upperLeftX + "," + upperLeftY + " WindowSize - " + windowWidth + "," + windowHeight + " PanelSize - " + panelWidth + "," + panelHeight);
         setDirty(true);
+
     }
 
     void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {

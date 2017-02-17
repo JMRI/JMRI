@@ -21,7 +21,7 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
     SignallingPanel sigPanel;
 
     /**
-     * Set the Signal Mast Logic frame's initial state
+     * Set the Signal Mast Logic frame's initial state.
      *
      * @param source The Signal Mast this SML is directly linked to
      * @param dest The Signal Mast this SML is looking at

@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Use of JavaDoc and UML</title>
+  <title>JMRI: Use of Javadoc and UML</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
   <!-- Style -->
@@ -27,11 +27,11 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Use of JavaDoc and UML</h1>
+      <h1>JMRI: Use of Javadoc and UML</h1>
 
       <p>The JMRI library provides the majority of its API
       documentation via <a href=
-      "http://java.sun.com/j2se/javadoc/writingdoccomments/">JavaDoc</a>
+      "http://java.sun.com/j2se/javadoc/writingdoccomments/">Javadoc</a>
       and <a href=
       "http://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>.</p>
 
@@ -41,13 +41,13 @@
 
       <p>We use the <a href="http://www.umlgraph.org">UmlGraph</a>
       doclet to automatically create the UML diagrams in our
-      JavaDoc pages.</p>
+      Javadoc pages.</p>
 
-      <h2>JavaDoc for Developers</h2>The <a href=
+      <h2>Javadoc for Developers</h2>The <a href=
       "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
-      JavaDoc tutorial</a> is a good, but somewhat long, <a href=
+      Javadoc tutorial</a> is a good, but somewhat long, <a href=
       "http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
-      introduction to JavaDoc</a>. A brief summary of the
+      introduction to Javadoc</a>. A brief summary of the
       formatting and tags can be found in <a href=
       "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">
       the reference</a>.
@@ -71,10 +71,10 @@
       "http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">
       "How and When To Deprecate APIs" page</a>.</p>
 
-      <p>The JavaDoc content is interpreted as HTML 4.01, so it
+      <p>The Javadoc content is interpreted as HTML 4.01, so it
       should be valid HTML 4.01. If it's not, it probably won't
       display properly when somebody wants to understand your code,
-      so it's in your interest to get the JavaDoc comments
+      so it's in your interest to get the Javadoc comments
       right.</p>
 
       <p>For example, you have to properly handle &amp; and &lt;
@@ -112,7 +112,7 @@
         <dd>Probably using '&gt;' as a character, e.g. A -&gt; B.
         If so, replace with "&amp;gt;" or wrap the line with
         @literal</dd>
-      </dl>Finally, note that this JavaDoc line is malformed:
+      </dl>Finally, note that this Javadoc line is malformed:
       <pre>
 <code>
  * @param foo
@@ -126,13 +126,13 @@ should be more like:
 </pre>or just omitted.
 
       <p>We are currently suppressing the "accessibility" class of
-      JavaDoc errors, which is mostly about providing extra
+      Javadoc errors, which is mostly about providing extra
       information on tables and images, and the "missing" class of
       errors, which tags it if an @param or @return isn't provided
       in any places that could have received comments. There are so
       many of these that it's not practical to tag them.</p>
 
-      <p>For a summary of current JavaDoc errors in the code, see
+      <p>For a summary of current Javadoc errors in the code, see
       <a href=
       "http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings3Result/">
       Builds Jenkins job</a>.</p>
@@ -151,15 +151,15 @@ should be more like:
       "http://edn.embarcadero.com/article/31863">Embarcadero
       Software introduction</a>.
 
-      <p>Our Ant JavaDoc processing makes basic UML class diagrams
+      <p>Our Ant Javadoc processing makes basic UML class diagrams
       automatically. For an example, see the <a href=
       "http://jmri.org/JavaDoc/doc/jmri/Sensor.html">Sensor
-      interface JavaDoc</a>, then click the "Show UML Class Diagram
+      interface Javadoc</a>, then click the "Show UML Class Diagram
       link" to see the <a href=
       "http://jmri.org/JavaDoc/doc/jmri/Sensor.png">class diagram
       embedded in it</a>. For a more complex example see <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.html">
-      ProgModeSelector class JavaDoc</a> then click the "Show UML
+      ProgModeSelector class Javadoc</a> then click the "Show UML
       Class Diagram link" to see the <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/progsupport/ProgModeSelector.png">
       class diagram embedded in it</a>.</p>
@@ -172,7 +172,7 @@ should be more like:
       java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> file. The
       resulting diagrams are visible in the <a href=
       "http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
-      JavaDoc output</a>.</p>
+      Javadoc output</a>.</p>
 
       <h2>Processing</h2>The standard JMRI Ant build provides three
       documentation targets:
@@ -180,12 +180,12 @@ should be more like:
       <dl>
         <dt>javadoc</dt>
 
-        <dd>Create the text JavaDocs in the local doc/ directory.
+        <dd>Create the text Javadocs in the local doc/ directory.
         Open doc/index.html for access.</dd>
 
         <dt>javadoc-uml</dt>
 
-        <dd>Create the UML diagrams and JavaDocs in the local doc/
+        <dd>Create the UML diagrams and Javadocs in the local doc/
         directory. Open doc/index.html for access.</dd>
 
         <dt>uploadjavadoc</dt>
