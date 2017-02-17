@@ -608,11 +608,19 @@ selects the different algorithm needed here.
       <pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
+            &lt;parameter name="Address Type"&gt;decoder&lt;/name&gt;
         &lt;/capability&gt;
-</pre>There are no parameters. Note that this only works for
-ops-mode writes; these particular NMRA DCC packets do not perform
-read operations, nor do they work in the service mode (programming
-track).
+</pre>The "Address Type" parameter is optional:
+      <ul>
+          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit decoder address.</li>
+          <li>If it is "accessory", the current address is interpreted as a 14-bit accessory address.</li>
+      </ul>
+      <p>
+        Note that this only works for
+        ops-mode writes; these particular NMRA DCC packets do not perform
+        read operations, nor do they work in the service mode (programming
+        track).
+      </p>
 
       <h4>Indexed CV Access</h4>To access indexed CVs, include this
       capability element:
