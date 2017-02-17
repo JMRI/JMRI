@@ -572,7 +572,7 @@
 
    <tocitem text="JavaHelp HowTo " target="html.doc.Technical.Help"/>
 
-   <tocitem text="Documentation with JavaDoc and UML " target="html.doc.Technical.JavaDoc"/>
+   <tocitem text="Documentation with Javadoc and UML " target="html.doc.Technical.Javadoc"/>
 
    <tocitem text="Unit testing with JUnit " target="html.doc.Technical.JUnit"/>
 
