@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
     BundleTest.class,
     XBeeMenuTest.class,
     XBeeComponentFactoryTest.class,
-    jmri.jmrix.ieee802154.xbee.swing.nodeconfig.PackageTest.class
+    jmri.jmrix.ieee802154.xbee.swing.nodeconfig.PackageTest.class,
+    jmri.jmrix.ieee802154.xbee.swing.packetgen.PackageTest.class
 })
 
 /**

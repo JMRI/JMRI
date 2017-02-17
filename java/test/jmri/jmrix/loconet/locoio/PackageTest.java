@@ -29,6 +29,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(LocoIOPanelTest.suite());
         suite.addTest(LocoIOTableModelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOTest.class));
         return suite;
     }
 

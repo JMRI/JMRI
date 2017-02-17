@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.locobufferii.configurexml.PackageTest.class
+   jmri.jmrix.loconet.locobufferii.configurexml.PackageTest.class,
+   LocoBufferIIAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.locobufferii package.
