@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.locomon;
 
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LnSensorManager;
+import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import junit.framework.Test;
@@ -68,7 +69,7 @@ public class LlnmonTest extends TestCase {
                 "Transponder Find report: address 3(short) present at LR19 (BDL16x Board 2 RX4 zone B).\n",
                 f.displayMessage(l));
         
-        jmri.jmrix.loconet.LnReporter r = (jmri.jmrix.loconet.LnReporter) lnrm.provideReporter("LR19");
+        LnReporter r = (LnReporter) lnrm.provideReporter("LR19");
         
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x7D, 0x03, 0x00, 0x14, 0x00, 0x7F});
         assertEquals("Transponding no reporter user name", 
@@ -105,9 +106,91 @@ public class LlnmonTest extends TestCase {
                 "Transponder Find report: address 4 present at LR25 (BDL16x Board 2 RX4 zone E).\n",
                 f.displayMessage(l));
         assertNotNull("reporter Created", lnrm.getBySystemName("LR25"));
+        ((LnReporter) lnrm.getBySystemName("LR25")).setUserName("Friendly name E");
+        assertEquals("check setting of username", lnrm.getBySystemName("LR25").getUserName(), "Friendly name E");
+        
+        ((LnReporter) lnrm.provideReporter("LR31")).setUserName("Friendly Name H");
+        ((LnReporter) lnrm.provideReporter("LR29")).setUserName("Friendly Name G");
+        ((LnReporter) lnrm.provideReporter("LR27")).setUserName("Friendly Name F");
+        ((LnReporter) lnrm.provideReporter("LR23")).setUserName("Friendly Name D");
+        ((LnReporter) lnrm.provideReporter("LR21")).setUserName("Friendly Name C");
+        ((LnReporter) lnrm.provideReporter("LR19")).setUserName("Friendly Name B");
+        ((LnReporter) lnrm.provideReporter("LR17")).setUserName("Friendly Name A");
         
         
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x18, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR25 (Friendly name E) (BDL16x Board 2 RX4 zone E).\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x14, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR21 (Friendly Name C) (BDL16x Board 2 RX4 zone C).\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR19 (Friendly Name B) (BDL16x Board 2 RX4 zone B).\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x10, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR17 (Friendly Name A) (BDL16x Board 2 RX4 zone A).\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1A, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR27 (Friendly Name F) (BDL16x Board 2 RX4 zone F).\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1C, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR29 (Friendly Name G) (BDL16x Board 2 RX4 zone G).\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x00, 0x00, 0x04, 0x00, 0x1E, 0x00, 0x7F});
+        assertEquals(" in D", 
+                "Transponder Find report: address 4 present at LR31 (Friendly Name H) (BDL16x Board 2 RX4 zone H).\n",
+                f.displayMessage(l));
+
+    }
+    
+    public void testOpcPeerXfer7Byte() {
+        LocoNetMessage l;
         
+        l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x00, 0x00, 0x00, 0x00, 0x1D});
+        assertEquals("not a known 7byte opcPeerXfer", 
+                "Unable to parse LocoNet message.\ncontents: E5 07 00 00 00 00 1D\n",
+                f.displayMessage(l));
+        l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x49, 0x42, 0x40, 0x00});
+        assertEquals("Uhlenbrock stop programming track", 
+                "Uhlenbrock IB-COM / Intellibox II Stop Programming Track.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x49, 0x42, 0x41, 0x00});
+        assertEquals("Uhlenbrock start programming track", 
+                "Uhlenbrock IB-COM / Intellibox II Start Programming Track.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x49, 0x42, 0x42, 0x55});
+        assertEquals("Uhlenbrock unknown programming track operation", 
+                "Unable to parse LocoNet message.\ncontents: E5 07 01 49 42 42 55\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x49, 0x41, 0x40, 0x54});
+        assertEquals("Uhlenbrock unknown programming track operation", 
+                "Unable to parse LocoNet message.\ncontents: E5 07 01 49 41 40 54\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x01, 0x48, 0x42, 0x40, 0x56});
+        assertEquals("Uhlenbrock unknown programming track operation", 
+                "Unable to parse LocoNet message.\ncontents: E5 07 01 48 42 40 56\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x07, 0x00, 0x49, 0x42, 0x40, 0x56});
+        assertEquals("Uhlenbrock unknown programming track operation", 
+                "Unable to parse LocoNet message.\ncontents: E5 07 00 49 42 40 56\n",
+                f.displayMessage(l));
     }
     
     public void testALM() {
@@ -487,6 +570,139 @@ public class LlnmonTest extends TestCase {
                 ".\n",
                 f.displayMessage(l));
 */
+    }
+    
+    public void testIplPingMessages() {
+        LocoNetMessage l;
+        
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL ping test 01",
+                "Pinging device with serial number 0xAEE.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL ping test 02",
+                "Pinging device with serial number 0x10AEE.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 03",
+                "Pinging device with serial number 0x2000AEE.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 04",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 03 00 00 00 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 05",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 04 00 00 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 06",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 05 00 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 07",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 06 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 08",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 07 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 09",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 08 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 10",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 09 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0A, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 11",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 0A 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0b, 0x00, 0x6B});
+        assertEquals("IPL Ping test 12",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 00 0B 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x01, 0x6E, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x6B});
+        assertEquals("IPL Ping test 13",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 01 6E 0A 00 00 00 00 00 00 00 00 00 00 00 0C 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 14",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 15",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 16",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x08, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping test 17",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 08 70 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6B\n", 
+                f.displayMessage(l));
+
+
+
+
+        
+
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x01, 0x6E, 0x0A, 0x00, 0x24, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping Reply test 01",
+                "Ping Report response from device with serial number EE: Local RSSI=21, Remote RSSI=50.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x00, 0x6E, 0x0A, 0x00, 0x24, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping Reply test 01",
+                "Ping Report response from device with serial number 6E: Local RSSI=21, Remote RSSI=50.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping Reply test 01",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 00 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping Reply test 01",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 70 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping Reply test 01",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 10 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping Reply test 01",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 20 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n", 
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x08, 0x10, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x0d, 0x21, 0x50, 0x43, 0x21, 0x17, 0x00, 0x00, 0x6B});
+        assertEquals("IPL Ping Reply test 01",
+                "Unable to parse LocoNet message.\ncontents: E5 14 08 10 40 00 00 00 00 00 50 0D 21 50 43 21 17 00 00 6B\n", 
+                f.displayMessage(l));
+
+
+
     }
 
     public void testSv1Messages() {
