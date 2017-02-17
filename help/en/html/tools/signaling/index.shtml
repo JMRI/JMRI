@@ -352,8 +352,8 @@
       communication needed to make the signal on the layout display
       the right colors.<br>
       <a href=
-      "../../../package/jmri/jmrit/beantable/SignalMasts.png"><img src="../../../package/jmri/jmrit/beantable/SignalMasts.png"
-      width="338" height="86" align="right"></a> Signal Masts are
+      "../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"><img src="../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"
+      width="309" height="83" align="right"></a> Signal Masts are
       configured through the <a href=
       "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
       Signal Mast Table</a>. From the Signal Mast Table, you can
