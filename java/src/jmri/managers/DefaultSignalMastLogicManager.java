@@ -119,7 +119,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     @Override
     public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
-        ArrayList<SignalMastLogic> list = new ArrayList<SignalMastLogic>();
+        ArrayList<SignalMastLogic> list = new ArrayList<>();
         for (SignalMastLogic source : signalMastLogic) {
             if (source.isDestinationValid(destination)) {
                 list.add(source);
