@@ -1,7 +1,9 @@
 package jmri.jmrix.jmriclient.json.swing;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,6 +18,7 @@ public class JsonPacketGenFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JsonPacketGenFrame t = new JsonPacketGenFrame();
         Assert.assertNotNull("exists",t);
     }
