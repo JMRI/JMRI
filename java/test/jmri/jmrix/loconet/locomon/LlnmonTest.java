@@ -2369,7 +2369,6 @@ public class LlnmonTest extends TestCase {
                 "Throttle status TCNTRL=41 (R/S key during msg, aborts), Throttle ID=0x02 0x00 (256), SLA=0x00, SLB=0x40.\n",
                 f.displayMessage(l));
 
-         
         l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x4e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
         assertEquals(" Slot test 1",
                 "Throttle status TCNTRL=4E (Throttle response to Semaphore Display Command), Throttle ID=0x00 0x00 (0), SLA=0x00, SLB=0x00.\n",
@@ -2380,43 +2379,7 @@ public class LlnmonTest extends TestCase {
                 "Throttle status TCNTRL=45 (unknown), Throttle ID=0x00 0x00 (0), SLA=0x00, SLB=0x00.\n",
                 f.displayMessage(l));
 
- /*
-        int tcntrl = l.getElement(2);
-        String stat;
-        switch (tcntrl) {
-            case 0x40:
-                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_OK");
-                break;
-            case 0x7F:
-                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_NO_KEYPRESS");
-                break;
-            case 0x43:
-                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_PLUS_KEY");
-                break;
-            case 0x42:
-                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_MINUS_KEY");
-                break;
-            case 0x41:
-                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RUNSTOP_KEY");
-                break;
-            case 0x4e:
-                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RESP_SEM_DISP_CMD");
-                break;
-            default:
-                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_UNKONWN");
-                break;
-        }
-
-        return Bundle.getMessage("LN_MSG_THROTTLE_STATUS",
-                StringUtil.twoHexFromInt(tcntrl),
-                stat,
-                idString(l.getElement(3), l.getElement(4)),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                        StringUtil.twoHexFromInt(l.getElement(7))),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                        StringUtil.twoHexFromInt(l.getElement(8))));
-        
-*/    }
+    }
     
     
     public void testBasicSlotAccessMessages() {
