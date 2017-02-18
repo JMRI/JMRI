@@ -202,8 +202,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
 
     @Override
     @CheckReturnValue
-    public String getStateString() {
-        int state = getState();
+    public String describeState(int state) {
         switch (state) {
             case UNKNOWN: return Bundle.getMessage("BeanStateUnknown");
             case INCONSISTENT: return Bundle.getMessage("BeanStateInconsistent");

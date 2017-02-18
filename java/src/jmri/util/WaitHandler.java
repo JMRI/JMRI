@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 /**
  * Common utility class for handling the "spurious wakeup from wait()" problem
- * described in the {@link java.lang.Object#wait(long)} JavaDocs
+ * described in the {@link java.lang.Object#wait(long)} Javadocs
  *
  * Generally, when waiting for a notify() operation, you need to provide a test
  * that a valid notify had happened due to e.g. a state change, etc.

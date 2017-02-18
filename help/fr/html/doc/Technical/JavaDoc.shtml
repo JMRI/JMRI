@@ -7,7 +7,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Utilisation de JavaDoc et UML</title>
+  <title>JMRI: Utilisation de Javadoc et UML</title>
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content="JMRI technical code">
   <!-- Style -->
@@ -28,10 +28,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Utilisation de JavaDoc et UML</h1>La
+      <h1>JMRI: Utilisation de Javadoc et UML</h1>La
       biblioth&egrave;que JMRI fournit la majorit&eacute; de ses
       Documentation de l'API via <a href=
-      "http://java.sun.com/j2se/javadoc/writingdoccomments/">JavaDoc</a>
+      "http://java.sun.com/j2se/javadoc/writingdoccomments/">Javadoc</a>
       et <a href=
       "http://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>
       .
@@ -44,14 +44,14 @@
       <p>Nous utilisons les <a href=
       "http://www.umlgraph.org">umLGraph</a> doclet pour
       cr&eacute;er automatiquement les diagrammes UML dans nos
-      pages JavaDoc.</p>
+      pages Javadoc.</p>
 
-      <h2>JavaDoc pour les D&eacute;veloppeurs</h2>Le <a href=
+      <h2>Javadoc pour les D&eacute;veloppeurs</h2>Le <a href=
       "http://java.sun.com/j2se/javadoc/writingdoccomments/">tutoriel
-      JavaDoc</a> est une bonne chose, mais un peu long,
+      Javadoc</a> est une bonne chose, mais un peu long,
       introduction <a href=
       "http://java.sun.com/j2se/javadoc/writingdoccomments/">pour
-      JavaDoc</a> . Un bref r&eacute;sum&eacute; de la mise en
+      Javadoc</a> . Un bref r&eacute;sum&eacute; de la mise en
       forme et les &eacute;tiquettes peut &ecirc;tre trouv&eacute;e
       dans <a href=
       "http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">
@@ -100,12 +100,12 @@
       trois objectifs de documentation:
 
       <dl>
-        <dd>javadoc -Cr&eacute;er des JavaDocs texte dans le
+        <dd>javadoc -Cr&eacute;er des Javadocs texte dans le
         r&eacute;pertoire local doc/. Ouvrirdoc/index.html pour
         l'acc&egrave;s.</dd>
 
         <dt>javadoc-uml -Cr&eacute;er des diagrammes UML et
-        JavaDocs dans le r&eacute;pertoire local doc/. Ouvrir
+        Javadocs dans le r&eacute;pertoire local doc/. Ouvrir
         doc/index.html pour l'acc&egrave;s.</dt>
 
         <dt>uploadjavadoc -Envoyer la documentation actuelle dans

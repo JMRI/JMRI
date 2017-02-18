@@ -18,7 +18,8 @@ import org.slf4j.LoggerFactory;
    SpecificMessageTest.class,
    SpecificReplyTest.class,
    SpecificSystemConnectionMemoTest.class,
-   SpecificTrafficControllerTest.class
+   SpecificTrafficControllerTest.class,
+   ConstantsTest.class
 })
 /**
  * Tests for the jmri.jmrix.powerline.insteon2412s package.

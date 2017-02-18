@@ -13,7 +13,10 @@ import org.slf4j.LoggerFactory;
    InternalReporterManagerTest.class,
    InternalTurnoutManagerTest.class,
    InternalSensorManagerTest.class,
-   InternalLightManagerTest.class
+   InternalLightManagerTest.class,
+   InternalAdapterTest.class,
+   InternalConnectionTypeListTest.class,
+   InternalSystemConnectionMemoTest.class
 })
 /**
  * Tests for the jmri.jmrix.internal package.
