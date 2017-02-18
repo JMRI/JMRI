@@ -1230,18 +1230,38 @@ public class Llnmon {
             }
             case 0x07: {
                 // Duplex Group Password
+                if (l.getElement(3) == 0x08) {
+                    return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
+                }
+
+                if ((l.getElement(5) < 0x30) | (l.getElement(5) > 0x3c)
+                        | (l.getElement(6) < 0x30) | (l.getElement(6) > 0x3c)
+                        | (l.getElement(7) < 0x30) | (l.getElement(7) > 0x3c)
+                        | (l.getElement(8) < 0x30) | (l.getElement(8) > 0x3c)
+                        ) {
+                    break;
+                }
                 char[] groupPasswordArray = {(char) l.getElement(5),
                     (char) l.getElement(6),
                     (char) l.getElement(7),
                     (char) l.getElement(8)};
+                if ((groupPasswordArray[0] >0x39) & (groupPasswordArray[0] < 0x3d) ) {
+                    groupPasswordArray[0] += ('A' - '9' - 1);
+                }
+                if ((groupPasswordArray[1] >0x39) & (groupPasswordArray[1] < 0x3d) ) {
+                    groupPasswordArray[1] += ('A' - '9' - 1);
+                }
+                if ((groupPasswordArray[2] >0x39) & (groupPasswordArray[2] < 0x3d) ) {
+                    groupPasswordArray[2] += ('A' - '9' - 1);
+                }
+                if ((groupPasswordArray[3] >0x39) & (groupPasswordArray[3] < 0x3d) ) {
+                    groupPasswordArray[3] += ('A' - '9' - 1);
+                }
                 String groupPassword = new String(groupPasswordArray);
 
                 switch (l.getElement(3)) {
                     case 0x00: {
                         return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_SET", groupPassword);
-                    }
-                    case 0x08: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
                     }
                     case 0x10: {
                         return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_REPORT", groupPassword);
