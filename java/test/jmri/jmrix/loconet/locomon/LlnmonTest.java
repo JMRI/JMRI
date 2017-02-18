@@ -1314,6 +1314,28 @@ public class LlnmonTest extends TestCase {
         assertEquals("PR3 mode test 3",
                 "Set PR3 to MS100 mode with PR3 termination of LocoNet (i.e. use PR3 without command station present).\n",
                 f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD3, 0x09, 0x03, 0x00, 0x00, 0x3D});
+        assertEquals("PR3 mode test 4",
+                "Unable to parse LocoNet message.\ncontents: D3 09 03 00 00 3D\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x07, 0x00, 0x00, 0x3D});
+        assertEquals("PR3 mode test 5",
+                "Unable to parse LocoNet message.\ncontents: D3 10 07 00 00 3D\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x03, 0x01, 0x00, 0x3D});
+        assertEquals("PR3 mode test 6",
+                "Unable to parse LocoNet message.\ncontents: D3 10 03 01 00 3D\n",
+                f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x03, 0x00, 0x10, 0x3D});
+        assertEquals("PR3 mode test 7",
+                "Unable to parse LocoNet message.\ncontents: D3 10 03 00 10 3D\n",
+                f.displayMessage(l));
+        
+        
     }
 
     public void testTrackPowerMessages() {
@@ -2315,6 +2337,88 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    public void testOpcPeerXfer10() {
+        LocoNetMessage l;
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x73, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=73 (unknown), Throttle ID=0x00 0x00 (0), SLA=0x00, SLB=0x00.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x40, 0x01, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=40 (OK), Throttle ID=0x02 0x01 (257), SLA=0x00, SLB=0x00.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x7F, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=7F (no key, immed, ignored), Throttle ID=0x00 0x01 (1), SLA=0x00, SLB=0x00.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x43, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=43 (+ key during msg), Throttle ID=0x02 0x00 (256), SLA=0x00, SLB=0x00.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x42, 0x01, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=42 (- key during msg), Throttle ID=0x00 0x01 (1), SLA=0x30, SLB=0x00.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x41, 0x00, 0x02, 0x00, 0x00, 0x00, 0x40, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=41 (R/S key during msg, aborts), Throttle ID=0x02 0x00 (256), SLA=0x00, SLB=0x40.\n",
+                f.displayMessage(l));
+
+         
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x4e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=4E (Throttle response to Semaphore Display Command), Throttle ID=0x00 0x00 (0), SLA=0x00, SLB=0x00.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x45, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
+        assertEquals(" Slot test 1",
+                "Throttle status TCNTRL=45 (unknown), Throttle ID=0x00 0x00 (0), SLA=0x00, SLB=0x00.\n",
+                f.displayMessage(l));
+
+ /*
+        int tcntrl = l.getElement(2);
+        String stat;
+        switch (tcntrl) {
+            case 0x40:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_OK");
+                break;
+            case 0x7F:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_NO_KEYPRESS");
+                break;
+            case 0x43:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_PLUS_KEY");
+                break;
+            case 0x42:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_MINUS_KEY");
+                break;
+            case 0x41:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RUNSTOP_KEY");
+                break;
+            case 0x4e:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_RESP_SEM_DISP_CMD");
+                break;
+            default:
+                stat = Bundle.getMessage("LN_MSG_THROTTLE_STATUS_HELPER_UNKONWN");
+                break;
+        }
+
+        return Bundle.getMessage("LN_MSG_THROTTLE_STATUS",
+                StringUtil.twoHexFromInt(tcntrl),
+                stat,
+                idString(l.getElement(3), l.getElement(4)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                        StringUtil.twoHexFromInt(l.getElement(7))),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                        StringUtil.twoHexFromInt(l.getElement(8))));
+        
+*/    }
+    
+    
     public void testBasicSlotAccessMessages() {
         LocoNetMessage l;
 
@@ -2472,7 +2576,8 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA2, 0x0E, 0x04, 0x57});
-        assertEquals(" Slot test 34", "Set loco in slot 14 Sound1/F5=Off Sound2/F6=Off Sound3/F7=On Sound4/F8=Off.\n",
+        assertEquals(" Slot test 34", 
+                "Set loco in slot 14 Sound1/F5=Off Sound2/F6=Off Sound3/F7=On Sound4/F8=Off.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xA0, 0x0D, 0x7F, 0x2D});
