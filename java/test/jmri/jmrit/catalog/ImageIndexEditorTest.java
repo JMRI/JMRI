@@ -44,6 +44,9 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
     }
 
     public void testOpenDirectory() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             DirectorySearcher.instance().openDirectory();
         });
@@ -53,7 +56,9 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
     }
     
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
-
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             DirectorySearcher.instance().searchFS();
         });
