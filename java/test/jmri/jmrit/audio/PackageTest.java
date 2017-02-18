@@ -2,8 +2,6 @@ package jmri.jmrit.audio;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -15,7 +13,14 @@ import org.slf4j.LoggerFactory;
    NullAudioListenerTest.class,
    NullAudioBufferTest.class,
    JavaSoundAudioListenerTest.class,
-   JavaSoundAudioBufferTest.class
+   JavaSoundAudioBufferTest.class,
+   JavaSoundAudioFactoryTest.class,
+   JavaSoundAudioSourceTest.class,
+   JoalAudioFactoryTest.class,
+   JoalAudioSourceTest.class,
+   NullAudioFactoryTest.class,
+   NullAudioSourceTest.class,
+   DefaultAudioManagerTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.jmrit.audio tree

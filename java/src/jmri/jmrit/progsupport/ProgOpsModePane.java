@@ -47,6 +47,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     /**
      * Get the selected programmer
      */
+    @Override
     public Programmer getProgrammer() {
         if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getText().equals(oldAddrText)) {
             // hasn't changed
@@ -86,6 +87,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      *
      * @return true is any button is selected
      */
+    @Override
     public boolean isSelected() {
         for (JRadioButton button : buttonMap.values()) {
             if (button.isSelected()) {
@@ -125,6 +127,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
         progBox.setSelectedItem(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)); // set default
         progBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
                 programmerSelected();
@@ -139,12 +142,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         add(mLongAddrCheck);
 
         mAddrField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
                 programmerSelected(); // in case has valid address now
             }
         });
         mLongAddrCheck.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
                 programmerSelected(); // in case has valid address now
@@ -206,6 +211,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     /**
      * Listen to buttons for mode changes
      */
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // find selected button
         log.debug("Selected button: {}", e.getActionCommand());
@@ -231,6 +237,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     /**
      * Listen to programmer for mode changes
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
@@ -260,6 +267,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     // no longer needed, disconnect if still connected
+    @Override
     public void dispose() {
     }
 

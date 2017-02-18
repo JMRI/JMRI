@@ -28,6 +28,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
@@ -45,6 +46,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

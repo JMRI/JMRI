@@ -32,6 +32,7 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);

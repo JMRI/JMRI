@@ -124,6 +124,7 @@ public class Distributor {
             this.client = client;
         }
 
+        @Override
         public void run() {
             client.notify(s);
         }
@@ -142,6 +143,7 @@ public class Distributor {
             this.client = client;
         }
 
+        @Override
         public void run() {
             client.notify(s);
         }

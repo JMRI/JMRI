@@ -20,10 +20,12 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     String prefix = "";
     NceTrafficController tc = null;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
         Turnout t = new NceTurnout(tc, getSystemPrefix(), addr);
@@ -32,10 +34,12 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
         return t;
     }
 
+    @Override
     public void reply(NceReply r) {
 
     }
 
+    @Override
     public void message(NceMessage m) {
 
     }

@@ -163,6 +163,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * Send the DCC++ message to set the Momentary state of locomotive
      * functions F0, F1, F2, F3, F4
      */
+    @Override
     protected void sendMomentaryFunctionGroup1() {
         DCCppMessage msg = DCCppMessage.makeFunctionGroup1SetMomMsg(this.getDccAddress(),
                 f0Momentary, f1Momentary, f2Momentary, f3Momentary, f4Momentary);
@@ -175,6 +176,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * Send the DCC++ message to set the momentary state of functions F5,
      * F6, F7, F8
      */
+    @Override
     protected void sendMomentaryFunctionGroup2() {
         DCCppMessage msg = DCCppMessage.makeFunctionGroup2SetMomMsg(this.getDccAddress(),
                 f5Momentary, f6Momentary, f7Momentary, f8Momentary);
@@ -187,6 +189,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * Send the DCC++ message to set the momentary state of functions F9,
      * F10, F11, F12
      */
+    @Override
     protected void sendMomentaryFunctionGroup3() {
         DCCppMessage msg = DCCppMessage.makeFunctionGroup2SetMomMsg(this.getDccAddress(),
                 f9Momentary, f10Momentary, f11Momentary, f12Momentary);
@@ -199,6 +202,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * Send the DCC++ message to set the momentary state of functions F13,
      * F14, F15, F16 F17 F18 F19 F20
      */
+    @Override
     protected void sendMomentaryFunctionGroup4() {
         DCCppMessage msg = DCCppMessage.makeFunctionGroup4SetMomMsg(this.getDccAddress(),
                 f13Momentary, f14Momentary, f15Momentary, f16Momentary,
@@ -212,6 +216,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * Send the DCC++ message to set the momentary state of functions F21,
      * F22, F23, F24 F25 F26 F27 F28
      */
+    @Override
     protected void sendMomentaryFunctionGroup5() {
         DCCppMessage msg = DCCppMessage.makeFunctionGroup5SetMomMsg(this.getDccAddress(),
                 f21Momentary, f22Momentary, f23Momentary, f24Momentary,
@@ -225,6 +230,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * setSpeedSetting - notify listeners and send the new speed to the
      * command station.
      */
+    @Override
     synchronized public void setSpeedSetting(float speed) {
         if (log.isDebugEnabled()) {
             log.debug("set Speed to: " + speed
@@ -264,6 +270,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     /* Since there is only one "throttle" command to the DCC++ base station,
      * when we change the direction, we must also re-set the speed.
      */
+    @Override
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
         setSpeedSetting(this.speedSetting);
@@ -291,6 +298,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * This is quite problematic, because a using object doesn't know when it's
      * the last user.
      */
+    @Override
     protected void throttleDispose() {
         active = false;
         stopStatusTimer();
@@ -318,11 +326,13 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     // to handle quantized speed. Note this can change! Valued returned is
     // always positive.
+    @Override
     public float getSpeedIncrement() {
         return speedIncrement;
     }
 
     // Handle incoming messages for This throttle.
+    @Override
     public void message(DCCppReply l) {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
@@ -398,10 +408,12 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
 	
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString() + " , " + msg.getRetries() + " retries available.");
@@ -451,6 +463,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             statusTask.cancel();
         }
         statusTask = new java.util.TimerTask() {
+            @Override
             public void run() {
                 /* If the timer times out, just send a status 
                  request message */
@@ -473,6 +486,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
     }
 
+    @Override
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, DCCppThrottleManager.isLongAddress(address));
     }

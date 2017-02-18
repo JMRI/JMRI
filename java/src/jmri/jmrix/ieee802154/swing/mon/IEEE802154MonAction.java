@@ -36,6 +36,7 @@ public class IEEE802154MonAction extends AbstractAction {
         this(Bundle.getMessage("MonActionTitle"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a IEEE802154MonFrame
         IEEE802154MonFrame f = new IEEE802154MonFrame(_memo);

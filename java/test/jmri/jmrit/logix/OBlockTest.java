@@ -20,7 +20,7 @@ public class OBlockTest extends TestCase {
     /* OBlock.DARK replaced with Block.UNDETECTED - 12/10/2016 pwc
     @SuppressWarnings("all") // otherwise, you get "Comparing identical" warning (until something breaks!)
     public void testEqualCoding() {
-        // the following match is required by the JavaDoc
+        // the following match is required by the Javadoc
         Assert.assertTrue("Block.UNKNOWN == OBlock.DARK", Block.UNKNOWN == OBlock.DARK);
     }*/
 
@@ -209,12 +209,14 @@ public class OBlockTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         blkMgr = new OBlockManager();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

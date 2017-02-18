@@ -96,11 +96,13 @@ public class Transmitter implements ThrottleListener {
         return false;
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         needReqThrottle = false;
         throttle = t;
     }
 
+    @Override
     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
     }
 }

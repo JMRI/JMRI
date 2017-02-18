@@ -59,6 +59,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         ok.addActionListener(okListener);
 
         ok.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 reset();
             }
@@ -68,6 +69,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
         reset();
         sysName.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent a) {
                 if (sysName.getText().length() > 0) {
                     ok.setEnabled(true);

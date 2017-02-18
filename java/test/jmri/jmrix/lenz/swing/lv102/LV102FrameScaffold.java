@@ -2,11 +2,8 @@ package jmri.jmrix.lenz.swing.lv102;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
-import javax.swing.JLabel;
 import javax.swing.JComboBox;
 
 /*

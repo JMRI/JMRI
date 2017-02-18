@@ -30,6 +30,7 @@ public class AlignTableFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the window
      */
+    @Override
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
 
@@ -53,6 +54,7 @@ public class AlignTableFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
+    @Override
     protected void storeValues() {
         p.storeDefault();
         setModifiedFlag(false);

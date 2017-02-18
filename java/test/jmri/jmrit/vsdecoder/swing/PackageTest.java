@@ -2,8 +2,6 @@ package jmri.jmrit.vsdecoder.swing;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -11,7 +9,9 @@ import org.slf4j.LoggerFactory;
     DieselPaneTest.class,
     VSDecoderPreferencesPaneTest.class,
     ManageLocationsActionTest.class,
-    VSDPreferencesActionTest.class
+    VSDPreferencesActionTest.class,
+    VSDControlTest.class,
+    VSDManagerFrameTest.class
 })
 
 

@@ -29,6 +29,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         java.io.File file = getFileName(getAllFileChooser());
         if (file == null) {

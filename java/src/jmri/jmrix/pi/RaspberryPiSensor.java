@@ -70,6 +70,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        else setOwnState(Sensor.INACTIVE);
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

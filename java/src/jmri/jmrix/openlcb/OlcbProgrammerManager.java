@@ -59,6 +59,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * @param pAddress     Specific decoder address to use.
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) { return null; }
 
     /**
@@ -69,12 +70,14 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * @param pAddress     Specific decoder address to use.
      * @return null if the address is in use by a reserved programmer
      */
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) { return null; }
 
     /**
      * Return access to an Addressed Mode Programmer, so that it can be used
      * elsewhere.
      */
+    @Override
     public void releaseAddressedProgrammer(AddressedProgrammer p) {}
 
     /**
@@ -83,6 +86,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      *
      * @return false if there's no chance of getting one
      */
+    @Override
     public boolean isAddressedModePossible() { return false; }
 
     /**
@@ -94,6 +98,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * <p>
      * If the order is significant, earlier modes are better.
      */
+    @Override
     public List<ProgrammingMode> getDefaultModes() { return new java.util.ArrayList<>(); }
 
     /**
@@ -101,6 +106,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
+    @Override
     public String getUserName() { return "OpenLCB"; }
 
     /**
@@ -108,5 +114,6 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
+    @Override
     public String toString() { return "OlcbProgrammerManager"; }
 }

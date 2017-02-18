@@ -35,6 +35,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
+    @Override
     public Vector<String> getPortNames() {
         portNameVector = null;
         try {
@@ -191,6 +192,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         }
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // this has to work through one of two sets of class. If
@@ -237,6 +239,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     /**
      * set up all of the other objects to operate with direct drive on this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         TrafficController.instance().connectPort(this);
@@ -250,6 +253,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     // base class methods for the PortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -258,6 +262,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return new DataInputStream(serialInStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -265,6 +270,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return new DataOutputStream(serialOutStream);
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -272,6 +278,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     /**
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"19,200 bps"};
     }

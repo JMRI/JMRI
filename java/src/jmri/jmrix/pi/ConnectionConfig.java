@@ -92,6 +92,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
+                @Override
                 public void focusGained(FocusEvent e) {
                 }
             });

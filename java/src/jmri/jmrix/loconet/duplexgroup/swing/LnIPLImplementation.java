@@ -35,6 +35,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         connect(memo.getLnTrafficController());
 
         swingTmrIplQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
@@ -804,6 +805,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * @param m - incoming LocoNet message to be examined
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         if (handleMessageIplDeviceQuery(m)) {

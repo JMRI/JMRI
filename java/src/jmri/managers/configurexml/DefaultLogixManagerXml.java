@@ -27,6 +27,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * @param o Object to store, of type LogixManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element logixs = new Element("logixs");
         setStoreElementClass(logixs);
@@ -91,6 +92,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         logixs.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -211,6 +213,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         }
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.LogixManager.class).getXMLOrder();
     }

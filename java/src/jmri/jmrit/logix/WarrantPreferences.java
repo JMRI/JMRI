@@ -1,21 +1,25 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.beans.Bean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.WarrantPreferencesPanel.DataPair;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
-import jmri.util.OrderedHashtable;
+import jmri.util.prefs.AbstractPreferencesManager;
+import jmri.util.prefs.InitializationException;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
@@ -29,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2015
  */
-public class WarrantPreferences extends Bean {
+public class WarrantPreferences extends AbstractPreferencesManager {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
     public static final String LAYOUT_SCALE = "layoutScale"; // NOI18N
@@ -41,8 +45,10 @@ public class WarrantPreferences extends Bean {
     public static final String RAMP_INCREMENT = "rampIncrement"; // NOI18N
     public static final String STEP_INCREMENTS = "stepIncrements"; // NOI18N
     public static final String SPEED_NAME_PREFS = "speedNames";   // NOI18N
+    public static final String SPEED_NAMES = SPEED_NAME_PREFS;
     public static final String INTERPRETATION = "interpretation"; // NOI18N
     public static final String APPEARANCE_PREFS = "appearancePrefs"; // NOI18N
+    public static final String APPEARANCES = "appearances"; // NOI18N
     /**
      * @deprecated since 4.7.1; use {@link #LAYOUT_PARAMS} instead
      */
@@ -109,16 +115,12 @@ public class WarrantPreferences extends Bean {
     private int _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
     private float _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
 
-    private OrderedHashtable<String, Float> _speedNames;
-    private OrderedHashtable<String, String> _headAppearances;
+    private final LinkedHashMap<String, Float> _speedNames = new LinkedHashMap<>();
+    private final LinkedHashMap<String, String> _headAppearances = new LinkedHashMap<>();
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
     private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
     private float _throttleIncr = 0.04f;    // throttle increment for each ramp speed change
-
-    WarrantPreferences(String fileName) {
-        openFile(fileName);
-    }
 
     /**
      * Get the default instance.
@@ -127,8 +129,13 @@ public class WarrantPreferences extends Bean {
      */
     public static WarrantPreferences getDefault() {
         return InstanceManager.getOptionalDefault(WarrantPreferences.class).orElseGet(() -> {
-            return InstanceManager.setDefault(WarrantPreferences.class, new WarrantPreferences(FileUtil.getUserFilesPath()
-                    + "signal" + File.separator + "WarrantPreferences.xml"));
+            WarrantPreferences preferences = InstanceManager.setDefault(WarrantPreferences.class, new WarrantPreferences());
+            try {
+                preferences.initialize(ProfileManager.getDefault().getActiveProfile());
+            } catch (InitializationException ex) {
+                log.error("Error initializing default WarrantPreferences", ex);
+            }
+            return preferences;
         });
     }
 
@@ -188,18 +195,20 @@ public class WarrantPreferences extends Bean {
             return;
         }
         Iterator<String> it = map.getValidSpeedNames().iterator();
-        _speedNames = new jmri.util.OrderedHashtable<>();
+        LinkedHashMap<String, Float> names = new LinkedHashMap<>();
         while (it.hasNext()) {
             String name = it.next();
-            _speedNames.put(name, map.getSpeed(name));
+            names.put(name, map.getSpeed(name));
         }
+        this.setSpeedNames(names);
 
         Enumeration<String> en = map.getAppearanceIterator();
-        _headAppearances = new OrderedHashtable<>();
+        LinkedHashMap<String, String> heads = new LinkedHashMap<>();
         while (en.hasMoreElements()) {
             String name = en.nextElement();
-            _headAppearances.put(name, map.getAppearanceSpeed(name));
+            heads.put(name, map.getAppearanceSpeed(name));
         }
+        this.setAppearances(heads);
         setTimeIncrement(map.getStepDelay());
         setThrottleIncrement(map.getStepIncrement());
     }
@@ -257,7 +266,7 @@ public class WarrantPreferences extends Bean {
                 log.error("Unable to read interpetation of Speed Map. Setting to default value % normal.", ex);
             }
         }
-        _speedNames = new OrderedHashtable<>();
+        HashMap<String, Float> map = new LinkedHashMap<>();
         List<Element> list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = list.get(i).getName();
@@ -268,22 +277,23 @@ public class WarrantPreferences extends Bean {
                 log.error("Speed names has invalid content for {} = ", name, list.get(i).getText());
             }
             log.debug("Add {}, {} to AspectSpeed Table", name, speed);
-            _speedNames.put(name, speed);
+            map.put(name, speed);
         }
+        this.setSpeedNames(map);
 
         rampParms = child.getChild(APPEARANCE_PREFS);
         if (rampParms == null) {
             return false;
         }
-        _headAppearances = new OrderedHashtable<>();
+        LinkedHashMap<String, String> heads = new LinkedHashMap<>();
         list = rampParms.getChildren();
         for (int i = 0; i < list.size(); i++) {
             String name = Bundle.getMessage(list.get(i).getName());
             String speed = list.get(i).getText();
-            _headAppearances.put(name, speed);
+            heads.put(name, speed);
         }
+        this.setAppearances(heads);
 
-        setSpeedMap();
         return true;
     }
 
@@ -326,7 +336,7 @@ public class WarrantPreferences extends Bean {
     public boolean store(Element root) {
         Element prefs = new Element(LAYOUT_PARAMS);
         try {
-            prefs.setAttribute(LAYOUT_SCALE, Float.toString(getScale()));
+            prefs.setAttribute(LAYOUT_SCALE, Float.toString(getLayoutScale()));
             prefs.setAttribute(SEARCH_DEPTH, Integer.toString(getSearchDepth()));
             root.addContent(prefs);
 
@@ -384,33 +394,11 @@ public class WarrantPreferences extends Bean {
     }
 
     /**
-     * Apply to classes that use this data
+     * @deprecated since 4.7.2 without replacement. Classes interested in
+     * changes to the warrant preferences listen for those changes.
      */
+    @Deprecated
     public void apply() {
-        setSpeedMap();
-        setNXdata();
-    }
-
-    private void setNXdata() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame frame = NXFrame.getDefault();
-            frame.setScale(_scale);
-            frame.setDepth(_searchDepth);
-            frame.setTimeInterval(_msIncrTime);
-            frame.setThrottleIncrement(_throttleIncr);
-            frame.setThrottleFactor(_throttleScale);
-            frame.updatePanel(_interpretation);
-        }
-    }
-
-    private void setSpeedMap() {
-        SignalSpeedMap map = new SignalSpeedMap();
-        map.setAspectTable(getSpeedNameEntryIterator(), _interpretation);
-        map.setAppearanceTable(getAppearanceEntryIterator());
-        map.setRampParams(_throttleIncr, _msIncrTime);
-        map.setDefaultThrottleFactor(_throttleScale);
-        map.setLayoutScale(_scale);
-        jmri.InstanceManager.setDefault(SignalSpeedMap.class, map);
     }
 
     /**
@@ -419,7 +407,7 @@ public class WarrantPreferences extends Bean {
      */
     @Deprecated
     float getScale() {
-        return _scale;
+        return this.getLayoutScale();
     }
 
     /**
@@ -448,17 +436,17 @@ public class WarrantPreferences extends Bean {
     public void setLayoutScale(float scale) {
         float oldScale = this._scale;
         _scale = scale;
-        propertyChangeSupport.firePropertyChange(LAYOUT_SCALE, oldScale, scale);
+        this.firePropertyChange(LAYOUT_SCALE, oldScale, scale);
     }
 
     public float getThrottleScale() {
         return _throttleScale;
     }
 
-    void setThrottleScale(float scale) {
+    public void setThrottleScale(float scale) {
         float oldScale = this._throttleScale;
         _throttleScale = scale;
-        propertyChangeSupport.firePropertyChange(THROTTLE_SCALE, oldScale, scale);
+        this.firePropertyChange(THROTTLE_SCALE, oldScale, scale);
     }
 
     int getSearchDepth() {
@@ -468,7 +456,7 @@ public class WarrantPreferences extends Bean {
     void setSearchDepth(int depth) {
         int oldDepth = this._searchDepth;
         _searchDepth = depth;
-        propertyChangeSupport.firePropertyChange(SEARCH_DEPTH, oldDepth, depth);
+        this.firePropertyChange(SEARCH_DEPTH, oldDepth, depth);
     }
 
     /**
@@ -500,8 +488,7 @@ public class WarrantPreferences extends Bean {
 
     /**
      * @param ti the throttle increment
-     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)}
-     * instead
+     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)} instead
      */
     @Deprecated
     void setThrottleIncre(float ti) {
@@ -511,11 +498,18 @@ public class WarrantPreferences extends Bean {
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
         List<Entry<String, Float>> vec = new java.util.ArrayList<>();
         _speedNames.entrySet().forEach((entry) -> {
-            vec.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+            vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
     }
 
+    /**
+     *
+     * @return the number of speed names
+     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
+     * result of {@link #getSpeedNames()} instead.
+     */
+    @Deprecated
     int getSpeedNamesSize() {
         return _speedNames.size();
     }
@@ -524,22 +518,43 @@ public class WarrantPreferences extends Bean {
         return _speedNames.get(key);
     }
 
+    @Nonnull
+    @CheckReturnValue
+    public HashMap<String, Float> getSpeedNames() {
+        return new HashMap<>(this._speedNames);
+    }
+
+    public void setSpeedNames(@Nonnull HashMap<String, Float> map) {
+        LinkedHashMap<String, Float> old = new LinkedHashMap<>(_speedNames);
+        _speedNames.clear();
+        _speedNames.putAll(map);
+        this.firePropertyChange(SPEED_NAMES, old, new LinkedHashMap<>(_speedNames));
+    }
+
     void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
-        _speedNames = new jmri.util.OrderedHashtable<>();
+        LinkedHashMap<String, Float> map = new LinkedHashMap<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
-            _speedNames.put(dp.getKey(), dp.getValue());
+            map.put(dp.getKey(), dp.getValue());
         }
+        this.setSpeedNames(map);
     }
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
         List<Entry<String, String>> vec = new ArrayList<>();
         _headAppearances.entrySet().stream().forEach((entry) -> {
-            vec.add(new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
+            vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
     }
 
+    /**
+     *
+     * @return the number of signal head appearances
+     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
+     * results of {@link #getAppearances()} instead
+     */
+    @Deprecated
     int getAppeaancesSize() {
         return _headAppearances.size();
     }
@@ -548,28 +563,42 @@ public class WarrantPreferences extends Bean {
         return _headAppearances.get(key);
     }
 
-    void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
-        _headAppearances = new jmri.util.OrderedHashtable<>();
-        for (int i = 0; i < appearanceMap.size(); i++) {
-            DataPair<String, String> dp = appearanceMap.get(i);
-            _headAppearances.put(dp.getKey(), dp.getValue());
-        }
+    /**
+     * Get a map of signal head appearances.
+     *
+     * @return a map of appearances or an empty map if none are defined
+     */
+    @Nonnull
+    @CheckReturnValue
+    public HashMap<String, String> getAppearances() {
+        return new HashMap<>(this._headAppearances);
     }
 
-    int getInterpretation() {
+    public void setAppearances(HashMap<String, String> map) {
+        LinkedHashMap<String, String> old = new LinkedHashMap<>(this._headAppearances);
+        this._headAppearances.clear();
+        this._headAppearances.putAll(map);
+        this.firePropertyChange(APPEARANCES, old, new LinkedHashMap<>(this._headAppearances));
+    }
+
+    void setAppearances(ArrayList<DataPair<String, String>> appearanceMap) {
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        for (int i = 0; i < appearanceMap.size(); i++) {
+            DataPair<String, String> dp = appearanceMap.get(i);
+            map.put(dp.getKey(), dp.getValue());
+        }
+        this.setAppearances(map);
+    }
+
+    public int getInterpretation() {
         return _interpretation;
     }
 
     void setInterpretation(int interp) {
         int oldInterpretation = this._interpretation;
         _interpretation = interp;
-        propertyChangeSupport.firePropertyChange(INTERPRETATION, oldInterpretation, interp);
+        this.firePropertyChange(INTERPRETATION, oldInterpretation, interp);
     }
-
-    public static class WarrantPreferencesXml extends XmlFile {
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class);
 
     /**
      * Get the time increment.
@@ -588,7 +617,7 @@ public class WarrantPreferences extends Bean {
     public void setTimeIncrement(int increment) {
         int oldIncrement = this._msIncrTime;
         this._msIncrTime = increment;
-        propertyChangeSupport.firePropertyChange(TIME_INCREMENT, oldIncrement, increment);
+        this.firePropertyChange(TIME_INCREMENT, oldIncrement, increment);
     }
 
     /**
@@ -608,6 +637,26 @@ public class WarrantPreferences extends Bean {
     public void setThrottleIncrement(float increment) {
         float oldIncrement = this._throttleIncr;
         this._throttleIncr = increment;
-        propertyChangeSupport.firePropertyChange(RAMP_INCREMENT, oldIncrement, increment);
+        this.firePropertyChange(RAMP_INCREMENT, oldIncrement, increment);
+
     }
+
+    @Override
+    public void initialize(Profile profile) throws InitializationException {
+        if (!this.isInitialized(profile) && !this.isInitializing(profile)) {
+            this.setInitializing(profile, true);
+            this.openFile(FileUtil.getUserFilesPath() + "signal" + File.separator + "WarrantPreferences.xml");
+            this.setInitialized(profile, true);
+        }
+    }
+
+    @Override
+    public void savePreferences(Profile profile) {
+        this.save();
+    }
+
+    public static class WarrantPreferencesXml extends XmlFile {
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class);
 }

@@ -20,6 +20,7 @@ public class LoadModifier extends SdfMacro {
         this.arg3 = arg3;
     }
 
+    @Override
     public String name() {
         return "LOAD_MODIFIER"; // NOI18N
     }
@@ -28,6 +29,7 @@ public class LoadModifier extends SdfMacro {
     int modType;
     int arg1, arg2, arg3;
 
+    @Override
     public int length() {
         return 4;
     }
@@ -62,6 +64,7 @@ public class LoadModifier extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte0);
@@ -73,10 +76,12 @@ public class LoadModifier extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return "Set Modifier " + modTypeVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         String args;
         String arg1Val;
@@ -244,6 +249,7 @@ public class LoadModifier extends SdfMacro {
         return "<could not parse, should not happen>"; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }

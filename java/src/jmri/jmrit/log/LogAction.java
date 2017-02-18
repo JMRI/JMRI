@@ -20,6 +20,7 @@ public class LogAction extends AbstractAction {
         this("Add Log Entry");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         LogFrame f = new LogFrame();
         try {

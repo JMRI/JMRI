@@ -20,6 +20,7 @@ public class JythonSigletAction extends AbstractAction {
 
     JPanel _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton
         JFileChooser fci = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");

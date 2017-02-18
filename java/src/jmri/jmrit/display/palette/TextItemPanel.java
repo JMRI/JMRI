@@ -36,6 +36,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         setToolTipText(Bundle.getMessage("ToolTipDragText"));
     }
 
+    @Override
     public void init() {
         if (!_initialized) {
             if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
@@ -83,6 +84,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         /**
          * ************** DragGestureListener **************
          */
+        @Override
         public void dragGestureRecognized(DragGestureEvent e) {
             if (log.isDebugEnabled()) {
                 log.debug("DragPositionable.dragGestureRecognized ");
@@ -94,34 +96,42 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         /**
          * ************** DragSourceListener ***********
          */
+        @Override
         public void dragDropEnd(DragSourceDropEvent e) {
         }
 
+        @Override
         public void dragEnter(DragSourceDragEvent e) {
         }
 
+        @Override
         public void dragExit(DragSourceEvent e) {
         }
 
+        @Override
         public void dragOver(DragSourceDragEvent e) {
         }
 
+        @Override
         public void dropActionChanged(DragSourceDragEvent e) {
         }
 
         /**
          * ************* Transferable ********************
          */
+        @Override
         public DataFlavor[] getTransferDataFlavors() {
             //if (log.isDebugEnabled()) log.debug("DragPositionable.getTransferDataFlavors ");
             return new DataFlavor[]{dataFlavor};
         }
 
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             //if (log.isDebugEnabled()) log.debug("DragPositionable.isDataFlavorSupported ");
             return dataFlavor.equals(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

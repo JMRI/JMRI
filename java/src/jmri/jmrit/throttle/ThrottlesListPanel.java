@@ -37,21 +37,26 @@ public class ThrottlesListPanel extends JPanel {
         throttleFrames.setTableHeader(null);
         throttleFrames.setDefaultRenderer(Object.class, new ThrottlesTableCellRenderer());
         throttleFrames.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 int row = throttleFrames.rowAtPoint(e.getPoint());
                 throttleFrames.getSelectionModel().setSelectionInterval(row, row);
                 ((ThrottleFrame) throttleFramesLM.getValueAt(row, 0)).toFront();
             }
 
+            @Override
             public void mouseEntered(MouseEvent arg0) {
             }
 
+            @Override
             public void mouseExited(MouseEvent arg0) {
             }
 
+            @Override
             public void mousePressed(MouseEvent arg0) {
             }
 
+            @Override
             public void mouseReleased(MouseEvent arg0) {
             }
         });
@@ -67,6 +72,7 @@ public class ThrottlesListPanel extends JPanel {
         jbNew.setVerticalTextPosition(JButton.BOTTOM);
         jbNew.setHorizontalTextPosition(JButton.CENTER);
         jbNew.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                 tf.toFront();

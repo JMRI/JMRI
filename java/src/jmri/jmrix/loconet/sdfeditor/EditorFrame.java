@@ -42,6 +42,7 @@ public class EditorFrame extends JmriJFrame {
 
     }
 
+    @Override
     public void dispose() {
         pane.dispose();
         super.dispose();

@@ -29,6 +29,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionableShape p = (PositionableShape) o;
 
@@ -108,6 +109,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;

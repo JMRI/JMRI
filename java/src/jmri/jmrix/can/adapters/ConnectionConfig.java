@@ -49,6 +49,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
         updateUserNameField();
 
         ((JComboBox<Option>) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateUserNameField();
             }
@@ -77,6 +78,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
         }
     }
 
+    @Override
     abstract public String name();
 
     @Override
@@ -84,5 +86,6 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
+    @Override
     abstract protected void setInstance(); // necessary to get right type
 }

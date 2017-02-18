@@ -121,10 +121,12 @@ public class EasyDccConsistManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
@@ -136,6 +138,7 @@ public class EasyDccConsistManagerTest extends TestCase {
         }
 
         // override some EasyDccInterfaceController methods for test purposes
+        @Override
         public boolean status() {
             return true;
         }
@@ -145,6 +148,7 @@ public class EasyDccConsistManagerTest extends TestCase {
          */
         public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
 
+        @Override
         public void sendEasyDccMessage(EasyDccMessage m, jmri.jmrix.easydcc.EasyDccListener l) {
             if (log.isDebugEnabled()) {
                 log.debug("sendEasyDccMessage [" + m + "]");

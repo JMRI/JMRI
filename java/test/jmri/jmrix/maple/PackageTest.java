@@ -49,6 +49,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.maple.nodeconfig.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(MapleSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MapleMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialReplyTest.class));
         return suite;
     }
 

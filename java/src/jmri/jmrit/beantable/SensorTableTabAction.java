@@ -13,14 +13,17 @@ public class SensorTableTabAction extends AbstractTableTabAction {
         this("Multiple Tabbed");
     }
 
+    @Override
     protected Manager getManager() {
         return InstanceManager.sensorManagerInstance();
     }
 
+    @Override
     protected String getClassName() {
         return SensorTableAction.class.getName();
     }
 
+    @Override
     protected AbstractTableAction getNewTableAction(String choice) {
         return new SensorTableAction(choice);
     }

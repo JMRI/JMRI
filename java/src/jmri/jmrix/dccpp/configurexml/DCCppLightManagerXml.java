@@ -21,14 +21,17 @@ public class DCCppLightManagerXml extends jmri.managers.configurexml.AbstractLig
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.dccpp.configurexml.DCCppLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
+    @Override
     public boolean load(Element lights) {
         // load individual lights
         return loadLights(lights);

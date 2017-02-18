@@ -120,6 +120,7 @@ public class Measurement {
 
     Reading r;  // a Reading object is by definition immutable
 
+    @Override
     public String toString() {
         if (!isValidPosition()) {
             // out-of-range

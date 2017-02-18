@@ -16,6 +16,7 @@ public class DefaultConditionalTest extends NamedBeanTest {
     /**
      * Operate parent NamedBeanTest tests.
      */
+    @Override
     protected NamedBean createInstance() {
         return new DefaultConditional("IXIC 0");
     }

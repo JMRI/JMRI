@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.can.adapters.loopback.configurexml.PackageTest.class,
-   LoopbackTrafficControllerTest.class
+   LoopbackTrafficControllerTest.class,
+   PortTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.adapters.loopback package.

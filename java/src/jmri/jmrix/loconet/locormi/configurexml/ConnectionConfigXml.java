@@ -25,11 +25,13 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         log.error("unexpected call to getInstance");
         new Exception().printStackTrace();
     }
 
+    @Override
     public Element store(Object o) {
         jmri.jmrix.loconet.locormi.ConnectionConfig c = (jmri.jmrix.loconet.locormi.ConnectionConfig) o;
         Element e = new Element("connection"); // NOI18N
@@ -136,6 +138,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     boolean connected = false;
 
+    @Override
     protected void register() {
         log.error("unexpected call to register()"); // NOI18N
         new Exception().printStackTrace();

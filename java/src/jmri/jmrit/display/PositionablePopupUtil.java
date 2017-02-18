@@ -84,6 +84,7 @@ public class PositionablePopupUtil {
         return util;
     }
 
+    @Override
     public String toString() {
         return _parent.getNameString() + ": fixedWidth= " + fixedWidth + ", fixedHeight= " + fixedHeight
                 + ", margin= " + margin + ", borderSize= " + borderSize;
@@ -413,7 +414,7 @@ public class PositionablePopupUtil {
     }
 
     public void setFontStyle(int style) {
-        _textComponent.setFont(jmri.util.FontUtil.deriveFont(_textComponent.getFont(), style));
+        _textComponent.setFont(_textComponent.getFont().deriveFont(style));
         _parent.updateSize();
     }
 
@@ -426,7 +427,7 @@ public class PositionablePopupUtil {
         if (italic != null) {
             italic.setSelected((styleValue & Font.ITALIC) != 0);
         }
-        _textComponent.setFont(jmri.util.FontUtil.deriveFont(_textComponent.getFont(), styleValue));
+        _textComponent.setFont(_textComponent.getFont().deriveFont(styleValue));
 
         //setSize(getPreferredSize().width, getPreferredSize().height);
         _parent.updateSize();

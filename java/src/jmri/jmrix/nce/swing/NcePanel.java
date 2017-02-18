@@ -19,10 +19,12 @@ abstract public class NcePanel extends jmri.util.swing.JmriPanel implements NceP
      */
     protected NceSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(NceSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {

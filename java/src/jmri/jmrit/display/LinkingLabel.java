@@ -45,14 +45,17 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
 
     String url;
 
+    @Override
     public String getUrl() {
         return url;
     }
 
+    @Override
     public void setUrl(String u) {
         url = u;
     }
 
+    @Override
     public boolean setLinkMenu(JPopupMenu popup) {
         popup.add(CoordinateEdit.getLinkEditAction(this, "EditLink"));
         return true;
@@ -61,6 +64,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
     // overide where used - e.g. momentary
 //    public void doMousePressed(MouseEvent event) {}
 //    public void doMouseReleased(MouseEvent event) {}
+    @Override
     public void doMouseClicked(MouseEvent event) {
         log.debug("click to " + url);
         try {

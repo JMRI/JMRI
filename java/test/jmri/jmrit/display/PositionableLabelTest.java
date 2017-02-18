@@ -54,6 +54,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // test button in upper left
         JButton doButton = new JButton("change label");
         doButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (to.getText().equals("one"))
                     to.setText("two");
@@ -564,6 +565,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -571,6 +573,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
+    @Override
     protected void tearDown() {
         // now close panel window
         if (panel != null) {

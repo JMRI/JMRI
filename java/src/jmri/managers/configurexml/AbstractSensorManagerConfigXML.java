@@ -32,6 +32,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * @param o Object to store, of type SensorManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element sensors = new Element("sensors");
         return store(o, sensors);
@@ -215,6 +216,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }

@@ -145,6 +145,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
         return null; // nothing, by default
    }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, XpaSystemConnectionMemo.class);

@@ -18,6 +18,7 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
     }
 
     /* Send an "Off" message to the decoder for this output  */
+    @Override
     protected synchronized void sendOffMessage() {
         // The Elite appears to react to the on and off messages
         // in the same manner, and does not handle feedback properly

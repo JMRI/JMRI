@@ -1,10 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.AbstractPowerManagerTestBase;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * tests for the Jmri package LnPowerManager

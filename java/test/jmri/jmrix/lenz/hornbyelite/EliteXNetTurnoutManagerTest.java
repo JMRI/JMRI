@@ -28,6 +28,7 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     XNetInterfaceScaffold lnis;
 
     @Test    
+    @Override
     public void testMisses() {
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));

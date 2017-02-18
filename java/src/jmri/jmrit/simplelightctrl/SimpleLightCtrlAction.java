@@ -25,6 +25,7 @@ public class SimpleLightCtrlAction extends AbstractAction {
         this("Lights");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         SimpleLightCtrlFrame f = new SimpleLightCtrlFrame();

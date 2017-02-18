@@ -25,6 +25,7 @@ public class QsiMonAction extends AbstractAction {
                 .getString("MenuItemCommandMonitor"),memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a QsiMonFrame
         QsiMonFrame f = new QsiMonFrame(_memo);

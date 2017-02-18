@@ -20,15 +20,18 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
 
     // returns the InputStream from the port
+    @Override
     public abstract DataInputStream getInputStream();
 
     // returns the outputStream to the port
+    @Override
     public abstract DataOutputStream getOutputStream();
 
     /**
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public abstract boolean status();
 
     /**

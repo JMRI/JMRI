@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -11,7 +10,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
-import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.RemoteXBeeDevice;
 
 import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;

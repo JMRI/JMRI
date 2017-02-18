@@ -51,6 +51,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
 
+    @Override
     public String toString() {
         return "CvValue _num=" + _num + " _cvName=" + _cvName + " _piCv=" + _piCv + " _siCv=" + _siCv
                 + " _iCv=" + _iCv;
@@ -259,6 +260,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     // color management
     Color _defaultColor;
 
+    @Override
     void setColor(Color c) {
         if (c != null) {
             _tableEntry.setBackground(c);
@@ -329,6 +331,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         return _writeOnly;
     }
 
+    @Override
     public void setToRead(boolean state) {
         if (getInfoOnly() || getWriteOnly()) {
             state = false;
@@ -336,11 +339,13 @@ public class CvValue extends AbstractValue implements ProgListener {
         _toRead = state;
     }
 
+    @Override
     public boolean isToRead() {
         return _toRead;
     }
     private boolean _toRead = false;
 
+    @Override
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly()) {
             state = false;
@@ -348,6 +353,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _toWrite = state;
     }
 
+    @Override
     public boolean isToWrite() {
         return _toWrite;
     }
@@ -677,6 +683,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
 
+    @Override
     public void programmingOpReply(int value, int retval) {
         if (log.isDebugEnabled()) {
             log.debug("CV progOpReply for CV " + _num + " with retval " + retval
@@ -729,6 +736,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
             // delay to ensure that the message appears!
             javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     errorTimeout();
                 }

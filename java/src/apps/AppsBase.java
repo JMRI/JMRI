@@ -117,6 +117,7 @@ public abstract class AppsBase {
         if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
             r = new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
@@ -134,6 +135,7 @@ public abstract class AppsBase {
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             r = new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         JmriScriptEngineManager.getDefault().initializeAllEngines();
@@ -179,7 +181,7 @@ public abstract class AppsBase {
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
@@ -345,6 +347,7 @@ public abstract class AppsBase {
         InstanceManager.getDefault(jmri.ShutDownManager.class).
                 register(new AbstractShutDownTask("Writing Blocks") {
 
+                    @Override
                     public boolean execute() {
                         // Save block values prior to exit, if necessary
                         log.debug("Start writing block info");

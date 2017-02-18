@@ -27,6 +27,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof MrcSystemConnectionMemo) {
             try {
@@ -37,10 +38,12 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel";
     }//NOI18N
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -53,6 +56,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         return x.toString();
     }
 
+    @Override
     public void initComponents(MrcSystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getMrcTrafficController();
@@ -77,6 +81,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }

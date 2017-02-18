@@ -49,6 +49,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
 
     // Handle a request to change state by sending a formatted packet
     // to the server.
+    @Override
     public synchronized void doNewState(int oldState, int s) {
         if (oldState == s) {
             return; //no change, just quit.
@@ -87,6 +88,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
     }
 
     // to listen for status changes from JMRIClient system
+    @Override
     public synchronized void reply(JMRIClientReply m) {
         String message = m.toString();
         if (!message.contains(transmitName + " ")) {
@@ -101,6 +103,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
         }
     }
 
+    @Override
     public void message(JMRIClientMessage m) {
     }
 
