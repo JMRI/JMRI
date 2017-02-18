@@ -18,6 +18,7 @@ public class SensorGroupFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SensorGroupFrame t = new SensorGroupFrame();
         Assert.assertNotNull("exists",t);
     }
