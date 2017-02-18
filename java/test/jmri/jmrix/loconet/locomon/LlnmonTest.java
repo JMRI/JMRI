@@ -2388,9 +2388,9 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xBA, 0x01, 0x01, 0x45} );
         assertEquals(" Slot test 14", "Set status of slot 1 to IN_USE.\n", f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x01, 0x33, 0x31, 0x00, 0x00, 0x07, 0x00, 0x21, 0x00, 0x00, 0x00, 0x33} );
+        l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x01, 0x33, 0x31, 0x00, 0x20, 0x07, 0x00, 0x21, 0x00, 0x00, 0x00, 0x33} );
         assertEquals(" Slot test 15", "Report of slot 1 information:\n"
-                +"\tLoco 4273 is Not Consisted, In-Use, operating in 128 SS mode, and is moving Forward at speed 0,\n"
+                +"\tLoco 4273 is Not Consisted, In-Use, operating in 128 SS mode, and is moving Reverse at speed 0,\n"
                 +"\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n"
                 +"\tMaster supports LocoNet 1.1; Track Status: On/Running; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n",
                 f.displayMessage(l));
