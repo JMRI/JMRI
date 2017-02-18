@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(RocoConnectionTypeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.roco.z21.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RocoCommandStationTest.class));
 
         return suite;
     }

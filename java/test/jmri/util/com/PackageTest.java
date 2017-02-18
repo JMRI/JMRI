@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.util.com.rbnb.PackageTest.class
+   jmri.util.com.rbnb.PackageTest.class,
+   jmri.util.com.sun.PackageTest.class
 })
 /**
  * Tests for the jmri.util.com package.

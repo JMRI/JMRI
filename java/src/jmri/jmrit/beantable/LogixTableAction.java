@@ -2424,7 +2424,7 @@ public class LogixTableAction extends AbstractTableAction {
 // Compare type
         _variableCompareTypeBox = new JComboBox<String>();
         for (int i = 0; i < Conditional.ITEM_TO_MEMORY_TEST.length; i++) {
-            _variableCompareTypeBox.addItem(ConditionalVariable.getStateString(Conditional.ITEM_TO_MEMORY_TEST[i]));
+            _variableCompareTypeBox.addItem(ConditionalVariable.describeState(Conditional.ITEM_TO_MEMORY_TEST[i]));
         }
         _variableComparePanel.add(makeEditPanel(_variableCompareTypeBox, "LabelCompareType", "CompareTypeHint"));
         _variableComparePanel.setVisible(false);
@@ -2915,10 +2915,10 @@ public class LogixTableAction extends AbstractTableAction {
                         || Conditional.TYPE_SIGNAL_HEAD_LUNAR == testType
                         || Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR == testType) {
                     _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[1]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[1]));
                     loadJComboBoxWithSignalAspects(_variableSignalBox, _curVariable.getName());
                     _variableSignalBox.setSelectedItem(
-                            ConditionalVariable.getStateString(_curVariable.getType()));
+                            ConditionalVariable.describeState(_curVariable.getType()));
                     _variableSignalPanel.setVisible(true);
                 }
                 break;
@@ -3726,7 +3726,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSensor"));
                 for (int i = 0; i < Conditional.ITEM_TO_SENSOR_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SENSOR_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SENSOR_TEST[i]));
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
@@ -3735,7 +3735,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintTurnout"));
                 for (int i = 0; i < Conditional.ITEM_TO_LIGHT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_TURNOUT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_TURNOUT_TEST[i]));
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
@@ -3744,7 +3744,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintLight"));
                 for (int i = 0; i < Conditional.ITEM_TO_LIGHT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_LIGHT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_LIGHT_TEST[i]));
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
@@ -3756,7 +3756,7 @@ public class LogixTableAction extends AbstractTableAction {
 
                 for (int i = 0; i < Conditional.ITEM_TO_SIGNAL_HEAD_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[i]));
                 }
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSignal"));
                 _variableNamePanel.setVisible(true);
@@ -3774,7 +3774,7 @@ public class LogixTableAction extends AbstractTableAction {
 
                 for (int i = 0; i < Conditional.ITEM_TO_SIGNAL_MAST_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_SIGNAL_MAST_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_MAST_TEST[i]));
                 }
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
                 _variableNamePanel.setVisible(true);
@@ -3806,7 +3806,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintConditional"));
                 for (int i = 0; i < Conditional.ITEM_TO_CONDITIONAL_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_CONDITIONAL_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_CONDITIONAL_TEST[i]));
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
@@ -3815,7 +3815,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintWarrant"));
                 for (int i = 0; i < Conditional.ITEM_TO_WARRANT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_WARRANT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_WARRANT_TEST[i]));
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
@@ -3842,7 +3842,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNameField.setText(_curVariable.getName());
                 for (int i = 0; i < Conditional.ITEM_TO_ENTRYEXIT_TEST.length; i++) {
                     _variableStateBox.addItem(
-                            ConditionalVariable.getStateString(Conditional.ITEM_TO_ENTRYEXIT_TEST[i]));
+                            ConditionalVariable.describeState(Conditional.ITEM_TO_ENTRYEXIT_TEST[i]));
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
@@ -5365,7 +5365,7 @@ public class LogixTableAction extends AbstractTableAction {
                             return rbx.getString("True");
                         case Conditional.FALSE:
                             return rbx.getString("False");
-                        case Conditional.UNKNOWN:
+                        case NamedBean.UNKNOWN:
                             return Bundle.getMessage("BeanStateUnknown");
                     }
                     break;
@@ -5401,7 +5401,7 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (state.equals(rbx.getString("False").toUpperCase().trim())) {
                         variable.setState(Conditional.FALSE);
                     } else {
-                        variable.setState(Conditional.UNKNOWN);
+                        variable.setState(NamedBean.UNKNOWN);
                     }
                     break;
                 case TRIGGERS_COLUMN:

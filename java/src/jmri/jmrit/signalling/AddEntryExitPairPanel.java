@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
+ * JPanel to create a new EntryExitPair.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  */
@@ -520,8 +520,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for it's
-     * values
+     * Service method to set up a column so that it will hold a button for it's
+     * values.
      *
      * @param table  the table
      * @param column the column
@@ -656,7 +656,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     }
 
     void optionSaveButton() {
-        int settingTimer = 2000;
+        int settingTimer = 2000; // in milliseconds
         try {
             settingTimer = Integer.parseInt(durationSetting.getText());
         } catch (Exception e) {

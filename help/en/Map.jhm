@@ -1998,7 +1998,7 @@
 
 <mapID target="package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame" url="package/jmri/jmrix/tams/swing/packetgen/PacketGenFrame.shtml"/>
 
-<mapID target="html.doc.Technical.JavaDoc" url="html/doc/Technical/JavaDoc.shtml"/>
+<mapID target="html.doc.Technical.Javadoc" url="html/doc/Technical/JavaDoc.shtml"/>
 
 <mapID target="package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame" url="package/jmri/jmrix/lenz/systeminfo/SystemInfoFrame.shtml"/>
 

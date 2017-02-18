@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    SimpleTimebaseXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.simpleclock.configurexml package.

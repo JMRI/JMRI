@@ -39,7 +39,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.can.cbus.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractCanTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrafficControllerTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CanConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CanConstantsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CanSystemConnectionMemoTest.class));
         return suite;
     }
 

@@ -91,7 +91,7 @@ public class DefaultConditional extends AbstractNamedBean
     // actions (consequent) parameters
     protected ArrayList<ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
 
-    private int _currentState = Conditional.UNKNOWN;
+    private int _currentState = NamedBean.UNKNOWN;
     private boolean _triggerActionsOnChange = true;
 
     /**
@@ -131,7 +131,7 @@ public class DefaultConditional extends AbstractNamedBean
     public void setLogicType(int type, String antecedent) {
         _logicType = type;
         _antecedent = antecedent;
-        setState(Conditional.UNKNOWN);
+        setState(NamedBean.UNKNOWN);
     }
 
     @Override
@@ -236,9 +236,9 @@ public class DefaultConditional extends AbstractNamedBean
         }
 
         // check if  there are no state variables
-        if (_variableList.size() == 0) {
+        if (_variableList.isEmpty()) {
             // if there are no state variables, no state can be calculated
-            setState(Conditional.UNKNOWN);
+            setState(NamedBean.UNKNOWN);
             return _currentState;
         }
         boolean result = true;

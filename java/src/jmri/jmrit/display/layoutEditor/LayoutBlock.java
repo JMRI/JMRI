@@ -11,7 +11,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -204,7 +203,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public String toString() {
         return "LayoutBlock " + getDisplayName();
     }
-
 
     /**
      * Accessor methods
@@ -3123,9 +3121,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return false;
     }
 
-    //We keep this vector list so that we only keep one instance of a registered listener
-    protected Vector<java.beans.PropertyChangeListener> listeners = new Vector<java.beans.PropertyChangeListener>();
-
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
     @Override
@@ -3137,18 +3132,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             return;
         }
 
-        if (!listeners.contains(l)) {
-            listeners.addElement(l);
-            pcs.addPropertyChangeListener(l);
-        }
+        pcs.addPropertyChangeListener(l);
     }
 
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.removeElement(l);
-            pcs.removePropertyChangeListener(l);
-        }
+        pcs.removePropertyChangeListener(l);
     }
 
     @Override
