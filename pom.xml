@@ -3,9 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>4.7.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -61,7 +62,7 @@
                                     <goal>run</goal>
                                 </goals>
                             </execution>
-                        </executions>  
+                        </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
@@ -102,7 +103,7 @@
                                     <goal>run</goal>
                                 </goals>
                             </execution>
-                        </executions>  
+                        </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
@@ -118,12 +119,12 @@
                         <artifactId>coveralls-maven-plugin</artifactId>
                         <version>4.3.0</version>
                         <configuration>
-                           <sourceDirectories>
-                                  <!-- Additional source directories -->
-                                  <File>java/tmp</File>
-                                  <File>target/generated-sources/javacc</File>
-                                  <File>target/generated-sources/jjtree</File>
-                           </sourceDirectories>
+                            <sourceDirectories>
+                                <!-- Additional source directories -->
+                                <File>java/tmp</File>
+                                <File>target/generated-sources/javacc</File>
+                                <File>target/generated-sources/jjtree</File>
+                            </sourceDirectories>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -131,19 +132,19 @@
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>0.7.8</version>
                         <configuration>
-                           <dataFile>jacoco.exec</dataFile>
-                           <excludes>
-                               <File>**/*Test*.class</File>
-                               <!-- Exclude testing infrastructure classes -->
-                               <File>**/*Scaffold.class"</File>
-                               <File>**/*JUnit*.class</File>
-                               <File>**/*Demo.class</File>
-                               <File>**/*Mock*.class</File>
-                               <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
-                               <File>jmri/jmrix/openlcb/SampleFactory.class</File>
-                               <File>jmri/util/swing/SamplePane.class</File>
-                               <File>apps/tests/Log4JFixture.class</File>
-                           </excludes>
+                            <dataFile>jacoco.exec</dataFile>
+                            <excludes>
+                                <File>**/*Test*.class</File>
+                                <!-- Exclude testing infrastructure classes -->
+                                <File>**/*Scaffold.class"</File>
+                                <File>**/*JUnit*.class</File>
+                                <File>**/*Demo.class</File>
+                                <File>**/*Mock*.class</File>
+                                <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
+                                <File>jmri/jmrix/openlcb/SampleFactory.class</File>
+                                <File>jmri/util/swing/SamplePane.class</File>
+                                <File>apps/tests/Log4JFixture.class</File>
+                            </excludes>
                         </configuration>
                         <executions>
                             <execution>
@@ -180,7 +181,7 @@
                                     <goal>run</goal>
                                 </goals>
                             </execution>
-                        </executions>  
+                        </executions>
                     </plugin>
                     <!-- use surefire (maven default test harness) only for line endings -->
                     <plugin>
@@ -233,7 +234,7 @@
             </build>
         </profile>
     </profiles>
-    
+
     <build>
         <sourceDirectory>${basedir}/java/src</sourceDirectory>
         <testSourceDirectory>${basedir}/java/test</testSourceDirectory>
@@ -272,7 +273,7 @@
             <filter>${basedir}/release.properties</filter>
             <filter>${project.build.directory}/generated/build-metadata/build.properties</filter>
         </filters>
-                    
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -294,7 +295,7 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
-                </executions>  
+                </executions>
                 -->
                 <dependencies>
                     <!-- use the version of ant we specify -->
@@ -314,7 +315,7 @@
                         <artifactId>ant-junit</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
-                </dependencies>          
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -322,7 +323,7 @@
                 <version>2.3.2</version>
                 <configuration>
                     <source>1.8</source>
-                    <target>1.8</target>                        
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -338,7 +339,7 @@
                             <goal>jjtree-javacc</goal>
                         </goals>
                     </execution>
-                </executions>            
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -351,7 +352,7 @@
                     <threshold>High</threshold>
                     <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
-                </configuration>            
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -411,7 +412,7 @@
                         <goals>
                             <goal>create-metadata</goal>
                         </goals>
-                    </execution>                
+                    </execution>
                 </executions>
                 <configuration>
                     <shortRevisionLength>8</shortRevisionLength>
@@ -424,7 +425,7 @@
                     <!-- want true to generate distibutions -->
                     <doUpdate>false</doUpdate>
                 </configuration>
-            </plugin>        
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -443,6 +444,92 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <!-- differs from ant-produced Javadocs by including JMRI version -->
+                    <maxmemory>512m</maxmemory>
+                    <overview>${basedir}/java/src/jmri/overview.html</overview>
+                    <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
+                    <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
+                    <!-- change from default 100 warnings -->
+                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 4000</additionalparam>
+                    <author>true</author><!-- default -->
+                    <use>true</use><!-- default -->
+                    <failOnError>true</failOnError><!-- default -->
+                    <quiet>true</quiet>
+                    <splitindex>true</splitindex>
+                    <tags>
+                        <tag>
+                            <!-- disable output of custom @navassoc tag - used for UML image generation -->
+                            <name>navassoc</name>
+                            <!-- The value X makes Javadoc ignoring the tag -->
+                            <placement>X</placement>
+                        </tag>
+                    </tags>                    
+                    <groups>
+                        <group>
+                            <title>Core</title>
+                            <packages>jmri</packages>
+                        </group>
+                        <group>
+                            <title>Cross-system Tools</title>
+                            <packages>jmri.jmrit*</packages>
+                        </group>
+                        <group>
+                            <title>Applications</title>
+                            <packages>apps:apps*</packages>
+                        </group>
+                        <group>
+                            <title>Implementations</title>
+                            <packages>jmri.implementation*:jmri.managers*:jmri.progdebugger:jmri.layout</packages>
+                        </group>
+                        <group>
+                            <title>Utilities</title>
+                            <packages>jmri.util*</packages>
+                        </group>
+                        <group>
+                            <title>XML persistance</title>
+                            <packages>jmri.configurexml*</packages>
+                        </group>
+                        <group>
+                            <title>Web Services</title>
+                            <packages>jmri.web*:jmri.server*</packages>
+                        </group>
+                        <group>
+                            <title>Interface Server Support</title>
+                            <packages>jmri.jmris*</packages>
+                        </group>
+                        <!-- Layout Connections last because so large -->
+                        <group>
+                            <title>Layout Connections</title>
+                            <packages>jmri.jmrix*</packages>
+                        </group>
+                    </groups>
+                    <bottom><![CDATA[<i>Copyright &copy; ${project.inceptionYear}&#x2013;{currentYear} JMRI Community.
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br>Site hosted by:
+                       <a href="http://sourceforge.net/projects/jmri">
+                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
+                ]]>
+                    </bottom>
+                    <links>
+                        <link>http://java.sun.com/products/javacomm/reference/api/</link>
+                        <link>http://users.frii.com/jarvi/rxtx/doc/</link>
+                        <link>http://www.jdom.org/docs/apidocs/</link>
+                        <link>http://javacsv.sourceforge.net/</link>
+                        <link>http://fasterxml.github.io/jackson-databind/javadoc/2.0.6</link>
+                        <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
+                        <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
+                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
+                        <link>https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.11</link>
+                        <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release</link>
+                    </links>
+                </configuration>
             </plugin>
             <!-- disable by default, enabled only in travis-coverage, for now
             <plugin>
@@ -486,7 +573,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>        
+            </plugin>
             -->
         </plugins>
     </build>
@@ -519,17 +606,17 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
             <version>1.5.4</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -721,7 +808,7 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>findbugs-annotations</artifactId>
             <version>3.0.1</version>
-        </dependency>    
+        </dependency>
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
@@ -764,6 +851,9 @@
     </dependencies>
 
     <repositories>
+        <!--
+        Repository hosting libraries not available through maven.org
+        -->
         <repository>
             <id>lib</id>
             <name>lib</name>
@@ -777,4 +867,5 @@
             <url>file://${project.basedir}/lib</url>
         </repository>
     </repositories>
+
 </project>

@@ -13,7 +13,7 @@ def printSomePreferences():
     """
     Simple examples of getting some JMRI Preferences. Although this example only
     shows getting preferences, both JMRI and arbitrary preferences can be stored
-    using the methods outlined in the java.util.prefs.Preferences JavaDocs.
+    using the methods outlined in the java.util.prefs.Preferences Javadocs.
     """
     profile = getPreferences("profile", True)
     # when getting a Preferences value, a key and a default value are passed
@@ -38,7 +38,7 @@ def printSomeConfigurations():
     # shared should be True if the configuration is common to multiple computers
     shared = True
     # A fragment is defined as any XML element with a name and namespace
-    # See the org.w3c.dom.Element JavaDocs to manipulate a fragment.
+    # See the org.w3c.dom.Element Javadocs to manipulate a fragment.
     fragment = getConfiguration().getConfigurationFragment(startupElement, startupNamespace, shared)
     print "There are", fragment.getElementsByTagName("perform").getLength() , "startup items in this profile."
 

@@ -33,6 +33,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(jmri.progdebugger.DebugProgrammerTest.suite());
         suite.addTest(jmri.progdebugger.DebugProgrammerManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgDebuggerTest.class));
         return suite;
     }
 

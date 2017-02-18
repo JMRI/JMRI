@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.util.MathUtil.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -941,9 +943,7 @@ public class LayoutSlip extends LayoutTurnout {
         g2.draw(new Line2D.Double(A, third(A, C)));
         g2.draw(new Line2D.Double(C, third(C, A)));
 
-        if (state == STATE_AC
-                || state == STATE_BD
-                || state == UNKNOWN) {
+        if (state == STATE_AC || state == STATE_BD || state == UNKNOWN) {
             g2.draw(new Line2D.Double(A, third(A, D)));
 
             g2.draw(new Line2D.Double(D, third(D, A)));
@@ -1103,8 +1103,7 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        String newName = (String) turnoutAComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = turnoutAComboBox.getSelectedItem().toString();
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1114,8 +1113,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = (String) turnoutBComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        newName = turnoutBComboBox.getSelectedItem().toString();
         if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
@@ -1126,7 +1124,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = (String) blockNameComboBox.getEditor().getItem();
+        newName = blockNameComboBox.getEditor().getItem().toString();
         newName = (null != newName) ? newName.trim() : "";
         if (!blockName.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
@@ -1281,7 +1279,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void draw(Graphics2D g2) {
-        if (!getHidden() || layoutEditor.isEditable()) {
+        if (!isHidden() || layoutEditor.isEditable()) {
             Point2D pointA = getCoordsA();
             Point2D pointB = getCoordsB();
             Point2D pointC = getCoordsC();
@@ -1374,29 +1372,29 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void drawSlipCircles(Graphics2D g2) {
-        int circleSize = layoutEditor.getTurnoutCircleSize();
+        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleSize / center.distance(leftCenter);
+        Double leftFract = circleRadius / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleSize / center.distance(rightCenter);
+        Double rightFract = circleRadius / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
     }
 
     public void drawSlipRect(Graphics2D g2) {
         // draw east/west turnout (control) circles
-        int circleSize = layoutEditor.getTurnoutCircleSize();
+        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleSize / center.distance(leftCenter);
+        Double leftFract = circleRadius / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleSize / center.distance(rightCenter);
+        Double rightFract = circleRadius / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
 

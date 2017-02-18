@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.rfid.networkdriver.configurexml.PackageTest.class
+   jmri.jmrix.rfid.networkdriver.configurexml.PackageTest.class,
+   NetworkDriverAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package
