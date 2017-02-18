@@ -349,6 +349,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * <p>
      * @param sGroupPassword The desired group password as a string
      * @return The packet which writes the Group Password to the UR92 device(s)
+     * @throws jmri.jmrix.loconet.LocoNetException in case of invalid sGrooupPassword
      */
     public static final LocoNetMessage createSetUr92GroupPasswordPacket(String sGroupPassword) throws jmri.jmrix.loconet.LocoNetException {
 
