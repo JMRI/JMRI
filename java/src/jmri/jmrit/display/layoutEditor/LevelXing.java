@@ -4,7 +4,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -1198,20 +1197,14 @@ public class LevelXing extends LayoutTrack {
             panel4.setLayout(new FlowLayout());
             // Edit 1 Block
             panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
-            xingEdit1Block.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEdit1BlockPressed(e);
-                }
+            xingEdit1Block.addActionListener((ActionEvent e) -> {
+                xingEdit1BlockPressed(e);
             });
             xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Edit 2 Block
             panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
-            xingEdit2Block.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEdit2BlockPressed(e);
-                }
+            xingEdit2Block.addActionListener((ActionEvent e) -> {
+                xingEdit2BlockPressed(e);
             });
             xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             contentPane.add(panel4);
@@ -1219,31 +1212,22 @@ public class LevelXing extends LayoutTrack {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            xingEditDone.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEditDonePressed(e);
-                }
+            xingEditDone.addActionListener((ActionEvent e) -> {
+                xingEditDonePressed(e);
             });
             xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
-                    rootPane.setDefaultButton(xingEditDone);
-                }
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
+                rootPane.setDefaultButton(xingEditDone);
             });
 
             // Cancel
             panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            xingEditCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEditCancelPressed(e);
-                }
+            xingEditCancel.addActionListener((ActionEvent e) -> {
+                xingEditCancelPressed(e);
             });
             xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);

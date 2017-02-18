@@ -2564,12 +2564,9 @@ public class LayoutTurnout extends LayoutTrack {
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JRootPane rootPane = SwingUtilities.getRootPane(turnoutEditDone);
-                    rootPane.setDefaultButton(turnoutEditDone);
-                }
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(turnoutEditDone);
+                rootPane.setDefaultButton(turnoutEditDone);
             });
 
             turnoutEditDone.addActionListener((ActionEvent e) -> {

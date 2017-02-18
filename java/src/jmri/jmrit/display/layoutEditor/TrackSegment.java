@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
@@ -617,39 +616,27 @@ public class TrackSegment extends LayoutTrack {
 
             // Edit Block
             panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
-            segmentEditBlock.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    segmentEditBlockPressed(e);
-                }
+            segmentEditBlock.addActionListener((ActionEvent e) -> {
+                segmentEditBlockPressed(e);
             });
             segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            segmentEditDone.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    segmentEditDonePressed(e);
-                }
+            segmentEditDone.addActionListener((ActionEvent e) -> {
+                segmentEditDonePressed(e);
             });
             segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JRootPane rootPane = SwingUtilities.getRootPane(segmentEditDone);
-                    rootPane.setDefaultButton(segmentEditDone);
-                }
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(segmentEditDone);
+                rootPane.setDefaultButton(segmentEditDone);
             });
 
             // Cancel
             panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            segmentEditCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    segmentEditCancelPressed(e);
-                }
+            segmentEditCancel.addActionListener((ActionEvent e) -> {
+                segmentEditCancelPressed(e);
             });
             segmentEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);

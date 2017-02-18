@@ -1,8 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-
-
-
 import static jmri.util.MathUtil.lerp;
 import static jmri.util.MathUtil.midpoint;
 
