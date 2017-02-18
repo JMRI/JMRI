@@ -68,7 +68,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
     }
 
-    // Most of the following methods will inherit JavaDoc from jmri.SignalMastLogic.java
+    // Most of the following methods will inherit Javadoc from jmri.SignalMastLogic.java
 
     @Override
     public void setFacingBlock(LayoutBlock facing) {

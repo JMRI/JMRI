@@ -105,7 +105,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - JSON processing library com.fasterxml.jackson
 - version 2.0.6
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
+- Javadoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
 
 bluecove-2.1.1-SNAPSHOT.jar
 lib/bluecove-bluez-2.1.1-SNAPSHOT.jar

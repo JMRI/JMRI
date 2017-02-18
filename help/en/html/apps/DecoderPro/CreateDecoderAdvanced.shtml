@@ -707,7 +707,7 @@ ESU.
 
       <p>For details and more advanced features, see this <a href=
       "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html"
-      target="_blank">JavaDoc page</a></p><a name="conditional" id=
+      target="_blank">Javadoc page</a></p><a name="conditional" id=
       "conditional"></a>
 
       <h3>Conditional Decoder Definitions</h3>To reduce the number

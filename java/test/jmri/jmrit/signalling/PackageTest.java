@@ -29,7 +29,13 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.signalling.entryexit.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.signalling.configurexml.PackageTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AddEntryExitPairFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EntryExitPairsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingFrameActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingSourceActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingSourceFrameTest.class));
         return suite;
     }
 
