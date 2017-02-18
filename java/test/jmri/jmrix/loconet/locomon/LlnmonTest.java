@@ -2307,6 +2307,12 @@ public class LlnmonTest extends TestCase {
         assertEquals("Channel Scan test 2",
                 "Reported Duplex Channel 15 noise/activity level is 8/255.\n",
                 f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x10, 0x10, 0x00, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09});
+        assertEquals("Channel Scan test 2",
+                "Reported Duplex Channel 15 noise/activity level is 8/255.\n",
+                f.displayMessage(l));
+
     }
 
     public void testBasicSlotAccessMessages() {
@@ -3243,6 +3249,130 @@ public class LlnmonTest extends TestCase {
         assertEquals("duplex nzme report",
                 "Reported Duplex Group Name=\"Fade2Blk\", Password=020F0603, Channel=3, ID=133.\n",
                 f.displayMessage(l));
+
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x04, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex ID query",
+                "Query Duplex ID.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x04, 0x10, 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex ID query",
+                "Reported Duplex ID is 128.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x04, 0x10, 1,9,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex ID query",
+                "Reported Duplex ID is 137.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x04, 0x10, 0,1,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex ID query",
+                "Reported Duplex ID is 1.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x04, 0x00, 1, 0x16, 0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex ID query",
+                "Set Duplex ID to 150.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x04, 0x00, 0,9,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex ID query",
+                "Set Duplex ID to 9.\n",
+                f.displayMessage(l));
+
+        
+        
+
+        
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Query Duplex Password.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x10, 0, 0x31,0x32,0x33,0x34,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Reported Duplex Password is 1234.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x10, 0, 0x35,0x36,0x37,0x38,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Reported Duplex Password is 5678.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x10, 0, 0x39,0x30,0x3a,0x3b,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Reported Duplex Password is 90AB.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0, 0x36, 0x39,0x33,0x32,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Set Duplex Password to 6932.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x30,0x2F,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 30 2F 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x30,0x3D,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 30 3D 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x30,0x7f,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 30 7F 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x2F,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 2F 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x3D,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 3D 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x30,0x7f,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 30 7F 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x2F,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 2F 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x3D,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 3D 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x30,0x7f,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 30 7F 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x2F,0x30,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 2F 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x3D,0x30,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 3D 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x07, 0x00, 0,0x7f,0x30,0x30,0x30,0,0,0,0,0,0,0,0,0,0x7f});
+        assertEquals("duplex Group Password query",
+                "Unable to parse LocoNet message.\ncontents: E5 14 07 00 00 7F 30 30 30 00 00 00 00 00 00 00 00 00 7F\n",
+                f.displayMessage(l));
+
 
     }
 
