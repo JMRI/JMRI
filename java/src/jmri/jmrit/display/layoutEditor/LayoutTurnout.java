@@ -7,7 +7,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -1789,17 +1788,14 @@ public class LayoutTurnout extends LayoutTrack {
     private void activateTurnout() {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
-                    = new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (secondNamedTurnout != null) {
-                        if (e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
-                                && e.getOldValue().equals(namedTurnout.getBean().getState())) {
-                            namedTurnout.getBean().setCommandedState((int) e.getNewValue());
-                        }
+                = (java.beans.PropertyChangeEvent e) -> {
+                if (secondNamedTurnout != null) {
+                    if (e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
+                            && e.getOldValue().equals(namedTurnout.getBean().getState())) {
+                        namedTurnout.getBean().setCommandedState((int) e.getNewValue());
                     }
-                    layoutEditor.redrawPanel();
                 }
+                layoutEditor.redrawPanel();
             }, namedTurnout.getName(), "Layout Editor Turnout");
         }
         if (secondNamedTurnout != null) {
@@ -2029,35 +2025,32 @@ public class LayoutTurnout extends LayoutTrack {
                     && (connectC == null) && (connectD == null)) {
                 JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
                 popup.add(rotateItem);
-                rotateItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        boolean entering = true;
-                        boolean error = false;
-                        String newAngle = "";
-                        while (entering) {
-                            // prompt for rotation angle
-                            error = false;
-                            newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                    rb.getString("EnterRotation") + " :");
-                            if (newAngle.length() < 1) {
-                                return;  // cancelled
-                            }
-                            double rot = 0.0;
-                            try {
-                                rot = Double.parseDouble(newAngle);
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
-                                        + " " + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                                error = true;
-                                newAngle = "";
-                            }
-                            if (!error) {
-                                entering = false;
-                                if (rot != 0.0) {
-                                    rotateCoords(rot);
-                                    layoutEditor.redrawPanel();
-                                }
+                rotateItem.addActionListener((ActionEvent event) -> {
+                    boolean entering = true;
+                    boolean error = false;
+                    String newAngle = "";
+                    while (entering) {
+                        // prompt for rotation angle
+                        error = false;
+                        newAngle = JOptionPane.showInputDialog(layoutEditor,
+                                rb.getString("EnterRotation") + " :");
+                        if (newAngle.length() < 1) {
+                            return;  // cancelled
+                        }
+                        double rot = 0.0;
+                        try {
+                            rot = Double.parseDouble(newAngle);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
+                                    + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            error = true;
+                            newAngle = "";
+                        }
+                        if (!error) {
+                            entering = false;
+                            if (rot != 0.0) {
+                                rotateCoords(rot);
+                                layoutEditor.redrawPanel();
                             }
                         }
                     }
@@ -2068,22 +2061,16 @@ public class LayoutTurnout extends LayoutTrack {
             }
             disableItem.setSelected(disabled);
             popup.add(disableItem);
-            disableItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    disabled = disableItem.isSelected();
-                }
+            disableItem.addActionListener((java.awt.event.ActionEvent e2) -> {
+                disabled = disableItem.isSelected();
             });
             if (disableWhenOccupiedItem == null) {
                 disableWhenOccupiedItem = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
             }
             disableWhenOccupiedItem.setSelected(disableWhenOccupied);
             popup.add(disableWhenOccupiedItem);
-            disableWhenOccupiedItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    disableWhenOccupied = disableWhenOccupiedItem.isSelected();
-                }
+            disableWhenOccupiedItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                disableWhenOccupied = disableWhenOccupiedItem.isSelected();
             });
             if (blockName.equals("")) {
                 popup.add(rb.getString("NoBlock"));
@@ -2453,16 +2440,13 @@ public class LayoutTurnout extends LayoutTrack {
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
             secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
-            additionalTurnout.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (additionalTurnout.isSelected()) {
-                        secondTurnoutLabel.setEnabled(true);
-                        secondTurnoutComboBox.setEnabled(true);
-                    } else {
-                        secondTurnoutLabel.setEnabled(false);
-                        secondTurnoutComboBox.setEnabled(false);
-                    }
+            additionalTurnout.addActionListener((ActionEvent e) -> {
+                if (additionalTurnout.isSelected()) {
+                    secondTurnoutLabel.setEnabled(true);
+                    secondTurnoutComboBox.setEnabled(true);
+                } else {
+                    secondTurnoutLabel.setEnabled(false);
+                    secondTurnoutComboBox.setEnabled(false);
                 }
             });
             if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
@@ -2512,11 +2496,8 @@ public class LayoutTurnout extends LayoutTrack {
             blockNameComboBox.setSelectedIndex(-1);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
-            turnoutEditBlock.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnoutEditBlockPressed(e);
-                }
+            turnoutEditBlock.addActionListener((ActionEvent e) -> {
+                turnoutEditBlockPressed(e);
             });
             contentPane.add(panel2);
             if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
@@ -2532,11 +2513,8 @@ public class LayoutTurnout extends LayoutTrack {
                 panel21.add(blockBNameComboBox);
 
                 panel21.add(turnoutEditBlockB = new JButton(rb.getString("CreateEdit")));
-                turnoutEditBlockB.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        turnoutEditBlockBPressed(e);
-                    }
+                turnoutEditBlockB.addActionListener((ActionEvent e) -> {
+                    turnoutEditBlockBPressed(e);
                 });
                 turnoutEditBlockB.setToolTipText(Bundle.getMessage("EditBlockHint", "2"));
                 contentPane.add(panel21);
@@ -2552,11 +2530,8 @@ public class LayoutTurnout extends LayoutTrack {
                 blockCNameComboBox.setToolTipText(rb.getString("EditBlockCNameHint"));
                 panel22.add(blockCNameComboBox);
                 panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
-                turnoutEditBlockC.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        turnoutEditBlockCPressed(e);
-                    }
+                turnoutEditBlockC.addActionListener((ActionEvent e) -> {
+                    turnoutEditBlockCPressed(e);
                 });
                 turnoutEditBlockC.setToolTipText(Bundle.getMessage("EditBlockHint", "3"));
                 contentPane.add(panel22);
@@ -2572,11 +2547,8 @@ public class LayoutTurnout extends LayoutTrack {
                 blockDNameComboBox.setToolTipText(rb.getString("EditBlockDNameHint"));
                 panel23.add(blockDNameComboBox);
                 panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));
-                turnoutEditBlockD.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        turnoutEditBlockDPressed(e);
-                    }
+                turnoutEditBlockD.addActionListener((ActionEvent e) -> {
+                    turnoutEditBlockDPressed(e);
                 });
                 turnoutEditBlockD.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));
                 contentPane.add(panel23);
@@ -2600,20 +2572,14 @@ public class LayoutTurnout extends LayoutTrack {
                 }
             });
 
-            turnoutEditDone.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnoutEditDonePressed(e);
-                }
+            turnoutEditDone.addActionListener((ActionEvent e) -> {
+                turnoutEditDonePressed(e);
             });
             turnoutEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(turnoutEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            turnoutEditCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnoutEditCancelPressed(e);
-                }
+            turnoutEditCancel.addActionListener((ActionEvent e) -> {
+                turnoutEditCancelPressed(e);
             });
             turnoutEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
