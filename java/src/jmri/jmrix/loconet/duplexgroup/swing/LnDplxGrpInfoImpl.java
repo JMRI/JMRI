@@ -344,7 +344,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * Create a LocoNet packet to set the Duplex group password.
      * <p>
      * If s provides anything other than a 4 character length group password
-     * which uses only valid group ID characters (0-9, A-C, a-c), a bogus
+     * which uses only valid group ID characters (0-9, A-C), a bogus
      * LocoNet message is returned.
      * <p>
      * @param sGroupPassword The desired group password as a string
@@ -352,10 +352,10 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      */
     public static final LocoNetMessage createSetUr92GroupPasswordPacket(String sGroupPassword) throws jmri.jmrix.loconet.LocoNetException {
 
-        int gr_p1 = sGroupPassword.charAt(0);
-        int gr_p2 = sGroupPassword.charAt(1);
-        int gr_p3 = sGroupPassword.charAt(2);
-        int gr_p4 = sGroupPassword.charAt(3);
+        int gr_p1 = sGroupPassword.toUpperCase().charAt(0);
+        int gr_p2 = sGroupPassword.toUpperCase().charAt(1);
+        int gr_p3 = sGroupPassword.toUpperCase().charAt(2);
+        int gr_p4 = sGroupPassword.toUpperCase().charAt(3);
         int i;
 
         if (validateGroupPassword(sGroupPassword) == false) {
