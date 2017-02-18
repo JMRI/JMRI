@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.concurrent.locks.ReentrantLock;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -66,6 +67,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     int cmdBlockIdx = 0;
 
     @Override
+    @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
     public void run() {
         if (log.isDebugEnabled()) log.debug("Engineer started warrant {}", _warrant.getDisplayName());
 
@@ -116,18 +118,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 // When the next block goes active or a control command is made, a call to rampSpeedTo()
                 // will test these indexes again and can trigger a notify() to free the wait
                 if (log.isDebugEnabled()) log.debug("Wait for train to enter \"{}\". Warrant {}", ts.getBlockName(), _warrant.getDisplayName());
+                ThreadingUtil.runOnLayoutEventually(() -> {
+                    _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
+                });
                 synchronized (this) {
                     try {
                         _waitForSync = true;
-                      ThreadingUtil.runOnLayoutEventually(() -> {
-                          _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
-                      });
                         wait();
                         _waitForSync = false;
                     } catch (InterruptedException ie) {
                         log.error("InterruptedException at _waitForSync " + ie);
-                    } catch (java.lang.IllegalArgumentException iae) {
-                        log.error("IllegalArgumentException " + iae);
+                        Thread.currentThread().interrupt();
                     }
                 }
                 if (_abort) {
@@ -179,9 +180,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             try {
                 if (command.equals("SPEED")) {
                     float speed = Float.parseFloat(ts.getValue());
-                    _lock.lock();
                     if (log.isTraceEnabled()) log.trace("SPEED CMD: speed= {} type= \"{}\"", speed, _speedType);
                     try {
+                        _lock.lock();
                         _normalSpeed = speed;
                         float speedMod = modifySpeed(speed, _speedType);
                         if (Math.abs(speed - speedMod) > .0001f) {
@@ -378,7 +379,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (sType.equals(Warrant.EStop)) {
             return -1.0f;
         }
-        float throttleSpeed = tSpeed;
+        float throttleSpeed = tSpeed;       // throttleSpeed is a throttle setting
         if (sType.equals(Warrant.Normal)) {
             return throttleSpeed;
         }
@@ -396,21 +397,21 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 break;
 
-            case SignalSpeedMap.SPEED_MPH:          // miles per hour
+            case SignalSpeedMap.SPEED_MPH:          // convert miles per hour to track speed
                 signalSpeed = signalSpeed / _speedMap.getLayoutScale();
-                signalSpeed = signalSpeed / 2.2369363f;  // layout track speed mph
-                signalSpeed = signalSpeed / getThrottleFactor(throttleSpeed);
-                if (signalSpeed < throttleSpeed) {
-                    throttleSpeed = signalSpeed;
+                signalSpeed = signalSpeed / 2.2369363f;  // layout track speed mph as mm/ms
+                float trackSpeed = getTrackSpeed(throttleSpeed);
+                if (signalSpeed < trackSpeed) {
+                    throttleSpeed = getThrottleSetting(signalSpeed);
                 }
                 break;
 
             case SignalSpeedMap.SPEED_KMPH:
                 signalSpeed = signalSpeed / _speedMap.getLayoutScale();
-                signalSpeed = signalSpeed / 3.6f;  // layout track speed mm/ms = kmph
-                signalSpeed = signalSpeed / getThrottleFactor(throttleSpeed);
-                if (signalSpeed < throttleSpeed) {
-                    throttleSpeed = signalSpeed;
+                signalSpeed = signalSpeed / 3.6f;  // layout track speed mm/ms for kmph
+                trackSpeed = getTrackSpeed(throttleSpeed);
+                if (signalSpeed < trackSpeed) {
+                    throttleSpeed = getThrottleSetting(signalSpeed);
                 }
                 break;
             default:
@@ -493,16 +494,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     public String getSpeedRestriction() {
         float curSpeed = _throttle.getSpeedSetting();
-        String units;
-        float scale = _speedMap.getLayoutScale();
-        float speed;
-        if (_speedProfile != null) {
-            speed = scale * _speedProfile.getSpeed(curSpeed, _throttle.getIsForward()) / 1000;
-        } else {
-            speed = curSpeed * _speedMap.getDefaultThrottleFactor() * scale;
-        }
-//        speed = speed * jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
+        float speed = getTrackSpeed(curSpeed) * _speedMap.getLayoutScale();
 
+        String units;
         if (_speedMap.getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
             units = "Kmph";
             speed = speed * 3.6f;
@@ -922,7 +916,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             distance = _speedProfile.getSpeed(speed, isForward) * time / 1000;
         } else {
-            distance = (speed * time) * _speedMap.getDefaultThrottleFactor();
+            float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
+            distance = speed * time * distanceFactor;
         }
         return distance;
     }
@@ -933,7 +928,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             time = distance * 1000 / _speedProfile.getSpeed(speed, isForward);
         } else {
-            time = distance / (_speedMap.getDefaultThrottleFactor() * speed);
+            float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
+            time = distance / (distanceFactor * speed);
         }
         return (long) time;
     }
@@ -951,10 +947,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         float rampLength = 0.0f;
         float delta = _speedMap.getStepIncrement();
-        if (delta <= 0.007f) {
-            log.error("SignalSpeedMap StepIncrement is not set correctly.  Check Preferences->Warrants.");
-            return 100.0f;
-        }
         int time = _speedMap.getStepDelay();
         boolean isForward = _throttle.getIsForward();
         float speed = fromSpeed;
@@ -964,7 +956,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (_speedProfile != null) {
                 dist = _speedProfile.getSpeed((speed - delta / 2), isForward) * time / 1000;
             } else {
-                dist = (speed - delta / 2) * time * _speedMap.getDefaultThrottleFactor();
+                float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
+                dist = (speed - delta / 2) * time * distanceFactor;
             }
             if (dist <= 0.0f) {
                 break;
@@ -983,13 +976,23 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return rampLength;
     }
 
-    private float getThrottleFactor(float speedStep) {
+    // return millimeters per millisecond (= meters/sec)
+    private float getTrackSpeed(float throttleSetting) {
         if (_speedProfile != null) {
-            return _speedProfile.getSpeed(speedStep, _throttle.getIsForward()) / (speedStep * 1000);
+            return _speedProfile.getSpeed(throttleSetting, _throttle.getIsForward()) / 1000;
         }
-        return _speedMap.getDefaultThrottleFactor();
+        return throttleSetting *_speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
     }
 
+    private float getThrottleSetting(float trackSpeed) {
+        float setting;
+        if (_speedProfile != null) {
+            setting = _speedProfile.getThrottleSetting(trackSpeed, _throttle.getIsForward());
+        } else {
+            setting = trackSpeed * _speedMap.getLayoutScale() / (NXFrame.SCALE_FACTOR *_speedMap.getDefaultThrottleFactor());            
+        }
+        return setting;
+    }
     // return a boolean so minSpeedType() can return a non-null String if possible
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
         if (speed1 == null) {

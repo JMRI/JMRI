@@ -1728,6 +1728,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         BlockOrder blkOrder = getBlockOrderAt(idxBlkOrder);
         String speedType = getPermissibleSpeedAt(blkOrder);
         OBlock block = blkOrder.getBlock();
+        if (log.isDebugEnabled()) log.debug("setStoppingCondition(): \"{}\" at block \"{}\" warrant= {}",
+                block.getDisplayName(), getDisplayName());                
         speedType = getPermissibleSpeedAt(blkOrder);
         if (speedType!=null && speedType.equals(Stop)) {
             // block speed cannot be Stop, so OK to assume signal
@@ -1888,6 +1890,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             String blockMsg = block.allocate(this);
             if (blockMsg!=null || (block.getState() & OBlock.OCCUPIED) != 0) {
+                if(log.isDebugEnabled()) log.debug("blockMsg= \"{}\", blockState= {}", blockMsg, block.getState());
                 speedType = Stop;
                 setStoppingBlock(block);
             }           
