@@ -37,7 +37,9 @@ public class PackageTest extends TestCase {
         suite.addTest(StringUtilTest.suite());
         suite.addTest(ThreadingUtilTest.suite());
         suite.addTest(I18NTest.suite());
+        suite.addTest(AlphanumComparatorTest.suite());
         suite.addTest(ColorUtilTest.suite());
+        suite.addTest(MathUtilTest.suite());
         suite.addTest(SwingTestCaseTest.suite());
         suite.addTest(jmri.util.docbook.PackageTest.suite());
         suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());

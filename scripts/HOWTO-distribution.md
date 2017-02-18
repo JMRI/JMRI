@@ -357,7 +357,7 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
     (clean up and logout)
 ```
 
-- Create and upload the JavaDocs (As of May 2016, the [Jenkins server](http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just have that run. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
+- Create and upload the Javadocs (As of May 2016, the [Jenkins server](http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just have that run. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
 ```
     ant javadoc-uml uploadjavadoc
 ```

@@ -204,7 +204,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return "LayoutBlock " + getDisplayName();
     }
 
-
     /**
      * Accessor methods
      */

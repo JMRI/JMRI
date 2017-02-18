@@ -5,7 +5,7 @@ import java.util.Vector;
 /**
  * Access to signal appearance information.
  * <p>
- * Maps to an appearance* file in a signal system.
+ * Maps to an appearance file in a signal system.
  *
  * This interface does not provide any methods to change the map.
  *

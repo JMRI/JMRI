@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignallingFrame object
- * Displayed when user clicks Edit Logic button in the Signal Mast table
+ * Swing action to create and register a SignallingFrame object.
+ * Displayed when user clicks Edit Logic button in the Signal Mast table.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
@@ -36,8 +36,8 @@ public class SignallingSourceAction extends AbstractAction {
     jmri.SignalMast source = null;
 
     /**
-     * Open a SignallingSourceFrame pane
-     * Displayed when user clicks Edit Logic button in the Signal Mast table
+     * Open a SignallingSourceFrame pane.
+     * Displayed when user clicks Edit Logic button in the Signal Mast table.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

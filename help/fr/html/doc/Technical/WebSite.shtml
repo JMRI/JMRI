@@ -57,7 +57,7 @@
 
         <li>Les informations de r&eacute;f&eacute;rences &agrave;
         partir de versions, telles que les d&eacute;finitions
-        d&eacute;codeur, des copies de scripts, JavaDocs, etc Nous
+        d&eacute;codeur, des copies de scripts, Javadocs, etc Nous
         fournissons ces informations s&eacute;par&eacute;ment:
 
           <ol>
@@ -155,10 +155,10 @@
       <p>la plupart du site est g&eacute;n&eacute;r&eacute;e
       &agrave; partir de la source JMRI elle-m&ecirc;me,
       plut&icirc;t que d'&ecirc;tre contenues dans la source. Le
-      <a href="/JavaDoc/doc">JavaDoc</a> est une section, avec une
+      <a href="/JavaDoc/doc">Javadoc</a> est une section, avec une
       partie de l' information sur les d&eacute;codeurs disponibles
       pour l'utilisation. Ces mises &agrave; jour, en particulier
-      la JavaDoc, impliquent nettement plus de travail que de
+      la Javadoc, impliquent nettement plus de travail que de
       simplement mettre &agrave; jour un r&eacute;pertoire, et donc
       ils sont effectu&eacute;s de nuit.</p>
 
