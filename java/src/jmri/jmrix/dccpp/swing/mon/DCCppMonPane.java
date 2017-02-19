@@ -124,7 +124,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 text += "\tCallback Sub: " + l.getCallbackSubString() + "\n";
                 text += "\tCV Value: " + l.getCVString();
                 break;
-            case DCCppConstants.VERSION_REPLY:
+            case DCCppConstants.STATUS_REPLY:
                 text = "Base Station Status: \n";
                 text += "\tVersion: " + l.getStatusVersionString() + "\n";
                 text += "\tBuild: " + l.getStatusBuildDateString();
