@@ -90,6 +90,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.locomon.LocoMonFrame" url="package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml"/>
 
+<mapID target="html.doc.Technical.Javadoc" url="html/doc/Technical/Javadoc.shtml"/>
+
 <mapID target="manual.DecoderPro.Main_Edit" url="manual/DecoderPro/Main_Edit.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_LocoNet" url="manual/DecoderPro/Main_LocoNet.shtml"/>
@@ -343,6 +345,8 @@
 <mapID target="manual.DecoderPro.Main_RPS_Debugger" url="manual/DecoderPro/Main_RPS.shtml#Debugger"/>
 
 <mapID target="html.hardware.can.cbus.index_tools" url="html/hardware/can/cbus/index.shtml#tools"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_LocomotiveConsists" url="package/jmri/jmrit/operations/Operations.shtml#LocomotiveConsists"/>
 
 <mapID target="html.apps.DecoderPro.Install" url="html/apps/DecoderPro/Install.shtml"/>
 
@@ -1998,8 +2002,6 @@
 
 <mapID target="package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame" url="package/jmri/jmrix/tams/swing/packetgen/PacketGenFrame.shtml"/>
 
-<mapID target="html.doc.Technical.Javadoc" url="html/doc/Technical/Javadoc.shtml"/>
-
 <mapID target="package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame" url="package/jmri/jmrix/lenz/systeminfo/SystemInfoFrame.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_XpressNet_Database" url="manual/DecoderPro/Main_XpressNet.shtml#Database"/>
@@ -2268,6 +2270,8 @@
 
 <mapID target="manual.DecoderPro3.dp3_settings_rosterGroups_renameRoster" url="manual/DecoderPro3/dp3_settings_rosterGroups.shtml#renameRoster"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_MaximumNumberLocos" url="package/jmri/jmrit/operations/Operations.shtml#MaximumNumberLocos"/>
+
 <mapID target="package.jmri.jmrit.logix.Warrant_RampParams" url="package/jmri/jmrit/logix/Warrant.shtml#RampParams"/>
 
 <mapID target="html.tools.throttle.ThrottleToolBar" url="html/tools/throttle/ThrottleToolBar.shtml"/>
@@ -2479,8 +2483,6 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_schedule" url="manual/JMRI_OPS_UsersGuide/Ops_schedule.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame" url="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml"/>
-
-<mapID target="package.jmri.jmrit.signalling.AddEditSignallingLogic" url="package/jmri/jmrit/signalling/AddEditSignallingLogic.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame" url="package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml"/>
 
