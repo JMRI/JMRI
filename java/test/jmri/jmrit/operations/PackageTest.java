@@ -35,11 +35,11 @@ public class PackageTest extends TestCase {
         suite.addTest(XmlLoadTests.suite()); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class)); 
         suite.addTest(new junit.framework.JUnit4TestAdapter(CommonConductorYardmasterPanelTest.class)); 
+        suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OpsPropertyChangeListenerTest.class));
-        suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
 
         return suite;
     }
