@@ -1307,8 +1307,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     void okPressed(ActionEvent e) {
-        // Test if bit already in use as a light
-        //int iName=0;
+
         int numberOfTurnouts = 1;
 
         if (range.isSelected()) {
