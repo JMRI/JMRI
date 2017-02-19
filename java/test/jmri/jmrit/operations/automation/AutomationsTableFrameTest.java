@@ -2,11 +2,13 @@ package jmri.jmrit.operations.automation;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -16,6 +18,7 @@ public class AutomationsTableFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationsTableFrame t = new AutomationsTableFrame();
         Assert.assertNotNull("exists",t);
     }
