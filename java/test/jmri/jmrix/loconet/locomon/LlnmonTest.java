@@ -517,6 +517,63 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xB4, 0x30, 0x00, 0x7B});
         assertEquals("LACK 0x30 0x00", "LONG_ACK: Switch request Failed!\n", f.displayMessage(l));
+
+     
+        l = new LocoNetMessage(new int[] {0xB4, 0x3F, 0x00, 0x7B});
+        assertEquals("LACK 0x3f 0x00", "LONG_ACK: NO FREE SLOTS!\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xB4, 0x39, 0x00, 0x7B});
+        assertEquals("LACK 0x39 0x00", "LONG_ACK: Invalid consist, unable to link.\n", f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xB4, 0x3d, 0x00, 0x7B});
+        assertEquals("LACK 0x3d 0x00", "LONG_ACK: The Command Station FIFO is full, the switch command was rejected.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x3d, 0x7f, 0x7B});
+        assertEquals("LACK 0x3d 0x7f", "LONG_ACK: The Command Station accepted the switch command.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x3d, 0x01, 0x7B});
+        assertEquals("LACK 0x3d 0x01", 
+                "LONG_ACK: Unknown response to Request Switch with ACK command, value 0x01.\ncontents: B4 3D 01 7B\n", f.displayMessage(l));
+        
+        l = new LocoNetMessage(new int[] {0xB4, 0x3d, 0x7e, 0x7B});
+        assertEquals("LACK 0x3d 0x7e",
+                "LONG_ACK: Unknown response to Request Switch with ACK command, value 0x7E.\ncontents: B4 3D 7E 7B\n", f.displayMessage(l));
+   
+        
+
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x00, 0x7B});
+        assertEquals("LACK 0x6f 0x00",
+                "LONG_ACK: The Slot Write command was rejected.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x01, 0x7B});
+        assertEquals("LACK 0x6f 0x01",
+                "LONG_ACK: The Slot Write command was accepted.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x23, 0x7B});
+        assertEquals("LACK 0x6f 0x23",
+                "LONG_ACK: DCS51 programming reply, thought to mean OK.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x2B, 0x7B});
+        assertEquals("LACK 0x6f 0x2B",
+                "LONG_ACK: DCS51 programming reply, thought to mean OK.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x6b, 0x7B});
+        assertEquals("LACK 0x6f 0x6b",
+                "LONG_ACK: DCS51 programming reply, thought to mean OK.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x40, 0x7B});
+        assertEquals("LACK 0x6f 0x40",
+                "LONG_ACK: The Slot Write command was accepted blind (no response will be sent).\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7f, 0x7B});
+        assertEquals("LACK 0x6f 0x7f",
+                "LONG_ACK: Function not implemented, no reply will follow.\n", f.displayMessage(l));
+   
+        l = new LocoNetMessage(new int[] {0xB4, 0x6F, 0x7e, 0x7B});
+        assertEquals("LACK 0x6f 0x7e",
+                "LONG_ACK: Unknown response to Write Slot Data message value 0x7E.\n"
+                        + "contents: B4 6F 7E 7B\n", f.displayMessage(l));
+   
     }
 
 
@@ -3109,6 +3166,17 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 
 }
+    
+    public void testDirf() {
+        LocoNetMessage l;
+        
+        l = new LocoNetMessage(new int[] {0xA1, 0x55, 0x44, 0x49});
+        assertEquals(" Slot test 37",
+                "Unable to parse LocoNet message.\ncontents: A1 55 44 49\n",
+                f.displayMessage(l));
+
+    }
+    
     public void testPeerXfer20DuplexQuery() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
