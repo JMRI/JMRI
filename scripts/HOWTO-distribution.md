@@ -189,15 +189,14 @@ where the date at the end should be the date (and optionally time) of the last r
         ant make-test-release-branch
 ```
  
-  This will have done (more or less) the following actions:
+  This will have done (more or less) the following actions (assumes 'github' is a remote pointing at https://github.com/JMRI/JMRI.git ):
 
 ```    
         git checkout master
         git pull
         (commit a version number increment to master)
-        git push JMRI/JMRI master
         git checkout -b {branch}
-        git push JMRI/JMRI {branch}
+        git push github {branch}
         git checkout master    
         git pull
 ```
