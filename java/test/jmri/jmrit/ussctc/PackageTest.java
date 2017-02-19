@@ -30,6 +30,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.ussctc.FollowerActionTest.class));
         suite.addTest(jmri.jmrit.ussctc.OsIndicatorTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.ussctc.OsIndicatorActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BasePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(FollowerFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(FollowerPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(OsIndicatorFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(OsIndicatorPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
         return suite;
     }
 

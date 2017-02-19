@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
+   ConnectionConfigXmlTest.class,
+   LnSensorManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.hexfile.configurexml package.

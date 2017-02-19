@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
@@ -10,13 +11,11 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 public interface SignalMastLogicManager extends Manager {
 
     /*public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);*/
-
     /**
-     * Replace all instances of an old SignalMast (either source or
-     * destination) with the new signal mast instance. This is for use with such
-     * tools as the Layout Editor where a signal mast at a certain location
-     * can be replaced with another, while the remainder of the configuration
-     * stays the same.
+     * Replace all instances of an old SignalMast (either source or destination)
+     * with the new signal mast instance. This is for use with such tools as the
+     * Layout Editor where a signal mast at a certain location can be replaced
+     * with another, while the remainder of the configuration stays the same.
      *
      * @param oldMast Current Signal Mast
      * @param newMast Replacement (new) Signal Mast
@@ -24,8 +23,11 @@ public interface SignalMastLogicManager extends Manager {
     public void replaceSignalMast(SignalMast oldMast, SignalMast newMast);
 
     /**
-     * Discover all possible valid source + destination signal mast pairs
-     * on all Layout Editor Panels and create the corresponding SMLs.
+     * Discover all possible valid source + destination signal mast pairs on all
+     * Layout Editor Panels and create the corresponding SMLs.
+     *
+     * @throws jmri.JmriException if there is an error discovering signaling
+     *                            pairs
      */
     public void automaticallyDiscoverSignallingPairs() throws JmriException;
 
@@ -38,13 +40,14 @@ public interface SignalMastLogicManager extends Manager {
      * @return true if valid, false if not valid
      */
     // public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
-
     /**
-     * Discover valid destination signal masts for a given source Signal Mast on a
-     * given Layout Editor Panel.
+     * Discover valid destination signal masts for a given source Signal Mast on
+     * a given Layout Editor Panel.
      *
      * @param source Source Signal Mast
      * @param layout Layout Editor panel to check
+     * @throws jmri.JmriException if there is an error discovering signaling
+     *                            destinations
      */
     public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException;
 
@@ -59,7 +62,9 @@ public interface SignalMastLogicManager extends Manager {
      * Gather a list of all the Signal Mast Logics, by destination Signal Mast.
      *
      * @param destination The destination Signal Mast
+     * @return a list of logics for destination or an empty list if none
      */
+    @Nonnull
     public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination);
 
     /**
@@ -71,15 +76,15 @@ public interface SignalMastLogicManager extends Manager {
     public SignalMastLogic getSignalMastLogic(SignalMast source);
 
     /**
-     * Return an arraylist of all existing Signal Mast Logics
+     * Return a list of all existing Signal Mast Logics
      *
      * @return An ArrayList of all Signal Mast Logics
      */
     public ArrayList<SignalMastLogic> getSignalMastLogicList();
 
     /**
-     * Initialise all the Signal Mast Logics. Primarily used after
-     * loading a configuration.
+     * Initialise all the Signal Mast Logics. Primarily used after loading a
+     * configuration.
      */
     public void initialise();
 
@@ -92,9 +97,9 @@ public interface SignalMastLogicManager extends Manager {
     public SignalMastLogic newSignalMastLogic(SignalMast source);
 
     //public void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
-
     /**
-     * Remove a destination Signal Mast and its settings from a Signal Mast Logic.
+     * Remove a destination Signal Mast and its settings from a Signal Mast
+     * Logic.
      *
      * @param sml  The Signal Mast Logic
      * @param dest The destination mast
@@ -116,16 +121,16 @@ public interface SignalMastLogicManager extends Manager {
     public void removeSignalMast(SignalMast mast);
 
     /**
-    * Disable the use of info from the Layout Editor Panels to configure
-     * a Signal Mast Logic for a specific Signal Mast.
-    *
-    * @param mast The Signal Mast for which LE info is to be disabled
-    */
+     * Disable the use of info from the Layout Editor Panels to configure a
+     * Signal Mast Logic for a specific Signal Mast.
+     *
+     * @param mast The Signal Mast for which LE info is to be disabled
+     */
     public void disableLayoutEditorUse(SignalMast mast);
 
     /**
-     * Replace the complete Signal Mast Logic configurations between two
-     * Source Signal Masts.
+     * Replace the complete Signal Mast Logic configurations between two Source
+     * Signal Masts.
      *
      * @param mastA Signal Mast A
      * @param mastB Signal Mast B
@@ -133,10 +138,11 @@ public interface SignalMastLogicManager extends Manager {
     public void swapSignalMasts(SignalMast mastA, SignalMast mastB);
 
     /**
-     * Check if a Signal Mast is in use as either a Source or
-     * Destination mast in any Signal Mast Logic
+     * Check if a Signal Mast is in use as either a Source or Destination mast
+     * in any Signal Mast Logic
      *
-     * @return true if Signal Mast is used by at least one Signal Mast Logic
+     * @param mast the signal mast to check
+     * @return true if mast is used by at least one Signal Mast Logic
      */
     public boolean isSignalMastUsed(SignalMast mast);
 

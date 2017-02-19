@@ -54,7 +54,7 @@
 
 <mapID target="package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame" url="package/jmri/jmrix/tams/swing/packetgen/PacketGenFrame.shtml"/>
 
-<mapID target="html.doc.Technical.JavaDoc" url="html/doc/Technical/JavaDoc.shtml"/>
+<mapID target="html.doc.Technical.Javadoc" url="html/doc/Technical/Javadoc.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_AllowLocalCarMovements" url="package/jmri/jmrit/operations/Operations.shtml#AllowLocalCarMovements"/>
 
