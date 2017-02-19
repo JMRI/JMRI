@@ -29,8 +29,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.rollingstock.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.routes.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.trains.PackageTest.suite());  // fixed references to Swing, 10/10/2012
-        suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.router.PackageTest.suite());  // fixed references to Swing, 10/10/2012
+        suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.automation.PackageTest.suite());
 
         suite.addTest(XmlLoadTests.suite()); // no tests in class itself
