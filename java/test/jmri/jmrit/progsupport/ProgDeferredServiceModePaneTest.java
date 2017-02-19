@@ -18,6 +18,7 @@ public class ProgDeferredServiceModePaneTest {
     public void testCTor() {
         ProgDeferredServiceModePane t = new ProgDeferredServiceModePane();
         Assert.assertNotNull("exists",t);
+        jmri.util.JUnitAppender.assertErrorMessage("This is missing code to listen to the programmer and update the mode display");
     }
 
     // The minimal setup for log4J
