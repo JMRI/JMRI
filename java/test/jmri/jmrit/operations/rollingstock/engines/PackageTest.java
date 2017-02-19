@@ -37,7 +37,12 @@ public class PackageTest extends TestCase {
         suite.addTest(EngineEditFrameTest.suite());
         suite.addTest(EngineAttributeEditFrameTest.suite());
         suite.addTest(EngineSetFrameTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEnginesTest.class));
         return suite;
     }
 

@@ -33,7 +33,12 @@ public class PackageTest extends TestCase {
         suite.addTest(AutomationTableFrameGuiTest.suite());
         suite.addTest(AutomationsTableFrameGuiTest.suite());
         suite.addTest(AutomationCopyFrameGuiTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationCopyActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutomationsTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));        
         return suite;
     }
 

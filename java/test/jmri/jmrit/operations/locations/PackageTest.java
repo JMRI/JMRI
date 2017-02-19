@@ -40,7 +40,20 @@ public class PackageTest extends TestCase {
         suite.addTest(StagingEditFrameTest.suite());
         suite.addTest(YardEditFrameTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterPanelTest.class)); 
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(InterchangeTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationsTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationsTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpurEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpurTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(StagingTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterByTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterByTrackPanelTest.class));
         return suite;
     }
 
