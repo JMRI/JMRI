@@ -1011,16 +1011,19 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return msg;
         }
         OBlock block = getBlockAt(0);
-            msg = block.allocate(this);
-            if (msg!=null) {
+        msg = block.allocate(this);
+        if (msg!=null) {
             return msg;
         }
+            
         // allocate all possible blocks
         // Only allocate up to a block reserved by another warrant
-        allocateFromIndex(1);
+        if (!_noRamp) {
+            allocateFromIndex(1);            
+        }
         return null;
     }
-    private void  allocateFromIndex(int index) {
+    private void allocateFromIndex(int index) {
         boolean stoppingBlockSet = false;
         for (int i = index; i < _orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
@@ -1097,6 +1100,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _message = bo.setPath(this);
         if (_message != null) {
             return _message;
+        }
+        if (_noRamp) {
+            return null;
         }
         for (int i = 1; i < _orders.size(); i++) {
             bo = _orders.get(i);
@@ -1381,6 +1387,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             return;
         }
+/*        if (_engineer != null) {
+            if (_engineer.getRunState() == WAIT_FOR_CLEAR || _engineer.getRunState() == HALT || !(_engineer.getSpeed() > 0.0f)) {
+                if (log.isDebugEnabled()) log.debug("Train stopped. Cannot have entered block.  warrant= {}", getDisplayName());
+                return;
+            }
+        }*/
+
         if (activeIdx == _idxCurrentOrder) {
             // Unusual case of current block losing detection, then regaining it.  i.e. dirty track, derail etc.
             // Also, can force train to move into occupied block with "Move into next Block" command.
@@ -1535,7 +1548,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
         int idx = getIndexOfBlock(block, _idxLastOrder);  // if idx >= 0, it is in this warrant
         if (log.isDebugEnabled()) {
-            log.debug("Block \"{}\" goingInactive. idx= {}, _idxCurrentOrder= {}. warrant= {}",
+            log.debug("*Block \"{}\" goingInactive. idx= {}, _idxCurrentOrder= {}. warrant= {}",
                    block.getDisplayName(), idx, _idxCurrentOrder, getDisplayName());
         }
         if (idx < _idxCurrentOrder) {
@@ -1606,6 +1619,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private float getBlockPathLength(BlockOrder blkOrder) {
         float len = blkOrder.getPath().getLengthMm();
         if (len <= 0) {
+            // todo find a better guess (and consistent one) for blocks user has not provided a length
             //a rampLen guess - half throttle for 7 sec.
             len = _engineer.getDistanceTraveled(0.5f, Normal, 7000);
             // len = 155000.0f*scale
@@ -1626,7 +1640,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         float maxSpeed = 0.0f;
         float lastSpeed = 0.0f;
         long blkTime = 0;
-        int firstIdx = 0;
+        int firstIdx = -1;      // for all blocks except first, this is index of NOOP command
         boolean hasSpeedChange = false;
         for (int i=0; i<_commands.size(); i++) {
             ThrottleSetting ts = _commands.get(i);
@@ -1781,7 +1795,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     }
                 }
                 if (!quit) {
-                    if(log.isDebugEnabled()) log.debug("CommandDelay: after wait of {}ms, did Ramp to {}", 
+                    if(log.isDebugEnabled()) log.debug("CommandDelay: after wait of {}ms, start Ramp to {}", 
                             _startWait, nextSpeedType);
                     jmri.util.ThreadingUtil.runOnLayout(() ->{ // move to layout-handling thread
                         _engineer.rampSpeedTo(nextSpeedType);                      
@@ -1790,7 +1804,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         } else {
                             _curSpeedType = nextSpeedType;
                         }
-                        _engineer.setCurrentCommandIndex(_cmdIndex);
+                        _engineer.advanceToCommandIndex(_cmdIndex);
                     });                    
                 }
             }
@@ -1875,38 +1889,85 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
          }
         
         // look ahead for a speed change slower than the current speed
+         // Note: blkOrder still is blkOrder = getBlockOrderAt(_idxCurrentOrder);
+         // and still speedType = currentType;
         int idxBlockOrder = _idxCurrentOrder;
         OBlock block = curBlock;
+        float rampLen = 1.0f;
+        float curDist = 0.0f;        
+        if (position==MID) {
+            curDist += getBlockPathLength(blkOrder)/2;                                   
+        } else if (position==BEG) {
+            curDist += getBlockPathLength(blkOrder);                
+        }   // position==END, hardly any track available
+        float availDist = curDist;        
         while (!_engineer.secondGreaterThanFirst(speedType, currentType)  && idxBlockOrder < _orders.size()-1) {
+            boolean stopSignal = false;
             idxBlockOrder++;
             blkOrder = getBlockOrderAt(idxBlockOrder);
             block = blkOrder.getBlock();
-            speedType = getPermissibleSpeedAt(blkOrder);
-            if (speedType==null) {
-                speedType = currentType;                   
-            } else if (speedType.equals(Stop)) {
+            String tempSpeedType = getPermissibleSpeedAt(blkOrder);
+            if (tempSpeedType==null) {
+                tempSpeedType = currentType;                   
+            } else if (tempSpeedType.equals(Stop)) {
                 // block speed cannot be Stop, so ok to assume signal
-                setStoppingSignal(blkOrder.getSignal());
+                // setStoppingSignal(blkOrder.getSignal());
+                stopSignal = true;
             }
-            String blockMsg = block.allocate(this);
-            if (blockMsg!=null || (block.getState() & OBlock.OCCUPIED) != 0) {
-                if(log.isDebugEnabled()) log.debug("blockMsg= \"{}\", blockState= {}", blockMsg, block.getState());
-                speedType = Stop;
-                setStoppingBlock(block);
-            }           
-        }
-        if (idxBlockOrder >= _orders.size()-1) {
-            if (currentType.equals(speedType)) {
-                // no speed changes 
-                if (runState==WAIT_FOR_CLEAR) {
-                    // if cleared during a halt, _engineer runningState can't change. Need to resume currentType
-                    _engineer.rampSpeedTo(currentType);                    
+            if (tempSpeedType != Stop) {
+                String blockMsg = block.allocate(this);
+                if (blockMsg!=null || (block.getState() & OBlock.OCCUPIED) != 0) {
+                    if(log.isDebugEnabled()) log.debug("blockMsg= \"{}\", blockState= {}", blockMsg, block.getState());
+                    tempSpeedType = Stop;
+                    // setStoppingBlock(block);
+                }                
+            }
+            if (!tempSpeedType.equals(currentType)) {
+                BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
+                float speed = blkSpeedInfo.getEntranceSpeed();
+                if (!(speed > 0.0f)) { // first block has 0.0 entrance speed
+                    speed = blkSpeedInfo.getMaxSpeed();
                 }
-                if(log.isDebugEnabled()) log.debug("No speed changes for runState= {} from {} found after block \"{}\" warrant {}",
-                        RUN_STATE[runState], currentType, curBlock.getDisplayName(), getDisplayName());
-                return true;    // no speed changes found                
+                rampLen = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, tempSpeedType)
+                        +blkOrder.getEntranceSpace();
+                if ((availDist - getBlockPathLength(blkOrder)) < rampLen) {
+                    speedType = tempSpeedType;
+                } // else - lots of room before speed change, do next block at current speed
+                if (speedType.equals(Stop) || speedType.equals(EStop)) {
+                    if (stopSignal) {
+                        setStoppingSignal(blkOrder.getSignal());                        
+                    } else {
+                        setStoppingBlock(block);
+                    }
+                }
+                if(log.isDebugEnabled()) log.debug("availDist= {}, before Block \"{}\" for ramp= {} to speed {} from {}. warrant {}", 
+                        availDist, block.getDisplayName(), rampLen, 
+                        _engineer.modifySpeed(speed,speedType), speed, getDisplayName());
+                break;
             }
+            availDist += getBlockPathLength(blkOrder);
         }
+        
+        if (currentType.equals(speedType)) {
+            // no speed changes 
+            if (runState==WAIT_FOR_CLEAR) {
+                // if cleared during a halt, _engineer runningState can't change. Need to resume currentType
+                _engineer.rampSpeedTo(currentType);                    
+            }
+            if(log.isDebugEnabled()) log.debug("No speed changes for runState= {} from {} found after block \"{}\" warrant {}",
+                    RUN_STATE[runState], currentType, curBlock.getDisplayName(), getDisplayName());
+            return true;    // no speed changes found                
+        }
+        if ((availDist - getBlockPathLength(getBlockOrderAt(_idxCurrentOrder))) > rampLen) {
+            if (runState==WAIT_FOR_CLEAR) {
+                // if cleared during a halt, _engineer runningState can't change. Need to resume currentType
+                _engineer.rampSpeedTo(currentType);                    
+            }
+            if(log.isDebugEnabled()) log.debug("Current block \"{}\" distance not needed for speed change {}. warrant {}",
+                    curBlock.getDisplayName(), speedType, getDisplayName());
+            return true;
+        }
+
         // if speedType > currentType - make change after entering the block (as was done above)
         if (_engineer.secondGreaterThanFirst(currentType, speedType)) {
             if(log.isDebugEnabled()) log.debug("Increase speedfor runState= {} speed {} to {} after entering block \"{}\" warrant {}",
@@ -1915,51 +1976,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             
         }
         
+        float speed  = _engineer.getSpeed();
+        if (Math.abs(speed - _engineer.modifySpeed(speed, speedType)) < 0.005) {
+            if(log.isDebugEnabled()) 
+                log.debug("Train already at speed= {} for speedType {}, warrant {}",
+                        speed, speedType, getDisplayName());    
+            if (runState==RUNNING && (speedType.equals(Stop) || speedType.equals(EStop))) {
+                _engineer.setWaitforClear(true);                                    
+                // if at the beginning of a block, there may be room to ramp up and down
+                // if (curDist > (rampLen + blkOrder.getEntranceSpace())) look at this later
+            }
+            return true;                
+        }
+        
         if(log.isDebugEnabled()) log.debug("Speed decrease to {} from {} needed before entering block \"{}\" warrant {}",
                 speedType, currentType, getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), getDisplayName());
-        // there is a speed change entering block
-        // make change before entering the block
-        // walk back to check if there is enough room to make the change
-        // from the beginning of the block
-        float rampLen = 1.0f;
-        float availDist = 0.0f;
-        BlockSpeedInfo blkSpeedInfo = null;
-        while (idxBlockOrder > _idxCurrentOrder && rampLen > availDist) {
-            idxBlockOrder--;    // start at block before the block with slower speed type 
-            blkOrder = getBlockOrderAt(idxBlockOrder);
-            if (idxBlockOrder==_idxCurrentOrder) {
-                if (position==MID) {
-                    availDist += getBlockPathLength(blkOrder)/2;                                   
-                } else if (position==BEG) {
-                    availDist += getBlockPathLength(blkOrder);                
-                }   // position==END, hardly any track available
-            } else {
-                availDist += getBlockPathLength(blkOrder);                
-            }
-            blkSpeedInfo = _speedInfo.get(idxBlockOrder);
-            
-            float speed = blkSpeedInfo.getEntranceSpeed();
-            if (speed<0.0001f) { // first block has 0.0 entrance speed
-                speed = blkSpeedInfo.getMaxSpeed();
-            }
-            rampLen = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, speedType)
-                    +blkOrder.getEntranceSpace();
-            if(log.isDebugEnabled()) log.debug("availDist= {}, at Block \"{}\" for ramp= {} to speed {} from {} warrant {}", 
-                    availDist, getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), rampLen, 
-                    _engineer.modifySpeed(speed,speedType), speed, getDisplayName());
-        }
-        if (idxBlockOrder > _idxCurrentOrder) {
-            if (runState==WAIT_FOR_CLEAR) {
-                // if cleared during a halt, _engineer runningState can't change. Need to resume currentType
-                _engineer.rampSpeedTo(currentType);                    
-            }
-            if(log.isDebugEnabled()) 
-                log.debug("Will decrease speed for runState= {} to {} from {} later in block \"{}\", warrant {}",
-                        RUN_STATE[runState], speedType, _curSpeedType, blkOrder.getBlock().getDisplayName(), getDisplayName());    
-            return true;    // change speed later
-        }
-        if(log.isDebugEnabled()) log.debug("availDist= {} for rampLen= {} from entrance of block \"{}\" ",
-                availDist, rampLen, blkOrder.getBlock().getDisplayName());
 
         // need to start ramp in the block of idxBlockOrder
         // now refine the point at which the ramp should begin
@@ -1976,8 +2007,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             return true;
         }
-        long waitTime = getWaitTime(idxBlockOrder, availDist, blkOrder.getEntranceSpace(), speedType);
-        blkSpeedInfo = _speedInfo.get(idxBlockOrder);
+        idxBlockOrder--;
+        if(log.isDebugEnabled()) log.debug("Get time to wait in block \"{}\" before ramping to {}. warrant {}",
+                getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), speedType, getDisplayName());
+        BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
+        long waitTime = getWaitTime(blkSpeedInfo, availDist, blkOrder.getEntranceSpace(), speedType);
         if (waitTime < 300) {
             _engineer.rampSpeedTo(speedType);            
             if (speedType.equals(Stop) || speedType.equals(EStop)) {
@@ -1998,17 +2032,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @param distAdj extra space user wants before entering block
      * @return time to wait before starting ramp down
      */
-    private long getWaitTime(int idxBlockOrder, float availDist, float distAdj, String endSpeedType) {
-        BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
-        int startIdx;
+    private long getWaitTime(BlockSpeedInfo blkSpeedInfo, float availDist, float distAdj, String endSpeedType) {
+        int startIdx = blkSpeedInfo.getFirstIndex() + 1;
         float speed = blkSpeedInfo.getEntranceSpeed();  // unmodified recorded speed
-        if (idxBlockOrder==0) {
-            startIdx = blkSpeedInfo.getFirstIndex();
-//            speed = blkSpeedInfo.getMaxSpeed();
-        } else {
-            startIdx = blkSpeedInfo.getFirstIndex() + 1;            
-//            speed = blkSpeedInfo.getEntranceSpeed();  // unmodified recorded speed
-        }
         float waitSpeed = _engineer.modifySpeed(speed, _curSpeedType); // speed while waiting to start ramp
         long waitTime = 0;      // time to wait before starting ramp
         long speedTime = 0;     // time running at a given speed
@@ -2020,7 +2046,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             timeRatio = 1.0f;
         }
         
-        float rampLen = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType)+distAdj;
+        float rampLen = 0.0f;   //_engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType)+distAdj;
         float waitDist = 0.0f;      // distance traveled until ramp is started
         int endIdx = blkSpeedInfo.getLastIndex();
         for (int i=startIdx; i<=endIdx; i++) {
@@ -2030,15 +2056,19 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 speedTime = (long)(ts.getTime()*timeRatio);
                 float dist = _engineer.getDistanceTraveled(speed, _curSpeedType, speedTime);
                 rampLen = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType)+distAdj;
+                if (rampLen > availDist) {
+                    log.error("(availDist-rampLen)="+(availDist-rampLen)+" negative!", new Exception("traceback")); 
+                }
                 
-                if (rampLen >= availDist - waitDist - dist) {
-                    float backupDist = availDist - waitDist;    // overshoot distance, if any                    
-                    if (availDist < rampLen) {
-                        log.error("(availDist-rampLen) negative!", new Exception("traceback")); 
+                if ((waitDist + dist) > (availDist - rampLen)) {
+//                    float backupDist = availDist - waitDist;    // overshoot distance, if any                    
+                    float backupDist = (waitDist + dist) - (availDist - rampLen);
+                    if (backupDist>0.1f) {
+                        waitTime = _engineer.getTimeForDistance(waitSpeed, backupDist);
+//                      waitTime += (long)(speedTime * (backupDist/dist));
+//                      waitDist +=  backupDist;
+                        dist = backupDist;
                     }
-                    waitTime = _engineer.getTimeForDistance(waitSpeed, backupDist);
-//                    waitTime += (long)(speedTime * (backupDist/dist));
-                    waitDist +=  backupDist;
                     break;
                     
                 }

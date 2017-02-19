@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
     
     private int _idxCurrentCommand;     // current throttle command
+    private int _idxNoSpeedCommand;     // make non-speed commands only untilndex
     private float _normalSpeed = 0;       // current commanded throttle setting (unmodified)
     private String _speedType = Warrant.Normal;    // current speed name
     private float _timeRatio = 1.0f;     // ratio to extend scripted time when speed is modified
@@ -51,6 +52,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
         _idxCurrentCommand = 0;
+        _idxNoSpeedCommand = -1;
         _throttle = throttle;
         _syncIdx = -1;
         _waitForSensor = false;
@@ -178,7 +180,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
 
             try {
-                if (command.equals("SPEED")) {
+                if (command.equals("SPEED") && _idxCurrentCommand > _idxNoSpeedCommand) {
                     float speed = Float.parseFloat(ts.getValue());
                     if (log.isTraceEnabled()) log.trace("SPEED CMD: speed= {} type= \"{}\"", speed, _speedType);
                     try {
@@ -240,8 +242,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return _idxCurrentCommand;
     }
 
-    protected void setCurrentCommandIndex(int idx) {
-        _idxCurrentCommand = idx;
+    /**
+     * Delayed ramp has started.  Do non-speed commands only until
+     * index is reached.
+     * @param idx index
+     */
+    protected void advanceToCommandIndex(int idx) {
+        _idxNoSpeedCommand = idx;
+        if (log.isDebugEnabled()) log.debug("_idxNoSpeedCommand= {}", _idxNoSpeedCommand);
     }
 
     private void setSpeedStepMode(int step) {
@@ -371,6 +379,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return _speedOverride;
     }
 
+    /**
+     * Modify a current or commanded throttle setting to a throttle setting constrained
+     * to a named speed restriction
+     * @param tSpeed throttle setting
+     * @param sType named speed restriction
+     * @return modified throttle setting
+     */
     protected float modifySpeed(float tSpeed, String sType) {
         if (log.isTraceEnabled()) log.trace("modifySpeed speed= {} for SpeedType= \"{}\"", tSpeed, sType);
         if (sType.equals(Warrant.Stop)) {
@@ -483,7 +498,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         } else if (!_speedType.equals(Warrant.Normal)) {
             return Warrant.SPEED_RESTRICTED;
         } else if (_idxCurrentCommand < 0) {
-            return 0;
+            return Warrant.STOP;
         }
         return Warrant.RUNNING;
     }
@@ -919,6 +934,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
             distance = speed * time * distanceFactor;
         }
+        if (log.isDebugEnabled()) log.debug("getDistanceTraveled = {} in time={}ms from speedSetting= {}, type {} by {}",
+                distance, time, speedSetting, speedtype,
+                (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
         return distance;
     }
 
@@ -931,6 +949,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
             time = distance / (distanceFactor * speed);
         }
+        if (log.isDebugEnabled()) log.debug("getTimeForDistance = {}ms from speedSetting= {} in distance {} by {}",
+                time, distance, 
+                (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
         return (long) time;
     }
 
@@ -950,7 +971,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         int time = _speedMap.getStepDelay();
         boolean isForward = _throttle.getIsForward();
         float speed = fromSpeed;
-//        int steps = 0;
+        int steps = 0;
         while (speed >= toSpeed) {
             float dist;
             if (_speedProfile != null) {
@@ -968,11 +989,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             } else {
                 rampLength += (speed+delta - toSpeed) * dist / delta;
             }
-//            steps++;
+            steps++;
         }
-/*        if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {} using {}",
+        if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {} using {}",
                 rampLength, time*steps, fromSpeed, curSpeedType, toSpeedType, toSpeed,
-                (_speedProfile != null ? "SpeedProfile" : "Factor=" + getThrottleFactor(curSpeed)));*/
+                (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
         return rampLength;
     }
 
