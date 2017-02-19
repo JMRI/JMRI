@@ -35,6 +35,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ieee802154.swing.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154PortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         return suite;
     }
 

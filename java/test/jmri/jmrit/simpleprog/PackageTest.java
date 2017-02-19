@@ -27,7 +27,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.simpleprog.PackageTest");   // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleProgActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleProgFrameTest.class));
         return suite;
     }
 

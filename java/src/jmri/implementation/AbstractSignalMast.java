@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract class providing the basic logic of the SignalMast interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
         implements SignalMast, java.io.Serializable, java.beans.VetoableChangeListener {

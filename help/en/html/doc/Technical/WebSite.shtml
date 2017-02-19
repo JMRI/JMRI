@@ -120,7 +120,7 @@ the root of the web server.</p>
 <li>contact - 
 </ul>
 <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being contained in 
-the source.  The <a href="http://jmri.org/JavaDoc/doc">JavaDoc</a> is one such section, along with some of the 
+the source.  The <a href="http://jmri.org/JavaDoc/doc">Javadoc</a> is one such section, along with some of the 
 <a href="http://jmri.org/xml/XSLT">human-readable information</a> about defined decoders.  
 
 <h2>Updating the jmri.org site</h2>
@@ -134,7 +134,7 @@ and this content is updated from the JMRI repository without any additional work
 <li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a>
 </ul>
 
-<p>The regeneration of the JavaDoc and xml content involves
+<p>The regeneration of the Javadoc and xml content involves
 significantly more work than merely updating a directory, and so these are only done once per day, as needed,
 by the
 <a href="http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">Generate Website</a>

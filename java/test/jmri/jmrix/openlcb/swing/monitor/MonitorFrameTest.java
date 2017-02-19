@@ -46,6 +46,9 @@ public class MonitorFrameTest {
         Assert.assertEquals("formatted", "S: Alias 0x678 CID 2 frame\n", testFormatted);
         Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         f.dispose();
+        
+        // accept WARN message due to defect in code as written - see #3091
+        jmri.util.JUnitAppender.assertWarnMessage("No User Preferences Manager, not saving format"); 
     }
 
     @Test
@@ -72,6 +75,9 @@ public class MonitorFrameTest {
         Assert.assertEquals("formatted", "R: Alias 0x678 CID 2 frame\n", testFormatted);
         Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         f.dispose();
+        
+        // accept WARN message due to defect in code as written - see #3091
+        jmri.util.JUnitAppender.assertWarnMessage("No User Preferences Manager, not saving format"); 
     }
 
     // The minimal setup for log4J
