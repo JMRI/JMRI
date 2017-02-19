@@ -101,7 +101,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         ant
 ```
 
-That will pop some frames, etc, but should be entirely automatic.  If you have to do it manually for some reason:
+Be patient, it might take a couple minutes. That will pop some frames, etc, but should be entirely automatic. If you have to do it manually for some reason:
 
 ```
         cd help/en/
