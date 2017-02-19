@@ -2896,7 +2896,7 @@ public class Llnmon {
 
     }
     
-    private String interpretDIRF(int dirf) {
+    protected String interpretDIRF(int dirf) {
         if ((dirf & 0x40) == 0x40) {
             return "";
         }
@@ -2912,9 +2912,6 @@ public class Llnmon {
     private String interpretOpcLocoDirf(LocoNetMessage l) {
         int slot = l.getElement(1);
         int dirf = l.getElement(2);
-        if ((dirf & 0x40) == 0x40) {
-            return "";
-        }
 
         String dirFinfo = interpretDIRF(dirf);
         if (dirFinfo.length() == 0) {
