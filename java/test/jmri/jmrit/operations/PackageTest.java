@@ -29,7 +29,6 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.rollingstock.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.routes.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.trains.PackageTest.suite());  // fixed references to Swing, 10/10/2012
-        suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.router.PackageTest.suite());  // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.automation.PackageTest.suite());
 
@@ -40,6 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OpsPropertyChangeListenerTest.class));
+        suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
 
         return suite;
     }

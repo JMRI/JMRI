@@ -17,6 +17,7 @@ import java.awt.GraphicsEnvironment;
 public class TrainsScheduleEditFrameTest {
 
     @Test
+    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleEditFrame t = new TrainsScheduleEditFrame();
