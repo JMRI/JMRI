@@ -17,7 +17,6 @@ import java.awt.GraphicsEnvironment;
 public class SchedulesByLoadFrameTest {
 
     @Test
-    @Ignore("need to unregiester property change listener created by object")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SchedulesByLoadFrame t = new SchedulesByLoadFrame();

@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 public class SchedulesTableModelTest {
 
     @Test
-    @Ignore("need to remove property change listener for the created object")
     public void testCTor() {
         SchedulesTableModel t = new SchedulesTableModel();
         Assert.assertNotNull("exists",t);
