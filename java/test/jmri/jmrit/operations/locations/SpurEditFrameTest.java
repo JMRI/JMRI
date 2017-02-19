@@ -21,6 +21,7 @@ public class SpurEditFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpurEditFrame t = new SpurEditFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

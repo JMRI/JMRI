@@ -21,6 +21,7 @@ public class LocationsTableFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationsTableFrame t = new LocationsTableFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

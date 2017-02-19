@@ -21,6 +21,7 @@ public class TrackEditFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrackEditFrame t = new TrackEditFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
