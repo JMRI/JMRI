@@ -56,7 +56,7 @@ public final class OperationsManager {
      * @return The OperationsManager default instance.
      */
     public synchronized static OperationsManager getInstance() {
-        OperationsManager instance = jmri.InstanceManager.getDefault(OperationsManager.class);
+        OperationsManager instance = jmri.InstanceManager.getNullableDefault(OperationsManager.class);
         if (instance == null) {
             instance = new OperationsManager();
             jmri.InstanceManager.setDefault(OperationsManager.class,instance);
