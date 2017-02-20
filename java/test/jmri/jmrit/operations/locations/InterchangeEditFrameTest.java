@@ -58,6 +58,11 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         f.trackLengthTextField.setText("4331");
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
         sleep(1);   // for slow machines
+        Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
+        Assert.assertNotNull("2nd interchange track", t);
+        Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
+        Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
+
         // deselect east and south check boxes
         getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
         getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
@@ -65,9 +70,6 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
         sleep(1);   // for slow machines
 
-        Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
-        Assert.assertNotNull("2nd interchange track", t);
-        Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
         Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
 
         f.dispose();

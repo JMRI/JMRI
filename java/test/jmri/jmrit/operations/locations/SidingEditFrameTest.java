@@ -78,6 +78,11 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
 
         sleep(1);   // for slow machines
 
+        Track t = l.getTrackByName("3rd siding track", null);
+        Assert.assertNotNull("3rd siding track", t);
+        Assert.assertEquals("3rd siding track length", 1010, t.getLength());
+        Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
+
         // deselect east, west and north check boxes
         getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
         getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
@@ -86,10 +91,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
 
         sleep(1);   // for slow machines
-
-        Track t = l.getTrackByName("3rd siding track", null);
-        Assert.assertNotNull("3rd siding track", t);
-        Assert.assertEquals("3rd siding track length", 1010, t.getLength());
 
         Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
 

@@ -72,8 +72,6 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
-        LocationManager lManager = LocationManager.instance();
-        Location l = lManager.getLocationByName("Test Loc C");
         YardEditFrame f = new YardEditFrame();
         f.setTitle("Test Yard Direction Set Frame");
         f.initComponents(l, null);
@@ -82,6 +80,12 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         f.trackLengthTextField.setText("21");
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
         sleep(1);   // for slow machines
+
+        Track t = l.getTrackByName("4th yard track", null);
+        Assert.assertNotNull("4th yard track", t);
+        Assert.assertEquals("4th yard track length", 21, t.getLength());
+        Assert.assertEquals("Direction all before change", ALL, t.getTrainDirections());
+
         // deselect east, west and south check boxes
         getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
         getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
@@ -91,9 +95,6 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         sleep(1);   // for slow machines
 
-        Track t = l.getTrackByName("4th yard track", null);
-        Assert.assertNotNull("4th yard track", t);
-        Assert.assertEquals("4th yard track length", 21, t.getLength());
         Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
         
         // clean up the frame
@@ -106,8 +107,6 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
-        LocationManager lManager = LocationManager.instance();
-        Location l = lManager.getLocationByName("Test Loc C");
         YardEditFrame f = new YardEditFrame();
         f.setTitle("Test Yard Create Frame");
         f.initComponents(l, null);
