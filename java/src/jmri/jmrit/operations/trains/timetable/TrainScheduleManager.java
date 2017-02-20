@@ -36,14 +36,15 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * record the single instance *
      */
-    private static TrainScheduleManager _instance = null;
     private int _id = 0;
 
     public static synchronized TrainScheduleManager instance() {
+        TrainScheduleManager _instance = jmri.InstanceManager.getNullableDefault(TrainScheduleManager.class);;
         if (_instance == null) {
             log.debug("TrainScheduleManager creating instance");
             // create and load
             _instance = new TrainScheduleManager();
+            jmri.InstanceManager.setDefault(TrainScheduleManager.class,_instance);
             TrainManagerXml.instance(); // load trains
         }
         if (Control.SHOW_INSTANCE) {

@@ -35,13 +35,13 @@ public class CarManager extends RollingStockManager {
     /**
      * record the single instance *
      */
-    private static CarManager _instance = null;
-
     public static synchronized CarManager instance() {
+        CarManager _instance = jmri.InstanceManager.getNullableDefault(CarManager.class);
         if (_instance == null) {
             log.debug("CarManager creating instance");
             // create and load
             _instance = new CarManager();
+            jmri.InstanceManager.setDefault(CarManager.class,_instance);
             OperationsSetupXml.instance(); // load setup
             // create manager to load cars and their attributes
             CarManagerXml.instance();
