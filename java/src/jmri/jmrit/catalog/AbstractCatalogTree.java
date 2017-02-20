@@ -247,8 +247,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     @Override
     @CheckReturnValue
-    public String getStateString() {
-        int state = getState();
+    public String describeState(int state) {
         switch (state) {
             case UNKNOWN: return Bundle.getMessage("BeanStateUnknowng");
             case INCONSISTENT: return Bundle.getMessage("BeanStateInconsistent");

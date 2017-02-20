@@ -30,8 +30,7 @@ public interface SignalGroupManager extends Manager {
 
     @Nonnull public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName);
 
-    @Nonnull@Override
- public List<String> getSystemNameList();
+    @Nonnull@Override public List<String> getSystemNameList();
 
     void deleteSignalGroup(@Nonnull SignalGroup s);
 }

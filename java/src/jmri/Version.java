@@ -5,27 +5,33 @@ import java.util.ResourceBundle;
 /**
  * Defines a simple place to get the JMRI version string.
  * <p>
- * JMRI's version string comes in two forms, depending on whether it was built by an "official"
- * process or not, which in turn is determined by the "release.official" property:
- *<dl>
- *<dt>Official<dd>
- *<ul>
- *<li>If the revision number e.g. 123abc (git hash) is available in release.revision_id, then 
- * "4.1.1-R123abc". Note the "R".
- *<li>Else "4.1.1-(date)", where the date comes from the release.build_date property.
- *</ul>
- *<dt>Unofficial<dd>
- * Unofficial releases are marked by "ish" after the version number, and inclusion of the building user's ID.
- *<ul>
- *<li>If the revision number e.g. 123abc (git hash) is available in release.revision_id, then 
- * "4.1.1ish-(user)-(date)-R123abc". Note the "R".
- *<li>Else "4.1.1-(user)-(date)", where the date comes from the release.build_date property.
- *</ul>
- *</dl>
- * The release.revision_id, release.build_user and release.build_date properties are set at build time by Ant.
+ * JMRI's version string comes in two forms, depending on whether it was built
+ * by an "official" process or not, which in turn is determined by the
+ * "release.official" property:
+ * <dl>
+ * <dt>Official<dd>
+ * <ul>
+ * <li>If the revision number e.g. 123abc (git hash) is available in
+ * release.revision_id, then "4.1.1-R123abc". Note the "R".
+ * <li>Else "4.1.1-(date)", where the date comes from the release.build_date
+ * property.
+ * </ul>
+ * <dt>Unofficial<dd>
+ * Unofficial releases are marked by "ish" after the version number, and
+ * inclusion of the building user's ID.
+ * <ul>
+ * <li>If the revision number e.g. 123abc (git hash) is available in
+ * release.revision_id, then "4.1.1ish-(user)-(date)-R123abc". Note the "R".
+ * <li>Else "4.1.1-(user)-(date)", where the date comes from the
+ * release.build_date property.
+ * </ul>
+ * </dl>
+ * The release.revision_id, release.build_user and release.build_date properties
+ * are set at build time by Ant.
  * <p>
- * Generally, JMRI updates its version string in the code repository right <b>after</b> a release. 
- * Between formal release 1.2.3 and 1.2.4, the string will be 1.2.4ish. 
+ * Generally, JMRI updates its version string in the code repository right
+ * <b>after</b> a release. Between formal release 1.2.3 and 1.2.4, the string
+ * will be 1.2.4ish.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -41,54 +47,63 @@ import java.util.ResourceBundle;
  */
 public class Version {
 
-    static final private ResourceBundle versionBundle = ResourceBundle.getBundle("jmri.Version"); // NOI18N
+    static final private ResourceBundle VERSION_BUNDLE = ResourceBundle.getBundle("jmri.Version"); // NOI18N
 
     /**
      * Major number changes with large incompatible changes in requirements or
      * API.
      */
-    static final public int major = Integer.parseInt(versionBundle.getString("release.major")); // NOI18N
+    static final public int major = Integer.parseInt(VERSION_BUNDLE.getString("release.major")); // NOI18N
 
     /**
      * Minor number changes with each production versionBundle. Odd is
      * development, even is production.
      */
-    static final public int minor = Integer.parseInt(versionBundle.getString("release.minor")); // NOI18N;
-
-    /* Test number changes with individual releases,
-     * generally fastest for test releases. Set 0 for production
-     */
-    static final public int test = Integer.parseInt(versionBundle.getString("release.build")); // NOI18N;
-
-    /* The user who built this versionBundle */
-    static final public String buildUser = versionBundle.getString("release.build_user"); // NOI18N;
-
-    /* The SVN revision ID for this versionBundle (if known) */
-    static final public String revisionId = versionBundle.getString("release.revision_id"); // NOI18N;
-
-    /* The date/time of this build */
-    static final public String buildDate = versionBundle.getString("release.build_date"); // NOI18N;
-
-    /* Has this build been created as a possible "official" versionBundle? */
-    static final public boolean official = Boolean.parseBoolean(versionBundle.getString("release.official")); // NOI18N
+    static final public int minor = Integer.parseInt(VERSION_BUNDLE.getString("release.minor")); // NOI18N;
 
     /**
-     * The Modifier is the third term in the
-     * 1.2.3 version name.  It's not present in production
-     * versions that set it to zero.
-     * Non-official versions get an "ish"
+     * Test number changes with individual releases, generally fastest for test
+     * releases. In production releases, if non-zero, indicates a bug fix only
+     * release.
+     */
+    static final public int test = Integer.parseInt(VERSION_BUNDLE.getString("release.build")); // NOI18N;
+
+    /**
+     * The user who built this versionBundle, as determined by the build
+     * machine.
+     */
+    static final public String buildUser = VERSION_BUNDLE.getString("release.build_user"); // NOI18N;
+
+    /**
+     * The Git revision ID for this versionBundle (if known).
+     */
+    static final public String revisionId = VERSION_BUNDLE.getString("release.revision_id"); // NOI18N;
+
+    /**
+     * The date/time of this build.
+     */
+    static final public String buildDate = VERSION_BUNDLE.getString("release.build_date"); // NOI18N;
+
+    /**
+     * Has this build been created as a possible "official" versionBundle?
+     */
+    static final public boolean official = Boolean.parseBoolean(VERSION_BUNDLE.getString("release.official")); // NOI18N
+
+    /**
+     * Get the third term in the 1.2.3 version name. It is not present in
+     * production versions when set to zero. Non-official versions include "ish"
+     * in the third term.
+     *
+     * @return the third term, possibly an empty String if {@link #test} is 0
      */
     public static String getModifier() {
         StringBuilder modifier = new StringBuilder("");
-
         if (test != 0) {
             modifier.append(".").append(test);
         }
-
-        if (! official) {
+        if (!official) {
             modifier.append("ish");
         }
-
         return modifier.toString();
     }
 
@@ -198,7 +213,7 @@ public class Version {
     /**
      * Return the version as a major.minor.test String.
      *
-     * @return The version
+     * @return the version
      */
     static public String getCanonicalVersion() {
         return major + "." + minor + "." + test;
@@ -207,11 +222,11 @@ public class Version {
     /**
      * Return the application copyright as a String.
      *
-     * @return The copyright
+     * @return the copyright
      */
     static public String getCopyright() {
         // TODO Internatonalize with Bundle.getMessage()
-        return "Copyright \u00a9 " + versionBundle.getString("jmri.copyright.year") + " JMRI Community";
+        return "Copyright \u00a9 1997-" + VERSION_BUNDLE.getString("jmri.copyright.year") + " JMRI Community";
     }
 
     /**

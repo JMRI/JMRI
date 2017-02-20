@@ -151,14 +151,9 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     jmri.UserPreferencesManager p;
 
     void cancelPressed(ActionEvent e) {
-        //p.setVisible(false);
-        //p.dispose();
-        //p = null;
     }
 
     void okPressed(ActionEvent e) {
-        /*String user = userName.getText();
-         if (user.equals("")) user=null;*/
 
         int numberOfSensors = 1;
 

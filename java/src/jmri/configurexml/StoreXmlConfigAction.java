@@ -3,6 +3,7 @@ package jmri.configurexml;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
+import javax.annotation.CheckForNull;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.ConfigureManager;
@@ -46,8 +47,11 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
      * <LI>adds .xml extension if needed
      * <LI>if that file exists, check with user
      * </OL>
-     * Returns null if selection failed for any reason
+     *
+     * @param fileChooser the file chooser to use
+     * @return the file to store or null if the user declined to store a file
      */
+    @CheckForNull
     public static File getFileCustom(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
         int retVal = fileChooser.showDialog(null, null);

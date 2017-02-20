@@ -751,7 +751,7 @@ public class ConditionalVariable {
      * @param t the state
      * @return the localized description
      */
-    public static String getStateString(int t) {
+    public static String describeState(int t) {
         switch (t) {
             case Conditional.TYPE_NONE:
                 return ""; // NOI18N
@@ -826,7 +826,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
         }
-        return "";
+        return "<none>";
     }
 
     /**

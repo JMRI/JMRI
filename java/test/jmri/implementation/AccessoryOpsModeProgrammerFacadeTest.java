@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2014
  *
  */
- // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
+// @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
 // @ToDo("test mode handling")
 // @ToDo("test packet contents in each mode")
 // @ToDo("test address handling")
@@ -27,7 +27,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
     public void testWriteDirect() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger(true, 123);
-        Programmer p = new AccessoryOpsModeProgrammerFacade(dp);
+        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, null);
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
@@ -49,7 +49,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
         dp.setTestReadLimit(1024);
         dp.setTestWriteLimit(1024);
 
-        Programmer p = new AccessoryOpsModeProgrammerFacade(dp);
+        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, null);
 
         Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));
         Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));

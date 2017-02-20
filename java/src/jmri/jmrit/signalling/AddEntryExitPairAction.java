@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register the Add Entry Exit Pair
+ * Swing action to create and register the Add Entry Exit Pair.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */

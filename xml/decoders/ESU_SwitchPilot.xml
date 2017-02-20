@@ -109,6 +109,7 @@
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
                 <name>Ops Mode Accessory Programming</name>
+                <parameter name="Address Type">decoder</parameter>
             </capability>
         </programming>
         <variables>
