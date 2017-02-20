@@ -33,9 +33,9 @@
 			<LI><a href="WebSite.shtml">Site Web</a>
 			
 			<LI><a href="/JavaDoc/doc">Javadocs</a><ul>
-				<LI><a href="/JavaDoc/doc/index-all.html">Index des Noms</a>
+				<LI><a href="/JavaDoc/doc/index-files/index-1.html">Index des Noms</a>
 				<LI><A HREF="/JavaDoc/doc/index.html">Paquets</A>
-				<LI><A HREF="/JavaDoc/doc/allclasses-frame.html">Hi&eacute;rarchie des Class</A>
+				<LI><A HREF="/JavaDoc/doc/allclasses-frame.html">Class</A>
 				</UL>
 			</ul>
 		</dd>
