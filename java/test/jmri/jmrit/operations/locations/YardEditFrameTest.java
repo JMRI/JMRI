@@ -16,15 +16,100 @@ import org.junit.Assert;
 public class YardEditFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+    private LocationManager lManager = LocationManager.instance();
+    private Location l = lManager.getLocationByName("Test Loc C");
 
-    public void testYardEditFrame() {
+    public void testCreateYardTrackDefault() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        YardEditFrame f = new YardEditFrame();
+        f.setTitle("Test Yard Add Frame");
+        f.initComponents(l, null);
+
+        // create a yard track with length 43.
+        f.trackNameTextField.setText("new yard track");
+        f.trackLengthTextField.setText("43");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        Track t = l.getTrackByName("new yard track", null);
+        Assert.assertNotNull("new yard track", t);
+        Assert.assertEquals("yard track length", 43, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        // add a second track with length 6543.
+        f.trackNameTextField.setText("2nd yard track");
+        f.trackLengthTextField.setText("6543");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        t = l.getTrackByName("2nd yard track", null);
+        Assert.assertNotNull("2nd yard track", t);
+        Assert.assertEquals("2nd yard track length", 6543, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        // add A third track with length 1.
+        f.trackNameTextField.setText("3rd yard track");
+        f.trackLengthTextField.setText("1");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        t = l.getTrackByName("3rd yard track", null);
+        Assert.assertNotNull("3rd yard track", t);
+        Assert.assertEquals("3rd yard track length", 1, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        // clean up the frame
+        f.setVisible(false);
+        f.dispose();
+    }
+
+    public void testSetDirectionUsingCheckbox() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
         LocationManager lManager = LocationManager.instance();
         Location l = lManager.getLocationByName("Test Loc C");
         YardEditFrame f = new YardEditFrame();
-        f.setTitle("Test Yard Add Frame");
+        f.setTitle("Test Yard Direction Set Frame");
+        f.initComponents(l, null);
+
+        f.trackNameTextField.setText("4th yard track");
+        f.trackLengthTextField.setText("21");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        sleep(1);   // for slow machines
+        // deselect east, west and south check boxes
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+
+        sleep(1);   // for slow machines
+
+        Track t = l.getTrackByName("4th yard track", null);
+        Assert.assertNotNull("4th yard track", t);
+        Assert.assertEquals("4th yard track length", 21, t.getLength());
+        Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
+        
+        // clean up the frame
+        f.setVisible(false);
+        f.dispose();
+
+    }
+
+    public void testCreateTracksAndReloadFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        LocationManager lManager = LocationManager.instance();
+        Location l = lManager.getLocationByName("Test Loc C");
+        YardEditFrame f = new YardEditFrame();
+        f.setTitle("Test Yard Create Frame");
         f.initComponents(l, null);
 
         // create four yard tracks
@@ -51,32 +136,8 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
 
-        Track t = l.getTrackByName("new yard track", null);
-        Assert.assertNotNull("new yard track", t);
-        Assert.assertEquals("yard track length", 43, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("2nd yard track", null);
-        Assert.assertNotNull("2nd yard track", t);
-        Assert.assertEquals("2nd yard track length", 6543, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("3rd yard track", null);
-        Assert.assertNotNull("3rd yard track", t);
-        Assert.assertEquals("3rd yard track length", 1, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("4th yard track", null);
-        Assert.assertNotNull("4th yard track", t);
-        Assert.assertEquals("4th yard track length", 21, t.getLength());
-        Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
-
+        // clean up the frame
+        f.setVisible(false);
         f.dispose();
 
         // now reload
@@ -84,7 +145,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull("Location Test Loc C", l2);
 
         LocationEditFrame fl = new LocationEditFrame(l2);
-        fl.setTitle("Test Edit Location Frame");
+        fl.setTitle("Test Edit Restored Location Frame");
 
         // check location name
         Assert.assertEquals("name", "Test Loc C", fl.locationNameTextField.getText());
@@ -92,6 +153,8 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of yards", 4, fl.yardModel.getRowCount());
         Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
 
+        // clean up the frame
+        fl.setVisible(false);
         fl.dispose();
     }
 
@@ -117,6 +180,9 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
+        
+        lManager = LocationManager.instance();
+        l = lManager.getLocationByName("Test Loc C");
     }
 
     public YardEditFrameTest(String s) {

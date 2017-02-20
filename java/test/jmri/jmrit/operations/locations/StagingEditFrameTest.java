@@ -23,7 +23,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
     /**
      * Staging tracks needs its own location
      */
-    public void testAddOneStagingTrack() {
+    public void testAddStagingTrackDefaults() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
@@ -32,7 +32,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
-        // create four staging tracks
+        // create one staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
@@ -44,13 +44,67 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("all directions", ALL, t.getTrainDirections());
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
+        // add a second track
+        f.trackNameTextField.setText("2nd staging track");
+        f.trackLengthTextField.setText("3456");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        t = l.getTrackByName("2nd staging track", null);
+        Assert.assertNotNull("2nd staging track", t);
+        Assert.assertEquals("2nd staging track length", 3456, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        // add a third track
+        f.trackNameTextField.setText("3rd staging track");
+        f.trackLengthTextField.setText("1");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        f.dispose();
+
+        t = l.getTrackByName("3rd staging track", null);
+        Assert.assertNotNull("3rd staging track", t);
+        Assert.assertEquals("3rd staging track length", 1, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
         f.dispose();
     }
 
-    /**
-     * Staging tracks needs its own location
-     */
-    public void testStagingEditFrame() {
+    public void testSetDirectionUsingChceckbox() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        StagingEditFrame f = new StagingEditFrame();
+        f.setTitle("Test Staging Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
+
+        f.trackNameTextField.setText("4th staging track");
+        f.trackLengthTextField.setText("12");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        sleep(1);	// for slow machines
+        // deselect east, west and south check boxes
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+
+        sleep(1);	// for slow machines
+
+        Track t = l.getTrackByName("4th staging track", null);
+        Assert.assertNotNull("4th staging track", t);
+        Assert.assertEquals("4th staging track length", 12, t.getLength());
+        Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());
+
+        f.dispose();
+    }
+
+    public void testAddCloseAndReload() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
@@ -75,6 +129,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        sleep(1);	// for slow machines
 
         // deselect east, west and south check boxes
         getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
@@ -84,26 +139,6 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
 
         sleep(1);	// for slow machines
-        // we check the first track in another test, so start with the 2nd.
-        Track t = l.getTrackByName("2nd staging track", null);
-        Assert.assertNotNull("2nd staging track", t);
-        Assert.assertEquals("2nd staging track length", 3456, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("3rd staging track", null);
-        Assert.assertNotNull("3rd staging track", t);
-        Assert.assertEquals("3rd staging track length", 1, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("4th staging track", null);
-        Assert.assertNotNull("4th staging track", t);
-        Assert.assertEquals("4th staging track length", 12, t.getLength());
-        Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());
-
         f.dispose();
 
         Location l2 = lManager.getLocationByName("Test Loc A");

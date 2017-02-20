@@ -17,13 +17,119 @@ import org.junit.Assert;
 public class SidingEditFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+    private LocationManager lManager = null;
+    private Location l = null;
 
-    public void testSidingEditFrame() {
+    public void testAddSidingDefaults() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
         LocationManager lManager = LocationManager.instance();
         Location l = lManager.getLocationByName("Test Loc C");
+        SpurEditFrame f = new SpurEditFrame();
+        f.setTitle("Test Siding Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
+
+        // create one siding tracks
+        f.trackNameTextField.setText("new siding track");
+        f.trackLengthTextField.setText("1223");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        sleep(1);   // for slow machines
+
+        Track t = l.getTrackByName("new siding track", null);
+        Assert.assertNotNull("new siding track", t);
+        Assert.assertEquals("siding track length", 1223, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        // create a second siding
+        f.trackNameTextField.setText("2nd siding track");
+        f.trackLengthTextField.setText("9999");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        sleep(1);   // for slow machines
+
+        t = l.getTrackByName("2nd siding track", null);
+        Assert.assertNotNull("2nd siding track", t);
+        Assert.assertEquals("2nd siding track length", 9999, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        // kill all frames
+        f.dispose();
+    }
+
+
+    public void testSetDirectionUsingCheckbox() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        SpurEditFrame f = new SpurEditFrame();
+        f.setTitle("Test Siding Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
+
+        f.trackNameTextField.setText("3rd siding track");
+        f.trackLengthTextField.setText("1010");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        sleep(1);   // for slow machines
+
+        // deselect east, west and north check boxes
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
+
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+
+        sleep(1);   // for slow machines
+
+        Track t = l.getTrackByName("3rd siding track", null);
+        Assert.assertNotNull("3rd siding track", t);
+        Assert.assertEquals("3rd siding track length", 1010, t.getLength());
+
+        Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
+
+        // kill all frames
+        f.dispose();
+    }
+
+    public void testAddScheduleButton() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        SpurEditFrame f = new SpurEditFrame();
+        f.setTitle("Test Siding Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
+
+        f.trackNameTextField.setText("3rd siding track");
+        f.trackLengthTextField.setText("1010");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        sleep(1);   // for slow machines
+
+        // create the schedule edit frame
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton));
+
+        sleep(1);   // for slow machines
+
+        // confirm schedule add frame creation
+        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur \"3rd siding track\"");
+        Assert.assertNotNull(sef);
+
+        // kill all frames
+        f.dispose();
+        sef.dispose();
+    }
+
+    public void testAddCloseAndRestore() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -48,26 +154,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
 
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
-
-        Track t = l.getTrackByName("new siding track", null);
-        Assert.assertNotNull("new siding track", t);
-        Assert.assertEquals("siding track length", 1223, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("2nd siding track", null);
-        Assert.assertNotNull("2nd siding track", t);
-        Assert.assertEquals("2nd siding track length", 9999, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("3rd siding track", null);
-        Assert.assertNotNull("3rd siding track", t);
-        Assert.assertEquals("3rd siding track length", 1010, t.getLength());
-
-        Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
 
         // create the schedule edit frame
         getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton));
@@ -118,6 +204,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
+        lManager = LocationManager.instance();
+        l = lManager.getLocationByName("Test Loc C");
     }
 
     public SidingEditFrameTest(String s) {

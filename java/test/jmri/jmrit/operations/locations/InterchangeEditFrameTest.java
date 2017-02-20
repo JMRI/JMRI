@@ -17,21 +17,97 @@ import org.junit.Assert;
 public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+    private LocationManager lManager = null;
+    private Location l = null;
 
-    public void testInterchangeEditFrame() {
+    public void testAddInterchange() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
         }
-        // add UP road name
-        CarRoads cr = CarRoads.instance();
-        cr.addName("UP");
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.setTitle("Test Interchange Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
 
-        LocationManager lManager = LocationManager.instance();
-        Location l3 = lManager.newLocation("Test Loc C");
-        l3.setLength(1003);
+        // create one interchange track
+        f.trackNameTextField.setText("new interchange track");
+        f.trackLengthTextField.setText("321");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
 
-        Location l = lManager.getLocationByName("Test Loc C");
-        Assert.assertNotNull("Test Loc C", l);
+        Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);
+        Assert.assertNotNull("new interchange track", t);
+        Assert.assertEquals("interchange track length", 321, t.getLength());
+        // check that the defaults are correct
+        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
+        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
+
+        f.dispose();
+    }
+
+    public void testSetDirectionUsingCheckbox() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.setTitle("Test Interchange Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
+
+        // create one interchange tracks
+        f.trackNameTextField.setText("2nd interchange track");
+        f.trackLengthTextField.setText("4331");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        sleep(1);   // for slow machines
+        // deselect east and south check boxes
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        sleep(1);   // for slow machines
+
+        Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
+        Assert.assertNotNull("2nd interchange track", t);
+        Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
+        Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
+
+        f.dispose();
+    }
+
+    public void testSetAcceptedCarTypes() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.setTitle("Test Interchange Add Frame");
+        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.initComponents(l, null);
+
+        // create one interchange tracks
+        f.trackNameTextField.setText("2nd interchange track");
+        f.trackLengthTextField.setText("4331");
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+
+        Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
+
+        // check track accepts Boxcars
+        Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
+        // test clear car types button
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.clearButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
+
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.setButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
+
+        f.dispose();
+    }
+
+
+    public void testAddCloseAndRestore() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -51,29 +127,6 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
 
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
-
-        Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);
-        Assert.assertNotNull("new interchange track", t);
-        Assert.assertEquals("interchange track length", 321, t.getLength());
-        // check that the defaults are correct
-        Assert.assertEquals("all directions", ALL, t.getTrainDirections());
-        Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
-
-        t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
-        Assert.assertNotNull("2nd interchange track", t);
-        Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
-        Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
-
-        // check track accepts Boxcars
-        Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
-        // test clear car types button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.clearButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
-        Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.setButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
-        Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
 
         f.dispose();
 
@@ -115,6 +168,13 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
+
+        // add UP road name
+        CarRoads cr = CarRoads.instance();
+        cr.addName("UP");
+
+        lManager = LocationManager.instance();
+        l = lManager.getLocationByName("Test Loc C");
     }
 
     public InterchangeEditFrameTest(String s) {
