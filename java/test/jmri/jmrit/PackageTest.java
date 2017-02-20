@@ -46,11 +46,12 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.logix.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.progsupport.PackageTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.mastbuilder.MastBuilderTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.mastbuilder.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.mailreport.PackageTest.class));
         suite.addTest(jmri.jmrit.powerpanel.PackageTest.suite());
         suite.addTest(jmri.jmrit.roster.PackageTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sendpacket.SendPacketTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sensorgroup.SensorGroupTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sendpacket.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.sensorgroup.PackageTest.class));
         suite.addTest(jmri.jmrit.simpleclock.PackageTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.PackageTest.suite());
         suite.addTest(jmri.jmrit.tracker.PackageTest.suite());

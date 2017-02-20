@@ -783,14 +783,16 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     void okPressed(ActionEvent e) {
-        int intNumberToAdd = 1;
+
+        int NumberOfBlocks = 1;
+
         if (range.isSelected()) {
-            intNumberToAdd = (Integer) numberToAdd.getValue();
+            NumberOfBlocks = (Integer) numberToAdd.getValue();
         }
-        if (intNumberToAdd >= 65) { // limited by JSpinnerModel to 100
-            String msg = Bundle.getMessage("WarnExcessBeans", new Object[]{intNumberToAdd, Bundle.getMessage("BeanNameBlock")});
+        if (NumberOfBlocks >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    msg, Bundle.getMessage("WarningTitle"),
+                    Bundle.getMessage("WarnExcessBeans", NumberOfBlocks),
+                    Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
             }
@@ -802,7 +804,7 @@ public class BlockTableAction extends AbstractTableAction {
         String sName = sysName.getText().toUpperCase();
         StringBuilder b;
 
-        for (int x = 0; x < intNumberToAdd; x++) {
+        for (int x = 0; x < NumberOfBlocks; x++) {
             if (x != 0) {
                 if (user != null) {
                     b = new StringBuilder(userName.getText());

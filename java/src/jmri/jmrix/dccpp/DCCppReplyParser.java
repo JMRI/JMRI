@@ -26,7 +26,7 @@ public class DCCppReplyParser {
     
     public static void parseReply(DCCppReply r, String s) {
         switch (s.charAt(0)) {
-            case DCCppConstants.VERSION_REPLY:
+            case DCCppConstants.STATUS_REPLY:
                 
         }
     }
@@ -37,7 +37,7 @@ public class DCCppReplyParser {
         switch(s.charAt(0)) {
             case DCCppConstants.COMM_TYPE_REPLY:
                 return(DCCppCommTypeReply.parseDCCppReply(s));
-            case DCCppConstants.VERSION_REPLY:
+            case DCCppConstants.STATUS_REPLY:
             case DCCppConstants.THROTTLE_REPLY:
             case DCCppConstants.TURNOUT_REPLY:
             case DCCppConstants.OUTPUT_REPLY:

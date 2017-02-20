@@ -425,8 +425,7 @@ public class ConnectivityUtil {
             }
         }
         if (notFound) {
-            if (prevBlock != null) // could not initialize the connectivity search
-            {
+            if (prevBlock != null) {    // could not initialize the connectivity search
                 if (!suppress) {
                     log.error("Could not find connection between Blocks " + block.getUserName() + " and "
                             + prevBlock.getUserName());
@@ -2351,7 +2350,7 @@ public class ConnectivityUtil {
         Object curObj = ob;
 
         if (logInfoFor_trackSegmentLeadsTo) {
-            log.info("•trackSegmentLeadsTo(): entry");
+            log.info("•trackSegmentLeadsTo({}, {}): entry", curTS.getID(), objectToNameOrIDString(curObj));
         }
 
         // post process track segment and conObj lists
@@ -2381,17 +2380,20 @@ public class ConnectivityUtil {
                     conObj = curTS.getConnect1();
                 } else {
                     log.error("Connectivity error when following track " + curTS.getID() + " in Block " + lb.getUserName());
+                    log.error(objectToNameOrIDString(curObj) + " not connected to " + curTS.getID() +
+                        " (connects: " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")");
                     return false;
                 }
 
                 if (logInfoFor_trackSegmentLeadsTo) {
                     String con_type = connectionTypeToString(conType);
 
-                    String conName = objectToNameOrIDString(conObj);
-                    String curName = objectToNameOrIDString(curObj);
-                    log.info("\tIn block " + lb.getUserName() + ", follow " + curName + " thru " + curTS.getID() +
-                        " (connects " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")" +
-                        " to " + conName + " (conType: " + con_type + "), nlb: " + nlb.getID());
+                    log.info("In block " + lb.getUserName() +
+                        ", going from " + objectToNameOrIDString(conObj) +
+                        " thru " + curTS.getID() +
+                        //" (connects: " + curTS.getConnect1Name() + " & " + curTS.getConnect2Name() + ")" +
+                        " to " + objectToNameOrIDString(curObj) +
+                        " (conType: " + con_type + "), nlb: " + nlb.getID());
                 }
 
                 // follow track according to next destination type
@@ -2663,7 +2665,10 @@ public class ConnectivityUtil {
                                 if (((TrackSegment) ls.getConnectA()).getLayoutBlock() == lb) {
                                     curTS = (TrackSegment) ls.getConnectA();
                                 } else {
-                                    log.debug("•••ERROR•••");
+                                    log.debug("{} not connected to {} (connections: {} & {})",
+                                            lb.getUserName(), ls.getName(),
+                                            objectToNameOrIDString(ls.getConnectA()),
+                                            objectToNameOrIDString(ls.getConnectB()));
                                 }
                                 break;
                             case LayoutTrack.SLIP_D:

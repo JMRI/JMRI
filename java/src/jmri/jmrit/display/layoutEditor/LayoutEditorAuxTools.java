@@ -112,7 +112,7 @@ public class LayoutEditorAuxTools {
                         blk2 = ts2.getLayoutBlock();
                         if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                             // this is a block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, p);
+                            log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, p);
                             c = new LayoutConnectivity(blk1, blk2);
                             // determine direction from block 1 to block 2
                             if (ts1.getConnect1() == p) {
@@ -133,8 +133,8 @@ public class LayoutEditorAuxTools {
                         }
                     }
                 }
-                if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
 
+                if (p.getType() == PositionablePoint.EDGE_CONNECTOR) {
                     //Need to find a way to compute the direction for this for a split over the panel
                     ts1 = p.getConnect1();
                     ts2 = p.getConnect2();
@@ -143,7 +143,7 @@ public class LayoutEditorAuxTools {
                         blk2 = ts2.getLayoutBlock();
                         if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
                             // this is a block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, p);
+                            log.debug("Block boundary ('{}'<->'{}') found at {}", blk1, blk2, p);
                             c = new LayoutConnectivity(blk1, blk2);
 
                             // determine direction from block 1 to block 2
@@ -198,7 +198,7 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, ts);
+                                log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
                                 c = new LayoutConnectivity(blk1, blk2);
                                 c.setConnections(ts, lt, type, null);
                                 c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
@@ -217,7 +217,7 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, ts);
+                                log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
                                 c = new LayoutConnectivity(blk1, blk2);
                                 c.setConnections(ts, lx, type, null);
                                 c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
@@ -233,7 +233,7 @@ public class LayoutEditorAuxTools {
                         blk2 = ls.getLayoutBlock();
                         if ((blk2 != null) && (blk1 != blk2)) {
                             // have a block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, ts);
+                            log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
                             c = new LayoutConnectivity(blk1, blk2);
                             c.setConnections(ts, ls, type, null);
                             c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
@@ -265,7 +265,7 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, ts);
+                                log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
                                 c = new LayoutConnectivity(blk1, blk2);
                                 c.setConnections(ts, lt, type, null);
                                 c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
@@ -284,7 +284,7 @@ public class LayoutEditorAuxTools {
                             }
                             if ((blk2 != null) && (blk1 != blk2)) {
                                 // have a block boundary, create a LayoutConnectivity
-                                log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, ts);
+                                log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
                                 c = new LayoutConnectivity(blk1, blk2);
                                 c.setConnections(ts, lx, type, null);
                                 c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
@@ -300,7 +300,7 @@ public class LayoutEditorAuxTools {
                         blk2 = ls.getLayoutBlock();
                         if ((blk2 != null) && (blk1 != blk2)) {
                             // have a block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, ts);
+                            log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, ts);
                             c = new LayoutConnectivity(blk1, blk2);
                             c.setConnections(ts, ls, type, null);
                             c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
@@ -324,7 +324,7 @@ public class LayoutEditorAuxTools {
                         // have multiple blocks and therefore internal block boundaries
                         if (lt.getLayoutBlock() != lt.getLayoutBlockB()) {
                             // have a AB block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, lt);
+                            log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
                             c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockB());
                             c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AB);
                             c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsB()));
@@ -333,7 +333,7 @@ public class LayoutEditorAuxTools {
                         if ((lt.getTurnoutType() != LayoutTurnout.LH_XOVER)
                                 && (lt.getLayoutBlock() != lt.getLayoutBlockC())) {
                             // have a AC block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, lt);
+                            log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
                             c = new LayoutConnectivity(lt.getLayoutBlock(), lt.getLayoutBlockC());
                             c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_AC);
                             c.setDirection(computeDirection(lt.getCoordsA(), lt.getCoordsC()));
@@ -341,7 +341,7 @@ public class LayoutEditorAuxTools {
                         }
                         if (lt.getLayoutBlockC() != lt.getLayoutBlockD()) {
                             // have a CD block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, lt);
+                            log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
                             c = new LayoutConnectivity(lt.getLayoutBlockC(), lt.getLayoutBlockD());
                             c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_CD);
                             c.setDirection(computeDirection(lt.getCoordsC(), lt.getCoordsD()));
@@ -350,7 +350,7 @@ public class LayoutEditorAuxTools {
                         if ((lt.getTurnoutType() != LayoutTurnout.RH_XOVER)
                                 && (lt.getLayoutBlockB() != lt.getLayoutBlockD())) {
                             // have a BD block boundary, create a LayoutConnectivity
-                            log.debug("LayoutEditorAuxTools::initializeBlockConnectivity(): block boundary ('{}'<->'{}') found at ", blk1, blk2, lt);
+                            log.debug("Block boundary  ('{}'<->'{}') found at {}", blk1, blk2, lt);
                             c = new LayoutConnectivity(lt.getLayoutBlockB(), lt.getLayoutBlockD());
                             c.setXoverBoundary(lt, LayoutConnectivity.XOVER_BOUNDARY_BD);
                             c.setDirection(computeDirection(lt.getCoordsB(), lt.getCoordsD()));

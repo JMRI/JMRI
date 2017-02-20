@@ -177,7 +177,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
