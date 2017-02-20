@@ -17,6 +17,7 @@ import java.awt.GraphicsEnvironment;
 public class AutomationsTableFrameTest {
 
     @Test
+    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationsTableFrame t = new AutomationsTableFrame();

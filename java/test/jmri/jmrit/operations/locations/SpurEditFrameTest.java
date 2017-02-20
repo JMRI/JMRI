@@ -17,10 +17,12 @@ import java.awt.GraphicsEnvironment;
 public class SpurEditFrameTest {
 
     @Test
+    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpurEditFrame t = new SpurEditFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

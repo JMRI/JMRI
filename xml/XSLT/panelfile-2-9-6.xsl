@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page              -->
 <!-- Used by default when the panel file is displayed in a web browser      -->
@@ -1080,6 +1080,12 @@ Loco icon "<xsl:value-of select="@text"/>"<br/>
 
 <xsl:template match="LightIcon">
 Light Icon "<xsl:value-of select="@light"/>"<br/>
+</xsl:template>
+
+<xsl:template match="multisensoricon">
+Multisensor Icon  
+    <xsl:for-each select="active">"<xsl:value-of select="@sensor"/>" </xsl:for-each>
+<br/>
 </xsl:template>
 
 <!-- Display version number in header -->

@@ -31,8 +31,13 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     String inString;
     String remoteAddress;
     DCCppMessage lastSentMessage;
-    final String sendPrefix = "SEND";
-
+    final String oldSendPrefix = "SEND"; // lack of space is correct for legacy code
+    final String oldReceivePrefix = "RECEIVE "; // presence of space is correct for legacy code
+    final String sendPrefix = "<";
+    final String oldServerVersionString = "VERSION JMRI Server "; // CAREFUL: Changing this could break backward compatibility
+    final String newServerVersionString = "VERSION DCC++ Server ";
+    boolean useOldPrefix = false;
+    
     public ClientRxHandler(String newRemoteAddress, Socket newSocket) {
         clientSocket = newSocket;
         setDaemon(true);
@@ -69,15 +74,39 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                 } else {
                     log.debug("ClientRxHandler: Received: " + inString);
 
+                    // Check for the old server version string.  If present,
+                    // append the old-style prefixes to transmissions.
+                    // Not sure this ever happens. Only the client sends
+                    // the version string. 
+                    if (inString.startsWith(oldServerVersionString)) {
+                        useOldPrefix = true;
+                    }
+                    // Legacy support: If the old prefix is there, delete it.
+                    // Also, set the flag so we will start sending old-style
+                    // prefixes.
+                    if (inString.startsWith(oldSendPrefix)) {
+                        useOldPrefix = true;
+                        final int trim = oldSendPrefix.length();
+                        inString = inString.substring(trim);
+                        log.debug("Adapted String: {}", inString);
+                    }
+                    // Check for the opening bracket
 		    if (!inString.startsWith(sendPrefix)) {
 			log.debug("Invalid packet format: {}", inString);
 			continue;
 		    }
-		    final int trim = sendPrefix.length();
-		    inString = inString.substring(trim);
+		    //final int trim = sendPrefix.length();
+		    //inString = inString.substring(trim);
 		    //  Note: the substring call below also strips off the "< >"
-		    DCCppMessage msg = DCCppMessage.parseDCCppMessage(inString.substring(inString.indexOf("<")+1,
-									   inString.lastIndexOf(">")));
+		    //DCCppMessage msg = DCCppMessage.parseDCCppMessage(inString.substring(inString.indexOf("<")+1,
+			//						   inString.lastIndexOf(">")));
+                        
+                    // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
+                    // need to be parsed. Indeed, trying to parse them will screw them up.
+                    // So instead, we de-@Deprecated the string constructor so that we can
+                    // directly create a DCCppMessage from the incoming string without translation/parsing.
+                    DCCppMessage msg = new DCCppMessage(inString.substring(inString.indexOf("<")+1,
+                                                                            inString.lastIndexOf(">")));
 		    if (!msg.isValidMessageFormat()) {
 			log.warn("Invalid Message Format {}", msg.toString());
 			continue;
@@ -134,7 +163,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         public void run() {
 
             try {
-                outBuf = new StringBuffer("VERSION JMRI Server ");
+                outBuf = new StringBuffer(newServerVersionString);
                 outBuf.append(jmri.Version.name()).append("\r\n");
                 outStream.write(outBuf.toString().getBytes());
 		
@@ -156,7 +185,9 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
                     if (msg != null) {
                         outBuf.setLength(0);
-                        outBuf.append("RECEIVE ");
+                        if (useOldPrefix) {
+                            outBuf.append(oldReceivePrefix);
+                        }
 			outBuf.append("<");
                         outBuf.append(msg.toString());
 			outBuf.append(">");

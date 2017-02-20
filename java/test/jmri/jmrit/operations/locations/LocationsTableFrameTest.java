@@ -17,10 +17,12 @@ import java.awt.GraphicsEnvironment;
 public class LocationsTableFrameTest {
 
     @Test
+    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationsTableFrame t = new LocationsTableFrame();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

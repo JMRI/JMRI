@@ -17,6 +17,7 @@ import java.awt.GraphicsEnvironment;
 public class LocationsByCarLoadFrameTest {
 
     @Test
+    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationsByCarLoadFrame t = new LocationsByCarLoadFrame();
