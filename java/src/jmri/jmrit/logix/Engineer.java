@@ -452,7 +452,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     
     protected void setSpeedToType(String speedType) {
         if (log.isTraceEnabled()) log.trace("setSpeedToType({})", speedType);
-        float speed = _throttle.getSpeedSetting();
         if (speedType!=null) {
             if (speedType.equals(Warrant.Stop) || speedType.equals(Warrant.EStop)) {
                 if (_throttle.getSpeedSetting() <= 0) {
@@ -472,7 +471,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     _timeRatio = 1.0f;
                 }
             }
-            setSpeed(modifySpeed(speed, speedType));
+            setSpeed(modifySpeed(_normalSpeed, speedType));
         } else {
             log.error("speedType == null ", new Exception("traceback"));
         }
