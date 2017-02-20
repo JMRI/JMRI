@@ -43,9 +43,9 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.deregister(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

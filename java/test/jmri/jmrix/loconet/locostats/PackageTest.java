@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    LocoStatsFrameTest.class
+    LocoStatsFrameTest.class,
+    LocoStatsPanelTest.class
 })
 public class PackageTest {
 }

@@ -70,7 +70,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
 
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
-        pane1a.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("DecoderInstalled")));
+        pane1a.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("LabelDecoderInstalled")));
         JButton iddecoder = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("IdentifyDecoder"));
         iddecoder.addActionListener(new ActionListener() {
             @Override

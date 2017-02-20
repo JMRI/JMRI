@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    jmri.jmrix.loconet.duplexgroup.swing.PackageTest.class
+    jmri.jmrix.loconet.duplexgroup.swing.PackageTest.class,
+    LnDplxGrpInfoImplConstantsTest.class
 })
 public class PackageTest {
 }

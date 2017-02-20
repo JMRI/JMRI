@@ -15,7 +15,10 @@ import org.junit.runners.Suite;
    MrcPortControllerTest.class,
    MrcTrafficControllerTest.class,
    MrcExceptionTest.class,
-   MrcMessageExceptionTest.class
+   MrcMessageExceptionTest.class,
+   MrcConnectionTypeListTest.class,
+   MrcPacketizerTest.class,
+   MrcPacketsTest.class
 })
 
 /**

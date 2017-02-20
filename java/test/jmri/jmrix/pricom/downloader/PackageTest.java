@@ -27,6 +27,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.pricom.pockettester");
         suite.addTest(jmri.jmrix.pricom.downloader.PdiFileTest.suite());
         suite.addTest(jmri.jmrix.pricom.downloader.LoaderPaneTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LoaderFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LoaderPanelActionTest.class));
         return suite;
     }
 

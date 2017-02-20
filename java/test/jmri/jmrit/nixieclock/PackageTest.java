@@ -27,6 +27,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.nixieclock.PackageTest");   // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NixieClockActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NixieClockFrameTest.class));
 
         return suite;
     }
