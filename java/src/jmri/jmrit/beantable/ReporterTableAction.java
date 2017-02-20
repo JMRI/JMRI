@@ -275,6 +275,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     void okPressed(ActionEvent e) {
+
         int numberOfReporters = 1;
 
         if (range.isSelected()) {
