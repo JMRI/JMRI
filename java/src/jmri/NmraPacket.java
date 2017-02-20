@@ -332,7 +332,7 @@ public class NmraPacket {
      * This is the old "legacy" format, newer decoders use the "Basic Accessory
      * Decoder Packet"
      *
-     * @param decAddr the decoder address
+     * @param decAddr Address of decoder, in the range 1 to 511
      * @param cvNum   the CV
      * @param data    the data
      * @return a packet
@@ -645,7 +645,7 @@ public class NmraPacket {
      * simplified interface, given an accessory address.
      * <br><br>
      *
-     * @param accAddr Address of accessory, starting with 1
+     * @param accAddr Address of accessory, in the range 1 to 2044
      * @param cvNum   CV number to access
      * @param data    Data to be written
      * @return a packet
@@ -671,7 +671,7 @@ public class NmraPacket {
      * simplified interface, given a decoder address.
      * <br><br>
      *
-     * @param decAddr Address of accessory, starting with 1
+     * @param decAddr Address of decoder, in the range 1 to 511
      * @param cvNum   CV number to access
      * @param data    Data to be written
      * @return a packet
@@ -703,7 +703,7 @@ public class NmraPacket {
      * This is the old "legacy" format, newer decoders use the "Basic Accessory
      * Decoder Packet"
      *
-     * @param accAddr Address of accessory, starting with 1
+     * @param accAddr Address of accessory, in the range 1 to 2044
      * @param cvNum   CV number to access
      * @param data    Data to be written
      * @return a packet
