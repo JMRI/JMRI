@@ -15,11 +15,6 @@ import org.slf4j.LoggerFactory;
 public class SerialLight extends AbstractLight {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 5341714389847300360L;
-
-    /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
@@ -63,6 +58,7 @@ public class SerialLight extends AbstractLight {
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         SerialNode mNode = SerialAddress.getNodeFromSystemName(getSystemName());
         if (mNode != null) {

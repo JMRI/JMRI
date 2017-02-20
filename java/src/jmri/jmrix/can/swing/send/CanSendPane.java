@@ -1,4 +1,3 @@
-// CanSendPane.java
 package jmri.jmrix.can.swing.send;
 
 import java.awt.GridLayout;
@@ -33,10 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6281707873589937794L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -66,6 +61,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
             pane1.add(Box.createVerticalGlue());
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -98,6 +94,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 runButtonActionPerformed(e);
             }
@@ -111,16 +108,19 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.swing.send.CanSendFrame";
     }
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " Send Can Frame");
@@ -144,6 +144,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendNextItem();
                 }
@@ -270,18 +271,21 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     /**
      * Don't pay attention to messages
      */
+    @Override
     public void message(CanMessage m) {
     }
 
     /**
      * Don't pay attention to replies
      */
+    @Override
     public void reply(CanReply m) {
     }
 
     /**
      * When the window closes, stop any sequences running
      */
+    @Override
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();
@@ -294,11 +298,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6513091592493774694L;
 
         public Default() {
             super("Send Can Frame",

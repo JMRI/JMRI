@@ -34,7 +34,7 @@
           <text> </text>
         </label>
         <label>
-          <text>TowerMan Input/Output Port Configuration settings. All numbers are entered as their actual</text>
+          <text>Input/Output Port Configuration settings. All numbers are entered as their actual</text>
         </label>
         <label>
           <text>event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond</text>
@@ -62,6 +62,9 @@
       <column>
         <display item="PA5 Type" label="    Type">
           </display>
+      </column>
+      <column>
+        <display item="PA5 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
       </column>
       <column>
         <display item="PA5 Timing" label="                                       Debounce">
@@ -160,6 +163,9 @@
           </display>
       </column>
       <column>
+        <display item="PA6 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
         <display item="PA6 Timing" label="                                       Debounce">
           </display>
       </column>
@@ -256,6 +262,9 @@
           </display>
       </column>
       <column>
+        <display item="PA7 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
         <display item="PA7 Timing" label="                                       Debounce">
           </display>
       </column>
@@ -350,6 +359,9 @@
       <column>
         <display item="PA8 Type" label="    Type">
           </display>
+      </column>
+      <column>
+        <display item="PA8 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
       </column>
       <column>
         <display item="PA8 Timing" label="                                       Debounce">

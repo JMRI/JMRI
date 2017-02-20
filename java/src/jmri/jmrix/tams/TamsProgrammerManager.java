@@ -27,6 +27,7 @@ public class TamsProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
@@ -37,18 +38,21 @@ public class TamsProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true if not USB connect to SB3
      */
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new TamsOpsModeProgrammer(tc, pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }
 
 
-/* @(#)TamsProgrammerManager.java */
+

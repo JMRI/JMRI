@@ -1,4 +1,3 @@
-// AcelaNode.java
 package jmri.jmrix.acela;
 
 import jmri.JmriException;
@@ -347,6 +346,7 @@ public class AcelaNode extends AbstractNode {
      * Public method to return state of Sensors. Note: returns 'true' if at
      * least one sensor is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         return hasActiveSensors;
     }
@@ -597,6 +597,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Public method to set the node address.
      */
+    @Override
     public boolean checkNodeAddress(int address) {
         return ((address >= 0) && (address < MAXNODE));
     }
@@ -638,6 +639,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Create an initialization packet if needed
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         return null;
     }
@@ -645,6 +647,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         //  Set up variables that will be used at the end to send the msg.
         int cmdlen = 3;         // Message length == 3, 4, or 5
@@ -1217,6 +1220,7 @@ public class AcelaNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         if (log.isDebugEnabled()) {
@@ -1225,6 +1229,7 @@ public class AcelaNode extends AbstractNode {
         return false;   // tells caller to NOT force init
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");
@@ -1233,5 +1238,3 @@ public class AcelaNode extends AbstractNode {
     }
     private final static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
 }
-
-/* @(#)AcelaNode.java */

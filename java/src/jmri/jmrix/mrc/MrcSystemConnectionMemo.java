@@ -1,4 +1,3 @@
-// MrcSystemConnectionMemo.java
 package jmri.jmrix.mrc;
 
 import java.util.ResourceBundle;
@@ -76,6 +75,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Tells which managers this provides by class
      */
     @SuppressWarnings("deprecation")
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -113,6 +113,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide manager by class
      */
     @SuppressWarnings({"unchecked", "deprecation"})
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -194,10 +195,12 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     /*public MrcConsistManager  getConsistManager() { return consistManager; }*/
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcBundle"); //IN18N
+        return ResourceBundle.getBundle("jmri.jmrix.mrc.MrcActionListBundle"); //NO18N
     }
 
+    @Override
     public void dispose() {
         mrcTrafficController = null;
         InstanceManager.deregister(this, MrcSystemConnectionMemo.class);
@@ -224,5 +227,3 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
 }
 
-
-/* @(#)MrcSystemConnectionMemo.java */

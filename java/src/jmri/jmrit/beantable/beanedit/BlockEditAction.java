@@ -42,6 +42,7 @@ public class BlockEditAction extends BeanEditAction {
 
     private DecimalFormat twoDigit = new DecimalFormat("0.00");
 
+    @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockEdit";
     } //IN18N
@@ -54,10 +55,12 @@ public class BlockEditAction extends BeanEditAction {
         physcialDetails();
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameBlock");
     }
 
+    @Override
     public NamedBean getByUserName(String name) {
         return jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
     }
@@ -78,6 +81,7 @@ public class BlockEditAction extends BeanEditAction {
         reporter.addItem(new BeanEditItem(reporterField, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
 
         reporterField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (reporterField.getSelectedBean() != null) {
                     useCurrent.setEnabled(true);
@@ -94,6 +98,7 @@ public class BlockEditAction extends BeanEditAction {
         }
 
         reporter.setResetItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 reporterField.setSelectedBean(((Block) bean).getReporter());
                 useCurrent.setSelected(((Block) bean).isReportingCurrent());
@@ -101,6 +106,7 @@ public class BlockEditAction extends BeanEditAction {
         });
 
         reporter.setSaveItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 blk.setReporter((Reporter) reporterField.getSelectedBean());
@@ -141,9 +147,11 @@ public class BlockEditAction extends BeanEditAction {
         basic.addItem(new BeanEditItem(lengthField, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText")));
 
         lengthField.addKeyListener(new KeyListener() {
+            @Override
             public void keyPressed(KeyEvent keyEvent) {
             }
 
+            @Override
             public void keyReleased(KeyEvent keyEvent) {
                 String text = lengthField.getText();
 
@@ -156,6 +164,7 @@ public class BlockEditAction extends BeanEditAction {
                 }
             }
 
+            @Override
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
@@ -171,12 +180,14 @@ public class BlockEditAction extends BeanEditAction {
         inch.setSelected(true);
 
         inch.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cm.setSelected(!inch.isSelected());
                 updateLength();
             }
         });
         cm.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 inch.setSelected(!cm.isSelected());
                 updateLength();
@@ -191,6 +202,7 @@ public class BlockEditAction extends BeanEditAction {
         permissiveField.setSelected(((Block) bean).getPermissiveWorking());
 
         basic.setSaveItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 String cName = (String) curvatureField.getSelectedItem();
@@ -229,6 +241,7 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 lengthField.setText(twoDigit.format(((Block) bean).getLengthMm()));
@@ -291,6 +304,7 @@ public class BlockEditAction extends BeanEditAction {
         debounce.sensorDebounce(basic);
 
         sensorField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 debounce.setBean(sensorField.getSelectedBean());
                 debounce.resetDebounceItems(e);
@@ -298,6 +312,7 @@ public class BlockEditAction extends BeanEditAction {
         });
 
         basic.setSaveItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 jmri.jmrit.display.layoutEditor.LayoutBlock lBlk = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
@@ -311,6 +326,7 @@ public class BlockEditAction extends BeanEditAction {
             }
         });
         basic.setResetItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Block blk = (Block) bean;
                 //From basic details

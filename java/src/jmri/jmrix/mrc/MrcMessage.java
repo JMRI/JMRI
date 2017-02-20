@@ -1,4 +1,3 @@
-// MrcMessage.java
 package jmri.jmrix.mrc;
 
 import org.slf4j.Logger;
@@ -118,6 +117,7 @@ public class MrcMessage {
         return i;
     }
 
+    @Override
     public String toString() {
         return MrcPackets.toString(this);
     }
@@ -513,4 +513,4 @@ public class MrcMessage {
 }
 
 
-/* @(#)MrcMessage.java */
+

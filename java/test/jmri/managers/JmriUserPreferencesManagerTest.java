@@ -1,9 +1,11 @@
 package jmri.managers;
 
-import org.junit.Assert;
+import java.awt.Dimension;
+import java.awt.Point;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.managers.JmriUserPreferencesManagerTest class.
@@ -25,6 +27,15 @@ public class JmriUserPreferencesManagerTest extends TestCase {
         Assert.assertTrue(!d.getSimplePreferenceState("one"));
         Assert.assertTrue(!d.getSimplePreferenceState("two"));
 
+        Point windowLocation = new Point(69, 96);
+        d.setWindowLocation(TestUserPreferencesManager.class.toString(), windowLocation);
+        Point savedWindowLocation = d.getWindowLocation(TestUserPreferencesManager.class.toString());
+        Assert.assertEquals(windowLocation, savedWindowLocation);
+
+        Dimension windowSize = new Dimension(666, 999);
+        d.setWindowSize(TestUserPreferencesManager.class.toString(), windowSize);
+        Dimension savedWindowSize = d.getWindowSize(TestUserPreferencesManager.class.toString());
+        Assert.assertEquals(windowSize, savedWindowSize);
     }
 
     // from here down is testing infrastructure

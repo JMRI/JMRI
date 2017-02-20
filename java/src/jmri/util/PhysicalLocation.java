@@ -113,6 +113,9 @@ public class PhysicalLocation extends Vector3f {
 
     /**
      * Get a panel component that can be used to view and/or edit a location.
+     *
+     * @param title the title of the component
+     * @return a new component
      */
     static public PhysicalLocationPanel getPanel(String title) {
         return (new PhysicalLocationPanel(title));
@@ -200,7 +203,9 @@ public class PhysicalLocation extends Vector3f {
     }
 
     /**
-     * Constructor from Vector3f
+     * Constructor from Vector3f.
+     *
+     * @param v the vector
      */
     public PhysicalLocation(Vector3f v) {
         super(v);
@@ -214,6 +219,11 @@ public class PhysicalLocation extends Vector3f {
 
     /**
      * Constructor from X, Y, Z (float) + is_tunnel (boolean)
+     *
+     * @param x        location on X axis
+     * @param y        location on Y axis
+     * @param z        location on Z axis
+     * @param isTunnel true is location is in a tunnel
      */
     public PhysicalLocation(float x, float y, float z, boolean isTunnel) {
         super(x, y, z);
@@ -223,37 +233,45 @@ public class PhysicalLocation extends Vector3f {
 
     /**
      * Constructor from X, Y, Z (float)
+     *
+     * @param x location on X axis
+     * @param y location on Y axis
+     * @param z location on Z axis
      */
     public PhysicalLocation(float x, float y, float z) {
-        setX(x);
-        setY(y);
-        setZ(z);
-        _isTunnel = false;
-
+        this(x, y, z, false);
     }
 
     /**
      * Constructor from X, Y, Z (double)
+     *
+     * @param x location on X axis
+     * @param y location on Y axis
+     * @param z location on Z axis
      */
     public PhysicalLocation(double x, double y, double z) {
-        super((float) x, (float) y, (float) z);
-        _isTunnel = false;
+        this(x, y, z, false);
     }
 
     /**
      * Constructor from X, Y, Z (double)
+     *
+     * @param x        location on X axis
+     * @param y        location on Y axis
+     * @param z        location on Z axis
+     * @param isTunnel true if location is in a tunnel
      */
     public PhysicalLocation(double x, double y, double z, boolean isTunnel) {
-        super((float) x, (float) y, (float) z);
-        _isTunnel = isTunnel;
+        this((float) x, (float) y, (float) z, isTunnel);
     }
 
     /**
      * Copy Constructor
+     *
+     * @param p the location to copy
      */
     public PhysicalLocation(PhysicalLocation p) {
-        super(p.getX(), p.getY(), p.getZ());
-        _isTunnel = p.isTunnel();
+        this(p.getX(), p.getY(), p.getZ(), p.isTunnel());
     }
 
     public boolean isTunnel() {
@@ -264,19 +282,24 @@ public class PhysicalLocation extends Vector3f {
         _isTunnel = t;
     }
 
-    /**
-     * equals()
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equals really does test for floating equality")
-    public Boolean equals(PhysicalLocation l) {
-        if ((this.getX() == l.getX())
-                && (this.getY() == l.getY())
-                && (this.getZ() == l.getZ())
-                && (this.isTunnel() == l.isTunnel())) {
-            return (true);
-        } else {
-            return (false);
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
         }
+        if (this.getClass().equals(o.getClass())) {
+            if (this.hashCode() == o.hashCode()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + (this._isTunnel ? 1 : 0) + super.hashCode();
+        return hash;
     }
 
     /**

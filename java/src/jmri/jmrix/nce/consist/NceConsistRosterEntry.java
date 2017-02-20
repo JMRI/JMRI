@@ -1,4 +1,3 @@
-// NceConsistRosterEntry.java
 package jmri.jmrix.nce.consist;
 
 import java.io.IOException;
@@ -458,6 +457,7 @@ public class NceConsistRosterEntry {
         return getId();
     }
 
+    @Override
     public String toString() {
         String out = "[ConsistRosterEntry: "
                 + _id + " "

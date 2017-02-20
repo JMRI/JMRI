@@ -43,6 +43,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fileChooser == null) {
             fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
@@ -59,7 +60,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
         if (ThrottleFrameManager.instance().getThrottleWindows().hasNext()) {
             Object[] possibleValues = {Bundle.getMessage("LabelMerge"),
                 Bundle.getMessage("LabelReplace"),
-                Bundle.getMessage("LabelCancel")};
+                Bundle.getMessage("ButtonCancel")};
             int selectedValue = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("DialogMergeOrReplace"),
                     Bundle.getMessage("OptionLoadingThrottles"),

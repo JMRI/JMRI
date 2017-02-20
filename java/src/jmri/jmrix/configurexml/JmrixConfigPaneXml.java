@@ -29,6 +29,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
     /**
      * Forward to the configurexml class for the specific object type.
      */
+    @Override
     public Element store(Object o) {
         ConnectionConfig oprime = ((JmrixConfigPane) o).getCurrentObject();
         if (oprime == null) {
@@ -111,6 +112,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
     }

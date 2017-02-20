@@ -57,7 +57,7 @@ public class ReportPanel extends JPanel {
 
     // Define which profile sub-directories to include
     // In lowercase as I was too lazy to do a proper case-insensitive check...
-    String[] profDirs = {"networkservices", "programmers", "throttle"};
+    String[] profDirs = {"networkservices", "profile", "programmers", "throttle"};
 
     public ReportPanel() {
         if (rb == null) {
@@ -271,7 +271,7 @@ public class ReportPanel extends JPanel {
                 // close containing Frame
                 getTopLevelAncestor().setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, rb.getString("ErrMessage"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, rb.getString("ErrMessage"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
                 sendButton.setEnabled(true);
             }
 
@@ -280,7 +280,7 @@ public class ReportPanel extends JPanel {
             sendButton.setEnabled(true);
         } catch (AddressException ex) {
             log.error("Invalid email address: " + ex);
-            JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
             sendButton.setEnabled(true);
         }
     }

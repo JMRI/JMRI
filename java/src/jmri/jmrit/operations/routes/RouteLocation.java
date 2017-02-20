@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.routes;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Point;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -165,6 +166,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
     /**
      * Set the train length departing this location when building a train
+     * @param length The train's current length.
      *
      */
     public void setTrainLength(int length) {
@@ -181,6 +183,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
     /**
      * Set the train weight departing this location when building a train
+     * @param weight The train's current weight.
      *
      */
     public void setTrainWeight(int weight) {
@@ -259,7 +262,8 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Set the number of moves that this location has when building a train
+     * Set the number of moves completed when building a train
+     * @param moves An integer representing the amount of moves completed.
      *
      */
     public void setCarMoves(int moves) {
@@ -343,7 +347,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         return time[0] + ":" + time[1] + AM_PM;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
     public void setGrade(double grade) {
         double old = _grade;
         _grade = grade;

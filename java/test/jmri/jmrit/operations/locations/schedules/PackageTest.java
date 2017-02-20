@@ -29,12 +29,8 @@ public class PackageTest extends TestCase {
         suite.addTest(ScheduleTest.suite());
         suite.addTest(ScheduleManagerTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(ScheduleEditFrameGuiTest.suite());
-            suite.addTest(ScheduleGuiTests.suite());
-        }
+        suite.addTest(ScheduleEditFrameGuiTest.suite());
+        suite.addTest(ScheduleGuiTests.suite());
 
         return suite;
     }

@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   ConnectionConfigTest.class,
    RaspberryPiAdapterTest.class,
    RaspberryPiSystemConnectionMemoTest.class,
    RaspberryPiSensorManagerTest.class,
    RaspberryPiTurnoutManagerTest.class,
-   ConnectionConfigTest.class,
-   jmri.jmrix.pi.configurexml.PackageTest.class
-
+   jmri.jmrix.pi.configurexml.PackageTest.class,
+   RaspberryPiConnectionTypeListTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package

@@ -53,6 +53,7 @@ public class CarTypes extends RollingStockAttribute {
     /**
      * Changes the car types from descriptive to AAR, or the other way. Only
      * removes the default car type names from the list
+     * @param type Setup.DESCRIPTIVE or Setup.AAR
      */
     public void changeDefaultNames(String type) {
         String[] convert = CONVERT_TYPES.split(","); // NOI18N
@@ -159,6 +160,7 @@ public class CarTypes extends RollingStockAttribute {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-cars.dtd.
+     * @param root The common Element for operations-cars.dtd.
      *
      */
     public void store(Element root) {

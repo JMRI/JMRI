@@ -45,22 +45,21 @@ public class PackageTest extends TestCase {
         suite.addTest(WiThrottlePreferencesTest.suite());
         suite.addTest(WiThrottlesListModelTest.suite());
         suite.addTest(new JUnit4TestAdapter(WiThrottlePrefsPanelTest.class));
-
-        // These tests do not need this protection against headless exceptions
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(new JUnit4TestAdapter(ControllerFilterActionTest.class));
-            suite.addTest(new JUnit4TestAdapter(ControllerFilterFrameTest.class));
-            suite.addTest(new JUnit4TestAdapter(UserInterfaceTest.class));
-        }
+        suite.addTest(new JUnit4TestAdapter(ControllerFilterActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControllerFilterFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(UserInterfaceTest.class));
+        suite.addTest(new JUnit4TestAdapter(WiThrottleCreationActionTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

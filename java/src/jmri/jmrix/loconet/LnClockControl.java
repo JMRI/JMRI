@@ -62,6 +62,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         // Create a Timebase listener for Minute change events from the internal clock
         minuteChangeListener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 newMinute();
             }
@@ -97,14 +98,17 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     /**
      * Accessor routines
      */
+    @Override
     public String getHardwareClockName() {
-        return ("Loconet Fast Clock");
+        return ("Loconet Fast Clock"); // NOI18N
     }
 
+    @Override
     public boolean canCorrectHardwareClock() {
         return true;
     }
 
+    @Override
     public void setRate(double newRate) {
         if (curRate == 0) {
             savedRate = (int) newRate;      // clock stopped case
@@ -115,15 +119,18 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         setClock();
     }
 
+    @Override
     public boolean requiresIntegerRate() {
         return true;
     }
 
+    @Override
     public double getRate() {
         return curRate;
     }
 
     @SuppressWarnings("deprecation")
+    @Override
     public void setTime(Date now) {
         curDays = now.getDate();
         curHours = now.getHours();
@@ -132,6 +139,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     }
 
     @SuppressWarnings("deprecation")
+    @Override
     public Date getTime() {
         Date tem = clock.getTime();
         int cHours = tem.getHours();
@@ -144,11 +152,13 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         return (new Date(nNumMSec));
     }
 
+    @Override
     public void startHardwareClock(Date now) {
         curRate = savedRate;
         setTime(now);
     }
 
+    @Override
     public void stopHardwareClock() {
         savedRate = curRate;
         curRate = 0;
@@ -156,6 +166,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     }
 
     @SuppressWarnings("deprecation")
+    @Override
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         synchronizeWithInternalClock = clock.getSynchronize();
         correctFastClock = clock.getCorrectHardware();
@@ -239,6 +250,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
      *
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         // only watch the clock slot
         if (s.getSlot() != LnConstants.FC_SLOT) {

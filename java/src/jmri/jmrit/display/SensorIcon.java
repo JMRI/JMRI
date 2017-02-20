@@ -205,6 +205,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return namedSensor.getBean();
     }
 
+    @Override
     public jmri.NamedBean getNamedBean() {
         return getSensor();
     }
@@ -278,6 +279,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     // update icon as state of turnout changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("property change: {}", e);
         if (e.getPropertyName().equals("KnownState")) {
@@ -310,22 +312,14 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (isEditable()) {
             if (isIcon()) {
                 popup.add(new AbstractAction(Bundle.getMessage("ChangeToText")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -3390271804671921017L;
-
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
                 });
             } else {
                 popup.add(new AbstractAction(Bundle.getMessage("ChangeToIcon")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4519365584461692910L;
-
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
@@ -335,6 +329,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             popup.add(momentaryItem);
             momentaryItem.setSelected(getMomentary());
             momentaryItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setMomentary(momentaryItem.isSelected());
                 }
@@ -356,11 +351,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             popup.add(CoordinateEdit.getTextEditAction(this, "OverlayText"));
         } else {
             popup.add(new AbstractAction(Bundle.getMessage("SetSensorText")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 2546736805586722119L;
-
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     String name = getNameString();
                     sensorTextEdit(name);
@@ -394,6 +385,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     /**
      * Drive the current state of the display from the state of the turnout.
      */
+    @Override
     public void displayState(int state) {
         if (getNamedSensor() == null) {
             log.debug("Display state " + state + ", disconnected");
@@ -441,11 +433,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2742815748447591539L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 editItem();
             }
@@ -458,6 +446,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                 PickListModel.sensorPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
@@ -512,11 +501,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor"));
         popup.add(new AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3488631229551835715L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -538,6 +523,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
         // set default icons, then override with this turnout's icons
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateSensor();
             }
@@ -883,6 +869,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         flashStateOff = state2;
         if (taskPerformer == null) {
             taskPerformer = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent evt) {
                     if (flashon) {
                         flashon = false;
@@ -972,6 +959,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             }
         }
 
+        @Override
         public void setBackgroundMenu(JPopupMenu popup) {
             if (isIcon()) {
                 super.setBackgroundMenu(popup);
@@ -995,6 +983,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 //final String desiredName = name;
                 final Color desiredColor = color;
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     switch (colorType) {
                         case FONT_COLOR:

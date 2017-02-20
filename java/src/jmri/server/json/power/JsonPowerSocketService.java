@@ -58,7 +58,9 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
 
     @Override
     public void onClose() {
-        InstanceManager.getDefault(PowerManager.class).removePropertyChangeListener(this);
+        InstanceManager.getOptionalDefault(PowerManager.class).ifPresent((PowerManager pm) -> {
+            pm.removePropertyChangeListener(JsonPowerSocketService.this);
+        });
     }
 
 }

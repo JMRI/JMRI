@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.maple;
 
 import jmri.Turnout;
@@ -19,10 +18,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "K";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = "";
@@ -162,4 +163,4 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
 }
 
-/* @(#)SerialTurnoutManager.java */
+

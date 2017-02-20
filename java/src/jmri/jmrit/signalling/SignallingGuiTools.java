@@ -7,20 +7,7 @@ import jmri.SignalMast;
 import jmri.util.JmriJFrame;
 
 /**
- *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  * @author	Kevin Dickerson Copyright (C) 2011
- * 
  */
 public class SignallingGuiTools {
 
@@ -30,12 +17,12 @@ public class SignallingGuiTools {
     }
 
     /**
-     * This provides a method to display a message to the user asking them to
-     * confirm if they wish to update the signal mast logic from the old signal
-     * mast to the new one..
+     * Display a message to the user asking them to
+     * confirm they wish to update the Signal Mast Logic from the old signal
+     * mast to the new one.
      */
     static public void updateSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {rb.getString("UpdateButton"),
+        Object[] options = {Bundle.getMessage("ButtonUpdate"),
             rb.getString("LeaveButton")};
         int n = JOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(rb.getString("UpdateLogic"),
@@ -52,12 +39,11 @@ public class SignallingGuiTools {
     }
 
     /**
-     * This provides a method to display a message to the user asking them to
-     * confirm if they wish to update the signal mast logic for swapping two
-     * signal masts over.
+     * Display a message to the user asking them to confirm they wish to update
+     * the Signal Mast Logic by swapping two signal masts.
      */
     static public void swapSignalMastLogic(JmriJFrame frame, SignalMast oldMast, SignalMast newMast) {
-        Object[] options = {rb.getString("UpdateButton"),
+        Object[] options = {Bundle.getMessage("ButtonUpdate"),
             rb.getString("LeaveButton")};
         int n = JOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(rb.getString("SwapLogic"),
@@ -74,8 +60,8 @@ public class SignallingGuiTools {
     }
 
     /**
-     * This provides a method to display a message to the user asking them to
-     * confirm if they wish to remove the signal mast logic for a given signal.
+     * Display a message to the user asking them to
+     * confirm they wish to remove the Signal Mast Logic for a given signal.
      */
     static public boolean removeSignalMastLogic(JmriJFrame frame, SignalMast mast) {
         Object[] options = {rb.getString("RemoveButton"),
@@ -97,9 +83,9 @@ public class SignallingGuiTools {
     }
 
     /**
-     * This provides a method to display a message to the user asking them to
-     * confirm if they wish to remove the signal mast logic for a given signal,
-     * this is the same as removeSignalMastLogic, but with altered text
+     * Display a message to the user asking them to
+     * confirm they wish to remove the Signal Mast Logic for a given Signal Mast.
+     * This is the same as removeSignalMastLogic, but with different text.
      */
     static public void removeAlreadyAssignedSignalMastLogic(JmriJFrame frame, SignalMast mast) {
         Object[] options = {rb.getString("RemoveButton"),

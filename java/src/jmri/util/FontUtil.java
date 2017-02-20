@@ -13,9 +13,18 @@ import java.awt.Font;
  * 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen Copyright 2003
+ * @deprecated since 4.7.1; use methods in {@link java.awt.Font}
  */
+@Deprecated
 public class FontUtil {
 
+    /**
+     * Return a constant value of true.
+     *
+     * @return true
+     * @deprecated since 4.7.1 without replacement
+     */
+    @Deprecated
     static public boolean canRestyle() {
         return true;
     }
@@ -31,6 +40,17 @@ public class FontUtil {
         }
     }
 
+    /**
+     * Creates a new Font object by replicating the current Font object and
+     * applying a new style to it.
+     *
+     * @param f     the font
+     * @param style the style for the new Font
+     * @return a new Font object
+     * @deprecated since 4.7.1; use {@link java.awt.Font#deriveFont(int)}
+     * instead
+     */
+    @Deprecated
     static public Font deriveFont(Font f, int style) {
         if (doInit) {
             init();
@@ -50,10 +70,28 @@ public class FontUtil {
         }
     }
 
+    /**
+     * Return a constant value of true.
+     *
+     * @return true
+     * @deprecated since 4.7.1 without replacement
+     */
+    @Deprecated
     static public boolean canResize() {
         return true;
     }
 
+    /**
+     * Creates a new Font object by replicating the current Font object and
+     * applying a new size to it.
+     *
+     * @param f    the font
+     * @param size the size for the new Font
+     * @return a new Font object
+     * @deprecated since 4.7.1; use {@link java.awt.Font#deriveFont(float)}
+     * instead
+     */
+    @Deprecated
     static public Font deriveFont(Font f, float size) {
         if (doInit) {
             init();

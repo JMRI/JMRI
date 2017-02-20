@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -90,7 +91,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         super(Bundle.getMessage("TitleEngineAdd")); // default is add engine
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
         // set tips
@@ -299,7 +300,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         if (!CarRoads.instance().containsName(engine.getRoadName())) {
             String msg = MessageFormat.format(Bundle.getMessage("roadNameNotExist"), new Object[]{engine
                     .getRoadName()});
-            if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddRoad"),
+            if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("rsAddRoad"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 CarRoads.instance().addName(engine.getRoadName());
             }

@@ -19,6 +19,7 @@ public class SpeedoConsoleAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SpeedoConsoleFrame f = new SpeedoConsoleFrame(_memo);
         try {

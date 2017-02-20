@@ -1,4 +1,3 @@
-// SimpleProgFrame.java
 package jmri.jmrit.simpleprog;
 
 import java.awt.GridLayout;
@@ -51,21 +50,25 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         // add the actions to the buttons
         readButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 readPushed(e);
             }
         });
         writeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 writePushed(e);
             }
         });
         decButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 decHexButtonChanged(e);
             }
         });
         hexButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 decHexButtonChanged(e);
             }
@@ -168,6 +171,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     }
 
     // listen for messages from the Programmer object
+    @Override
     public void programmingOpReply(int value, int status) {
         resultsField.setText(statusCode(status));
 
@@ -251,6 +255,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         }
     }
 
+    @Override
     public void dispose() {
         modePane.dispose();
         super.dispose();

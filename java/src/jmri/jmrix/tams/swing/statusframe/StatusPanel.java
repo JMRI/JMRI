@@ -31,6 +31,7 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
         super();
     }
 
+    @Override
     public void initComponents(TamsSystemConnectionMemo memo) {
         super.initComponents(memo);
         //memo.getTrafficController().addTamsListener(this);
@@ -50,6 +51,7 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
 
         add(sendButton);
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -61,6 +63,7 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.removeTamsListener(this);
         tc = null;
@@ -83,6 +86,7 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
     TamsTrafficController tc;
 
     // to listen for status changes from Tams system
+    @Override
     public void reply(TamsReply m) {
         // power message?
         String msg = m.toString();
@@ -91,6 +95,7 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
         serVersion.setText(serString + version[1]);
     }
 
+    @Override
     public void message(TamsMessage m) {
         // messages are ignored
     }
@@ -99,11 +104,6 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2919382089865855790L;
 
         public Default() {
             super(ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle").getString("MenuItemInfo"),

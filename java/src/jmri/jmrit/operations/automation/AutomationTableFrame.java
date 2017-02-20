@@ -1,4 +1,3 @@
-// AutomationTableFrame.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;
@@ -268,18 +267,18 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
     private void addNewAutomationItem() {
         // add item to this automation
         if (addActionAtTopRadioButton.isSelected()) {
-            _automation.addItem(0);
+            _automation.addNewItem(0);
         } else if (addActionAtBottomRadioButton.isSelected()) {
             _automation.addItem();
         } else {
             // middle radio button selected
             if (_automationTable.getSelectedRow() >= 0) {
                 int row = _automationTable.getSelectedRow();
-                _automation.addItem(row);
+                _automation.addNewItem(row);
                 // we need to reselect the table since the content has changed
                 _automationTable.getSelectionModel().setSelectionInterval(row, row);
             } else {
-                _automation.addItem(_automation.getSize() / 2);
+                _automation.addNewItem(_automation.getSize() / 2);
             }
         }
     }

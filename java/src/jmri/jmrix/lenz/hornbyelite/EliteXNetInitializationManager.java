@@ -1,4 +1,3 @@
-// EliteXNetInitializationManager.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;
@@ -19,6 +18,7 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

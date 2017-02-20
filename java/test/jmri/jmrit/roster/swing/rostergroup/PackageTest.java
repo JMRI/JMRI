@@ -27,15 +27,18 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.rostergroup.PackageTest");
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupTableModelTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

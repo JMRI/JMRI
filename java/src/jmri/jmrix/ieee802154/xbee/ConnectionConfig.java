@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.ieee802154.xbee;
 
 import javax.swing.JButton;
@@ -38,6 +37,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super.loadDetails(details);
     }
 
+    @Override
     public String name() {
         return "XBee Network";
     }

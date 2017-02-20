@@ -22,12 +22,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         if(adapter == null) {
            adapter = new SerialDriverAdapter();
         }
     }
 
+    @Override
     protected void getInstance(Object object) {
        if(object instanceof ConnectionConfig ) {
           adapter = ((ConnectionConfig) object).getAdapter();

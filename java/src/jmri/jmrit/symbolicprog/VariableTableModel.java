@@ -1,9 +1,11 @@
 package jmri.jmrit.symbolicprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -44,24 +46,26 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Defines the columns; values understood are: "Name", "Value", "Range",
      * "Read", "Write", "Comment", "CV", "Mask", "State"
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         super();
         _status = status;
         _cvModel = cvModel;
         _indxCvModel = iCvModel;
-        headers = h;
+        headers = Arrays.copyOf(h, h.length);
     }
 
     // basic methods for AbstractTableModel implementation
+    @Override
     public int getRowCount() {
         return rowVector.size();
     }
 
+    @Override
     public int getColumnCount() {
         return headers.length;
     }
 
+    @Override
     public String getColumnName(int col) {
         if (log.isDebugEnabled()) {
             log.debug("getColumnName " + col);
@@ -69,6 +73,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return headers[col];
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         // if (log.isDebugEnabled()) log.debug("getColumnClass "+col);
         if (headers[col].equals("Value")) {
@@ -82,6 +87,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         if (log.isDebugEnabled()) {
             log.debug("isCellEditable " + col);
@@ -142,6 +148,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v.getNewRep(format);
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
         if (row >= rowVector.size()) {
@@ -190,6 +197,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (log.isDebugEnabled()) {
             log.debug("setvalueAt " + row + " " + col + " " + value);
@@ -331,10 +339,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     protected void processModifierElements(final Element e, final VariableValue v) {
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new ValueQualifier(v, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 v.addPropertyChangeListener(qc);
             }
@@ -836,7 +846,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Configure from a constant. This is like setRow (which processes a
      * variable Element).
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+    @SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
             justification = "null mask parameter to ConstantValue constructor expected.")
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
@@ -932,6 +942,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v.addPropertyChangeListener(this);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("action performed,  command: " + e.getActionCommand());
@@ -971,6 +982,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v.writeAll();
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("prop changed " + e.getPropertyName()

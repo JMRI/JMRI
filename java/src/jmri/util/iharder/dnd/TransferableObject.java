@@ -149,6 +149,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      * @return An array of supported data flavors
      * @since 1.1
      */
+    @Override
     public java.awt.datatransfer.DataFlavor[] getTransferDataFlavors() {
         if (customFlavor != null) {
             return new java.awt.datatransfer.DataFlavor[]{customFlavor,
@@ -173,6 +174,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      * @return The dropped data
      * @since 1.1
      */
+    @Override
     public Object getTransferData(java.awt.datatransfer.DataFlavor flavor)
             throws java.awt.datatransfer.UnsupportedFlavorException, java.io.IOException {
         // Native object
@@ -197,6 +199,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      * @return Whether or not the flavor is supported
      * @since 1.1
      */
+    @Override
     public boolean isDataFlavorSupported(java.awt.datatransfer.DataFlavor flavor) {
         // Native object
         if (flavor.equals(DATA_FLAVOR)) {

@@ -29,17 +29,23 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.signalling.entryexit.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.signalling.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AddEntryExitPairFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EntryExitPairsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingFrameActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingSourceActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignallingSourceFrameTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
 
 public class WiThrottlesListModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 473377515756069668L;
-
     ArrayList<DeviceServer> deviceList;
     //DeviceServer[] deviceList;
 
@@ -32,14 +27,17 @@ public class WiThrottlesListModel extends AbstractTableModel {
 
     }
 
+    @Override
     public int getColumnCount() {
         return 2;
     }
 
+    @Override
     public int getRowCount() {
         return deviceList.size();
     }
 
+    @Override
     public String getColumnName(int col) {
         String title;
         switch (col) {
@@ -58,6 +56,7 @@ public class WiThrottlesListModel extends AbstractTableModel {
         return title;
     }
 
+    @Override
     public String getValueAt(int row, int col) {
         if (deviceList.size() < 1) {
             return null;

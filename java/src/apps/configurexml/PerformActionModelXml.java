@@ -2,12 +2,7 @@ package apps.configurexml;
 
 import apps.PerformActionModel;
 import apps.StartupActionsManager;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.swing.SystemConnectionAction;
-import jmri.util.ConnectionNameFromSystemName;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +24,7 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element element = new Element("perform");
         PerformActionModel g = (PerformActionModel) o;
@@ -68,35 +64,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
                 model.setSystemPrefix(child.getAttributeValue("value")); // NOI18N
             }
         }
-        log.debug("Invoke Action from {}", className);
-        try {
-            Action action = (Action) Class.forName(className).newInstance();
-            if (SystemConnectionAction.class.isAssignableFrom(action.getClass())) {
-                SystemConnectionMemo memo = ConnectionNameFromSystemName.getSystemConnectionMemoFromSystemPrefix(model.getSystemPrefix());
-                if (memo != null) {
-                    ((SystemConnectionAction) action).setSystemConnectionMemo(memo);
-                } else {
-                    log.error("Connection {} does not exist. Cannot be assigned to action {}", model.getSystemPrefix(), className);
-                    result = false;
-                }
-            }
-            action.actionPerformed(new ActionEvent("prefs", 0, ""));
-        } catch (ClassNotFoundException ex) {
-            log.error("Could not find specified class: {}", className);
-            exception = ex;
-        } catch (IllegalAccessException ex) {
-            log.error("Unexpected access exception for class: {}", className, ex);
-            result = false;
-            exception = ex;
-        } catch (InstantiationException ex) {
-            log.error("Could not instantiate specified class: {}", className, ex);
-            result = false;
-            exception = ex;
-        } catch (Exception ex) {
-            log.error("Error while performing startup action for class: {}", className, ex);
-            result = false;
-            exception = ex;
-        }
         InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
         if (exception != null) {
             throw exception;
@@ -110,6 +77,7 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }

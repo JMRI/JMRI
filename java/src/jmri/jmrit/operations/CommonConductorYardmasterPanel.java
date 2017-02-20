@@ -1,4 +1,3 @@
-// YardmasterFrame.java
 package jmri.jmrit.operations;
 
 import java.awt.Dimension;
@@ -404,6 +403,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
      * three panes are pick up, set out, or local move. To keep track of each
      * car and which pane to use, they are placed in the list "rollingStock"
      * with the prefix "p", "s" or "m" and the car's unique id.
+     * @param rl The RouteLocation
+     * @param isManifest True if manifest, false if switch list
      *
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {

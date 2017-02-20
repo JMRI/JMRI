@@ -27,6 +27,7 @@ public class ConsistController extends AbstractController implements ProgListene
         //  writeFile needs to be separate method
         if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
             manager = new WiFiConsistManager();
+            jmri.InstanceManager.store(manager,jmri.ConsistManager.class);
             log.debug("Using WiFiConsisting");
         } else {
             manager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
@@ -186,6 +187,7 @@ public class ConsistController extends AbstractController implements ProgListene
         isConsistAllowed = b;
     }
 
+    @Override
     boolean verifyCreation() {
         return isValid;
     }
@@ -194,6 +196,7 @@ public class ConsistController extends AbstractController implements ProgListene
      *
      * @param message string containing new consist information
      */
+    @Override
     void handleMessage(String message) {
         try {
             if (message.charAt(0) == 'P') {  //  Change consist 'P'ositions
@@ -437,6 +440,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     }
 
+    @Override
     public void programmingOpReply(int value, int status) {
 
     }
@@ -462,10 +466,12 @@ public class ConsistController extends AbstractController implements ProgListene
         return false;
     }
 
+    @Override
     void register() {
         throw new UnsupportedOperationException("Not used.");
     }
 
+    @Override
     void deregister() {
         throw new UnsupportedOperationException("Not used.");
     }

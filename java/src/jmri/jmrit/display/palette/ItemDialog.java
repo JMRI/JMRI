@@ -1,6 +1,6 @@
-// ItemDialog.java
 package jmri.jmrit.display.palette;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.util.JmriJFrame;
 
 /**
@@ -14,11 +14,6 @@ import jmri.util.JmriJFrame;
  * @author Pete Cressman Copyright (c) 2010
  */
 public class ItemDialog extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2157245075058528455L;
 
     //    protected ItemPanel _parent;
     protected String _type;
@@ -51,7 +46,8 @@ public class ItemDialog extends JmriJFrame {
     protected void closeDialogs() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Null reference to singular version to allow gc earlier")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Null reference to singular version to allow gc earlier")
+    @Override
     public void dispose() {
         closeDialogs();
         super.dispose();

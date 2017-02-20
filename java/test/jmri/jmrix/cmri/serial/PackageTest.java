@@ -25,7 +25,15 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.cmri.serial.networkdriver.PackageTest.class,
    jmri.jmrix.cmri.serial.sim.PackageTest.class,
    jmri.jmrix.cmri.serial.serialdriver.PackageTest.class,
-   jmri.jmrix.cmri.serial.configurexml.PackageTest.class
+   jmri.jmrix.cmri.serial.configurexml.PackageTest.class,
+   jmri.jmrix.cmri.serial.serialmon.PackageTest.class,
+   jmri.jmrix.cmri.serial.nodeconfig.PackageTest.class,
+   jmri.jmrix.cmri.serial.assignment.PackageTest.class,
+   jmri.jmrix.cmri.serial.diagnostic.PackageTest.class,
+   jmri.jmrix.cmri.serial.packetgen.PackageTest.class,
+   SerialNetworkPortControllerTest.class,
+   SerialPortControllerTest.class,
+   SerialReplyTest.class
 })
 
 public class PackageTest{

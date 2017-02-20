@@ -90,11 +90,13 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 
     }
 
+    @Override
     public void notifyDeviceConnected(DeviceServer device) {
 
         deviceList.add(device);
     }
 
+    @Override
     public void notifyDeviceDisconnected(DeviceServer device) {
         if (deviceList.size() < 1) {
             return;
@@ -112,6 +114,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
      * Received an UDID, filter out any duplicate.
      *
      */
+    @Override
     public void notifyDeviceInfoChanged(DeviceServer device) {
 
         //  Filter duplicate connections
@@ -128,6 +131,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
     }
 
+    @Override
     public String getSelectedRosterGroup() {
 //        return rosterGroupSelector.getSelectedRosterGroup();
         return null;

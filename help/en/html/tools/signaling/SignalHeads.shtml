@@ -8,7 +8,7 @@
 
   <title>JMRI: Signal Heads Documentation</title>
   <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20160323">
+  <meta name="Date.Modified" content="20161218">
   <meta name="keywords" content=
   "turnout model railroad JMRI decoderpro panelpro"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -50,8 +50,8 @@
       Heads. <a name="table" id="table"></a></p>
 
       <h3>The Signal Head Table</h3><a href=
-      "../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png"
-      align="right" width="554" height="184" hspace="0" vspace="0"
+      "../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"
+      align="right" width="447" height="177" hspace="0" vspace="0"
       alt="Signal Head Table figure"></a> 
       <!-- The following section is taken from, and should be kept consistent with -->
        
@@ -67,8 +67,8 @@
       "add"></a></p>
 
       <h3>Creating a Signal Head</h3><a href=
-      "../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeadAdd1.png"
-      align="right" width="181" height="218" hspace="0" vspace="0"
+      "../../../package/jmri/jmrit/beantable/images/SignalHeadAdd1.png"><img src="../../../package/jmri/jmrit/beantable/images/SignalHeadAdd1.png"
+      align="right" width="127" height="200" hspace="0" vspace="0"
       alt="Add Signal Head window figure"></a>
 
       <p>To define a new Signal Head, click on the <a href=
@@ -97,8 +97,9 @@
       by other parts of JMRI!</p>
 
       <h3>Controlling a Signal Head</h3>Apart from manually setting
-      the Aspect of a Signal Head from the Signal Head Table by
-      clicking on the "Appearance" button in the State column,
+      the Appearance of a Signal Head from the Signal Head Table by
+      clicking on the current state of a head in the Appearance column
+      and selecting a state from the combo box that opens,
       Signal Heads can be automatically controlled by JMRI in
       various ways, including:
 

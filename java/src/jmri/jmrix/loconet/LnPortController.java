@@ -1,4 +1,3 @@
-// LnPortController.java
 package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
@@ -21,15 +20,18 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
 
     // returns the InputStream from the port
+    @Override
     public abstract DataInputStream getInputStream();
 
     // returns the outputStream to the port
+    @Override
     public abstract DataOutputStream getOutputStream();
 
     /**
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public abstract boolean status();
 
     /**
@@ -51,6 +53,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
         LnCommandStationType.COMMAND_STATION_DCS240,
+        LnCommandStationType.COMMAND_STATION_DCS210,
         LnCommandStationType.COMMAND_STATION_DCS200,
         LnCommandStationType.COMMAND_STATION_DCS050,
         LnCommandStationType.COMMAND_STATION_DCS051,
@@ -86,19 +89,19 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         if (value == null) {
             return;  // can happen while switching protocols
         }
-        log.debug("setCommandStationType: " + value);
+        log.debug("setCommandStationType: " + value); // NOI18N
         commandStationType = value;
     }
 
     public void setTurnoutHandling(String value) {
-        if (value.equals("One Only") || value.equals("Both")) {
+        if (value.equals("One Only") || value.equals("Both")) { // NOI18N
             mTurnoutNoRetry = true;
         }
-        if (value.equals("Spread") || value.equals("Both")) {
+        if (value.equals("Spread") || value.equals("Both")) { // NOI18N
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: " + mTurnoutNoRetry);
-        log.debug("turnout extra space: " + mTurnoutExtraSpace);
+        log.debug("turnout no retry: " + mTurnoutNoRetry); // NOI18N
+        log.debug("turnout extra space: " + mTurnoutExtraSpace); // NOI18N
     }
 
     @Override
@@ -107,6 +110,3 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
     private final static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
 }
-
-
-/* @(#)LnPortController.java */

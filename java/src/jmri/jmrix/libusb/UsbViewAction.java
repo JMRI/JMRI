@@ -1,4 +1,3 @@
-// UsbViewAction.java
 package jmri.jmrix.libusb;
 
 import org.slf4j.Logger;
@@ -11,11 +10,6 @@ import org.slf4j.LoggerFactory;
   */
 public class UsbViewAction extends javax.swing.AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7957478904918565568L;
-
     public UsbViewAction(String s) {
         super(s);
     }
@@ -24,6 +18,7 @@ public class UsbViewAction extends javax.swing.AbstractAction {
         this(java.util.ResourceBundle.getBundle("jmri.jmrix.libusb.UsbViewActionBundle").getString("USB_Device_Viewer"));
     }
 
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // create and display
         try {
@@ -36,5 +31,3 @@ public class UsbViewAction extends javax.swing.AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(UsbViewAction.class.getName());
 }
-
-/* @(#)UsbViewAction.java */

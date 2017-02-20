@@ -1,4 +1,3 @@
-// SerialReply.java
 package jmri.jmrix.oaktree;
 
 
@@ -33,6 +32,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return getElement(0);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;
@@ -40,4 +40,4 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)SerialReply.java */
+

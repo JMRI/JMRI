@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <name>Railcom</name>
+  <name>RailCom</name>
+  <name xml:lang="it">RailCom</name>
+  <name xml:lang="de">RailCom</name>
+  <name xml:lang="cs">RailCom</name>
   <column>
     <display item="Enable RailCom" format="checkbox"/>
     <display item="RailCom channel 1 (Broadcast)"/>
@@ -12,5 +16,4 @@
     </label>
     <display item="RailCom speed reporting method"/>
   </column>
-  <name xml:lang="it">Railcom</name>
 </pane>

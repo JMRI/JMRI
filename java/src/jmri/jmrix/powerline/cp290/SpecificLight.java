@@ -1,4 +1,3 @@
-// SpecificLight.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -31,11 +30,6 @@ import org.slf4j.LoggerFactory;
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 4123284768492494792L;
-
-    /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
@@ -64,6 +58,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
      * <p>
      * Invoked the first time intensity is set.
      */
+    @Override
     protected void initIntensity(double intensity) {
         maxDimStep = tc.getNumberOfIntensitySteps();
 
@@ -106,5 +101,3 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     private final static Logger log = LoggerFactory.getLogger(SpecificLight.class.getName());
 }
-
-/* @(#)SpecificLight.java */

@@ -1,20 +1,12 @@
 package jmri.jmrix.pi;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
-import com.pi4j.io.gpio.WiringPiGpioProviderBase;
-import com.pi4j.io.gpio.Pin;
-import com.pi4j.io.gpio.PinMode;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.PinPullResistance;
 
 import jmri.Sensor;
 
@@ -25,7 +17,7 @@ import jmri.Sensor;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private GpioProvider myprovider = null;
 
@@ -98,37 +90,8 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @Before
     public void setUp() {
        apps.tests.Log4JFixture.setUp();
-       GpioProvider myprovider = new WiringPiGpioProviderBase(){
-           @Override
-           public String getName(){
-              return "RaspberryPi GPIO Provider";
-           }
-
-           @Override
-           public boolean hasPin(Pin pin) {
-              return false;
-           }
-
-           @Override
-           public void export(Pin pin, PinMode mode, PinState defaultState) {
-           }
-
-           @Override
-           public void setPullResistance(Pin pin, PinPullResistance resistance) {
-           }
-            
-           @Override
-           protected void updateInterruptListener(Pin pin) {
-           }
-
-           @Override
-           public PinState getState(Pin pin) {
-                  return PinState.HIGH;
-           }
-       };
- 
+       GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
-
        jmri.util.JUnitUtil.resetInstanceManager();
        l = new RaspberryPiSensorManager("Pi");
     }

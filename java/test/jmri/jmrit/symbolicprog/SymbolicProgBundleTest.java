@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog;
 
-import java.util.Locale;
 
 import org.junit.Assert;
 import junit.framework.Test;

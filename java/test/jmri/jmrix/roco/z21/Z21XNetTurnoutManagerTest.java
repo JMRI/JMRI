@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2004
  * @author	Paul Bender Copyright 2016
  */
-public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i) {
@@ -29,6 +29,7 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
     XNetInterfaceScaffold lnis;
 
     @Test
+    @Override
     public void testMisses() {
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));

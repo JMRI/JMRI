@@ -15,10 +15,11 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (c) 2003
  */
-public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
         
     private XNetInterfaceScaffold xnis; 
 
+    @Override
     public String getSystemName(int i) {
         return "XS" + i;
     }
@@ -39,6 +40,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     }
 
     @Test
+    @Override
     public void testMisses() {
         // sample turnout object
         Sensor s = l.newSensor("XS22", "test");

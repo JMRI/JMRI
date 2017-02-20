@@ -49,15 +49,19 @@ public class LocoIcon extends PositionableLabel {
         //setEditable(false);
         _text = true;	//Markers are an icon with text
         setPopupUtility(new PositionablePopupUtil(this, this) {       // need this class for Font Edit
+            @Override
             public void setFixedTextMenu(JPopupMenu popup) {
             }
 
+            @Override
             public void setTextMarginMenu(JPopupMenu popup) {
             }
 
+            @Override
             public void setTextBorderMenu(JPopupMenu popup) {
             }
 
+            @Override
             public void setTextJustificationMenu(JPopupMenu popup) {
             }
         });
@@ -78,16 +82,19 @@ public class LocoIcon extends PositionableLabel {
     }
 
     // Marker tool tips are always disabled
+    @Override
     public void setShowTooltip(boolean set) {
         super.setShowTooltip(false);
     }
 
     // Markers are always positionable 
+    @Override
     public void setPositionable(boolean enabled) {
         super.setPositionable(true);
     }
 
     // Markers always have a popup menu
+    @Override
     public boolean doViemMenu() {
         return false;
     }
@@ -97,14 +104,11 @@ public class LocoIcon extends PositionableLabel {
     /**
      * Pop-up only if right click and not dragged
      */
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (_entry != null) {
             popup.add(new AbstractAction("Throttle") {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -1098488345509610672L;
-
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
                     tf.getAddressPanel().setRosterEntry(_entry);
@@ -162,6 +166,7 @@ public class LocoIcon extends PositionableLabel {
         r.addActionListener(new ActionListener() {
             final String desiredColor = color;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setLocoColor(desiredColor);
             }
@@ -231,6 +236,7 @@ public class LocoIcon extends PositionableLabel {
                 return this;
             }
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ed.setSelectionsDockingLocation(loco);
             }
@@ -267,6 +273,7 @@ public class LocoIcon extends PositionableLabel {
                 return this;
             }
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ed.dockSelections(loco);
             }
@@ -298,6 +305,7 @@ public class LocoIcon extends PositionableLabel {
     /**
      * Set display attributes for Tracker
      */
+    @Override
     public void doMouseReleased(MouseEvent event) {
         List<Positionable> selections = _editor.getSelectedItems(event);
         if (selections == null) {

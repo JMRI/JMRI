@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
- * Frame Entry Exit Frames
+ * Create frame for an Add Entry Exit.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
@@ -22,6 +22,11 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
     JButton sendButton;
     AddEntryExitPairPanel nxPanel;
 
+    /**
+     * Create and set an AddEntryExitPairFrame on a given LE panel and add menuItems.
+     *
+     * @param panel the LE panel on which to create the NX frame
+     */
     public void initComponents(LayoutEditor panel) throws Exception {
         // the following code sets the frame's initial state
 
@@ -36,6 +41,7 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
         JMenuItem options = new JMenuItem(Bundle.getMessage("MenuOptions")); // reuse existing key in jmrit.Bundle
         menuBar.add(options);
         options.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 nxPanel.optionWindow(event);
             }

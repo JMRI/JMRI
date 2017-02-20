@@ -43,6 +43,7 @@ public class PaneNewProgAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (log.isDebugEnabled()) {
@@ -66,6 +67,7 @@ public class PaneNewProgAction extends AbstractAction {
         // new Loco on programming track
         JPanel pane1 = new LocoSelTreePane(null, null) {
 
+            @Override
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
                 String title = SymbolicProgBundle.getMessage("FrameNewEntryTitle");
@@ -73,6 +75,7 @@ public class PaneNewProgAction extends AbstractAction {
                         title, "programmers" + File.separator + filename + ".xml",
                         null, false) {
 
+                    @Override
                             protected JPanel getModePane() {
                                 return null;
                             }

@@ -93,21 +93,13 @@ abstract class BeanEditAction extends AbstractAction {
         basic.addItem(new BeanEditItem(commentFieldScroller, Bundle.getMessage("ColumnComment"), null));
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1823311798750191527L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveBasicItems(e);
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2590436299984618901L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 resetBasicItems(e);
             }
@@ -162,21 +154,13 @@ abstract class BeanEditAction extends AbstractAction {
         jsp.setPreferredSize(tableDim);
         properties.addItem(new BeanEditItem(jsp, "", null));
         properties.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5627203723098157467L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.updateModel(bean);
             }
         });
         properties.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -956489116413677732L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.setModel(bean);
             }
@@ -217,9 +201,11 @@ abstract class BeanEditAction extends AbstractAction {
         selectedTab = c;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (bean == null) {
-            log.error("No bean set so unable to edit a null bean");  //IN18N
+            // add error dialog TODO
+            log.error("No bean set so unable to edit a null bean");  //NOI18N
             return;
         }
         if (f == null) {
@@ -239,12 +225,14 @@ abstract class BeanEditAction extends AbstractAction {
             JPanel buttons = new JPanel();
             JButton applyBut = new JButton(Bundle.getMessage("ButtonApply"));
             applyBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     applyButtonAction(e);
                 }
             });
             JButton okBut = new JButton(Bundle.getMessage("ButtonOK"));
             okBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     applyButtonAction(e);
                     f.dispose();
@@ -252,6 +240,7 @@ abstract class BeanEditAction extends AbstractAction {
             });
             JButton cancelBut = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelButtonAction(e);
                 }
@@ -403,7 +392,7 @@ abstract class BeanEditAction extends AbstractAction {
                 if (!nbMan.inUse(nBean.getSystemName(), nBean)) {
                     return;
                 }
-                String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToUserName"),
+                String msg = Bundle.getMessage("UpdateToUserName",
                         new Object[]{getBeanType(), value, nBean.getSystemName()});
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
@@ -446,10 +435,6 @@ abstract class BeanEditAction extends AbstractAction {
     //Based upon the code from the RosterMediaPane
     private static class BeanPropertiesTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7466799526127205872L;
         Vector<KeyValueModel> attributes;
         String titles[];
         boolean wasModified;
@@ -516,18 +501,22 @@ abstract class BeanEditAction extends AbstractAction {
             return false;
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return attributes.size();
         }
 
+        @Override
         public String getColumnName(int col) {
             return titles[col];
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             if (row < attributes.size()) {
                 if (col == 0) {
@@ -540,6 +529,7 @@ abstract class BeanEditAction extends AbstractAction {
             return "...";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             KeyValueModel kv;
 
@@ -579,6 +569,7 @@ abstract class BeanEditAction extends AbstractAction {
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }

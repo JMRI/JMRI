@@ -1,19 +1,28 @@
 package jmri.jmrix.rps;
 
+import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
 import javax.swing.JFrame;
+import jmri.configurexml.ConfigXmlManager;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the rps.Reading class.
  *
  * @author	Bob Jacobsen Copyright 2006
   */
-public class RpsPositionIconTest extends TestCase {
+public class RpsPositionIconTest {
 
+    @Test
     public void testCtorAndID() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // init test system
         new Engine() {
             void reset() {
@@ -21,36 +30,28 @@ public class RpsPositionIconTest extends TestCase {
             }
         }.reset();
 
-        new jmri.configurexml.ConfigXmlManager().load(new java.io.File("java/test/jmri/jmrix/rps/LocationTestPanel.xml"));
+        new ConfigXmlManager().load(new File("java/test/jmri/jmrix/rps/LocationTestPanel.xml"));
 
         // and push a good measurement
         Reading loco = new Reading("27", null);
         Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 5, "source");
         Distributor.instance().submitMeasurement(m);
 
-//    }
-//  test order isn't guaranteed!
-//    public void testXPanelCreation() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("RPS Location Test");
-        Assert.assertTrue("found frame", f != null);
+        JFrame f = JmriJFrame.getFrame("RPS Location Test");
+        Assert.assertNotNull("found frame", f);
         f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public RpsPositionIconTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {RpsPositionIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
+        Log4JFixture.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RpsPositionIconTest.class);
-        return suite;
-    }
-
 }

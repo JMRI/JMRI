@@ -12,7 +12,11 @@ import org.slf4j.LoggerFactory;
 public class JmriNamedPaneAction extends JmriAbstractAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Constructor that associates the panel with the given window.
+     *
+     * @param s         panel name
+     * @param wi        window associated with pane
+     * @param paneClass class of the pane
      */
     public JmriNamedPaneAction(String s, WindowInterface wi, String paneClass) {
         super(s, wi);
@@ -26,6 +30,9 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
 
     /**
      * Original constructor for compatibility with older menus. Assumes SDI GUI.
+     *
+     * @param s the panel name
+     * @param p the panel class
      */
     public JmriNamedPaneAction(String s, String p) {
         this(s, new jmri.util.swing.sdi.JmriJFrameInterface(), p);
@@ -33,6 +40,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
 
     protected String paneClass;
 
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         try {
             JmriPanel p = (JmriPanel) Class.forName(paneClass).newInstance();

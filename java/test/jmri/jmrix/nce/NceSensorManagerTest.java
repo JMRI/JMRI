@@ -1,9 +1,5 @@
 package jmri.jmrix.nce;
 
-import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,7 +11,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2002
  * @author      Paul Bender Copyright (C) 2016
  */
-public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
         
     private NceInterfaceScaffold lnis = null;
 

@@ -1,16 +1,17 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test PaneProg with qualified variables
@@ -21,18 +22,20 @@ public class QualifiedVarTest extends TestCase {
 
     // show me a specially-created frame
     public void testFrame() throws Exception {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+        if (GraphicsEnvironment.isHeadless()) {
             return;
         }
 
         // run all following on Swing thread
         javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
             public void run() {
                 setupDoc();
                 PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                         "test qualified var", "programmers/Basic.xml",
                         new jmri.progdebugger.ProgDebugger(), false) {
                             // dummy implementations
+                    @Override
                             protected JPanel getModePane() {
                                 return null;
                             }
@@ -198,10 +201,12 @@ public class QualifiedVarTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class.getName());
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

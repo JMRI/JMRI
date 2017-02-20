@@ -199,6 +199,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         g.add(buttonTrailDiv);
         g.add(buttonFacing);
         ActionListener a = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 buttonClicked();
             }
@@ -246,6 +247,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         line.add(outSignalField = new JTextField(12));
         outSignalField.setToolTipText(outSignalFieldTooltip);
         outSignalField.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // user hit enter, use this name to fill in the rest of the fields
                 activate();
@@ -284,17 +286,18 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         line = new JPanel();
         line.setLayout(new FlowLayout());
-        line.add(new JLabel(rbt.getString("Comment:_")));
+        line.add(new JLabel(rbt.getString("Comment")));
         line.add(commentField = new JTextField(30));
         getContentPane().add(line);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
         // add OK button at bottom
-        JButton b = new JButton(rbt.getString("Apply"));
+        JButton b = new JButton(rbt.getString("Apply")); // TODO add Bundle to folder and use ButtonApply from NBB
         b.setAlignmentX(0.5f);
         getContentPane().add(b);
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed();
             }

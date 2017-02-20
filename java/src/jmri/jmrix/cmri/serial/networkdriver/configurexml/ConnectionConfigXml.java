@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
@@ -29,10 +30,15 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = new NetworkDriverAdapter();
+        if(adapter == null) {
+           adapter = new NetworkDriverAdapter();
+           adapter.configure(); // sets the memo and traffic controller.
+        }
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
@@ -42,9 +48,10 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      *
      * @param e Element being extended
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     protected void extendElement(Element e) {
         SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
         SerialNode node = (SerialNode) tc.getNode(0);

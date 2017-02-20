@@ -1,5 +1,8 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import static org.junit.Assert.*;
+
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JComponent;
@@ -11,105 +14,109 @@ import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
  */
-public class PaneProgPaneTest extends TestCase {
+public class PaneProgPaneTest {
 
     ProgDebugger p = new ProgDebugger();
 
     // test creating columns in a pane
+    @Test
     public void testColumn() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    // dummy implementations
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
-        if (log.isDebugEnabled()) {
-            log.debug("CvTableModel ctor complete");
-        }
+        log.debug("CvTableModel ctor complete");
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) {
-            log.debug("VariableTableModel ctor complete");
-        }
+        log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
-        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
+        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
+            @Override
             public JPanel newColumn(Element e, boolean a, Element el) {
                 colCount++;
                 return new JPanel();
             }
         };
-        assertNotNull("exists", p);
+        assertNotNull("exists", pane);
         assertEquals("column count", 2, colCount);
     }
 
     // test specifying variables in columns
+    @Test
     public void testVariables() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();  // make sure XML document is ready
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    // dummy implementations
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) {
-            log.debug("VariableTableModel ctor complete");
-        }
+        log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
-        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
+        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
+            @Override
             public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a) {
                 varCount++;
             }
         };
-        assertNotNull("exists", p);
+        assertNotNull("exists", pane);
         assertEquals("variable defn count", 7, varCount);
     }
 
     // test storage of programming info in list
+    @Test
     public void testVarListFill() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();  // make sure XML document is ready
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    // dummy implementations
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) {
-            log.debug("VariableTableModel ctor complete");
-        }
+        log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
                 .setAttribute("CV", "17")
@@ -117,58 +124,49 @@ public class PaneProgPaneTest extends TestCase {
                 .setAttribute("mask", "VVVVVVVV")
                 .setAttribute("label", "Start voltage")
                 .addContent(new Element("longAddressVal"));
-        if (log.isDebugEnabled()) {
-            log.debug("First element created");
-        }
+        log.debug("First element created");
         varModel.setRow(0, el0);
-        if (log.isDebugEnabled()) {
-            log.debug("First element loaded");
-        }
+        log.debug("First element loaded");
         Element el1 = new Element("variable")
                 .setAttribute("CV", "17")
                 .setAttribute("readOnly", "no")
                 .setAttribute("mask", "VVVVVVVV")
                 .setAttribute("label", "Primary Address")
                 .addContent(new Element("decVal"));
-        if (log.isDebugEnabled()) {
-            log.debug("Second element created");
-        }
+        log.debug("Second element created");
         varModel.setRow(1, el1);
-        if (log.isDebugEnabled()) {
-            log.debug("Two elements loaded");
-        }
+        log.debug("Two elements loaded");
 
         // test by invoking
-        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
-        assertEquals("variable list length", 2, p.varList.size());
-        assertEquals("1st variable index ", Integer.valueOf(1), p.varList.get(0));
-        assertEquals("2nd variable index ", Integer.valueOf(0), p.varList.get(1));
+        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
+        assertEquals("variable list length", 2, pane.varList.size());
+        assertEquals("1st variable index ", Integer.valueOf(1), pane.varList.get(0));
+        assertEquals("2nd variable index ", Integer.valueOf(0), pane.varList.get(1));
     }
 
     // test storage of programming info in list
+    @Test
     public void testPaneRead() {
-        if (log.isDebugEnabled()) {
-            log.debug("testPaneRead starts");
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        log.debug("testPaneRead starts");
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    // dummy implementations
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) {
-            log.debug("VariableTableModel ctor complete");
-        }
+        log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
                 .setAttribute("CV", "2")
@@ -194,38 +192,37 @@ public class PaneProgPaneTest extends TestCase {
         progPane.readAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
-        JUnitUtil.waitFor(()->{return !progPane.isBusy();}, "progPane.isBusy");
+        JUnitUtil.waitFor(() -> {
+            return !progPane.isBusy();
+        }, "progPane.isBusy");
 
         Assert.assertEquals("CV 2 value ", "20", varModel.getValString(0));
         Assert.assertEquals("CV 3 value ", "30", varModel.getValString(1));
 
-        if (log.isDebugEnabled()) {
-            log.debug("testPaneRead ends ok");
-        }
+        log.debug("testPaneRead ends ok");
     }
 
+    @Test
     public void testPaneWrite() {
-        if (log.isDebugEnabled()) {
-            log.debug("testPaneWrite starts");
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        log.debug("testPaneWrite starts");
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    // dummy implementations
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) {
-            log.debug("VariableTableModel ctor complete");
-        }
+        log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
                 .setAttribute("CV", "2")
@@ -243,9 +240,7 @@ public class PaneProgPaneTest extends TestCase {
                 .addContent(new Element("decVal"));
         varModel.setRow(0, el0);
         varModel.setRow(1, el1);
-        if (log.isDebugEnabled()) {
-            log.debug("Two elements loaded");
-        }
+        log.debug("Two elements loaded");
 
 //        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
         PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
@@ -257,32 +252,33 @@ public class PaneProgPaneTest extends TestCase {
         progPane.writeAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
-        JUnitUtil.waitFor(()->{return !progPane.isBusy();}, "progPane.isBusy");
+        JUnitUtil.waitFor(() -> {
+            return !progPane.isBusy();
+        }, "progPane.isBusy");
 
         Assert.assertEquals("CV 2 value ", 20, p.getCvVal(2));
         Assert.assertEquals("CV 3 value ", 30, p.getCvVal(3));
 
-        if (log.isDebugEnabled()) {
-            log.debug("testPaneWrite ends ok");
-        }
+        log.debug("testPaneWrite ends ok");
     }
 
     // test counting of read operations needed
+    @Test
     public void testPaneReadOpCount() {
-        if (log.isDebugEnabled()) {
-            log.debug("testPaneReadOpCount starts");
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        log.debug("testPaneReadOpCount starts");
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    // dummy implementations
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
@@ -351,9 +347,7 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("spdtbl changed CVs to read ", 2, progPane.countOpsNeeded(true, true));
         Assert.assertEquals("spdtbl changed CVs to write ", 2, progPane.countOpsNeeded(false, true));
 
-        if (log.isDebugEnabled()) {
-            log.debug("testPaneReadOpCount ends ok");
-        }
+        log.debug("testPaneReadOpCount ends ok");
     }
 
     // static variables for internal classes to report their interpretations
@@ -426,35 +420,17 @@ public class PaneProgPaneTest extends TestCase {
                 )
         ); // end of adding contents
 
-        if (log.isDebugEnabled()) {
-            log.debug("setupDoc complete");
-        }
-        return;
-    }
-
-    // from here down is testing infrastructure
-    public PaneProgPaneTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PaneProgPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PaneProgPaneTest.class);
-        return suite;
+        log.debug("setupDoc complete");
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

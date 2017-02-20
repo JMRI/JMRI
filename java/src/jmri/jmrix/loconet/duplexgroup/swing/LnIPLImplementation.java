@@ -1,4 +1,3 @@
-// LnIPLImplementation.java
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import jmri.jmrix.loconet.LnConstants;
@@ -14,11 +13,6 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
  * @author B. Milhaupt Copyright 2010, 2011
  */
 public class LnIPLImplementation extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 451414694716197612L;
 
     /**
      * Constructor for LnIPMImplementation which uses a
@@ -41,12 +35,13 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         connect(memo.getLnTrafficController());
 
         swingTmrIplQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
                 int oldvalue = 9999;
                 int newvalue = 0;
-                thisone.firePropertyChange("LnIPLEndOfDeviceQuery", oldvalue, newvalue);
+                thisone.firePropertyChange("LnIPLEndOfDeviceQuery", oldvalue, newvalue); // NOI18N
             }
         });
     }
@@ -645,28 +640,28 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             case LnConstants.RE_IPL_MFR_DIGITRAX: {
                 switch (hostDevice) {
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
-                        s = "Digitrax DCS51";
+                        s = "Digitrax DCS51"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
                         if ((slaveMfr == LnConstants.RE_IPL_MFR_DIGITRAX)
                                 && (slaveDevice == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
-                            s = "Digitrax DT402D";
+                            s = "Digitrax DT402D"; // NOI18N
                         } else {
-                            s = "Digitrax DT402(x)";
+                            s = "Digitrax DT402(x)"; // NOI18N
                         }
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
-                        s = "Digitrax PR3";
+                        s = "Digitrax PR3"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
-                        s = "Digitrax UR92";
+                        s = "Digitrax UR92"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
                         if ((slaveMfr == LnConstants.RE_IPL_MFR_DIGITRAX)
                                 && (slaveDevice == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
-                            s = "Digitrax UT4D";
+                            s = "Digitrax UT4D"; // NOI18N
                         } else {
-                            s = "Digitrax UT4(x)";
+                            s = "Digitrax UT4(x)"; // NOI18N
                         }
                         break;
                     default:
@@ -708,19 +703,19 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             case LnConstants.RE_IPL_MFR_DIGITRAX: {
                 switch (hostDevice) {
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
-                        s = "Digitrax DCS51";
+                        s = "Digitrax DCS51"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
-                        s = "Digitrax DT402(x)";
+                        s = "Digitrax DT402(x)"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
-                        s = "Digitrax PR3";
+                        s = "Digitrax PR3"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
-                        s = "Digitrax UR92";
+                        s = "Digitrax UR92"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
-                        s = "Digitrax UT4(x)";
+                        s = "Digitrax UT4(x)"; // NOI18N
                         break;
                     default:
                         s = "Digitrax (unknown device)";
@@ -731,7 +726,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             case LnConstants.RE_IPL_MFR_RR_CIRKITS: {
                 switch (hostDevice) {
                     case LnConstants.RE_IPL_RRCIRKITS_HOST_TC64:
-                        s = "RR-Cirkits TC-64";
+                        s = "RR-Cirkits TC-64"; // NOI18N
                         break;
                     default:
                         s = "RR-Cirkits (unknown device)";
@@ -761,7 +756,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             case LnConstants.RE_IPL_MFR_DIGITRAX: {
                 switch (slaveDevice) {
                     case LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24:
-                        s = "Digitrax RF24";
+                        s = "Digitrax RF24"; // NOI18N
                         break;
                     default:
                         s = "Digitrax (Unknown device)";
@@ -810,6 +805,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * @param m - incoming LocoNet message to be examined
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         if (handleMessageIplDeviceQuery(m)) {
@@ -841,7 +837,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                     + extractIplIdentityHostDevice(m);
             int oldvalue = 99999;
             int newvalue = deviceType;
-            thisone.firePropertyChange("IplDeviceTypeQuery", oldvalue, newvalue);
+            thisone.firePropertyChange("IplDeviceTypeQuery", oldvalue, newvalue); // NOI18N
             if (waitingForIplReply == true) {
                 swingTmrIplQuery.restart();
             }
@@ -856,7 +852,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                     + extractIplIdentityHostDevice(m);
             int oldvalue = 99999;
             int newvalue = deviceType;
-            thisone.firePropertyChange("IplDeviceTypeReport", oldvalue, newvalue);
+            thisone.firePropertyChange("IplDeviceTypeReport", oldvalue, newvalue); // NOI18N
             if (waitingForIplReply == true) {
                 waitingForIplReply = false;
                 swingTmrIplQuery.stop();

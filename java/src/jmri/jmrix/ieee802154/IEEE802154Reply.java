@@ -1,4 +1,3 @@
-// IEEE802154Reply.java
 package jmri.jmrix.ieee802154;
 
 
@@ -253,6 +252,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
         return (byte) getElement(3);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;
@@ -281,4 +281,4 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)IEEE802154Reply.java */
+

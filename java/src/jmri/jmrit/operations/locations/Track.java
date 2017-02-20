@@ -270,8 +270,9 @@ public class Track {
 
     public void setName(String name) {
         String old = _name;
-        _name = name;
+        _name = name;        
         if (!old.equals(name)) {
+            LocationManager.instance().resetNameLengths(); // recalculate max track name length for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }
@@ -606,6 +607,7 @@ public class Track {
 
     /**
      * Adds rolling stock to a specific track.
+     * @param rs The rolling stock to place on the track.
      *
      */
     public void addRS(RollingStock rs) {
@@ -631,6 +633,7 @@ public class Track {
     /**
      * Increments the number of cars and or engines that will be picked up by a
      * train from this track.
+     * @param rs The rolling stock.
      */
     public void addPickupRS(RollingStock rs) {
         int old = _pickupRS;
@@ -932,6 +935,7 @@ public class Track {
     /**
      * Add a receive load that the track will either service or exclude. See
      * setLoadOption
+     * @param load The string load name.
      *
      * @return true if load name was added, false if load name wasn't in the
      *         list.
@@ -949,6 +953,7 @@ public class Track {
     /**
      * Delete a receive load name that the track will either service or exclude.
      * See setLoadOption
+     * @param load The string load name.
      *
      * @return true if load name was removed, false if load name wasn't in the
      *         list.
@@ -1053,6 +1058,7 @@ public class Track {
     /**
      * Add a ship load that the track will either service or exclude. See
      * setShipLoadOption
+     * @param load The string load name.
      *
      * @return true if load name was added, false if load name wasn't in the
      *         list.
@@ -1070,6 +1076,7 @@ public class Track {
     /**
      * Delete a ship load name that the track will either service or exclude.
      * See setLoadOption
+     * @param load The string load name.
      *
      * @return true if load name was removed, false if load name wasn't in the
      *         list.
@@ -1205,6 +1212,7 @@ public class Track {
     /**
      * Determine if train can set out cars to this track. Based on the train's
      * id or train's route id. See setDropOption(option).
+     * @param train The Train to test.
      *
      * @return true if the train can set out cars to this track.
      */
@@ -1265,6 +1273,7 @@ public class Track {
 
     /**
      * Add train or route id to this track.
+     * @param id The string id for the train or route.
      *
      */
     public void addPickupId(String id) {
@@ -1285,6 +1294,7 @@ public class Track {
     /**
      * Determine if train can pick up cars from this track. Based on the train's
      * id or train's route id. See setPickupOption(option).
+     * @param train The Train to test.
      *
      * @return true if the train can pick up cars from this track.
      */
@@ -1583,6 +1593,7 @@ public class Track {
      * Get's the current schedule item for this track Protects against user
      * deleting an item in a shared schedule. Recommend using this versus
      * getScheduleItemId() as the id can be obsolete.
+     * @return The current ScheduleItem.
      */
     public ScheduleItem getCurrentScheduleItem() {
         Schedule sch = getSchedule();
@@ -1755,6 +1766,7 @@ public class Track {
     /**
      * Checks to see if car can be placed on this spur using this schedule.
      * Returns OKAY if the schedule can service the car.
+     * @param car The Car to be tested.
      *
      * @return Track.OKAY track.CUSTOM track.SCHEDULE
      */
@@ -1913,6 +1925,7 @@ public class Track {
      * Check to see if track has schedule and if it does will schedule the next
      * item in the list. Load the car with the next schedule load if one exists,
      * and set the car's final destination if there's one in the schedule.
+     * @param car The Car to be modified.
      *
      * @return Track.OKAY or Track.SCHEDULE
      */
@@ -2213,6 +2226,7 @@ public class Track {
 
     /**
      * Returns true if destination is valid from this track.
+     * @param destination The Location to be checked.
      *
      * @return true if track services the destination
      */
@@ -2306,6 +2320,7 @@ public class Track {
      * with the detailed DTD in operations-config.xml
      *
      * @param e Consist XML element
+     * @param location The Location loading this track.
      */
     public Track(Element e, Location location) {
         _location = location;

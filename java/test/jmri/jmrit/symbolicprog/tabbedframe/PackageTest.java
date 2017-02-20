@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,23 +28,15 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.symbolicprog.tabbedframe.PackageTest");   // no tests in this class itself
 
+        suite.addTest(new JUnit4TestAdapter(PaneProgPaneTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNamesTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.symbolicprog.tabbedframe.SchemaTest.class));
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
+        suite.addTest(new JUnit4TestAdapter(PaneEditActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PaneNewProgActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PaneOpsProgActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PaneProgActionTest.class));
         return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
     }
 }

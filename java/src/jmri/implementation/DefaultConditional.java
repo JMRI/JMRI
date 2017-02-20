@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,6 +78,7 @@ public class DefaultConditional extends AbstractNamedBean
         super(systemName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameConditional");
     }
@@ -89,7 +91,7 @@ public class DefaultConditional extends AbstractNamedBean
     // actions (consequent) parameters
     protected ArrayList<ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
 
-    private int _currentState = Conditional.UNKNOWN;
+    private int _currentState = NamedBean.UNKNOWN;
     private boolean _triggerActionsOnChange = true;
 
     /**
@@ -107,6 +109,7 @@ public class DefaultConditional extends AbstractNamedBean
     /**
      * Get antecedent (boolean expression) of Conditional
      */
+    @Override
     public String getAntecedentExpression() {
         return _antecedent;
     }
@@ -114,6 +117,7 @@ public class DefaultConditional extends AbstractNamedBean
     /**
      * Get type of operators in the antecedent statement
      */
+    @Override
     public int getLogicType() {
         return _logicType;
     }
@@ -123,16 +127,19 @@ public class DefaultConditional extends AbstractNamedBean
      * antecedent expression - should be a well formed boolean statement with
      * parenthesis indicating the order of evaluation
      */
+    @Override
     public void setLogicType(int type, String antecedent) {
         _logicType = type;
         _antecedent = antecedent;
-        setState(Conditional.UNKNOWN);
+        setState(NamedBean.UNKNOWN);
     }
 
+    @Override
     public boolean getTriggerOnChange() {
         return _triggerActionsOnChange;
     }
 
+    @Override
     public void setTriggerOnChange(boolean trigger) {
         _triggerActionsOnChange = trigger;
     }
@@ -143,6 +150,7 @@ public class DefaultConditional extends AbstractNamedBean
      * <P>
      * This method assumes that all information has been validated.
      */
+    @Override
     public void setStateVariables(ArrayList<ConditionalVariable> arrayList) {
         if (log.isDebugEnabled()) {
             log.debug("Conditional \"" + getUserName() + "\" (" + getSystemName()
@@ -154,6 +162,7 @@ public class DefaultConditional extends AbstractNamedBean
     /**
      * Make deep clone of variables
      */
+    @Override
     public ArrayList<ConditionalVariable> getCopyOfStateVariables() {
         ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
         for (int i = 0; i < _variableList.size(); i++) {
@@ -183,6 +192,7 @@ public class DefaultConditional extends AbstractNamedBean
     /**
      * Set list of actions
      */
+    @Override
     public void setAction(ArrayList<ConditionalAction> arrayList) {
         _actionList = arrayList;
     }
@@ -190,6 +200,7 @@ public class DefaultConditional extends AbstractNamedBean
     /**
      * Make deep clone of actions
      */
+    @Override
     public ArrayList<ConditionalAction> getCopyOfActions() {
         ArrayList<ConditionalAction> actionList = new ArrayList<ConditionalAction>();
         for (int i = 0; i < _actionList.size(); i++) {
@@ -218,15 +229,16 @@ public class DefaultConditional extends AbstractNamedBean
      * actions. When _enabled is true, the state is computed and if the state
      * has changed, will trigger all its actions.
      */
+    @Override
     public int calculate(boolean enabled, PropertyChangeEvent evt) {
         if (log.isTraceEnabled()) {
             log.trace("calculate starts for " + getSystemName());
         }
 
         // check if  there are no state variables
-        if (_variableList.size() == 0) {
+        if (_variableList.isEmpty()) {
             // if there are no state variables, no state can be calculated
-            setState(Conditional.UNKNOWN);
+            setState(NamedBean.UNKNOWN);
             return _currentState;
         }
         boolean result = true;
@@ -351,6 +363,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Check that an antecedent is well formed
      *
      */
+    @Override
     public String validateAntecedent(String ant, ArrayList<ConditionalVariable> variableList) {
         char[] ch = ant.toCharArray();
         int n = 0;
@@ -579,7 +592,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Conditional
      */
     @SuppressWarnings({"deprecation", "fallthrough"})
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     // it's unfortunate that this is such a huge method, because these annotation
     // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {
@@ -1092,7 +1105,7 @@ public class DefaultConditional extends AbstractNamedBean
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());
                         } else {
                             jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getInstance();
-                            String err = frame.runTrain(w);
+                            String err = frame.runTrain(w, Warrant.MODE_RUN);
                             if (err != null) {
                                 w.stopWarrant(true);
                             }
@@ -1293,6 +1306,7 @@ public class DefaultConditional extends AbstractNamedBean
             panel = new JPanel();
             JButton closeButton = new JButton("Close");
             closeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     if (rememberSession.isSelected()) {
                         _skipErrorDialog = true;
@@ -1421,6 +1435,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Stop a sensor timer if one is actively delaying setting of the specified
      * sensor
      */
+    @Override
     public void cancelSensorTimer(String sname) {
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
@@ -1452,6 +1467,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Stop a turnout timer if one is actively delaying setting of the specified
      * turnout
      */
+    @Override
     public void cancelTurnoutTimer(String sname) {
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
@@ -1484,6 +1500,7 @@ public class DefaultConditional extends AbstractNamedBean
      *
      * @return state value
      */
+    @Override
     public int getState() {
         return _currentState;
     }
@@ -1493,6 +1510,7 @@ public class DefaultConditional extends AbstractNamedBean
      * state of a Conditional is only changed by its calculate method, so the
      * state is really a read-only bound property.
      */
+    @Override
     public void setState(int state) {
         if (_currentState != state) {
             int oldState = _currentState;
@@ -1512,6 +1530,7 @@ public class DefaultConditional extends AbstractNamedBean
 
         private int mIndex = 0;
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             // set sensor state
             ConditionalAction action = _actionList.get(mIndex);
@@ -1555,6 +1574,7 @@ public class DefaultConditional extends AbstractNamedBean
 
         private int mIndex = 0;
 
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             // set turnout state
             ConditionalAction action = _actionList.get(mIndex);

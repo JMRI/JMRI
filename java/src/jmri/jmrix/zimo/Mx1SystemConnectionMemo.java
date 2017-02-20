@@ -1,4 +1,3 @@
-// Mx1SystemConnectionMemo.javaf
 package jmri.jmrix.zimo;
 
 import java.util.ResourceBundle;
@@ -202,11 +201,12 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return throttleManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        //No actions that can be loaded at startup
-        return null;
+        return ResourceBundle.getBundle("jmri.jmrix.zimo.ZimoActionListBundle");
     }
 
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, Mx1SystemConnectionMemo.class);
@@ -221,4 +221,4 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 }
 
 
-/* @(#)Mx1SystemConnectionMemo.java */
+

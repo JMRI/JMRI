@@ -1,5 +1,6 @@
 package jmri.jmrix.xpa;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;
@@ -50,12 +51,14 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
 
 // The methods to implement the XpaInterface
-    private Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
+    protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
 
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
 
+    @Override
     public synchronized void addXpaListener(XpaListener l) {
         // add only if not already registered
         if (l == null) {
@@ -66,6 +69,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         }
     }
 
+    @Override
     public synchronized void removeXpaListener(XpaListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);
@@ -137,8 +141,9 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     /**
      * Forward a preformatted message to the actual interface.
      */
-     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL"},
+     @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL"},
               justification = "Notify is used because Having more than one thread waiting on xmtHandler is an error.")
+    @Override
     synchronized public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendXpaMessage message: [" + m + "]");
@@ -221,6 +226,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      * via <code>connectPort</code>. Terminates with the input stream breaking
      * out of the try block.
      */
+    @Override
     public void run() {
         while (true) {   // loop permanently, stream close will exit via exception
             try {
@@ -257,6 +263,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                 XpaMessage msgForLater = thisMsg;
                 XpaTrafficController myTC = thisTC;
 
+                @Override
                 public void run() {
                     log.debug("Delayed notify starts");
                     myTC.notifyReply(msgForLater);
@@ -271,8 +278,9 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      */
     class XmtHandler implements Runnable {
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","NO_NOTIFY_NOT_NOTIFYALL"},
+        @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","NO_NOTIFY_NOT_NOTIFYALL"},
                 justification = "while loop controls access")
+        @Override
         public void run() {
             while (true) { //  loop forever
                 // Check to see if there is anything to send
@@ -327,4 +335,4 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 }
 
 
-/* @(#)XpaTrafficController.java */
+

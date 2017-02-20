@@ -75,9 +75,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     public static final String DISPOSE = "automationItemDispose"; // NOI18N
 
-    /**
-     *
-     */
     public AutomationItem(String id) {
         log.debug("New automation item id: {}", id);
         _id = id;
@@ -193,6 +190,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automation for actions, not the automation associated with this item.
+     * @param automation the automation to run
      *
      */
     public void setAutomationToRun(Automation automation) {
@@ -220,6 +218,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * The automation for action GOTO, not this automation item.
+     * @param automationItem which automation item to GOTO
      *
      */
     public void setGotoAutomationItem(AutomationItem automationItem) {

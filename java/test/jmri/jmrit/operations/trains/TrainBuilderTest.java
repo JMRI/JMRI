@@ -1,4 +1,3 @@
-// TrainBuilderTest.java
 package jmri.jmrit.operations.trains;
 
 import java.util.List;
@@ -5176,6 +5175,31 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 destination 3", "Boston Engine Yard", e1.getDestinationTrackName());
         Assert.assertEquals("e2 destination 3", "Boston Engine Yard", e2.getDestinationTrackName());
+        
+        // now try to find a caboose with "similar" (hyphen feature) road name to engine
+        c1.setRoadName("UP-1");
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertEquals("Train 1 After Build 3", true, train1.isBuilt());
+
+        // check destinations
+        Assert.assertEquals("c1 destination 3", "Boston Yard", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 3", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 3", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 3", "", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 3", "", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 3", "Boston Yard", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 3", "Boston Yard", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 3", "Arlington Yard", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 3", "", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 3", "", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 3", "Boston Engine Yard", e1.getDestinationTrackName());
+        Assert.assertEquals("e2 destination 3", "Boston Engine Yard", e2.getDestinationTrackName());
+        c1.setRoadName("UP"); // done
 
         // should default to the caboose with the least moves
         e1.setRoadName("X");

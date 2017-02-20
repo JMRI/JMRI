@@ -1,4 +1,3 @@
-// pricom.pockettester.MonitorFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 
@@ -11,10 +10,6 @@ package jmri.jmrix.pricom.pockettester;
   */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7060223518481154741L;
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
@@ -22,9 +17,11 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
         super();
     }
 
+    @Override
     public void init() {
     }
 
+    @Override
     protected String title() {
         String title = filter;
         if (filter == null) {
@@ -34,11 +31,13 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
                 (Object[]) new String[]{title});
     }
 
+    @Override
     public void dispose() {
         // and clean up parent
         super.dispose();
     }
 
+    @Override
     public void asciiFormattedMessage(String m) {
         if ((filter == null) || m.startsWith(filter)) {
             nextLine(m, "");

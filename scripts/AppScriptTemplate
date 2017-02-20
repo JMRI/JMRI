@@ -70,6 +70,12 @@ EOM
 # except --settingsdir argument
 function parse_args() {
     while [ $# -gt 0 ] ; do
+        if [ -z "${1}" ] ; then
+            shift
+            continue
+        fi
+        # note: set DEBUG=yes in environment to see at this point
+        [ -n "${DEBUG}" ] && echo "Parsing Arg: '${1}'"
         case "${1}" in
             # append to classpath
             --cp:a) post_classpath="${post_classpath}:${2}" ; shift ;;
@@ -166,6 +172,9 @@ CLASSNAME="@CLASS@"
 # define empty jmri_options
 jmri_options=""
 
+# define empty array of passed in options
+declare -a all_options=()
+
 # ensure JMRI environment options are always set
 JMRI_OPTIONS=${JMRI_OPTIONS:-}
 JMRI_SERIAL_PORTS=${JMRI_SERIAL_PORTS:-}
@@ -238,12 +247,24 @@ done
 if [ -f "${settingsdir}/jmri.conf" ] ; then
     default_options=""
     source "${settingsdir}/jmri.conf"
-    parse_args ${default_options}
+    if [ -n "${default_options}" ] ; then
+        IFS=' ' read -a all_options <<< "${default_options}"
+    fi
 fi
 
 # process environment and command line arguments
-parse_args ${JMRI_OPTIONS}
-parse_args $@
+if [ -n "${JMRI_OPTIONS}" ] ; then
+    IFS=' ' read -a options <<< "${JMRI_OPTIONS}"
+    for option in "${options[@]}" ; do
+        all_options=("${all_options[@]-}" "${option}")
+    done
+fi
+if [ $# -gt 0 ] ; then
+    for option in "$@"; do
+        all_options=("${all_options[@]-}" "${option}")
+    done
+fi
+parse_args "${all_options[@]:-}"
 
 # define JAVA_HOME if needed
 if [ -z "${JAVA_HOME}" ] ; then
@@ -422,7 +443,7 @@ if [ -n "${pre_classpath}" ] ; then
     pre_classpath="${pre_classpath#:}"
     CP="${pre_classpath}:"
 fi
-CP="${CP}.:classes:java/classes:jmri.jar"
+CP="${CP}.:classes:target/classes:jmri.jar"
 # add contents of lib
 CP="${CP}:$( ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':' )"
 
@@ -479,7 +500,7 @@ fi
 
 OPTIONS="${jmri_options} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
-OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
+OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:target/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits

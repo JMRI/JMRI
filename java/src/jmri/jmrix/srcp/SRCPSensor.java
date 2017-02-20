@@ -16,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SRCPSensor extends AbstractSensor implements SRCPListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5107185740550775540L;
     // data members
     private int _number;   // sensor number
     private int _bus;      // bus number
@@ -45,6 +41,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
 
     // Handle a request to change state by sending a formatted packet
     // to the server.
+    @Override
     public void setKnownState(int s) throws jmri.JmriException {
         // sort out states
         if ((s & Sensor.ACTIVE) !=  0) {
@@ -68,6 +65,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
         }
     }
 
+    @Override
     public void requestUpdateFromLayout() {
         // get the message text
         String text = "GET " + _bus + " FB " + _number + "\n";
@@ -91,6 +89,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
     }
 
     // to listen for status changes from SRCP system
+    @Override
     public void reply(SRCPReply m) {
         String message = m.toString();
         log.debug("Message Received: " + m);
@@ -106,6 +105,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
         }
     }
 
+    @Override
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
             log.debug("reply called with simpleNode " + n.jjtGetValue());
@@ -114,6 +114,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
         reply(new SRCPReply(n));
     }
 
+    @Override
     public void message(SRCPMessage m) {
     }
 
@@ -122,4 +123,4 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
 }
 
 
-/* @(#)JMRIClientSensor.java */
+

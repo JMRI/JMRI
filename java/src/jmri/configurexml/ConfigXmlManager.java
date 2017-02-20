@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration to XML.
- * "Layout" refers to the hardware: Specific communcation systems, etc.
+ * "Layout" refers to the hardware: Specific communication systems, etc.
  *
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
@@ -37,10 +38,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public ConfigXmlManager() {
     }
 
+    @Override
     public void registerConfig(Object o) {
         registerConfig(o, 50);
     }
 
+    @Override
     public void registerPref(Object o) {
         // skip if already present, leaving in original order
         if (plist.contains(o)) {
@@ -75,14 +78,28 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     /**
+    * Handles classes who's location has migrated,
+    * e.g. so that it's now in a different package.
+    */
+    static public String currentClassName(String name) {
+        if (! classMigrationBundle.containsKey(name)) return name;
+        String migratedName = classMigrationBundle.getString(name);
+        log.debug("Using migrated class name {} for {}", migratedName, name);
+        return migratedName;
+    }
+    static java.util.ResourceBundle classMigrationBundle = java.util.ResourceBundle.getBundle("jmri.configurexml.ClassMigration");
+    
+    /**
      * Remove the registered preference items. This is used e.g. when a GUI
      * wants to replace the preferences with new values.
      */
+    @Override
     public void removePrefItems() {
         log.debug("removePrefItems dropped {}", plist.size());
         plist.clear();
     }
 
+    @Override
     public Object findInstance(Class<?> c, int index) {
         ArrayList<Object> temp = new ArrayList<Object>(plist);
         temp.addAll(clist.keySet());
@@ -99,6 +116,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return null;
     }
 
+    @Override
     public ArrayList<Object> getInstanceList(Class<?> c) {
         ArrayList<Object> temp = new ArrayList<Object>(plist);
         ArrayList<Object> returnlist = new ArrayList<Object>();
@@ -119,6 +137,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     }
 
+    @Override
     public void registerConfig(Object o, int x) {
         // skip if already present, leaving in original order
         if (clist.containsKey(o)) {
@@ -132,6 +151,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         clist.put(o, x);
     }
 
+    @Override
     public void registerTool(Object o) {
         // skip if already present, leaving in original order
         if (tlist.contains(o)) {
@@ -150,6 +170,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param o The object, which must have an associated adapter class.
      */
+    @Override
     public void registerUser(Object o) {
         // skip if already present, leaving in original order
         if (ulist.contains(o)) {
@@ -162,6 +183,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ulist.add(o);
     }
 
+    @Override
     public void registerUserPrefs(Object o) {
         // skip if already present, leaving in original order
         if (uplist.contains(o)) {
@@ -174,6 +196,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         uplist.add(o);
     }
 
+    @Override
     public void deregister(Object o) {
         plist.remove(o);
         if (o != null) {
@@ -253,6 +276,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<Map.Entry<Object, Integer>>(clist.entrySet());
         Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>() {
 
+            @Override
             public int compare(Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) {
                 return o1.getValue().compareTo(o2.getValue());
             }
@@ -265,8 +289,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     root.addContent(e);
                 }
             } catch (Exception e) {
-                storingErrorEncountered(null, "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addConfigStore",
+                        "Exception thrown", null, null, e);
                 result = false;
             }
         }
@@ -284,8 +308,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             } catch (Exception e) {
                 result = false;
-                storingErrorEncountered(((XmlAdapter) o), "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addToolsStore",
+                        "Exception thrown", null, null, e);
             }
         }
         return result;
@@ -302,8 +326,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             } catch (Exception e) {
                 result = false;
-                storingErrorEncountered((XmlAdapter) o, "storing to file",
-                        "Unknown error (Exception)", null, null, e);
+                storingErrorEncountered(null, "storing to file in addUserStore",
+                        "Exception thrown", null, null, e);
             }
         }
         return result;
@@ -362,6 +386,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param file config file to write
      */
+    @Override
     public boolean storeAll(File file) {
         boolean result = true;
         Element root = initStore();
@@ -387,10 +412,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Writes prefs to a predefined File location.
      */
+    @Override
     public void storePrefs() {
         storePrefs(prefsFile);
     }
 
+    @Override
     public void storePrefs(File file) {
         synchronized (this) {
             Element root = initStore();
@@ -399,6 +426,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    @Override
     public void storeUserPrefs(File file) {
         synchronized (this) {
             Element root = initStore();
@@ -423,6 +451,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param file config file to write.
      */
+    @Override
     public boolean storeConfig(File file) {
         boolean result = true;
         Element root = initStore();
@@ -444,6 +473,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @param file config file to write
      */
+    @Override
     public boolean storeUser(File file) {
         boolean result = true;
         Element root = initStore();
@@ -460,6 +490,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    @Override
     public boolean makeBackup(File file) {
         return makeBackupFile(defaultBackupDirectory, file);
     }
@@ -518,10 +549,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      *
      * @return true if no problems during the load
      */
+    @Override
     public boolean load(File fi) throws JmriConfigureXmlException {
         return load(fi, false);
     }
 
+    @Override
     public boolean load(URL url) throws JmriConfigureXmlException {
         return load(url, false);
     }
@@ -597,7 +630,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
          */
         Map<Element, Integer> loadlist = Collections.synchronizedMap(new LinkedHashMap<Element, Integer>());
 
+        boolean verify = XmlFile.getVerify();
         try {
+            XmlFile.setVerify(true);
             root = super.rootFromURL(url);
             // get the objects to load
             List<Element> items = root.getChildren();
@@ -613,6 +648,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (log.isDebugEnabled()) {
                     log.debug("attempt to get adapter {} for {}", adapterName, item);
                 }
+                adapterName = currentClassName(adapterName);
                 XmlAdapter adapter = null;
 
                 adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
@@ -624,6 +660,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             ArrayList<Map.Entry<Element, Integer>> l = new ArrayList<Map.Entry<Element, Integer>>(loadlist.entrySet());
             Collections.sort(l, new Comparator<Map.Entry<Element, Integer>>() {
 
+                @Override
                 public int compare(Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) {
                     return o1.getValue().compareTo(o2.getValue());
                 }
@@ -631,6 +668,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             for (int i = 0; i < l.size(); i++) {
                 Element item = l.get(i).getKey();
                 String adapterName = item.getAttribute("class").getValue();
+                adapterName = currentClassName(adapterName);
                 if (log.isDebugEnabled()) {
                     log.debug("load " + item + " via " + adapterName);
                 }
@@ -699,6 +737,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             result = false;
         } finally {
             // no matter what, close error reporting
+            XmlFile.setVerify(verify);
             handler.done();
         }
 
@@ -716,7 +755,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } else {
             log.info("Not recording file history");
         }
-
+        XmlFile.setVerify(verify);
         return result;
     }
 
@@ -796,8 +835,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Invoke common handling of errors that happen during the "load" process.
      * <p>
      * Generally, this is invoked by {@link XmlAdapter} implementations of their
-     * creationErrorEncountered() method (note different arguemments, though).
-     * The standard implemenation of that is in {@link AbstractXmlAdapter}.
+     * creationErrorEncountered() method (note different arguments, though).
+     * The standard implementation of that is in {@link AbstractXmlAdapter}.
      * <p>
      * Exceptions passed into this are absorbed.
      *

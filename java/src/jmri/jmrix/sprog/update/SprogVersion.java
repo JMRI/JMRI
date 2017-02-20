@@ -145,6 +145,7 @@ public class SprogVersion {
      *
      * @return String representation of SPROG version
      */
+    @Override
     public String toString() {
         return this.toString(this);
     }
@@ -163,4 +164,4 @@ public class SprogVersion {
     private final static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
 }
 
-/* @(#)SprogVersion.java */
+

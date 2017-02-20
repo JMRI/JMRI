@@ -55,6 +55,7 @@ public class RouteManager {
     protected Hashtable<String, Route> _routeHashTable = new Hashtable<String, Route>();
 
     /**
+     * @param name The string name of the Route.
      * @return requested Route object or null if none exists
      */
     public Route getRouteByName(String name) {
@@ -76,6 +77,7 @@ public class RouteManager {
     /**
      * Finds an existing route or creates a new route if needed requires route's
      * name creates a unique id for this route
+     * @param name The string name of the new Route.
      *
      *
      * @return new route or existing route
@@ -95,6 +97,7 @@ public class RouteManager {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param route The Route to add.
      */
     public void register(Route route) {
         Integer oldSize = Integer.valueOf(_routeHashTable.size());
@@ -110,6 +113,7 @@ public class RouteManager {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     * @param route The Route to delete.
      */
     public void deregister(Route route) {
         if (route == null) {
@@ -316,4 +320,4 @@ public class RouteManager {
 
 }
 
-/* @(#)RouteManager.java */
+

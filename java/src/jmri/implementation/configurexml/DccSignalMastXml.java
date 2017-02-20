@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for a DefaultSignalMastManager objects.
+ * Handle XML configuration for DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
  * 
@@ -27,6 +27,7 @@ public class DccSignalMastXml
      * @param o Object to store, of type TripleDccSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DccSignalMast p = (DccSignalMast) o;
         Element e = new Element("dccsignalmast");
@@ -122,6 +123,7 @@ public class DccSignalMastXml
 
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

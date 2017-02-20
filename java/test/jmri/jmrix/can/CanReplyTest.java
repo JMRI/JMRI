@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanReplyTest extends CanMRCommonTest {
+public class CanReplyTest extends CanMRCommonTestBase {
 
     public void testCopyCtor() {
         CanReply m1 = new CanReply();
@@ -148,10 +148,12 @@ public class CanReplyTest extends CanMRCommonTest {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -1,4 +1,3 @@
-// TamsReply.java
 package jmri.jmrix.tams;
 
 import org.slf4j.Logger;
@@ -39,15 +38,18 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
 	// Maximum size of a reply packet is 157 bytes.
 	// At least for 52 S88 modules each generating 3 bytes + a last byte 00
+        @Override
 	public int maxSize() {
 		return 157;
 	}
 
 	// no need to do anything
+        @Override
 	protected int skipPrefix(int index) {
 		return index;
 	}
 
+        @Override
 	public int value() {
 		if (isBinary()) {
 			return getElement(0);//Jan thinks this should return the whole binary reply and not just element(0)
@@ -81,4 +83,4 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
 }
 
-/* @(#)TamsReply.java */
+

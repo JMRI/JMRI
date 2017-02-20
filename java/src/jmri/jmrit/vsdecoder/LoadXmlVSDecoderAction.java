@@ -3,7 +3,6 @@ package jmri.jmrit.vsdecoder;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.jmrit.XmlFile;
@@ -19,8 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood 2011
  */
 public class LoadXmlVSDecoderAction extends AbstractAction {
-
-    static final ResourceBundle rb = VSDecoderBundle.bundle();
 
     /**
      * Constructor
@@ -50,9 +47,10 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fileChooser == null) {
-            fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+            fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
             fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
             fileChooser.setCurrentDirectory(new File(VSDecoderPane.getDefaultVSDecoderFolder()));
         }

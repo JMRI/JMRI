@@ -1,10 +1,11 @@
 package jmri.jmrit.logix;
 
 import jmri.Block;
-import org.junit.Assert;
+import jmri.Turnout;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the OPath class
@@ -12,6 +13,10 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2010
  */
 public class OPathTest extends TestCase {
+    
+    OBlockManager _blkMgr;
+    PortalManager _portalMgr;
+    jmri.TurnoutManager _turnoutMgr;
 
     public void testCtor() {
         Block b = new Block("IB1");
@@ -73,6 +78,30 @@ public class OPathTest extends TestCase {
         Assert.assertTrue("on contents", op1.equals(op2));
     }
     
+    public void testPortals() {
+        Portal entryP = _portalMgr.providePortal("entryP");
+        Portal exitP = _portalMgr.providePortal("exitP");
+        OBlock blk = _blkMgr.provideOBlock("OB0");
+        OPath path = new OPath("path", blk, entryP, exitP, null);
+        Assert.assertEquals("Get entry portal", entryP, path.getFromPortal());
+        Assert.assertEquals("Get exit portal", exitP, path.getToPortal());
+    }
+    
+    public void testNameChange() {
+        Portal exitP = _portalMgr.providePortal("exitP");
+        OBlock blk = _blkMgr.provideOBlock("OB0");
+        Turnout to = _turnoutMgr.provideTurnout("turnout_1");
+        OPath path = new OPath("path", blk, null, null, null);
+        path.setToPortal(exitP);
+        path.addSetting(new jmri.BeanSetting(to, Turnout.CLOSED));
+        Assert.assertEquals("Get exit portal", exitP, path.getToPortal());
+        path.setName("OtherPath");
+        Assert.assertEquals("path name change", "OtherPath", path.getName());
+        Assert.assertEquals("turnout unknown", Turnout.UNKNOWN, to.getCommandedState());
+        path.setTurnouts(0, true, 0, false);
+        Assert.assertEquals("path name change", Turnout.CLOSED, to.getCommandedState());
+    }
+    
     // from here down is testing infrastructure
     public OPathTest(String s) {
         super(s);
@@ -90,10 +119,16 @@ public class OPathTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        _blkMgr = new OBlockManager();
+        _portalMgr = new PortalManager();
+        _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -1,11 +1,3 @@
-/*
- * CbusEventFilterPanel.java
- *
- * Created on 16 August 2008, 15:15
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
 package jmri.jmrix.can.cbus.swing.console;
 
 import javax.swing.BorderFactory;
@@ -25,10 +17,6 @@ import jmri.jmrix.can.cbus.CbusConstants;
  */
 public class CbusEventFilterPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5291143894239237548L;
     protected JCheckBox nnEnButton = new JCheckBox();
     protected JTextField nnLowField = new JTextField("", 5);
     protected JTextField nnHighField = new JTextField("", 5);
@@ -139,6 +127,7 @@ public class CbusEventFilterPanel extends JPanel {
 
         // connect actions to buttons
         enableButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 enableButtonActionPerformed(e);
             }
@@ -146,6 +135,7 @@ public class CbusEventFilterPanel extends JPanel {
 
         // connect actions to buttons
         disableButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 disableButtonActionPerformed(e);
             }

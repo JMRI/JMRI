@@ -1,4 +1,3 @@
-// RollingStockManager.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public class RollingStockManager {
 
     /**
      * Get rolling stock by id
+     * @param id The string id.
      *
      * @return requested RollingStock object or null if none exists
      */
@@ -101,6 +101,7 @@ public class RollingStockManager {
 
     /**
      * Load RollingStock.
+     * @param rs The RollingStock to load.
      */
     public void register(RollingStock rs) {
         Integer oldSize = Integer.valueOf(_hashTable.size());
@@ -110,6 +111,7 @@ public class RollingStockManager {
 
     /**
      * Unload RollingStock.
+     * @param rs The RollingStock to delete.
      */
     public void deregister(RollingStock rs) {
         rs.dispose();
@@ -523,6 +525,7 @@ public class RollingStockManager {
 
     /**
      * Get a list of rolling stocks assigned to a train ordered by location
+     * @param train The Train.
      *
      * @return List of RollingStock assigned to the train ordered by location
      */
@@ -534,6 +537,7 @@ public class RollingStockManager {
 
     /**
      * Returns a list (no order) of RollingStock in a train.
+     * @param train The Train.
      *
      * @return list of RollingStock
      */

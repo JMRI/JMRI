@@ -16,6 +16,7 @@
   <name>Lenz Function Map</name>
   <name xml:lang="it">Mappatura Funzioni Lenz</name>
   <name xml:lang="de">Lenz Funktionszuordnung</name>
+  <name xml:lang="cs">Přiřazení funkcí Lenz</name>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -29,6 +30,18 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-24-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
@@ -55,11 +68,15 @@
           <text>Select which function</text>
           <text xml:lang="de">Auswahl der Funktion für</text>
           <text xml:lang="it">Seleziona quale funzione</text>
+          <text xml:lang="cs">Vyberte která funkce</text>
+          <text xml:lang="ca">Selecciona quina funció</text>
         </label>
         <label>
           <text>disables momentum:</text>
           <text xml:lang="de">Anfahr- und Bremsverzögerung:</text>
           <text xml:lang="it">Disabilita l'Inerzia</text>
+          <text xml:lang="cs">znepřístupní zrychlení/zpomalení:</text>
+          <text xml:lang="ca">desactiva la inèrcia</text>
         </label>
         <label>
           <text> </text>
@@ -89,11 +106,15 @@
           <text>Select which function</text>
           <text xml:lang="de">Auswahl der Funktion für</text>
           <text xml:lang="it">Seleziona quale funzione</text>
+          <text xml:lang="cs">Vyberte která funkce</text>
+          <text xml:lang="ca">Selecciona quina funció</text>
         </label>
         <label>
           <text>enables switching gear:</text>
           <text xml:lang="de">den Rangiergang:</text>
           <text xml:lang="it">Abilita Velocità da manovra</text>
+          <text xml:lang="cs">zpřístupní přepínání posunu</text>
+          <text xml:lang="ca">activa marxa de maniobres</text>
         </label>
         <label>
           <text> </text>
@@ -123,11 +144,15 @@
           <text>Select which function enables</text>
           <text xml:lang="de">Auswahl der Funktion für</text>
           <text xml:lang="it">Seleziona quale funzione</text>
+          <text xml:lang="cs">Vyberte která funkce zpřístupní</text>
+          <text xml:lang="ca">Selecciona quina funció</text>
         </label>
         <label>
           <text>light dimming for A and B outputs:</text>
           <text xml:lang="de">das Dimmen der Ausgänge A und B:</text>
           <text xml:lang="it">Smorza uscite A e B</text>
+          <text xml:lang="cs">snížení jasu na výstupech A a B</text>
+          <text xml:lang="ca">l'atenuació de llums a la funció A i B</text>
         </label>
         <label>
           <text> </text>
@@ -154,11 +179,15 @@
           <text>Select which function toggles</text>
           <text xml:lang="de">Auswahl der Funktion für die</text>
           <text xml:lang="it">Seleziona quale funzione inverte</text>
+          <text xml:lang="cs">Vyberte která funkce přepíná</text>
+          <text xml:lang="ca">Selecciona quina funció</text>
         </label>
         <label>
           <text>lighting effects on/off for outputs A and B:</text>
           <text xml:lang="de">Lichteffekte an den Ausgängen A und B:</text>
           <text xml:lang="it">effetti luce per uscite A e B</text>
+          <text xml:lang="cs">zapnout/vypnout světelné efekty na výstupech A a B:</text>
+          <text xml:lang="ca">activa els efectes de llum a la sortida A i B</text>
         </label>
         <label>
           <text> </text>
@@ -191,11 +220,15 @@
           <text>Select which function toggles</text>
           <text xml:lang="de">Auswahl der Funktion für die</text>
           <text xml:lang="it">Seleziona quale funzione inverte</text>
+          <text xml:lang="cs">Vyberte která funkce přepíná</text>
+          <text xml:lang="ca">Selecciona quina funció</text>
         </label>
         <label>
           <text>lighting effects on/off for outputs C and D:</text>
           <text xml:lang="de">Lichteffekte an den Ausgängen C und D:</text>
           <text xml:lang="it">effetti luce per uscite A e B</text>
+          <text xml:lang="cs">zapnout/vypnout světelné efekty na výstupech C a D:</text>
+          <text xml:lang="ca">activa els efectes de llum a la sortida C i D</text>
         </label>
         <label>
           <text> </text>

@@ -124,14 +124,17 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     // basic methods for AbstractTableModel implementation
+    @Override
     public int getRowCount() {
         return _numRows;
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAMECOLUMN:
@@ -157,6 +160,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case NAMECOLUMN:
@@ -182,6 +186,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case NAMECOLUMN:
@@ -239,6 +244,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         return _indxCvAllVector.elementAt(row);
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         // some error checking
         if (row >= _indxCvDisplayVector.size()) {
@@ -288,6 +294,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case VALCOLUMN: // Object is actually an Integer
@@ -302,6 +309,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
 
     private int _row;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("action command: " + e.getActionCommand());
@@ -404,6 +412,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         (_indxCvDisplayVector.elementAt(_row)).writePI(_status);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
 
         if (log.isDebugEnabled()) {

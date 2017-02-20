@@ -1,4 +1,3 @@
-// OlcbSensorManager.java
 package jmri.jmrix.openlcb;
 
 import jmri.JmriException;
@@ -7,6 +6,8 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+
+import org.openlcb.OlcbInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +22,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
     String prefix = "M";
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
         super.dispose();
@@ -40,6 +43,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
     CanSystemConnectionMemo memo;
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
@@ -51,7 +55,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         }
 
         // OK, make
-        Sensor s = new OlcbSensor(getSystemPrefix(), addr, memo.getTrafficController());
+        Sensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
         return s;
     }
@@ -60,6 +64,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return false;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         try {
             validateSystemNameFormat(curAddress);
@@ -70,6 +75,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return prefix + typeLetter() + curAddress;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         // always return this (the current) name without change
         return curAddress;
@@ -92,11 +98,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // listen for sensors, creating them as needed
+    @Override
     public void reply(CanReply l) {
         // doesn't do anything, because for now 
         // we want you to create manually
     }
 
+    @Override
     public void message(CanMessage l) {
         // doesn't do anything, because 
         // messages come from us
@@ -106,6 +114,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      * No mechanism currently exists to request status updates from all layout
      * sensors.
      */
+    @Override
     public void updateAll() {
     }
 
@@ -113,4 +122,4 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
 }
 
-/* @(#)OlcbSensorManager.java */
+

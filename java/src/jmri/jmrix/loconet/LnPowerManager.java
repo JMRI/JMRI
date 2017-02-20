@@ -1,4 +1,3 @@
-// LnPowerManager.java
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
@@ -36,6 +35,7 @@ public class LnPowerManager
 
     protected int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
 
@@ -52,9 +52,10 @@ public class LnPowerManager
             tc.sendLocoNetMessage(l);
         }
 
-        firePropertyChange("Power", null, null);
+        firePropertyChange("Power", null, null); // NOI18N
     }
 
+    @Override
     public int getPower() {
         return power;
     }
@@ -74,6 +75,7 @@ public class LnPowerManager
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         if (tc != null) {
             tc.removeLocoNetListener(~0, this);
@@ -85,18 +87,19 @@ public class LnPowerManager
 
     private void checkTC() throws JmriException {
         if (tc == null) {
-            throw new JmriException("Use power manager after dispose");
+            throw new JmriException("Use power manager after dispose"); // NOI18N
         }
     }
 
     // to listen for status changes from LocoNet
+    @Override
     public void message(LocoNetMessage m) {
         if (m.getOpCode() == LnConstants.OPC_GPON) {
             power = ON;
-            firePropertyChange("Power", null, null);
+            firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
-            firePropertyChange("Power", null, null);
+            firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // grab the track status any time that a slot read of a "normal" slot passes thru.
             // Ignore "reserved" and "master control" slots in slot numbers 120-127
@@ -107,7 +110,7 @@ public class LnPowerManager
                     // fire a property change only if slot status is DIFFERENT 
                     // from current local status
                     power = slotTrackStatus; // update local track status from slot info
-                    firePropertyChange("Power", null, null);
+                    firePropertyChange("Power", null, null); // NOI18N
                 }
             }
         }
@@ -148,11 +151,12 @@ public class LnPowerManager
          * then sends a query of slot 0 so that the power manager can inspect
          * the {@code "<trk>"} byte.
          */
+        @Override
         public void run() {
             // wait a little bit to allow power manager to be initialized
             try {
-                // Delay 200 mSec to allow init of traffic controller, listeners.
-                Thread.sleep(200);
+                // Delay 500 mSec to allow init of traffic controller, listeners.
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
             }
@@ -165,5 +169,3 @@ public class LnPowerManager
     }
     private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
 }
-
-/* @(#)LnPowerManager.java */

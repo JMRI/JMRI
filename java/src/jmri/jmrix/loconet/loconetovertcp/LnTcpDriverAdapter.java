@@ -1,4 +1,3 @@
-// LnTcpDriverAdapter.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.jmrix.loconet.LnNetworkPortController;
@@ -30,6 +29,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
      * set up all of the other objects to operate with a LocoNet connected via
      * this class.
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -49,6 +49,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         packets.startThreads();
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -56,6 +57,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
     // private control members
     private boolean opened = false;
 
+    @Override
     public void configureOption1(String value) {
         super.configureOption1(value);
         log.debug("configureOption1: " + value);

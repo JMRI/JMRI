@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.bachrus;
 
 
@@ -27,4 +26,4 @@ abstract public class ActiveFlag {
 
 }
 
-/* @(#)ActiveFlag.java */
+

@@ -1,4 +1,3 @@
-// LocoStatsFrame.java
 package jmri.jmrix.loconet.locostats;
 
 import java.awt.event.ActionEvent;
@@ -40,19 +39,17 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5940710123873302443L;
     JPanel lb2Panel;
     JPanel rawPanel;
     JPanel pr2Panel;
     JPanel ms100Panel;
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame";
+        return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemLocoStats"));
     }
@@ -63,6 +60,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle");
 
+    @Override
     public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -124,6 +122,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
         // install "update" button handler
         updateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 requestUpdate();
             }
@@ -140,6 +139,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         // will connect when memo is available
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -158,6 +158,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         log.error(msg);
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         if (updatePending
                 && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
@@ -249,6 +250,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
+    @Override
     public void dispose() {
         // disconnect from the LnTrafficController
         memo.getLnTrafficController().removeLocoNetListener(~0, this);
@@ -288,11 +290,6 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5534308120479708337L;
 
         public Default() {
             super(Bundle.getMessage("MenuItemLocoStats"),

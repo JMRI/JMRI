@@ -1,4 +1,3 @@
-// DCCppMenu.java
 package jmri.jmrix.dccpp.swing;
 
 import java.util.ResourceBundle;

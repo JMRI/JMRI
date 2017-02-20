@@ -1,4 +1,3 @@
-// PortNameMapper.java
 package jmri.util;
 
 import at.jta.*;
@@ -95,9 +94,15 @@ public class PortNameMapper {
                             String deviceClass = reg.readValueAsString(pathKey, "Class");
                             if (deviceClass.equals("Ports") || deviceClass.equals("Modem")) {
                                 name = reg.readValueAsString(pathKey, "FriendlyName");
-                                Key pathKey2 = reg.openKey(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i) + "\\" + regSubEntry.get(0) + "\\Device Parameters", Regor.KEY_READ);
-                                port = reg.readValueAsString(pathKey2, "PortName");
-                                reg.closeKey(pathKey2);
+                                try {
+                                    Key pathKey2 = reg.openKey(Regor.HKEY_LOCAL_MACHINE, path + regentry.get(i) + "\\" + regSubEntry.get(0) + "\\Device Parameters", Regor.KEY_READ);
+                                    port = reg.readValueAsString(pathKey2, "PortName");
+                                    reg.closeKey(pathKey2);
+                                } catch (java.lang.NullPointerException e) {
+                                    // ...\\Device Parameters does not exist for some odd-ball Windows 
+                                    // serial devices, so cannot get the "PortName" from there.
+                                    // Instead, leave port as null and ignore the exception
+                                }
                             }
                             reg.closeKey(pathKey);
                         }
@@ -109,7 +114,7 @@ public class PortNameMapper {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (RegistryErrorException e) {
             e.printStackTrace();
         }
         for (int i = 0; i < friendlyName.size(); i++) {

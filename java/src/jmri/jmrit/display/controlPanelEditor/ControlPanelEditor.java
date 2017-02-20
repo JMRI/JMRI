@@ -938,11 +938,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_editorMenu == null) {
                 _editorMenu = new JMenu(Bundle.getMessage("MenuEdit"));
                 _editorMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4440624973051999883L;
-
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setAllEditable(true);
@@ -1132,7 +1127,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         }
                     }
                     Object select = JOptionPane.showInputDialog(this, Bundle.getMessage("multipleSelections"),
-                            Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE,
+                            Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE,
                             null, selects, null);
                     if (select != null) {
                         iter = selections.iterator();
@@ -1481,6 +1476,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     @Override
     public void mouseEntered(MouseEvent event) {
+        _targetPanel.repaint();
     }
 
     @Override
@@ -1498,7 +1494,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         targetWindowClosing(true);
     }
 
@@ -1575,14 +1570,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 putItem(pos);
                 log.debug("Add {}", pos.getNameString());
             }
-        }
-        if (_selectionGroup.get(0) instanceof LocoIcon) {
-            LocoIcon p = (LocoIcon) _selectionGroup.get(0);
-            CoordinateEdit f = new CoordinateEdit();
-            f.init("Train Name", p, false);
-            f.initText();
-            f.setVisible(true);
-            f.setLocationRelativeTo(p);
+            if (_selectionGroup.get(0) instanceof LocoIcon) {
+                LocoIcon p = (LocoIcon) _selectionGroup.get(0);
+                CoordinateEdit f = new CoordinateEdit();
+                f.init("Train Name", p, false);
+                f.initText();
+                f.setVisible(true);
+                f.setLocationRelativeTo(p);
+            }
         }
         _pastePending = false;
     }

@@ -6,8 +6,8 @@
  
  Java files
  
- If you want to put the notice in the JavaDoc, include the following
- at the end of the class or interface JavaDoc comment, just above the
+ If you want to put the notice in the Javadoc, include the following
+ at the end of the class or interface Javadoc comment, just above the
  @copyright line.  See jmri.Version for an example.
  
  *
@@ -25,7 +25,7 @@
  * for more details.
  * <P>
 
-Alternately, for minor files where it doesn't need to appear in the JavaDoc, 
+Alternately, for minor files where it doesn't need to appear in the Javadoc, 
 put the following at the top of the file above the package statement.
 
 // This file is part of JMRI.

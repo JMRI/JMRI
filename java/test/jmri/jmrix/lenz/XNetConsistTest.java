@@ -11,28 +11,28 @@ import org.junit.Test;
  *
  * Description:	tests for the jmri.jmrix.lenz.XNetConsist class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2010,2016,2017
  */
 public class XNetConsistTest {
 
     // infrastructure objects, populated by setUp.
     private XNetInterfaceScaffold tc = null;
     private XNetSystemConnectionMemo memo = null;
+    private XNetConsist c = null;
 
     @Test public void integerConstructorTest() {
-        XNetConsist c = new XNetConsist(5, tc, memo);
-        Assert.assertNotNull(c);
+        XNetConsist ic = new XNetConsist(5, tc, memo);
+        Assert.assertNotNull(ic);
     }
 
     @Test public void dccLocoAddressConstructorTest() {
         jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
 
-        XNetConsist c = new XNetConsist(addr, tc, memo);
-        Assert.assertNotNull(c);
+        XNetConsist ac = new XNetConsist(addr, tc, memo);
+        Assert.assertNotNull(ac);
     }
 
     @Test public void checkDisposeMethod(){
-        XNetConsist c =  new XNetConsist(5,tc,memo);
         // verify that c has been added to the traffic controller's 
         // list of listeners.
         int listeners = tc.numListeners();
@@ -41,60 +41,50 @@ public class XNetConsistTest {
     }
 
     @Test public void testGetConsistType(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         Assert.assertEquals("default consist type",jmri.Consist.ADVANCED_CONSIST,c.getConsistType());
     }
 
     @Test public void testSetConsistTypeAdvanced(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        Assert.assertEquals("default consist type",jmri.Consist.ADVANCED_CONSIST,c.getConsistType());
+        Assert.assertEquals("advanced consist type",jmri.Consist.ADVANCED_CONSIST,c.getConsistType());
     }
 
     @Test public void testSetConsistTypeCS(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
-        Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
+        Assert.assertEquals("CS consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
     @Test public void testSetConsistTypeOther(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(255);
         // make sure an error message is generated.
         jmri.util.JUnitAppender.assertErrorMessage("Consist Type Not Supported");
     }
 
     @Test public void checkAddressAllowedGood(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         Assert.assertTrue("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(200,true)));
     }
 
     @Test public void checkAddressAllowedBad(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         Assert.assertFalse("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(0,false)));
     }
 
     @Test public void checkSizeLimitAdvanced(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
         Assert.assertEquals("Advanced Consist Limit",-1,c.sizeLimit());   
     } 
 
     @Test public void checkSizeLimitCS(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS Consist Limit",2,c.sizeLimit());   
     } 
 
     @Ignore("Can't directly set consist type to something that is not supported")
     @Test public void checkSizeLimitOther(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(255);
         Assert.assertEquals("Other Consist Limit",0,c.sizeLimit());   
     } 
 
     @Test public void checkContainsAdvanced(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -113,7 +103,6 @@ public class XNetConsistTest {
     }
 
     @Test public void checkContainsCS(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -132,7 +121,6 @@ public class XNetConsistTest {
     }
 
     @Test public void checkGetLocoDirectionAdvanced(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -144,7 +132,6 @@ public class XNetConsistTest {
     }
 
     @Test public void checkGetLocoDirectionCS(){
-        XNetConsist c = new XNetConsist(5, tc, memo);
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -161,6 +148,7 @@ public class XNetConsistTest {
         apps.tests.Log4JFixture.setUp();
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
+        c = new XNetConsist(5, tc, memo);
     }
    
     @After

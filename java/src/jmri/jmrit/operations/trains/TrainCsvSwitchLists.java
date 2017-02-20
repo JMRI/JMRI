@@ -1,6 +1,6 @@
-// TrainCsvSwitchLists.java
 package jmri.jmrit.operations.trains;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,10 +33,11 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 
     /**
      * builds a csv file containing the switch list for a location
+     * @param location The Location requesting a switch list.
      *
      * @return File
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public File buildSwitchList(Location location) {
 
         // create csv switch list file
@@ -68,7 +69,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         }
         addLine(fileOut, VT + getDate(true));
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        // get a list of trains sorted by arrival time
+        List<Train> trains = TrainManager.instance().getTrainsArrivingThisLocationList(location);
+        for (Train train : trains) {
             if (!train.isBuilt()) {
                 continue; // train wasn't built so skip
             }
@@ -106,7 +109,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 // the departure location
                 // the departure time
                 // the train's direction when it arrives
-                // if it terminate at this location
+                // if it terminates at this location
                 if (stops == 1) {
                     // newLine(fileOut);
                     addLine(fileOut, TN + train.getName());
@@ -213,17 +216,26 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     }
                 }
                 stops++;
+                if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                    addLine(fileOut, TL +
+                            train.getTrainLength(rl) +
+                            DEL +
+                            train.getNumberEmptyCarsInTrain(rl) +
+                            DEL +
+                            train.getNumberCarsInTrain(rl));
+                    addLine(fileOut, TW + train.getTrainWeight(rl));
+                }
             }
             if (trainDone && pickupCars == 0 && dropCars == 0) {
                 addLine(fileOut, TDONE);
-            } else {
-                if (stops > 1 && pickupCars == 0) {
+            } else if (stops > 1) {
+                if (pickupCars == 0) {
                     addLine(fileOut, NCPU);
                 }
-
-                if (stops > 1 && dropCars == 0) {
+                if (dropCars == 0) {
                     addLine(fileOut, NCSO);
                 }
+                addLine(fileOut, TEND + train.getName()); // done with this train
             }
         }
         addLine(fileOut, END); // done with switch list

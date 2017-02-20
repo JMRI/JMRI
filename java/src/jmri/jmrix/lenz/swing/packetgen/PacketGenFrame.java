@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.lenz.swing.packetgen;
 
 import jmri.jmrix.lenz.XNetMessage;
@@ -11,12 +10,9 @@ import jmri.jmrix.lenz.XNetTrafficController;
   */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1866366252396463489L;
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
 
+    @Override
     public void initComponents() throws Exception {
         super.initComponents();
 
@@ -27,6 +23,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         pack();
     }
 
+    @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendXNetMessage(createPacket(packetTextField.getSelectedItem().toString()), null);
     }

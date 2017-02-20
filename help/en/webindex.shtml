@@ -588,7 +588,7 @@
 
  
 <li>
-<a href="">iPhone/iPod </a>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#iphone">iPhone/iPod </a>
 <ul></ul>
 </li>
 
@@ -964,6 +964,12 @@
 <ul></ul>
 </li>
 
+  
+<li>
+<a href="">Handling Errors </a>
+<ul></ul>
+</li>
+
  
 </ul>
 </li>
@@ -1327,6 +1333,12 @@
 </li>
 
  
+<li>
+<a href="package/apps/SystemConsole.shtml">System Console </a>
+<ul></ul>
+</li>
+
+ 
 <li>Tables <ul>
   
 <li>
@@ -1509,7 +1521,7 @@
 
   
 <li>
-<a href="">Wii Remote as Throttle </a>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#wii">Wii Remote as Throttle </a>
 <ul></ul>
 </li>
 
@@ -1639,7 +1651,7 @@
 
  
 <li>
-<a href="">Wii Remote </a>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#wii">Wii Remote </a>
 <ul></ul>
 </li>
 

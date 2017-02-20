@@ -2,9 +2,10 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,48 +15,26 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016	
  */
-public class Z21XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
-    public int numListeners() {
-        return lnis.numListeners();
-    }
-
-    XNetInterfaceScaffold lnis;
-
+    @Override
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "53 00 15 88 CE",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
+    @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "53 00 15 89 CF",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
-    public void checkIncoming() {
-        t.setFeedbackMode(jmri.Turnout.MONITORING);
-        // notify the object that somebody else changed it...
-        XNetReply m = new XNetReply();
-        m.setElement(0, 0x42);
-        m.setElement(1, 0x05);
-        m.setElement(2, 0x04);     // set CLOSED
-        m.setElement(3, 0x43);
-        lnis.sendTestMessage(m);
-        Assert.assertTrue(t.getKnownState() == jmri.Turnout.CLOSED);
-
-        m = new XNetReply();
-        m.setElement(0, 0x42);
-        m.setElement(1, 0x05);
-        m.setElement(2, 0x08);     // set THROWN
-        m.setElement(3, 0x4F);
-        lnis.sendTestMessage(m);
-        Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
-    }
-
     // Test the Z21XNetTurnout message sequence.
-    public void testz21XNetTurnoutMsgSequence() {
+    @Test
+    @Override
+    public void testXNetTurnoutMsgSequence() {
         t.setFeedbackMode(jmri.Turnout.DIRECT);
         // prepare an interface
         // set closed
@@ -105,7 +84,9 @@ public class Z21XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest 
     // Test that property change events are properly sent from the parent
     // to the propertyChange listener (this handles events for one sensor 
     // and twosensor feedback).
-    public void testz21XNetTurnoutPropertyChange() {
+    @Test
+    @Override
+    public void testXNetTurnoutPropertyChange() {
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
@@ -136,6 +117,7 @@ public class Z21XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest 
         Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
     }
 
+    @Test
     @Override
     public void testDispose() {
         t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
@@ -145,26 +127,12 @@ public class Z21XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest 
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // from here down is testing infrastructure
-    public Z21XNetTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21XNetTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21XNetTurnoutTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
 
@@ -172,7 +140,10 @@ public class Z21XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest 
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

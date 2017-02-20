@@ -1,4 +1,3 @@
-// TrainsEditFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -371,6 +370,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (_train != null) {
             toolMenu.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
         }
+        toolMenu.addSeparator();
         toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
         toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
         toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPrintManifest"), false, this));
@@ -721,6 +721,16 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (b.isSelected()) {
             _train.deleteTrainSkipsLocation(id);
         } else {
+            // check to see if skipped location is staging
+            if (_train.getRoute().getLocationById(id).getLocation().isStaging()) {
+                int result = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("TrainRouteStaging"),
+                        new Object[]{_train.getName(), _train.getRoute().getLocationById(id).getName()}),
+                        Bundle.getMessage("TrainRouteNotStaging"), JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.CANCEL_OPTION) {
+                    b.setSelected(true);
+                    return; // don't skip staging
+                }
+            }
             _train.addTrainSkipsLocation(id);
         }
     }

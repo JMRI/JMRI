@@ -17,8 +17,6 @@ import jmri.util.StringUtil;
  */
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
-    private static final long serialVersionUID = 1L;
-    
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -30,6 +28,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
@@ -57,6 +56,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
             add(sendButton);
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -64,14 +64,17 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.tams.swing.packetgen.PacketGenFrame";
     }
 
+    @Override
     public String getTitle() {
         return "Send Tams command";
     }
 
+    @Override
     public void initComponents(TamsSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -150,9 +153,11 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         return m;
     }
 
+    @Override
     public void message(TamsMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(TamsReply r) {
     } // ignore replies
 

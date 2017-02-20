@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.qsi.serialdriver;
 
 import java.util.ResourceBundle;
@@ -26,6 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "Quantum Programmer";
     }
@@ -35,6 +35,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.qsi.QsiActionListBundle");
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null) {
            adapter = new SerialDriverAdapter();

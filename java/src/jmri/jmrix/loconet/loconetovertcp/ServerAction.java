@@ -1,4 +1,3 @@
-// ServerAction.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.awt.event.ActionEvent;
@@ -11,11 +10,6 @@ import javax.swing.AbstractAction;
   */
 public class ServerAction
         extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7774780042559216689L;
 
     public ServerAction(String s) {
         super(s);
@@ -31,6 +25,7 @@ public class ServerAction
         Server.getInstance();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ServerFrame f = ServerFrame.getInstance();
         f.setVisible(true);

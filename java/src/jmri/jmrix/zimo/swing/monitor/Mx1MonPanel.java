@@ -22,10 +22,12 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         super();
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.zimo.swing.monitor.Mx1MonPanel";
     }//IN18N
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -90,32 +92,33 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         logMessage(timestamp, m, prefix);
     }
 
+    @Override
     public synchronized void message(Mx1Message l) {  // receive a MX-1 message and log it
         // display the raw data if requested
-        String raw = "packet: ";
+        StringBuilder raw = new StringBuilder("packet: ");
         if (rawCheckBox.isSelected()) {
             int len = l.getNumDataElements();
             for (int i = 0; i < len; i++) {
-                raw += Integer.toHexString(l.getElement(i)) + " ";
+                raw.append(Integer.toHexString(l.getElement(i))).append(" ");
             }
         }
 
         // display the decoded data
-        nextLine(l.getStringMsg() + "\n", raw);
+        nextLine(l.getStringMsg() + "\n", raw.toString());
     }
 
     private void logMessage(Date timestamp, Mx1Message m, String src) {  // receive a Mrc message and log it
-        String raw = "";
+        StringBuilder raw = new StringBuilder("");
         for (int i = 0; i < m.getNumDataElements(); i++) {
             if (i > 0) {
-                raw += " ";
+                raw.append(" ");
             }
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(m.getElement(i) & 0xFF, raw);
+            raw.append(jmri.util.StringUtil.twoHexFromInt(m.getElement(i) & 0xFF));
         }
 
         // display the decoded data
         // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw);
+        nextLineWithTime(timestamp, src + " " + m.toString() + "\n", raw.toString());
     }
 
     /**

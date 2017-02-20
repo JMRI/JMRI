@@ -36,15 +36,14 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV=" + CV + " val=" + val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
-        _progRead = false;
         progState = COMMANDSENT;
         _val = val;
-        _cv = CV;
 
         // Add the packet to the queue rather than send it directly
         // [AC 23/01/16] Check that there is a free slot for the ops mode packet.
@@ -55,22 +54,19 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
             t.setRepeats(false);
             t.start();
         } else {
+            progState = NOTPROGRAMMING;
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }
     }
 
+    @Override
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("read CV=" + CV);
-        }
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
+    @Override
     synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("confirm CV={}", CV);
-        }
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
     }
@@ -85,6 +81,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         return ret;
     }
 
+    @Override
     synchronized public void notifyReply(SprogReply m) {
         // We will not see any replies
     }
@@ -100,14 +97,17 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         return false;
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }

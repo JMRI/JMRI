@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -27,44 +28,43 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.throttle.PackageTest");   // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-           suite.addTest(AddressPanelTest.suite());
-           suite.addTest(BackgroundPanelTest.suite());
-           suite.addTest(ControlPanelTest.suite());
-           suite.addTest(ControlPanelPropertyEditorTest.suite());
-           suite.addTest(FunctionButtonTest.suite());
-           suite.addTest(FunctionButtonPropertyEditorTest.suite());
-           suite.addTest(FunctionPanelTest.suite());
-           suite.addTest(LargePowerManagerButtonTest.suite());
-           suite.addTest(LoadDefaultXmlThrottlesLayoutActionTest.suite());
-           suite.addTest(LoadXmlThrottlesLayoutActionTest.suite());
-           suite.addTest(SmallPowerManagerButtonTest.suite());
-           suite.addTest(StopAllButtonTest.suite());
-           suite.addTest(StoreDefaultXmlThrottlesLayoutActionTest.suite());
-           suite.addTest(StoreXmlThrottlesLayoutActionTest.suite());
-           suite.addTest(ThrottleCreationActionTest.suite());
-           suite.addTest(ThrottleFrameTest.suite());
-           suite.addTest(ThrottleFrameManagerTest.suite());
-           suite.addTest(ThrottleFramePropertyEditorTest.suite());
-           suite.addTest(ThrottlesListActionTest.suite());
-           suite.addTest(ThrottlesPreferencesActionTest.suite());
-           suite.addTest(ThrottlesPreferencesTest.suite());
-           suite.addTest(ThrottlesPreferencesPaneTest.suite());
-           suite.addTest(ThrottlesListPanelTest.suite());
-           suite.addTest(ThrottlesTableCellRendererTest.suite());
-           suite.addTest(ThrottlesTableModelTest.suite());
-           suite.addTest(ThrottleWindowTest.suite());
-        }
-
+        suite.addTest(AddressPanelTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BackgroundPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControlPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControlPanelPropertyEditorTest.class));
+        suite.addTest(FunctionButtonTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FunctionButtonPropertyEditorTest.class));
+        suite.addTest(new JUnit4TestAdapter(FunctionPanelTest.class));
+        suite.addTest(LargePowerManagerButtonTest.suite());
+        suite.addTest(LoadDefaultXmlThrottlesLayoutActionTest.suite());
+        suite.addTest(LoadXmlThrottlesLayoutActionTest.suite());
+        suite.addTest(SmallPowerManagerButtonTest.suite());
+        suite.addTest(StopAllButtonTest.suite());
+        suite.addTest(StoreDefaultXmlThrottlesLayoutActionTest.suite());
+        suite.addTest(StoreXmlThrottlesLayoutActionTest.suite());
+        suite.addTest(ThrottleCreationActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ThrottleFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(ThrottleFrameManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(ThrottleFramePropertyEditorTest.class));
+        suite.addTest(ThrottlesListActionTest.suite());
+        suite.addTest(ThrottlesPreferencesActionTest.suite());
+        suite.addTest(ThrottlesPreferencesTest.suite());
+        suite.addTest(ThrottlesPreferencesPaneTest.suite());
+        suite.addTest(ThrottlesListPanelTest.suite());
+        suite.addTest(ThrottlesTableCellRendererTest.suite());
+        suite.addTest(ThrottlesTableModelTest.suite());
+        suite.addTest(new JUnit4TestAdapter(KeyListenerInstallerTest.class));
+        suite.addTest(new JUnit4TestAdapter(WindowPreferencesTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

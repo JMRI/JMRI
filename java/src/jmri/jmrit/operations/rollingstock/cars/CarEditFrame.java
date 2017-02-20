@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -108,7 +109,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         super(Bundle.getMessage("TitleCarAdd"));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
         // the following code sets the frame's initial state
@@ -137,15 +138,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         saveButton.setEnabled(false);
 
         editRoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Road").toLowerCase()}));
+                new Object[]{Bundle.getMessage("road")})); // in OpsCarsBundle: initial caps for some languages i.e. German
         editTypeButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Type").toLowerCase()}));
+                new Object[]{Bundle.getMessage("type")})); // initial caps for some languages i.e. German
         editColorButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Color").toLowerCase()}));
         editLengthButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Length").toLowerCase()}));
+                new Object[]{Bundle.getMessage("length")})); // initial caps for some languages i.e. German
         editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Load").toLowerCase()}));
+                new Object[]{Bundle.getMessage("load")})); // initial caps for some languages i.e. German
         editOwnerButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Owner").toLowerCase()}));
         editKernelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
@@ -375,7 +376,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
         if (!CarRoads.instance().containsName(car.getRoadName())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("roadNameNotExist"),
-                    new Object[]{car.getRoadName()}), Bundle.getMessage("carAddRoad"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    new Object[]{car.getRoadName()}), Bundle.getMessage("rsAddRoad"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 CarRoads.instance().addName(car.getRoadName());
             }
         }
@@ -457,7 +458,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         if (ae.getSource() == typeComboBox && typeComboBox.getSelectedItem() != null) {
             log.debug("Type comboBox sees change, update car loads");
             CarLoads.instance().updateComboBox((String) typeComboBox.getSelectedItem(), loadComboBox);
-            // turnout off auto for location tracks
+            // turn off auto for location tracks
             autoTrackCheckBox.setSelected(false);
             autoTrackCheckBox.setEnabled(false);
             updateTrackLocationBox();

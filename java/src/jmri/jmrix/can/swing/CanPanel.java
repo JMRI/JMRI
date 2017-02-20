@@ -1,4 +1,3 @@
-// CbusPanel.java
 package jmri.jmrix.can.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -15,14 +14,11 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanPanelInterface {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 4619397055638527582L;
-    /**
      * make "memo" object available as convenience
      */
     protected CanSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
     }

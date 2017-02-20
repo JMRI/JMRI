@@ -32,8 +32,6 @@ abstract public class VSDSound {
 
     public final static float default_gain = 0.8f;
 
-    protected String vsd_file_base = "resource:resources/sounds/vsd/";
-
     javax.swing.Timer t;
 
     boolean is_playing;

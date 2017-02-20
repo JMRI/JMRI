@@ -1,38 +1,45 @@
 package jmri.jmrit.display;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
+import jmri.ConfigureManager;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandleManager;
+import jmri.Sensor;
+import jmri.SignalMast;
+import jmri.Turnout;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.*;
-import jmri.util.JUnitUtil;
 /**
  * Test signal system via a specific layout file
  *
- * This is in jmri.jmrit.display instead of jmri.implementation because the files
- * it loads display the signals for debugging purposes; if their panels were editted
- * out, jmri.implementation would be a better location
+ * This is in jmri.jmrit.display instead of jmri.implementation because the
+ * files it loads display the signals for debugging purposes; if their panels
+ * were editted out, jmri.implementation would be a better location
  *
  * @author Bob Jacobsen Copyright 2016
  * @since 4.3.2
  */
-public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
+public class SignalSystemTest {
 
-
+    @Test
     public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
-        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/jmrit/display/verify/SimplePanel_OBlocks-DB1969.xml"));
-        
+
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-    
-        // check aspects
 
+        // check aspects
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr0");
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0009)", "Hp1+Vr1");
@@ -44,7 +51,7 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0006)", "Hp1+Vr0");
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr1");
         checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
-       
+
         InstanceManager.turnoutManagerInstance().getTurnout("IT201").setCommandedState(Turnout.CLOSED);
 
         checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
@@ -86,12 +93,13 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0006)", "Hp1+Vr0");
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr0");
         checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
-        
+
     }
 
+    @Test
     public void testLoadAA1UPtest() throws jmri.JmriException {
-        if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
-        
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // load file
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
 
@@ -101,10 +109,10 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
-        jmri.util.JUnitUtil.waitFor(()->{
-                 return InstanceManager.sensorManagerInstance().provideSensor("IS_ROUTING_DONE").getKnownState() == jmri.Sensor.ACTIVE; 
-             },
-             "LayoutEditor stabilized sensor went ACTIVE");
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return InstanceManager.sensorManagerInstance().provideSensor("IS_ROUTING_DONE").getKnownState() == jmri.Sensor.ACTIVE;
+        },
+                "LayoutEditor stabilized sensor went ACTIVE");
 
         // check aspects
         checkAspect("IF$vsm:BNSF-1996:SE-1A($0152)", "Stop");
@@ -142,45 +150,29 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         checkAspect("IF$vsm:UP-2008:SL-3A($0248)", "Stop");
         checkAspect("IF$vsm:UP-2008:SL-3L2($0249)", "Approach Restricting");
         checkAspect("IF$vsm:UP-2008:SL-3L2($0250)", "Approach");
-       
+
         // clean up messages from file
         jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0100)");
         jmri.util.JUnitAppender.clearBacklog();
         jmri.util.JUnitAppender.verifyNoBacklog();
-        log.warn("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
+        log.info("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
     }
-    
+
     void checkAspect(String mastName, String aspect) {
         SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mastName);
         if (mast != null) {
             // wait present or error
-            jmri.util.JUnitUtil.waitFor(()->{return mast.getAspect().equals(aspect);},
-                "mast " + mastName + " aspect \""+aspect+"\" expected, currently showing \""+mast.getAspect()+"\"");
+            jmri.util.JUnitUtil.waitFor(() -> {
+                return mast.getAspect().equals(aspect);
+            },
+                    "mast " + mastName + " aspect \"" + aspect + "\" expected, currently showing \"" + mast.getAspect() + "\"");
         } else {
-            Assert.fail("Mast "+mastName+" not found");
+            Assert.fail("Mast " + mastName + " not found");
         }
     }
-        
-    // from here down is testing infrastructure
-    public SignalSystemTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SignalSystemTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SignalSystemTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -191,9 +183,9 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         JUnitUtil.initMemoryManager();
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         JUnitUtil.resetInstanceManager();
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

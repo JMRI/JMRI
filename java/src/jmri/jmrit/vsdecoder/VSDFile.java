@@ -27,7 +27,6 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -45,11 +44,9 @@ public class VSDFile extends ZipFile {
     private static class VSDXmlFile extends XmlFile {
     }
 
-    static final ResourceBundle rb = VSDecoderBundle.bundle();
-
     protected Element root;
     protected boolean initialized = false;
-    private String _statusMsg = rb.getString("VSDFileStatusOK");
+    private String _statusMsg = Bundle.getMessage("ButtonOK"); // File Status = OK
 
     ZipInputStream zis;
 
@@ -238,7 +235,7 @@ public class VSDFile extends ZipFile {
         if (!i.hasNext()) {
 
             log.warn("Validate: No Profiles.");
-            return (new ValidateStatus(false, rb.getString("VSDFileStatusNoProfiles")));
+            return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoProfiles")));
         }
 
         // Iterate through Profiles
@@ -251,7 +248,7 @@ public class VSDFile extends ZipFile {
             Iterator<Element> i2 = (e.getChildren("sound")).iterator();
             if (!i2.hasNext()) {
                 log.warn("Validate: Profile " + e.getAttributeValue("name") + " has no Sounds");
-                return (new ValidateStatus(false, rb.getString("VSDFileStatusNoSounds") + " : " + e.getAttributeValue("name")));
+                return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoSounds") + " : " + e.getAttributeValue("name")));
             }
 
             // Iterate through Sounds
@@ -260,7 +257,7 @@ public class VSDFile extends ZipFile {
                 log.debug("Element: " + el.toString());
                 if (el.getAttribute("name") == null) {
                     log.debug("Name missing.");
-                    return (new ValidateStatus(false, rb.getString("VSDFileStatusNoName") + " : " + e.getAttributeValue("name") + "(" + el.getName() + ")"));
+                    return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoName") + " : " + e.getAttributeValue("name") + "(" + el.getName() + ")"));
                 }
                 String type = el.getAttributeValue("type");
                 log.debug("  Name: " + el.getAttributeValue("name"));
@@ -271,16 +268,16 @@ public class VSDFile extends ZipFile {
                     // that's OK.  But if there is an element, and the FILE is missing,
                     // that's bad.
                     if (!validateOptionalFile(el, "start-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <start-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <start-file>"));
                     }
                     if (!validateOptionalFile(el, "mid-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <mid-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <mid-file>"));
                     }
                     if (!validateOptionalFile(el, "end-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <end-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <end-file>"));
                     }
                     if (!validateOptionalFile(el, "short-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <short-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <short-file>"));
                     }
                 } else if (type.equals("diesel")) {
                     // Validate a Diesel sound
@@ -289,16 +286,16 @@ public class VSDFile extends ZipFile {
                     // that's bad.
                     String[] file_elements = {"file"};
                     if (!validateOptionalFile(el, "start-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <start-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <start-file>"));
                     }
                     if (!validateOptionalFile(el, "shutdown-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <shutdown-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <shutdown-file>"));
                     }
                     if (!validateFiles(el, "notch-sound", file_elements)) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
                     }
                     if (!validateFiles(el, "notch-transition", file_elements, false)) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <notch-transition>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-transition>"));
                     }
                 } else if (type.equals("diesel2")) {
                     // Validate a diesel2 type sound
@@ -308,37 +305,37 @@ public class VSDFile extends ZipFile {
                     // that's bad.
                     String[] file_elements = {"file", "accel-file", "decel-file"};
                     if (!validateOptionalFile(el, "start-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <start-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <start-file>"));
                     }
                     if (!validateOptionalFile(el, "shutdown-file")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <shutdown-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <shutdown-file>"));
                     }
                     if (!validateFiles(el, "notch-sound", file_elements)) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
                     }
                 } else if (type.equals("steam")) {
                     // Validate a Steam sound
                     String[] file_elements = {"file"};
                     if (!validateRequiredElement(el, "top-speed")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <top-speed>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <top-speed>"));
                     }
                     if (!validateRequiredElement(el, "driver-diameter")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <driver-diameter>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <driver-diameter>"));
                     }
                     if (!validateRequiredElement(el, "cylinders")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <cylinders>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <cylinders>"));
                     }
                     if (!validateRequiredElement(el, "rpm-steps")) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingElement") + " : <rpm-steps>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <rpm-steps>"));
                     }
                     if (!validateFiles(el, "rpm-step", file_elements)) {
-                        return (new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
                     }
                 }
             }
         }
         log.debug("File Validation Successful.");
-        return (new ValidateStatus(true, rb.getString("VSDFileStatusOK")));
+        return (new ValidateStatus(true, Bundle.getMessage("ButtonOK"))); //  File Status = OK
     }
 
     protected boolean validateRequiredElement(Element el, String name) {

@@ -1,4 +1,3 @@
-// PacketTableFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 import javax.swing.BoxLayout;
@@ -15,10 +14,6 @@ import javax.swing.table.TableRowSorter;
   */
 public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 219225062863225988L;
     PacketDataModel model = new PacketDataModel();
     JTable table;
     JScrollPane scroll;
@@ -26,6 +21,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
+    @Override
     public void initComponents() {
 
         table = new JTable(model);
@@ -43,6 +39,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
         JPanel p1 = new JPanel();
         JButton b = new JButton(rb.getString("ButtonClear"));
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 model.reset();
             }
@@ -54,6 +51,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
 
     }
 
+    @Override
     public void dispose() {
         if (source != null) {
             source.removeListener(this);
@@ -72,6 +70,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
         model.setSource(d);
     }
 
+    @Override
     public void asciiFormattedMessage(String m) {
         model.asciiFormattedMessage(m);
     }

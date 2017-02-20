@@ -1,4 +1,3 @@
-// SprogVersionListener.java
 package jmri.jmrix.sprog.update;
 
 /**
@@ -13,4 +12,4 @@ public interface SprogVersionListener extends java.util.EventListener {
 
 }
 
-/* @(#)SprogVersionListener.java */
+

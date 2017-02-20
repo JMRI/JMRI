@@ -63,6 +63,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     /**
      * Init for creation insert table
      */
+    @Override
     public void init() {
         if (!_initialized) {
             super.init();
@@ -75,6 +76,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
      * Init for update of existing indicator turnout _bottom3Panel has "Update
      * Panel" button put into _bottom1Panel
      */
+    @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         add(initTablePanel(_model, _editor), 0);
@@ -107,6 +109,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
         _addTableButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 makeAddToTableWindow();
             }
@@ -115,6 +118,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         panel.add(_addTableButton);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 _table.clearSelection();
             }
@@ -132,9 +136,11 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         _addTableDialog = new JDialog(_paletteFrame, Bundle.getMessage("AddToTableTitle"), true);
 
         ActionListener cancelListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) { cancelPressed(e); }
         };
         ActionListener okListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addToTable();
             }
@@ -192,6 +198,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
      */
     public NamedBean getTableSelection() {
         int row = _table.getSelectedRow();
+        row = _table.convertRowIndexToModel(row);
         if (row >= 0) {
             NamedBean b = _model.getBeanAt(row);
             _table.clearSelection();
@@ -207,6 +214,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     public void setSelection(NamedBean bean) {
         int row = _model.getIndexOf(bean);
+        row = _table.convertRowIndexToView(row);
         log.debug("setSelection: NamedBean= " + bean + ", row= " + row);
         if (row >= 0) {
             _table.addRowSelectionInterval(row, row);
@@ -219,6 +227,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     /**
      * ListSelectionListener action
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null || _updateButton == null) {
             return;
@@ -252,6 +261,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         return _model.getBeanAt(row);
     }
 
+    @Override
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, map, icon);
     }
@@ -265,6 +275,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             iMap = map;
         }
         
+        @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
@@ -275,6 +286,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             return true;
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

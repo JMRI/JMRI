@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.configurexml.StoreXmlConfigAction;
@@ -26,8 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("serial")
 public class StoreXmlVSDecoderAction extends AbstractAction {
-
-    static final ResourceBundle rb = VSDecoderBundle.bundle();
 
     /**
      * Constructor
@@ -54,8 +51,9 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
-        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+        JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
         fileChooser.setCurrentDirectory(new File(VSDecoderPane.getDefaultVSDecoderFolder()));
         java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);

@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.zimo.mx1.configurexml.PackageTest.class
+   jmri.jmrix.zimo.mx1.configurexml.PackageTest.class,
+   Mx1AdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.zimo.mx1 package.

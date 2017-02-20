@@ -14,13 +14,9 @@ import jmri.jmrit.display.Positionable;
  */
 public class PositionableEllipse extends PositionableRectangle {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2828662466661825613L;
-
     public PositionableEllipse(Editor editor) {
         super(editor);
+        makeShape();
     }
 
     public PositionableEllipse(Editor editor, Shape shape) {
@@ -31,6 +27,7 @@ public class PositionableEllipse extends PositionableRectangle {
      * this class must be overridden by its subclasses and executed only after
      * its parameters have been set
      */
+    @Override
     public void makeShape() {
         setShape(new Ellipse2D.Double(0, 0, _width, _height));
     }
@@ -41,20 +38,17 @@ public class PositionableEllipse extends PositionableRectangle {
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(PositionableEllipse pos) {
+/*    protected Positionable finishClone(PositionableShape pos) {
         pos._width = _width;
         pos._height = _height;
         return super.finishClone(pos);
-    }
+    }*/
 
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("Ellipse"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2502324392840592055L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
                     _editFrame = new DrawEllipse("editShape", "Ellipse", null);

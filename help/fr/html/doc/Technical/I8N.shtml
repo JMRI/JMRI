@@ -143,8 +143,7 @@ fichier, qui contient des lettres diacritiques pour la traduction tch&#232;que.
 <P>
 Il y a plusieurs fichiers de propri&#233;t&#233;s qui sont utilis&#233;s pour le contr&#244;le interne,
 et ne devrait pas &#234;tre traduit. Ceux-ci sont marqu&#233;es par un commentaire au sommet
-du fichier. Les exemples sont les apps/AppsStructureBundle.properties,
-jmri/web/serveur/Services.properties et jmri/web/serveur/fichiers FilePaths.properties.
+du fichier. Le exemple sont le apps/AppsStructureBundle.properties.
 
 <p>
 Pour v&#233;rifier votre travail:
@@ -172,12 +171,13 @@ Sur MacOS X ou Linux, cela se fait avec la commande
 svn diff java/src> patch.txt
 </pre> </code>
 et les utilisateurs de Windows peuvent faire la m&#234;me chose de leur application SVN.
-<li> T&#233;l&#233;chargez ce fichier sur le tracker "Patches" sur sourceforge: <br>
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">http://sourceforge.net/tracker/?group_id=26788&atid=388315</a>.<br/>
+<li> T&#233;l&#233;chargez ce fichier sur le tracker "Issues" sur GitHub: <br>
+<a href="https://github.com/JMRI/JMRI/issues">https://github.com/JMRI/JMRI/issues</a>.<br/>
 Sur cette page:
 <ul>
-<LI> Cliquez sur "Create ticket" sur le c&#244;t&#233; gauche
-<LI> Remplissez le "Title" et le "Summary" sur la
+    <!-- needs retranslation -->
+<LI> Cliquez sur "New issue" sur le c&#244;t&#233; gauche
+<LI> Remplissez le "Title" et le "Comment" sur la
 nouvelle page qui appara&#238;t (vous pouvez Lead Etat, propri&#233;taire, le type et la priorit&#233; qu'ils ont),
 <LI> Cliquez sur le boite "I would like to add an attachment" (je voudrais ajouter une pi&#232;ce jointe)
  proximit&#233; du bas,

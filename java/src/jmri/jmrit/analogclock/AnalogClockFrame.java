@@ -69,6 +69,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
         // request callback to update time
         clock.addMinuteChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 update();
             }
@@ -78,10 +79,6 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     public class ClockPanel extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8721855316541244373L;
         // Create a Panel that has clockface drawn on it scaled to the size of the panel
         // Define common variables
         Image logo;
@@ -138,6 +135,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
             // Add component listener to handle frame resizing event
             this.addComponentListener(new ComponentAdapter() {
+                @Override
                 public void componentResized(ComponentEvent e) {
                     scaleFace();
                 }
@@ -145,6 +143,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
         }
 
+        @Override
         public void paint(Graphics g) {
 
             // overridden Paint method to draw the clock
@@ -300,6 +299,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         repaint();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -307,6 +307,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     /**
      * Handle a change to clock properties
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         boolean now = clock.getRun();
         if (now) {
@@ -320,6 +321,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     private class ButtonListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent a) {
             boolean next = !clock.getRun();
             clock.setRun(next);

@@ -16,19 +16,16 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 abstract public class MrcPanel extends jmri.util.swing.JmriPanel implements MrcPanelInterface {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -8704964386237089071L;
-
-    /**
      * make "memo" object available as convenience
      */
     protected MrcSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(MrcSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof MrcSystemConnectionMemo) {
             try {

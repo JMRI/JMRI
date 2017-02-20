@@ -1,6 +1,6 @@
-// CarsSetFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +41,9 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
         setTitle(Bundle.getMessage("TitleSetCars"));
         addHelpMenu("package.jmri.jmrit.operations.Operations_SetCars", true); // NOI18N
-        // modify Save button text to "Change"
-        saveButton.setText(Bundle.getMessage("Change"));
+        // modify Save button text to "Change";
+        // as the changes entered in the panel is directly applied, use ButtonApply
+        saveButton.setText(Bundle.getMessage("ButtonApply"));
         // disable edit load button if no cars selected
         editLoadButton.setEnabled(false);
         // show ignore checkboxes
@@ -98,7 +99,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean save() {
         // save ignore states
         ignoreStatusCheckBoxSelected = ignoreStatusCheckBox.isSelected();

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2005
  */
-public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i) {
@@ -42,6 +42,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
     }
 
     @Test
+    @Override
     public void testMisses() {
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));

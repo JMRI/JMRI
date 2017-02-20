@@ -27,11 +27,6 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.display.panelEditor");   // no tests in this class itself
 
-
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.panelEditor.configurexml.PackageTest.class));
 
@@ -39,10 +34,12 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

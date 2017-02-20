@@ -1,4 +1,3 @@
-// pricom.pockettester.MonitorAction.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.event.ActionEvent;
@@ -16,11 +15,6 @@ import org.slf4j.LoggerFactory;
   */
 public abstract class MonitorAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4061133241777429055L;
-
     public MonitorAction(String s) {
         super(s);
     }
@@ -31,6 +25,7 @@ public abstract class MonitorAction extends AbstractAction {
         putValue(javax.swing.Action.NAME, rb.getString("ActionMonitor"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         MonitorFrame f = new MonitorFrame();
         try {
@@ -47,6 +42,3 @@ public abstract class MonitorAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(MonitorAction.class.getName());
 
 }
-
-
-/* @(#)MonitorAction.java */

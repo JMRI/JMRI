@@ -9,11 +9,6 @@ import jmri.implementation.AbstractSensor;
  */
 public class SerialSensor extends AbstractSensor {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5465958868822894698L;
-
     public SerialSensor(String systemName) {
         super(systemName);
         _knownState = UNKNOWN;
@@ -24,6 +19,7 @@ public class SerialSensor extends AbstractSensor {
         _knownState = UNKNOWN;
     }
 
+    @Override
     public void dispose() {
     }
 
@@ -34,9 +30,8 @@ public class SerialSensor extends AbstractSensor {
      * Eventually, we may want to have this move the related AIU to the top of
      * the polling queue.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 
 }
-
-/* @(#)SerialSensor.java */

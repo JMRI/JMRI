@@ -11,11 +11,11 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
-public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i) {
-        return "MTX00000" + i + ";X00000" + (i-1);
+        return "MTX010203040506070" + i + ";X010203040506070" + (i - 1);
     }
 
     @Test
@@ -26,7 +26,8 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Test
     public void testUpperLower() {
-        Turnout t = l.provideTurnout("MTX00000" + getNumToTest2()+ ";X00000" + (getNumToTest2()-1) );
+        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest2()+ ";X010203040506070" +
+                (getNumToTest2()-1) );
 
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
@@ -35,7 +36,8 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testDefaultSystemName() {
         // create
-        Turnout t = l.provideTurnout("MTX00000" + getNumToTest1() + ";X00000" + (getNumToTest1()-1) );
+        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest1() + ";X010203040506070" +
+                (getNumToTest1()-1) );
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -50,8 +52,7 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
 
-        OlcbSystemConnectionMemo m = new OlcbSystemConnectionMemo();
-        m.setTrafficController(new jmri.jmrix.can.TestTrafficController());
+        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
         l = new OlcbTurnoutManager(m);
 
     }

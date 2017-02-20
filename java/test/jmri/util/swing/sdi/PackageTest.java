@@ -4,10 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.ButtonTestAction;
-import org.junit.Assert;
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Invokes complete set of tests in the jmri.util.swing.sdi tree
@@ -44,18 +45,22 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(PackageTest.class);
+        TestSuite suite = new TestSuite(PackageTest.class.getName());
 
-        suite.addTest(SdiJfcUnitTests.suite());
+        suite.addTest(SdiJfcUnitTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SdiWindowTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriJFrameInterfaceTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

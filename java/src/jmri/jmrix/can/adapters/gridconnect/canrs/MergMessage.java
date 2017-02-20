@@ -61,6 +61,7 @@ public class MergMessage extends GridConnectMessage {
      *
      * @param header A valid CAN header value
      */
+    @Override
     public void setHeader(int header) {
         int munged;
         if (isExtended()) {
@@ -89,6 +90,7 @@ public class MergMessage extends GridConnectMessage {
         }
     }
 
+    @Override
     public void setRtr(boolean rtr) {
         int offset = isExtended() ? 10 : 6;
         setElement(offset, rtr ? 'R' : 'N');
@@ -103,6 +105,7 @@ public class MergMessage extends GridConnectMessage {
      * @param val the value to set
      * @param n   the index of the byte to be set
      */
+    @Override
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {
             int index = n * 2 + (isExtended() ? 11 : 7);  // differs here from superclass

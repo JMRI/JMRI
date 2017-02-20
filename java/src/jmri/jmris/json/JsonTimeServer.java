@@ -13,11 +13,15 @@ import jmri.jmris.AbstractTimeServer;
 import jmri.jmris.JmriConnection;
 import jmri.server.json.JsonException;
 
+/**
+ * @deprecated since 4.5.6
+ */
 @Deprecated
 public class JsonTimeServer extends AbstractTimeServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
+
     JsonTimeServer(JmriConnection connection) {
         super();
         this.connection = connection;

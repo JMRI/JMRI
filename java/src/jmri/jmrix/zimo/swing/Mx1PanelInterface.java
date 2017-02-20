@@ -1,4 +1,3 @@
-// MrcPanelInterface.java
 package jmri.jmrix.zimo.swing;
 
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
@@ -14,10 +13,13 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 public interface Mx1PanelInterface {
 
     /**
-     * 2nd stage of initialization, invoked after the constuctor is complete.
+     * 2nd stage of initialization, invoked after the constructor is complete.
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     *
+     * @param memo the memo to initialize components with
+     * @throws java.lang.Exception if unable to initialize components
      */
     public void initComponents(Mx1SystemConnectionMemo memo) throws Exception;
 

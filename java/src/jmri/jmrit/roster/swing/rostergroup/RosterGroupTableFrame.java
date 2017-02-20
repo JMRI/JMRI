@@ -134,6 +134,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         ++topBoxIndex;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
             dataModel.dispose();

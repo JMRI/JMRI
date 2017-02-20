@@ -1,9 +1,6 @@
 package jmri.util.swing.multipane;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import jmri.util.swing.ButtonTestAction;
-import org.junit.Assert;
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,44 +11,6 @@ import junit.framework.TestSuite;
  * @author	Bob Jacobsen Copyright 2003
  */
 public class PackageTest extends TestCase {
-
-    public void testShow() {
-        new MultiPaneWindow("Test of empty Multi Pane Window",
-                "xml/config/apps/panelpro/Gui3LeftTree.xml",
-                "xml/config/apps/panelpro/Gui3Menus.xml",
-                "xml/config/apps/panelpro/Gui3MainToolBar.xml"
-        ).setVisible(true);
-
-        JFrame f = jmri.util.JmriJFrame.getFrame("Test of empty Multi Pane Window");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
-    }
-
-    public void testAction() {
-        MultiPaneWindow m = new MultiPaneWindow("Test of Multi Pane Window function",
-                "xml/config/apps/panelpro/Gui3LeftTree.xml",
-                "xml/config/apps/panelpro/Gui3Menus.xml",
-                "xml/config/apps/panelpro/Gui3MainToolBar.xml");
-        {
-            JButton b = new JButton(new ButtonTestAction(
-                    "Open new frame", new jmri.util.swing.sdi.JmriJFrameInterface()));
-            m.getUpperRight().add(b);
-        }
-        {
-            JButton b = new JButton(new ButtonTestAction(
-                    "Open in upper panel", new PanedInterface(m)));
-            m.getLowerRight().add(b);
-
-            b = new JButton(new jmri.jmrit.powerpanel.PowerPanelAction(
-                    "power", new PanedInterface(m)));
-            m.getLowerRight().add(b);
-        }
-        m.setVisible(true);
-
-        JFrame f = jmri.util.JmriJFrame.getFrame("Test of Multi Pane Window function");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
-    }
 
     // from here down is testing infrastructure
     public PackageTest(String s) {
@@ -66,20 +25,23 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(PackageTest.class);
+        TestSuite suite = new TestSuite(PackageTest.class.getName());
 
         suite.addTest(MultiJfcUnitTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MultiPaneWindowTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

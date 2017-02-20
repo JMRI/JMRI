@@ -1,4 +1,3 @@
-// ImportRollingStock.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.io.BufferedReader;

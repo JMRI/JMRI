@@ -1,4 +1,3 @@
-// MarklinTurnoutManager.java
 package jmri.jmrix.marklin;
 
 import jmri.Turnout;
@@ -28,10 +27,12 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
@@ -50,4 +51,4 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class.getName());
 }
 
-/* @(#)MarklinTurnoutManager.java */
+

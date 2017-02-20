@@ -1,6 +1,6 @@
-// NceConsistBackup.java
 package jmri.jmrix.nce.consist;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -64,6 +64,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         }
     }
 
+    @Override
     public void run() {
 
         // get file to write to
@@ -221,11 +222,13 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         return m;
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     // this reply always expects two consecutive reads
+    @Override
     public void reply(NceReply r) {
 
         if (waiting <= 0) {
@@ -251,6 +254,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 
     private static class textFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -263,6 +267,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
             }
         }
 
+        @Override
         public String getDescription() {
             return "Text Documents (*.txt)";
         }

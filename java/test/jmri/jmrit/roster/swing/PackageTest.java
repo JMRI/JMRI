@@ -32,15 +32,27 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.roster.swing.attributetable.PackageTest.suite());
         suite.addTest(jmri.jmrit.roster.swing.rostergroup.PackageTest.suite());
         suite.addTest(jmri.jmrit.roster.swing.speedprofile.PackageTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.swing.rostertree.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GlobalRosterEntryComboBoxTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterEntryComboBoxTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterEntryListCellRendererTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterEntrySelectorPanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterFrameActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterFrameStartupActionFactoryTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupComboBoxTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupsPanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterTableTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

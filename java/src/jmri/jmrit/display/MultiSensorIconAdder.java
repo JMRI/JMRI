@@ -54,10 +54,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MultiSensorIconAdder extends IconAdder {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6135920336395495628L;
     JRadioButton _updown;
     JRadioButton _rightleft;
 
@@ -74,6 +70,7 @@ public class MultiSensorIconAdder extends IconAdder {
         super(type);
     }
 
+    @Override
     public void reset() {
         _sensorMap = new HashMap<String, NamedBeanHandle<Sensor>>();
         super.reset();
@@ -82,6 +79,7 @@ public class MultiSensorIconAdder extends IconAdder {
     /**
      * Build iconMap and orderArray from user's choice of defaults (override)
      */
+    @Override
     protected void makeIcons(CatalogTreeNode n) {
         if (log.isDebugEnabled()) {
             log.debug("makeIcons from node= " + n.toString() + ", numChildren= "
@@ -129,6 +127,7 @@ public class MultiSensorIconAdder extends IconAdder {
      * Override. First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
+    @Override
     protected void doIconPanel() {
         if (log.isDebugEnabled()) {
             log.debug("doIconPanel: Sizes: _iconMap= " + _iconMap.size()
@@ -156,10 +155,11 @@ public class MultiSensorIconAdder extends IconAdder {
             p1.add(_iconMap.get(key));
 
             JPanel p2 = new JPanel();
-            JButton delete = new JButton(Bundle.getMessage("ButtonDeleteIcon"));
+            JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));
             ActionListener action = new ActionListener() {
                 String key;
 
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     delete(key);
                 }
@@ -253,6 +253,7 @@ public class MultiSensorIconAdder extends IconAdder {
      * Override
      *
      */
+    @Override
     public void complete(ActionListener addIconAction, boolean changeIcon,
             boolean addToTable, boolean update) {
         ButtonGroup group = new ButtonGroup();
@@ -268,6 +269,7 @@ public class MultiSensorIconAdder extends IconAdder {
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
         JButton addIcon = new JButton(Bundle.getMessage("AddMultiSensorIcon"));
         addIcon.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addIcon();
             }
@@ -283,19 +285,17 @@ public class MultiSensorIconAdder extends IconAdder {
 
     class ExportHandler extends TransferHandler {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1457006609475522778L;
-
+        @Override
         public int getSourceActions(JComponent c) {
             return COPY;
         }
 
+        @Override
         public Transferable createTransferable(JComponent c) {
             return new TransferableNamedBean();
         }
 
+        @Override
         public void exportDone(JComponent c, Transferable t, int action) {
         }
     }
@@ -312,16 +312,19 @@ public class MultiSensorIconAdder extends IconAdder {
             }
         }
 
+        @Override
         public DataFlavor[] getTransferDataFlavors() {
             //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.getTransferDataFlavors ");
             return new DataFlavor[]{dataFlavor};
         }
 
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.isDataFlavorSupported ");
             return dataFlavor.equals(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (log.isDebugEnabled()) {
                 log.debug("TransferableNamedBean.getTransferData ");
@@ -351,6 +354,7 @@ public class MultiSensorIconAdder extends IconAdder {
      * Override. Activate Add to Panel button when all icons are assigned
      * sensors.
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_addButton == null) {
             return;
@@ -402,7 +406,7 @@ public class MultiSensorIconAdder extends IconAdder {
         if (index >= _order.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoIconAt"), index - 2),
-                    Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -420,7 +424,7 @@ public class MultiSensorIconAdder extends IconAdder {
         if (index >= _order.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoSensorAt"), index - 2),
-                    Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -442,7 +446,7 @@ public class MultiSensorIconAdder extends IconAdder {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                         Bundle.getMessage("DupSensorName"),
                         new Object[]{name}),
-                        Bundle.getMessage("errorTitle"),
+                        Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -456,10 +460,6 @@ public class MultiSensorIconAdder extends IconAdder {
      */
     class DropPanel extends JPanel implements DropTargetListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7051687527703065869L;
         DataFlavor dataFlavor;
 
         DropPanel() {
@@ -472,19 +472,24 @@ public class MultiSensorIconAdder extends IconAdder {
             //if (log.isDebugEnabled()) log.debug("DropPanel ctor");
         }
 
+        @Override
         public void dragExit(DropTargetEvent dte) {
         }
 
+        @Override
         public void dragEnter(DropTargetDragEvent dtde) {
         }
 
+        @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropPanel.dragOver");
         }
 
+        @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();

@@ -1,4 +1,3 @@
-// EasyDccTurnout.java
 package jmri.jmrix.easydcc;
 
 import jmri.NmraPacket;
@@ -21,11 +20,6 @@ import org.slf4j.LoggerFactory;
 public class EasyDccTurnout extends AbstractTurnout {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -2850269669837354617L;
-
-    /**
      * EasyDcc turnouts use the NMRA number (0-511) as their numerical
      * identification.
      */
@@ -46,6 +40,7 @@ public class EasyDccTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -64,6 +59,7 @@ public class EasyDccTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ET" + _number);
@@ -125,5 +121,3 @@ public class EasyDccTurnout extends AbstractTurnout {
 
 }
 
-
-/* @(#)EasyDccTurnout.java */

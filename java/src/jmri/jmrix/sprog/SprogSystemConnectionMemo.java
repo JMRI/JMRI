@@ -289,11 +289,13 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return sprogTurnoutManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
     }
 
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, SprogSystemConnectionMemo.class);

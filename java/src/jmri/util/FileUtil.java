@@ -46,22 +46,6 @@ public final class FileUtil {
      */
     static public final String SCRIPTS = "scripts:"; // NOI18N
     /**
-     * Replaced with {@link #PROGRAM}.
-     *
-     * @see #PROGRAM
-     * @deprecated since 2.13.1
-     */
-    @Deprecated
-    static public final String RESOURCE = "resource:"; // NOI18N
-    /**
-     * Replaced with {@link #PREFERENCES}.
-     *
-     * @see #PREFERENCES
-     * @deprecated since 2.13.1
-     */
-    @Deprecated
-    static public final String FILE = "file:"; // NOI18N
-    /**
      * The portable file path component separator.
      */
     static public final char SEPARATOR = '/'; // NOI18N
@@ -136,8 +120,6 @@ public final class FileUtil {
     /**
      * Get the resource file corresponding to a name. There are five cases:
      * <ul>
-     * <li>Starts with "resource:", treat the rest as a pathname relative to the
-     * program directory (deprecated; see "program:" below)</li>
      * <li>Starts with "program:", treat the rest as a relative pathname below
      * the program directory</li>
      * <li>Starts with "preference:", treat the rest as a relative path below
@@ -146,9 +128,6 @@ public final class FileUtil {
      * JMRI system preferences directory</li>
      * <li>Starts with "home:", treat the rest as a relative path below the
      * user.home directory</li>
-     * <li>Starts with "file:", treat the rest as a relative path below the
-     * resource directory in the preferences directory (deprecated; see
-     * "preference:" above)</li>
      * <li>Starts with "profile:", treat the rest as a relative path below the
      * profile directory as specified in the
      * active{@link jmri.profile.Profile}</li>
@@ -159,9 +138,8 @@ public final class FileUtil {
      * </ul>
      * In any case, absolute pathnames will work.
      *
-     * @param pName The name string, possibly starting with file:, home:,
-     *              profile:, program:, preference:, scripts:, settings, or
-     *              resource:
+     * @param pName The name string, possibly starting with home:, profile:,
+     *              program:, preference:, scripts:, or settings:
      * @return Absolute file name to use, or null. This will include
      *         system-specific file separators.
      * @since 2.7.2
@@ -268,9 +246,6 @@ public final class FileUtil {
     /**
      * Test if the given filename is a portable filename.
      *
-     * Note that this method may return a false positive if the filename is a
-     * file: URL.
-     *
      * @param filename the name to test
      * @return true if filename is portable
      */
@@ -352,7 +327,10 @@ public final class FileUtil {
     }
 
     /**
-     * Get the JMRI program directory.
+     * Get the JMRI program directory. If the program directory has not been
+     * previously sets, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>, or
+     * <code>.</code> if that property is not set.
      *
      * @return JMRI program directory as a String.
      */
@@ -687,7 +665,8 @@ public final class FileUtil {
     /**
      * Get the JMRI distribution jar file.
      *
-     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     * @return the JAR file containing the JMRI library or null if not running
+     *         from a JAR file
      */
     static public JarFile jmriJarFile() {
         return FileUtilSupport.getDefault().getJmriJarFile();
@@ -830,11 +809,11 @@ public final class FileUtil {
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
-     * @throws java.io.IOException if a backup cannot be created
+     * @throws java.io.IOException      if a backup cannot be created
      * @throws IllegalArgumentException if max is less than one
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int,
      * java.lang.String)
-     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
+     * @see jmri.util.FileUtilSupport#backup(java.io.File)
      */
     public static void rotate(File file, int max, String extension) throws IOException {
         FileUtilSupport.getDefault().rotate(file, max, extension);

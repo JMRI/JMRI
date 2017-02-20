@@ -19,6 +19,7 @@ public class SystemNameComparator implements Comparator<Object>, java.io.Seriali
     public SystemNameComparator() {
     }
 
+    @Override
     public int compare(Object o1, Object o2) {
         if (o1.toString().length() <= 3 && o2.toString().length() <= 3) {
             return o1.toString().compareTo(o2.toString());

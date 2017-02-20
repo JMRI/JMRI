@@ -1,4 +1,3 @@
-// RpsBlock.java
 package jmri.jmrix.rps;
 
 import java.util.List;
@@ -37,6 +36,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     SignalHead signal = null;
     RpsSensor sensor = null;
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         handleParameterChange(e.getPropertyName(),
                 e.getOldValue(), e.getNewValue(),
@@ -82,12 +82,14 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
         }
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         // put in map
         Integer num = Integer.valueOf(((DccLocoAddress) t.getLocoAddress()).getNumber());
         throttleTable.put(num, t);
     }
 
+    @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
     }
 
@@ -137,4 +139,4 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
 }
 
-/* @(#)RpsBlock.java */
+

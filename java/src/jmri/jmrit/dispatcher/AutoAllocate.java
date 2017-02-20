@@ -225,13 +225,43 @@ public class AutoAllocate {
             }
             log.warn("Failure of prepared choice of next Section in AutoAllocate");
         }
+        // Jay Janzen 
+        // If there is an AP check to see if the AP's target is on the list of choices
+        // and if so, return that.
+        ActiveTrain at = ar.getActiveTrain();
+        AllocationPlan ap = getPlanThisTrain(at);
+        Section as = null;
+        if (ap != null) {
+            if      (ap.getActiveTrain(1) == at) {
+                as = ap.getTargetSection(1);
+            }
+            else if (ap.getActiveTrain(2) == at) {
+                as = ap.getTargetSection(2);
+            }
+            else {
+                return null;
+            }
+            for (int i = 0; i < sList.size(); i++) {
+                if (as != null && as == sList.get(i)) return as;
+            }
+        }
+        // If our end block section is on the list of choices
+        // return that occupied or not. In the list of choices the primary occurs
+        // ahead any alternates, so if our end block is an alternate and its
+        // primary is unoccupied, the search will select the primary and
+        // we wind up skipping right over our end section.
+        for (int i = 0; i < sList.size(); i++) {
+            if (at.getEndBlockSection().getSystemName().equals(sList.get(i).getSystemName())) {
+                return sList.get(i);
+            }
+        }        
         // no prepared choice, or prepared choice failed, is there an unoccupied Section available
         for (int i = 0; i < sList.size(); i++) {
             if ((sList.get(i).getOccupancy() == Section.UNOCCUPIED)
                     && (sList.get(i).getState() == Section.FREE)
                     && (_dispatcher.getSignalType() == DispatcherFrame.SIGNALHEAD
                     || (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST
-                    && _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar) == null))) {
+                    && _dispatcher.checkBlocksNotInAllocatedSection(sList.get(i), ar) == null))) {
                 return sList.get(i);
             }
         }
@@ -344,7 +374,14 @@ public class AutoAllocate {
         }
     }
 
+    // test to see how far ahead allocations have already been made
+    // and go no farther than three unless the "all the way" attribute 
+    // for the train is true then always allocate the request
     private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
+        if (ar.getActiveTrain().getAllocateAllTheWay()) {
+            _dispatcher.allocateSection(ar, null);
+            return true;
+        }        
         // test how far ahead of occupied track this requested section is
         ArrayList<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
         if (aSectionList.size() >= 4) {

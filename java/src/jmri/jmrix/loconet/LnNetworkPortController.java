@@ -26,6 +26,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
 
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
+        LnCommandStationType.COMMAND_STATION_DCS240,
+        LnCommandStationType.COMMAND_STATION_DCS210,
         LnCommandStationType.COMMAND_STATION_DCS200,
         LnCommandStationType.COMMAND_STATION_DCS050,
         LnCommandStationType.COMMAND_STATION_DCS051,
@@ -92,12 +94,10 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
      * Set the third port option. Only to be used after construction, but before
      * the openPort call
      */
+    @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
         log.debug("configureOption3: " + value);
         setTurnoutHandling(value);
     }
 }
-
-
-/* @(#)LnNetworkPortController.java */

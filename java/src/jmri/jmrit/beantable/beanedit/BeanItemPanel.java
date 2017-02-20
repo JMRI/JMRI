@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 
 /**
- * Hold the information for each bean panel in a structured mannor.
+ * Hold the information for each bean panel in a structured manner.
  */
 public class BeanItemPanel extends JPanel {
 
@@ -56,10 +56,12 @@ public class BeanItemPanel extends JPanel {
 
     String name;
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }

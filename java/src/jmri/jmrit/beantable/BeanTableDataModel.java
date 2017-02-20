@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of NamedBean manager contents
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @author Dennis Miller Copyright (C) 2006
+ * @author  Dennis Miller Copyright (C) 2006
  */
 abstract public class BeanTableDataModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -71,9 +71,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
     static public final int VALUECOL = 2;
     static public final int COMMENTCOL = 3;
     static public final int DELETECOL = 4;
-
     static public final int NUMCOLUMN = 5;
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
     protected List<String> sysNameList = null;
     boolean noWarnDelete = false;
     NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
@@ -167,7 +165,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 return Bundle.getMessage("ColumnComment"); //"Comment";
             case DELETECOL:
                 return "";
-
             default:
                 return "unknown";
         }
@@ -237,7 +234,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 return new JTextField(5).getPreferredSize().width;
             case COMMENTCOL:
             case USERNAMECOL:
-                return new JTextField(15).getPreferredSize().width;
+                return new JTextField(15).getPreferredSize().width; // TODO I18N using Bundle.getMessage()
             case VALUECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
             case DELETECOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                 return new JTextField(22).getPreferredSize().width;
@@ -623,14 +620,13 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Delete"));
+        menuItem = new JMenuItem(Bundle.getMessage("ButtonDelete"));
         menuItem.addActionListener((ActionEvent e1) -> {
             deleteBean(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
-
     }
 
     public void copyName(int row, int column) {
@@ -765,7 +761,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                     showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
             //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
         }
-
     }
 
     protected void showTableHeaderPopup(MouseEvent e, JTable table) {
@@ -1070,4 +1065,5 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
 }

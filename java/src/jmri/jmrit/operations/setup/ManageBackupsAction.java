@@ -1,4 +1,3 @@
-// ManageAutoBackupsAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;

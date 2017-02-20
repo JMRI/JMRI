@@ -1,4 +1,3 @@
-// LocationsTableFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -94,6 +93,7 @@ public class LocationsTableFrame extends OperationsFrame {
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
         }
+        toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
         menuBar.add(toolMenu);

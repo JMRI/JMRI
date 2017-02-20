@@ -1,4 +1,3 @@
-// MarklinMessage.java
 package jmri.jmrix.marklin;
 
 
@@ -288,4 +287,4 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
     }
 }
 
-/* @(#)MarklinMessage.java */
+

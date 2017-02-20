@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.powerline.simulator;
 
 import javax.swing.JPanel;
@@ -28,14 +27,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SimulatorAdapter();

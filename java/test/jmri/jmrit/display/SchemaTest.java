@@ -1,35 +1,32 @@
 package jmri.jmrit.display;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.io.File;
+import java.util.ArrayList;
+import jmri.configurexml.SchemaTestBase;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-//import jmri.InstanceManager;
 /**
  * Checks of JMRI XML Schema
  *
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
  */
-public class SchemaTest extends jmri.configurexml.SchemaTestBase {
+@RunWith(Parameterized.class)
+public class SchemaTest extends SchemaTestBase {
 
-    // from here down is testing infrastructure
-    public SchemaTest(String s) {
-        super(s);
+    @Parameters(name = "{0} (pass={1})")
+    public static Iterable<Object[]> data() {
+        ArrayList<Object[]> files = new ArrayList<>();
+        // the following are just tested for schema pass/fail, not load/store
+        files.addAll(getFiles(new File("java/test/jmri/jmrit/display/verify"), true, true));
+        // also tested for load/store
+        files.addAll(getFiles(new File("java/test/jmri/jmrit/display/load"), true, true));
+        return files;
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SchemaTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.display.SchemaTest");
-
-        validateDirectory(suite, "java/test/jmri/jmrit/display/verify");
-        validateDirectory(suite, "java/test/jmri/jmrit/display/load");
-
-        return suite;
+    public SchemaTest(File file, boolean pass) {
+        super(file, pass);
     }
 }

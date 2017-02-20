@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.nce.networkdriver;
 
 /**
@@ -26,6 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
@@ -33,6 +33,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     // public String getManufacturer() { return manufacturerName; }
     // public void setManufacturer(String manu) { manufacturerName=manu; }
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();

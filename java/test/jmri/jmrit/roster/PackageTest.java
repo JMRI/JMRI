@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,27 +26,33 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.PackageTest");
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
-        suite.addTest(jmri.jmrit.roster.RosterTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.roster.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
-            suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
-            suite.addTest(jmri.jmrit.roster.FunctionLabelPaneTest.suite());
-            suite.addTest(jmri.jmrit.roster.IdentifyLocoTest.suite());
-        }
-
+        suite.addTest(new JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(RosterEntryTest.suite());
+        suite.addTest(new JUnit4TestAdapter(RosterTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.roster.configurexml.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(CopyRosterItemActionTest.class));
+        suite.addTest(RosterEntryPaneTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FunctionLabelPaneTest.class));
+        suite.addTest(IdentifyLocoTest.suite());
         suite.addTest(jmri.jmrit.roster.swing.PackageTest.suite());
-
+        suite.addTest(new JUnit4TestAdapter(LocoFileTest.class));
+        suite.addTest(new JUnit4TestAdapter(RecreateRosterActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(RosterConfigManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(RosterConfigPaneTest.class));
+        suite.addTest(new JUnit4TestAdapter(RosterIconFactoryTest.class));
+        suite.addTest(new JUnit4TestAdapter(RosterMediaPaneTest.class));
+        suite.addTest(new JUnit4TestAdapter(RosterRecorderTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.roster.rostergroup.PackageTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

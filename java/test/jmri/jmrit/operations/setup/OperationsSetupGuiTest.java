@@ -1,6 +1,6 @@
-// OperationsSetupGuiTest.java
 package jmri.jmrit.operations.setup;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
@@ -17,6 +17,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
 
     public void testDirectionCheckBoxes() {
         // it may be possible to make this a headless test by only initializing the panel, not the frame
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         OperationsSetupFrame f = new OperationsSetupFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -48,6 +51,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
 
     public void testSetupFrameWrite() {
         // it may be possible to make this a headless test by only initializing the panel, not the frame
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         // force creation of backup
         Setup.setCarTypes(Setup.AAR);
 
@@ -123,6 +129,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     }
 
     public void testOptionFrameWrite() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         OptionFrame f = new OptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -190,6 +199,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     }
   
     public void testBuildReportOptionFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         BuildReportOptionFrame f = new BuildReportOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -201,6 +213,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     }
       
     public void testPrintMoreOptionFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         PrintMoreOptionFrame f = new PrintMoreOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -212,6 +227,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     }
     
     public void testEditManifestTextFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         EditManifestTextFrame f = new EditManifestTextFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -223,6 +241,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     }
     
     public void testEditSwitchListTextFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         EditSwitchListTextFrame f = new EditSwitchListTextFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -234,6 +255,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     }
     
     public void testEditManifestHeaderTextFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         EditManifestHeaderTextFrame f = new EditManifestHeaderTextFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -245,6 +269,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
     }
     
     public void testPrintOptionFrame() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
         PrintOptionFrame f = new PrintOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();

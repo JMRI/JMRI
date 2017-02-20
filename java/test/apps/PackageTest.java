@@ -2,8 +2,6 @@ package apps;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -21,6 +19,7 @@ import org.slf4j.LoggerFactory;
         apps.DispatcherPro.PackageTest.class,
         apps.PanelPro.PackageTest.class,
         apps.SignalPro.PackageTest.class,
+        apps.SoundPro.PackageTest.class,
         JmriFacelessTest.class
 })
 /**

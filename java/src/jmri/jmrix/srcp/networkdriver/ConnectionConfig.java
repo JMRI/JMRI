@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.srcp.networkdriver;
 
 /**
@@ -24,10 +23,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "SRCP Network Connection";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new NetworkDriverAdapter();
@@ -35,6 +36,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    @Override
     public boolean isPortAdvanced() {
         return false;
     }

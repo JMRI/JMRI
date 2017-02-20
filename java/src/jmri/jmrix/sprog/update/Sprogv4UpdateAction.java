@@ -17,6 +17,7 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
         super(s,memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         Object[] options = {"Cancel", "Update"};
         if (1 == JOptionPane.showOptionDialog(null,
@@ -42,4 +43,4 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
 }
 
 
-/* @(#)Sprogv4UpdateAction.java */
+

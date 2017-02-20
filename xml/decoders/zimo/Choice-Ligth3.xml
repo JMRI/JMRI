@@ -5,17 +5,25 @@
       <enumChoice choice="Automatic Stop Lights for Streetcars">
         <choice>Automatic Stop Lights for Streetcars</choice>
         <choice xml:lang="it">Luci Stop automatico per Tram</choice>
+        <choice xml:lang="cs">Automatická brzdová světla pro tramvaje</choice>
+        <choice xml:lang="de">Autom. Bremslicht für Straßenbahnen</choice>
       </enumChoice>
       <enumChoice choice="Turns off when speed is greater than 0">
         <choice>Turns off when speed is greater than 0</choice>
         <choice xml:lang="it">Spegnimento per velocità &gt; 0</choice>
+        <choice xml:lang="cs">Vypnout když je rychlost vyšší než 0</choice>
+        <choice xml:lang="de">Automatisches Abschalten bei Fahrstufe &gt; 0</choice>
       </enumChoice>
       <enumChoice choice="Turns off after 5 Min.">
         <choice>Turns off after 5 Min.</choice>
         <choice xml:lang="it">Spegnimento dopo 5 minuti</choice>
+        <choice xml:lang="cs">Vypnout po 5 minutách</choice>
+        <choice xml:lang="de">Automatisches Abschalten nach 5 min</choice>
       </enumChoice>
       <enumChoice choice="Turns off after 10 Min.">
         <choice>Turns off after 10 Min.</choice>
         <choice xml:lang="it">Spegnimento dopo 10 minuti</choice>
+        <choice xml:lang="cs">Vypnout po 10 minutách</choice>
+        <choice xml:lang="de">Automatisches Abschalten nach 10 min</choice>
       </enumChoice>
 </enumChoiceGroup>

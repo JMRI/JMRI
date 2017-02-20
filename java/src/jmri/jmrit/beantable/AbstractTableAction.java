@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignalHeadTable GUI
+ * Swing action to create and register a NamedBeanTable GUI
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
@@ -58,11 +58,13 @@ abstract public class AbstractTableAction extends AbstractAction {
             /**
              * Include an "add" button
              */
+            @Override
             void extras() {
                 if (includeAddButton) {
                     JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                     addToBottomBox(addButton, this.getClass().getName());
                     addButton.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             addPressed(e);
                         }
@@ -70,7 +72,7 @@ abstract public class AbstractTableAction extends AbstractAction {
                 }
             }
         };
-        setMenuBar(f);
+        setMenuBar(f); // comes after the Help menu is added by f = new BeanTableFrame(etc.) in stand alone application
         setTitle();
         addToFrame(f);
         f.pack();
@@ -87,7 +89,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     /**
-     * Allow subclasses to add to the frame without have to actually subclass
+     * Allow subclasses to add to the frame without having to actually subclass
      * the BeanTableDataFrame
      */
     public void addToFrame(BeanTableFrame f) {
@@ -108,7 +110,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     /**
-     * Allow subclasses to add alter the frames Menubar without have to actually
+     * Allow subclasses to alter the frame's Menubar without having to actually
      * subclass the BeanTableDataFrame
      */
     public void setMenuBar(BeanTableFrame f) {

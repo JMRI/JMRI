@@ -1,4 +1,3 @@
-// SchedulesTableFrame.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Dimension;
@@ -83,6 +82,7 @@ public class SchedulesTableFrame extends OperationsFrame {
         toolMenu.add(new ScheduleCopyAction());
         toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
         toolMenu.add(new SchedulesResetHitsAction(Bundle.getMessage("MenuItemResetHits")));
+        toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
         menuBar.add(toolMenu);

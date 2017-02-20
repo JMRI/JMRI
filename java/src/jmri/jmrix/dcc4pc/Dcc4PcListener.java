@@ -1,4 +1,3 @@
-// Dcc4PcListener.java
 package jmri.jmrix.dcc4pc;
 
 /**
@@ -19,5 +18,3 @@ public interface Dcc4PcListener extends jmri.jmrix.AbstractMRListener {
 
     public void processingData();
 }
-
-/* @(#)Dcc4PcListener.java */

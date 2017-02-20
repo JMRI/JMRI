@@ -49,6 +49,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     int _cv;	// remember the cv being read/written
 
     // programming interface
+    @Override
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -78,6 +79,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         readCV(CV, p);
     }
 
+    @Override
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -142,10 +144,12 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         }
     }
 
+    @Override
     public void message(TamsMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    @Override
     public synchronized void reply(TamsReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -222,6 +226,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     protected synchronized void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

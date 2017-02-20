@@ -1,8 +1,10 @@
 package jmri.jmrix.acela;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,15 +13,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Coleman
  */
-public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     private AcelaTrafficControlScaffold tcis = null;
     private AcelaSystemConnectionMemo memo = null;
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkClosedMsgSent() {
 
 //        Assert.assertEquals("closed message","52 05 88 00",
@@ -29,6 +33,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
     }
 
+    @Override
     public void checkThrownMsgSent() {
 
 //        Assert.assertEquals("thrown message","52 05 89 00",
@@ -37,6 +42,8 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
+    @Test
+    @Ignore("Copied verbatim from Lenz, probably isn't correct")
     public void checkIncoming() {
         // notify the object that somebody else changed it...
         AcelaReply m = new AcelaReply();
@@ -57,6 +64,8 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     }
 
     // AcelaTurnout test for incoming status message
+    @Test
+    @Ignore("Copied verbatim from Lenz, probably isn't correct")
     public void testAcelaTurnoutStatusMsg() {
         // prepare an interface
         // set closed
@@ -78,27 +87,12 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
     }
 
-    // from here down is testing infrastructure
-    public AcelaTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AcelaTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AcelaTurnoutTest.class);
-        return suite;
-    }
-
     AcelaNode a0, a1, a2, a3;
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
 
         tcis = new AcelaTrafficControlScaffold();
@@ -139,8 +133,8 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         t = new AcelaTurnout("AT11",memo);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
