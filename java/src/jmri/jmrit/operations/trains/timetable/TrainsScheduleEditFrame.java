@@ -33,15 +33,21 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 
     JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
 
-    TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
+    TrainScheduleManager trainScheduleManager = null;
 
     public TrainsScheduleEditFrame() {
         super();
+
+        trainScheduleManager = TrainScheduleManager.instance();
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new GridBagLayout());
 
         trainScheduleManager.addPropertyChangeListener(this);
+    }
+
+    @Override
+    public void initComponents() {
         comboBox = trainScheduleManager.getComboBox();
 
         // row 1
