@@ -805,10 +805,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
 
         // change the block name
-        blockIDComboBox.addActionListener( 
+        blockIDComboBox.addActionListener(
             (ActionEvent a) -> {
                 String newName = blockIDComboBox.getEditor().getItem().toString();
-                newName = (null != newName) ? newName.trim() : "";
+                if (-1 != blockIDComboBox.getSelectedIndex()) {
+                    newName = blockIDComboBox.getSelectedDisplayName();
+                } else {
+                    newName = (null != newName) ? newName.trim() : "";
+                }
                 LayoutBlock b = provideLayoutBlock(newName);
                 if (b != null) {
                     // if there is an occupancy sensor assigned already
@@ -867,7 +871,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockContentsComboBox.addActionListener(
             (ActionEvent a) -> {
                 String newName = blockContentsComboBox.getEditor().getItem().toString();
-                newName = (null != newName) ? newName.trim() : "";
+                if (-1 != blockContentsComboBox.getSelectedIndex()) {
+                    newName = blockContentsComboBox.getSelectedDisplayName();
+                } else {
+                    newName = (null != newName) ? newName.trim() : "";
+                }
                 LayoutBlock b = provideLayoutBlock(newName);
                 if (b != null) {
                     if (true) {
@@ -6893,14 +6901,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setLink(newTrack, LayoutTrack.TRACK, foundObject, foundPointType);
         // check on layout block
         String newName = blockIDComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockIDComboBox.getSelectedIndex()) {
+            newName = blockIDComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             newTrack.setLayoutBlock(b);
             auxTools.setBlockConnectivityChanged();
             // check on occupancy sensor
             String sensorName = blockSensorComboBox.getEditor().getItem().toString();
-            sensorName = (null != sensorName) ? sensorName.trim() : "";
+            if (-1 != blockSensorComboBox.getSelectedIndex()) {
+                sensorName = blockSensorComboBox.getSelectedDisplayName();
+            } else {
+                sensorName = (null != sensorName) ? sensorName.trim() : "";
+            }
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
@@ -6936,14 +6952,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
         // check on layout block
         String newName = blockIDComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockIDComboBox.getSelectedIndex()) {
+            newName = blockIDComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlockAC(b);
             o.setLayoutBlockBD(b);
             // check on occupancy sensor
             String sensorName = blockSensorComboBox.getEditor().getItem().toString();
-            sensorName = (null != sensorName) ? sensorName.trim() : "";
+            if (-1 != blockSensorComboBox.getSelectedIndex()) {
+                sensorName = blockSensorComboBox.getSelectedDisplayName();
+            } else {
+                sensorName = (null != sensorName) ? sensorName.trim() : "";
+            }
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
@@ -6993,13 +7017,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // check on layout block
         String newName = blockIDComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockIDComboBox.getSelectedIndex()) {
+            newName = blockIDComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
             String sensorName = blockSensorComboBox.getEditor().getItem().toString();
-            sensorName = (null != sensorName) ? sensorName.trim() : "";
+            if (-1 != blockSensorComboBox.getSelectedIndex()) {
+                sensorName = blockSensorComboBox.getSelectedDisplayName();
+            } else {
+                sensorName = (null != sensorName) ? sensorName.trim() : "";
+            }
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
@@ -7010,7 +7042,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         String turnoutName = turnoutNameComboBox.getEditor().getItem().toString();
-        turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
+        if (-1 != turnoutNameComboBox.getSelectedIndex()) {
+            turnoutName = turnoutNameComboBox.getSelectedDisplayName();
+        } else {
+            turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
+        }
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
             o.setTurnout(turnoutName);
@@ -7024,7 +7060,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         turnoutName = extraTurnoutNameComboBox.getEditor().getItem().toString();
-        turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
+        if (-1 != extraTurnoutNameComboBox.getSelectedIndex()) {
+            turnoutName = extraTurnoutNameComboBox.getSelectedDisplayName();
+        } else {
+            turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
+        }
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
             o.setTurnoutB(turnoutName);
@@ -7076,13 +7116,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
         // check on layout block
         String newName = blockIDComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockIDComboBox.getSelectedIndex()) {
+            newName = blockIDComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         LayoutBlock b = provideLayoutBlock(newName);
         if (b != null) {
             o.setLayoutBlock(b);
             // check on occupancy sensor
             String sensorName = blockSensorComboBox.getEditor().getItem().toString();
-            sensorName = (null != sensorName) ? sensorName.trim() : "";
+            if (-1 != blockSensorComboBox.getSelectedIndex()) {
+                sensorName = blockSensorComboBox.getSelectedDisplayName();
+            } else {
+                sensorName = (null != sensorName) ? sensorName.trim() : "";
+            }
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
@@ -7095,7 +7143,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         o.setContinuingSense(Turnout.CLOSED);
         // check on a physical turnout
         String turnoutName = turnoutNameComboBox.getEditor().getItem().toString();
-        turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
+        if (-1 != turnoutNameComboBox.getSelectedIndex()) {
+            turnoutName = turnoutNameComboBox.getSelectedDisplayName();
+        } else {
+            turnoutName = (null != turnoutName) ? turnoutName.trim() : "";
+        }
         if (validatePhysicalTurnout(turnoutName, this)) {
             // turnout is valid and unique.
             o.setTurnout(turnoutName);
@@ -8028,7 +8080,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addSensor() {
         String newName = sensorComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != sensorComboBox.getSelectedIndex()) {
+            newName = sensorComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -8074,8 +8130,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addSignalHead() {
         // check for valid signal head entry
         String newName = signalHeadComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
-
+        if (-1 != signalHeadComboBox.getSelectedIndex()) {
+            newName = signalHeadComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         SignalHead mHead = null;
         if (!newName.equals("")) {
             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(newName);
@@ -8160,7 +8219,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     void addSignalMast() {
         // check for valid signal head entry
         String newName = signalMastComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != signalMastComboBox.getSelectedIndex()) {
+            newName = signalMastComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         SignalMast mMast = null;
         if (!newName.equals("")) {
             mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(newName);
@@ -8260,7 +8323,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addMemory() {
         String memoryName = textMemoryComboBox.getEditor().getItem().toString();
-        memoryName = (null != memoryName) ? memoryName.trim() : "";
+        if (-1 != textMemoryComboBox.getSelectedIndex()) {
+            memoryName = textMemoryComboBox.getSelectedDisplayName();
+        } else {
+            memoryName = (null != memoryName) ? memoryName.trim() : "";
+        }
         if (memoryName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11a"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -8286,7 +8353,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     void addBlockContents() {
         String newName = blockContentsComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockContentsComboBox.getSelectedIndex()) {
+            newName = blockContentsComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11b"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);

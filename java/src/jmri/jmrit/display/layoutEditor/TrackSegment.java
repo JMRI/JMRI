@@ -599,7 +599,7 @@ public class TrackSegment extends LayoutTrack {
 
             contentPane.add(panel2);
 
-            if ((getArc()) && (getCircle())) {
+            if (getArc() && getCircle()) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -989,15 +989,16 @@ public class TrackSegment extends LayoutTrack {
         double pt1x;
         double pt1y;
 
-        pt2x = getTmpPt2().getX();
-        pt2y = getTmpPt2().getY();
-        pt1x = getTmpPt1().getX();
-        pt1y = getTmpPt1().getY();
         if (getFlip()) {
             pt1x = getTmpPt2().getX();
             pt1y = getTmpPt2().getY();
             pt2x = getTmpPt1().getX();
             pt2y = getTmpPt1().getY();
+        } else {
+            pt1x = getTmpPt1().getX();
+            pt1y = getTmpPt1().getY();
+            pt2x = getTmpPt2().getX();
+            pt2y = getTmpPt2().getY();
         }
         //Point 1 to new point length
         double a;
@@ -1022,11 +1023,13 @@ public class TrackSegment extends LayoutTrack {
      * Calculates the initally parameters for drawing a circular track segment.
      */
     protected void calculateTrackSegmentAngle(/*Point2D pt1, Point2D pt2*/) {
-        Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
-        Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+        Point2D pt1, pt2;
         if (getFlip()) {
             pt1 = layoutEditor.getCoords(getConnect2(), getType2());
             pt2 = layoutEditor.getCoords(getConnect1(), getType1());
+        } else {
+            pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+            pt2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
         if ((getTmpPt1() != pt1) || (getTmpPt2() != pt2) || trackNeedsRedraw()) {
             setTmpPt1(pt1);
@@ -1054,7 +1057,7 @@ public class TrackSegment extends LayoutTrack {
             // Make sure chord is not null
             // In such a case (pt1 == pt2), there is no arc to draw
             if (chord > 0.0D) {
-                double radius = (chord / 2) / (java.lang.Math.sin(halfAngleRAD));
+                double radius = (chord / 2) / java.lang.Math.sin(halfAngleRAD);
                 // Circle
                 double startRad = java.lang.Math.atan2(a, o) - halfAngleRAD;
                 setStartadj(java.lang.Math.toDegrees(startRad));
@@ -1066,8 +1069,8 @@ public class TrackSegment extends LayoutTrack {
                     // Circle - Compute rectangle required by Arc2D.Double
                     setCW(radius * 2.0D);
                     setCH(radius * 2.0D);
-                    setCX(getCentreX() - (radius));
-                    setCY(getCentreY() - (radius));
+                    setCX(getCentreX() - radius);
+                    setCY(getCentreY() - radius);
 
                     // Compute the vlues for locating the circle
                     setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngleRAD));
