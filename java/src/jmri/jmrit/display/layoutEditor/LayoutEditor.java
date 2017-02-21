@@ -375,6 +375,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JCheckBoxMenuItem snapToGridOnAddItem = null;
     private JCheckBoxMenuItem snapToGridOnMoveItem = null;
     private JCheckBoxMenuItem antialiasingOnItem = null;
+    private JCheckBoxMenuItem highlightSelectedBlockItem = null;
+
     private JCheckBoxMenuItem turnoutCirclesOnItem = null;
     private JCheckBoxMenuItem skipTurnoutItem = null;
     private JCheckBoxMenuItem turnoutDrawUnselectedLegItem = null;
@@ -489,6 +491,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean snapToGridOnAdd = false;
     private boolean snapToGridOnMove = false;
     private boolean antialiasingOn = false;
+    private boolean highlightSelectedBlockFlag = false;
+
     private boolean turnoutCirclesWithoutEditMode = false;
     private boolean tooltipsWithoutEditMode = false;
     private boolean tooltipsInEditMode = true;
@@ -806,38 +810,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
 
         // change the block name
-        blockIDComboBox.addActionListener(
-            (ActionEvent a) -> {
-                String newName = blockIDComboBox.getEditor().getItem().toString();
-                if (-1 != blockIDComboBox.getSelectedIndex()) {
-                    newName = blockIDComboBox.getSelectedDisplayName();
+        blockIDComboBox.addActionListener((ActionEvent a) -> {
+            String newName = blockIDComboBox.getEditor().getItem().toString();
+            if (-1 != blockIDComboBox.getSelectedIndex()) {
+                newName = blockIDComboBox.getSelectedDisplayName();
+            } else {
+                newName = (null != newName) ? newName.trim() : "";
+            }
+            LayoutBlock b = provideLayoutBlock(newName);
+            if (b != null) {
+                // if there is an occupancy sensor assigned already
+                String sensorName = b.getOccupancySensorName();
+                if (sensorName.length() > 0) {
+                    // update the block sensor ComboBox
+                    blockSensorComboBox.getEditor().setItem(sensorName);
                 } else {
-                    newName = (null != newName) ? newName.trim() : "";
+                    blockSensorComboBox.getEditor().setItem("");
                 }
-                LayoutBlock b = provideLayoutBlock(newName);
-                if (b != null) {
-                    // if there is an occupancy sensor assigned already
-                    String sensorName = b.getOccupancySensorName();
-                    if (sensorName.length() > 0) {
-                        // update the block sensor ComboBox
-                        blockSensorComboBox.getEditor().setItem(sensorName);
-                    } else {
-                        blockSensorComboBox.getEditor().setItem("");
-                    }
-                    if (true) {
-                        // HACK: use the "Extra" color to highlight the selected block
-                        int count = blockIDComboBox.getItemCount();
-                        for (int i = 0; i < count; i++) {
-                            String blockNameI = blockIDComboBox.getItemAt(i);
-                            LayoutBlock bI = provideLayoutBlock(blockNameI);
-                            if (bI != null) {
-                                bI.setUseExtraColor(newName.equals(blockNameI));
-                            }
-                        }
-                    }
+                // use the "Extra" color to highlight the selected block
+                if (highlightSelectedBlockFlag) {
+                    highlightBlockNamed(newName);
                 }
             }
-        );
+        });
 
         blockSensorComboBox.setEditable(true);
         blockSensorComboBox.getEditor().setItem("");
@@ -869,30 +864,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockContentsComboBox.setEnabled(false);
         blockContentsComboBox.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
-        blockContentsComboBox.addActionListener(
-            (ActionEvent a) -> {
-                String newName = blockContentsComboBox.getEditor().getItem().toString();
-                if (-1 != blockContentsComboBox.getSelectedIndex()) {
-                    newName = blockContentsComboBox.getSelectedDisplayName();
-                } else {
-                    newName = (null != newName) ? newName.trim() : "";
-                }
-                LayoutBlock b = provideLayoutBlock(newName);
-                if (b != null) {
-                    if (true) {
-                        // HACK: use the "Extra" color to highlight the selected block
-                        int count = blockContentsComboBox.getItemCount();
-                        for (int i = 0; i < count; i++) {
-                            String blockNameI = blockContentsComboBox.getItemAt(i);
-                            LayoutBlock bI = provideLayoutBlock(blockNameI);
-                            if (bI != null) {
-                                bI.setUseExtraColor(newName.equals(blockNameI));
-                            }
-                        }
-                    }
-                }
+        blockContentsComboBox.addActionListener((ActionEvent a) -> {
+            // use the "Extra" color to highlight the selected block
+            if (highlightSelectedBlockFlag) {
+                highlightSelectedBlock(blockContentsComboBox);
             }
-        );
+        });
 
         // fourth row of edit tool bar items
 
@@ -1065,6 +1042,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
                     //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
                     setAntialiasingOn(prefsAntialiasingOn);
+
+                    boolean prefsHighlightSelectedBlockFlag = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
+                    //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+                    setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
                     Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
                     //log.info("{}.prefsWindowLocation is {}", windowFrameRef, prefsWindowLocation);
@@ -1770,19 +1751,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 if (isEditable()) {
                     setAllShowTooltip(tooltipsInEditMode);
+
+                    // redo using the "Extra" color to highlight the selected block
+                    if (highlightSelectedBlockFlag) {
+                        if (!highlightSelectedBlock(blockIDComboBox)) {
+                            highlightSelectedBlock(blockContentsComboBox);
+                        }
+                    }
                 } else {
                     setAllShowTooltip(tooltipsWithoutEditMode);
 
-                    if (true) {
-                        // HACK: undo using the "Extra" color to highlight the selected block
-                        int count = blockIDComboBox.getItemCount();
-                        for (int i = 0; i < count; i++) {
-                            String blockNameI = blockIDComboBox.getItemAt(i);
-                            LayoutBlock bI = provideLayoutBlock(blockNameI);
-                            if (bI != null) {
-                                bI.setUseExtraColor(false);
-                            }
-                        }
+                    // undo using the "Extra" color to highlight the selected block
+                    if (highlightSelectedBlockFlag) {
+                        highlightBlockNamed(null);
                     }
                 }
                 awaitingIconChange = false;
@@ -2048,6 +2029,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         );
         antialiasingOnItem.setSelected(antialiasingOn);
+
+        // Highlight Selected Block
+        highlightSelectedBlockItem = new JCheckBoxMenuItem(rb.getString("HighlightSelectedBlock"));
+        optionMenu.add(highlightSelectedBlockItem);
+        highlightSelectedBlockItem.addActionListener(
+            (ActionEvent event) -> {
+                setHighlightSelectedBlock(highlightSelectedBlockItem.isSelected());
+            }
+        );
+        highlightSelectedBlockItem.setSelected(highlightSelectedBlockFlag);
+
         // title item
         optionMenu.addSeparator();
         JMenuItem titleItem = new JMenuItem(rb.getString("EditTitle") + "...");
@@ -8726,6 +8718,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return antialiasingOn;
     }
 
+    public boolean getHighlightSelectedBlock() {
+        return highlightSelectedBlockFlag;
+    }
+
     public boolean getTurnoutCircles() {
         return turnoutCirclesWithoutEditMode;
     }
@@ -8873,6 +8869,74 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn);
             });
         }
+    }
+
+    // HACK: enable/disable using the "Extra" color to highlight the selected block
+    public void setHighlightSelectedBlock(boolean state) {
+        if (highlightSelectedBlockFlag != state) {
+            highlightSelectedBlockFlag = state;
+
+            // this may not be setup yet…
+            if (highlightSelectedBlockItem != null) {
+                highlightSelectedBlockItem.setSelected(highlightSelectedBlockFlag);
+            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
+            });
+            if (highlightSelectedBlockFlag) {
+                // use the "Extra" color to highlight the selected block
+                if (!highlightSelectedBlock(blockIDComboBox)) {
+                    highlightSelectedBlock(blockContentsComboBox);
+                }
+            } else {
+                // undo using the "Extra" color to highlight the selected block
+                highlightBlockNamed(null);
+            }
+        }
+    }
+
+    //
+    // highlight the block selected by the combo Box
+    //
+    private boolean highlightSelectedBlock(JmriBeanComboBox inComboBox) {
+        String newName = inComboBox.getEditor().getItem().toString();
+        if (-1 != inComboBox.getSelectedIndex()) {
+            newName = inComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
+        return highlightBlockNamed(((null != newName) && (newName.length() > 0)) ? newName : null);
+    }
+
+    //
+    // highlight the block named inBlockName; (pass null to un-highlight)
+    //
+    private boolean highlightBlockNamed(String inBlockName) {
+        boolean result = false;
+        int count = blockIDComboBox.getItemCount();
+        for (int i = 0; i < count; i++) {
+            String blockNameI = blockIDComboBox.getItemAt(i);
+            LayoutBlock bI = provideLayoutBlock(blockNameI);
+            if (bI != null) {
+                boolean enable = ((null != inBlockName) && inBlockName.equals(blockNameI));
+                bI.setUseExtraColor(enable);
+                result |= enable;
+            }
+        }
+        if ((null != inBlockName) && !result) {
+            count = blockContentsComboBox.getItemCount();
+            for (int i = 0; i < count; i++) {
+                String blockNameI = blockContentsComboBox.getItemAt(i);
+                LayoutBlock bI = provideLayoutBlock(blockNameI);
+                if (bI != null) {
+                    boolean enable = ((null != inBlockName) && inBlockName.equals(blockNameI));
+                    bI.setUseExtraColor(enable);
+                    result |= enable;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public void setTurnoutCircles(boolean state) {
