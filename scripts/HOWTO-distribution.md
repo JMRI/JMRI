@@ -101,7 +101,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         ant
 ```
 
-That will pop some frames, etc, but should be entirely automatic.  If you have to do it manually for some reason:
+Be patient, it might take a couple minutes. That will pop some frames, etc, but should be entirely automatic. If you have to do it manually for some reason:
 
 ```
         cd help/en/
@@ -189,15 +189,14 @@ where the date at the end should be the date (and optionally time) of the last r
         ant make-test-release-branch
 ```
  
-  This will have done (more or less) the following actions:
+  This will have done (more or less) the following actions (assumes 'github' is a remote pointing at https://github.com/JMRI/JMRI.git ):
 
 ```    
         git checkout master
         git pull
         (commit a version number increment to master)
-        git push JMRI/JMRI master
         git checkout -b {branch}
-        git push JMRI/JMRI {branch}
+        git push github {branch}
         git checkout master    
         git pull
 ```
