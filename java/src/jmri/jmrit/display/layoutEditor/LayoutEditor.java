@@ -817,6 +817,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 newName = (null != newName) ? newName.trim() : "";
             }
+
+            // use the "Extra" color to highlight the selected block
+            if (highlightSelectedBlockFlag) {
+                highlightBlockNamed(newName);
+            }
+
             LayoutBlock b = provideLayoutBlock(newName);
             if (b != null) {
                 // if there is an occupancy sensor assigned already
@@ -826,10 +832,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     blockSensorComboBox.getEditor().setItem(sensorName);
                 } else {
                     blockSensorComboBox.getEditor().setItem("");
-                }
-                // use the "Extra" color to highlight the selected block
-                if (highlightSelectedBlockFlag) {
-                    highlightBlockNamed(newName);
                 }
             }
         });
