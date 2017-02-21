@@ -18,6 +18,11 @@ public final class MathUtil {
         return ((1.0 - t) * a) + (t * b);
     }
 
+    //return a Double between a & b for t:0 ==> a and t:1 ==> b
+    public static Double lerp(Double a, Double b, Double t) {
+        return ((1.0 - t) * a) + (t * b);
+    }
+
     //return a Point2D between a & b for t:0 ==> a and t:1 ==> b
     public static Point2D lerp(Point2D p1, Point2D p2, double interpolant) {
         return new Point2D.Double(
