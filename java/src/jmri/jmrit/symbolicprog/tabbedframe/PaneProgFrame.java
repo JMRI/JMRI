@@ -847,7 +847,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             int option = JOptionPane.showOptionDialog(null, SymbolicProgBundle.getMessage("PromptCloseWindowNotWrittenConfig"),
                     SymbolicProgBundle.getMessage("PromptChooseOne"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
-                    new String[]{SymbolicProgBundle.getMessage("PromptSaveAndClose"), SymbolicProgBundle.getMessage("PromptClose"), SymbolicProgBundle.getMessage("PromptCancel")},
+                    new String[]{SymbolicProgBundle.getMessage("PromptSaveAndClose"), SymbolicProgBundle.getMessage("PromptClose"), SymbolicProgBundle.getMessage("ButtonCancel")},
                     SymbolicProgBundle.getMessage("PromptSaveAndClose"));
             if (option == 0) {
                 // save requested
