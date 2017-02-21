@@ -94,6 +94,7 @@ import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
@@ -1435,11 +1436,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBarPanel.setVisible(isEditable() && showHelpBar);
         editToolBarContainer.setVisible(isEditable());
 
-        setFontSize();
+        // Note: We have to invoke this later because everything's not setup yet
+        SwingUtilities.invokeLater(
+            () -> {
+                setupFontSizes();
+            }
+        );
 
     }    // setupToolbar()
 
-    private void setFontSize() {
+    private void setupFontSizes() {
         // calculate the largest font size that will fill the current window
         // (without scrollbars)
         // font size 13 ==> min windowWidth width = 1592 pixels
@@ -1448,7 +1454,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // 1592 - (13 * 92) ==> 396 pixels
         // therefore:
         float newFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
-        newFontSize = Math.max(newFontSize, 9.f);   // but not smaller than this!
+        newFontSize = (float) MathUtil.pin(newFontSize, 9.0, 12.0); // keep it between 9 & 12
         log.info("Font size: " + newFontSize);
         layoutFont = zoomLabel.getFont();
         layoutFont = layoutFont.deriveFont(newFontSize);
