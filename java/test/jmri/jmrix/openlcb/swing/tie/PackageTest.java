@@ -5,7 +5,13 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    TieToolFrameTest.class
+    TieToolFrameTest.class,
+    ConsumerTableModelTest.class,
+    ConsumerTablePaneTest.class,
+    ProducerTableModelTest.class,
+    ProducerTablePaneTest.class,
+    TieTableModelTest.class,
+    TieTablePaneTest.class
 })
 /**
  * Tests for the jmri.jmrix.openlcb package.

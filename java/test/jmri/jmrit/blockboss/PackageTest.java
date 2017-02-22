@@ -28,6 +28,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.blockboss.BlockBossLogicTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.blockboss.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockBossActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockBossFrameTest.class));
         return suite;
     }
 

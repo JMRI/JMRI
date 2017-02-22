@@ -19,7 +19,10 @@ import org.junit.runners.Suite;
         OlcbThrottleManagerTest.class,
         BundleTest.class,
         jmri.jmrix.openlcb.swing.PackageTest.class,
-        jmri.jmrix.openlcb.configurexml.PackageTest.class
+        jmri.jmrix.openlcb.configurexml.PackageTest.class,
+        LinkNodeInventoryTest.class,
+        OlcbConnectionTypeListTest.class,
+        OlcbConstantsTest.class
 })
 
 

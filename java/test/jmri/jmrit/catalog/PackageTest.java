@@ -32,7 +32,10 @@ public class PackageTest extends TestCase {
         suite.addTest(ImageIndexEditorTest.suite());        
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.catalog.configurexml.PackageTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CatalogPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CatalogPanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CatalogTreeModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DefaultCatalogTreeManagerTest.class));
         return suite;
     }
 

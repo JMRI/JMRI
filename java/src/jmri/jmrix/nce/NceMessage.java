@@ -536,7 +536,20 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    public static NceMessage createAccDecoderPktOpsMode(NceTrafficController tc, int accyAddr, int cvAddr, int cvData) {
+        NceMessage m = new NceMessage(6);
+        m.setBinary(true);
+        m.setReplyLen(1);
+        m.setTimeout(SHORT_TIMEOUT);
+        byte[] mess = NceBinaryCommand.usbOpsModeAccy(accyAddr, cvAddr, cvData);
+        m.setOpCode(mess[0]);
+        m.setElement(1, mess[1]);
+        m.setElement(2, mess[2]);
+        m.setElement(3, mess[3]);
+        m.setElement(4, mess[4]);
+        m.setElement(5, mess[5]);
+        return m;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NceMessage.class.getName());
 }
-
-

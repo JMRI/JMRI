@@ -31,22 +31,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements an Entry Exit based method of setting turnouts, setting up signal
- * logic and the allocation of blocks through based upon the layout editor.
+ * logic and allocating blocks through a path based on the Layout Editor.
  * <p>
  * The route is based upon having a sensor assigned at a known location on the
  * panel (set at the boundary of two different blocks) through to a sensor at a
  * remote location on the same panel. Using the layout block routing, a path can
- * then be set between the two sensors so long as one existings and that no
- * section of tra ck is set occupied. If possible an alternative route will be
- * used.
+ * then be set between the two sensors so long as one exists and no
+ * section of track is set occupied. If available an alternative route will be
+ * used when the direct path is occupied (blocked).
  * <p>
  * Initial implementation only handles the setting up of turnouts on a path.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDefault {
-
-    //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle"); // seems not to be used
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -83,20 +81,20 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     /**
      * Constant value to represent that the entryExit will only set up the
-     * turnouts between two different points
+     * turnouts between two different points.
      */
     public final static int SETUPTURNOUTSONLY = 0x00;
 
     /**
      * Constant value to represent that the entryExit will set up the turnouts
-     * between two different points and configure the signalmast logic to use
+     * between two different points and configure the Signal Mast Logic to use
      * the correct blocks.
      */
     public final static int SETUPSIGNALMASTLOGIC = 0x01;
 
     /**
-     * Constant value to represent that the entryExit will do full interlocking
-     * it will set the turnouts and "reserve" the blocks.
+     * Constant value to represent that the entryExit will do full interlocking.
+     * It will set the turnouts and "reserve" the blocks.
      */
     public final static int FULLINTERLOCK = 0x02;
 
@@ -110,9 +108,14 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     static JPanel glassPane = new JPanel();
 
-    //Method to get delay between issuing Turnout commands
+    /**
+     * Delay between issuing Turnout commands
+     */
     public int turnoutSetDelay = 0;
 
+    /**
+     * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
+     */
     public EntryExitPairs() {
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
@@ -137,6 +140,9 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return allocateToDispatcher;
     }
 
+    /**
+     * Return the transparent JPanel for this EntryExitPairs.
+     */
     public JPanel getGlassPane() {
         return glassPane;
     }
@@ -287,9 +293,12 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     /**
-     * This method will generate the point details, given a known source and
-     * layout panel.
+     * Generate the point details, given a known source and a
+     * Layout Editor panel.
      *
+     * @param source Origin of movement
+     * @param panel  A Layout Editor panel
+     * @return A PointDetails object
      */
     public PointDetails providePoint(NamedBean source, LayoutEditor panel) {
         PointDetails sourcePoint = getPointDetails(source, panel);
@@ -306,6 +315,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return sourcePoint;
     }
 
+    /**
+     * Return a list of all source (origin) points on a given
+     * Layout Editor panel.
+     *
+     * @param panel  A Layout Editor panel
+     * @return A list of source objects
+     */
     public List<Object> getSourceList(LayoutEditor panel) {
         List<Object> list = new ArrayList<Object>();
 
@@ -397,8 +413,15 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     int refCounter = 0;
 
+    /**
+     * List holding SourceToDest sets of routes between two points.
+     */
     ArrayList<SourceToDest> routesToSet = new ArrayList<SourceToDest>();
 
+    /**
+     * Class to store NX sets consisting of a source point, a destination point,
+     * a direction and a reference.
+     */
     static class SourceToDest {
 
         Source s = null;
@@ -406,6 +429,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         boolean direction = false;
         int ref = -1;
 
+        /**
+         * Constructor for a SourceToDest element.
+         * @param s a source point
+         * @param dp a destination point
+         * @param dir a direction
+         * @param ref Integer used as reference
+         */
         SourceToDest(Source s, DestinationPoints dp, boolean dir, int ref) {
             this.s = s;
             this.dp = dp;
@@ -416,6 +446,9 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     int currentDealing = 0;
 
+    /**
+     * Activate each SourceToDest set in routesToSet
+     */
     synchronized void processRoutesToSet() {
         if (routesToSet.isEmpty()) {
             return;
@@ -430,7 +463,9 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         s.activeBean(dp, dir);
     }
 
-    //Removes the remaining routes for a given reference
+    /**
+     * Remove remaining SourceToDest sets in routesToSet
+     */
     synchronized void removeRemainingRoute() {
         ArrayList<SourceToDest> toRemove = new ArrayList<SourceToDest>();
         for (SourceToDest rts : routesToSet) {
@@ -458,9 +493,9 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     ArrayList<Object> destinationList = new ArrayList<Object>();
 
-    //Need to sort out the presentation of the name here rather than using the point id
-    //This is used for the creation and display of information in the table
-    //The presentation of the name might have to be done at the table level.
+    // Need to sort out the presentation of the name here rather than using the point ID.
+    // This is used for the creation and display of information in the table.
+    // The presentation of the name might have to be done at the table level.
     public ArrayList<Object> getNxSource(LayoutEditor panel) {
         ArrayList<Object> source = new ArrayList<Object>();
         destinationList = new ArrayList<Object>();
@@ -497,7 +532,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     /**
-     * Returns a point if already exists, or creates a new one if not.
+     * Return a point if it already exists, or create a new one if not.
      */
     private PointDetails providePoint(LayoutBlock source, List<LayoutBlock> protecting, LayoutEditor panel) {
         PointDetails sourcePoint = getPointDetails(source, protecting, panel);
@@ -650,8 +685,9 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return destlist;
     }
 
-    //protecting helps us to determine which direction we are going in.
-    //validateOnly flag is used, if all we are doing is simply checking to see if the source/destpoints are valid, when creating the pairs in the user GUI
+    // protecting helps us to determine which direction we are going.
+    // validateOnly flag is used, if all we are doing is simply checking to see if the source/destpoints are valid
+    // when creating the pairs in the user GUI
     public boolean isPathActive(Object sourceObj, Object destObj, LayoutEditor panel) {
         PointDetails pd = getPointDetails(sourceObj, panel);
         if (nxpair.containsKey(pd)) {
@@ -675,6 +711,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     public final static int EXITROUTE = 2;
     public final static int STACKROUTE = 4;
 
+   /**
+     * Return a point from a given LE Panel.
+     *
+     * @param obj The point object
+     * @param panel The Layout Editor panel on which the point was placed
+     * @return the point object, null if the point is not found
+     */
     public PointDetails getPointDetails(Object obj, LayoutEditor panel) {
         for (int i = 0; i < pointDetails.size(); i++) {
             if ((pointDetails.get(i).getRefObject() == obj) && (pointDetails.get(i).getPanel() == panel)) {
@@ -685,8 +728,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return null;
     }
 
-    /*
-     * Returns either an existing point, or creates a new one as required.
+    /**
+     * Return either an existing point stored in pointDetails, or create a new one as required.
+     *
+     * @param source The Layout Block functioning as the source (origin)
+     * @param destination A (list of) Layout Blocks functioning as destinations
+     * @param panel The Layout Editor panel on which the point is to be placed
+     * @return the point object
      */
     PointDetails getPointDetails(LayoutBlock source, List<LayoutBlock> destination, LayoutEditor panel) {
         PointDetails newPoint = new PointDetails(source, destination);
@@ -702,9 +750,16 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return newPoint;
     }
 
-    //No point in have multiple copies of what is the same thing.
+    //No point can have multiple copies of what is the same thing.
     static ArrayList<PointDetails> pointDetails = new ArrayList<PointDetails>();
 
+    /**
+     * Get the name of a destinationPoint on a LE Panel.
+     *
+     * @param obj the point object
+     * @param panel The Layout Editor panel on which it is expected to be placed
+     * @return the name of the point
+     */
     public String getPointAsString(NamedBean obj, LayoutEditor panel) {
         if (obj == null) {
             return "null";
@@ -718,6 +773,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
     ArrayList<StackDetails> stackList = new ArrayList<StackDetails>();
 
+    /**
+     * If a route is requested but is currently blocked, ask user
+     * if it should be added to stackList.
+     *
+     * @param dp DestinationPoints object
+     * @param reverse true for a reversed running direction, mostly false
+     */
     synchronized public void stackNXRoute(DestinationPoints dp, boolean reverse) {
         if (isRouteStacked(dp, reverse)) {
             return;
@@ -742,6 +804,11 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     StackNXPanel stackPanel = null;
     JDialog stackDialog = null;
 
+    /**
+     * Get a list of all stacked routes from stackList.
+     *
+     * @return an ArrayList containing destinationPoint elements
+     */
     public List<DestinationPoints> getStackedInterlocks() {
         List<DestinationPoints> dpList = new ArrayList<DestinationPoints>();
         for (StackDetails st : stackList) {
@@ -750,6 +817,13 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return dpList;
     }
 
+    /**
+     * Query if a stacked route is in stackList.
+     *
+     * @param dp DestinationPoints object
+     * @param reverse true for a reversed running direction, mostly false
+     * @return true if dp is in stackList
+     */
     public boolean isRouteStacked(DestinationPoints dp, boolean reverse) {
         Iterator<StackDetails> iter = stackList.iterator();
         while (iter.hasNext()) {
@@ -761,6 +835,12 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         return false;
     }
 
+    /**
+     * Remove a stacked route from stackList.
+     *
+     * @param dp DestinationPoints object
+     * @param reverse true for a reversed running direction, mostly false
+     */
     synchronized public void cancelStackedRoute(DestinationPoints dp, boolean reverse) {
         Iterator<StackDetails> iter = stackList.iterator();
         while (iter.hasNext()) {
@@ -776,6 +856,9 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         }
     }
 
+    /**
+     * Class to collect (stack) routes when they are requested but blocked.
+     */
     static class StackDetails {
 
         DestinationPoints dp;
@@ -802,6 +885,10 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         }
     });
 
+    /**
+     * Step through stackList and activate the first stacked route in line
+     * if it is no longer blocked.
+     */
     synchronized void checkRoute() {
         checkTimer.stop();
         StackDetails[] tmp = new StackDetails[stackList.size()];
@@ -809,8 +896,8 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
 
         for (StackDetails st : tmp) {
             if (!st.getDestinationPoint().isActive()) {
-                //If the route is not alredy active then check
-                //If the route does get set then the setting process will remove the route from the stack
+                // If the route is not already active, then check.
+                // If the route does get set, then the setting process will remove the route from the stack.
                 st.getDestinationPoint().setInterlockRoute(st.getReverse());
             }
         }
@@ -848,23 +935,27 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
         pcs.firePropertyChange(p, old, n);
     }
 
-    boolean runWhenStablised = false;
+    boolean runWhenStabilised = false;
     LayoutEditor toUseWhenStable;
     int interlockTypeToUseWhenStable;
 
     /**
-     * Discover all possible valid source and destination signalmasts past pairs
-     * on all layout editor panels.
+     * Discover all possible valid source and destination Signal Mast Logic pairs
+     * on all Layout Editor panels.
+     *
+     * @param editor The Layout Editor panel
+     * @param interlockType Integer value representing the type of interlocking, one of
+     *                      SETUPTURNOUTSONLY, SETUPSIGNALMASTLOGIC or FULLINTERLOCK
      */
     public void automaticallyDiscoverEntryExitPairs(LayoutEditor editor, int interlockType) throws JmriException {
         //This is almost a duplicate of that in the DefaultSignalMastLogicManager
-        runWhenStablised = false;
+        runWhenStabilised = false;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
-            runWhenStablised = true;
+            runWhenStabilised = true;
             toUseWhenStable = editor;
             interlockTypeToUseWhenStable = interlockType;
             log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");
@@ -897,7 +988,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
                 //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
                 boolean newValue = (Boolean) e.getNewValue();
                 if (newValue) {
-                    if (runWhenStablised) {
+                    if (runWhenStabilised) {
                         try {
                             automaticallyDiscoverEntryExitPairs(toUseWhenStable, interlockTypeToUseWhenStable);
                         } catch (JmriException je) {

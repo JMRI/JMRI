@@ -27,7 +27,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.speedprofile.PackageTest");
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfileFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedProfilePanelTest.class));
         return suite;
     }
 

@@ -90,24 +90,26 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
 
     /**
      * Get the username attribute from one element of a list of Elements
-     * defining NamedBeans
+     * defining NamedBeans.
      *
-     * @param beanList List, where each entry is an Element
+     * @param beanList list of Elements
      * @param i        index of Element in list to examine
+     * @return the user name of bean in beanList at i or null
      */
     protected String getUserName(List<Element> beanList, int i) {
         return getUserName(beanList.get(i));
     }
 
     /**
-     * Get the user name from an Element defining a NamedBean
+     * Get the user name from an Element defining a NamedBean.
      * <ul>
-     * <li>Before 2.9.6, this was an attribute
+     * <li>Before 2.9.6, this was stored as an attribute
      * <li>Starting in 2.9.6, this was stored as both attribute and element
-     * <li>Starting in 3.1/2.11.1, this will be just an element
+     * <li>Starting in 3.1/2.11.1, this is stored as an element
      * </ul>
      *
      * @param elem The existing Element
+     * @return the user name of bean or null
      */
     protected String getUserName(Element elem) {
         if (elem.getChild("userName") != null) {
@@ -122,12 +124,13 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     /**
      * Get the system name from an Element defining a NamedBean
      * <ul>
-     * <li>Before 2.9.6, this was an attribute
+     * <li>Before 2.9.6, this was stored as an attribute
      * <li>Starting in 2.9.6, this was stored as both attribute and element
-     * <li>Starting in 3.1/2.10.1, this will be just an element
+     * <li>Starting in 3.1/2.10.1, this is stored as an element
      * </ul>
      *
      * @param elem The existing Element
+     * @return the system name or null if not defined
      */
     protected String getSystemName(Element elem) {
         if (elem.getChild("systemName") != null) {
@@ -168,10 +171,11 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
 
     /**
      * Convenience method to get a String value from an Attribute in an Element
-     * defining a NamedBean
+     * defining a NamedBean.
      *
-     * @param elem The existing Element
+     * @param elem existing Element
      * @param name name of desired Attribute
+     * @return attribute value or null if name is not an attribute of elem
      */
     String getAttributeString(Element elem, String name) {
         Attribute a = elem.getAttribute(name);
@@ -184,11 +188,13 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
 
     /**
      * Convenience method to get a boolean value from an Attribute in an Element
-     * defining a NamedBean
+     * defining a NamedBean.
      *
-     * @param elem The existing Element
-     * @param name Name of desired Attribute
-     * @param def  Default value for attribute
+     * @param elem existing Element
+     * @param name name of desired Attribute
+     * @param def  default value for attribute
+     * @return value of attribute name or def if name is not an attribute of
+     *         elem
      */
     boolean getAttributeBool(Element elem, String name, boolean def) {
         String v = getAttributeString(elem, name);
@@ -202,14 +208,14 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
 
     /**
-     * Store all key/value properties
+     * Store all key/value properties.
      *
      * @param t    The NamedBean being loaded
      * @param elem The existing Element
      */
     void storeProperties(NamedBean t, Element elem) {
         java.util.Set<String> s = t.getPropertyKeys();
-        if (s.size() == 0) {
+        if (s.isEmpty()) {
             return;
         }
         Element ret = new Element("properties");
@@ -250,20 +256,18 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
 
                 // create key string
                 String key = e.getChild("key").getText();
-                
+
                 // check for non-String key.  Warn&proceed if found.
                 // Pre-JMRI 4.3, keys in NamedBean parameters could be Objects
                 // constructed from Strings, similar to the value code below.
-                if (! (
-                    e.getChild("key").getAttributeValue("class") == null
-                    || e.getChild("key").getAttributeValue("class").equals("")
-                    || e.getChild("key").getAttributeValue("class").equals("java.lang.String")
-                    )) {
-                    
-                    log.warn("NamedBean {} property key of invalid non-String type {} not supported", 
-                        t.getSystemName(), e.getChild("key").getAttributeValue("class"));
+                if (!(e.getChild("key").getAttributeValue("class") == null
+                        || e.getChild("key").getAttributeValue("class").equals("")
+                        || e.getChild("key").getAttributeValue("class").equals("java.lang.String"))) {
+
+                    log.warn("NamedBean {} property key of invalid non-String type {} not supported",
+                            t.getSystemName(), e.getChild("key").getAttributeValue("class"));
                 }
-                    
+
                 // create value object
                 Object value = null;
                 if (e.getChild("value") != null) {
@@ -274,9 +278,9 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
 
                 // store
                 t.setProperty(key, value);
-            } catch (ClassNotFoundException | NoSuchMethodException 
-                        | InstantiationException | IllegalAccessException 
-                        | java.lang.reflect.InvocationTargetException ex) {
+            } catch (ClassNotFoundException | NoSuchMethodException
+                    | InstantiationException | IllegalAccessException
+                    | java.lang.reflect.InvocationTargetException ex) {
                 log.error("Error loading properties", ex);
             }
         }

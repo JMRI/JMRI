@@ -102,23 +102,22 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Create a DCCppMessage from a String containing bytes.
      * Since DCCppMessages are text, there is no Hex-to-byte conversion
+     * 
+     * NOTE 15-Feb-17: un-Deprecating this function so that it can be used
+     * in the DCCppOverTCP server/client interface.  Messages shouldn't
+     * be parsed, they are already in DCC++ format, so we need the string
+     * constructor to generate a DCCppMessage from the incoming byte stream
      */
-    @Deprecated
+    //@Deprecated
     public DCCppMessage(String s) {
         setBinary(false);
         setRetries(_nRetries);
         setTimeout(DCCppMessageTimeout);
         myMessage = new StringBuilder(s); // yes, copy... or... maybe not.
         // gather bytes in result
+        setRegex();
         _nDataChars = myMessage.length();
         _dataChars = new int[_nDataChars];
-        // Not even sure the for loop below is useful...
-        // considering setElement is just going to insert it
-        // into a string...
-//        for (int i = 0; i < s.length(); i++) {
-//            setElement(i, myMessage.charAt(i));
-//        }
-        
     }
     
     // Partial constructor used in the static getMessageType() calls below.
@@ -292,10 +291,96 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                 break;
             case DCCppConstants.WRITE_TO_EEPROM_CMD:
                 return(new DCCppMessage(DCCppConstants.WRITE_TO_EEPROM_CMD, DCCppConstants.WRITE_TO_EEPROM_REGEX));
+            case DCCppConstants.QUERY_SENSOR_STATES_CMD:
+                return(new DCCppMessage(DCCppConstants.QUERY_SENSOR_STATES_CMD, DCCppConstants.QUERY_SENSOR_STATES_REGEX));
             default:
                 return(null);
         }
         return(null);
+    }
+    
+    private void setRegex() {
+        Matcher m;
+        switch(myMessage.charAt(0)) {
+            case DCCppConstants.THROTTLE_CMD:
+                myRegex = DCCppConstants.THROTTLE_CMD_REGEX; break;
+            case DCCppConstants.FUNCTION_CMD:
+                myRegex = DCCppConstants.FUNCTION_CMD_REGEX; break;
+            case DCCppConstants.ACCESSORY_CMD:
+                myRegex = DCCppConstants.ACCESSORY_CMD_REGEX; break;
+            case DCCppConstants.TURNOUT_CMD:
+                if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
+                myRegex = DCCppConstants.TURNOUT_ADD_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.TURNOUT_DELETE_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.TURNOUT_LIST_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.TURNOUT_CMD_REGEX;
+                } else {
+                    myRegex = "";
+                }
+                break;
+            case DCCppConstants.SENSOR_CMD:
+                if ((m = match(myMessage.toString(), DCCppConstants.SENSOR_ADD_REGEX, "ctor")) != null) {
+                myRegex = DCCppConstants.SENSOR_ADD_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.SENSOR_DELETE_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.SENSOR_LIST_REGEX;
+                } else {
+                    myRegex = "";
+                }
+                break;
+            case DCCppConstants.OUTPUT_CMD:
+                if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
+                myRegex = DCCppConstants.OUTPUT_ADD_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.OUTPUT_DELETE_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.OUTPUT_LIST_REGEX;
+                } else if ((m = match(myMessage.toString(), DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.OUTPUT_CMD_REGEX;
+                } else {
+                    myRegex = "";
+                }
+                break;
+            case DCCppConstants.OPS_WRITE_CV_BYTE:
+                myRegex = DCCppConstants.OPS_WRITE_BYTE_REGEX; break;
+            case DCCppConstants.OPS_WRITE_CV_BIT:
+                myRegex = DCCppConstants.OPS_WRITE_BIT_REGEX; break;
+            case DCCppConstants.PROG_WRITE_CV_BYTE:
+                myRegex = DCCppConstants.PROG_WRITE_BYTE_REGEX; break;
+            case DCCppConstants.PROG_WRITE_CV_BIT:
+                myRegex = DCCppConstants.PROG_WRITE_BIT_REGEX; break;
+            case DCCppConstants.PROG_READ_CV:
+                myRegex = DCCppConstants.PROG_READ_REGEX; break;
+            case DCCppConstants.TRACK_POWER_ON:
+            case DCCppConstants.TRACK_POWER_OFF:
+                myRegex = DCCppConstants.TRACK_POWER_REGEX; break;
+            case DCCppConstants.READ_TRACK_CURRENT:
+                myRegex = DCCppConstants.READ_TRACK_CURRENT_REGEX; break;
+            case DCCppConstants.READ_CS_STATUS:
+                myRegex = DCCppConstants.READ_CS_STATUS_REGEX; break;
+            case DCCppConstants.WRITE_TO_EEPROM_CMD:
+                myRegex = DCCppConstants.WRITE_TO_EEPROM_REGEX; break;
+            case DCCppConstants.CLEAR_EEPROM_CMD:
+                myRegex = DCCppConstants.CLEAR_EEPROM_REGEX; break;
+            case DCCppConstants.QUERY_SENSOR_STATES_CMD:
+                myRegex = DCCppConstants.QUERY_SENSOR_STATES_REGEX; break;
+            case DCCppConstants.WRITE_DCC_PACKET_MAIN:
+                myRegex = DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX; break;
+            case DCCppConstants.WRITE_DCC_PACKET_PROG:
+                myRegex = DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX; break;
+            case DCCppConstants.GET_FREE_MEMORY:
+                myRegex = DCCppConstants.GET_FREE_MEMORY_REGEX; break;
+            case DCCppConstants.LIST_REGISTER_CONTENTS:
+                myRegex = DCCppConstants.LIST_REGISTER_CONTENTS_REGEX; break;
+            case DCCppConstants.ENTER_DIAG_MODE_CMD:
+                myRegex = DCCppConstants.ENTER_DIAG_MODE_REGEX; break;
+            default:
+                myRegex = "";
+        }
     }
     
     /**
@@ -510,6 +595,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isOutputAddMessage() { return(this.match(DCCppConstants.OUTPUT_ADD_REGEX) != null); }
     public boolean isOutputDeleteMessage() { return(this.match(DCCppConstants.OUTPUT_DELETE_REGEX) != null); }
     public boolean isListOutputsMessage() { return(this.match(DCCppConstants.OUTPUT_LIST_REGEX) != null); }
+    public boolean isQuerySensorStatesMessage() { return(this.match(DCCppConstants.QUERY_SENSOR_STATES_REGEX) != null); }
 
     //------------------------------------------------------
     // Helper methods for Sensor Query Commands
@@ -1360,6 +1446,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public static DCCppMessage makeSensorListMsg() {
         return(new DCCppMessage(DCCppConstants.SENSOR_CMD, DCCppConstants.SENSOR_LIST_REGEX));
+    }
+
+     /**
+     * Query All Sensors States
+     *
+     * Format: {@code <Q>}
+     *
+     *    returns status messages containing the status of each connected sensor.
+     */
+  public static DCCppMessage makeQuerySensorStatesMsg() {
+	return(new DCCppMessage(DCCppConstants.QUERY_SENSOR_STATES_CMD, DCCppConstants.QUERY_SENSOR_STATES_REGEX));
     }
 
     /**
