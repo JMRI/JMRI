@@ -1137,9 +1137,9 @@ public class LevelXing extends LayoutTrack {
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideCrossing"));
 
     private JmriBeanComboBox block1NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
     private JmriBeanComboBox block2NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
     private JButton xingEditDone;
     private JButton xingEditCancel;
     private JButton xingEdit1Block;

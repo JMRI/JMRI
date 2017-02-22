@@ -448,7 +448,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
         // Set up Add/Edit Signal Group window
         if (addFrame == null) { // if it's not yet present, create addFrame
-            mainSignalComboBox = new JmriBeanComboBox(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+            mainSignalComboBox = new JmriBeanComboBox(jmri.InstanceManager.getDefault(jmri.SignalMastManager.class), null, JmriBeanComboBox.DISPLAYNAME);
             mainSignalComboBox.setFirstItemBlank(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
