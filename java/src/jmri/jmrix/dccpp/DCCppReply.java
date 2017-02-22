@@ -577,7 +577,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean getTOIsThrown() {
-	return(this.getValueBool(1));
+	return(this.getValueBool(2));
     }
 
     public boolean getTOIsClosed() {
