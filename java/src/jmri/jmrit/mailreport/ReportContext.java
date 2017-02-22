@@ -211,7 +211,7 @@ public class ReportContext {
             Insets jmriInsets = JmriInsets.getInsets();
             addString("JmriInsets t:" + jmriInsets.top + ", b:" + jmriInsets.bottom
                     + "; l:" + jmriInsets.left + ", r:" + jmriInsets.right);
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             addString("Exception getting JmriInsets" + ex.getMessage());
         }
     }

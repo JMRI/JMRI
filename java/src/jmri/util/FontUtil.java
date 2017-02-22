@@ -61,13 +61,7 @@ public class FontUtil {
             return f;
         }
 
-        // on other platforms, try it
-        try {
-            return f.deriveFont(style);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            // just carry on with original fonts
-            return f;
-        }
+        return f.deriveFont(style);
     }
 
     /**
@@ -102,11 +96,6 @@ public class FontUtil {
             return f;
         }
 
-        // on other platforms, try it
-        try {
-            return f.deriveFont(size);
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            return f; // just carry on with original fonts
-        }
+        return f.deriveFont(size);
     }
 }

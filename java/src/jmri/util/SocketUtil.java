@@ -2,6 +2,7 @@ package jmri.util;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Common utility methods for working with Sockets.
@@ -30,13 +31,7 @@ public class SocketUtil {
      */
     @Deprecated
     static public String getRemoteSocketAddress(Socket socket) {
-        try {
-            return socket.getRemoteSocketAddress().toString();
-        } catch (Throwable e) {
-            // ignore
-        }
-        return "<unknown>";
-
+        return socket.getRemoteSocketAddress().toString();
     }
 
     /**
@@ -52,7 +47,7 @@ public class SocketUtil {
     static public void setReuseAddress(ServerSocket socket, boolean on) {
         try {
             socket.setReuseAddress(on);
-        } catch (Throwable e) {
+        } catch (SocketException e) {
             // ignore any errors
         }
     }
