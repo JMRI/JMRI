@@ -118,19 +118,18 @@
  * @param foo
 </code>
 </pre>because it doesn't include any explanatory text. The line
-should be more like:
+should include explanatory text:
       <pre>
 <code>
- * @param foo Holds the latest Bar instance
+ * @param foo holds the latest Bar instance
 </code>
-</pre>or just omitted.
+</pre>.
 
-      <p>We are currently suppressing the "accessibility" class of
-      Javadoc errors, which is mostly about providing extra
-      information on tables and images, and the "missing" class of
-      errors, which tags it if an @param or @return isn't provided
-      in any places that could have received comments. There are so
-      many of these that it's not practical to tag them.</p>
+      <p>We are currently suppressing the "missing" class of
+      warnings, which warns of missing @param or @return tags. Note that
+      Javadoc will throw an error if the number of "missing" warnings
+      exceeds 3975 (as of 2017-02-20). Once the number of these warnings
+      is reduced to a managable level, we will stop suppressing them.</p>
 
       <p>For a summary of current Javadoc errors in the code, see
       <a href=
