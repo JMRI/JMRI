@@ -12,6 +12,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
@@ -36,10 +38,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<ProgrammingMode, JRadioButton>();
     JComboBox<AddressedProgrammerManager> progBox;
     ArrayList<JRadioButton> buttonPool = new ArrayList<JRadioButton>();
-
-    JTextField mAddrField = new JTextField(4);
-    String oldAddrText = "";
-
+    // JTextField mAddrField = new JTextField(4);
+    // use JSpinner for CV number input
+    SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10239, 1); // 10239 is highest DCC Long Address documented by NMRA as per 2017
+    JSpinner mAddrField = new JSpinner(model);
+    int oldAddrValue = 3; // Default start value
     JCheckBox mLongAddrCheck = new JCheckBox(Bundle.getMessage("LongAddress"));
     boolean oldLongAddr = false;
     AddressedProgrammer programmer = null;
@@ -49,7 +52,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     @Override
     public Programmer getProgrammer() {
-        if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getText().equals(oldAddrText)) {
+        if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getValue().equals(oldAddrValue)) {
             // hasn't changed
             return programmer;
         }
@@ -57,14 +60,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         // here values have changed, try to create a new one
         AddressedProgrammerManager pm = ((AddressedProgrammerManager) progBox.getSelectedItem());
         oldLongAddr = mLongAddrCheck.isSelected();
-        oldAddrText = mAddrField.getText();
+        oldAddrValue = (Integer) mAddrField.getValue();
 
         if (pm != null) {
             int address = 3;
             try {
-                address = Integer.parseInt(mAddrField.getText());
+                address = (Integer) mAddrField.getValue();
             } catch (java.lang.NumberFormatException e) {
-                log.error("loco address \"{}\" not correct", mAddrField.getText());
+                log.error("loco address \"{}\" not correct", mAddrField.getValue());
                 programmer = null;
             }
             boolean longAddr = mLongAddrCheck.isSelected();
@@ -141,13 +144,13 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         add(panel);
         add(mLongAddrCheck);
 
-        mAddrField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+//        mAddrField.addActionListener(new java.awt.event.ActionListener() {
+//            @Override
+//            public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
-                programmerSelected(); // in case has valid address now
-            }
-        });
+//                programmerSelected(); // in case has valid address now
+//            }
+//        });
         mLongAddrCheck.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -174,7 +177,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         buttonMap.clear();
 
         // require new programmer if possible
-        oldAddrText = "";
+        oldAddrValue = 0;
 
         // configure buttons
         int index = 0;
