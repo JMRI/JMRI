@@ -34,7 +34,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         // create one siding tracks
         f.trackNameTextField.setText("new siding track");
         f.trackLengthTextField.setText("1223");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
         sleep(1);   // for slow machines
 
         Track t = l.getTrackByName("new siding track", null);
@@ -47,7 +47,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         // create a second siding
         f.trackNameTextField.setText("2nd siding track");
         f.trackLengthTextField.setText("9999");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         sleep(1);   // for slow machines
 
@@ -74,7 +74,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         sleep(1);   // for slow machines
 
@@ -84,11 +84,11 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
 
         // deselect east, west and north check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox,1000l));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
 
         sleep(1);   // for slow machines
 
@@ -109,12 +109,12 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         sleep(1);   // for slow machines
 
         // create the schedule edit frame
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton,1000l));
 
         sleep(1);   // for slow machines
 
@@ -139,25 +139,25 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         // create three siding tracks
         f.trackNameTextField.setText("new siding track");
         f.trackLengthTextField.setText("1223");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         f.trackNameTextField.setText("2nd siding track");
         f.trackLengthTextField.setText("9999");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         // deselect east, west and north check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox,1000l));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
 
         // create the schedule edit frame
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton,1000l));
 
         // confirm schedule add frame creation
         JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur \"3rd siding track\"");

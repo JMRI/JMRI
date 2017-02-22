@@ -32,7 +32,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange track
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("new interchange track", t);
@@ -56,7 +56,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
         sleep(1);   // for slow machines
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("2nd interchange track", t);
@@ -64,10 +64,10 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
 
         // deselect east and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox,1000l));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
         sleep(1);   // for slow machines
 
         Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
@@ -87,19 +87,19 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
 
         // check track accepts Boxcars
         Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
         // test clear car types button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.clearButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.clearButton,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
         Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.setButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.setButton,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
         Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
 
         f.dispose();
@@ -118,17 +118,17 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create two interchange tracks
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         // deselect east and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox,1000l));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
 
         f.dispose();
 

@@ -35,7 +35,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // create one staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
         Track t = l.getTrackByName("new staging track", null);
         Assert.assertNotNull("new staging track", t);
         Assert.assertEquals("staging track length", 34, t.getLength());
@@ -47,7 +47,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // add a second track
         f.trackNameTextField.setText("2nd staging track");
         f.trackLengthTextField.setText("3456");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         t = l.getTrackByName("2nd staging track", null);
         Assert.assertNotNull("2nd staging track", t);
@@ -59,7 +59,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // add a third track
         f.trackNameTextField.setText("3rd staging track");
         f.trackLengthTextField.setText("1");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         f.dispose();
 
@@ -84,7 +84,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         sleep(1);	// for slow machines
         Track t = l.getTrackByName("4th staging track", null);
@@ -93,11 +93,11 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Direction All before Change", ALL , t.getTrainDirections());
 
         // deselect east, west and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox,1000l));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
 
         sleep(1);	// for slow machines
 
@@ -118,26 +118,26 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         // create four staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         f.trackNameTextField.setText("2nd staging track");
         f.trackLengthTextField.setText("3456");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         f.trackNameTextField.setText("3rd staging track");
         f.trackLengthTextField.setText("1");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
 
         // deselect east, west and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox,1000l));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
 
         f.dispose();
 
