@@ -27,7 +27,7 @@
       <xs:element name="matrixsignalmast" type="MatrixSignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="virtualsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="signalmastrepeater" type="SignalMastRepeater" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="signalmastrepeater" type="SignalMastRepeaterType" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="class" type="classType" use="required" />
   </xs:complexType>
@@ -373,7 +373,7 @@
     <xs:attribute name="class" type="classType" use="required" />
   </xs:complexType>
 
-  <xs:complexType name="SignalMastRepeater">
+  <xs:complexType name="SignalMastRepeaterType">
     <xs:annotation>
       <xs:documentation>
         Define the XML structure for storing the contents of one Signal Mast Repeater implementation.
@@ -385,7 +385,7 @@
       <xs:element name="enabled" type="xs:string" minOccurs="0" maxOccurs="1" />
       <xs:element name="update" minOccurs="0" maxOccurs="1">
         <xs:simpleType>
-          <xs:restriction base="xs:string">
+          <xs:restriction base="xs:token">
             <xs:enumeration value="BothWay"/>
             <xs:enumeration value="MasterToSlave"/>
             <xs:enumeration value="SlaveToMaster"/>
