@@ -65,8 +65,15 @@ public class PackageTest extends TestCase {
         suite.addTest(ReporterTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.implementation.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(LightControlTest.class));
+        suite.addTest(new JUnit4TestAdapter(DccConsistManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(DefaultClockControlTest.class));
+        suite.addTest(new JUnit4TestAdapter(FileLocationsPreferencesTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriConfigurationManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(NmraConsistManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(ProgrammerFacadeSelectorTest.class));
 
         return suite;
     }
 
 }
+
