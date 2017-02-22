@@ -31,6 +31,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * To avoid being unable to quit the program, which annoys people, an exception
  * in a ShutDownTask is treated as permission to continue after logging.
+ * <p>
+ * A non-Exception Throwable during shutdown will lead to an immediate
+ * application halt.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
@@ -40,6 +43,9 @@ public class DefaultShutDownManager implements ShutDownManager {
     private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
     private final ArrayList<ShutDownTask> tasks = new ArrayList<>();
 
+    /**
+     * Create a new shutdown manager.
+     */
     public DefaultShutDownManager() {
         // This shutdown hook allows us to perform a clean shutdown when
         // running in headless mode and SIGINT (Ctrl-C) or SIGTERM. It
@@ -112,10 +118,10 @@ public class DefaultShutDownManager implements ShutDownManager {
      * Executes all registered {@link jmri.ShutDownTask}s before closing any
      * displayable windows.
      *
-     * @param status Integer status returned on program exit
-     * @param exit   True if System.exit() should be called if all tasks are
-     *               executed correctly.
-     * @return false if shutdown or restart failed.
+     * @param status integer status on program exit
+     * @param exit   true if System.exit() should be called if all tasks are
+     *               executed correctly; false otherwise
+     * @return false if shutdown or restart failed
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     protected boolean shutdown(int status, boolean exit) {
@@ -173,6 +179,16 @@ public class DefaultShutDownManager implements ShutDownManager {
         return false;
     }
 
+    /**
+     * Run registered shutdown tasks. Any Exceptions are logged and otherwise
+     * ignored.
+     *
+     * @param isParallel true if parallel-capable shutdown tasks are to be run;
+     *                   false if shutdown tasks that must be run sequentially
+     *                   are to be run
+     * @return true if shutdown tasks ran; false if a shutdown task aborted the
+     *         shutdown sequence
+     */
     private boolean runShutDownTasks(boolean isParallel) {
         // can't return out of a stream or forEach loop
         for (ShutDownTask task : new ArrayList<>(tasks)) {
@@ -196,7 +212,7 @@ public class DefaultShutDownManager implements ShutDownManager {
                     System.err.println(e);
                     System.err.println("Terminating abnormally");
                     // forcably halt, do not restart, even if requested
-                    System.exit(1);
+                    Runtime.getRuntime().halt(1);
                 }
                 log.debug("Task \"{}\" took {} milliseconds to execute", task.getName(), new Date().getTime() - timer.getTime());
             }
@@ -204,6 +220,11 @@ public class DefaultShutDownManager implements ShutDownManager {
         return true;
     }
 
+    /**
+     * Check if application is shutting down.
+     *
+     * @return true if shutting down; false otherwise
+     */
     @Override
     public boolean isShuttingDown() {
         return shuttingDown;
@@ -213,6 +234,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * This method is static so that if multiple DefaultShutDownManagers are
      * registered, they are all aware of this state.
      *
+     * @param state true if shutting down; false otherwise
      */
     private static void setShuttingDown(boolean state) {
         shuttingDown = state;
