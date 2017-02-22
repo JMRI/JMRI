@@ -40,11 +40,11 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: " + e.toString());
         }
-        options.put("SensorDefaultState",  // NOI18N
-                new Option(Bundle.getMessage("DefaultSensorState") + 
-                        ":",  // NOI18N
-                        new String[]{Bundle.getMessage("BeanStateUnknown"), 
-                            Bundle.getMessage("SensorStateInactive"), 
+        options.put("SensorDefaultState", // NOI18N
+                new Option(Bundle.getMessage("DefaultSensorState")
+                        + ":", // NOI18N
+                        new String[]{Bundle.getMessage("BeanStateUnknown"),
+                            Bundle.getMessage("SensorStateInactive"),
                             Bundle.getMessage("SensorStateActive")}, true));
     }
 
@@ -202,32 +202,31 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     @Override
     public java.util.Vector<String> getPortNames() {
-        log.error("getPortNames should not have been invoked"); // NOI18N
-        new Exception().printStackTrace();
+        log.error("getPortNames should not have been invoked", new Exception());
         return null;
     }
 
     @Override
     public String openPort(String portName, String appName) {
-        log.error("openPort should not have been invoked"); // NOI18N
-        new Exception().printStackTrace();
+        log.error("openPort should not have been invoked", new Exception());
         return null;
     }
 
     @Override
     public void configure() {
-        log.error("configure should not have been invoked"); // NOI18N
+        log.error("configure should not have been invoked");
     }
 
     @Override
     public String[] validBaudRates() {
-        log.error("validBaudRates should not have been invoked", new Throwable()); // NOI18N
+        log.error("validBaudRates should not have been invoked", new Exception());
         return null;
     }
 
     /**
      * Get an array of valid values for "option 3"; used to display valid
      * options. May not be null, but may have zero entries
+     *
      * @return the options
      */
     public String[] validOption3() {
