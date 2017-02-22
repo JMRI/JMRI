@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import static jmri.util.MathUtil.lerp;
 import static jmri.util.MathUtil.midpoint;
 
+import apps.gui.GuiLafPreferencesManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -173,12 +174,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     // top row of check boxes
     private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
-            InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     private JPanel turnoutNamePanel = new JPanel();
     private JPanel extraTurnoutPanel = new JPanel();
     private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
-            InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
     private JComboBox rotationComboBox = null;
     private JPanel rotationPanel = new JPanel();
 
@@ -194,12 +195,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private JLabel blockNameLabel = new JLabel();
     private JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     private JLabel blockSensorNameLabel = new JLabel();
     private JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
     private JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     // 3rd row of radio buttons (and any associated text fields)
     private JLabel nodesLabel = new JLabel();
@@ -213,26 +214,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
     private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
     private JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     // 4th row of radio buttons (and any associated text fields)
     private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     private JRadioButton signalMastButton = new JRadioButton(rb.getString("SignalMastIcon"));
     private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     private JRadioButton sensorButton = new JRadioButton(rb.getString("SensorIcon"));
     private JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     private JRadioButton signalButton = new JRadioButton(rb.getString("SignalIcon"));
     private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
 
     private JRadioButton iconLabelButton = new JRadioButton(rb.getString("IconLabel"));
 
@@ -1025,46 +1026,44 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         auxTools = new LayoutEditorAuxTools(thisPanel);
 
         // Note: We have to invoke this later because everything's not really setup yet
-        SwingUtilities.invokeLater(
-            () -> {
-                // initialize preferences
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                    String windowFrameRef = getWindowFrameRef();
-                    Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
-                    //log.info("{}.toolBarSide is {}", windowFrameRef, prefsProp);
-                    if (prefsProp != null) {
-                        eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
-                        setToolBarSide(newToolBarSide);
-                    }
+        SwingUtilities.invokeLater(() -> {
+            // initialize preferences
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                String windowFrameRef = getWindowFrameRef();
+                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
+                //log.info("{}.toolBarSide is {}", windowFrameRef, prefsProp);
+                if (prefsProp != null) {
+                    eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
+                    setToolBarSide(newToolBarSide);
+                }
 
-                    boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
-                    //log.info("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
-                    setShowHelpBar(prefsShowHelpBar);
+                boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
+                //log.info("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
+                setShowHelpBar(prefsShowHelpBar);
 
-                    boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
-                    //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
+                boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
+                //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
+                setAntialiasingOn(prefsAntialiasingOn);
+
+                boolean prefsHighlightSelectedBlockFlag = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
+                //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+                setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
+
+                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                //log.info("{}.prefsWindowLocation is {}", windowFrameRef, prefsWindowLocation);
+                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                //log.info("{}.prefsWindowSize is {}", windowFrameRef, prefsWindowSize);
+
+                if (prefsWindowLocation != null && prefsWindowSize != null &&
+                        prefsWindowSize.width >= 640 && prefsWindowSize.height >= 480) {
+                    // note: panel width & height comes from the saved (xml) panel (file) on disk
+                    setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
+                            prefsWindowLocation.x, prefsWindowLocation.y,
+                            panelWidth, panelHeight);
                     setAntialiasingOn(prefsAntialiasingOn);
-
-                    boolean prefsHighlightSelectedBlockFlag = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
-                    //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
-                    setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
-
-                    Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-                    //log.info("{}.prefsWindowLocation is {}", windowFrameRef, prefsWindowLocation);
-                    Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                    //log.info("{}.prefsWindowSize is {}", windowFrameRef, prefsWindowSize);
-
-                    if (prefsWindowLocation != null && prefsWindowSize != null &&
-                            prefsWindowSize.width >= 640 && prefsWindowSize.height >= 480) {
-                        // note: panel width & height comes from the saved (xml) panel (file) on disk
-                        setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
-                                prefsWindowLocation.x, prefsWindowLocation.y,
-                                panelWidth, panelHeight);
-                        setAntialiasingOn(prefsAntialiasingOn);
-                    }
-                });
-            }
-        );
+                }
+            });
+        });
     }
 
     private void setupToolbar() {
@@ -1420,24 +1419,45 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editToolBarContainer.setVisible(isEditable());
 
         // Note: We have to invoke this later because everything's not setup yet
-        SwingUtilities.invokeLater(
-            () -> {
-                setupFontSizes();
-            }
-        );
+        SwingUtilities.invokeLater(() -> {
+            if (true) {
+                // use the GuiLafPreferencesManager value
+                GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+                setupFontSizes(manager.getFontSize());
+            } else {
+                // if it's been set as a preference for this panel use that
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    // calculate the largest font size that will fill the current window
+                    // (without scrollbars)
+                    // font size 13 ==> min windowWidth width = 1592 pixels
+                    // font size 8 ==> min windowWidth width = 1132 pixels
+                    // (1592 - 1132) (UserPreferencesManager.class)./ (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
+                    // 1592 - (13 * 92) ==> 396 pixels
+                    // therefore:
+                    float newFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
+                    newFontSize = (float) MathUtil.pin(newFontSize, 9.0, 12.0); // keep it between 9 & 12
 
+                    // see if the user preferences for the panel have a setting for it
+                    String windowFrameRef = getWindowFrameRef();
+                    Object prefsProp = prefsMgr.getProperty(windowFrameRef, "fontSize");
+                    //log.info("{}.fontsSize is {}", windowFrameRef, prefsProp);
+                    if (prefsProp != null) {    // (yes)
+                        newFontSize = Float.parseFloat(prefsProp.toString());
+                    } else {    // (no)
+                        // use the GuiLafPreferencesManager value
+                        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+                        newFontSize = manager.getFontSize();
+                        // save it in user preferences for the panel
+                        prefsMgr.setProperty(getWindowFrameRef(), "fontSize", newFontSize);
+                    }
+                    setupFontSizes(newFontSize);
+                });
+            }
+        });
     }    // setupToolbar()
 
-    private void setupFontSizes() {
-        // calculate the largest font size that will fill the current window
-        // (without scrollbars)
-        // font size 13 ==> min windowWidth width = 1592 pixels
-        // font size 8 ==> min windowWidth width = 1132 pixels
-        // (1592 - 1132) / (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
-        // 1592 - (13 * 92) ==> 396 pixels
-        // therefore:
-        float newFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
-        newFontSize = (float) MathUtil.pin(newFontSize, 9.0, 12.0); // keep it between 9 & 12
+    private void setupFontSizes(float newFontSize) {
+
         log.info("Font size: " + newFontSize);
         layoutFont = zoomLabel.getFont();
         layoutFont = layoutFont.deriveFont(newFontSize);

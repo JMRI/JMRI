@@ -1137,9 +1137,9 @@ public class LevelXing extends LayoutTrack {
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideCrossing"));
 
     private JmriBeanComboBox block1NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
     private JmriBeanComboBox block2NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
     private JButton xingEditDone;
     private JButton xingEditCancel;
     private JButton xingEdit1Block;
@@ -1253,7 +1253,11 @@ public class LevelXing extends LayoutTrack {
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = block1NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block1NameComboBox.getSelectedIndex()) {
+            newName = block1NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1295,7 +1299,11 @@ public class LevelXing extends LayoutTrack {
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = block2NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block2NameComboBox.getSelectedIndex()) {
+            newName = block2NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
@@ -1337,7 +1345,11 @@ public class LevelXing extends LayoutTrack {
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
         String newName = block1NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block1NameComboBox.getSelectedIndex()) {
+            newName = block1NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1366,7 +1378,11 @@ public class LevelXing extends LayoutTrack {
             needsBlockUpdate = true;
         }
         newName = block2NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block2NameComboBox.getSelectedIndex()) {
+            newName = block2NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {

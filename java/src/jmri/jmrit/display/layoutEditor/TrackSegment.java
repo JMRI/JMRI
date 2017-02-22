@@ -529,7 +529,7 @@ public class TrackSegment extends LayoutTrack {
     private int mainlineTrackIndex;
     private int sideTrackIndex;
     private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.SYSTEMNAMEUSERNAME);
     private JTextField arcField = new JTextField(5);
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
     private JButton segmentEditBlock;
@@ -669,7 +669,11 @@ public class TrackSegment extends LayoutTrack {
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = blockNameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockNameComboBox.getSelectedIndex()) {
+            newName = blockNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
@@ -733,7 +737,11 @@ public class TrackSegment extends LayoutTrack {
         }
         // check if Block changed
         String newName = blockNameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockNameComboBox.getSelectedIndex()) {
+            newName = blockNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {

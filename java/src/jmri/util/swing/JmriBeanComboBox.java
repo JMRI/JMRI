@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.NamedBean;
+import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +119,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 }
             }
         }
-        java.util.Arrays.sort(displayList);
+        java.util.Arrays.sort(displayList, new AlphanumComparator());
 
         for (int i = 0; i < displayList.length; i++) {
             addItem(displayList[i]);

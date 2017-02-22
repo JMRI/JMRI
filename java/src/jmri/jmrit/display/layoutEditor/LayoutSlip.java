@@ -792,7 +792,7 @@ public class LayoutSlip extends LayoutTurnout {
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
             turnoutAComboBox = new JmriBeanComboBox(
-                InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
+                InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.SYSTEMNAMEUSERNAME);
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
@@ -800,7 +800,7 @@ public class LayoutSlip extends LayoutTurnout {
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
             turnoutBComboBox = new JmriBeanComboBox(
-                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DISPLAYNAME);
+                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.SYSTEMNAMEUSERNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
             contentPane.add(panel1a);
@@ -1088,7 +1088,12 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        String newName = turnoutAComboBox.getSelectedItem().toString();
+        String newName = turnoutAComboBox.getEditor().getItem().toString();
+        if (-1 != turnoutAComboBox.getSelectedIndex()) {
+            newName = turnoutAComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1098,7 +1103,12 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = turnoutBComboBox.getSelectedItem().toString();
+        newName = turnoutBComboBox.getEditor().getItem().toString();
+        if (-1 != turnoutBComboBox.getSelectedIndex()) {
+            newName = turnoutBComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
@@ -1109,8 +1119,13 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
+
         newName = blockNameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != blockNameComboBox.getSelectedIndex()) {
+            newName = blockNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockName.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((block != null)) {
