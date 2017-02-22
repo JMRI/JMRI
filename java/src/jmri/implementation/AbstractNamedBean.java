@@ -23,9 +23,12 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         mUserName = null;
     }
 
-    protected AbstractNamedBean(String sys, String user) {
+    protected AbstractNamedBean(String sys, String user) throws NamedBean.BadUserNameException {
         this(sys);
-        mUserName = user;
+        if (user != null)
+            mUserName = NamedBean.normalizeUserName(user);
+        else
+            mUserName = null;
     }
 
     /**
@@ -174,10 +177,13 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
 
     @Override
-    public void setUserName(String s) {
+    public void setUserName(String s) throws NamedBean.BadUserNameException {
         String old = mUserName;
-        mUserName = s;
-        firePropertyChange("UserName", old, s);
+        if (s != null)
+            mUserName = NamedBean.normalizeUserName(s);
+        else
+            mUserName = null;
+        firePropertyChange("UserName", old, mUserName);
     }
 
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
