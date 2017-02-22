@@ -63,7 +63,7 @@ public interface NamedBean {
     @CheckForNull
     public String getUserName();
 
-    public void setUserName(@CheckForNull String s);
+    public void setUserName(@CheckForNull String s) throws BadUserNameException;
 
     /**
      * Get a system-specific name. This encodes the hardware addressing
@@ -289,4 +289,21 @@ public interface NamedBean {
     @CheckReturnValue
     @Nonnull
     public String getBeanType();
+    
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a user name.
+     * <p>
+     * This implementation just passes the name through, but later versions might 
+     * e.g. trim leading and trailing spaces.
+     *
+     * @param inputName 
+     * @throws CantNormalizeNameException If the inputName can't be converted to normalized form
+     * @return A user name in standard normalized form 
+     */
+    @CheckReturnValue
+    static public @Nonnull String normalizeUserName(@Nonnull String inputName) throws BadUserNameException {
+        return inputName;
+    }
+    public class BadUserNameException extends IllegalArgumentException {}
+
 }
