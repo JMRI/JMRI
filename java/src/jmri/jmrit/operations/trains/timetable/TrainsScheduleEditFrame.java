@@ -76,6 +76,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        log.error("action performed source {} data {}",ae.getSource(),addTextBox.getText());
         if (ae.getSource() == deleteButton && comboBox.getSelectedItem() != null) {
             trainScheduleManager.deregister((TrainSchedule) comboBox.getSelectedItem());
         }
@@ -90,6 +91,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         }
         if (ae.getSource() == addButton) {
             trainScheduleManager.newSchedule(s);
+            new Exception().printStackTrace();
         }
         if (ae.getSource() == replaceButton && comboBox.getSelectedItem() != null) {
             TrainSchedule ts = ((TrainSchedule) comboBox.getSelectedItem());

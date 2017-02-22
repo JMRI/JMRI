@@ -36,10 +36,10 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
-        sleep(1);	// for slow machines
         Track t = l.getTrackByName("new staging track", null);
         Assert.assertNotNull("new staging track", t);
         Assert.assertEquals("staging track length", 34, t.getLength());
+
         // check that the defaults are correct
         Assert.assertEquals("all directions", ALL, t.getTrainDirections());
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
@@ -131,7 +131,6 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
-        sleep(1);	// for slow machines
 
         // deselect east, west and south check boxes
         getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox));
@@ -140,7 +139,6 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
 
-        sleep(1);	// for slow machines
         f.dispose();
 
         Location l2 = lManager.getLocationByName("Test Loc A");

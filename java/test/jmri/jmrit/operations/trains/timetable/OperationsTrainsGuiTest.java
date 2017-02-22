@@ -38,12 +38,12 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
             return; // can't use Assume in TestCase subclasses
         }
         TrainsScheduleEditFrame f = new TrainsScheduleEditFrame();
+        TrainScheduleManager tsm = TrainScheduleManager.instance();
         Assert.assertNotNull("frame exists", f);
 
         f.addTextBox.setText("A New Day");
         enterClickAndLeave(f.addButton);
 
-        TrainScheduleManager tsm = TrainScheduleManager.instance();
         Assert.assertNotNull("Train schedule manager exists", tsm);
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
