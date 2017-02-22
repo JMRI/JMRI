@@ -445,7 +445,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public char getOpCodeChar() {
-        return(opcode);
+        //return(opcode);
+        return(myMessage.charAt(0));
     }
 
     @Deprecated
@@ -474,8 +475,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public boolean getValueBool(int idx) {
+        log.debug("msg = {}, regex = {}", myMessage.toString(), myRegex);
         Matcher m = match(myMessage.toString(), myRegex, "gvi");
-        if ((m != null) && (idx <= m.groupCount())) {
+        
+        if (m == null) {
+            log.error("No Match!");
+            return(false);
+        } else if (idx <= m.groupCount()) {
             return(!m.group(idx).equals("0"));
         } else {
             log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
@@ -664,7 +670,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getOutputStateInt() {
 	if (isOutputCmdMessage()) {
-            return(getValueInt(4));
+            return(getValueInt(2));
 	} else {
 	    log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
 	    return(0);
@@ -673,7 +679,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     
     public boolean getOutputStateBool() {
 	if (this.isOutputCmdMessage()) {
-            return(getValueInt(4) != 0);
+            return(getValueInt(2) != 0);
 	} else {
 	    log.error("Output Parser called on non-Output message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(false);
@@ -1287,6 +1293,19 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         
         m._nDataChars = m.toString().length();
         return(m);
+    }
+    
+    public static DCCppMessage makeAccessoryDecoderMsg(int address, boolean activate) {
+	// Convert the single address to an address/subaddress pair:
+	// address = (address - 1) * 4 + subaddress + 1 for address>0;
+        int addr, subaddr;
+        if (address > 0) {
+            addr = (address - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
+            subaddr = (address - 1) % (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
+        } else {
+            addr = subaddr = 0;
+        }
+        return(makeAccessoryDecoderMsg(addr, subaddr, activate));
     }
 
 

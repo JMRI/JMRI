@@ -287,6 +287,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 if (msg.isOutputCmdMessage()) {
                     log.debug("Output Command Message: {}", msg.toString());
                     r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
+                    log.debug("Reply String: {}", r);
                     reply = DCCppReplyParser.parseReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } else if (msg.isOutputAddMessage() || msg.isOutputDeleteMessage()) {
