@@ -641,7 +641,7 @@ abstract public class AbstractMRTrafficController {
                         transmitLoop();
                     } catch (Throwable e) {
                         log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
-                        // ThreadDeath must be thrown per Java API JavaDocs
+                        // ThreadDeath must be thrown per Java API Javadocs
                         if (e instanceof ThreadDeath) {
                             throw e;
                         }
