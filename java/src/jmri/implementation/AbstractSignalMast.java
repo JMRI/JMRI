@@ -68,7 +68,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     private boolean mLit = true;
 
     /**
-     * Default behavior for "lit" parameter is to track value and return it.
+     * Default behavior for "lit" property is to track value and return it.
      */
     @Override
     public boolean getLit() {
@@ -81,7 +81,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     private boolean mHeld = false;
 
     /**
-     * "Held" parameter is just tracked and notified.
+     * "Held" property is just tracked and notified.
      */
     @Override
     public boolean getHeld() {
@@ -89,9 +89,11 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     /**
-     * Set the lit parameter.
+     * Set the lit property.
      *
      * This acts on all the SignalHeads included in this SignalMast
+     *
+     * @param newLit the new value of lit
      */
     @OverridingMethodsMustInvokeSuper
     @Override
@@ -101,17 +103,19 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         if (oldLit != newLit) {
             //updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
+            firePropertyChange("Lit", oldLit, newLit);
         }
 
     }
 
     /**
-     * Set the held parameter.
+     * Set the held property.
      * <P>
      * Note that this does not directly effect the output on the layout; the
-     * held parameter is a local variable which effects the aspect only via
+     * held property is a local variable which effects the aspect only via
      * higher-level logic.
+     *
+     * @param newHeld the new value of the help property
      */
     @OverridingMethodsMustInvokeSuper
     @Override
@@ -120,7 +124,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         mHeld = newHeld;
         if (oldHeld != newHeld) {
             // notify listeners, if any
-            firePropertyChange("Held", Boolean.valueOf(oldHeld), Boolean.valueOf(newHeld));
+            firePropertyChange("Held", oldHeld, newHeld);
         }
 
     }
@@ -150,15 +154,17 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         return map;
     }
 
-    ArrayList<String> disabledAspects = new ArrayList<String>(1);
+    ArrayList<String> disabledAspects = new ArrayList<>(1);
 
     /**
-     * returns a list of all the valid aspects, that have not been disabled
+     * Get a list of all the valid aspects that have not been disabled.
+     *
+     * @return list of valid aspects; may be empty
      */
     @Override
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
+        Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
             if (!disabledAspects.contains(aspect)) {
@@ -169,12 +175,14 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     /**
-     * returns a list of all the known aspects for this mast, including those
-     * that have been disabled
+     * Get a list of all the known aspects for this mast, including those that
+     * have been disabled.
+     *
+     * @return list of known aspects; may be empty
      */
     public Vector<String> getAllKnownAspects() {
         java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
+        Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
         }
