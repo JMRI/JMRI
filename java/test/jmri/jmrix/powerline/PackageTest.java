@@ -43,7 +43,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialPortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTrafficControllerTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(InsteonSequenceTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         return suite;
     }
 

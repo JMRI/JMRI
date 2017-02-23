@@ -83,7 +83,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 this.setFontSize(this.getDefaultFontSize());
             }
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
-            this.setVerticalToolBar(preferences.getBoolean(VERTICAL_TOOLBAR, this.isVerticalToolBar()));
+            this.setVerticalToolBar(preferences.getBoolean(VERTICAL_TOOLBAR, this.isToolBarVertical()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
             Locale.setDefault(this.getLocale());
             this.applyLookAndFeel();
@@ -125,7 +125,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
-        preferences.putBoolean(VERTICAL_TOOLBAR, this.isVerticalToolBar());
+        preferences.putBoolean(VERTICAL_TOOLBAR, this.isToolBarVertical());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -266,7 +266,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * @return the verticalToolBar
      */
-    public boolean isVerticalToolBar() {
+    public boolean isToolBarVertical() {
         return verticalToolBar;
     }
 

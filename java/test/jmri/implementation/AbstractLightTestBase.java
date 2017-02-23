@@ -78,14 +78,16 @@ public abstract class AbstractLightTestBase extends TestCase {
     public void testCommandOff() {
         t.setState(Light.OFF);
         // check
-        Assert.assertEquals("commanded state", jmri.Light.OFF, t.getState());
+        Assert.assertEquals("state 1", jmri.Light.OFF, t.getState());
+        Assert.assertEquals("state 2", "Off", t.describeState(t.getState()));
         checkOffMsgSent();
     }
 
     public void testCommandOn() {
         t.setState(Light.ON);
         // check
-        Assert.assertEquals("commanded state", jmri.Light.ON, t.getState());
+        Assert.assertEquals("state 1", jmri.Light.ON, t.getState());
+        Assert.assertEquals("state 2", "On", t.describeState(t.getState()));
         checkOnMsgSent();
     }
 

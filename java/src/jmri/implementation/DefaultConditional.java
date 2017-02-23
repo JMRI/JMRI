@@ -87,16 +87,13 @@ public class DefaultConditional extends AbstractNamedBean
     private String _antecedent = "";
     private int _logicType = Conditional.ALL_AND;
     // variables (antecedent) parameters
-    private ArrayList<ConditionalVariable> _variableList = new ArrayList<ConditionalVariable>();
+    private ArrayList<ConditionalVariable> _variableList = new ArrayList<>();
     // actions (consequent) parameters
-    protected ArrayList<ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
+    protected ArrayList<ConditionalAction> _actionList = new ArrayList<>();
 
-    private int _currentState = Conditional.UNKNOWN;
+    private int _currentState = NamedBean.UNKNOWN;
     private boolean _triggerActionsOnChange = true;
 
-    /**
-     * Inverse map
-     */
     public static int getIndexInTable(int[] table, int entry) {
         for (int i = 0; i < table.length; i++) {
             if (entry == table[i]) {
@@ -131,7 +128,7 @@ public class DefaultConditional extends AbstractNamedBean
     public void setLogicType(int type, String antecedent) {
         _logicType = type;
         _antecedent = antecedent;
-        setState(Conditional.UNKNOWN);
+        setState(NamedBean.UNKNOWN);
     }
 
     @Override
@@ -164,7 +161,7 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public ArrayList<ConditionalVariable> getCopyOfStateVariables() {
-        ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
+        ArrayList<ConditionalVariable> variableList = new ArrayList<>();
         for (int i = 0; i < _variableList.size(); i++) {
             ConditionalVariable variable = _variableList.get(i);
             ConditionalVariable clone = new ConditionalVariable();
@@ -183,7 +180,9 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Only used for store
+     * Get the list of state variables for this Conditional.
+     *
+     * @return the list of state variables
      */
     public ArrayList<ConditionalVariable> getStateVariableList() {
         return _variableList;
@@ -202,7 +201,7 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public ArrayList<ConditionalAction> getCopyOfActions() {
-        ArrayList<ConditionalAction> actionList = new ArrayList<ConditionalAction>();
+        ArrayList<ConditionalAction> actionList = new ArrayList<>();
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
             ConditionalAction clone = new DefaultConditionalAction();
@@ -217,7 +216,9 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Only used for store
+     * Get the list of actions for this conditional.
+     *
+     * @return the list of actions
      */
     public ArrayList<ConditionalAction> getActionList() {
         return _actionList;
@@ -236,9 +237,9 @@ public class DefaultConditional extends AbstractNamedBean
         }
 
         // check if  there are no state variables
-        if (_variableList.size() == 0) {
+        if (_variableList.isEmpty()) {
             // if there are no state variables, no state can be calculated
-            setState(Conditional.UNKNOWN);
+            setState(NamedBean.UNKNOWN);
             return _currentState;
         }
         boolean result = true;
@@ -328,7 +329,10 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Find out if the state variable is willing to cause the actions to execute
+     * Check if an event will trigger actions.
+     *
+     * @param evt the event that possibly triggers actions
+     * @return true if event will trigger actions; false otherwise
      */
     boolean wantsToTrigger(PropertyChangeEvent evt) {
         try {
@@ -404,15 +408,10 @@ public class DefaultConditional extends AbstractNamedBean
             if (index >= 0 && index < variableList.size()) {
                 return java.text.MessageFormat.format(
                         rbx.getString("ParseError5"),
-                        new Object[]{Integer.valueOf(variableList.size()),
-                            Integer.valueOf(index + 1)});
+                        new Object[]{variableList.size(), index + 1});
             }
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException | IndexOutOfBoundsException | JmriException nfe) {
             return rbx.getString("ParseError6") + nfe.getMessage();
-        } catch (IndexOutOfBoundsException ioob) {
-            return rbx.getString("ParseError6") + ioob.getMessage();
-        } catch (JmriException je) {
-            return rbx.getString("ParseError6") + je.getMessage();
         }
         return null;
     }
@@ -421,7 +420,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Parses and computes one parenthesis level of a boolean statement.
      * <p>
      * Recursively calls inner parentheses levels. Note that all logic operators
-     * are dectected by the parsing, therefore the internal negation of a
+     * are detected by the parsing, therefore the internal negation of a
      * variable is washed.
      *
      * @param s            The expression to be parsed
@@ -429,6 +428,7 @@ public class DefaultConditional extends AbstractNamedBean
      * @return a data pair consisting of the truth value of the level a count of
      *         the indices consumed to parse the level and a bitmap of the
      *         variable indices used.
+     * @throws jmri.JmriException if unable to compute the logic
      */
     DataPair parseCalculate(String s, ArrayList<ConditionalVariable> variableList)
             throws JmriException {
@@ -455,9 +455,7 @@ public class DefaultConditional extends AbstractNamedBean
                 try {
                     k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                     i += 2;
-                } catch (NumberFormatException nfe) {
-                    k = Integer.parseInt(String.valueOf(s.charAt(++i)));
-                } catch (IndexOutOfBoundsException ioob) {
+                } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
                     k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                 }
                 leftArg = variableList.get(k - 1).evaluate();
@@ -478,9 +476,7 @@ public class DefaultConditional extends AbstractNamedBean
                     try {
                         k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                         i += 2;
-                    } catch (NumberFormatException nfe) {
-                        k = Integer.parseInt(String.valueOf(s.charAt(++i)));
-                    } catch (IndexOutOfBoundsException ioob) {
+                    } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
                         k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                     }
                     leftArg = variableList.get(k - 1).evaluate();
@@ -524,9 +520,7 @@ public class DefaultConditional extends AbstractNamedBean
                         try {
                             k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                             i += 2;
-                        } catch (NumberFormatException nfe) {
-                            k = Integer.parseInt(String.valueOf(s.charAt(++i)));
-                        } catch (IndexOutOfBoundsException ioob) {
+                        } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
                             k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                         }
                         rightArg = variableList.get(k - 1).evaluate();
@@ -547,9 +541,7 @@ public class DefaultConditional extends AbstractNamedBean
                             try {
                                 k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                                 i += 2;
-                            } catch (NumberFormatException nfe) {
-                                k = Integer.parseInt(String.valueOf(s.charAt(++i)));
-                            } catch (IndexOutOfBoundsException ioob) {
+                            } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
                                 k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                             }
                             rightArg = variableList.get(k - 1).evaluate();
@@ -603,7 +595,7 @@ public class DefaultConditional extends AbstractNamedBean
         int actionNeeded = 0;
         int act = 0;
         int state = 0;
-        ArrayList<String> errorList = new ArrayList<String>();
+        ArrayList<String> errorList = new ArrayList<>();
         // Use a local copy of state to guarantee the entire list of actions will be fired off
         // before a state change occurs that may block their completion.
         int currentState = _currentState;
@@ -1295,7 +1287,7 @@ public class DefaultConditional extends AbstractNamedBean
             contentPanel.add(panel);
 
             panel = new JPanel();
-            panel.add(new JList<String>(list.toArray(new String[0])));
+            panel.add(new JList<>(list.toArray(new String[0])));
             contentPanel.add(panel);
 
             panel = new JPanel();
@@ -1366,13 +1358,17 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Return int from either literal String or Internal memory reference.
+     * Get an integer from either a String literal or named memory reference.
+     *
+     * @param action an action containing either an integer or name of a Memory
+     * @return the integral value of the action or -1 if the action references a
+     *         Memory that does not contain an integral value
      */
     int getIntegerValue(ConditionalAction action) {
         String sNumber = action.getActionString();
         int time = 0;
         try {
-            time = Integer.valueOf(sNumber).intValue();
+            time = Integer.parseInt(sNumber);
         } catch (NumberFormatException e) {
             if (sNumber.charAt(0) == '@') {
                 sNumber = sNumber.substring(1);
@@ -1385,7 +1381,7 @@ public class DefaultConditional extends AbstractNamedBean
                 return -1;
             }
             try {
-                time = Integer.valueOf((String) mem.getValue()).intValue();
+                time = Integer.parseInt((String) mem.getValue());
             } catch (NumberFormatException ex) {
                 log.error("invalid action number variable from memory, \""
                         + getUserName() + "\" (" + mem.getSystemName() + "), value = " + (String) mem.getValue()
@@ -1398,13 +1394,19 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Return int from either literal String or Internal memory reference.
+     * Get the number of milliseconds from either a String literal or named
+     * memory reference containing a value representing a number of seconds.
+     *
+     * @param action an action containing either a number of seconds or name of
+     *               a Memory
+     * @return the number of milliseconds represented by action of -1 if action
+     *         references a Memory without a numeric value
      */
     int getMillisecondValue(ConditionalAction action) {
         String sNumber = action.getActionString();
         float time = 0;
         try {
-            time = Float.valueOf(sNumber).floatValue();
+            time = Float.parseFloat(sNumber);
         } catch (NumberFormatException e) {
             if (sNumber.charAt(0) == '@') {
                 sNumber = sNumber.substring(1);
@@ -1417,7 +1419,7 @@ public class DefaultConditional extends AbstractNamedBean
                 return -1;
             }
             try {
-                time = Float.valueOf((String) mem.getValue()).floatValue();
+                time = Float.parseFloat((String) mem.getValue());
             } catch (NumberFormatException ex) {
                 time = -1;
             }
@@ -1509,13 +1511,15 @@ public class DefaultConditional extends AbstractNamedBean
      * State of Conditional is set. Not really public for Conditionals. The
      * state of a Conditional is only changed by its calculate method, so the
      * state is really a read-only bound property.
+     *
+     * @param state the new state
      */
     @Override
     public void setState(int state) {
         if (_currentState != state) {
             int oldState = _currentState;
             _currentState = state;
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_currentState));
+            firePropertyChange("KnownState", oldState, _currentState);
         }
     }
 

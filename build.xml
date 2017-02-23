@@ -31,7 +31,7 @@
     <!-- local.properties file      (not an error if doesn't exist)                      -->
     <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
-    <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
+    <!--    # Your SourceForge ID (used for Javadocs, distribution) if different         -->
     <!--    sourceforge.userid=                                                          -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
@@ -1529,7 +1529,7 @@
         </jar>
     </target>
 
-    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs">
+    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1550,7 +1550,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="4100"/><!-- change from default 100 warnings -->
+            <arg value="3850"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1599,7 +1599,7 @@
   <!-- use of the public option in the main task definition, and -->
   <!-- the execution of "dot" at the bottom.                     -->
   <!-- Requires Graphviz from http://www.graphviz.org            -->
-    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs with UML">
+    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs with UML">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1695,7 +1695,7 @@
         </plantuml>
     </target>
 
-    <target name="uploadjavadoc" description="upload existing JavaDocs to jmri.org without recreating">
+    <target name="uploadjavadoc" description="upload existing Javadocs to jmri.org without recreating">
         <exec executable="rsync">
             <arg value="-avz"/>
             <arg value="--delete"/>
@@ -2167,7 +2167,6 @@
 
     <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <antcall target="checklineends" />
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />

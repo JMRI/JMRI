@@ -32,6 +32,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(JythonWindowsTest.class));
 
         suite.addTest(SampleScriptTest.suite());
+        suite.addTest(new JUnit4TestAdapter(InputWindowActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(InputWindowTest.class));
+        suite.addTest(new JUnit4TestAdapter(JynstrumentFactoryTest.class));
+        suite.addTest(new JUnit4TestAdapter(JythonWindowTest.class));
+
         return suite;
     }
 

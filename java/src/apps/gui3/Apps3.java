@@ -130,18 +130,13 @@ public abstract class Apps3 extends AppsBase {
     protected JmriJFrame mainFrame;
 
     protected void initializeHelpSystem() {
-        try {
+        // initialize help system
+        HelpUtil.initOK();
 
-            // initialize help system
-            HelpUtil.initOK();
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-            // help items are set in the various Tree/Menu/Toolbar constructors        
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help: " + e3);
-        }
+        // help items are set in the various Tree/Menu/Toolbar constructors        
     }
 
     abstract protected void createMainFrame();
@@ -324,7 +319,7 @@ public abstract class Apps3 extends AppsBase {
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use

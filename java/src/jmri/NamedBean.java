@@ -212,6 +212,17 @@ public interface NamedBean {
     public int getState();
 
     /**
+     * Provide human-readable, localized version of state value.
+     * <P>
+     * This method is intended for use when presenting to a human operator.
+     *
+     * @param state the state to describe
+     * @return the state in localized form
+     */
+    @CheckReturnValue
+    public String describeState(int state);
+
+    /**
      * Get associated comment text.
      *
      * @return the comment or null

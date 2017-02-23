@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.CheckReturnValue;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -197,6 +198,16 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
             register.remove(l);
             listenerRefs.remove(l);
        }
+    }
+
+    @Override
+    @CheckReturnValue
+    public String describeState(int state) {
+        switch (state) {
+            case UNKNOWN: return Bundle.getMessage("BeanStateUnknown");
+            case INCONSISTENT: return Bundle.getMessage("BeanStateInconsistent");
+            default: return Bundle.getMessage("BeanStateUnexpected", state);
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,8 +62,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Common check routine to confirm an adapter is available as part of
      * registration process.
      * <p>
-     * Note: Should only be called for debugging purposes, e.g. when Log4J DEBUG
-     * level is selected, to load fewer classes at startup.
+     * Note: Should only be called for debugging purposes,, for example, when
+     * Log4J DEBUG level is selected, to load fewer classes at startup.
+     *
+     * @param o object to verify XML adapter exists for
      */
     void confirmAdapterAvailable(Object o) {
         String adapter = adapterName(o);
@@ -77,8 +80,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     /**
-     * Handles classes who's location has migrated, e.g. so that it's now in a
-     * different package.
+     * Handles classes that have moved to a new package or been superceded.
+     *
+     * @param name name of the moved or superceded class
+     * @return name of the class in newer package or of superseding class
      */
     static public String currentClassName(String name) {
         if (!classMigrationBundle.containsKey(name)) {
@@ -91,8 +96,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     static java.util.ResourceBundle classMigrationBundle = java.util.ResourceBundle.getBundle("jmri.configurexml.ClassMigration");
 
     /**
-     * Remove the registered preference items. This is used e.g. when a GUI
-     * wants to replace the preferences with new values.
+     * Remove the registered preference items. This is used, for example, when a
+     * GUI wants to replace the preferences with new values.
      */
     @Override
     public void removePrefItems() {
@@ -251,10 +256,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Handle failure to load adapter class. Although only a one-liner in this
      * class, it is a separate member to facilitate testing.
+     * 
+     * @param ex the exception throw failing to load adapterName as o
+     * @param adapterName name of the adapter class
+     * @param o adapter object
      */
     void locateClassFailed(Throwable ex, String adapterName, Object o) {
-        log.error("{} could not load adapter class {}", ex.getMessage(), adapterName);
-        log.debug("trace follows", ex);
+        log.error("{} could not load adapter class {}", ex, adapterName);
+        log.debug("Stack trace is", ex);
     }
 
     protected Element initStore() {
@@ -440,7 +449,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * File need not exist, but location must be writable when storePrefs()
      * called.
      *
-     * @param prefsFile the writable file; need not be pre-existing
+     * @param prefsFile new location for preferences file
      */
     public void setPrefsLocation(File prefsFile) {
         this.prefsFile = prefsFile;
@@ -548,10 +557,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Handles problems locally to the extent that it can, by routing them to
      * the creationErrorEncountered method.
      *
-     * @param fi the file to load
+     * @param fi file to load
      * @return true if no problems during the load
-     * @throws jmri.configurexml.JmriConfigureXmlException if problem during
-     *                                                     load
+     * @throws jmri.configurexml.JmriConfigureXmlException if unable to load
+     *                                                     file
      */
     @Override
     public boolean load(File fi) throws JmriConfigureXmlException {
@@ -615,7 +624,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                         throw new RuntimeException(e);
                     }
                 });
-            } catch (InterruptedException | java.lang.reflect.InvocationTargetException e) {
+            } catch (InterruptedException | InvocationTargetException e) {
                 throw new JmriConfigureXmlException(e);
             }
 

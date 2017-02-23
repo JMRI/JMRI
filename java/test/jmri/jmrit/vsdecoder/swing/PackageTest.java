@@ -9,7 +9,9 @@ import org.junit.runners.Suite;
     DieselPaneTest.class,
     VSDecoderPreferencesPaneTest.class,
     ManageLocationsActionTest.class,
-    VSDPreferencesActionTest.class
+    VSDPreferencesActionTest.class,
+    VSDControlTest.class,
+    VSDManagerFrameTest.class
 })
 
 
