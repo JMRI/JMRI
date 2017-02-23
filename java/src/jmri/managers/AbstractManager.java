@@ -215,14 +215,20 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
-            String old = (String) e.getOldValue();  // OldValue is actually system name
-            String now = (String) e.getNewValue();
+            String old = (String) e.getOldValue();  // previous user name
+            String now = (String) e.getNewValue();  // current user name
             NamedBean t = (NamedBean) e.getSource();
             if (old != null) {
-                _tuser.remove(old);
+                _tuser.remove(old); // remove old name for this bean
             }
             if (now != null) {
-                _tuser.put(now, t);
+                // was there previously a bean with the new name?
+                if (_tuser.get(now) != null) {
+                    // If so, clear. Note that this is not a "move" operation
+                    _tuser.get(now).setUserName(null);
+                }
+                
+                _tuser.put(now, t); // put new name for this bean
             }
 
             //called DisplayListName, as DisplayName might get used at some point by a NamedBean
