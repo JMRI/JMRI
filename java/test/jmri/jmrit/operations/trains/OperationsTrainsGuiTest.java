@@ -22,9 +22,12 @@ import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
 import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.Ignore;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -35,10 +38,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
+    @Test
     public void testTrainsTableFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainManager tmanager = TrainManager.instance();
 
         TrainsTableFrame f = new TrainsTableFrame();
@@ -92,10 +94,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
      * This test relies on OperationsTrainsTest having been run to initialize
      * the train fields.
      */
+    @Test
     public void testTrainEditFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Edit Train Frame");
         ThreadingUtil.runOnGUI(()->{
@@ -258,10 +259,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         });
     }
 
+    @Test
     public void testTrainEditFrameBuildOptionFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // test build options
         TrainManager tmanager = TrainManager.instance();
         Train t = tmanager.newTrain("Test Train New Name");
@@ -509,64 +509,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
-    //	public void testTrainEditFrameRead() {
-    //		TrainManager tmanager = TrainManager.instance();
-    //		Train t = tmanager.newTrain("Test Train Name");
-    //
-    //		// change the train so it doesn't match the add test
-    //		t.setRequirements(Train.CABOOSE);
-    //		t.setCabooseRoad("CP");
-    //
-    //		TrainEditFrame f = new TrainEditFrame();
-    //		f.initComponents(t);
-    //		f.setTitle("Test Edit Train Frame");
-    //
-    //		Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
-    //		Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField
-    //				.getText());
-    //		Assert.assertEquals("train comment", "Test Train Comment", f.commentTextArea.getText());
-    //		Assert.assertEquals("train depart hour", "15", f.hourBox.getSelectedItem());
-    //		Assert.assertEquals("train depart minute", "45", f.minuteBox.getSelectedItem());
-    //		Assert.assertEquals("train route", t.getRoute(), f.routeBox.getSelectedItem());
-    //		Assert.assertEquals("number of engines", "3", f.numEnginesBox.getSelectedItem());
-    //		Assert.assertEquals("engine model", "FT", f.modelEngineBox.getSelectedItem());
-    //		Assert.assertEquals("engine road", "UP", f.roadEngineBox.getSelectedItem());
-    //		Assert.assertEquals("caboose road", "CP", f.roadCabooseBox.getSelectedItem());
-    //		// check radio buttons
-    //		Assert.assertTrue("caboose selected", f.cabooseRadioButton.isSelected());
-    //		Assert.assertFalse("none selected", f.noneRadioButton.isSelected());
-    //		Assert.assertFalse("FRED selected", f.fredRadioButton.isSelected());
-    //
-    //		f.dispose();
-    //	}
-//    public void testTrainModifyFrame() {
-//        // confirm that train default accepts Boxcars
-//        TrainManager tmanager = TrainManager.instance();
-//        Train t = tmanager.newTrain("Test Train Name 2");
-//        Assert.assertTrue("accepts Boxcar 1", t.acceptsTypeName("Boxcar"));
-//
-//        TrainsByCarTypeFrame f = new TrainsByCarTypeFrame();
-//        f.initComponents("Boxcar");
-//
-//        // remove Boxcar from trains
-//        enterClickAndLeave(f.clearButton);
-//        enterClickAndLeave(f.saveButton);
-//
-//        Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
-//
-//        // now add Boxcar to trains
-//        enterClickAndLeave(f.setButton);
-//        enterClickAndLeave(f.saveButton);
-//
-//        Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
-//
-//        f.dispose();
-//    }
-
+    @Test
     public void testTrainSwitchListEditFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // check defaults
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
@@ -633,10 +578,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     /**
      * Test that delete train works
      */
+    @Test
     public void testTrainEditFrameDelete() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainManager tmanager = TrainManager.instance();
         Train t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull(t);
@@ -661,10 +605,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         trainEditFrame.dispose();
     }
 
+    @Test
     public void testTrainByCarTypeFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainManager tmanager = TrainManager.instance();
         Train train = tmanager.getTrainByName("Test Train Name");
         TrainByCarTypeFrame f = new TrainByCarTypeFrame();
@@ -674,10 +617,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testTrainsScheduleTableFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
         ThreadingUtil.runOnGUI(()->{
             f.setVisible(true);
@@ -689,33 +631,10 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         });
     }
 
-//    public void testTrainsScheduleEditFrame() {
-//        TrainsScheduleEditFrame f = new TrainsScheduleEditFrame();
-//        Assert.assertNotNull("frame exists", f);
-//
-//        f.addTextBox.setText("A New Day");
-//        enterClickAndLeave(f.addButton);
-//
-//        TrainScheduleManager tsm = TrainScheduleManager.instance();
-//        Assert.assertNotNull("Train schedule manager exists", tsm);
-//        Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
-//
-//        enterClickAndLeave(f.deleteButton);
-//
-//        Assert.assertNull("A new Day schedule does not exist", tsm.getScheduleByName("A New Day"));
-//
-//        enterClickAndLeave(f.replaceButton);
-//
-//        Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
-//
-//        f.dispose();
-//    }
-
     // test TrainIcon attributes
+    @Test
     public void testTrainIconAttributes() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
 
         Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
@@ -737,10 +656,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         editor.getTargetFrame().dispose();
     }
 
+    @Test
     public void testTrainIcon() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
@@ -1081,16 +999,19 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         editor.getTargetFrame().dispose();
     }
 
-    //	public void testTrainTestPanel() {
-    //		// confirm panel creation
-    //		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
-    //		Assert.assertNotNull(f);
-    //
-    //	}
+    @Test
+    @Ignore("commented out in JUnit3")
+    public void testTrainTestPanel() {
+    		// confirm panel creation
+    		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
+    		Assert.assertNotNull(f);
+    
+    }
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadTrains();
@@ -1140,24 +1061,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         RouteManager.instance().newRoute("Test Route E");
     }
 
-    public OperationsTrainsGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsTrainsGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsTrainsGuiTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

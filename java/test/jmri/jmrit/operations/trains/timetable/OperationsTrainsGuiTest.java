@@ -10,9 +10,11 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -21,6 +23,7 @@ import org.junit.Assert;
  */
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
+    @Test
     public void testTrainsScheduleTableFrame() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -32,6 +35,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testTrainsScheduleEditFrame() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -59,7 +63,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadTrains();
@@ -109,24 +114,9 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         RouteManager.instance().newRoute("Test Route E");
     }
 
-    public OperationsTrainsGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsTrainsGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsTrainsGuiTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }
