@@ -377,8 +377,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         } catch (org.jdom2.DataConversionException e) {
             log.error("Could not parse path attribute");
         } catch (NullPointerException e) {
-            creationErrorEncountered("Block Path entry in file missing required attribute",
-                    block.getSystemName(), block.getUserName(), null);
+            handleException("Block Path entry in file missing required attribute",
+                    null, block.getSystemName(), block.getUserName(), null);
         }
 
         Block toBlock = null;
