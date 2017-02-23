@@ -22,6 +22,8 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -180,7 +182,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JPanel extraTurnoutPanel = new JPanel();
     private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
-    private JComboBox rotationComboBox = null;
+    private JComboBox<String> rotationComboBox = null;
     private JPanel rotationPanel = new JPanel();
 
     // 2nd row of radio buttons
@@ -352,10 +354,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // Option menu items
     private JCheckBoxMenuItem editModeItem = null;
 
+    //private JRadioButtonMenuItem toolBarSideTopButton = null;
+
     private JRadioButtonMenuItem toolBarSideTopButton = null;
     private JRadioButtonMenuItem toolBarSideLeftButton = null;
     private JRadioButtonMenuItem toolBarSideBottomButton = null;
     private JRadioButtonMenuItem toolBarSideRightButton = null;
+
+//// FontSize = Font Size
+
+// PopupsDisplay = Popup Controls Display...
+// PopupsDisplayDisplayName = Display Name (User else System)
+// PopupsDisplayUserName = User Name
+// PopupsDisplaySystemName = System Name
+// PopupsDisplayUserNameSystemName = User Name followed by System Name
+// PopupsDisplaySystemNameUserName = System Name followed by User Name
 
     private JCheckBoxMenuItem positionableItem = null;
     private JCheckBoxMenuItem controlItem = null;
@@ -744,6 +757,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         turnoutNameComboBox.setEditable(true);
         turnoutNameComboBox.getEditor().setItem("");
         turnoutNameComboBox.setSelectedIndex(-1);
+        setupComboBoxFocusListener(turnoutNameComboBox);
         turnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
         turnoutNamePanel.add(turnoutNameComboBox);
 
@@ -751,6 +765,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutNameComboBox.setEditable(true);
         extraTurnoutNameComboBox.getEditor().setItem("");
         extraTurnoutNameComboBox.setSelectedIndex(-1);
+        extraTurnoutNameComboBox.addFocusListener(comboBoxFocusListener);
         extraTurnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
 
         // this is enabled/disabled via selectionListAction above
@@ -761,7 +776,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutPanel.setEnabled(false);
 
         String[] angleStrings = {"-180", "-135", "-90", "-45", "0", "+45", "+90", "+135", "+180"};
-        rotationComboBox = new JComboBox(angleStrings);
+        rotationComboBox = new JComboBox<>(angleStrings);
         rotationComboBox.setEditable(true);
         rotationComboBox.setSelectedIndex(4);
         rotationComboBox.setToolTipText(rb.getString("RotationToolTip"));
@@ -808,6 +823,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockIDComboBox.setEditable(true);
         blockIDComboBox.getEditor().setItem("");
         blockIDComboBox.setSelectedIndex(-1);
+        setupComboBoxFocusListener(blockIDComboBox);
         blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
 
         // change the block name
@@ -840,6 +856,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockSensorComboBox.setEditable(true);
         blockSensorComboBox.getEditor().setItem("");
         blockSensorComboBox.setSelectedIndex(-1);
+        setupComboBoxFocusListener(blockSensorComboBox);
         blockSensorComboBox.setToolTipText(rb.getString("OccupancySensorToolTip"));
 
         // third row of edit tool bar items
@@ -857,6 +874,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         textMemoryComboBox.setEditable(true);
         textMemoryComboBox.getEditor().setItem("");
         textMemoryComboBox.setSelectedIndex(-1);
+        setupComboBoxFocusListener(textMemoryComboBox);
         textMemoryComboBox.setToolTipText(rb.getString("MemoryToolTip"));
         textMemoryComboBox.setEnabled(false);
 
@@ -865,6 +883,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockContentsComboBox.getEditor().setItem("");
         blockContentsComboBox.setSelectedIndex(-1);
         blockContentsComboBox.setEnabled(false);
+        setupComboBoxFocusListener(blockContentsComboBox);
         blockContentsComboBox.setToolTipText(rb.getString("BlockContentsButtonToolTip"));
 
         blockContentsComboBox.addActionListener((ActionEvent a) -> {
@@ -884,6 +903,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         signalMastComboBox.setEditable(true);
         signalMastComboBox.getEditor().setItem("");
         signalMastComboBox.setSelectedIndex(-1);
+        setupComboBoxFocusListener(signalMastComboBox);
         signalMastComboBox.setEnabled(false);
 
         // sensor icon & text
@@ -892,6 +912,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         sensorComboBox.setEditable(true);
         sensorComboBox.getEditor().setItem("");
         sensorComboBox.setSelectedIndex(-1);
+        setupComboBoxFocusListener(sensorComboBox);
         sensorComboBox.setEnabled(false);
 
         sensorIconEditor = new MultiIconEditor(4);
@@ -910,6 +931,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         signalHeadComboBox.setEditable(true);
         signalHeadComboBox.getEditor().setItem("");
         signalHeadComboBox.setSelectedIndex(-1);
+        setupComboBoxFocusListener(signalHeadComboBox);
         signalHeadComboBox.setEnabled(false);
         signalHeadComboBox.setToolTipText(rb.getString("SignalIconToolTip"));
 
@@ -1006,7 +1028,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         super.setTargetPanelSize(width, height);
         setSize(screenDim.width, screenDim.height);
 
-        setupToolbar();
+        setupToolBar();
 
         // register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -1049,11 +1071,40 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
-                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-                //log.info("{}.prefsWindowLocation is {}", windowFrameRef, prefsWindowLocation);
-                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                //log.info("{}.prefsWindowSize is {}", windowFrameRef, prefsWindowSize);
+// FontSize = Font Size
+                prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
+                log.info("{} prefsProp 1075 is {}", windowFrameRef, prefsProp);
+                if (null != prefsProp) {
+                    float toolBarFontSize = Float.parseFloat(prefsProp.toString());
+                    setupToolBarFontSizes(toolBarFontSize);
+                }
 
+                if (false) { ////// TODO: pre-fetch this preference (WORK-IN-PROGRESS)
+                    // pre-fetch this preference
+                    //     DropDownListsDisplay = Drop Down Lists Display...
+                    //     DropDownListsDisplayDisplayName = Display Name (User else System)
+                    //     DropDownListsDisplayUserName = User Name
+                    //     DropDownListsDisplaySystemName = System Name
+                    //     DropDownListsDisplayUserNameSystemName = User Name followed by System Name
+                    //     DropDownListsDisplaySystemNameUserName = System Name followed by User Name
+                }
+
+                // this doesn't work as expected (1st one called messes up 2nd?)
+                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                log.info("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
+                log.info("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
+
+                // use this instead?
+                if (true) {    // (Nope, it's not working ether: prefsProp always comes back null)
+                    prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+                    log.info("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
+                    if (null != prefsProp) {
+                        Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
+                        prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
+                        prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
+                    }
+                }
                 if (prefsWindowLocation != null && prefsWindowSize != null &&
                         prefsWindowSize.width >= 640 && prefsWindowSize.height >= 480) {
                     // note: panel width & height comes from the saved (xml) panel (file) on disk
@@ -1062,11 +1113,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             panelWidth, panelHeight);
                     setAntialiasingOn(prefsAntialiasingOn);
                 }
-            });
-        });
-    }
+            }); // InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent
+        }); // SwingUtilities.invokeLater
+    }   // LayoutEditor (constructor)
 
-    private void setupToolbar() {
+    private void setupToolBar() {
         // setup edit toolbar(s)
 
         Container contentPane = getContentPane();
@@ -1285,7 +1336,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // first row properties
             JPanel turnoutPropertiesPanel = new JPanel();
-            //turnoutPropertiesPanel.add(turnoutNamePanel);
+            turnoutPropertiesPanel.add(turnoutNamePanel);
             turnoutPropertiesPanel.add(extraTurnoutPanel);
             turnoutPropertiesPanel.add(rotationPanel);
             hTop1Panel.add(turnoutPropertiesPanel);
@@ -1418,12 +1469,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         helpBarPanel.setVisible(isEditable() && showHelpBar);
         editToolBarContainer.setVisible(isEditable());
 
-        // Note: We have to invoke this later because everything's not setup yet
+        // Note: We have to invoke this later because everything's not really setup yet
         SwingUtilities.invokeLater(() -> {
-            if (true) {
+            if (false) {
                 // use the GuiLafPreferencesManager value
+                /// doing this for now (since window prefs seem to be whacked)
                 GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
-                setupFontSizes(manager.getFontSize());
+                setupToolBarFontSizes(manager.getFontSize());
             } else {
                 // if it's been set as a preference for this panel use that
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
@@ -1434,95 +1486,106 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     // (1592 - 1132) (UserPreferencesManager.class)./ (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
                     // 1592 - (13 * 92) ==> 396 pixels
                     // therefore:
-                    float newFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
-                    newFontSize = (float) MathUtil.pin(newFontSize, 9.0, 12.0); // keep it between 9 & 12
+                    float newToolBarFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
+                    newToolBarFontSize = (float) MathUtil.pin(newToolBarFontSize, 9.0, 12.0); // keep it between 9 & 12
 
                     // see if the user preferences for the panel have a setting for it
                     String windowFrameRef = getWindowFrameRef();
-                    Object prefsProp = prefsMgr.getProperty(windowFrameRef, "fontSize");
-                    //log.info("{}.fontsSize is {}", windowFrameRef, prefsProp);
+                    Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
+                    log.info("{} prefsProp 1496 is {}", windowFrameRef, prefsProp);
                     if (prefsProp != null) {    // (yes)
-                        newFontSize = Float.parseFloat(prefsProp.toString());
+                        newToolBarFontSize = Float.parseFloat(prefsProp.toString());
                     } else {    // (no)
                         // use the GuiLafPreferencesManager value
                         GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
-                        newFontSize = manager.getFontSize();
+                        newToolBarFontSize = manager.getFontSize();
                         // save it in user preferences for the panel
-                        prefsMgr.setProperty(getWindowFrameRef(), "fontSize", newFontSize);
+                        prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", newToolBarFontSize);
                     }
-                    setupFontSizes(newFontSize);
+                    setupToolBarFontSizes(newToolBarFontSize);
                 });
             }
-        });
-    }    // setupToolbar()
+                if (false) { ////// TODO: fetch this preference (WORK-IN-PROGRESS) & setup all comboboxes
+                //     DropDownListsDisplay = Drop Down Lists Display...
+                //     DropDownListsDisplayDisplayName = Display Name (User else System)
+                //     DropDownListsDisplayUserName = User Name
+                //     DropDownListsDisplaySystemName = System Name
+                //     DropDownListsDisplayUserNameSystemName = User Name followed by System Name
+                //     DropDownListsDisplaySystemNameUserName = System Name followed by User Name
+            }
+        }); // SwingUtilities.invokeLater
+    }    // setupToolBar()
 
-    private void setupFontSizes(float newFontSize) {
+    private float gToolBarFontSize = 12.f;
+    private void setupToolBarFontSizes(float newToolBarFontSize) {
+        if (gToolBarFontSize != newToolBarFontSize) {
+            gToolBarFontSize = newToolBarFontSize;
+            log.info("Font size: " + newToolBarFontSize);
+            layoutFont = zoomLabel.getFont();
+            layoutFont = layoutFont.deriveFont(newToolBarFontSize);
 
-        log.info("Font size: " + newFontSize);
-        layoutFont = zoomLabel.getFont();
-        layoutFont = layoutFont.deriveFont(newFontSize);
+            anchorButton.setFont(layoutFont);
+            blockContentsButton.setFont(layoutFont);
+            blockNameLabel.setFont(layoutFont);
+            blockSensorLabel.setFont(layoutFont);
+            blockSensorNameLabel.setFont(layoutFont);
+            changeIconsButton.setFont(layoutFont);
+            doubleXoverButton.setFont(layoutFont);
+            edgeButton.setFont(layoutFont);
+            endBumperButton.setFont(layoutFont);
+            iconLabelButton.setFont(layoutFont);
+            labelsLabel.setFont(layoutFont);
+            layoutDoubleSlipButton.setFont(layoutFont);
+            layoutSingleSlipButton.setFont(layoutFont);
+            levelXingButton.setFont(layoutFont);
+            lhXoverButton.setFont(layoutFont);
+            memoryButton.setFont(layoutFont);
+            multiSensorButton.setFont(layoutFont);
+            nodesLabel.setFont(layoutFont);
+            rhXoverButton.setFont(layoutFont);
+            sensorButton.setFont(layoutFont);
+            sensorComboBox.setFont(layoutFont);
+            signalButton.setFont(layoutFont);
+            signalHeadComboBox.setFont(layoutFont);
+            signalMastButton.setFont(layoutFont);
+            signalMastComboBox.setFont(layoutFont);
+            textLabelButton.setFont(layoutFont);
+            textLabelTextField.setFont(layoutFont);
+            textMemoryComboBox.setFont(layoutFont);
+            trackButton.setFont(layoutFont);
+            trackLabel.setFont(layoutFont);
+            turnoutLabel.setFont(layoutFont);
+            turnoutLHButton.setFont(layoutFont);
+            turnoutRHButton.setFont(layoutFont);
+            turnoutWYEButton.setFont(layoutFont);
 
-        anchorButton.setFont(layoutFont);
-        blockContentsButton.setFont(layoutFont);
-        blockNameLabel.setFont(layoutFont);
-        blockSensorLabel.setFont(layoutFont);
-        blockSensorNameLabel.setFont(layoutFont);
-        changeIconsButton.setFont(layoutFont);
-        doubleXoverButton.setFont(layoutFont);
-        edgeButton.setFont(layoutFont);
-        endBumperButton.setFont(layoutFont);
-        iconLabelButton.setFont(layoutFont);
-        labelsLabel.setFont(layoutFont);
-        layoutDoubleSlipButton.setFont(layoutFont);
-        layoutSingleSlipButton.setFont(layoutFont);
-        levelXingButton.setFont(layoutFont);
-        lhXoverButton.setFont(layoutFont);
-        memoryButton.setFont(layoutFont);
-        multiSensorButton.setFont(layoutFont);
-        nodesLabel.setFont(layoutFont);
-        rhXoverButton.setFont(layoutFont);
-        sensorButton.setFont(layoutFont);
-        sensorComboBox.setFont(layoutFont);
-        signalButton.setFont(layoutFont);
-        signalHeadComboBox.setFont(layoutFont);
-        signalMastButton.setFont(layoutFont);
-        signalMastComboBox.setFont(layoutFont);
-        textLabelButton.setFont(layoutFont);
-        textLabelTextField.setFont(layoutFont);
-        textMemoryComboBox.setFont(layoutFont);
-        trackButton.setFont(layoutFont);
-        trackLabel.setFont(layoutFont);
-        turnoutLabel.setFont(layoutFont);
-        turnoutLHButton.setFont(layoutFont);
-        turnoutRHButton.setFont(layoutFont);
-        turnoutWYEButton.setFont(layoutFont);
+            for (Component c : locationPanel.getComponents()) {
+                c.setFont(layoutFont);
+            }
 
-        for (Component c : locationPanel.getComponents()) {
-            c.setFont(layoutFont);
-        }
+            for (Component c : extraTurnoutPanel.getComponents()) {
+                c.setFont(layoutFont);
+            }
 
-        for (Component c : extraTurnoutPanel.getComponents()) {
-            c.setFont(layoutFont);
-        }
+            for (Component c : helpBar.getComponents()) {
+                c.setFont(layoutFont);
+            }
 
-        for (Component c : helpBar.getComponents()) {
-            c.setFont(layoutFont);
-        }
+            for (Component c : rotationPanel.getComponents()) {
+                c.setFont(layoutFont);
+            }
 
-        for (Component c : rotationPanel.getComponents()) {
-            c.setFont(layoutFont);
-        }
+            for (Component c : trackSegmentPropertiesPanel.getComponents()) {
+                c.setFont(layoutFont);
+            }
 
-        for (Component c : trackSegmentPropertiesPanel.getComponents()) {
-            c.setFont(layoutFont);
-        }
+            for (Component c : turnoutNamePanel.getComponents()) {
+                c.setFont(layoutFont);
+            }
 
-        for (Component c : turnoutNamePanel.getComponents()) {
-            c.setFont(layoutFont);
-        }
-
-        for (Component c : zoomPanel.getComponents()) {
-            c.setFont(layoutFont);
+            for (Component c : zoomPanel.getComponents()) {
+                c.setFont(layoutFont);
+            }
         }
     }
 
@@ -1574,6 +1637,47 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 || (savedShowHelpBar != showHelpBar));
         targetWindowClosing(save);
     }
+
+////// TODO: Determine if this is needed…
+    // we may be able to use JFrame.getFocusOwner() instead
+    // Or KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner()
+    private JmriBeanComboBox focusedComboBox = null;
+    private boolean setupComboBoxFocusListener(JmriBeanComboBox inComboBox) {
+        if (true) {
+            // disabled while testing above alternatives
+        } else
+        if (false) {    // this didn't work
+            inComboBox.setFocusable(true);
+            inComboBox.addFocusListener(comboBoxFocusListener);
+        } else {        // gonna try this
+            Component component = inComboBox.getEditor().getEditorComponent();
+            if (component instanceof JTextField) {
+                JTextField textfield = (JTextField) component;
+                textfield.setFocusable(true);
+                textfield.addFocusListener(comboBoxFocusListener);
+            }
+        }
+        return true;
+    }
+    private FocusListener comboBoxFocusListener = new FocusListener() {
+        @Override
+        public void focusGained(FocusEvent event) {
+            if (event.getSource() instanceof JTextField) {
+                JTextField textField = (JTextField) event.getSource();
+                Container parent = SwingUtilities.getUnwrappedParent(textField);
+                if (parent instanceof JmriBeanComboBox) {
+                    focusedComboBox = (JmriBeanComboBox) parent;
+                    log.debug("•Got Focus! " + focusedComboBox);
+                }
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent event) {
+            log.debug("•Lost Focus! " + focusedComboBox);
+            focusedComboBox = null;
+        }
+    };
 
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
@@ -1793,7 +1897,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         editModeItem.setSelected(isEditable());
 
-        // toolbar side menu & items: (top, left, bottom, right)
+
+        // create our (top) toolbar menu
+        JMenu toolBarMenu = new JMenu(Bundle.getMessage("ToolBar")); // used for ToolBar SubMenu
+        optionMenu.add(toolBarMenu);
+
+        // create toolbar side menu & items: (top, left, bottom, right)
         toolBarSideTopButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideTop"));
         toolBarSideTopButton.addActionListener(
             (ActionEvent event) -> {
@@ -1827,7 +1936,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         toolBarSideRightButton.setSelected(toolBarSide.equals(eToolBarSide.eRIGHT));
 
         JMenu toolBarSideMenu = new JMenu(Bundle.getMessage("ToolBarSide")); // used for ScrollBarsSubMenu
-        optionMenu.add(toolBarSideMenu);
         toolBarSideMenu.add(toolBarSideTopButton);
         toolBarSideMenu.add(toolBarSideLeftButton);
         toolBarSideMenu.add(toolBarSideBottomButton);
@@ -1838,6 +1946,105 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         toolBarSideGroup.add(toolBarSideLeftButton);
         toolBarSideGroup.add(toolBarSideBottomButton);
         toolBarSideGroup.add(toolBarSideRightButton);
+        toolBarMenu.add(toolBarSideMenu);
+
+        //// FontSize = Font Size
+        JMenu toolBarFontSizeMenu= new JMenu(Bundle.getMessage("FontSize"));
+        ButtonGroup toolBarFontSizeGroup = new ButtonGroup();
+
+        String[] fontSizes = {"9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
+        for (String fontSize : fontSizes) {
+            float fontSizeFloat = Float.parseFloat(fontSize);
+            JRadioButtonMenuItem fontSizeButton = new JRadioButtonMenuItem(fontSize);
+            fontSizeButton.addActionListener((ActionEvent event) -> {
+                setupToolBarFontSizes(fontSizeFloat);
+
+                // save it in the user preferences for the window
+                String windowFrameRef = getWindowFrameRef();
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", fontSizeFloat);
+                });
+
+                /// doing this for now (since window prefs seem to be whacked)
+                GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+                manager.setFontSize((int) fontSizeFloat);
+            });
+            toolBarFontSizeMenu.add(fontSizeButton);
+            toolBarFontSizeGroup.add(fontSizeButton);
+            fontSizeButton.setSelected(fontSizeFloat == gToolBarFontSize);
+        }
+        toolBarMenu.add(toolBarFontSizeMenu);
+
+        if (true) { ////// TODO: fetch this preference (WORK-IN-PROGRESS) & setup option menu
+            //     DropDownListsDisplay = Drop Down Lists Display...
+            //     DropDownListsDisplayDisplayName = Display Name (User else System)
+            //     DropDownListsDisplayUserName = User Name
+            //     DropDownListsDisplaySystemName = System Name
+            //     DropDownListsDisplayUserNameSystemName = User Name followed by System Name
+            //     DropDownListsDisplaySystemNameUserName = System Name followed by User Name
+
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                String windowFrameRef = getWindowFrameRef();
+
+                // this is the preference name
+                String ddldoPrefName = "DropDownListsDisplayOption";
+
+                // this is the default value if we can't find it in any preferences
+                String ddldoPref = "DropDownListsDisplayDisplayName";
+
+                // try to get the preference
+                Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
+                if (null != ddldoProp) {
+                    // this will be the default value for all combo
+                    // boxes that don't have a saved preference .
+                    ddldoPref = ddldoProp.toString();
+                }
+
+                // if there is a focused JmriBeanComboBox append its class to the pref string
+                Component c = this.getFocusOwner();
+                if ((null != c) && (c instanceof JmriBeanComboBox)) {
+                    JmriBeanComboBox jbcb = (JmriBeanComboBox) c;
+                    String className = c.getClass().getName();
+                    if (null != className) {
+                        ddldoPrefName = className + ddldoPrefName;
+                        // and look up in the users preference
+                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                        if (null != ddldoProp) { // if we found it…
+                            ddldoPref = ddldoProp.toString();
+                        } else {    // …otherwise…
+                            // save it in the users preferences
+                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                        }
+                        //// TODO: add code here to change the combo boxes displayOrder
+                        // (I suspect that I'll have to add a setter to the JmriBeanComboBox class)
+                        //jbcb.setXXX(ddldoPref);
+                    }
+                }
+            });
+
+            // TODO: I don't know how to get this value out of the lambda function above…
+            //  I may be able to get it from the focused JmriBeanComboBox 
+            // (after I've set it in the lambda function above)
+            // for now I'm just hard coding it to this
+            String ddldoPref = "DropDownListsDisplayDisplayName";
+
+            JMenu DropDownListsDisplayMenu = new JMenu(Bundle.getMessage("DropDownListsDisplay"));
+            ButtonGroup DropDownListsDisplayGroup = new ButtonGroup();
+
+            String[] ddldOptions = {"DropDownListsDisplayDisplayName", "DropDownListsDisplayUserName",
+            "DropDownListsDisplaySystemName", "DropDownListsDisplayUserNameSystemName", "DropDownListsDisplaySystemNameUserName"};
+            for (String ddldOption : ddldOptions) {
+                JRadioButtonMenuItem ddldOptionButton = new JRadioButtonMenuItem(Bundle.getMessage(ddldOption));
+                ddldOptionButton.addActionListener((ActionEvent event) -> {
+                    ///setupDropDownListsDisplays(fontSizeFloat);
+                });
+                DropDownListsDisplayMenu.add(ddldOptionButton);
+                DropDownListsDisplayGroup.add(ddldOptionButton);
+                // if it matches the saved preference then select it
+                ddldOptionButton.setSelected(ddldOption.equals(ddldoPref));
+            }
+            toolBarMenu.add(DropDownListsDisplayMenu);
+        }
 
         // positionable item
         positionableItem = new JCheckBoxMenuItem(rb.getString("AllowRepositioning"));
@@ -2347,7 +2554,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
             });
             toolBarIsVertical = (toolBarSide.equals(eToolBarSide.eRIGHT) || toolBarSide.equals(eToolBarSide.eLEFT));
-            setupToolbar(); // re-layout all the toolbar items
+            setupToolBar(); // re-layout all the toolbar items
             editToolBarContainer.setVisible(isEditable());
 
             toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));
@@ -3551,14 +3758,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
             String windowFrameRef = getWindowFrameRef();
+            // the restore code for this isn't working…
             prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
             prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
+            // we're going to use this instead
+            if (true) {    // (Nope, it's not working ether)
+                // save it in the user preferences for the window
+                Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
+                prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
+                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+                log.info("testing prefsProp: " + prefsProp);
+            }
         });
 
         log.debug("setCurrentPositionAndSize Position - " + upperLeftX + "," + upperLeftY + " WindowSize - " + windowWidth + "," + windowHeight + " PanelSize - " + panelWidth + "," + panelHeight);
         setDirty(true);
 
-    }
+    }   // setCurrentPositionAndSize()
 
     void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
@@ -4152,7 +4368,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 selections.get(0).doMousePressed(event);
             }
         }
-        //thisPanel.setFocusable(true);
         thisPanel.requestFocusInWindow();
     }   //mousePressed
 
@@ -5145,7 +5360,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         } else if (selectionWidth == 0 || selectionHeight == 0) {
             clearSelectionGroups();
         }
-        //thisPanel.setFocusable(true);
         thisPanel.requestFocusInWindow();
         return;
     }
@@ -8918,7 +9132,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     //
-    // highlight the block selected by the combo Box
+    // highlight the block selected by the specified combo Box
     //
     private boolean highlightSelectedBlock(JmriBeanComboBox inComboBox) {
         String newName = inComboBox.getEditor().getItem().toString();
@@ -8960,6 +9174,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         return result;
     }
+
+//// FontSize = Font Size
+
+// PopupsDisplay = Popup Controls Display...
+// PopupsDisplayDisplayName = Display Name (User else System)
+// PopupsDisplayUserName = User Name
+// PopupsDisplaySystemName = System Name
+// PopupsDisplayUserNameSystemName = User Name followed by System Name
+// PopupsDisplaySystemNameUserName = System Name followed by User Name
+
 
     public void setTurnoutCircles(boolean state) {
         if (turnoutCirclesWithoutEditMode != state) {
