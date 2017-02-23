@@ -76,6 +76,15 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProgWriteExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TimebaseRateExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.spi.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriPluginTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MetadataTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NoFeedbackTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RawTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScaleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SectionManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TransitManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TurnoutOperationManagerTest.class));
         return suite;
     }
 
