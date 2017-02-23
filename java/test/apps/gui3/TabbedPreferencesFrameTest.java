@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 public class TabbedPreferencesFrameTest {
 
     @Test
-    @Ignore("Requires more setup")
     public void testCTor() {
         TabbedPreferencesFrame t = new TabbedPreferencesFrame();
         Assert.assertNotNull("exists",t);
@@ -26,6 +25,7 @@ public class TabbedPreferencesFrameTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.InstanceManager.setDefault(TabbedPreferences.class,new TabbedPreferences());
     }
 
     @After
