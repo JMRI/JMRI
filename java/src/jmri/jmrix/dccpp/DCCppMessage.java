@@ -456,7 +456,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     
     public String getValueString(int idx) {
         Matcher m = match(myMessage.toString(), myRegex, "gvs");
-        if ((m != null) && (idx <= m.groupCount())) {
+        if (m == null) {
+            log.error("No match!");
+            return("");
+        } else if (idx <= m.groupCount()) {
             return(m.group(idx));
         } else {
             log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
@@ -466,7 +469,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     
     public int getValueInt(int idx) {
         Matcher m = match(myMessage.toString(), myRegex, "gvi");
-        if ((m != null) && (idx <= m.groupCount())) {
+        if (m == null) {
+            log.error("No match!");
+            return(0);
+        } else if (idx <= m.groupCount()) {
             return(Integer.parseInt(m.group(idx)));
         } else {
             log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
@@ -597,7 +603,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isSensorAddMessage() { return(this.match(DCCppConstants.SENSOR_ADD_REGEX) != null); }
     public boolean isSensorDeleteMessage() { return(this.match(DCCppConstants.SENSOR_DELETE_REGEX) != null); }
     public boolean isListSensorsMessage() { return(this.match(DCCppConstants.SENSOR_LIST_REGEX) != null); }
-    public boolean isOutputCmdMessage() { return(this.getOpCodeChar() == DCCppConstants.OUTPUT_CMD); }
+    //public boolean isOutputCmdMessage() { return(this.getOpCodeChar() == DCCppConstants.OUTPUT_CMD); }
+    public boolean isOutputCmdMessage() { return(this.match(DCCppConstants.OUTPUT_CMD_REGEX) != null); }
     public boolean isOutputAddMessage() { return(this.match(DCCppConstants.OUTPUT_ADD_REGEX) != null); }
     public boolean isOutputDeleteMessage() { return(this.match(DCCppConstants.OUTPUT_DELETE_REGEX) != null); }
     public boolean isListOutputsMessage() { return(this.match(DCCppConstants.OUTPUT_LIST_REGEX) != null); }
