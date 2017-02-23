@@ -4,7 +4,6 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -34,7 +33,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         // create one siding tracks
         f.trackNameTextField.setText("new siding track");
         f.trackLengthTextField.setText("1223");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
         sleep(1);   // for slow machines
 
         Track t = l.getTrackByName("new siding track", null);
@@ -47,7 +46,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         // create a second siding
         f.trackNameTextField.setText("2nd siding track");
         f.trackLengthTextField.setText("9999");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         sleep(1);   // for slow machines
 
@@ -74,7 +73,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         sleep(1);   // for slow machines
 
@@ -84,13 +83,11 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
 
         // deselect east, west and north check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox,1000l));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.westCheckBox);
+        enterClickAndLeave(f.northCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
-
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
 
@@ -109,14 +106,10 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
-
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.addTrackButton);
 
         // create the schedule edit frame
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton,1000l));
-
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
         JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur \"3rd siding track\"");
@@ -139,25 +132,25 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         // create three siding tracks
         f.trackNameTextField.setText("new siding track");
         f.trackLengthTextField.setText("1223");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd siding track");
         f.trackLengthTextField.setText("9999");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         // deselect east, west and north check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.northCheckBox,1000l));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.westCheckBox);
+        enterClickAndLeave(f.northCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
+        enterClickAndLeave(f.saveTrackButton);
 
         // create the schedule edit frame
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.editScheduleButton,1000l));
+        enterClickAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
         JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Spur \"3rd siding track\"");

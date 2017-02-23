@@ -9,7 +9,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -39,7 +38,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         f.builtTextField.setText("1999");
         f.ownerComboBox.setSelectedItem("Owner1");
         f.commentTextField.setText("test Engine comment field");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
 
         EngineManager cManager = EngineManager.instance();
         // should have 6 Engines
@@ -55,7 +54,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         Assert.assertEquals("Engine owner", "Owner1", c6.getOwner());
         Assert.assertEquals("Engine comment", "test Engine comment field", c6.getComment());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        enterClickAndLeave(f.saveButton);
         // should have 6 Engines now
         Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
 
@@ -84,7 +83,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         Assert.assertEquals("Engine comment", "Test Engine NH 1 Comment", f.commentTextField.getText());
 
         // test delete button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
+        enterClickAndLeave(f.deleteButton);
 
         // should have 5 Engines now
         Assert.assertEquals("number of Engines", 4, cManager.getNumEntries());

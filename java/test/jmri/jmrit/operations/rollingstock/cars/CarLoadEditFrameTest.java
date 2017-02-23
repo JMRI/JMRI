@@ -3,7 +3,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -22,7 +21,7 @@ public class CarLoadEditFrameTest extends OperationsSwingTestCase {
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("New Load");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
         // new load should appear at start of list
         Assert.assertEquals("new load", "New Load", f.loadComboBox.getItemAt(0));
 

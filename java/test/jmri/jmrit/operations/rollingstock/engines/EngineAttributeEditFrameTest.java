@@ -8,7 +8,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -31,7 +30,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals(27, f.comboBox.getItemCount());
         // now add a new model name
         f.addTextBox.setText("New Model");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
         // new model should appear at start of list
         Assert.assertEquals("new model name", "New Model", f.comboBox.getItemAt(0));
 
@@ -39,13 +38,13 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         f.comboBox.setSelectedItem("SD45");
         f.addTextBox.setText("DS54");
         // push replace button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
+        enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         pressDialogButton(f, "Yes");
         // did the replace work?
         Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
+        enterClickAndLeave(f.deleteButton);
         // new model was next
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 

@@ -46,7 +46,7 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
         // create add location frame by clicking add button
         f.addButton.doClick();
         // the following fails on 13" laptops
-        //getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        //enterClickAndLeave(f.addButton);
 
         // confirm location add frame creation
         JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("Add Location")!=null;}, "lef not null");

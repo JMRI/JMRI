@@ -3,7 +3,6 @@ package jmri.jmrit.operations.automation;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -22,13 +21,13 @@ public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
         
         f.setVisible(true);
         
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.copyButton));
+        enterClickAndLeave(f.copyButton);
         // dialog window requesting name for automation should appear
         pressDialogButton(f, "OK");
         
         // enter a name for the automation
         f.automationNameTextField.setText("Name of new automation");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.copyButton));
+        enterClickAndLeave(f.copyButton);
         // dialog window requesting automation to copy should appear
         pressDialogButton(f, "OK");
           
@@ -54,13 +53,13 @@ public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
         
         copyFrame.setVisible(true);
         
-        getHelper().enterClickAndLeave(new MouseEventData(this, copyFrame.copyButton));
+        enterClickAndLeave(copyFrame.copyButton);
         // dialog window requesting name for automation should appear
         pressDialogButton(copyFrame, "OK");
         
         // enter a name for the automation
         copyFrame.automationNameTextField.setText("Name of new automation 2");
-        getHelper().enterClickAndLeave(new MouseEventData(this, copyFrame.copyButton));
+        enterClickAndLeave(copyFrame.copyButton);
         
         // dialog window requesting automation to copy should appear
         pressDialogButton(copyFrame, "OK");
@@ -70,7 +69,7 @@ public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
         
         //now select the automation to copy
         copyFrame.automationBox.setSelectedIndex(1);
-        getHelper().enterClickAndLeave(new MouseEventData(this, copyFrame.copyButton));
+        enterClickAndLeave(copyFrame.copyButton);
         
         Automation copiedAutomation = manager.getAutomationByName("Name of new automation 2");
         Assert.assertNotNull(copiedAutomation);

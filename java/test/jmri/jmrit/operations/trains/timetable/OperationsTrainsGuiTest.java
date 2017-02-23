@@ -10,7 +10,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.TrainManager;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -56,11 +55,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
         f.dispose();
-    }
-
-    private void enterClickAndLeave(Component comp) {
-        getHelper().enterClickAndLeave(new MouseEventData(this, comp,1000l));
-        jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
     }
 
     // Ensure minimal setup for log4J

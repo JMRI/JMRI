@@ -13,7 +13,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -101,13 +100,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
             trainicon1.setLocoColor(colors[i]);
         }
         editor.getTargetFrame().dispose();
-    }
-
-
-
-    private void enterClickAndLeave(Component comp) {
-        getHelper().enterClickAndLeave(new MouseEventData(this, comp));
-        jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
     }
 
     // Ensure minimal setup for log4J

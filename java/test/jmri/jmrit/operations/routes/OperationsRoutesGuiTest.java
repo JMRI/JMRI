@@ -7,7 +7,6 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -39,7 +38,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         // create add route frame
         f.addButton.doClick();
         // the following fails on a 13" laptop
-        //getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        //enterClickAndLeave(f.addButton);
         // confirm panel creation
         JmriJFrame ref = JmriJFrame.getFrame("Add Route");
         Assert.assertNotNull("route edit frame", ref);
@@ -61,8 +60,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.routeNameTextField.setText("New Test Route");
         f.commentTextField.setText("New Text Route Comment");
-        //f.addRouteButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addRouteButton));
+        enterClickAndLeave(f.addRouteButton);
         
         loadRoutes();
 
@@ -77,23 +75,23 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         LocationManager lManager = LocationManager.instance();
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc D"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc A"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
 
         // put the next two locations at the start of the route
         //f.addLocAtTop.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocAtTop));
+        enterClickAndLeave(f.addLocAtTop);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc C"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc E"));
         //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
 
         // confirm that the route sequence is correct
         List<RouteLocation> routeLocations = newRoute.getLocationsBySequenceList();
@@ -105,13 +103,13 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.routeNameTextField.setText("Newer Test Route");
         //f.saveRouteButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveRouteButton));
+        enterClickAndLeave(f.saveRouteButton);
 
         Assert.assertEquals("changed route name", "Newer Test Route", newRoute.getName());
 
         // test delete button
         //f.deleteRouteButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteRouteButton));
+        enterClickAndLeave(f.deleteRouteButton);
         // click "Yes" in the confirm popup
         pressDialogButton(f, "Yes");
 

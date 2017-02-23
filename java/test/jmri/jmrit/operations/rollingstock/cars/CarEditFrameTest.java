@@ -4,7 +4,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -42,13 +41,13 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         f.commentTextField.setText("test car comment field");
         
         // Save button should be disabled
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        enterClickAndLeave(f.saveButton);
 
         Car c6 = cManager.getByRoadAndNumber("SP", "6");
         Assert.assertNull("Car should not exist", c6);
         
         // use add button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
 
         c6 = cManager.getByRoadAndNumber("SP", "6");
         Assert.assertNotNull("Car did not create", c6);
@@ -65,9 +64,9 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("no fred", c6.hasFred());
         Assert.assertFalse("not hazardous", c6.isHazardous());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.cabooseCheckBox));
+        enterClickAndLeave(f.cabooseCheckBox);
         Assert.assertFalse("still not a caboose", c6.isCaboose());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        enterClickAndLeave(f.saveButton);
         // Change all car type to caboose dialog window should appear
         // need to push the "No" button in the dialog window to close
         pressDialogButton(f, "No");
@@ -75,28 +74,28 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertTrue("now a caboose", c6.isCaboose());
         Assert.assertFalse("not hazardous 2", c6.isHazardous());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.fredCheckBox));
+        enterClickAndLeave(f.fredCheckBox);
         Assert.assertTrue("still a caboose", c6.isCaboose());
         Assert.assertFalse("still no fred", c6.hasFred());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
         pressDialogButton(f, "No");
         Assert.assertFalse("no longer a caboose", c6.isCaboose());
         Assert.assertTrue("now has a fred", c6.hasFred());
         Assert.assertFalse("not hazardous 3", c6.isHazardous());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.hazardousCheckBox));
+        enterClickAndLeave(f.hazardousCheckBox);
         Assert.assertFalse("still not hazardous 3", c6.isHazardous());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
         pressDialogButton(f, "No");
         Assert.assertFalse("still no longer a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
         Assert.assertTrue("now hazardous", c6.isHazardous());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.utilityCheckBox));
+        enterClickAndLeave(f.utilityCheckBox);
         Assert.assertFalse("not utility", c6.isUtility());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
         pressDialogButton(f, "No");
         Assert.assertTrue("now utility", c6.isUtility());
@@ -142,7 +141,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("car is not hazardous", f.hazardousCheckBox.isSelected());
 
         // test delete button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
+        enterClickAndLeave(f.deleteButton);
 
         // should have 5 cars now
         Assert.assertEquals("number of cars", 4, cManager.getNumEntries());

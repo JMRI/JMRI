@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -27,8 +26,7 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
         f.setTitle("Test Add Location Frame");
 
         f.locationNameTextField.setText("New Test Location");
-        //f.addLocationButton.doClick();
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocationButton));
+        enterClickAndLeave(f.addLocationButton);
 
         LocationManager lManager = LocationManager.instance();
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
@@ -37,24 +35,24 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull(newLoc);
 
         // add a yard track
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addYardButton));
+        enterClickAndLeave(f.addYardButton);
 
         // add an interchange track
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addInterchangeButton));
+        enterClickAndLeave(f.addInterchangeButton);
 
         // add a staging track
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addStagingButton));
+        enterClickAndLeave(f.addStagingButton);
 
         // add a yard track
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addYardButton));
+        enterClickAndLeave(f.addYardButton);
 
         f.locationNameTextField.setText("Newer Test Location");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveLocationButton));
+        enterClickAndLeave(f.saveLocationButton);
 
         Assert.assertEquals("changed location name", "Newer Test Location", newLoc.getName());
 
         // test delete button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteLocationButton));
+        enterClickAndLeave(f.deleteLocationButton);
         Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
         // confirm delete dialog window should appear
         pressDialogButton(f, "Yes");

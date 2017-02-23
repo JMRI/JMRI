@@ -26,7 +26,7 @@ public class AutomationsTableFrameGuiTest extends OperationsSwingTestCase {
         // now create the add automation frame
         f.addButton.doClick();
         // the following fails on a 13" laptop
-        //getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        //enterClickAndLeave(f.addButton);
         addAutomationFrame = JmriJFrame.getFrame("Add Automation");
         Assert.assertNotNull(addAutomationFrame);
 

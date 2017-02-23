@@ -8,7 +8,6 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -38,7 +37,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         f.setTitle("Test Schedule Frame");
         f.scheduleNameTextField.setText("Test Schedule A");
         f.commentTextField.setText("Test Comment");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addScheduleButton));
+        enterClickAndLeave(f.addScheduleButton);
 
         // was the schedule created?
         ScheduleManager m = ScheduleManager.instance();
@@ -47,16 +46,16 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
         // now add some car types to the schedule
         f.typeBox.setSelectedItem("Boxcar");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
+        enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem("Flatcar");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
+        enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem("Coilcar");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
+        enterClickAndLeave(f.addTypeButton);
         // put Tank Food at start of list
         f.typeBox.setSelectedItem("Tank Food");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocAtTop));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveScheduleButton));
+        enterClickAndLeave(f.addLocAtTop);
+        enterClickAndLeave(f.addTypeButton);
+        enterClickAndLeave(f.saveScheduleButton);
 
         List<ScheduleItem> list = s.getItemsBySequenceList();
         Assert.assertEquals("number of items", 4, list.size());
@@ -70,7 +69,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         si = list.get(3);
         Assert.assertEquals("3rd type", "Coilcar", si.getTypeName());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteScheduleButton));
+        enterClickAndLeave(f.deleteScheduleButton);
         // Yes to pop up
         pressDialogButton(f, "Yes");
         s = m.getScheduleByName("Test Schedule A");

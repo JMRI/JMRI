@@ -4,7 +4,6 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -23,7 +22,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarEditFrame.COLOR);
         f.addTextBox.setText("Pink");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
         // new color should appear at start of list
         Assert.assertEquals("new color", "Pink", f.comboBox.getItemAt(0));
 
@@ -31,13 +30,13 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         f.comboBox.setSelectedItem("Pink");
         f.addTextBox.setText("Pinker");
         // push replace button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
+        enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         pressDialogButton(f, "Yes");
         // did the replace work?
         Assert.assertEquals("replaced Pink with Pinker", "Pinker", f.comboBox.getItemAt(0));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
+        enterClickAndLeave(f.deleteButton);
         // black is the first default color
         Assert.assertEquals("old color", "Black", f.comboBox.getItemAt(0));
 
@@ -64,7 +63,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("previous kernel 1", "TwoCars", f.comboBox.getItemAt(1));
 
         f.addTextBox.setText("TestKernel");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
         // new kernel should appear at start of list after blank
         Assert.assertEquals("new kernel", "TestKernel", f.comboBox.getItemAt(1));
 
@@ -72,7 +71,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
         f.comboBox.setSelectedItem("TestKernel");
         f.addTextBox.setText("TestKernel2");
         // push replace button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
+        enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
         pressDialogButton(f, "Yes");
         // did the replace work?
@@ -80,7 +79,7 @@ public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
 
         // now try and delete
         f.comboBox.setSelectedItem("TestKernel2");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
+        enterClickAndLeave(f.deleteButton);
         // blank is the first default kernel
         Assert.assertEquals("space 2", "", f.comboBox.getItemAt(0));
         Assert.assertEquals("previous kernel 2", "TwoCars", f.comboBox.getItemAt(1));

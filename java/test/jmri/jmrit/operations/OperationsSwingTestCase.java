@@ -2,6 +2,7 @@
 package jmri.jmrit.operations;
 
 import java.io.File;
+import java.awt.Component;
 import java.util.List;
 import java.util.Locale;
 import jmri.jmrit.operations.automation.AutomationManager;
@@ -57,8 +58,14 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
         javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
         Assert.assertNotNull("button not found", button);
         // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        enterClickAndLeave(button);
     }
+
+    protected void enterClickAndLeave(Component comp) {
+        getHelper().enterClickAndLeave(new MouseEventData(this, comp,1000l));
+        jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
+    }
+  
 
     @Override
     protected void setUp() throws Exception {

@@ -3,7 +3,6 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -33,15 +32,15 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         Assert.assertTrue("North selected", p.northCheckBox.isSelected());
         Assert.assertTrue("East selected", p.eastCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.northCheckBox));
+        enterClickAndLeave(p.northCheckBox);
         Assert.assertFalse("North deselected", p.northCheckBox.isSelected());
         Assert.assertTrue("East selected", p.eastCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.eastCheckBox));
+        enterClickAndLeave(p.eastCheckBox);
         Assert.assertTrue("North selected", p.northCheckBox.isSelected());
         Assert.assertFalse("East deselected", p.eastCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.eastCheckBox));
+        enterClickAndLeave(p.eastCheckBox);
         Assert.assertTrue("North selected", p.northCheckBox.isSelected());
         Assert.assertTrue("East selected", p.eastCheckBox.isSelected());
 
@@ -68,8 +67,8 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         p.switchTimeTextField.setText("3");
         p.travelTimeTextField.setText("4");
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.scaleHO));
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.typeDesc));
+        enterClickAndLeave(p.scaleHO);
+        enterClickAndLeave(p.typeDesc);
 
         p.panelTextField.setText("Test Panel Name");
 
@@ -80,7 +79,7 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         p.terminateComboBox.setSelectedItem(LocoIcon.GRAY);
         p.localComboBox.setSelectedItem(LocoIcon.YELLOW);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.saveButton));
+        enterClickAndLeave(p.saveButton);
         // dialog window should appear regarding train lengths
         pressDialogButton(f, "OK");
         // dialog window should appear regarding railroad name
@@ -148,34 +147,34 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse("engine logger", p.engineLoggerCheckBox.isSelected());
         Assert.assertTrue("router", p.routerCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.buildAggressive));
+        enterClickAndLeave(p.buildAggressive);
         Assert.assertFalse("build normal", p.buildNormal.isSelected());
         Assert.assertTrue("build aggressive", p.buildAggressive.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.localSpurCheckBox));
+        enterClickAndLeave(p.localSpurCheckBox);
         Assert.assertTrue("local", p.localSpurCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.localInterchangeCheckBox));
+        enterClickAndLeave(p.localInterchangeCheckBox);
         Assert.assertTrue("interchange", p.localInterchangeCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.localYardCheckBox));
+        enterClickAndLeave(p.localYardCheckBox);
         Assert.assertTrue("yard", p.localYardCheckBox.isSelected());
 
-        //        getHelper().enterClickAndLeave(new MouseEventData(this, p.rfidCheckBox));
+        //        enterClickAndLeave(p.rfidCheckBox);
         // use doClick() in case the checkbox isn't visible due to scrollbars.
         p.rfidCheckBox.doClick();
         Assert.assertTrue("rfid", p.rfidCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.carLoggerCheckBox));
+        enterClickAndLeave(p.carLoggerCheckBox);
         Assert.assertTrue("car logger", p.carLoggerCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.engineLoggerCheckBox));
+        enterClickAndLeave(p.engineLoggerCheckBox);
         Assert.assertTrue("engine logger", p.engineLoggerCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.routerCheckBox));
+        enterClickAndLeave(p.routerCheckBox);
         Assert.assertFalse("router", p.routerCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.saveButton));
+        enterClickAndLeave(p.saveButton);
         // done
         f.dispose();
 

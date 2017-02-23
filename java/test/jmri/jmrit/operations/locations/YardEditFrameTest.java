@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
@@ -30,7 +29,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // create a yard track with length 43.
         f.trackNameTextField.setText("new yard track");
         f.trackLengthTextField.setText("43");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("new yard track", null);
         Assert.assertNotNull("new yard track", t);
@@ -42,7 +41,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // add a second track with length 6543.
         f.trackNameTextField.setText("2nd yard track");
         f.trackLengthTextField.setText("6543");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("2nd yard track", null);
         Assert.assertNotNull("2nd yard track", t);
@@ -54,7 +53,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // add A third track with length 1.
         f.trackNameTextField.setText("3rd yard track");
         f.trackLengthTextField.setText("1");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("3rd yard track", null);
         Assert.assertNotNull("3rd yard track", t);
@@ -78,8 +77,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("4th yard track");
         f.trackLengthTextField.setText("21");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("4th yard track", null);
         Assert.assertNotNull("4th yard track", t);
@@ -87,13 +85,11 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Direction all before change", ALL, t.getTrainDirections());
 
         // deselect east, west and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox,1000l));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.westCheckBox);
+        enterClickAndLeave(f.southCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
-
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
         
@@ -114,26 +110,26 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // create four yard tracks
         f.trackNameTextField.setText("new yard track");
         f.trackLengthTextField.setText("43");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd yard track");
         f.trackLengthTextField.setText("6543");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("3rd yard track");
         f.trackLengthTextField.setText("1");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("4th yard track");
         f.trackLengthTextField.setText("21");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton,1000l));
+        enterClickAndLeave(f.addTrackButton);
 
         // deselect east, west and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox,1000l));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox,1000l));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.westCheckBox);
+        enterClickAndLeave(f.southCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton,1000l));
+        enterClickAndLeave(f.saveTrackButton);
 
         // clean up the frame
         f.setVisible(false);
