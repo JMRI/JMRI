@@ -101,6 +101,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
+     * Constructor for the Programming settings pane.
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
      */
@@ -109,8 +110,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
+     * Constructor for the Programming settings pane.
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
+     * @param group A set of JButtons to display programming modes
      */
     public ProgOpsModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;
@@ -148,14 +151,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 //            @Override
 //            public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
-//                programmerSelected(); // in case has valid address now
+//                programmerSelected(); // in case it has valid address now
 //            }
 //        });
         mLongAddrCheck.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
-                programmerSelected(); // in case has valid address now
+                programmerSelected(); // in case it has valid address now
             }
         });
 
@@ -164,7 +167,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
-     * reload the interface with the new programmers
+     * Reload the interface with the new programmers.
      */
     void programmerSelected() {
         log.debug("programmerSelected starts with {} buttons", buttonPool.size());
@@ -212,7 +215,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
-     * Listen to buttons for mode changes
+     * Listen to buttons for mode changes.
+     * @param e ActionEvent heard
      */
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -229,6 +233,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
     }
 
+    /**
+     * Change the programmer (mode).
+     * @param programmer The type of programmer (i.e. Byte Mode)
+     */
     void setProgrammerFromGui(Programmer programmer) {
         for (ProgrammingMode mode : buttonMap.keySet()) {
             if (buttonMap.get(mode).isSelected()) {
@@ -238,7 +246,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
-     * Listen to programmer for mode changes
+     * Listen to programmer for mode changes.
+     * @param e ActionEvent heard
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -250,6 +259,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
     }
 
+    /**
+     * Change the selected mode in GUI when programmer is changed elsewhere.
+     */
     void setGuiFromProgrammer() {
         if (getProgrammer() == null) {
             // no mode selected
@@ -269,7 +281,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         button.setSelected(true);
     }
 
-    // no longer needed, disconnect if still connected
+    // Free up memory from no longer needed stuff, disconnect if still connected.
     @Override
     public void dispose() {
     }
