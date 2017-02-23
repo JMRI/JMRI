@@ -40,11 +40,10 @@
       <b>As of February 2017, we are considering a change to 
         the allowable user names: They can't have leading or trailing
         spaces.  If this change is made, the names will be "trimmed"
-        whenever entered.  You can try it out by executing
-        <code><pre>
-        jmri.NamedBean.doUserNameTrimming = True
-        </pre></code>
-        in a script.
+        whenever entered.  If you have a copy of the code 
+        checked out, you can test this by modifying the jmri.NamedBean
+        class following the instructions in the normalizeUserName(..) routine,
+        rebuilding and running </b> 
         
       <h2>What's in a name?</h2>Why do we need names at all, rather
       than just references within the code? There are several
