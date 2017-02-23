@@ -34,7 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SoundTest.class));
         suite.addTest(XmlFileTest.suite());
 
-        suite.addTest(jmri.jmrit.automat.AutomatTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.automat.PackageTest.class));
         suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
         suite.addTest(jmri.jmrit.blockboss.PackageTest.suite());
         suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
@@ -75,6 +75,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.vsdecoder.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.simplelightctrl.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.simpleturnoutctrl.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(MemoryFrameActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(XmlFileLocationActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(XmlFileValidateActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(XmlFileValidateStartupActionFactoryTest.class));
         return suite;
     }
 
@@ -89,3 +94,4 @@ public class PackageTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 }
+
