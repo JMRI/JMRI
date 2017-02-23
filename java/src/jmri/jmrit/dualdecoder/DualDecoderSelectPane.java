@@ -83,7 +83,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         add(pane2);
 
         JPanel pane3 = new JPanel();
-        pane3.add(t = new JButton(Bundle.getMessage("InitDH163"));
+        pane3.add(t = new JButton(Bundle.getMessage("InitDH163")));
         t.setToolTipText(Bundle.getMessage("InitDH163Tooltip"));
         t.addActionListener(new ActionListener() {
             @Override
