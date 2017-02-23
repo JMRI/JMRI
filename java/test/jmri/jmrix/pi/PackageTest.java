@@ -33,7 +33,10 @@ public class PackageTest {
         //junit.textui.TestRunner.main(testCaseName);
         if (result.wasSuccessful()) {
             log.info("Success");
+            System.out.println("Success");
         }
+        log.info("Tests Run: {} Tests Failed: {} Tests Ignored: {} ",result.getRunCount(),result.getFailureCount(), result.getIgnoreCount() );
+        System.out.println("Tests Run: " + result.getRunCount() +"  Tests Failed: " + result.getFailureCount() + " Tests Ignored: " + result.getIgnoreCount() );
     }
 
     private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
