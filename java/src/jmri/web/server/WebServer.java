@@ -363,7 +363,7 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
-        log.warn("Web Server failed", thrwbl);
+        log.error("Web Server failed", thrwbl);
     }
 
     @Override

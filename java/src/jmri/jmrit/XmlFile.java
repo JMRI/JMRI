@@ -19,6 +19,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
 import org.jdom2.Comment;
+import org.jdom2.Content;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -459,11 +460,12 @@ public abstract class XmlFile {
      *
      * JMRI only knows about certain ones; the others will be ignored.
      *
-     * @return the Document that results from the processing
+     * @param doc the document containing processing instructions
+     * @return the processed document
      */
     Document processInstructions(Document doc) {
         // this iterates over top level
-        for (Object c : doc.getContent()) { // type Content
+        for (Content c : doc.cloneContent()) {
             if (c instanceof ProcessingInstruction) {
                 try {
                     doc = processOneInstruction((ProcessingInstruction) c, doc);

@@ -649,13 +649,14 @@ function $handleMultiClick(e) {
     jmri.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
 
     //increment or decrement based on where the click occurred on image
+    var missed = true; //flag if click x,y outside image bounds, indicates we didn't get good values
     var dec = false;
     if ($widget.updown == "true") {
-        if (clickY > this.height / 2)
-            dec = true;
+        if (clickY >= 0 && clickY <= this.height) missed = false;
+        if (clickY > this.height / 2) dec = true;
     } else {
-        if (clickX < this.width / 2)
-            dec = true;
+        if (clickX >= 0 && clickX <= this.width)  missed = false;
+        if (clickX < this.width / 2)  dec = true;
     }
     var displaying = 0;
     for (i in $widget.siblings) {  //determine which is currently active
@@ -663,15 +664,21 @@ function $handleMultiClick(e) {
             displaying = i; //flag the current active sibling
         }
     }
-    var next;  //determine which is the next one which should be set to active
+    var next;  //determine which is the next one to be set active (loop around only if click outside object)
     if (dec) {
-        next = displaying - 1;
-        if (next < 0)
-            next = 0;
+    	next = displaying - 1;
+    	if (next < 0)
+    		if (missed) 
+    			next = i;
+    		else 
+    			next = 0;
     } else {
-        next = displaying * 1 + 1;
-        if (next > i)
-            next = i;
+    	next = displaying * 1 + 1;        
+    	if (next > i)
+    		if (missed) 
+    			next = 0;
+    		else 
+    			next = i;
     }
     for (i in $widget.siblings) {  //loop through siblings and send changes as needed
         if (i == next) {

@@ -72,10 +72,8 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         sysName.setName("sysName");
         userName.setName("userName");
         prefixBox.setName("prefixBox");
-        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, Bundle.getMessage("ButtonAddSensor"), okListener, cancelListener, rangeListener));
+        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonAddSensor", okListener, cancelListener, rangeListener));
         canAddRange(null);
-
-        //super.AddnewHardwareDevicePanel(sysName, userName, prefixBox, , Bundle.getMessage("ButtonAddSensor")
     }
 
     private void canAddRange(ActionEvent e) {
