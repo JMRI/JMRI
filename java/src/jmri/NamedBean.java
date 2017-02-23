@@ -302,8 +302,11 @@ public interface NamedBean {
      */
     @CheckReturnValue
     static public @Nonnull String normalizeUserName(@Nonnull String inputName) throws BadUserNameException {
+        // doUserNameTrim is a _temporary_ control value to allow debugging of trimmed user names
+        if (doUserNameTrimming) return inputName.trim();
         return inputName;
     }
     public class BadUserNameException extends IllegalArgumentException {}
-
+    // an Ugly Hack to permit e.g. turning on "trim usernames" via a script
+    public static boolean doUserNameTrimming = false;
 }
