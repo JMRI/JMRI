@@ -176,7 +176,14 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
         String systemName = s.getSystemName();
         _tsys.put(systemName, s);
         String userName = s.getUserName();
+        
         if (userName != null) {
+            // enforce uniqueness of user names
+            // by setting username to null in any existing bean with the same name
+            // Note that this is not a "move" operation for the user name
+            if (_tuser.get(userName)!=null && _tuser.get(userName)!=s ) _tuser.get(userName).setUserName(null);
+            
+            // store the new bean under the name
             _tuser.put(userName, s);
         }
         firePropertyChange("length", null, _tsys.size());
