@@ -75,7 +75,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         if (_displayOrder == SYSTEMNAME) {
             displayList = nameList.toArray(displayList);
         } else {
-            //for(String name: nameList){
             for (int i = 0; i < nameList.size(); i++) {
                 String name = nameList.get(i);
                 NamedBean nBean = null;
@@ -181,6 +180,31 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         return null;
     }
 
+    /**
+     * Get the display order of the combobox
+     *
+     * @return the display order of this combobox
+     */
+    public int getDisplayOrder() {
+        return _displayOrder;
+    }
+
+    /**
+     * Set the display order of the combobox
+     *
+     * @param blank true to insert, false to remove
+     */
+    public void setDisplayOrder(int inDisplayOrder) {
+        if (_displayOrder != inDisplayOrder) {
+            NamedBean selectedBean = getSelectedBean();
+            _displayOrder = inDisplayOrder;
+            //refreshCombo();
+            setSelectedBean(selectedBean);
+        }
+    }
+
+    
+    
     /**
      * Insert a blank entry at the top of the list
      *

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import static jmri.util.MathUtil.lerp;
 import static jmri.util.MathUtil.midpoint;
 
@@ -22,6 +23,8 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -66,6 +69,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -361,14 +366,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButtonMenuItem toolBarSideBottomButton = null;
     private JRadioButtonMenuItem toolBarSideRightButton = null;
 
-//// FontSize = Font Size
-
-// PopupsDisplay = Popup Controls Display...
-// PopupsDisplayDisplayName = Display Name (User else System)
-// PopupsDisplayUserName = User Name
-// PopupsDisplaySystemName = System Name
-// PopupsDisplayUserNameSystemName = User Name followed by System Name
-// PopupsDisplaySystemNameUserName = System Name followed by User Name
+    private JMenu toolBarFontSizeMenu = null;
+    private JMenu dropDownListsDisplayOrderMenu = null;
 
     private JCheckBoxMenuItem positionableItem = null;
     private JCheckBoxMenuItem controlItem = null;
@@ -484,8 +483,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // persistent instance variables - saved to disk with Save Panel
     private int windowWidth = 0;
     private int windowHeight = 0;
+
     private int panelWidth = 0;
     private int panelHeight = 0;
+
+    private Dimension toolBarDimension = new Dimension(0, 0);
+
     private int upperLeftX = 0;
     private int upperLeftY = 0;
     private float mainlineTrackWidth = 4.0F;
@@ -766,7 +769,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         extraTurnoutNameComboBox.getEditor().setItem("");
         extraTurnoutNameComboBox.setSelectedIndex(-1);
         extraTurnoutNameComboBox.addFocusListener(comboBoxFocusListener);
-        extraTurnoutNameComboBox.setToolTipText(rb.getString("TurnoutNameToolTip"));
+        extraTurnoutNameComboBox.setToolTipText(rb.getString("SecondTurnoutNameToolTip"));
 
         // this is enabled/disabled via selectionListAction above
         JLabel extraTurnoutLabel = new JLabel(rb.getString("SecondName"));
@@ -1079,15 +1082,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     setupToolBarFontSizes(toolBarFontSize);
                 }
 
-                if (false) { ////// TODO: pre-fetch this preference (WORK-IN-PROGRESS)
-                    // pre-fetch this preference
-                    //     DropDownListsDisplay = Drop Down Lists Display...
-                    //     DropDownListsDisplayDisplayName = Display Name (User else System)
-                    //     DropDownListsDisplayUserName = User Name
-                    //     DropDownListsDisplaySystemName = System Name
-                    //     DropDownListsDisplayUserNameSystemName = User Name followed by System Name
-                    //     DropDownListsDisplaySystemNameUserName = System Name followed by User Name
-                }
+                updateAllComboBoxesDropDownListDisplayOrderFromPrefs(prefsMgr);
 
                 // this doesn't work as expected (1st one called messes up 2nd?)
                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
@@ -1121,6 +1116,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // setup edit toolbar(s)
 
         Container contentPane = getContentPane();
+        toolBarDimension = contentPane.getSize();
+        // toolBarDimension vs. toolBarFontSize
+        // 1286 @ 9pt
+        // 1328 @ 10pt
+        // 1435 @ 11pt
+        // 1545 @ 12pt
+        // 1624 @ 13pt
+        // ???? @ 14pt
+        // ???? @ 15pt
+        // ???? @ 16pt
+        // (1624-1286)/(13-9) ==> 338 / 4 ==> 84.5
+        // 1624/84.5 ==> 19.23 - 13 ==> 6.23
+        //double minWideWidth = (toolBarFontSize + 6) * 84.5;
+        boolean wideFlag = true;
+        if (null != editToolBarScroll) {
+            int wideWidth = editToolBarScroll.getPreferredSize().width;
+            wideFlag = (toolBarDimension.width >= wideWidth);
+        }
 
         // remove these (if present) so we can add them back (without duplicates)
         if (editToolBarContainer != null) {
@@ -1336,12 +1349,32 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // first row properties
             JPanel turnoutPropertiesPanel = new JPanel();
+            //turnoutPropertiesPanel.setBorder(BorderFactory.createLineBorder(Color.red));
             turnoutPropertiesPanel.add(turnoutNamePanel);
             turnoutPropertiesPanel.add(extraTurnoutPanel);
             turnoutPropertiesPanel.add(rotationPanel);
-            hTop1Panel.add(turnoutPropertiesPanel);
+            if (wideFlag) { // WIDE
+                hTop1Panel.add(turnoutPropertiesPanel);
+                editToolBarPanel.add(hTop1Panel);
+            } else {
+                editToolBarPanel.add(hTop1Panel);
 
-            editToolBarPanel.add(hTop1Panel);
+                //turnoutPropertiesPanel.add(Box.createHorizontalGlue());
+                turnoutPropertiesPanel.setMaximumSize(turnoutPropertiesPanel.getPreferredSize());
+
+                JPanel hTop1pPanel = new JPanel();
+                hTop1pPanel.setLayout(new BoxLayout(hTop1pPanel, BoxLayout.LINE_AXIS));
+                hTop1pPanel.add(turnoutPropertiesPanel);
+
+                JPanel panelPropertiesPanel = new JPanel();
+                panelPropertiesPanel.add(Box.createHorizontalGlue());
+                panelPropertiesPanel.add(zoomPanel);
+                panelPropertiesPanel.add(locationPanel);
+
+                hTop1pPanel.add(panelPropertiesPanel);
+
+                editToolBarPanel.add(hTop1pPanel);
+            }
 
             // second row buttons
             JPanel hTop2Panel = new JPanel();
@@ -1362,12 +1395,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             blockPropertiesPanel.add(blockSensorComboBox);
             hTop2Panel.add(blockPropertiesPanel);
 
-            hTop2Panel.add(Box.createHorizontalGlue());
-            JPanel panelPropertiesPanel = new JPanel();
-            panelPropertiesPanel.add(Box.createHorizontalGlue());
-            panelPropertiesPanel.add(zoomPanel);
-            panelPropertiesPanel.add(locationPanel);
-            hTop2Panel.add(panelPropertiesPanel);
+            if (wideFlag) { // WIDE
+                hTop2Panel.add(Box.createHorizontalGlue());
+                JPanel panelPropertiesPanel = new JPanel();
+                panelPropertiesPanel.add(Box.createHorizontalGlue());
+                panelPropertiesPanel.add(zoomPanel);
+                panelPropertiesPanel.add(locationPanel);
+                hTop2Panel.add(panelPropertiesPanel);
+            }
 
             editToolBarPanel.add(hTop2Panel);
 
@@ -1428,6 +1463,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editToolBarContainer = new JPanel();
         editToolBarContainer.setLayout(new BoxLayout(editToolBarContainer, BoxLayout.PAGE_AXIS));
         editToolBarContainer.add(editToolBarScroll);
+
+        // setup notification for when horizontal scrollbar changes visibility
+        //editToolBarScroll.getViewport().addChangeListener(e -> {
+        //    log.warn("scrollbars visible: " + editToolBarScroll.getHorizontalScrollBar().isVisible());
+        //});
 
         editToolBarContainer.setMinimumSize(new Dimension(width, height));
         editToolBarContainer.setPreferredSize(new Dimension(width, height));
@@ -1492,7 +1532,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     // see if the user preferences for the panel have a setting for it
                     String windowFrameRef = getWindowFrameRef();
                     Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
-                    log.info("{} prefsProp 1496 is {}", windowFrameRef, prefsProp);
+                    //log.debug("{} prefsProp is {}", windowFrameRef, prefsProp);
                     if (prefsProp != null) {    // (yes)
                         newToolBarFontSize = Float.parseFloat(prefsProp.toString());
                     } else {    // (no)
@@ -1506,20 +1546,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 });
             }
                 if (false) { ////// TODO: fetch this preference (WORK-IN-PROGRESS) & setup all comboboxes
-                //     DropDownListsDisplay = Drop Down Lists Display...
-                //     DropDownListsDisplayDisplayName = Display Name (User else System)
-                //     DropDownListsDisplayUserName = User Name
-                //     DropDownListsDisplaySystemName = System Name
-                //     DropDownListsDisplayUserNameSystemName = User Name followed by System Name
-                //     DropDownListsDisplaySystemNameUserName = System Name followed by User Name
+                //     DropDownListsDisplayOrder = Drop Down Lists Display...
+                //     DropDownListsDisplayOrderDisplayName = Display Name (User else System)
+                //     DropDownListsDisplayOrderUserName = User Name
+                //     DropDownListsDisplayOrderSystemName = System Name
+                //     DropDownListsDisplayOrderUserNameSystemName = User Name followed by System Name
+                //     DropDownListsDisplayOrderSystemNameUserName = System Name followed by User Name
             }
         }); // SwingUtilities.invokeLater
     }    // setupToolBar()
 
-    private float gToolBarFontSize = 12.f;
+    private float toolBarFontSize = 12.f;
     private void setupToolBarFontSizes(float newToolBarFontSize) {
-        if (gToolBarFontSize != newToolBarFontSize) {
-            gToolBarFontSize = newToolBarFontSize;
+        if (toolBarFontSize != newToolBarFontSize) {
+            toolBarFontSize = newToolBarFontSize;
             log.info("Font size: " + newToolBarFontSize);
             layoutFont = zoomLabel.getFont();
             layoutFont = layoutFont.deriveFont(newToolBarFontSize);
@@ -1620,12 +1660,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             default:
                 break;
         }
+
+        Container contentPane = getContentPane();
+        contentPane.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int wideWidth = editToolBarScroll.getPreferredSize().width;
+                boolean oldWideFlag = (toolBarDimension.width >= wideWidth);
+
+                Container contentPane = getContentPane();
+                toolBarDimension = contentPane.getSize();
+                
+                boolean newWideFlag = (toolBarDimension.width >= wideWidth);
+                if (oldWideFlag != newWideFlag) {
+                    setupToolBar();
+                }
+            }
+        });
     }
 
     @Override
     public void setSize(int w, int h) {
-        log.debug("Frame size now w=" + width + ", h=" + height);
         super.setSize(w, h);
+        log.info("Frame size: {w:" + width + ", h:" + height + "}");
     }
 
     @Override
@@ -1856,6 +1913,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
     }
 
+    //
+    //  setup option menu
+    //
     protected JMenu setupOptionMenu(JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         optionMenu.setMnemonic(stringsToVTCodes.get(rb.getString("OptionsMnemonic")));
@@ -1868,71 +1928,60 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
         editModeItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(rb.getString("EditModeAccelerator")), primary_modifier));
-        editModeItem.addActionListener(
-            (ActionEvent event) -> {
-                setAllEditable(editModeItem.isSelected());
-
-                // show/hide the help bar
-                helpBarPanel.setVisible(isEditable() && showHelpBar);
-
-                if (isEditable()) {
-                    setAllShowTooltip(tooltipsInEditMode);
-
-                    // redo using the "Extra" color to highlight the selected block
-                    if (highlightSelectedBlockFlag) {
-                        if (!highlightSelectedBlock(blockIDComboBox)) {
-                            highlightSelectedBlock(blockContentsComboBox);
-                        }
-                    }
-                } else {
-                    setAllShowTooltip(tooltipsWithoutEditMode);
-
-                    // undo using the "Extra" color to highlight the selected block
-                    if (highlightSelectedBlockFlag) {
-                        highlightBlockNamed(null);
+        editModeItem.addActionListener((ActionEvent event) -> {
+            setAllEditable(editModeItem.isSelected());
+            // show/hide the help bar
+            helpBarPanel.setVisible(isEditable() && showHelpBar);
+            if (isEditable()) {
+                setAllShowTooltip(tooltipsInEditMode);
+                // redo using the "Extra" color to highlight the selected block
+                if (highlightSelectedBlockFlag) {
+                    if (!highlightSelectedBlock(blockIDComboBox)) {
+                        highlightSelectedBlock(blockContentsComboBox);
                     }
                 }
-                awaitingIconChange = false;
+            } else {
+                setAllShowTooltip(tooltipsWithoutEditMode);
+                // undo using the "Extra" color to highlight the selected block
+                if (highlightSelectedBlockFlag) {
+                    highlightBlockNamed(null);
+                }
             }
-        );
+            awaitingIconChange = false;
+        });
         editModeItem.setSelected(isEditable());
 
-
+        //
         // create our (top) toolbar menu
+        //
         JMenu toolBarMenu = new JMenu(Bundle.getMessage("ToolBar")); // used for ToolBar SubMenu
         optionMenu.add(toolBarMenu);
 
-        // create toolbar side menu & items: (top, left, bottom, right)
+        //
+        // create toolbar side menu items: (top, left, bottom, right)
+        //
         toolBarSideTopButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideTop"));
-        toolBarSideTopButton.addActionListener(
-            (ActionEvent event) -> {
-                setToolBarSide(eToolBarSide.eTOP);
-            }
-        );
+        toolBarSideTopButton.addActionListener((ActionEvent event) -> {
+            setToolBarSide(eToolBarSide.eTOP);
+        });
         toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));
 
         toolBarSideLeftButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideLeft"));
-        toolBarSideLeftButton.addActionListener(
-            (ActionEvent event) -> {
-                setToolBarSide(eToolBarSide.eLEFT);
-            }
-        );
+        toolBarSideLeftButton.addActionListener((ActionEvent event) -> {
+            setToolBarSide(eToolBarSide.eLEFT);
+        });
         toolBarSideLeftButton.setSelected(toolBarSide.equals(eToolBarSide.eLEFT));
 
         toolBarSideBottomButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideBottom"));
-        toolBarSideBottomButton.addActionListener(
-            (ActionEvent event) -> {
-                setToolBarSide(eToolBarSide.eBOTTOM);
-            }
-        );
+        toolBarSideBottomButton.addActionListener((ActionEvent event) -> {
+            setToolBarSide(eToolBarSide.eBOTTOM);
+        });
         toolBarSideBottomButton.setSelected(toolBarSide.equals(eToolBarSide.eBOTTOM));
 
         toolBarSideRightButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideRight"));
-        toolBarSideRightButton.addActionListener(
-            (ActionEvent event) -> {
-                setToolBarSide(eToolBarSide.eRIGHT);
-            }
-        );
+        toolBarSideRightButton.addActionListener((ActionEvent event) -> {
+            setToolBarSide(eToolBarSide.eRIGHT);
+        });
         toolBarSideRightButton.setSelected(toolBarSide.equals(eToolBarSide.eRIGHT));
 
         JMenu toolBarSideMenu = new JMenu(Bundle.getMessage("ToolBarSide")); // used for ScrollBarsSubMenu
@@ -1948,8 +1997,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         toolBarSideGroup.add(toolBarSideRightButton);
         toolBarMenu.add(toolBarSideMenu);
 
-        //// FontSize = Font Size
-        JMenu toolBarFontSizeMenu= new JMenu(Bundle.getMessage("FontSize"));
+        //
+        // create setup font size menu items
+        //
+        toolBarFontSizeMenu = new JMenu(Bundle.getMessage("FontSize"));
         ButtonGroup toolBarFontSizeGroup = new ButtonGroup();
 
         String[] fontSizes = {"9", "10", "11", "12", "13", "14", "15", "16", "17", "18"};
@@ -1971,82 +2022,82 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             });
             toolBarFontSizeMenu.add(fontSizeButton);
             toolBarFontSizeGroup.add(fontSizeButton);
-            fontSizeButton.setSelected(fontSizeFloat == gToolBarFontSize);
+            fontSizeButton.setSelected(fontSizeFloat == toolBarFontSize);
         }
         toolBarMenu.add(toolBarFontSizeMenu);
 
-        if (true) { ////// TODO: fetch this preference (WORK-IN-PROGRESS) & setup option menu
-            //     DropDownListsDisplay = Drop Down Lists Display...
-            //     DropDownListsDisplayDisplayName = Display Name (User else System)
-            //     DropDownListsDisplayUserName = User Name
-            //     DropDownListsDisplaySystemName = System Name
-            //     DropDownListsDisplayUserNameSystemName = User Name followed by System Name
-            //     DropDownListsDisplaySystemNameUserName = System Name followed by User Name
+        //
+        // setup drop down list display order menu
+        //
+        dropDownListsDisplayOrderMenu = new JMenu(Bundle.getMessage("DropDownListsDisplayOrder"));
+        ButtonGroup dropDownListsDisplayOrderGroup = new ButtonGroup();
 
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                String windowFrameRef = getWindowFrameRef();
+        String[] ddldoChoices = {"DropDownListsDisplayOrderDisplayName", "DropDownListsDisplayOrderUserName",
+        "DropDownListsDisplayOrderSystemName", "DropDownListsDisplayOrderUserNameSystemName", "DropDownListsDisplayOrderSystemNameUserName"};
+        for (String ddldoChoice : ddldoChoices) {
+            JRadioButtonMenuItem ddldoChoiceMenuItem = new JRadioButtonMenuItem(Bundle.getMessage(ddldoChoice));
+            ddldoChoiceMenuItem.addActionListener((ActionEvent event) -> {
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    JRadioButtonMenuItem ddldoMenuItem = (JRadioButtonMenuItem) event.getSource();
+                    JPopupMenu parentMenu = (JPopupMenu) ddldoMenuItem.getParent();
+                    int ddldo = parentMenu.getComponentZOrder(ddldoMenuItem);
 
-                // this is the preference name
-                String ddldoPrefName = "DropDownListsDisplayOption";
+                    // change this comboboxes ddldo
+                    String windowFrameRef = getWindowFrameRef();
 
-                // this is the default value if we can't find it in any preferences
-                String ddldoPref = "DropDownListsDisplayDisplayName";
+                    // this is the preference name
+                    String ddldoPrefName = "DropDownListsDisplayOrder";
 
-                // try to get the preference
-                Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
-                if (null != ddldoProp) {
-                    // this will be the default value for all combo
-                    // boxes that don't have a saved preference .
-                    ddldoPref = ddldoProp.toString();
-                }
-
-                // if there is a focused JmriBeanComboBox append its class to the pref string
-                Component c = this.getFocusOwner();
-                if ((null != c) && (c instanceof JmriBeanComboBox)) {
-                    JmriBeanComboBox jbcb = (JmriBeanComboBox) c;
-                    String className = c.getClass().getName();
-                    if (null != className) {
-                        ddldoPrefName = className + ddldoPrefName;
-                        // and look up in the users preference
-                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                        if (null != ddldoProp) { // if we found it…
-                            ddldoPref = ddldoProp.toString();
-                        } else {    // …otherwise…
-                            // save it in the users preferences
-                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                        }
-                        //// TODO: add code here to change the combo boxes displayOrder
-                        // (I suspect that I'll have to add a setter to the JmriBeanComboBox class)
-                        //jbcb.setXXX(ddldoPref);
+                    // make a focused component specific preference name
+                    Component focusedComponent = getFocusOwner();
+                    if (focusedComponent instanceof JTextField) {
+                        focusedComponent = SwingUtilities.getUnwrappedParent(focusedComponent);
                     }
-                }
-            });
+                    if (focusedComponent instanceof JmriBeanComboBox) {
+                        JmriBeanComboBox focusedJBCB = (JmriBeanComboBox) focusedComponent;
+                        // now try to get a preference specific to this combobox
+                        String ttt = focusedJBCB.getToolTipText();
+                        if (null != ttt) {
+                            // change the name of the preference based on the tool tip text
+                            ddldoPrefName = ddldoPrefName + "." + ttt;
+                        }
 
-            // TODO: I don't know how to get this value out of the lambda function above…
-            //  I may be able to get it from the focused JmriBeanComboBox 
-            // (after I've set it in the lambda function above)
-            // for now I'm just hard coding it to this
-            String ddldoPref = "DropDownListsDisplayDisplayName";
+                        // now set the combo box display order
+                        focusedJBCB.setDisplayOrder(ddldo);
+                    }
+                    // update the users preference
+                    String[] ddldoPrefs = {"DISPLAYNAME", "USERNAME", "SYSTEMNAME", "USERNAMESYSTEMNAME", "SYSTEMNAMEUSERNAME"};
+                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPrefs[ddldo]);
+                }); // ifPresent
+            }); // addActionListener
 
-            JMenu DropDownListsDisplayMenu = new JMenu(Bundle.getMessage("DropDownListsDisplay"));
-            ButtonGroup DropDownListsDisplayGroup = new ButtonGroup();
-
-            String[] ddldOptions = {"DropDownListsDisplayDisplayName", "DropDownListsDisplayUserName",
-            "DropDownListsDisplaySystemName", "DropDownListsDisplayUserNameSystemName", "DropDownListsDisplaySystemNameUserName"};
-            for (String ddldOption : ddldOptions) {
-                JRadioButtonMenuItem ddldOptionButton = new JRadioButtonMenuItem(Bundle.getMessage(ddldOption));
-                ddldOptionButton.addActionListener((ActionEvent event) -> {
-                    ///setupDropDownListsDisplays(fontSizeFloat);
-                });
-                DropDownListsDisplayMenu.add(ddldOptionButton);
-                DropDownListsDisplayGroup.add(ddldOptionButton);
-                // if it matches the saved preference then select it
-                ddldOptionButton.setSelected(ddldOption.equals(ddldoPref));
-            }
-            toolBarMenu.add(DropDownListsDisplayMenu);
+            dropDownListsDisplayOrderMenu.add(ddldoChoiceMenuItem);
+            dropDownListsDisplayOrderGroup.add(ddldoChoiceMenuItem);
+            // if it matches the 1st choice then select it (for now; it will be updated later)
+            ddldoChoiceMenuItem.setSelected(ddldoChoice.equals(ddldoChoices[0]));
         }
+        dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                // TODO: update menu item based on focused combobox (if any)
+                ///
+            }
 
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
+        toolBarMenu.add(dropDownListsDisplayOrderMenu);
+
+        //
         // positionable item
+        //
         positionableItem = new JCheckBoxMenuItem(rb.getString("AllowRepositioning"));
         optionMenu.add(positionableItem);
         positionableItem.addActionListener(
@@ -2056,7 +2107,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         positionableItem.setSelected(allPositionable());
 
+        //
         // controlable item
+        //
         controlItem = new JCheckBoxMenuItem(rb.getString("AllowLayoutControl"));
         optionMenu.add(controlItem);
         controlItem.addActionListener(
@@ -2066,7 +2119,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         controlItem.setSelected(allControlling());
 
+        //
         // animation item
+        //
         animationItem = new JCheckBoxMenuItem(rb.getString("AllowTurnoutAnimation"));
         optionMenu.add(animationItem);
         animationItem.addActionListener(
@@ -2077,7 +2132,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         animationItem.setSelected(true);
 
+        //
         // show help item
+        //
         showHelpItem = new JCheckBoxMenuItem(rb.getString("ShowEditHelp"));
         optionMenu.add(showHelpItem);
         showHelpItem.addActionListener(
@@ -2087,7 +2144,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         );
         showHelpItem.setSelected(showHelpBar);
+
+        //
         // show grid item
+        //
         showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
         showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 rb.getString("ShowEditGridAccelerator")), primary_modifier));
@@ -2099,7 +2159,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         );
         showGridItem.setSelected(drawGrid);
+
+        //
         // snap to grid on add item
+        //
         snapToGridOnAddItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnAdd"));
         snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 rb.getString("SnapToGridOnAddAccelerator")), primary_modifier | ActionEvent.SHIFT_MASK));
@@ -2111,7 +2174,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         );
         snapToGridOnAddItem.setSelected(snapToGridOnAdd);
+
+        //
         // snap to grid on move item
+        //
         snapToGridOnMoveItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnMove"));
         snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                 rb.getString("SnapToGridOnMoveAccelerator")), primary_modifier | ActionEvent.SHIFT_MASK));
@@ -2124,7 +2190,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         snapToGridOnMoveItem.setSelected(snapToGridOnMove);
 
+        //
         // specify grid square size
+        //
         JMenuItem gridSizeItem = new JMenuItem(rb.getString("EditGridSize") + "...");
         optionMenu.add(gridSizeItem);
         gridSizeItem.addActionListener(
@@ -2151,7 +2219,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         );
 
+        //
         // Show/Hide Scroll Bars
+        //
         scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable")); // used for ScrollBarsSubMenu
         optionMenu.add(scrollMenu);
         ButtonGroup scrollGroup = new ButtonGroup();
@@ -2200,7 +2270,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         );
 
+        //
         // Tooltip options
+        //
         tooltipMenu = new JMenu(rb.getString("TooltipSubMenu"));
         optionMenu.add(tooltipMenu);
         ButtonGroup tooltipGroup = new ButtonGroup();
@@ -2248,7 +2320,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 setAllShowTooltip(!isEditable());
             }
         );
+
+        //
         // antialiasing
+        //
         antialiasingOnItem = new JCheckBoxMenuItem(rb.getString("AntialiasingOn"));
         optionMenu.add(antialiasingOnItem);
         antialiasingOnItem.addActionListener(
@@ -2259,7 +2334,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         antialiasingOnItem.setSelected(antialiasingOn);
 
+        //
         // Highlight Selected Block
+        //
         highlightSelectedBlockItem = new JCheckBoxMenuItem(rb.getString("HighlightSelectedBlock"));
         optionMenu.add(highlightSelectedBlockItem);
         highlightSelectedBlockItem.addActionListener(
@@ -2269,7 +2346,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         highlightSelectedBlockItem.setSelected(highlightSelectedBlockFlag);
 
-        // title item
+        //
+        // edit title item
+        //
         optionMenu.addSeparator();
         JMenuItem titleItem = new JMenuItem(rb.getString("EditTitle") + "...");
         optionMenu.add(titleItem);
@@ -2296,7 +2375,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 setDirty(true);
             }
         );
-        // background image
+
+        //
+        // background image menu item
+        //
         JMenuItem backgroundItem = new JMenuItem(rb.getString("AddBackground") + "...");
         optionMenu.add(backgroundItem);
         backgroundItem.addActionListener(
@@ -2307,6 +2389,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         );
 
+        //
+        // background color menu item
+        //
         JMenu backgroundColorMenu = new JMenu(rb.getString("SetBackgroundColor"));
         backgroundColorButtonGroup = new ButtonGroup();
         addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Black"), Color.black);
@@ -2323,7 +2408,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Magenta"), Color.magenta);
         addBackgroundColorMenuEntry(backgroundColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         optionMenu.add(backgroundColorMenu);
-        // fast clock
+
+        //
+        // add fast clock menu item
+        //
         JMenuItem clockItem = new JMenuItem(Bundle.getMessage("AddItem", Bundle.getMessage("FastClock")));
         optionMenu.add(clockItem);
         clockItem.addActionListener(
@@ -2333,7 +2421,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         );
-        // turntable
+
+        //
+        // add turntable menu item
+        //
         JMenuItem turntableItem = new JMenuItem(rb.getString("AddTurntable"));
         optionMenu.add(turntableItem);
         turntableItem.addActionListener(
@@ -2343,7 +2434,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         );
-        // reporter
+
+        //
+        // add reporter menu item
+        //
         JMenuItem reporterItem = new JMenuItem(rb.getString("AddReporter") + "...");
         optionMenu.add(reporterItem);
         reporterItem.addActionListener(
@@ -2354,7 +2448,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         );
-        // set location and size
+
+        //
+        // set location and size menu item
+        //
         JMenuItem locationItem = new JMenuItem(rb.getString("SetLocation"));
         optionMenu.add(locationItem);
         locationItem.addActionListener(
@@ -2363,7 +2460,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 log.debug("Bounds:" + upperLeftX + ", " + upperLeftY + ", " + windowWidth + ", " + windowHeight + ", " + panelWidth + ", " + panelHeight);
             }
         );
-        // set track width
+
+        //
+        // set track width menu item
+        //
         JMenuItem widthItem = new JMenuItem(rb.getString("SetTrackWidth") + "...");
         optionMenu.add(widthItem);
         widthItem.addActionListener(
@@ -2372,7 +2472,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 enterTrackWidth();
             }
         );
-        // track color item
+
+        //
+        // track colors item menu item
+        //
         JMenu trkColourMenu = new JMenu(rb.getString("TrackColorSubMenu"));
         optionMenu.add(trkColourMenu);
 
@@ -2427,6 +2530,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         trkColourMenu.add(trackAlternativeColorMenu);
 
+        //
+        // add text color menu item
+        //
         JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
         textColorButtonGroup = new ButtonGroup();
         addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Black"), Color.black);
@@ -2444,7 +2550,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTextColorMenuEntry(textColorMenu, Bundle.getMessage("Cyan"), Color.cyan);
         optionMenu.add(textColorMenu);
 
-        //turnout options submenu
+        //
+        // add turnout options submenu
+        //
         JMenu turnoutOptionsMenu = new JMenu(rb.getString("TurnoutOptions"));
         optionMenu.add(turnoutOptionsMenu);
 
@@ -2493,7 +2601,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "10", 10);
         turnoutOptionsMenu.add(turnoutCircleSizeMenu);
 
-        // enable drawing of unselected leg (helps when diverging angle is small)
+        //
+        // add "enable drawing of unselected leg " menu item (helps when diverging angle is small)
+        //
         turnoutDrawUnselectedLegItem = new JCheckBoxMenuItem(rb.getString("TurnoutDrawUnselectedLeg"));
         turnoutOptionsMenu.add(turnoutDrawUnselectedLegItem);
         turnoutDrawUnselectedLegItem.addActionListener(
@@ -2504,7 +2614,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         turnoutDrawUnselectedLegItem.setSelected(turnoutDrawUnselectedLeg);
 
-        // show grid item
+        // add show grid menu item
         autoAssignBlocksItem = new JCheckBoxMenuItem(rb.getString("AutoAssignBlock"));
         optionMenu.add(autoAssignBlocksItem);
         autoAssignBlocksItem.addActionListener(
@@ -2514,7 +2624,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         autoAssignBlocksItem.setSelected(autoAssignBlocks);
 
-        //hideTrackSegmentConstructionLines
+        //
+        // add hideTrackSegmentConstructionLines menu item
+        //
         hideTrackSegmentConstructionLines = new JCheckBoxMenuItem(rb.getString("HideTrackConLines"));
         optionMenu.add(hideTrackSegmentConstructionLines);
         hideTrackSegmentConstructionLines.addActionListener(
@@ -2531,6 +2643,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         );
         hideTrackSegmentConstructionLines.setSelected(autoAssignBlocks);
 
+        //
+        // add "use direct turnout control" menu item
+        //
         useDirectTurnoutControlItem = new JCheckBoxMenuItem(rb.getString("UseDirectTurnoutControl")); //IN18N
         optionMenu.add(useDirectTurnoutControlItem);
         useDirectTurnoutControlItem.addActionListener(
@@ -2544,7 +2659,106 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         useDirectTurnoutControlItem.setSelected(useDirectTurnoutControl);
 
         return optionMenu;
-    }
+    }   // setupOptionMenu
+
+    //
+    // update drop down menu display order menu
+    //
+    private int gDDMDO = JmriBeanComboBox.DISPLAYNAME;
+    private void updateDropDownMenuDisplayOrderMenu() {
+        Component focusedComponent = getFocusOwner();
+        if (focusedComponent instanceof JmriBeanComboBox) {
+            JmriBeanComboBox focusedJBCB = (JmriBeanComboBox) focusedComponent;
+            gDDMDO = focusedJBCB.getDisplayOrder();
+        }
+
+        int idx = 1;
+        for (Component c : dropDownListsDisplayOrderMenu.getComponents()) {
+            if (c instanceof JRadioButtonMenuItem) {
+                JRadioButtonMenuItem crb = (JRadioButtonMenuItem) c;
+                crb.setSelected(gDDMDO == idx);
+                idx++;
+            }
+        }
+     }
+
+    //
+    // update drop down menu display order for all combo boxes (from prefs)
+    //
+    private void updateAllComboBoxesDropDownListDisplayOrderFromPrefs(UserPreferencesManager inPrefsMgr)
+    {
+        // 1st call the recursive funtion starting from the edit toolbar container
+        updateComboBoxDropDownListDisplayOrderFromPrefs(editToolBarContainer, inPrefsMgr);
+        // and now that that's done update the drop down menu display order menu
+        updateDropDownMenuDisplayOrderMenu();
+   }
+
+    //
+    // update drop down menu display order for all combo boxes (from prefs)
+    // note: recursive function that walks down the component / container tree
+    //
+    private void updateComboBoxDropDownListDisplayOrderFromPrefs(Component inComponent, UserPreferencesManager inPrefsMgr)
+    {
+        if (inComponent instanceof JmriBeanComboBox) {
+            String windowFrameRef = getWindowFrameRef();
+
+            // this is the preference name
+            String ddldoPrefName = "DropDownListsDisplayOrder";
+
+            // this is the default value if we can't find it in any preferences
+            String ddldoPref = "DISPLAYNAME";
+
+            // try to get the preference
+            Object ddldoProp = inPrefsMgr.getProperty(windowFrameRef, ddldoPrefName);
+            if (null != ddldoProp) {
+                // this will be the value if this combo box doesn't have a saved preference.
+                ddldoPref = ddldoProp.toString();
+            } else {
+                // save a default preference
+                inPrefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+            }
+
+            // now try to get a preference specific to this combobox
+            JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
+            String ttt = jbcb.getToolTipText();
+            if (null != ttt) {
+                // change the name of the preference based on the tool tip text
+                ddldoPrefName = ddldoPrefName + "." + ttt;
+                // try to get the preference
+                ddldoProp = inPrefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                if (null != ddldoProp) { // if we found it…
+                    ddldoPref = ddldoProp.toString();   // get it's (string value
+                } else {    // …otherwise…
+                    // save it in the users preferences
+                    inPrefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                }
+            }
+
+            // now set the combo box display order
+            if (ddldoPref.equals("DISPLAYNAME")) {
+                jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+            } else if (ddldoPref.equals("USERNAME")) {
+                jbcb.setDisplayOrder(JmriBeanComboBox.USERNAME);
+            } else if (ddldoPref.equals("SYSTEMNAME")) {
+                jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAME);
+            } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
+                jbcb.setDisplayOrder(JmriBeanComboBox.USERNAMESYSTEMNAME);
+            } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
+                jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+            } else {
+                // must be a bogus value… lets re-set everything to DISPLAYNAME
+                ddldoPref = "DISPLAYNAME";
+                inPrefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+            }
+        } else if (inComponent instanceof Container) {
+            for (Component c : ((Container) inComponent).getComponents()) {
+                updateComboBoxDropDownListDisplayOrderFromPrefs(c, inPrefsMgr);
+            }
+        } else {
+            // nothing to do here… move along
+        }
+    }   // updateComboBoxDropDownListDisplayOrderFromPrefs
 
     private void setToolBarSide(eToolBarSide newToolBarSide) {
         // null if edit toolbar not setup yet…
@@ -9174,16 +9388,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         return result;
     }
-
-//// FontSize = Font Size
-
-// PopupsDisplay = Popup Controls Display...
-// PopupsDisplayDisplayName = Display Name (User else System)
-// PopupsDisplayUserName = User Name
-// PopupsDisplaySystemName = System Name
-// PopupsDisplayUserNameSystemName = User Name followed by System Name
-// PopupsDisplaySystemNameUserName = System Name followed by User Name
-
 
     public void setTurnoutCircles(boolean state) {
         if (turnoutCirclesWithoutEditMode != state) {
