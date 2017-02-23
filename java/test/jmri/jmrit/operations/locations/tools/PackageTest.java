@@ -26,7 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.locations.tools.PackageTest"); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(PoolTrackGuiTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTrackGuiTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EditCarTypeActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocationCopyActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocationCopyFrameTest.class));

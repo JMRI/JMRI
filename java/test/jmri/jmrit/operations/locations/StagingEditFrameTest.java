@@ -3,9 +3,10 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -22,6 +23,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
     /**
      * Staging tracks needs its own location
      */
+    @Test
     public void testAddStagingTrackDefaults() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -72,6 +74,7 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSetDirectionUsingChceckbox() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -85,7 +88,6 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         f.trackLengthTextField.setText("12");
         enterClickAndLeave(f.addTrackButton);
 
-        sleep(1);	// for slow machines
         Track t = l.getTrackByName("4th staging track", null);
         Assert.assertNotNull("4th staging track", t);
         Assert.assertEquals("4th staging track length", 12, t.getLength());
@@ -98,13 +100,12 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         enterClickAndLeave(f.saveTrackButton);
 
-        sleep(1);	// for slow machines
-
         Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());
 
         f.dispose();
     }
 
+    @Test
     public void testAddCloseAndReload() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -178,7 +179,8 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadLocations();
@@ -190,24 +192,9 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         jmri.jmrit.operations.setup.Setup.setRfidEnabled(false); // turn off the ID Tag Reader field by default.
     }
 
-    public StagingEditFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", StagingEditFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(StagingEditFrameTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
 
         lManager = null; 

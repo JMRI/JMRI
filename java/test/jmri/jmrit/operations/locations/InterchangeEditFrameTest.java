@@ -4,9 +4,10 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -19,6 +20,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
     private LocationManager lManager = null;
     private Location l = null;
 
+    @Test
     public void testAddInterchange() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -43,6 +45,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSetDirectionUsingCheckbox() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -56,7 +59,6 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
         enterClickAndLeave(f.addTrackButton);
-        sleep(1);   // for slow machines
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("2nd interchange track", t);
         Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
@@ -67,13 +69,13 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.southCheckBox);
 
         enterClickAndLeave(f.saveTrackButton);
-        sleep(1);   // for slow machines
 
         Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
 
         f.dispose();
     }
 
+    @Test
     public void testSetAcceptedCarTypes() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -104,7 +106,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
-
+    @Test
     public void testAddCloseAndRestore() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -165,7 +167,8 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadLocations();
@@ -178,25 +181,10 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         l = lManager.getLocationByName("Test Loc C");
     }
 
-    public InterchangeEditFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", InterchangeEditFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(InterchangeEditFrameTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

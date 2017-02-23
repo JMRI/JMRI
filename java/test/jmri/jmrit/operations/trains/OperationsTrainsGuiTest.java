@@ -1026,7 +1026,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
             if (ti2.getX() == 25 && ti2.getY() == 25) {
                 break;
             }
-            sleep(10); // need to wait on slow machines
         }
 
         Assert.assertEquals("Train 1 icon X", 25, ti1.getX());
@@ -1043,7 +1042,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
             if (ti1.getX() == 75 && ti1.getY() == 25) {
                 break;
             }
-            sleep(10); // need to wait on slow machines
         }
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
@@ -1059,7 +1057,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
             if (ti2.getX() == 75 && ti2.getY() == 25) {
                 break;
             }
-            sleep(10); // need to wait on slow machines
         }
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
@@ -1074,7 +1071,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
             if (ti2.getX() == 125 && ti2.getY() == 35) {
                 break;
             }
-            sleep(10); // need to wait on slow machines
         }
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());

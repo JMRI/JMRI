@@ -4,9 +4,10 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JmriJFrame;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -19,6 +20,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
     private LocationManager lManager = null;
     private Location l = null;
 
+    @Test
     public void testAddSidingDefaults() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -34,7 +36,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         f.trackNameTextField.setText("new siding track");
         f.trackLengthTextField.setText("1223");
         enterClickAndLeave(f.addTrackButton);
-        sleep(1);   // for slow machines
 
         Track t = l.getTrackByName("new siding track", null);
         Assert.assertNotNull("new siding track", t);
@@ -48,7 +49,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         f.trackLengthTextField.setText("9999");
         enterClickAndLeave(f.addTrackButton);
 
-        sleep(1);   // for slow machines
 
         t = l.getTrackByName("2nd siding track", null);
         Assert.assertNotNull("2nd siding track", t);
@@ -62,6 +62,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
     }
 
 
+    @Test
     public void testSetDirectionUsingCheckbox() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -74,8 +75,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
         enterClickAndLeave(f.addTrackButton);
-
-        sleep(1);   // for slow machines
 
         Track t = l.getTrackByName("3rd siding track", null);
         Assert.assertNotNull("3rd siding track", t);
@@ -95,6 +94,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testAddScheduleButton() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -120,6 +120,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         sef.dispose();
     }
 
+    @Test
     public void testAddCloseAndRestore() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -194,7 +195,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadLocations();
@@ -202,24 +204,9 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         l = lManager.getLocationByName("Test Loc C");
     }
 
-    public SidingEditFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SidingEditFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SidingEditFrameTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

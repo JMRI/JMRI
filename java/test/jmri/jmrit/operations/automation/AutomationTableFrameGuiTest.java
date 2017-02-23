@@ -19,7 +19,6 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("test creation", f);
         f.automationNameTextField.setText("New Automation Test Name");
         f.commentTextField.setText("New Automation Test Comment");
-        flushAWT(); // to allow time to take effect
 
         // Confirm enable state of buttons
         Assert.assertTrue(f.addAutomationButton.isEnabled());

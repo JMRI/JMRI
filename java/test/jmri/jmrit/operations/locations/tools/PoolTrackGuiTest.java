@@ -6,9 +6,11 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Pool;
 import jmri.jmrit.operations.locations.Track;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Ignore;
 
 /**
  * Tests for the Operations PoolTrackFrame class
@@ -118,6 +120,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
      * - Not sure if we want to test the status display panel, as it doesn't do
      * anything.
      */
+    @Test
     public void testPoolFrameCreate() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -139,22 +142,25 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
-//	public void testOpenWithNullTrack() throws Exception {
-//		// See what happens when a null track is passed in.
-//		try {
-//			PoolTrackFrame f = new PoolTrackFrame((Track) null);
-//			Assert.fail("NullPointerException not thrown");
-//
-//			f.initComponents();
-//			f.setVisible(true);
-//
-//			// close windows
-//			f.dispose();
-//		} catch (NullPointerException e) {
-//			// Here we don't do anything, as this was expected.
-//		}
-//
-//	}
+    @Test
+    @Ignore("commented out as JUnit3 Test")
+ 	public void testOpenWithNullTrack() throws Exception {
+		// See what happens when a null track is passed in.
+		try {
+			PoolTrackFrame f = new PoolTrackFrame((Track) null);
+			Assert.fail("NullPointerException not thrown");
+
+			f.initComponents();
+			f.setVisible(true);
+
+			// close windows
+			f.dispose();
+		} catch (NullPointerException e) {
+			// Here we don't do anything, as this was expected.
+		}
+	}
+
+    @Test
     public void testAddNewPoolName() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -211,6 +217,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 
     }
 
+    @Test
     public void testSelectPoolAndSaveTrack() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -244,6 +251,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSetMinLengthAndSaveTrack() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -326,37 +334,25 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     // elf.dispose();
     //
     // }
+
+    @Test
+    @Ignore("Not sure if we need this one....")
     public void testVerifyStatusPanel() {
-        // Not sure if we need this one...
     }
 
     // Ensure minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
-    }
-
-    public PoolTrackGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",
-            PoolTrackGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PoolTrackGuiTest.class);
-        return suite;
+        apps.tests.Log4JFixture.setUp();
     }
 
     // The minimal setup for log4J
+    @After
     @Override
-    protected void tearDown() throws Exception {
-        // apps.tests.Log4JFixture.tearDown();
+    public void tearDown() throws Exception {
+        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }
