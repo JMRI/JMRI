@@ -453,7 +453,7 @@ public class NmraPacket {
         if ((packet[0] & 0xC0) != 0x80) {
             return false;
         }
-        if ((packet[1] & 0x88) != 0x88) {
+        if (((packet[1] & 0x88) != 0x88) && ((packet[1] & 0x8F) != 0x80)) {
             return false;
         }
         if ((packet[2] & 0xFC) != 0xEC) {
@@ -490,7 +490,7 @@ public class NmraPacket {
      * Mode Packet.
      *
      * @param packet the packet to extract the address from
-     * @return the address
+     * @return the decoder address
      */
     public static int getAccDecPktOpsModeLegacyAddress(byte[] packet) {
         int midAddr = packet[0] & 0x3f;
@@ -504,7 +504,7 @@ public class NmraPacket {
      * Packet Ops Mode Packet.
      *
      * @param packet the packet to extract the address from
-     * @return the address
+     * @return the accessory address
      */
     public static int getAccDecoderPktOpsModeLegacyAddress(byte[] packet) {
         int midAddr = packet[0] & 0x3f;
@@ -512,16 +512,15 @@ public class NmraPacket {
 
         int boardAddr = (hiAddr << 6 | midAddr) - 1;
 
-//        return ((boardAddr << 2)) + 1;
         return ((boardAddr << 2)) + 1;
     }
 
     /**
-     * Recover the 1-based output address from a Basic Accessory Decoder Packet
-     * Ops Mode Packet.
+     * Recover the accessory address from a Basic Accessory Decoder Packet Ops
+     * Mode Packet.
      *
      * @param packet the packet to extract the address from
-     * @return the address
+     * @return the accessory address
      */
     public static int getAccDecoderPktOpsModeAddress(byte[] packet) {
         int midAddr = packet[0] & 0x3f;
@@ -531,6 +530,20 @@ public class NmraPacket {
         int boardAddr = (hiAddr << 6 | midAddr) - 1;
 
         return ((boardAddr << 2) | lowAddr) + 1;
+    }
+
+    /**
+     * Recover the equivalent decoder address from a Basic Accessory Decoder
+     * Packet Ops Mode Packet.
+     *
+     * @param packet the packet to extract the address from
+     * @return the decoder address
+     */
+    public static int getAccDecPktOpsModeAddress(byte[] packet) {
+        int lowAddr = packet[0] & 0x3f;
+        int hiAddr = ((~packet[1]) & 0x70) >> 4;
+
+        return (hiAddr << 6 | lowAddr);
     }
 
     /**
@@ -670,6 +683,21 @@ public class NmraPacket {
      * Provide a basic operations mode accessory CV programming packet via a
      * simplified interface, given a decoder address.
      * <br><br>
+     * From the NMRA Standard: Basic Accessory Decoder Packet address for
+     * operations mode programming
+     * <br><br>
+     * 10AAAAAA 0 1AAACDDD
+     * <br><br>
+     * Where DDD is used to indicate the output whose CVs are being modified and
+     * C=1.
+     * <br>
+     * If CDDD= 0000 then the CVs refer to the entire decoder.
+     * <br><br>
+     * Hence this method uses CDDD= 0000.
+     * <br><br>
+     * For programming individual outputs use
+     * {@link #accDecoderPktOpsMode(int accAddr, int cvNum, int data)}
+     * <br><br>
      *
      * @param decAddr Address of decoder, in the range 1 to 511
      * @param cvNum   CV number to access
@@ -679,13 +707,13 @@ public class NmraPacket {
     public static byte[] accDecPktOpsMode(int decAddr, int cvNum, int data) {
         // dBit is the "channel" info, least 7 bits, for the packet
         // The lowest channel bit represents CLOSED (1) and THROWN (0)
-        int dBits = 1;  // assume CLOSED
+        int dBits = 0;  // dBits is the "channel" info, CDDD= 0000 indicates the entire decoder
 
         // aBits is the "address" part of the nmra packet, which starts with 1
         int aBits = decAddr;
 
-        // cBit is the control bit, we're always setting it active
-        int cBit = 1;
+        // cBit is the control bit, CDDD= 0000 indicates the entire decoder
+        int cBit = 0;
 
         // get the packet
         return NmraPacket.accDecoderPktOpsMode(aBits, cBit, dBits, cvNum, data);
