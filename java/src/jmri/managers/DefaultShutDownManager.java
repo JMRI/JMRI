@@ -185,8 +185,18 @@ public class DefaultShutDownManager implements ShutDownManager {
                         log.info("Program termination aborted by \"{}\"", task.getName());
                         return false;  // abort early
                     }
-                } catch (Throwable e) {
+                } catch (Exception e) {
                     log.error("Error during processing of ShutDownTask \"{}\"", task.getName(), e);
+                } catch (Throwable e) {
+                    // try logging the error
+                    log.error("Unrecoverable error during processing of ShutDownTask \"{}\"", task.getName(), e);
+                    log.error("Terminating abnormally");
+                    // also dump error directly to System.err in hopes its more observable
+                    System.err.println("Unrecoverable error during processing of ShutDownTask \"" + task.getName() + "\"");
+                    System.err.println(e);
+                    System.err.println("Terminating abnormally");
+                    // forcably halt, do not restart, even if requested
+                    System.exit(1);
                 }
                 log.debug("Task \"{}\" took {} milliseconds to execute", task.getName(), new Date().getTime() - timer.getTime());
             }

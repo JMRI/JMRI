@@ -11,7 +11,11 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    AddSignalMastPanelTest.class
+    AddSignalMastPanelTest.class,
+    AddSignalMastJFrameTest.class,
+    SignalMastRepeaterJFrameTest.class,
+    SignalMastRepeaterPanelTest.class,
+    SignalMastTableDataModelTest.class
 })
 public class PackageTest {
 }

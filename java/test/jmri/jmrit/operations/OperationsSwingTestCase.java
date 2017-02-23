@@ -27,6 +27,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
@@ -77,63 +78,8 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
 
-        // set the file location to temp (in the root of the build directory).
-        OperationsSetupXml.setFileLocation("temp" + File.separator);
-        
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        String tempstring = OperationsSetupXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator + "JUnitTest")) {
-            OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        }
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        JUnitOperationsUtil.resetOperationsManager();
 
-        FileUtil.createDirectory(OperationsXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName());
-
-        // delete files
-        File file = new File(RouteManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(EngineManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(CarManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(LocationManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(TrainManagerXml.instance().getDefaultOperationsFilename());
-        file.delete();
-        file = new File(OperationsSetupXml.instance().getDefaultOperationsFilename());
-        file.delete();
-      
-        TrainManager.instance().dispose();
-        LocationManager.instance().dispose();
-        RouteManager.instance().dispose();
-        ScheduleManager.instance().dispose();
-        CarTypes.instance().dispose();
-        CarColors.instance().dispose();
-        CarLengths.instance().dispose();
-        CarLoads.instance().dispose();
-        CarRoads.instance().dispose();
-        CarManager.instance().dispose();
-        AutomationManager.instance().dispose();
-        
-        // delete file and log directory before testing
-        file = new File(RollingStockLogger.instance().getFullLoggerFileName());
-        file.delete();
-        File dir = new File(RollingStockLogger.instance().getDirectoryName());
-        dir.delete();
-
-        RollingStockLogger.instance().dispose();
- 
-        // dispose of the manager first, because otherwise
-        // the models go away.
-        EngineManager.instance().dispose();
-        EngineModels.instance().dispose();
-        EngineLengths.instance().dispose();
     }
     
     @Override
