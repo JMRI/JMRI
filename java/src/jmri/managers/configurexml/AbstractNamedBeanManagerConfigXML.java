@@ -169,7 +169,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
             }
             
             NamedBean bean = manager.getBeanByUserName(normalizedUserName);
-            if (bean != null) {
+            if (bean != null && !bean.getSystemName().equals(rawSystemName)) {
                 log.warn("User name \"{}\" already exists as system name \"{}\"", normalizedUserName, bean.getSystemName());
             }
         }
