@@ -45,17 +45,17 @@ public class BlockManagerTest extends TestCase {
 
     public void testNameIncrement() {
         // original create with no systemname and an empty username
-        Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("");
+        Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(null);
         Assert.assertEquals("system name 1", "IB:AUTO:0001", b1.getSystemName());
-        Assert.assertEquals("user name 1", "", b1.getUserName());
+        Assert.assertEquals("user name 1", null, b1.getUserName());
 
-        Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("");
+        Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(null);
         Assert.assertEquals("system name 2", "IB:AUTO:0002", b2.getSystemName());
-        Assert.assertEquals("user name 2", "", b2.getUserName());
+        Assert.assertEquals("user name 2", null, b2.getUserName());
 
         // and b1 still OK
         Assert.assertEquals("system name 1", "IB:AUTO:0001", b1.getSystemName());
-        Assert.assertEquals("user name 1", "", b1.getUserName());
+        Assert.assertEquals("user name 1", null, b1.getUserName());
     }
 
     public void testProvideWorksTwice() {
