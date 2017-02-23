@@ -83,8 +83,8 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         add(pane2);
 
         JPanel pane3 = new JPanel();
-        pane3.add(t = new JButton("Init DH163 + Soundtraxx"));
-        t.setToolTipText("This will configure a loco containing a DH163 and a decoder not supporting the proposed protocol");
+        pane3.add(t = new JButton(Bundle.getMessage("InitDH163"));
+        t.setToolTipText(Bundle.getMessage("InitDH163Tooltip"));
         t.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -147,7 +147,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         Programmer p = modePane.getProgrammer();
         if (p == null) {
             state = IDLE;
-            status.setText("No programmer connected");
+            status.setText(Bundle.getMessage("NoProgrammerConnected"));
         } else {
             try {
                 status.setText(Bundle.getMessage("StateWriting"));
@@ -163,7 +163,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         Programmer p = modePane.getProgrammer();
         if (p == null) {
             state = IDLE;
-            status.setText("No programmer connected");
+            status.setText(Bundle.getMessage("NoProgrammerConnected"));
         } else {
             try {
                 status.setText(Bundle.getMessage("StateReading"));
@@ -231,7 +231,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                         labels[next].setEnabled(false);
                         buttons[next].setEnabled(false);
                     }
-                    result = "Unexpected ID read: " + value;
+                    result = Bundle.getMessage("UnexpectedID_Read", value);
                 }
                 // go on to next?
                 if (scanning) {
@@ -273,14 +273,14 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             case IDLE:
             default:
                 // shouldn't happen, reset and ignore
-                log.warn("Unexpected init programming reply: " + value + " " + retcode);
+                log.warn("Unexpected init programming reply: {0} {1}", value, retcode);
                 state = IDLE;
                 break;
             case FIRSTCV16:
                 state = FIRSTCV15;
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: " + retcode + " " + value);
-                    status.setText("Write CV15=7 failed!");
+                    log.debug("Readback error: {0} {1}", retcode, value);
+                    status.setText(Bundle.getMessage("WriteCVFailed", 15, 7));
                     state = IDLE;
                 } else { // is OK
                     writeCV15(7);
@@ -289,8 +289,8 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             case FIRSTCV15:
                 state = SECONDCV16;
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: " + retcode + " " + value);
-                    status.setText("Write CV16=7 failed!");
+                    log.debug("Readback error: {0} {1}", retcode, value);
+                    status.setText(Bundle.getMessage("WriteCVFailed", 16, 7));
                     state = IDLE;
                 } else { // is OK
                     writeCV16(7);
@@ -298,12 +298,12 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                 break;
             case SECONDCV16:
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: " + retcode + " " + value);
-                    status.setText("Write CV16=1 failed!");
+                    log.debug("Readback error: {0} {1}", retcode, value);
+                    status.setText(Bundle.getMessage("WriteCVFailed", 16, 1));
                     state = IDLE;
                 } else { // is OK
                     state = IDLE;
-                    status.setText("Initialized");
+                    status.setText(Bundle.getMessage("StateInitialized"));
                 }
                 break;
         }
