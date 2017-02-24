@@ -28,14 +28,14 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
 
-public class ConfigSensorsAndTurnoutsAction extends AbstractAction {
+public class ConfigBaseStationAction extends AbstractAction {
 
     /**
      *
      */
-    private ConfigSensorsAndTurnoutsFrame f = null;
+    private ConfigBaseStationFrame f = null;
     
-    public ConfigSensorsAndTurnoutsAction(String s, String a) {
+    public ConfigBaseStationAction(String s, String a) {
         super(s);
     }
 
@@ -50,7 +50,7 @@ public class ConfigSensorsAndTurnoutsAction extends AbstractAction {
             // Send query for sensor values
             DCCppTrafficController tc = systemMemo.getDCCppTrafficController();
     
-            f = new ConfigSensorsAndTurnoutsFrame(smgr, tmgr, tc);
+            f = new ConfigBaseStationFrame(smgr, tmgr, tc);
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
             tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), f); // TODO: Put this in Constants?
             tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), f); // TODO: Put this in Constants?

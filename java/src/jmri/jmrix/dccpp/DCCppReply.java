@@ -113,7 +113,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public void parseReply(String s) {
-        DCCppReply r = DCCppReplyParser.parseReply(s);
+        //DCCppReply r = DCCppReplyParser.parseReply(s);
+        DCCppReply r = DCCppReply.parseDCCppReply(s);
         log.debug("in parseReply() string: {}", s);
         if (r != null) {
             this.opcode = r.opcode;
@@ -185,12 +186,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
                 return(r);
             case DCCppConstants.OUTPUT_REPLY:
-                if (s.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) {
-                    r.myReply = new StringBuilder(s);
-                    r.myRegex = DCCppConstants.OUTPUT_REPLY_REGEX;
-                } else if (s.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)) {
+                if (s.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.OUTPUT_LIST_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
+                    r.myRegex = DCCppConstants.OUTPUT_REPLY_REGEX;
                 } else {
                     //return(null);
                     return(new DCCppReply());
@@ -577,7 +578,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean getTOIsThrown() {
-	return(this.getValueBool(1));
+	return(this.getValueBool(2));
     }
 
     public boolean getTOIsClosed() {

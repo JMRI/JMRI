@@ -100,7 +100,8 @@ public final class DCCppConstants {
     public final static String SENSOR_ADD_REGEX = "S\\s(\\d+)\\s(\\d+)\\s([1,0])";
     public final static String SENSOR_DELETE_REGEX = "S\\s(\\d+)";
     public final static String SENSOR_LIST_REGEX = "S";
-    public final static String OUTPUT_CMD_REGEX = "\\s*z\\s*(\\d+)\\s+(\\d+)\\s*"; // <Z ID STATE>
+    //public final static String OUTPUT_CMD_REGEX = "\\s*Z\\s*(\\d+)\\s+(\\d+)\\s*"; // <Z ID STATE>
+    public final static String OUTPUT_CMD_REGEX = "Z\\s(\\d+)\\s([1,0])"; // <Z ID STATE>
     public final static String OUTPUT_ADD_REGEX = "\\s*Z\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // <Z ID PIN IFLAG>
     public final static String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*"; // <Z ID>
     public final static String OUTPUT_LIST_REGEX = "\\s*Z\\s*"; // <Z>
