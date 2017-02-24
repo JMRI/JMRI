@@ -519,9 +519,9 @@ EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
     if [ "$OS" = "macosx" ] ; then
-        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
+        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
     else
-        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
+        "${JAVACMD}" ${OPTIONS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
     fi
 
     EXIT_STATUS=$?
