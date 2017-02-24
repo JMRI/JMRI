@@ -115,7 +115,7 @@ public interface XmlAdapter {
      *                                   propagated upward to higher-level error
      *                                   handling
      * @deprecated since 4.7.2; use
-     * {@link #handleError(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Throwable)}
+     * {@link #handleException(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Throwable)}
      * instead
      */
     @Deprecated
