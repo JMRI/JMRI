@@ -12,12 +12,20 @@ import javax.annotation.Nonnull;
  * Provides common services for classes representing objects on the layout, and
  * allows a common form of access by their Managers.
  * <P>
- * Each object has a two names. The "user" name is entirely free form, and can
- * be used for any purpose. The "system" name is provided by the system-specific
+ * Each object has a two names. The "user" name is free form text except for two restrictions:
+ * <ul>
+ * <li>It can't be the empty string "".  No user name is coded as a null.
+ * <li>And eventually, we may insist on normalizing user names to e.g. remove leading and trailing white space; 
+ *     see see the normalizeUserName method
+ * </ul><p> 
+ * The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system. Each of these two
- * names must be unique for every NamedBean on the layout and a single NamedBean
- * cannot have a user name that is the same as its system name. Note that this
+ * (e.g. LocoNet, NCE, etc) and address within that system. 
+ * <p>
+ * Each of these two
+ * names must be unique for every NamedBean of the same type on the layout and a single NamedBean
+ * cannot have a user name that is the same as another of the same type's system name. 
+ * Note that this
  * restriction is not currently enforced, only warned about; a future version of
  * JMRI will enforce this restriction.
  *
