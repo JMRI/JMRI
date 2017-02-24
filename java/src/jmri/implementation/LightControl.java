@@ -65,7 +65,7 @@ public class LightControl {
     protected int _timeOnDuration = 0;          // duration (milliseconds) if TIMED_ON_CONTROL
     private String _controlSensor2Name = ""; // second controlling sensor if TWO_SENSOR_CONTROL
 
-    /**
+    /*
      * Accessor methods
      */
     public int getControlType() {

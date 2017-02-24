@@ -91,12 +91,12 @@ public class NceBinaryCommand {
     public static final int DISABLE_TRACK_CMD = 0x89;   // NCE enable program/kill main track, NCE-USB no
     public static final int DUMMY_CMD = 0x8C;           // NCE Dummy instruction, NCE-USB yes
     public static final int SPEED_MODE_CMD = 0x8D;      // NCE set speed mode, NCE-USB no
-    public static final int WRITEN_CMD = 0x8E;          // NCE write up to 16 bytes of memory command, NCE-USB no
+    public static final int WRITE_N_CMD = 0x8E;         // NCE write up to 16 bytes of memory command, NCE-USB no
     /**
-     * @deprecated since 4.7.2; use {@link #WRITEN_CMD} instead
+     * @deprecated since 4.7.2; use {@link #WRITE_N_CMD} instead
      */
     @Deprecated
-    public static final int WRITEn_CMD = WRITEN_CMD;
+    public static final int WRITEn_CMD = WRITE_N_CMD;
     public static final int READ16_CMD = 0x8F;          // NCE read 16 bytes of memory command, NCE-USB no
     public static final int DISPLAY3_CMD = 0x90;        // NCE write 16 char to cab display line 3, NCE-USB no
     public static final int DISPLAY4_CMD = 0x91;        // NCE write 16 char to cab display line 4, NCE-USB no
@@ -236,10 +236,10 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[4 + 16];
-        retVal[0] = (byte) (WRITEN_CMD); // write n bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
-        retVal[3] = (byte) num;          // number of bytes to write
+        retVal[0] = (byte) (WRITE_N_CMD); // write n bytes command
+        retVal[1] = (byte) (addr_h);      // high address
+        retVal[2] = (byte) (addr_l);      // low address
+        retVal[3] = (byte) num;           // number of bytes to write
 
         return retVal;
 

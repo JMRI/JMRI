@@ -287,6 +287,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 if (msg.isOutputCmdMessage()) {
                     log.debug("Output Command Message: {}", msg.toString());
                     r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
+                    log.debug("Reply String: {}", r);
                     reply = DCCppReplyParser.parseReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } else if (msg.isOutputAddMessage() || msg.isOutputDeleteMessage()) {
@@ -294,12 +295,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     r = "O";
                 } else if (msg.isListOutputsMessage()) {
                     log.debug("Output List Message");
-                    r = "Z 1 2 3 4"; // Totally fake, but the right number of arguments.
+                    r = "Y 1 2 3 4"; // Totally fake, but the right number of arguments.
                 } else {
                     log.error("Invalid Output Command: {}{", msg.toString());
-                    r = "Z 1 2";
+                    r = "Y 1 2";
                 }
-                reply = DCCppReplyParser.parseReply(r);
+                //reply = DCCppReplyParser.parseReply(r);
+                reply = DCCppReply.parseDCCppReply(r);
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
@@ -464,7 +466,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	}
          */
 
-        DCCppReply r = DCCppReplyParser.parseReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 05 Nov 2015 00:09:57");
+        DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         writeReply(r);
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread sent Reply" + r.toString());
@@ -546,7 +548,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         }
         // TODO: Still need to strip leading and trailing whitespace.
         log.debug("Complete message = {}", s);
-        return (DCCppMessage.parseDCCppMessage(s.toString()));
+        //return (DCCppMessage.parseDCCppMessage(s.toString()));
+        // BUG FIX: Incoming DCCpp messages are already formatted for DCC++ and don't
+        // need to be parsed. Indeed, trying to parse them will screw them up.
+        // So instead, we de-@Deprecated the string constructor so that we can
+        // directly create a DCCppReply from the incoming string without translation/parsing.
+        return (new DCCppMessage(s.toString()));
     }
 
     /**

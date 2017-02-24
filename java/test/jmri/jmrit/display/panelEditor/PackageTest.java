@@ -29,7 +29,8 @@ public class PackageTest extends TestCase {
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.panelEditor.configurexml.PackageTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PanelEditorActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PanelEditorTest.class));
         return suite;
     }
 
