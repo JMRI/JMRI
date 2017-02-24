@@ -32,6 +32,7 @@ public class DCCppCommandStationTest extends TestCase {
         //DCCppReply r = new DCCppReply("iDCC++BASE STATION vUNO_1.0: BUILD 23 Feb 2015 09:23:57");
 	// V1.1 Status Message
         DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        Assert.assertNotNull(r);
 	log.debug("Status Reply: {}", r.toString());
         c.setCommandStationInfo(r);
 	// Assert.assertTrue(c.getBaseStationType().equals("UNO_1.0"));
