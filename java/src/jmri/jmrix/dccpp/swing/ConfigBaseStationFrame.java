@@ -409,6 +409,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             
         }
     }
+    
     /** addButtonPressed()
      * 
      * Respond to the user pressing the "Add" button...
@@ -583,7 +584,10 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         if (value == JOptionPane.YES_OPTION) {
             tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage("E"), this);
             log.debug("Sending: <E> (Write To EEPROM)");
+            // These might not actually be necessary...
             sensorModel.fireTableDataChanged();
+            turnoutModel.fireTableDataChanged();
+            outputModel.fireTableDataChanged();
         }
     }
 
@@ -785,6 +789,14 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         }
     }
 
+    /** Button Editor class to replace the DefaultCellEditor in the table
+     * for the delete button.
+     * 
+     * NOTE: This isn't actually used anymore except as being a unique class
+     * type that can be returned from the TableModel classes for the column
+     * that includes the Delete buttons.
+     * 
+     */
     class ButtonEditor extends DefaultCellEditor {
 
         protected JButton button;
