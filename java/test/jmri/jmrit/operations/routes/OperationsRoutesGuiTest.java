@@ -7,9 +7,11 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JmriJFrame;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Routes GUI class
@@ -17,11 +19,10 @@ import org.junit.Assert;
  * @author	Dan Boudreau Copyright (C) 2009
  */
 public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
-
+  
+    @Test
     public void testRoutesTableFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadRoutes();
 
         RoutesTableFrame f = new RoutesTableFrame();
@@ -50,10 +51,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testRouteEditFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RouteEditFrame f = new RouteEditFrame();
         f.setTitle("Test Add Route Frame");
         f.initComponents(null);
@@ -118,10 +118,9 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testRouteEditFrameRead() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadRoutes();
         RouteManager lManager = RouteManager.instance();
         Route l2 = lManager.getRouteByName("Test Route C");
@@ -167,28 +166,14 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
     }
 
-    public OperationsRoutesGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsRoutesGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsRoutesGuiTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

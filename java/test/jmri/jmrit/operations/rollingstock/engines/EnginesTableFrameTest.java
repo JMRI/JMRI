@@ -11,9 +11,11 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations EnginesTableFrame class
@@ -23,10 +25,9 @@ import org.junit.Assert;
  */
 public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
+    @Test
     public void testenginesTableFrame() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // enable rfid field
         Setup.setRfidEnabled(true);
 
@@ -151,7 +152,8 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadEngines();
@@ -239,24 +241,9 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
     }
 
-    public EnginesTableFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EnginesTableFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EnginesTableFrameTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

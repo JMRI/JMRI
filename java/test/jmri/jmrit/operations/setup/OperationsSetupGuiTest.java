@@ -3,9 +3,11 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Setup GUI class
@@ -14,11 +16,10 @@ import org.junit.Assert;
  */
 public class OperationsSetupGuiTest extends OperationsSwingTestCase {
 
+    @Test
     public void testDirectionCheckBoxes() {
         // it may be possible to make this a headless test by only initializing the panel, not the frame
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OperationsSetupFrame f = new OperationsSetupFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -48,11 +49,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSetupFrameWrite() {
         // it may be possible to make this a headless test by only initializing the panel, not the frame
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // force creation of backup
         Setup.setCarTypes(Setup.AAR);
 
@@ -127,10 +127,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         frameRead.dispose();
     }
 
+    @Test
     public void testOptionFrameWrite() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OptionFrame f = new OptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -196,11 +195,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         // done
         f.dispose();
     }
-  
+ 
+    @Test 
     public void testBuildReportOptionFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         BuildReportOptionFrame f = new BuildReportOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -210,11 +208,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         // done
         f.dispose();        
     }
-      
+    
+    @Test  
     public void testPrintMoreOptionFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PrintMoreOptionFrame f = new PrintMoreOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -224,11 +221,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         // done
         f.dispose();        
     }
-    
+   
+    @Test 
     public void testEditManifestTextFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditManifestTextFrame f = new EditManifestTextFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -238,11 +234,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         // done
         f.dispose();        
     }
-    
+   
+    @Test 
     public void testEditSwitchListTextFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditSwitchListTextFrame f = new EditSwitchListTextFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -252,11 +247,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         // done
         f.dispose();        
     }
-    
+   
+    @Test 
     public void testEditManifestHeaderTextFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditManifestHeaderTextFrame f = new EditManifestHeaderTextFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -266,11 +260,10 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         // done
         f.dispose();        
     }
-    
+   
+    @Test 
     public void testPrintOptionFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PrintOptionFrame f = new PrintOptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
@@ -298,30 +291,16 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         new Setup();
     }
 
-    public OperationsSetupGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsSetupGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsSetupGuiTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

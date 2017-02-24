@@ -2,16 +2,17 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
+    @Test
     public void testNewFrameCreation() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = AutomationManager.instance();
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -99,10 +100,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testFrameCreation() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Automation automation = AutomationManager.instance().newAutomation("Automation Table Frame Name");
         automation.setComment("Gui Test Automation Table Frame Comment");
 
@@ -172,10 +172,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testFrameCreationWithAction() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Automation automation = AutomationManager.instance().newAutomation("Automation Table Frame Name");
         automation.setComment("Gui Test Automation Table Frame Comment");
         automation.addItem();
@@ -207,30 +206,15 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
-    }
-
-    public AutomationTableFrameGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",
-                AutomationTableFrameGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AutomationTableFrameGuiTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         // apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }

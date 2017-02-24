@@ -6,12 +6,12 @@ import java.util.Locale;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
@@ -28,23 +28,27 @@ import org.junit.Assert;
  */
 public class OperationsSwingTestCase {
 
-    @SuppressWarnings("unchecked")
     protected void pressDialogButton(JmriJFrame f, String buttonName) {
-        //  (with JfcUnit, not pushing this off to another thread)                                                      
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
+        JFrameOperator jfo = new JFrameOperator(f);
+        JDialogOperator jdo = new JDialogOperator(jfo,1); // wait for the first dialog.
+        NameComponentChooser bChooser = new NameComponentChooser(buttonName);
+        //JButtonOperator jbo = new JButtonOperator(jdo,buttonName);
+        JButtonOperator jbo = new JButtonOperator(jdo,bChooser);
         // Click button
-        enterClickAndLeave(button);
+        jbo.push();
+    }
+
+    protected void pressDialogButton(JmriJFrame f,String dialogTitle, String buttonName) {
+        JFrameOperator jfo = new JFrameOperator(f);
+        JDialogOperator jdo = new JDialogOperator(jfo,dialogTitle); // wait for the first dialog.
+        JButtonOperator jbo = new JButtonOperator(jdo,buttonName);
+        // Click button
+        jbo.push();
     }
 
     protected void enterClickAndLeave(JButton comp) {
         JButtonOperator jbo = new JButtonOperator(comp);
-        jbo.clickMouse();
+        jbo.push();
         //jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
     }
   
