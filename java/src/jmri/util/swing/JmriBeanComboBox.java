@@ -192,7 +192,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     /**
      * Set the display order of the combobox
      *
-     * @param blank true to insert, false to remove
+     * @param inDisplayOrder - the desired display order for this combobox
      */
     public void setDisplayOrder(int inDisplayOrder) {
         if (_displayOrder != inDisplayOrder) {
@@ -203,8 +203,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         }
     }
 
-    
-    
     /**
      * Insert a blank entry at the top of the list
      *

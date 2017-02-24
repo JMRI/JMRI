@@ -164,7 +164,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public LayoutEditorAuxTools auxTools = null;
     private ConnectivityUtil conTools = null;
 
-    private Font layoutFont = null;
+    private Font toolBarFont = null;
 
     private ButtonGroup itemGroup = null;
 
@@ -1074,7 +1074,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
-// FontSize = Font Size
                 prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
                 log.info("{} prefsProp 1075 is {}", windowFrameRef, prefsProp);
                 if (null != prefsProp) {
@@ -1561,70 +1560,70 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (toolBarFontSize != newToolBarFontSize) {
             toolBarFontSize = newToolBarFontSize;
             log.info("Font size: " + newToolBarFontSize);
-            layoutFont = zoomLabel.getFont();
-            layoutFont = layoutFont.deriveFont(newToolBarFontSize);
+            toolBarFont = zoomLabel.getFont();
+            toolBarFont = toolBarFont.deriveFont(newToolBarFontSize);
 
-            anchorButton.setFont(layoutFont);
-            blockContentsButton.setFont(layoutFont);
-            blockNameLabel.setFont(layoutFont);
-            blockSensorLabel.setFont(layoutFont);
-            blockSensorNameLabel.setFont(layoutFont);
-            changeIconsButton.setFont(layoutFont);
-            doubleXoverButton.setFont(layoutFont);
-            edgeButton.setFont(layoutFont);
-            endBumperButton.setFont(layoutFont);
-            iconLabelButton.setFont(layoutFont);
-            labelsLabel.setFont(layoutFont);
-            layoutDoubleSlipButton.setFont(layoutFont);
-            layoutSingleSlipButton.setFont(layoutFont);
-            levelXingButton.setFont(layoutFont);
-            lhXoverButton.setFont(layoutFont);
-            memoryButton.setFont(layoutFont);
-            multiSensorButton.setFont(layoutFont);
-            nodesLabel.setFont(layoutFont);
-            rhXoverButton.setFont(layoutFont);
-            sensorButton.setFont(layoutFont);
-            sensorComboBox.setFont(layoutFont);
-            signalButton.setFont(layoutFont);
-            signalHeadComboBox.setFont(layoutFont);
-            signalMastButton.setFont(layoutFont);
-            signalMastComboBox.setFont(layoutFont);
-            textLabelButton.setFont(layoutFont);
-            textLabelTextField.setFont(layoutFont);
-            textMemoryComboBox.setFont(layoutFont);
-            trackButton.setFont(layoutFont);
-            trackLabel.setFont(layoutFont);
-            turnoutLabel.setFont(layoutFont);
-            turnoutLHButton.setFont(layoutFont);
-            turnoutRHButton.setFont(layoutFont);
-            turnoutWYEButton.setFont(layoutFont);
+            anchorButton.setFont(toolBarFont);
+            blockContentsButton.setFont(toolBarFont);
+            blockNameLabel.setFont(toolBarFont);
+            blockSensorLabel.setFont(toolBarFont);
+            blockSensorNameLabel.setFont(toolBarFont);
+            changeIconsButton.setFont(toolBarFont);
+            doubleXoverButton.setFont(toolBarFont);
+            edgeButton.setFont(toolBarFont);
+            endBumperButton.setFont(toolBarFont);
+            iconLabelButton.setFont(toolBarFont);
+            labelsLabel.setFont(toolBarFont);
+            layoutDoubleSlipButton.setFont(toolBarFont);
+            layoutSingleSlipButton.setFont(toolBarFont);
+            levelXingButton.setFont(toolBarFont);
+            lhXoverButton.setFont(toolBarFont);
+            memoryButton.setFont(toolBarFont);
+            multiSensorButton.setFont(toolBarFont);
+            nodesLabel.setFont(toolBarFont);
+            rhXoverButton.setFont(toolBarFont);
+            sensorButton.setFont(toolBarFont);
+            sensorComboBox.setFont(toolBarFont);
+            signalButton.setFont(toolBarFont);
+            signalHeadComboBox.setFont(toolBarFont);
+            signalMastButton.setFont(toolBarFont);
+            signalMastComboBox.setFont(toolBarFont);
+            textLabelButton.setFont(toolBarFont);
+            textLabelTextField.setFont(toolBarFont);
+            textMemoryComboBox.setFont(toolBarFont);
+            trackButton.setFont(toolBarFont);
+            trackLabel.setFont(toolBarFont);
+            turnoutLabel.setFont(toolBarFont);
+            turnoutLHButton.setFont(toolBarFont);
+            turnoutRHButton.setFont(toolBarFont);
+            turnoutWYEButton.setFont(toolBarFont);
 
             for (Component c : locationPanel.getComponents()) {
-                c.setFont(layoutFont);
+                c.setFont(toolBarFont);
             }
 
             for (Component c : extraTurnoutPanel.getComponents()) {
-                c.setFont(layoutFont);
+                c.setFont(toolBarFont);
             }
 
             for (Component c : helpBar.getComponents()) {
-                c.setFont(layoutFont);
+                c.setFont(toolBarFont);
             }
 
             for (Component c : rotationPanel.getComponents()) {
-                c.setFont(layoutFont);
+                c.setFont(toolBarFont);
             }
 
             for (Component c : trackSegmentPropertiesPanel.getComponents()) {
-                c.setFont(layoutFont);
+                c.setFont(toolBarFont);
             }
 
             for (Component c : turnoutNamePanel.getComponents()) {
-                c.setFont(layoutFont);
+                c.setFont(toolBarFont);
             }
 
             for (Component c : zoomPanel.getComponents()) {
-                c.setFont(layoutFont);
+                c.setFont(toolBarFont);
             }
         }
     }
@@ -2024,6 +2023,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             toolBarFontSizeGroup.add(fontSizeButton);
             fontSizeButton.setSelected(fontSizeFloat == toolBarFontSize);
         }
+        toolBarFontSizeMenu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                String fontSizeString = String.valueOf((int)toolBarFontSize);
+                for (Component c : toolBarFontSizeMenu.getMenuComponents()) {
+                    if (c instanceof JRadioButtonMenuItem) {
+                        JRadioButtonMenuItem crb = (JRadioButtonMenuItem) c;
+                        String menuItemFontSizeString = crb.getText();
+                        crb.setSelected(menuItemFontSizeString.equals(fontSizeString));
+                    }
+                }
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
         toolBarMenu.add(toolBarFontSizeMenu);
 
         //
@@ -2079,8 +2101,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
-                // TODO: update menu item based on focused combobox (if any)
-                ///
+                /// TODO: update menu item based on focused combobox (if any)
+                log.debug("update menu item based on focused combobox");
             }
 
             @Override
@@ -2672,8 +2694,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             gDDMDO = focusedJBCB.getDisplayOrder();
         }
 
-        int idx = 1;
-        for (Component c : dropDownListsDisplayOrderMenu.getComponents()) {
+        int idx = 0;
+        for (Component c : dropDownListsDisplayOrderMenu.getMenuComponents()) {
             if (c instanceof JRadioButtonMenuItem) {
                 JRadioButtonMenuItem crb = (JRadioButtonMenuItem) c;
                 crb.setSelected(gDDMDO == idx);
