@@ -29,8 +29,8 @@ public class PackageTest extends TestCase {
         suite.addTest(ScheduleTest.suite());
         suite.addTest(ScheduleManagerTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(ScheduleEditFrameGuiTest.suite());
-        suite.addTest(ScheduleGuiTests.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleEditFrameGuiTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleGuiTests.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleCopyActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleCopyFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleTableModelTest.class));

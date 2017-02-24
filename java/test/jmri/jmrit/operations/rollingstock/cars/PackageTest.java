@@ -36,11 +36,11 @@ public class PackageTest extends TestCase {
         suite.addTest(CarManagerTest.suite());
         suite.addTest(XmlTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(CarsTableFrameTest.suite());
-        suite.addTest(CarEditFrameTest.suite());
-        suite.addTest(CarAttributeEditFrameTest.suite());
-        suite.addTest(CarLoadEditFrameTest.suite());
-        suite.addTest(CarSetFrameTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarAttributeEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarLoadEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarSetFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarManagerXmlTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarsSetFrameTest.class));

@@ -4,10 +4,10 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -20,6 +20,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
     private LocationManager lManager = null;
     private Location l = null;
 
+    @Test
     public void testAddInterchange() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -32,7 +33,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange track
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("new interchange track", t);
@@ -44,6 +45,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSetDirectionUsingCheckbox() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -56,25 +58,24 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.addTrackButton);
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
         Assert.assertNotNull("2nd interchange track", t);
         Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
         Assert.assertEquals("Direction All before change", ALL , t.getTrainDirections());
 
         // deselect east and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.southCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("west and north", Track.NORTH + Track.WEST, t.getTrainDirections());
 
         f.dispose();
     }
 
+    @Test
     public void testSetAcceptedCarTypes() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -87,25 +88,25 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create one interchange tracks
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
 
         // check track accepts Boxcars
         Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
         // test clear car types button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.clearButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        enterClickAndLeave(f.clearButton);
+        enterClickAndLeave(f.saveTrackButton);
         Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.setButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        enterClickAndLeave(f.setButton);
+        enterClickAndLeave(f.saveTrackButton);
         Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
 
         f.dispose();
     }
 
-
+    @Test
     public void testAddCloseAndRestore() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -118,17 +119,17 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         // create two interchange tracks
         f.trackNameTextField.setText("new interchange track");
         f.trackLengthTextField.setText("321");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd interchange track");
         f.trackLengthTextField.setText("4331");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         // deselect east and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.southCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        enterClickAndLeave(f.saveTrackButton);
 
         f.dispose();
 
@@ -166,7 +167,8 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadLocations();
@@ -179,25 +181,10 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         l = lManager.getLocationByName("Test Loc C");
     }
 
-    public InterchangeEditFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", InterchangeEditFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(InterchangeEditFrameTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

@@ -3,10 +3,10 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -19,6 +19,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
     private LocationManager lManager = LocationManager.instance();
     private Location l = lManager.getLocationByName("Test Loc C");
 
+    @Test
     public void testCreateYardTrackDefault() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -30,7 +31,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // create a yard track with length 43.
         f.trackNameTextField.setText("new yard track");
         f.trackLengthTextField.setText("43");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("new yard track", null);
         Assert.assertNotNull("new yard track", t);
@@ -42,7 +43,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // add a second track with length 6543.
         f.trackNameTextField.setText("2nd yard track");
         f.trackLengthTextField.setText("6543");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("2nd yard track", null);
         Assert.assertNotNull("2nd yard track", t);
@@ -54,7 +55,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // add A third track with length 1.
         f.trackNameTextField.setText("3rd yard track");
         f.trackLengthTextField.setText("1");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("3rd yard track", null);
         Assert.assertNotNull("3rd yard track", t);
@@ -68,6 +69,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSetDirectionUsingCheckbox() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -78,8 +80,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
         f.trackNameTextField.setText("4th yard track");
         f.trackLengthTextField.setText("21");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("4th yard track", null);
         Assert.assertNotNull("4th yard track", t);
@@ -87,13 +88,11 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Direction all before change", ALL, t.getTrainDirections());
 
         // deselect east, west and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.westCheckBox);
+        enterClickAndLeave(f.southCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
-
-        sleep(1);   // for slow machines
+        enterClickAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
         
@@ -103,6 +102,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
     }
 
+    @Test
     public void testCreateTracksAndReloadFrame() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't use Assume in TestCase subclasses
@@ -114,26 +114,26 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         // create four yard tracks
         f.trackNameTextField.setText("new yard track");
         f.trackLengthTextField.setText("43");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd yard track");
         f.trackLengthTextField.setText("6543");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("3rd yard track");
         f.trackLengthTextField.setText("1");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("4th yard track");
         f.trackLengthTextField.setText("21");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTrackButton));
+        enterClickAndLeave(f.addTrackButton);
 
         // deselect east, west and south check boxes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.eastCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.westCheckBox));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.southCheckBox));
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.westCheckBox);
+        enterClickAndLeave(f.southCheckBox);
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrackButton));
+        enterClickAndLeave(f.saveTrackButton);
 
         // clean up the frame
         f.setVisible(false);
@@ -175,7 +175,8 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadLocations();
@@ -184,24 +185,9 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
         l = lManager.getLocationByName("Test Loc C");
     }
 
-    public YardEditFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", YardEditFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(YardEditFrameTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }
