@@ -337,6 +337,10 @@
 
       <p>Additional documentation will be provided on other pages
       linked here:</p>
+      <ul>
+          <li><a href="Sensors.shtml">Configuring Sensors</a></li>
+          <li><a href="Turnouts.shtml">Configuring Turnouts and Outputs</a></li>
+      </ul>
 
       <h3>Third Party info</h3>For more information on how to
       construct and program a DCC++ Base Station, refer to the
