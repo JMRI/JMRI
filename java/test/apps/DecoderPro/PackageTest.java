@@ -5,9 +5,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        BundleTest.class,
-        DecoderProTest.class
-
+   BundleTest.class,
+   DecoderProTest.class,
+   DecoderProActionTest.class,
+   DecoderProPaneTest.class
 })
 /**
  * Invoke complete set of tests for the apps.DecoderPro package

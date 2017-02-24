@@ -1,4 +1,4 @@
-package apps.systemconsole;
+package apps.gui;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -6,10 +6,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SystemConsolePreferencesManagerTest.class,
+   GuiLafPreferencesManagerTest.class,
 })
 /**
- * Tests for the apps.systemconsole package
+ * Tests for the apps.gui package
  *
  * @author      Paul Bender Copyright (C) 2017
  */
