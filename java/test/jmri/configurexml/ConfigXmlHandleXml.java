@@ -1,5 +1,7 @@
 package jmri.configurexml;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.jdom2.Element;
 
 /**
@@ -56,7 +58,16 @@ class ConfigXmlHandleXml implements XmlAdapter {
             String description,
             String systemName,
             String userName,
-            Throwable exception) throws JmriConfigureXmlException {
+            Exception exception) throws JmriConfigureXmlException {
+    }
+
+    @Override
+    public void handleException(
+            @Nonnull String description,
+            @Nullable String operation,
+            @Nullable String systemName,
+            @Nullable String userName,
+            @Nullable Exception exception) throws JmriConfigureXmlException {
     }
 
     @Override
