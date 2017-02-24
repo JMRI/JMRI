@@ -304,8 +304,8 @@ public interface NamedBean {
      * This implementation just passes the name through, but later versions might 
      * e.g. trim leading and trailing spaces.
      *
-     * @param inputName 
-     * @throws CantNormalizeNameException If the inputName can't be converted to normalized form
+     * @param inputName User name to be normalized
+     * @throws BadUserNameException If the inputName can't be converted to normalized form
      * @return A user name in standard normalized form 
      */
     @CheckReturnValue
