@@ -45,6 +45,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         TrainsTableFrame f = new TrainsTableFrame();
         f.setLocation(10, 20);
+
         enterClickAndLeave(f.saveButton);
 
         Assert.assertEquals("sort by name", TrainsTableModel.TIMECOLUMNNAME, f.getSortBy());
@@ -128,7 +129,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.saveTrainButton);
 
         // clear no route dialogue box
-        pressDialogButton(trainEditFrame, "OK");
+        pressDialogButton(trainEditFrame,Bundle.getMessage("TrainNoRoute"), "OK");
 
         Assert.assertEquals("train comment", "15:45", t.getDepartureTime());
 
@@ -217,7 +218,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         // don't delete, we need this train for the next two tests
         // testTrainBuildOptionFrame() and testTrainEditFrameRead()
-        pressDialogButton(trainEditFrame, "No");
+        pressDialogButton(trainEditFrame,Bundle.getMessage("deleteTrain"),"No");
 
         ThreadingUtil.runOnGUI(()->{
             ref.dispose();
@@ -382,7 +383,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "", t.getSecondLegStartLocationName());
@@ -408,7 +409,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("caboose 1 change", Train.ADD_CABOOSE, t.getSecondLegOptions());
 
@@ -423,7 +424,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("helper 1 change", Train.HELPER_ENGINES, t.getSecondLegOptions());
 
@@ -446,7 +447,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "", t.getThirdLegStartLocationName());
@@ -472,7 +473,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
@@ -487,7 +488,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotSave"), "OK");
 
         Assert.assertEquals("helper 2 change", Train.HELPER_ENGINES, t.getThirdLegOptions());
 
@@ -591,7 +592,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         enterClickAndLeave(trainEditFrame.deleteTrainButton);
 
         // And now press the confirmation button
-        pressDialogButton(trainEditFrame, "Yes");
+        pressDialogButton(trainEditFrame,Bundle.getMessage("deleteTrain"),"Yes");
 
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNull("train deleted", t);

@@ -11,6 +11,7 @@ import org.junit.Test;
 
 public class AutomationsTableFrameGuiTest extends OperationsSwingTestCase {
 
+    @Test
     public void testFrameCreation() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = AutomationManager.instance();

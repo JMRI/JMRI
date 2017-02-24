@@ -25,9 +25,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     @Test
     public void testTrainsScheduleTableFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleTableFrame f = new TrainsScheduleTableFrame();
         f.setVisible(true);
 
@@ -37,12 +35,11 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     @Test
     public void testTrainsScheduleEditFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScheduleEditFrame f = new TrainsScheduleEditFrame();
         TrainScheduleManager tsm = TrainScheduleManager.instance();
         Assert.assertNotNull("frame exists", f);
+        f.setVisible(true);
 
         f.addTextBox.setText("A New Day");
         enterClickAndLeave(f.addButton);

@@ -81,10 +81,12 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
 
         enterClickAndLeave(p.saveButton);
         // dialog window should appear regarding train lengths
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,java.text.MessageFormat.format(
+                    Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), "OK");
         // dialog window should appear regarding railroad name
-        pressDialogButton(f, "No");
-        // done
+        /*pressDialogButton(f,java.text.MessageFormat.format(Bundle
+                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,"No");
+        // done*/
         f.dispose();
 
         // it may be possible to make this a headless test by only initializing the panel, not the frame

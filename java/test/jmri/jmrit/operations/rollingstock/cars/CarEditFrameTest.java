@@ -42,7 +42,8 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         f.commentTextField.setText("test car comment field");
         
         // Save button should be disabled
-        enterClickAndLeave(f.saveButton);
+        // Jemmy has no way to click a disabled button.
+        //enterClickAndLeave(f.saveButton);
 
         Car c6 = cManager.getByRoadAndNumber("SP", "6");
         Assert.assertNull("Car should not exist", c6);
@@ -70,7 +71,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveButton);
         // Change all car type to caboose dialog window should appear
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
+        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
 
         Assert.assertTrue("now a caboose", c6.isCaboose());
         Assert.assertFalse("not hazardous 2", c6.isHazardous());
@@ -80,7 +81,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("still no fred", c6.hasFred());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
+        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
         Assert.assertFalse("no longer a caboose", c6.isCaboose());
         Assert.assertTrue("now has a fred", c6.hasFred());
         Assert.assertFalse("not hazardous 3", c6.isHazardous());
@@ -89,7 +90,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("still not hazardous 3", c6.isHazardous());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
+        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
         Assert.assertFalse("still no longer a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
         Assert.assertTrue("now hazardous", c6.isHazardous());
@@ -98,7 +99,7 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("not utility", c6.isUtility());
         enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
+        pressDialogButton(f,java.text.MessageFormat.format(Bundle.getMessage("carModifyAllType"),new Object[]{"Caboose"}), "No");
         Assert.assertTrue("now utility", c6.isUtility());
         Assert.assertFalse("not a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());

@@ -166,7 +166,7 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals(1, AutomationManager.instance().getSize());
         enterClickAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
-        pressDialogButton(f, "Yes");
+        pressDialogButton(f,Bundle.getMessage("DeleteAutomation?"), "Yes");
         Assert.assertEquals(0, AutomationManager.instance().getSize());
 
         f.dispose();
@@ -198,7 +198,7 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals(1, AutomationManager.instance().getSize());
         enterClickAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
-        pressDialogButton(f, "No");
+        pressDialogButton(f,Bundle.getMessage("DeleteAutomation?"), "No");
         Assert.assertEquals(1, AutomationManager.instance().getSize());
 
         f.dispose();

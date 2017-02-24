@@ -24,13 +24,13 @@ public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
         
         enterClickAndLeave(f.copyButton);
         // dialog window requesting name for automation should appear
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotCopyAutomation"), "OK");
         
         // enter a name for the automation
         f.automationNameTextField.setText("Name of new automation");
         enterClickAndLeave(f.copyButton);
         // dialog window requesting automation to copy should appear
-        pressDialogButton(f, "OK");
+        pressDialogButton(f,Bundle.getMessage("CanNotCopyAutomation"), "OK");
           
         f.dispose();
     }
@@ -55,14 +55,14 @@ public class AutomationCopyFrameGuiTest extends OperationsSwingTestCase {
         
         enterClickAndLeave(copyFrame.copyButton);
         // dialog window requesting name for automation should appear
-        pressDialogButton(copyFrame, "OK");
+        pressDialogButton(copyFrame,Bundle.getMessage("CanNotCopyAutomation"), "OK");
         
         // enter a name for the automation
         copyFrame.automationNameTextField.setText("Name of new automation 2");
         enterClickAndLeave(copyFrame.copyButton);
         
         // dialog window requesting automation to copy should appear
-        pressDialogButton(copyFrame, "OK");
+        pressDialogButton(copyFrame,Bundle.getMessage("CanNotCopyAutomation"), "OK");
  
         // still only one automation
         Assert.assertEquals("Number of automations", 1, manager.getSize());
