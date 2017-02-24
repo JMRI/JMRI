@@ -16,7 +16,6 @@ import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
-import jmri.jmrix.dccpp.DCCppReplyParser;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import org.slf4j.Logger;
@@ -251,7 +250,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         return (null);
                     }
                     r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
-                    reply = DCCppReplyParser.parseReply(r);
+                    reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
                     log.error("Malformed pattern syntax! ");
@@ -279,7 +278,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.debug("TURNOUT_CMD detected");
                     r = "H" + msg.getTOIDString() + " " + Integer.toString(msg.getTOStateInt());
                 }
-                reply = DCCppReplyParser.parseReply(r);
+                reply = DCCppReply.parseDCCppReply(r);
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
@@ -288,7 +287,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.debug("Output Command Message: {}", msg.toString());
                     r = "Y" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
                     log.debug("Reply String: {}", r);
-                    reply = DCCppReplyParser.parseReply(r);
+                    reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } else if (msg.isOutputAddMessage() || msg.isOutputDeleteMessage()) {
                     log.debug("Output Add/Delete Message");
@@ -320,7 +319,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.debug("Invalid SENSOR_CMD detected");
                     r = "X";
                 }
-                reply = DCCppReplyParser.parseReply(r);
+                reply = DCCppReply.parseDCCppReply(r);
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
@@ -338,7 +337,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                             + m.group(4) + " "
                             + m.group(2);
                     CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
-                    reply = DCCppReplyParser.parseReply(r);
+                    reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
                     log.error("Malformed pattern syntax! ");
@@ -373,7 +372,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     } else {
                         CVs[idx] = CVs[idx] & ~(0x0001 << bit);
                     }
-                    reply = DCCppReplyParser.parseReply(r);
+                    reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
                     log.error("Malformed pattern syntax! ");
@@ -400,7 +399,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     // TODO: Work Magic Here to retrieve stored value.
                     int cv = CVs[Integer.parseInt(m.group(1))];
                     r = "r " + m.group(2) + " " + m.group(3) + " " + Integer.toString(cv);
-                    reply = DCCppReplyParser.parseReply(r);
+                    reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
                     log.error("Malformed pattern syntax! ");
@@ -417,21 +416,21 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
                 TrackPowerState = true;
-                reply = DCCppReplyParser.parseReply("p1");
+                reply = DCCppReply.parseDCCppReply("p1");
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
             case DCCppConstants.TRACK_POWER_OFF:
                 log.debug("TRACK_POWER_OFF detected");
                 TrackPowerState = false;
-                reply = DCCppReplyParser.parseReply("p0");
+                reply = DCCppReply.parseDCCppReply("p0");
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
             case DCCppConstants.READ_TRACK_CURRENT:
                 log.debug("READ_TRACK_CURRENT detected");
                 int randint = 480 + rgen.nextInt(64);
-                reply = DCCppReplyParser.parseReply("a " + (TrackPowerState ? Integer.toString(randint) : "0"));
+                reply = DCCppReply.parseDCCppReply("a " + (TrackPowerState ? Integer.toString(randint) : "0"));
                 log.debug("Reply generated = {}", reply.toString());
                 break;
 
@@ -484,7 +483,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
         String reply = (value == 1 ? "Q " : "q ") + Integer.toString(sensorNum);
 
-        DCCppReply r = DCCppReplyParser.parseReply(reply);
+        DCCppReply r = DCCppReply.parseDCCppReply(reply);
         writeReply(r);
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread sent Reply" + r.toString());

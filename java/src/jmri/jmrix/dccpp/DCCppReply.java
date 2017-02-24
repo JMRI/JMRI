@@ -281,6 +281,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 r.myReply = new StringBuilder(s);
                 r.myRegex = DCCppConstants.MADC_SUCCESS_REPLY_REGEX;
                 return(r);
+            case DCCppConstants.COMM_TYPE_REPLY:
+                r.myReply = new StringBuilder(s);
+                r.myRegex = DCCppConstants.COMM_TYPE_REPLY_REGEX;
+                return(r);
             default:
                     //return(null);
                     return(new DCCppReply());
@@ -906,6 +910,24 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public int getFreeMemoryInt() {
 	return(Integer.parseInt(this.getFreeMemoryString()));
     }
+    
+    public int getCommTypeInt() {
+ 	if (this.isCommTypeReply()) {
+            return(this.getValueInt(1));
+	} else {
+	    log.error("CommTypeReply Parser called on non-CommTypeReply message type {}", this.getOpCodeChar());
+	    return(0);
+        }
+    }
+    
+    public String getCommTypeValueString() {
+ 	if (this.isCommTypeReply()) {
+            return(this.getValueString(2));
+	} else {
+	    log.error("CommTypeReply Parser called on non-CommTypeReply message type {}", this.getOpCodeChar());
+	    return("N/A");
+        }
+    }
 
 
     //-------------------------------------------------------------------
@@ -931,6 +953,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isFreeMemoryReply() { return(this.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)); }
     public boolean isOutputListReply() { return(this.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)); }
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
+    public boolean isCommTypeReply() { return(this.matches(DCCppConstants.COMM_TYPE_REPLY_REGEX)); }
 
     public boolean isValidReplyFormat() {
 	// NOTE: Does not (yet) handle STATUS replies

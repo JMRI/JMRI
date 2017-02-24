@@ -153,7 +153,9 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 text += "\tFree Memory: " + l.getFreeMemoryString();
                 break;
             case DCCppConstants.COMM_TYPE_REPLY:
-                text = "Comm Port: " + l.getValueString(2);
+                text = "Comm Type Reply ";
+                text += "Type: " + Integer.toString(l.getCommTypeInt());
+                text += " Port: " + l.getCommTypeValueString();
                 break;
             case DCCppConstants.MADC_FAIL_REPLY:
                 text = "No Sensor/Turnout/Output Reply ";
