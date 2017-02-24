@@ -12,23 +12,29 @@ import javax.annotation.Nonnull;
  * Provides common services for classes representing objects on the layout, and
  * allows a common form of access by their Managers.
  * <P>
- * Each object has a two names. The "user" name is free form text except for two restrictions:
- * <ul>
- * <li>It can't be the empty string "".  No user name is coded as a null.
- * <li>And eventually, we may insist on normalizing user names to e.g. remove leading and trailing white space; 
- *     see see the normalizeUserName method
- * </ul><p> 
+ * Each object has two types of names:<p>
  * The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system. 
+ * (e.g. LocoNet, NCE, etc) and address within that system. It must 
+ * be present and unique across the JMRI instance.
  * <p>
+ * The "user" name is optional. It's free form text except for two restrictions:
+ * <ul>
+ * <li>It can't be the empty string "".  (A non-existant user name is coded as a null)
+ * <li>And eventually, we may insist on normalizing user names to a specific form, 
+ *     e.g. remove leading and trailing white space; 
+ *     see the {@link #normalizeUserName(java.lang.String)} method
+ * </ul><p> 
  * Each of these two
  * names must be unique for every NamedBean of the same type on the layout and a single NamedBean
- * cannot have a user name that is the same as another of the same type's system name. 
- * Note that this
- * restriction is not currently enforced, only warned about; a future version of
- * JMRI will enforce this restriction.
- *
+ * cannot have a user name that is the same as the system name of another NamedBean of the same type. 
+ * (The complex wording is saying that a single NamedBean object is allowed to have its 
+ * system name and user name be the same, but that's the only non-uniqueness that's allowed within a specific type).
+ * Note that the uniqueness restrictions are currently not completely 
+ * enforced, only warned about; a future version of JMRI will enforce this restriction.
+ *<p>
+ * For more information, see the <a href="http://jmri.org/help/en/html/doc/Technical/Names.shtml">Names and Naming</a> page
+ * in the <a href="http://jmri.org/help/en/html/doc/Technical/index.shtml">Technical Info</a> pages.
  * <hr>
  * This file is part of JMRI.
  * <P>
