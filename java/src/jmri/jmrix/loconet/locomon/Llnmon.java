@@ -226,7 +226,7 @@ public class Llnmon {
             isShortAddress = Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_ADDRESS");
             addressHigh = 0;
         }
-        if (addressHigh == 0) {
+        if ((addressHigh == 0) | (addressHigh == 0x7f)) {
             if (addressLow >= 120) {
                 return Bundle.getMessage("LN_MSG_LOCO_ADDRESS_HELPER_MIXED_ADDRESS",
                         String.valueOf(addressLow), isShortAddress, "(c" +     // NOI18N
@@ -345,7 +345,7 @@ public class Llnmon {
             if ((ss2 & LnConstants.STAT2_ALIAS_MASK) == LnConstants.STAT2_ID_IS_ALIAS) {
                 /* this is an aliased address and we have the alias */
                 return Bundle.getMessage("LN_MSG_LOCO_ADDR_HELPER_ALIAS_2_DIGIT_WITH_KNOWN_4_DIGIT",
-                        LOCO_ADR(id2, id1), mixedAdrStr);
+                        Integer.toString(LOCO_ADR(id2, id1)), mixedAdrStr);
             } else {
                 /* this is an aliased address and we don't have the alias */
             return Bundle.getMessage("LN_MSG_LOCO_ADDR_HELPER_ALIAS_2_DIGIT_WITH_UNKNOWN_4_DIGIT",
@@ -379,22 +379,26 @@ public class Llnmon {
         switch (type) {
             case LnConstants.RE_IPL_DIGITRAX_HOST_ALL:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_ALLDEVICES");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_LNRP:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_LNRP");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT4");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR92");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT402");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS51");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR3");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_WTL12:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_WTL12");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS210");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR3");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT402");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DT500:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT500");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS51");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR92");
             default:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);
         }
@@ -944,9 +948,54 @@ public class Llnmon {
 
             case LnConstants.OPC_ALM_WRITE:
             case LnConstants.OPC_ALM_READ: {
-
                 if (l.getElement(1) == 0x10) {
-                    // ALM read and write messages
+                    
+                    if ((l.getElement(2) == 0) && 
+                            (l.getElement(3) == 0)
+                            && (l.getElement(6) == 0)) {
+                            return Bundle.getMessage("LN_MSG_QUERY_ALIAS_INFO");
+                    } else if ((l.getElement(2) == 0)
+                            && (l.getElement(3) == 0) 
+                            && (l.getElement(6) == 0x0b)) {
+                        return Bundle.getMessage("LN_MSG_ALIAS_INFO_REPORT", l.getElement(4)*2);
+                    } else if ((l.getElement(2) == 0 )
+                            && (l.getElement(6) == 0xf)
+                            && (l.getElement(14) == 0)) {
+                        // Alias read and write messages
+                        String message;
+                        if (l.getElement(3) == 0x2) {
+                            if (l.getOpCode() == LnConstants.OPC_ALM_WRITE) {
+                                return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
+                            } else {
+                                message = "LN_MSG_REPORT_ALIAS_2_ALIASES";
+                            }
+                        } else {
+                            break;
+                        }
+                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
+                        int shortAddr = l.getElement(9);
+                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
+                        int shortAddr2 = l.getElement(13);
+                        int pair = l.getElement(4);
+                            
+                        return Bundle.getMessage(message, pair,
+                                longAddr, shortAddr, longAddr2, shortAddr2);
+                    } else if ((l.getElement(2) == 0)
+                            && (l.getElement(3) == 0x43)) {
+                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
+                        int shortAddr = l.getElement(9);
+                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
+                        int shortAddr2 = l.getElement(13);
+                        int pair = l.getElement(4);
+                        return Bundle.getMessage("LN_MSG_SET_ALIAS_2_ALIASES",
+                                pair, longAddr, shortAddr, longAddr2, shortAddr2);
+                    } else if ((l.getElement(2) == 0)
+                            && (l.getElement(6) == 0)
+                            && (l.getElement(14) == 0)) {
+                        return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
+                        }
+                            
+                    }
                     return Bundle.getMessage(
                             ((l.getElement(0) == LnConstants.OPC_ALM_WRITE)
                                     ? "LN_MSG_ALM_WRITE"
@@ -973,8 +1022,7 @@ public class Llnmon {
                                     StringUtil.twoHexFromInt(l.getElement(13))),
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(14))));
-                } 
-                break;
+                
             } // case LnConstants.OPC_ALM_READ
 
             /*
@@ -1280,7 +1328,7 @@ public class Llnmon {
                     }
                     case 0x10: {
                         // High order bit stashed in another element again.
-                        int level = (l.getElement(6) & 0x7F) | ((l.getElement(4) & 0x02) << 6);
+                        int level = (l.getElement(6) & 0x7F) + ((l.getElement(4) & 0x02) << 6);
 
                         return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_REPORT", l.getElement(5),
                                 level);
@@ -1435,7 +1483,6 @@ public class Llnmon {
             } //end of case 0x08, which decodes 0xe5 0x14 0x08
 
             case LnConstants.RE_IPL_IDENTITY_OPERATION: {
-                String interpretedMessage;
                 // Operations related to DigiIPL "Ping", "Identify" and "Discover"
                 String device;
 
@@ -1543,165 +1590,7 @@ public class Llnmon {
                         break;
                     } // end case 0x08, which decodes 0xe5 0x14 0x0f 0x08
                     case 0x10: {
-                        /**
-                         * **********************************************************************************
-                         * IPL device identity report -
-                         * RE_IPL_IDENTITY_OPERATION (Device
-                         * Report) * The message bytes are
-                         * assigned as follows:
-                         *
-                         * <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst>
-                         * <DI_Slv> <DI_Smf> <DI_Hsw> ...
-                         *
-                         * <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1>
-                         * <DI_Hs2> <DI_F2> <DI_Ss0> ...
-                         *
-                         * <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> *
-                         * where:
-                         *
-                         * <DI_Hmf> DigiIPL-capable Host device
-                         * manufacturer number. This is not *
-                         * the same as an NMRA Manufacturer ID.
-                         * * 0x00 Digitrax * Others No other
-                         * Host device manufacturer * numbers
-                         * have been reverse- * engineered
-                         *
-                         * <DI_Hst> encodes the DigiIPL-capable
-                         * Host device type as follows: * When
-                         * <DI_Hmf> = 0x00 * 0x00 (0 decimal) No
-                         * Host device type reported * 0x04 (4
-                         * decimal) UT4D * 0x23 (35 decimal) PR3
-                         * * 0x2A (42 decimal) DT402 (or DT402R
-                         * or DT402D) * 0x33 (51 decimal) DCS51
-                         * * 0x5C (92 decimal) UR92 * Others No
-                         * other Host device types have been *
-                         * reverse-engineered * When <DI_Hmf> is
-                         * not 0x00 * All values Not
-                         * reverse-engineered
-                         *
-                         * <DI_Slv> encodes the DigiIPL-capable
-                         * Slave device type as follows: * When
-                         * <DI_Smf> = 0x00 * 0x00 (0 decimal)
-                         * Report for all Slave device types *
-                         * 0x18 (24 decimal) RF24 * Others No
-                         * other Slave device types have been *
-                         * reverse-engineered
-                         *
-                         * <DI_Smf> DigiIPL-capable Slave device
-                         * manufacturer number. This is not *
-                         * the same as an NMRA Manufacturer ID.
-                         * * 0x00 Digitrax * Others No other
-                         * Slave device manufacturer * numbers
-                         * have been reverse- * engineered
-                         *
-                         * <DI_Hsw> encodes the DigiIPL-capable
-                         * Host device firmware revision *
-                         * number as follows: * bit 7 always 0 *
-                         * bits 6-3 Host device firmware major
-                         * revision number * bits 2-0 Host
-                         * device firmware minor revision number
-                         *
-                         * <DI_F1> encodes additional bits for
-                         * the Slave device firmware major *
-                         * revision number and for the Host
-                         * device serial number. * bits 7-4
-                         * always 0000b * bit 3 Bit 23 of Host
-                         * Device Serial Number * bit 2 Bit 15
-                         * of Host Device Serial Number * bit 1
-                         * Bit 7 of Host Device Serial Number *
-                         * bit 0 bit 4 of Slave device firmware
-                         * Major number
-                         *
-                         * <DI_Ssw> encodes the DigiIPL-capable
-                         * Slave device firmware revision *
-                         * number as follows: * bit 7 always 0 *
-                         * bits 6-3 Host device firmware major
-                         * revision number * bits 6-3 4
-                         * least-significant bits of Slave
-                         * device firmware major * revision
-                         * number (see also <DI_F1>[0]) * bits
-                         * 2-0 Slave device firmware minor
-                         * revision number
-                         *
-                         * <DI_Hs0> encodes 7 bits of the 24 bit
-                         * Host device serial number: * bit 7
-                         * always 0 * bits 6-3 Bits 6-0 of Host
-                         * device serial number
-                         *
-                         * <DI_Hs1> encodes 7 bits of the 24 bit
-                         * Host device serial number: * bit 7
-                         * always 0 * bits 6-3 Bits 14-9 of Host
-                         * device serial number
-                         *
-                         * <DI_Hs2> encodes 7 bits of the 24 bit
-                         * Host device serial number: * bit 7
-                         * always 0 * bits 6-3 Bits 22-16 of
-                         * Host device serial number
-                         *
-                         * <DI_F2> encodes additional bits for
-                         * the Slave device serial number. *
-                         * bits 7-4 always 0000b * bit 3 Bit 31
-                         * of Slave Device Serial Number * bit 2
-                         * Bit 23 of Slave Device Serial Number
-                         * * bit 1 Bit 15 of Slave Device Serial
-                         * Number * bit 0 Bit 7 of Slave Device
-                         * Serial Number
-                         *
-                         * <DI_Ss0> encodes 7 bits of the 32 bit
-                         * Slave device serial number: * bit 7
-                         * always 0 * bits 6-3 Bits 6-0 of Slave
-                         * device serial number
-                         *
-                         * <DI_Ss1> encodes 7 bits of the 32 bit
-                         * Slave device serial number: * bit 7
-                         * always 0 * bits 6-3 Bits 14-9 of
-                         * Slave device serial number
-                         *
-                         * <DI_Ss2> encodes 7 bits of the 32 bit
-                         * Slave device serial number: * bit 7
-                         * always 0 * bits 6-3 Bits 22-16 of
-                         * Slave device serial number
-                         *
-                         * <DI_Ss3> encodes 7 bits of the 32 bit
-                         * Slave device serial number: * bit 7
-                         * always 0 * bits 6-3 Bits 30-24 of
-                         * Slave device serial number * *
-                         * Information reverse-engineered by B.
-                         * Milhaupt and used with permission *
-                         * **********************************************************************************
-                         */
-                        // Request for one specific IPL-queryable device to return its identity information.
-                        // Expected response is of type <E5><14><10>...
-                        //
-                        // Note that standard definitions are provided for RF24, even though these
-                        // devices do not generate this report.
-                        //
-                        // Information reverse-engineered by B. Milhaupt and used with permission
-                        String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                        String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
-                        int hostSnInt = ((l.getElement(13) + (((l.getElement(9) & 0x8) == 8) ? 128 : 0)) * 256 * 256)
-                                + ((l.getElement(12) + (((l.getElement(9) & 0x4) == 4) ? 128 : 0)) * 256)
-                                + (l.getElement(11) + (((l.getElement(9) & 0x2) == 2) ? 128 : 0));
-                        String hostSN = Integer.toHexString(hostSnInt).toUpperCase();
-                        String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
-                                hostType, hostSN, hostVer);
-
-                        String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
-                        String slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_NO_SLAVE");
-                        if (l.getElement(6) != 0) {
-                            String slaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
-                            int slaveSnInt
-                                    = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
-                                    + ((l.getElement(16) + (((l.getElement(14) & 0x2) == 2) ? 128 : 0)) * 256)
-                                    + ((l.getElement(17) + (((l.getElement(14) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                    + ((l.getElement(18) + (((l.getElement(14) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
-                                    Integer.toHexString(slaveSnInt).toUpperCase(),
-                                    slaveVer);
-                        }
-                        return Bundle.getMessage("LN_MSG_IPL_DEVICE_IDENTITY_REPORT",
-                                hostInfo,
-                                slaveInfo);
+                        return interpretOpcPeerXfer20Sub10(l);
                     } // end case 0x10, which decodes 0xe5 0x14 0x0f 0x10
                     default: {
                         break;
@@ -1716,6 +1605,172 @@ public class Llnmon {
             }
         } // switch (l.getElement(2))
         return "";
+    }
+    
+    private String interpretOpcPeerXfer20Sub10(LocoNetMessage l) {
+        /**
+         * **********************************************************************************
+         * IPL device identity report -
+         * RE_IPL_IDENTITY_OPERATION (Device
+         * Report) * The message bytes are
+         * assigned as follows:
+         *
+         * <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst>
+         * <DI_Slv> <DI_Smf> <DI_Hsw> ...
+         *
+         * <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1>
+         * <DI_Hs2> <DI_F2> <DI_Ss0> ...
+         *
+         * <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> *
+         * where:
+         *
+         * <DI_Hmf> DigiIPL-capable Host device
+         * manufacturer number. This is not *
+         * the same as an NMRA Manufacturer ID.
+         * * 0x00 Digitrax * Others No other
+         * Host device manufacturer * numbers
+         * have been reverse- * engineered
+         *
+         * <DI_Hst> encodes the DigiIPL-capable
+         * Host device type as follows: * When
+         * <DI_Hmf> = 0x00 * 0x00 (0 decimal) No
+         * Host device type reported * 0x04 (4
+         * decimal) UT4D * 0x23 (35 decimal) PR3
+         * * 0x2A (42 decimal) DT402 (or DT402R
+         * or DT402D) * 0x33 (51 decimal) DCS51
+         * * 0x5C (92 decimal) UR92 * Others No
+         * other Host device types have been *
+         * reverse-engineered * When <DI_Hmf> is
+         * not 0x00 * All values Not
+         * reverse-engineered
+         *
+         * <DI_Slv> encodes the DigiIPL-capable
+         * Slave device type as follows: * When
+         * <DI_Smf> = 0x00 * 0x00 (0 decimal)
+         * Report for all Slave device types *
+         * 0x18 (24 decimal) RF24 * Others No
+         * other Slave device types have been *
+         * reverse-engineered
+         *
+         * <DI_Smf> DigiIPL-capable Slave device
+         * manufacturer number. This is not *
+         * the same as an NMRA Manufacturer ID.
+         * * 0x00 Digitrax * Others No other
+         * Slave device manufacturer * numbers
+         * have been reverse- * engineered
+         *
+         * <DI_Hsw> encodes the DigiIPL-capable
+         * Host device firmware revision *
+         * number as follows: * bit 7 always 0 *
+         * bits 6-3 Host device firmware major
+         * revision number * bits 2-0 Host
+         * device firmware minor revision number
+         *
+         * <DI_F1> encodes additional bits for
+         * the Slave device firmware major *
+         * revision number and for the Host
+         * device serial number. * bits 7-4
+         * always 0000b * bit 3 Bit 23 of Host
+         * Device Serial Number * bit 2 Bit 15
+         * of Host Device Serial Number * bit 1
+         * Bit 7 of Host Device Serial Number *
+         * bit 0 bit 4 of Slave device firmware
+         * Major number
+         *
+         * <DI_Ssw> encodes the DigiIPL-capable
+         * Slave device firmware revision *
+         * number as follows: * bit 7 always 0 *
+         * bits 6-3 Host device firmware major
+         * revision number * bits 6-3 4
+         * least-significant bits of Slave
+         * device firmware major * revision
+         * number (see also <DI_F1>[0]) * bits
+         * 2-0 Slave device firmware minor
+         * revision number
+         *
+         * <DI_Hs0> encodes 7 bits of the 24 bit
+         * Host device serial number: * bit 7
+         * always 0 * bits 6-3 Bits 6-0 of Host
+         * device serial number
+         *
+         * <DI_Hs1> encodes 7 bits of the 24 bit
+         * Host device serial number: * bit 7
+         * always 0 * bits 6-3 Bits 14-9 of Host
+         * device serial number
+         *
+         * <DI_Hs2> encodes 7 bits of the 24 bit
+         * Host device serial number: * bit 7
+         * always 0 * bits 6-3 Bits 22-16 of
+         * Host device serial number
+         *
+         * <DI_F2> encodes additional bits for
+         * the Slave device serial number. *
+         * bits 7-4 always 0000b * bit 3 Bit 31
+         * of Slave Device Serial Number * bit 2
+         * Bit 23 of Slave Device Serial Number
+         * * bit 1 Bit 15 of Slave Device Serial
+         * Number * bit 0 Bit 7 of Slave Device
+         * Serial Number
+         *
+         * <DI_Ss0> encodes 7 bits of the 32 bit
+         * Slave device serial number: * bit 7
+         * always 0 * bits 6-3 Bits 6-0 of Slave
+         * device serial number
+         *
+         * <DI_Ss1> encodes 7 bits of the 32 bit
+         * Slave device serial number: * bit 7
+         * always 0 * bits 6-3 Bits 14-9 of
+         * Slave device serial number
+         *
+         * <DI_Ss2> encodes 7 bits of the 32 bit
+         * Slave device serial number: * bit 7
+         * always 0 * bits 6-3 Bits 22-16 of
+         * Slave device serial number
+         *
+         * <DI_Ss3> encodes 7 bits of the 32 bit
+         * Slave device serial number: * bit 7
+         * always 0 * bits 6-3 Bits 30-24 of
+         * Slave device serial number * *
+         * Information reverse-engineered by B.
+         * Milhaupt and used with permission *
+         * **********************************************************************************
+         */
+        // Request for one specific IPL-queryable device to return its identity information.
+        // Expected response is of type <E5><14><10>...
+        //
+        // Note that standard definitions are provided for RF24, even though these
+        // devices do not generate this report.
+        //
+        // Information reverse-engineered by B. Milhaupt and used with permission
+        String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+        
+        String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
+        
+        int hostSnInt = ((l.getElement(13) + (((l.getElement(9) & 0x8) == 8) ? 128 : 0)) * 256 * 256)
+                + ((l.getElement(12) + (((l.getElement(9) & 0x4) == 4) ? 128 : 0)) * 256)
+                + (l.getElement(11) + (((l.getElement(9) & 0x2) == 2) ? 128 : 0));
+        String hostSN = Integer.toHexString(hostSnInt).toUpperCase();
+        String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
+                hostType, hostSN, hostVer);
+
+        String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+        String slaveInfo;
+        if (l.getElement(6) != 0) {
+            String slaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
+            int slaveSnInt
+                    = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
+                    + ((l.getElement(16) + (((l.getElement(14) & 0x2) == 2) ? 128 : 0)) * 256)
+                    + ((l.getElement(17) + (((l.getElement(14) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                    + ((l.getElement(18) + (((l.getElement(14) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
+                    Integer.toHexString(slaveSnInt).toUpperCase(),
+                    slaveVer);
+        } else {
+            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_NO_SLAVE");
+        }
+        return Bundle.getMessage("LN_MSG_IPL_DEVICE_IDENTITY_REPORT",
+                hostInfo,
+                slaveInfo);
     }
     private String interpretOpcPeerXfer16(LocoNetMessage l) {
         /*
@@ -2615,9 +2670,6 @@ public class Llnmon {
     }
 
     private String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
-        if (l.getElement(1) == 0x0E) {
-        // message length is correct for "standard" slot read and write
-        // data as described in the LocoNet PE document.
         int slot = l.getElement(2); // slot number for this request
         String mode;
         int command = l.getElement(0);
@@ -2632,13 +2684,13 @@ public class Llnmon {
         } else {
             mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_RESPONSE");
         }
-        
+
         int track_stat = l.getElement(7);
         /* check track status value and display */
         if (trackStatus != track_stat) {
             trackStatus = track_stat;
         }
-        
+
         switch (slot) {
             case LnConstants.FC_SLOT:
                 String result;
@@ -2653,7 +2705,7 @@ public class Llnmon {
                     return result;
                 }
                 break;
-                
+
             case 0x79:
             case 0x7a:
             case 0x7D:
@@ -2666,7 +2718,7 @@ public class Llnmon {
                     return result;
                 }
                 break;
-                
+
             default:
                 result = interpretStandardSlotRdWr(l, id1, id2, command, slot);
                 if (result.length() > 0) {
@@ -2674,10 +2726,8 @@ public class Llnmon {
                 }
                 break;
             } // end switch (slot)
-        } // end if (l.getElement(1) == 0x0E
 
         return "";
-
     }
     
     private String interpretOpcInputRep(LocoNetMessage l) {
@@ -3277,7 +3327,8 @@ public class Llnmon {
                         case LnConstants.PAGED_ON_SRVC_TRK | LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_PAGED_WR",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                    cvNumber, cvData));
+                                    cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case LnConstants.DIR_BYTE_ON_SRVC_TRK:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BYTE_RD",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
@@ -3285,15 +3336,18 @@ public class Llnmon {
                         case LnConstants.DIR_BYTE_ON_SRVC_TRK | LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BYTE_WR",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                    cvNumber, cvData));
+                                    cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case LnConstants.DIR_BIT_ON_SRVC_TRK:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BIT_RD",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
-                                    cvNumber));
+                                    cvNumber), cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true));
                         case LnConstants.DIR_BIT_ON_SRVC_TRK | LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_DIR_BIT_WR",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                    cvNumber, cvData));
+                                    cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case LnConstants.REG_BYTE_RW_ON_SRVC_TRK:
                         case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_REG_BYTE_RD",
@@ -3303,7 +3357,8 @@ public class Llnmon {
                         case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_REG_BYTE_WR",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                    cvNumber, cvData));
+                                    cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case LnConstants.SRVC_TRK_RESERVED:
                         case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_RD_RESERVED",
@@ -3313,7 +3368,8 @@ public class Llnmon {
                         case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_WR_RESERVED",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                            cvNumber, cvData));
+                                            cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case LnConstants.OPS_BYTE_NO_FEEDBACK:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_RD_NO_FEEDBACK",
                                     convertToMixed(lopsa, hopsa),
@@ -3335,7 +3391,8 @@ public class Llnmon {
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BYTE_WR_FEEDBACK",
                                     convertToMixed(lopsa, hopsa),
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                            cvNumber, cvData));
+                                            cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case LnConstants.OPS_BIT_NO_FEEDBACK:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_RD_NO_FEEDBACK",
                                     convertToMixed(lopsa, hopsa),
@@ -3345,8 +3402,9 @@ public class Llnmon {
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_WR_NO_FEEDBACK",
                                     convertToMixed(lopsa, hopsa),
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                            cvNumber, cvData));
-                                                                case LnConstants.OPS_BIT_FEEDBACK:
+                                            cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
+                        case LnConstants.OPS_BIT_FEEDBACK:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_RD_FEEDBACK",
                                     convertToMixed(lopsa, hopsa),
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
@@ -3355,7 +3413,8 @@ public class Llnmon {
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_OPS_BIT_WR_FEEDBACK",
                                     convertToMixed(lopsa, hopsa),
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                            cvNumber, cvData));
+                                            cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case 0:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UHLENBROCK_RD",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
@@ -3363,14 +3422,16 @@ public class Llnmon {
                         case LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UHLENBROCK_WR",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                            cvNumber, cvData));
+                                            cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         default:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_UNKNOWN",
                                     pcmd,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(pcmd)),
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
-                                            cvNumber, cvData));
+                                            cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                            StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                     }
                 } else {
                     /* interpret the  programming mode response (from programmer) */
