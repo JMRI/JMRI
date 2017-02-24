@@ -248,8 +248,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param idx index
      */
     protected void advanceToCommandIndex(int idx) {
-        _idxNoSpeedCommand = idx;
-        if (log.isDebugEnabled()) log.debug("_idxNoSpeedCommand= {}", _idxNoSpeedCommand);
+//        _idxNoSpeedCommand = idx;
+        if (log.isDebugEnabled()) log.debug("_idxNoSpeedCommand= {} _normalSpeed= {}", _idxNoSpeedCommand, _normalSpeed);
     }
 
     private void setSpeedStepMode(int step) {
@@ -990,7 +990,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             steps++;
         }
-        if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {} using {}",
+        if (log.isTraceEnabled()) log.trace("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {} using {}",
                 rampLength, time*steps, fromSpeed, curSpeedType, toSpeedType, toSpeed,
                 (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
         return rampLength;
