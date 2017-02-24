@@ -54,13 +54,13 @@ public class OperationsSwingTestCase {
   
     protected void enterClickAndLeave(JCheckBox comp) {
         JCheckBoxOperator jbo = new JCheckBoxOperator(comp);
-        jbo.clickMouse();
+        jbo.doClick();
         //jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
     }
 
     protected void enterClickAndLeave(JRadioButton comp) {
         JRadioButtonOperator jbo = new JRadioButtonOperator(comp);
-        jbo.clickMouse();
+        jbo.doClick();
         //jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
     }
 
