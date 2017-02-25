@@ -56,6 +56,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager {
 
+    public final static String SAVE_ALLOWED = "saveAllowed";
+
     private final static String CLASSPREFS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/class-preferences-4-3-5.xsd"; // NOI18N
     private final static String CLASSPREFS_ELEMENT = "classPreferences"; // NOI18N
     private final static String COMBOBOX_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/combobox-4-3-5.xsd"; // NOI18N
@@ -77,12 +79,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @return the default UserPreferencesManager
      */
     public static UserPreferencesManager getDefault() {
-        if (InstanceManager.getNullableDefault(UserPreferencesManager.class) == null) {
+        return InstanceManager.getOptionalDefault(UserPreferencesManager.class).orElseGet(() -> {
             JmriUserPreferencesManager manager = new JmriUserPreferencesManager();
-            InstanceManager.setDefault(UserPreferencesManager.class, manager);
             manager.readUserPreferences();
-        }
-        return InstanceManager.getDefault(UserPreferencesManager.class);
+            return InstanceManager.setDefault(UserPreferencesManager.class, manager);
+        });
     }
 
     private boolean dirty = false;
@@ -112,15 +113,27 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public synchronized void allowSave() {
-        this.allowSave = true;
-        if (this.dirty) {
-            this.savePreferences();
-        }
+        this.setSaveAllowed(true);
     }
 
     @Override
     public synchronized void disallowSave() {
-        this.allowSave = false;
+        this.setSaveAllowed(false);
+    }
+
+    @Override
+    public synchronized void setSaveAllowed(boolean saveAllowed) {
+        boolean old = this.allowSave;
+        this.allowSave = saveAllowed;
+        if (saveAllowed && this.dirty) {
+            this.savePreferences();
+        }
+        this.firePropertyChange(SAVE_ALLOWED, old, this.allowSave);
+    }
+
+    @Override
+    public boolean isSaveAllowed() {
+        return this.allowSave;
     }
 
     @Override
@@ -849,11 +862,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
-        for (MultipleChoice mc : classPreferenceList.get(strClass).getMultipleChoiceList()) {
-            if (mc.getItem().equals(choice)) {
-                mc.setValue(value);
-            }
-        }
+        classPreferenceList.get(strClass).getMultipleChoiceList().stream()
+                .filter((mc) -> (mc.getItem().equals(choice))).forEachOrdered((mc) -> {
+            mc.setValue(value);
+        });
         this.savePreferencesState();
     }
 
@@ -1385,11 +1397,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
 
         void setValue(String value) {
-            for (Integer o : options.keySet()) {
-                if (options.get(o).equals(value)) {
-                    this.value = o;
-                }
-            }
+            options.keySet().stream().filter((o) -> (options.get(o).equals(value))).forEachOrdered((o) -> {
+                this.value = o;
+            });
         }
 
         void setMessageItems(String description, HashMap<Integer, String> options, int defaultOption) {

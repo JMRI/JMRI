@@ -257,7 +257,7 @@ public interface UserPreferencesManager {
      * Set the last selected value in a given combo box.
      *
      * @param comboBoxName the combo box name
-     * @param lastValue the selected value
+     * @param lastValue    the selected value
      */
     public void setComboBoxLastSelection(String comboBoxName, String lastValue);
 
@@ -286,9 +286,44 @@ public interface UserPreferencesManager {
 
     public Dimension getScreen();
 
+    /**
+     * Convenience method allow saving preferences.
+     *
+     * @deprecated since 4.7.2; use {@link #setSaveAllowed(boolean)} with true
+     * instead
+     */
+    @Deprecated
     public void allowSave();
 
+    /**
+     * Convenience method set allow saving preferences to false.
+     *
+     * @deprecated since 4.7.2; use {@link #setSaveAllowed(boolean)} with false
+     * instead
+     */
+    @Deprecated
     public void disallowSave();
+
+    /**
+     * Check if saving preferences is allowed.
+     *
+     * @return true if saving is allowed; false otherwise
+     */
+    public boolean isSaveAllowed();
+
+    /**
+     * Set if saving preferences is allowed. When setting true, preferences will
+     * be saved immediately if needed.
+     * <p>
+     * <strong>Note</strong> only set false if a number of preferences will be
+     * set together to avoid excessive disk I/O while setting preferences.
+     * <p>
+     * <strong>Note</strong> remember to allow saving as soon as blocking saving
+     * is no longer needed.
+     *
+     * @param saveAllowed true to allow saving; false to block saving
+     */
+    public void setSaveAllowed(boolean saveAllowed);
 
     public void removePropertyChangeListener(PropertyChangeListener l);
 

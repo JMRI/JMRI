@@ -37,7 +37,8 @@ import org.slf4j.LoggerFactory;
  * next time"
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager} instead.
+ * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager}
+ * instead.
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
 @SuppressFBWarnings(
@@ -54,9 +55,11 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     DefaultUserMessagePreferences(boolean doInit) {
-        if (doInit) init();
+        if (doInit) {
+            init();
+        }
     }
-    
+
     void init() {
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
@@ -98,7 +101,18 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         readUserPreferences();
     }
 
+    @Override
+    public boolean isSaveAllowed() {
+        return DefaultUserMessagePreferencesHolder.instance.allowSave;
+    }
+
+    @Override
+    public void setSaveAllowed(boolean saveAllowed) {
+        DefaultUserMessagePreferencesHolder.instance.allowSave = saveAllowed;
+    }
+
     private static class DefaultUserMessagePreferencesHolder {
+
         static DefaultUserMessagePreferences instance = null;
     }
 
@@ -317,7 +331,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name  A unique identifer for preference.
+     * @param name A unique identifer for preference.
      */
     @Override
     public void setSessionPreferenceState(String name, boolean state) {
