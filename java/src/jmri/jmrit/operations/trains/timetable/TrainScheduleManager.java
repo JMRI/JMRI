@@ -228,8 +228,12 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      * Update a JComboBox with the latest schedules.
      *
      * @param box the JComboBox needing an update.
+     * @throws IllegalArgumentException if box is null
      */
     public void updateComboBox(JComboBox<TrainSchedule> box) {
+        if(box==null) {
+           throw new IllegalArgumentException("Attempt to update non-existant comboBox");
+        }
         box.removeAllItems();
         for (TrainSchedule sch : getSchedulesByNameList()) {
             box.addItem(sch);

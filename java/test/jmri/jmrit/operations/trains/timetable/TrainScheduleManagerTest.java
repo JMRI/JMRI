@@ -20,6 +20,12 @@ public class TrainScheduleManagerTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testGetComboBox(){
+        TrainScheduleManager t = new TrainScheduleManager();
+        Assert.assertNotNull("ComboBox Available",t.getComboBox());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

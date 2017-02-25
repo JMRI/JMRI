@@ -24,7 +24,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
     JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
     // combo box
-    JComboBox<TrainSchedule> comboBox;
+    private JComboBox<TrainSchedule> comboBox = null;
 
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
@@ -44,11 +44,18 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         getContentPane().setLayout(new GridBagLayout());
 
         trainScheduleManager.addPropertyChangeListener(this);
+
+        initComponents();
     }
 
     @Override
     public void initComponents() {
-        comboBox = trainScheduleManager.getComboBox();
+        try {
+           comboBox = trainScheduleManager.getComboBox();
+        } catch(IllegalArgumentException iae) {
+           comboBox = new JComboBox<TrainSchedule>();
+           trainScheduleManager.updateComboBox(comboBox);
+        }
 
         // row 1
         addItem(addTextBox, 2, 2);
@@ -76,7 +83,6 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-        log.error("action performed source {} data {}",ae.getSource(),addTextBox.getText());
         if (ae.getSource() == deleteButton && comboBox.getSelectedItem() != null) {
             trainScheduleManager.deregister((TrainSchedule) comboBox.getSelectedItem());
         }
@@ -91,7 +97,6 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         }
         if (ae.getSource() == addButton) {
             trainScheduleManager.newSchedule(s);
-            new Exception().printStackTrace();
         }
         if (ae.getSource() == replaceButton && comboBox.getSelectedItem() != null) {
             TrainSchedule ts = ((TrainSchedule) comboBox.getSelectedItem());
