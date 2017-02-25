@@ -25,7 +25,6 @@ public final class OperationsManager {
 
     private ShutDownTask shutDownTask = null;
 
-    static private OperationsManager instance = null;
     static private final Logger log = LoggerFactory.getLogger(OperationsManager.class);
 
     private OperationsManager() {
@@ -57,8 +56,10 @@ public final class OperationsManager {
      * @return The OperationsManager default instance.
      */
     public synchronized static OperationsManager getInstance() {
+        OperationsManager instance = jmri.InstanceManager.getNullableDefault(OperationsManager.class);
         if (instance == null) {
             instance = new OperationsManager();
+            jmri.InstanceManager.setDefault(OperationsManager.class,instance);
         }
         return instance;
     }

@@ -12,7 +12,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     ProgServiceModePaneTest.class,
     BundleTest.class,
-    ProgModeExceptionTest.class
+    ProgModeExceptionTest.class,
+    ProgDeferredServiceModePaneTest.class,
+    ProgServiceModeComboBoxTest.class
 })
 public class PackageTest {
 }
