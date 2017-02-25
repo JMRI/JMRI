@@ -1,69 +1,68 @@
 //OperationsTestCase.java
 package jmri.jmrit.operations;
 
-import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import jmri.jmrit.operations.automation.AutomationManager;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.RollingStockLogger;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JRadioButton;
+import org.junit.Before;
+import org.junit.After;
 import org.junit.Assert;
 
 /**
  * Common setup and tear down for operation tests.
  *
  * @author	Dan Boudreau Copyright (C) 2015
+ * @author  Paul Bender Copyright (C) 2016
  * 
  */
-public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
+public class OperationsSwingTestCase {
 
-    public OperationsSwingTestCase(String s) {
-        super(s);
-    }
-    
-    @SuppressWarnings("unchecked")
     protected void pressDialogButton(JmriJFrame f, String buttonName) {
-        //  (with JfcUnit, not pushing this off to another thread)                                                      
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
+        JFrameOperator jfo = new JFrameOperator(f);
+        JDialogOperator jdo = new JDialogOperator(jfo,1); // wait for the first dialog.
+        NameComponentChooser bChooser = new NameComponentChooser(buttonName);
+        //JButtonOperator jbo = new JButtonOperator(jdo,buttonName);
+        JButtonOperator jbo = new JButtonOperator(jdo,bChooser);
         // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        jbo.push();
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        
+    protected void pressDialogButton(JmriJFrame f,String dialogTitle, String buttonName) {
+        JFrameOperator jfo = new JFrameOperator(f);
+        JDialogOperator jdo = new JDialogOperator(jfo,dialogTitle); // wait for the first dialog.
+        JButtonOperator jbo = new JButtonOperator(jdo,buttonName);
+        // Click button
+        jbo.push();
+    }
+
+    protected void enterClickAndLeave(JButton comp) {
+        JButtonOperator jbo = new JButtonOperator(comp);
+        jbo.push();
+    }
+  
+    protected void enterClickAndLeave(JCheckBox comp) {
+        JCheckBoxOperator jbo = new JCheckBoxOperator(comp);
+        jbo.doClick();
+    }
+
+    protected void enterClickAndLeave(JRadioButton comp) {
+        JRadioButtonOperator jbo = new JRadioButtonOperator(comp);
+        jbo.doClick();
+    }
+
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
 
         // set the locale to US English
@@ -82,12 +81,11 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
 
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         // restore locale
         Locale.setDefault(Locale.getDefault());
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
     }
 }

@@ -24,13 +24,13 @@ public class LocationManagerXml extends OperationsXml {
     /**
      * record the single instance *
      */
-    private static LocationManagerXml _instance = null;
-
     public static synchronized LocationManagerXml instance() {
+        LocationManagerXml _instance = jmri.InstanceManager.getNullableDefault(LocationManagerXml.class);
         if (_instance == null) {
             log.debug("LocationManagerXml creating instance");
             // create and load
             _instance = new LocationManagerXml();
+            jmri.InstanceManager.setDefault(LocationManagerXml.class,_instance);
             _instance.load();
         }
         if (Control.SHOW_INSTANCE) {
@@ -104,10 +104,7 @@ public class LocationManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "For testing")
     public void dispose() {
-        _instance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());
