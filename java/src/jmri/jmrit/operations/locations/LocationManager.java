@@ -30,14 +30,15 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     /**
      * record the single instance *
      */
-    private static LocationManager _instance = null;
     private int _id = 0;
 
     public static synchronized LocationManager instance() {
+        LocationManager _instance = jmri.InstanceManager.getNullableDefault(LocationManager.class);
         if (_instance == null) {
             log.debug("LocationManager creating instance");
             // create and load
             _instance = new LocationManager();
+            jmri.InstanceManager.setDefault(LocationManager.class,_instance);
             OperationsSetupXml.instance(); // load setup
             LocationManagerXml.instance(); // load locations
         }
