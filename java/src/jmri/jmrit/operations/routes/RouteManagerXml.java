@@ -23,13 +23,14 @@ public class RouteManagerXml extends OperationsXml {
     /**
      * record the single instance *
      */
-    private static RouteManagerXml _instance = null;
 
     public static synchronized RouteManagerXml instance() {
+        RouteManagerXml _instance = jmri.InstanceManager.getNullableDefault(RouteManagerXml.class);
         if (_instance == null) {
             log.debug("RouteManagerXml creating instance");
             // create and load
             _instance = new RouteManagerXml();
+            jmri.InstanceManager.setDefault(RouteManagerXml.class,_instance);
             _instance.load();
             log.debug("Routes have been loaded!");
         }
@@ -102,10 +103,7 @@ public class RouteManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsRouteRoster.xml"; // NOI18N
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
     public void dispose() {
-        _instance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
