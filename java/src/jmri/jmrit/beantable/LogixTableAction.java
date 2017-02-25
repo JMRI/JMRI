@@ -3152,7 +3152,8 @@ public class LogixTableAction extends AbstractTableAction {
         }
         _editVariableFrame.pack();
         _editVariableFrame.transferFocusBackward();
-    }       /* initializeStateVariables */
+    }
+
     /*
      String getConditionalUserName(String name) {
      Conditional c = _conditionalManager.getBySystemName(name);
@@ -3163,10 +3164,8 @@ public class LogixTableAction extends AbstractTableAction {
      }
 
      /**
-     * set display to show current action (curAction) parameters
+     * Set display to show current action (curAction) parameters.
      */
-
-
     void initializeActionVariables() {
         int actionType = _curAction.getType();
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
@@ -3371,7 +3370,7 @@ public class LogixTableAction extends AbstractTableAction {
     JFileChooser defaultFileChooser = null;
 
     /**
-     * Responds to the (...) Set button in the Edit Action window action section.
+     * Respond to the (...) Set button in the Edit Action window action section.
      */
     void setFileLocation(ActionEvent e) {
         ConditionalAction action = _actionList.get(_curActionRowNumber);
@@ -3421,7 +3420,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to a change in an Action Type Box of Edit Action Window Set
+     * Respond to a change in an Action Type Box of Edit Action Window Set
      * components visible for the selected type.
      */
     void actionItemChanged(int type) {
@@ -3753,8 +3752,7 @@ public class LogixTableAction extends AbstractTableAction {
             log.debug("Exit actionItemChanged size: " + _editActionFrame.getWidth()
                     + " X " + _editActionFrame.getHeight());
         }
-    } /* actionItemChanged */
-
+    }
 
     private void compareTypeChanged(int selection) {
         JPanel p = (JPanel) _variableData1Panel.getComponent(0);
@@ -3867,7 +3865,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to change in variable type in State Variable Table in the Edit
+     * Respond to change in variable type in State Variable Table in the Edit
      * Conditional window Also used to set up for Edit of a Conditional with
      * state variables.
      */
@@ -4018,18 +4016,17 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
         }
         _variableStateBox.setMaximumSize(_variableStateBox.getPreferredSize());
-    } /* variableTypeChanged */
-
+    }
 
     /**
-     * Validates Variable data from Edit Variable Window, and transfers it to
-     * current action object as appropriate
-     * <P>
-     * Returns true if all data checks out OK, otherwise false.
-     * <P>
+     * Validate Variable data from Edit Variable Window, and transfer it to
+     * current action object as appropriate.
+     * <p>
      * Messages are sent to the user for any errors found. This routine returns
-     * false immediately after finding an error, even if there might be more
+     * false immediately after finding the first error, even if there might be more
      * errors.
+     *
+     * @return true if all data checks out OK, otherwise false
      */
     boolean validateVariable() {
         String name = _variableNameField.getText().trim();
@@ -4229,14 +4226,14 @@ public class LogixTableAction extends AbstractTableAction {
 
 
     /**
-     * Validates Action data from Edit Action Window, and transfers it to
-     * current action object as appropriate
-     * <P>
-     * Returns true if all data checks out OK, otherwise false.
-     * <P>
+     * Validate Action data from Edit Action Window, and transfer it to
+     * current action object as appropriate.
+     * <p>
      * Messages are sent to the user for any errors found. This routine returns
      * false immediately after finding an error, even if there might be more
      * errors.
+     *
+     * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
         int itemType = _actionItemTypeBox.getSelectedIndex();
@@ -4615,8 +4612,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     // *********** Utility Methods ********************
+
     /**
-     * Checks if String is an integer or references an integer
+     * Check if String is an integer or references an integer.
      */
     boolean validateIntensityReference(int actionType, String intReference) {
         if (intReference == null || intReference.trim().length() == 0) {
@@ -4655,8 +4653,8 @@ public class LogixTableAction extends AbstractTableAction {
     }
     
     /**
-     * Checks text represents an integer suitable for percentage
-     * NumberFormatException
+     * Check if text represents an integer suitable for percentage
+     * w/o NumberFormatException.
      */
     boolean validateIntensity(int time) {
         if (time < 0 || time > 100) {
@@ -4669,7 +4667,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
     
     /**
-     * Checks if String is decimal or references a decimal
+     * Check if a string is decimal or references a decimal.
      */
     boolean validateTimeReference (int actionType, String ref) {
         if (ref == null || ref.trim().length() == 0) {
@@ -4708,7 +4706,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Range check time (assumes seconds)
+     * Range check time (assumes seconds).
      */
     boolean validateTime(int actionType, float time) {
         float maxTime = 3600;     // more than 1 hour
@@ -4774,7 +4772,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Memory reference of text.
+     * Check Memory reference of text.
      */
     String validateMemoryReference(String name) {
         Memory m = null;
@@ -4810,7 +4808,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Turnout reference of text.
+     * Check Turnout reference of text.
      */
     String validateTurnoutReference(String name) {
         Turnout t = null;
@@ -4831,7 +4829,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks SignalHead reference of text.
+     * Check SignalHead reference of text.
      */
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
@@ -4852,7 +4850,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks SignalMast reference of text.
+     * Check SignalMast reference of text.
      */
     String validateSignalMastReference(String name) {
         SignalMast h = null;
@@ -4913,7 +4911,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Sensor reference of text.
+     * Check Sensor reference of text.
      */
     String validateSensorReference(String name) {
         Sensor s = null;
@@ -4934,7 +4932,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Light reference of text.
+     * Check Light reference of text.
      */
     String validateLightReference(String name) {
         Light l = null;
@@ -4955,7 +4953,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Conditional reference of text. Forces name to System name
+     * Check Conditional reference of text.
+     * <p>
+     * Forces name to System name.
      */
     String validateConditionalReference(String name) {
         Conditional c = null;
@@ -4976,7 +4976,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Logix reference of text.
+     * Check Logix reference of text.
      */
     String validateLogixReference(String name) {
         Logix l = null;
@@ -4997,7 +4997,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Route reference of text.
+     * Check Route reference of text.
      */
     String validateRouteReference(String name) {
         Route r = null;
@@ -5050,7 +5050,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * get Light instance.
+     * Get Light instance.
      */
     Light getLight(String name) {
         if (name == null) {
