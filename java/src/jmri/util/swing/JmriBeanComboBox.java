@@ -55,6 +55,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
     HashMap<String, NamedBean> displayToBean = new HashMap<String, NamedBean>();
 
+    public jmri.Manager getManager()
+    {
+        return _manager;
+    }
+    
     public void refreshCombo() {
         updateComboBox((String) getSelectedItem());
     }
@@ -62,6 +67,30 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     void updateComboBox(String select) {
         displayToBean = new HashMap<String, NamedBean>();
         removeAllItems();
+
+        String[] displayList = getDisplayList();
+
+        for (int i = 0; i < displayList.length; i++) {
+            addItem(displayList[i]);
+            if ((select != null) && (displayList[i].equals(select))) {
+                setSelectedIndex(i);
+            }
+        }
+        if (_firstBlank) {
+            super.insertItemAt("", 0);
+            if (_lastSelected == null || _lastSelected.equals("")) {
+                setSelectedIndex(0);
+            }
+        }
+    }
+    
+    /**
+     * Get the display list used by this combo box
+     *
+     * @return the display list used by this combo box
+     */
+
+    public String[] getDisplayList() {
         ArrayList<String> nameList = new ArrayList<String>(Arrays.asList(_manager.getSystemNameArray()));
 
         for (NamedBean bean : exclude) {
@@ -119,21 +148,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
         }
         java.util.Arrays.sort(displayList, new AlphanumComparator());
-
-        for (int i = 0; i < displayList.length; i++) {
-            addItem(displayList[i]);
-            if ((select != null) && (displayList[i].equals(select))) {
-                setSelectedIndex(i);
-            }
-        }
-        if (_firstBlank) {
-            super.insertItemAt("", 0);
-            if (_lastSelected == null || _lastSelected.equals("")) {
-                setSelectedIndex(0);
-            }
-        }
+        return displayList;        
     }
-
+    
     /**
      * Get the User name of the selected namedBean
      *
@@ -287,6 +304,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         updateComboBox(_lastSelected);
     }
 
+    public List<NamedBean> getExcludeItems()
+    {
+        return this.exclude;
+    }
+    
     /**
      * constant used to format the entries in the combo box using the
      * displayname
