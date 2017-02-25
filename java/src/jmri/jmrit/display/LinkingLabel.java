@@ -1,6 +1,8 @@
 package jmri.jmrit.display;
 
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
@@ -91,7 +93,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
             } else if (url.length() > 0) {
                 jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(url));
             }
-        } catch (Throwable t) {
+        } catch (IOException | URISyntaxException t) {
             log.error("Error handling link", t);
         }
         super.doMouseClicked(event);

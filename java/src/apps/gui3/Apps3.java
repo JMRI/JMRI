@@ -130,18 +130,13 @@ public abstract class Apps3 extends AppsBase {
     protected JmriJFrame mainFrame;
 
     protected void initializeHelpSystem() {
-        try {
+        // initialize help system
+        HelpUtil.initOK();
 
-            // initialize help system
-            HelpUtil.initOK();
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-            // help items are set in the various Tree/Menu/Toolbar constructors        
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help: " + e3);
-        }
+        // help items are set in the various Tree/Menu/Toolbar constructors        
     }
 
     abstract protected void createMainFrame();

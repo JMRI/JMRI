@@ -27,14 +27,15 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     /**
      * record the single instance *
      */
-    private static AutomationManager _instance = null;
     private int _id = 0;
 
     public static synchronized AutomationManager instance() {
+        AutomationManager _instance = jmri.InstanceManager.getNullableDefault(AutomationManager.class);
         if (_instance == null) {
             log.debug("AutomationManager creating instance");
             // create and load
             _instance = new AutomationManager();
+            jmri.InstanceManager.setDefault(AutomationManager.class,_instance);
         }
         if (Control.SHOW_INSTANCE) {
             log.debug("AutomationManager returns instance {}", _instance);

@@ -1,6 +1,7 @@
 package jmri.jmrit.turnoutoperations;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.JPanel;
 import jmri.TurnoutOperation;
 import org.slf4j.Logger;
@@ -49,8 +50,9 @@ public class TurnoutOperationConfig extends JPanel {
             if (constrs.length == 1) {
                 try {
                     config = (TurnoutOperationConfig) constrs[0].newInstance(new Object[]{op});
-                } catch (Throwable e) {
-                }		// too many to list!
+                } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | InvocationTargetException ex) {
+                    log.error("Error configuring TurnoutOperation", ex);
+                }
             }
         } catch (ClassNotFoundException e) {
         }
