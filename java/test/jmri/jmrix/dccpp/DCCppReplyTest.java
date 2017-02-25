@@ -38,7 +38,7 @@ public class DCCppReplyTest extends TestCase {
         DCCppReply r = DCCppReply.parseDCCppReply("r 1234|87|23 12");
         Assert.assertTrue(r.isProgramReply());
         r = DCCppReply.parseDCCppReply("r 1234|66|23 4 1");
-        Assert.assertTrue(r.isProgramReply());
+        Assert.assertTrue(r.isProgramBitReply());
         r = DCCppReply.parseDCCppReply("r 1234|82|23 4");
         Assert.assertTrue(r.isProgramReply());
     }
