@@ -248,6 +248,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param idx index
      */
     protected void advanceToCommandIndex(int idx) {
+        // todo Merging of ramp commands with scripted command
 //        _idxNoSpeedCommand = idx;
         if (log.isDebugEnabled()) log.debug("_idxNoSpeedCommand= {} _normalSpeed= {}", _idxNoSpeedCommand, _normalSpeed);
     }
