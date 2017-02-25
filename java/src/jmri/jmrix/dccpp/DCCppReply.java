@@ -48,15 +48,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     private ArrayList<Integer> valueList = new ArrayList<Integer>();
     protected String myRegex;
     protected StringBuilder myReply;
-    protected char opcode;
+    //protected char opcode;
 
     // Create a new reply.
     public DCCppReply() {
         super();
         setBinary(false);
         myRegex = "";
-        myReply = new StringBuilder("");
-        opcode = 0x00;
+        myReply = new StringBuilder();
+        //opcode = 0x00;
     }
 
     // Create a new reply from an existing reply
@@ -89,13 +89,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         super();
         setBinary(false);
         myReply = new StringBuilder(message);
-        opcode = message.charAt(0);
+        //opcode = message.charAt(0);
         // BUG? myRegex is not set by this function yet...
         // gather bytes in result
         _nDataChars = myReply.length();
         _dataChars = new int[_nDataChars];
     }
 
+    /*
     protected DCCppReply(char c, String regex) {
         super();
         setBinary(false);
@@ -105,10 +106,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         _nDataChars = myReply.length();
         log.debug("DCCppReply() opcode = {} ({})", opcode, Character.toString(opcode));
     }
+    */
     
     @Override
     public String toString() {
-        log.debug("DCCppReply.toString(): char {} {} msg {}", opcode, Character.toString(opcode), myReply.toString());
+        log.debug("DCCppReply.toString(): msg {}", myReply.toString());
         return(myReply.toString());
     }
 
@@ -117,12 +119,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         DCCppReply r = DCCppReply.parseDCCppReply(s);
         log.debug("in parseReply() string: {}", s);
         if (r != null) {
-            this.opcode = r.opcode;
+            //this.opcode = r.opcode;
             this.valueList = r.valueList;
             this.myRegex = r.myRegex;
             this.myReply = r.myReply;
             this._nDataChars = r._nDataChars;
-            log.debug("copied: this: {} opcode {}", this.toString(), opcode);
+            log.debug("copied: this: {}", this.toString());
         }
     }
 
@@ -141,7 +143,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public static DCCppReply parseDCCppReply(String s) {
 
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
-        DCCppReply r = new DCCppReply(s.charAt(0), null);
+        //DCCppReply r = new DCCppReply(s.charAt(0), null);
+        DCCppReply r = new DCCppReply();
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
                 if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
@@ -200,7 +203,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
                 return(r);
             case DCCppConstants.PROGRAM_REPLY:
-                if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
+                if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
+                    r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
                 } else {
@@ -291,23 +297,38 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    /** getOpCode()
+     * 
+     * Not really used inside of DCC++.  Just here
+     * to play nicely with the inheritance.
+     * 
+     * TODO: If this is unused, can we just not override it
+     * and (not) "use" the superclass version?
+     * ANSWER: No, we can't because the superclass looks in
+     * the _datachars element, which we don't use, and which
+     * will contain garbage data.  Better to return something
+     * meaningful.
+     * @return 
+     */
     @Override
     public int getOpCode() {
-        return((opcode) & 0x00FF);
+        if (myReply.length() > 0) {
+            return(Character.getNumericValue(myReply.charAt(0)));
+        } else {
+            return(0);
+        }
+        //return((opcode) & 0x00FF);
 //	return((getElement(0) & 0x00FF));
     }
 
     /* Get the opcode as a one character string */
     public char getOpCodeChar() {
-        return(opcode);
+        if (myReply.length() > 0) {
+            return(myReply.charAt(0));
+        } else {
+            return(0);
+        }
 //	return ((char)(getElement(0) & 0x00FF));
-    }
-
-    /* Get the opcode as a string in hex format */
-    // Not sure how this is used or applies in DCC++
-    @Deprecated
-    public String getOpCodeHex() {
-        return "0x" + Integer.toHexString(this.getOpCode());
     }
 
     @Override
@@ -647,10 +668,28 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    public String getProgramBitString() {
+	if (this.isProgramBitReply()) {
+            return(this.getValueString(4));
+	} else {
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
+	    return("0");
+        }
+    }
+
+    public int getProgramBitInt() {
+        if (this.isProgramBitReply()) {
+            return(this.getValueInt(4));
+        } else {
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
+	    return(0);
+        }
+    }
+
     public String getReadValueString() {
 	if (this.isProgramReply()) {
-            if (this.opcode == DCCppConstants.PROG_WRITE_CV_BIT) {
-                return(this.getValueString(6));
+            if (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
+                return(this.getValueString(5));
             } else {
                 return(this.getValueString(4));
             }
@@ -936,7 +975,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      // Message Identification functions
     public boolean isThrottleReply() { return (this.getOpCodeChar() == DCCppConstants.THROTTLE_REPLY); }
     public boolean isTurnoutReply() { return (this.getOpCodeChar() == DCCppConstants.TURNOUT_REPLY); }
-    public boolean isProgramReply() { return (this.getOpCodeChar() == DCCppConstants.PROGRAM_REPLY); }
+    public boolean isProgramReply() { return (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)); }
+    public boolean isProgramBitReply() { return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)); }
     public boolean isPowerReply() { return (this.getOpCodeChar() == DCCppConstants.POWER_REPLY); }
     public boolean isCurrentReply() { return (this.getOpCodeChar() == DCCppConstants.CURRENT_REPLY); }
     public boolean isMemoryReply() { return (this.getOpCodeChar() == DCCppConstants.MEMORY_REPLY); }

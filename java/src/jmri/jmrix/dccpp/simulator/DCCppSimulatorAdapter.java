@@ -333,9 +333,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         log.error("Malformed ProgWriteCVByte Command: {}", s);
                         return (null);
                     }
-                    r = "r " + m.group(3) + " "
-                            + m.group(4) + " "
-                            + m.group(2);
+                    // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
+                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                    r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
+                            " " + m.group(2);
                     CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
@@ -361,9 +362,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         log.error("Malformed ProgWriteCVBit Command: {}", s);
                         return (null);
                     }
-                    r = "r " + m.group(4) + " "
-                            + m.group(5) + " "
-                            + m.group(3);
+                    // CMD: <B CV BIT Value CALLBACKNUM CALLBACKSUB>
+                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV BIT Value>
+                    r = "r " + m.group(4) + "|" + m.group(5) + "|" + m.group(1) + " "
+                            + m.group(2) + m.group(3);
                     int idx = Integer.parseInt(m.group(1));
                     int bit = Integer.parseInt(m.group(2));
                     int v = Integer.parseInt(m.group(3));
@@ -397,8 +399,17 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         return (null);
                     }
                     // TODO: Work Magic Here to retrieve stored value.
-                    int cv = CVs[Integer.parseInt(m.group(1))];
-                    r = "r " + m.group(2) + " " + m.group(3) + " " + Integer.toString(cv);
+                    // Make sure that CV exists
+                    int cv = Integer.parseInt(m.group(1));
+                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                    if (cv < CVs.length) {
+                        cvVal = CVs[Integer.parseInt(m.group(1))];
+                    } 
+                    // CMD: <R CV CALLBACKNUM CALLBACKSUB>
+                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                    r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
+                            + Integer.toString(cvVal);
+                            
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
@@ -466,6 +477,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
          */
 
         DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        writeReply(r);
+        if (log.isDebugEnabled()) {
+            log.debug("Simulator Thread sent Reply" + r.toString());
+        }
+        r = DCCppReply.parseDCCppReply("N0: SERIAL");
         writeReply(r);
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread sent Reply" + r.toString());
