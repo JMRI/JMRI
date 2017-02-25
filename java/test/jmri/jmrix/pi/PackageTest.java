@@ -25,18 +25,7 @@ public class PackageTest {
 
     // Main entry point
     static public void main(String[] args) {
-        org.junit.runner.Result result = org.junit.runner.JUnitCore
-                 .runClasses(PackageTest.class);
-        for(org.junit.runner.notification.Failure fail: result.getFailures()) {
-            log.error(fail.toString());
-        }
-        //junit.textui.TestRunner.main(testCaseName);
-        if (result.wasSuccessful()) {
-            log.info("Success");
-            System.out.println("Success");
-        }
-        log.info("Tests Run: {} Tests Failed: {} Tests Ignored: {} ",result.getRunCount(),result.getFailureCount(), result.getIgnoreCount() );
-        System.out.println("Tests Run: " + result.getRunCount() +"  Tests Failed: " + result.getFailureCount() + " Tests Ignored: " + result.getIgnoreCount() );
+        org.junit.runner.JUnitCore.main(PackageTest.class.getName());
     }
 
     private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
