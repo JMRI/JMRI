@@ -81,9 +81,9 @@ public class Version {
     public static String getModifier() {
         StringBuilder modifier = new StringBuilder("");
 
-        if (test != 0) {
+        // (test != 0) {
             modifier.append(".").append(test);
-        }
+        //}
 
         if (! official) {
             modifier.append("ish");
