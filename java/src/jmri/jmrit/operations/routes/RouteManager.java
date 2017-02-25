@@ -29,14 +29,15 @@ public class RouteManager {
     /**
      * record the single instance *
      */
-    private static RouteManager _instance = null;
     private int _id = 0;
 
     public static synchronized RouteManager instance() {
+        RouteManager _instance = jmri.InstanceManager.getNullableDefault(RouteManager.class);
         if (_instance == null) {
             log.debug("RouteManager creating instance");
             // create and load
             _instance = new RouteManager();
+            jmri.InstanceManager.setDefault(RouteManager.class,_instance);
             OperationsSetupXml.instance(); // load setup
             RouteManagerXml.instance(); // load routes
         }
