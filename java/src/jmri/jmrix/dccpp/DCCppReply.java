@@ -48,7 +48,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     private ArrayList<Integer> valueList = new ArrayList<Integer>();
     protected String myRegex;
     protected StringBuilder myReply;
-    //protected char opcode;
 
     // Create a new reply.
     public DCCppReply() {
@@ -56,7 +55,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         setBinary(false);
         myRegex = "";
         myReply = new StringBuilder();
-        //opcode = 0x00;
     }
 
     // Create a new reply from an existing reply
@@ -89,24 +87,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         super();
         setBinary(false);
         myReply = new StringBuilder(message);
-        //opcode = message.charAt(0);
         // BUG? myRegex is not set by this function yet...
         // gather bytes in result
         _nDataChars = myReply.length();
         _dataChars = new int[_nDataChars];
     }
-
-    /*
-    protected DCCppReply(char c, String regex) {
-        super();
-        setBinary(false);
-        myRegex = regex;
-        opcode = c;
-        myReply = new StringBuilder(Character.toString(opcode));
-        _nDataChars = myReply.length();
-        log.debug("DCCppReply() opcode = {} ({})", opcode, Character.toString(opcode));
-    }
-    */
     
     @Override
     public String toString() {
@@ -119,7 +104,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         DCCppReply r = DCCppReply.parseDCCppReply(s);
         log.debug("in parseReply() string: {}", s);
         if (r != null) {
-            //this.opcode = r.opcode;
             this.valueList = r.valueList;
             this.myRegex = r.myRegex;
             this.myReply = r.myReply;
@@ -143,7 +127,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public static DCCppReply parseDCCppReply(String s) {
 
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
-        //DCCppReply r = new DCCppReply(s.charAt(0), null);
         DCCppReply r = new DCCppReply();
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
@@ -317,8 +300,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         } else {
             return(0);
         }
-        //return((opcode) & 0x00FF);
-//	return((getElement(0) & 0x00FF));
     }
 
     /* Get the opcode as a one character string */

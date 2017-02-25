@@ -65,7 +65,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         StringBuilder raw = new StringBuilder("RX: ");
         if (rawCheckBox.isSelected()) {
             raw.append(l.toString());
-            raw.append("\n");
         }
 
         log.debug("Message in Monitor: {} opcode {}", l.toString(), Character.toString(l.getOpCodeChar()));
@@ -193,7 +192,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         StringBuilder raw = new StringBuilder("TX: ");
         if (rawCheckBox.isSelected()) {
             raw.append(l.toString());
-            raw.append("\n");
         }
 
         // Beautify and display
