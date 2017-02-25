@@ -38,6 +38,20 @@ public class JmriUserPreferencesManagerTest extends TestCase {
         Assert.assertEquals(windowSize, savedWindowSize);
     }
 
+    public void testSaveRestoreSetup() {
+        JmriUserPreferencesManager d = new TestJmriUserPreferencesManager();
+
+        d.setSimplePreferenceState("PLUGH", true);
+        d.setSimplePreferenceState("XYZZY", false);
+	}
+
+    public void testSaveRestoreTest() {
+        JmriUserPreferencesManager d = new TestJmriUserPreferencesManager();
+
+        Assert.assertTrue(d.getSimplePreferenceState("PLUGH"));
+        Assert.assertTrue(!d.getSimplePreferenceState("XYZZY"));
+	}
+
     // from here down is testing infrastructure
     public JmriUserPreferencesManagerTest(String s) {
         super(s);
