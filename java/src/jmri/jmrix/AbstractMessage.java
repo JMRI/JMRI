@@ -104,5 +104,5 @@ public abstract class AbstractMessage implements Message {
         return retval;
     }
 
-    private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
 }
