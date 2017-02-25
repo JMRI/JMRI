@@ -30,15 +30,15 @@ public class EngineManager extends RollingStockManager {
     }
 
     /**
-     * record the single instance *
+     * record the single instance
      */
-    private static EngineManager _instance = null;
-
     public static synchronized EngineManager instance() {
+        EngineManager _instance = jmri.InstanceManager.getNullableDefault(EngineManager.class);
         if (_instance == null) {
             log.debug("EngineManager creating instance");
             // create and load
             _instance = new EngineManager();
+            jmri.InstanceManager.setDefault(EngineManager.class,_instance);
             OperationsSetupXml.instance(); // load setup
             // create manager to load engines and their attributes
             EngineManagerXml.instance();
