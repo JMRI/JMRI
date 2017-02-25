@@ -77,13 +77,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a Logix Table.
  * <P>
- * Also contains the windows to create, edit, and delete a Logix. Also contains
- * the window to define and edit a Conditional.
+ * Also contains the panes to create, edit, and delete a Logix. Also contains
+ * the pane to define and edit a Conditional.
  * <P>
  * Most of the text used in this GUI is in LogixTableBundle.properties, accessed
  * via rbx, and the remainder of the text is in BeanTableBundle.properties,
- * accessed via rb (the latter can easily be converted to the Bundle.getMessage() method)
- *
+ * accessed via the Bundle.getMessage() method.
+ * <p>
  * Methods and Members for 'state variables' and 'actions' removed to become
  * their own objects - 'ConditionalVariable' and 'ConditionalAction' in jmri
  * package. Two more types of logic for a Conditional to use in its antecedent
@@ -92,11 +92,13 @@ import org.slf4j.LoggerFactory;
  * operations). The 'OR's an 'AND's types are unambiguous and do not require
  * parentheses. The 'Mixed' type uses a TextField for the user to insert
  * parenthees. Jan 22, 2009 - Pete Cressman
- *
+ * <p>
  * Conditionals now have two policies to trigger execution of their action
- * lists. 1. the previous policy - Trigger on change of state only 2. the new
- * default - Trigger on any enabled state calculation Jan 15, 2011 - Pete
- * Cressman
+ * lists:<br>
+ * 1. the previous policy - Trigger on change of state only <br>
+ * 2. the new default - Trigger on any enabled state calculation
+ * <p>
+ * Jan 15, 2011 - Pete Cressman
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
@@ -105,11 +107,10 @@ import org.slf4j.LoggerFactory;
 public class LogixTableAction extends AbstractTableAction {
 
     /**
-     * Create an action with a specific title.
-     * <P>
-     * Note that the argument is the Action title, not the title of the
-     * resulting frame. Perhaps this should be changed?
+     * Constructor to create a LogixManager instance.
      *
+     * @param s the Action title, not the title of the
+     * resulting frame. Perhaps this should be changed?
      */
     public LogixTableAction(String s) {
         super(s);
@@ -124,6 +125,9 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Constructor to create a LogixManager instance with default title.
+     */
     public LogixTableAction() {
         this(Bundle.getMessage("TitleLogixTable"));
     }
@@ -131,12 +135,14 @@ public class LogixTableAction extends AbstractTableAction {
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     // *********** Methods for Logix Table Window ********************
+
     /**
      * Create the JTable DataModel, along with the changes (overrides of
-     * BeanTableDataModel) for the specific case of a Logix table. Note: Table
-     * Models for the Conditional table in the Edit Logix window, and the State
-     * Variable table in the Edit Conditional window are at the end of this
-     * module.
+     * BeanTableDataModel) for the specific case of a Logix table.
+     * <p>
+     * Note: Table Models for the Conditional table in the Edit Logix window,
+     * and the State Variable table in the Edit Conditional window are at
+     * the end of this module.
      */
     @Override
     protected void createModel() {
@@ -237,8 +243,10 @@ public class LogixTableAction extends AbstractTableAction {
 
             /**
              * Delete the bean after all the checking has been done.
-             * <P>
-             * Deactivate the Logix and remove it's conditionals
+             * <p>
+             * Deactivates the Logix and remove it's conditionals.
+             *
+             * @param bean of the Logix to delete
              */
             @Override
             void doDelete(NamedBean bean) {
@@ -287,7 +295,9 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             /**
-             * Replace delete button with comboBox
+             * Replace delete button with comboBox to edit/delete/copy/select Logix.
+             *
+             * @param table name of the Logix JTable holding the column
              */
             @Override
             protected void configDeleteColumn(JTable table) {
@@ -317,7 +327,9 @@ public class LogixTableAction extends AbstractTableAction {
         };
     }
 
-    // set title for Logix table
+    /**
+     * Set title of Logix table.
+     */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixTable"));
@@ -325,9 +337,10 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Insert 2 table specific menus.
-     * Account for the Window and Help menus, which are already added to the menu bar
-     * as part of the creation of the JFrame, by adding the menus 2 places earlier
-     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * <p>
+     * Accounts for the Window and Help menus, which are already added to the menu bar
+     * as part of the creation of the JFrame, by adding the new menus 2 places earlier
+     * unless the table is part of the ListedTableFrame, which adds the Help menu later on.
      * @param f the JFrame of this table
      */
     @Override
@@ -416,6 +429,9 @@ public class LogixTableAction extends AbstractTableAction {
         menuBar.add(menu, pos + offset + 1); // add this menu to the right of the previous
     }
 
+    /**
+     * Open a new Pick List to drag Actions from to form Logix Conditionals.
+     */
     void OpenPickListTable() {
         if (_pickTables == null) {
             _pickTables = new jmri.jmrit.picker.PickFrame(rbx.getString("TitlePickList"));
@@ -425,10 +441,22 @@ public class LogixTableAction extends AbstractTableAction {
         _pickTables.toFront();
     }
 
+    /**
+     * Find empty Conditional entries, called from menu.
+     *
+     * @see Maintenance#findEmptyPressed(Frame)
+     * @param e the event heard
+     */
     void findEmptyPressed(ActionEvent e) {
         Maintenance.findEmptyPressed(f);
     }
 
+    /**
+     * Find orphaned entries, called from menu.
+     *
+     * @see Maintenance#findOrphansPressed(Frame)
+     * @param e the event heard
+     */
     void findOrphansPressed(ActionEvent e) {
         Maintenance.findOrphansPressed(f);
     }
@@ -457,7 +485,7 @@ public class LogixTableAction extends AbstractTableAction {
             extraPanel.add(panel);
             setContentPane(extraPanel);
             pack();
-//            setLocationRelativeTo((java.awt.Component)_pos);
+            // setLocationRelativeTo((java.awt.Component)_pos);
             setVisible(true);
         }
 
@@ -481,6 +509,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     // *********** variable definitions ********************
+
     // Multi use variables
     ConditionalManager _conditionalManager = null; // set when LogixAction is created
 
@@ -490,7 +519,7 @@ public class LogixTableAction extends AbstractTableAction {
     boolean _suppressIndirectRef = false;
     jmri.jmrit.picker.PickFrame _pickTables;
 
-    // current focus variables
+    // Current focus variables
     Logix _curLogix = null;
     int numConditionals = 0;
     int conditionalRowNumber = 0;
@@ -532,10 +561,10 @@ public class LogixTableAction extends AbstractTableAction {
     private JPanel _antecedentPanel;
     private int _logicType = Conditional.ALL_AND;
     private String _antecedent = null;
-    private boolean _newItem = false;   // marks a new Action or Variable object added
+    private boolean _newItem = false; // marks a new Action or Variable object was added
 
     /**
-     * * Conponents of Edit Variable Windows
+     * Components of Edit Variable panes
      */
     JmriJFrame _editVariableFrame = null;
     JComboBox<String> _variableTypeBox;
@@ -554,7 +583,7 @@ public class LogixTableAction extends AbstractTableAction {
     JPanel _variableData2Panel;
 
     /**
-     * * Conponents of Edit Action Windows
+     * Conponents of Edit Action panes
      */
     JmriJFrame _editActionFrame = null;
     JComboBox<String> _actionItemTypeBox;
@@ -574,7 +603,8 @@ public class LogixTableAction extends AbstractTableAction {
     JPanel _setPanel;
     JPanel _textPanel;
 
-    /* Listener for _actionTypeBox
+    /**
+     * Listener for _actionTypeBox.
      */
     class ActionTypeListener implements ActionListener {
 
@@ -628,9 +658,12 @@ public class LogixTableAction extends AbstractTableAction {
     static final int STRUT = 10;
 
     // *********** Methods for Add Logix Window ********************
+
     /**
-     * Responds to the Add button in Logix table Creates and/or initializes the
-     * Add Logix window
+     * Respond to the Add button in Logix table Creates and/or initializes the
+     * Add Logix pane.
+     *
+     * @param e The event heard
      */
     @Override
     protected void addPressed(ActionEvent e) {
@@ -662,7 +695,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * shared method for window to create or copy Logix Returns the button panel
+     * Create or copy Logix frame.
+     *
+     * @param titleId property key to fetch as title of the frame
+     * @param messageId part 1 of property key to fetch as user instruction on pane,
+     *                  either 1 or 2 is added to form the whole key
+     * @return the button JPanel
      */
     JPanel makeAddLogixFrame(String titleId, String messageId) {
         addLogixFrame = new JmriJFrame(rbx.getString(titleId));
@@ -749,6 +787,10 @@ public class LogixTableAction extends AbstractTableAction {
         return panel5;
     }
 
+    /**
+     * Enable/disable fields for data entry when user selects to have system name
+     * automatically generated.
+     */
     void autoSystemName() {
         if (_autoSystemName.isSelected()) {
             _systemName.setEnabled(false);
@@ -760,8 +802,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Cancel button in Add Logix window Note: Also get there if
-     * the user closes the Add Logix window
+     * Respond to the Cancel button in Add Logix window.
+     * <p>
+     * Note: Also get there if the user closes the Add Logix window.
+     * @param e The event heard
      */
     void cancelAddPressed(ActionEvent e) {
         addLogixFrame.setVisible(false);
@@ -773,6 +817,13 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Respond to the Copy Logix button in Add Logix window.
+     * <p>
+     * Provides a pane to set new properties of the copy.
+     *
+     * @param sName system name of Logix to be copied
+     */
     void copyPressed(String sName) {
         if (!checkFlags(sName)) {
             return;
@@ -808,6 +859,11 @@ public class LogixTableAction extends AbstractTableAction {
 
     String _logixSysName;
 
+    /**
+     * Copy the Logix as configured in the Copy set up pane.
+     *
+     * @param e the event heard
+     */
     void copyLogixPressed(ActionEvent e) {
         String uName = _addUserName.getText().trim();
         if (uName.length() == 0) {
@@ -868,6 +924,13 @@ public class LogixTableAction extends AbstractTableAction {
         cancelAddPressed(null);
     }
 
+    /**
+     * Copy a given Conditional from one Logix to another.
+     *
+     * @param cSysName system name of the Conditional
+     * @param srcLogix original Logix containing the Conditional
+     * @param targetLogix target Logix to copy to
+     */
     void copyConditionalToLogix(String cSysName, Logix srcLogix, Logix targetLogix) {
         Conditional cOld = _conditionalManager.getBySystemName(cSysName);
         if (cOld == null) {
@@ -913,6 +976,12 @@ public class LogixTableAction extends AbstractTableAction {
         targetLogix.addConditional(cNewSysName, -1);
     }
 
+    /**
+     * Check and warn if a string is already in use as the user name of a Logix.
+     *
+     * @param uName the suggested name
+     * @return true if not in use
+     */
     boolean checkLogixUserName(String uName) {
         // check if a Logix with the same user name exists
         if (uName != null && uName.trim().length() > 0) {
@@ -928,8 +997,14 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Check validity of Logix system name.
+     * <p>
+     * Fixes name if it doesn't start with "IX".
+     * </p>
+     * @return false if name has length &lt; 1 after displaying a dialog
+     */
     boolean checkLogixSysName() {
-        // check validity of Logix system name
         String sName = _systemName.getText().trim();
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
@@ -948,6 +1023,13 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Check if another Logix editing session is currently open
+     * or no system name is provided.
+     *
+     * @param sName system name of Logix to be copied
+     * @return true if a new session may be started
+     */
     boolean checkFlags(String sName) {
         if (inEditMode) {
             // Already editing a Logix, ask for completion of that edit
@@ -984,7 +1066,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Create Logix button in Add Logix window
+     * Respond to the Create Logix button in Add Logix window.
+     *
+     * @param e The event heard
      */
     void createPressed(ActionEvent e) {
         // possible change
@@ -1045,9 +1129,13 @@ public class LogixTableAction extends AbstractTableAction {
                 Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-    // *********** Methods for Edit Logix Window ********************
+
+    // *********** Methods for Edit Logix Pane ********************
+
     /**
-     * Responds to the Edit button pressed in Logix table
+     * Respond to the Edit button pressed in Logix table.
+     *
+     * @param sName system name of Logix to be edited
      */
     void editPressed(String sName) {
         if (!checkFlags(sName)) {
@@ -1071,7 +1159,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * creates and/or initializes the Edit Logix window
+     * Create and/or initialize the Edit Logix pane.
      */
     void makeEditLogixWindow() {
         //if (log.isDebugEnabled()) log.debug("makeEditLogixWindow ");
@@ -1236,7 +1324,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Display reminder to save
+     * Display reminder to save.
      */
     void showSaveReminder() {
         /*if (_showReminder && !_suppressReminder) {
@@ -1256,7 +1344,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Reorder Button in the Edit Logix window
+     * Respond to the Reorder Button in the Edit Logix pane.
+     *
+     * @param e The event heard
      */
     void reorderPressed(ActionEvent e) {
         if (checkEditConditional()) {
@@ -1271,7 +1361,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the First/Next (Delete) Button in the Edit Logix window
+     * Respond to the First/Next (Delete) Button in the Edit Logix window.
+     *
+     * @param row index of the row to put as next in line (instead of the one that was supposed to be next)
      */
     void swapConditional(int row) {
         _curLogix.swapConditional(_nextInOrder, row);
@@ -1285,6 +1377,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Responds to the Calculate Button in the Edit Logix window
+     *
+     * @param e The event heard
      */
     void calculatePressed(ActionEvent e) {
         if (checkEditConditional()) {
@@ -1316,9 +1410,13 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Done button in the Edit Logix window Note: also get here
+     * Respond to the Done button in the Edit Logix window.
+     * <p>
+     * Note: We also get here
      * if the Edit Logix window is dismissed, or if the Add button is pressed in
      * the Logic Table with an active Edit Logix window.
+     *
+     * @param e The event heard
      */
     void donePressed(ActionEvent e) {
         if (_curLogix == null) {
@@ -1355,7 +1453,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         // complete update and activate Logix
         finishDone();
-    }  /* donePressed */
+    }
 
 
     void finishDone() {
@@ -1384,7 +1482,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Delete combo selection Logix window
+     * Respond to the Delete combo selection Logix window.
+     *
+     * @param sName system name of bean to be deleted
      */
     void deletePressed(String sName) {
         if (!checkFlags(sName)) {
@@ -1471,7 +1571,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Delete button in the Edit Logix window
+     * Respond to the Delete button in the Edit Logix window.
+     *
+     * @param e The event heard
      */
     void deletePressed(ActionEvent e) {
         if (checkEditConditional()) {
@@ -1486,7 +1588,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the New Conditional Button in Edit Logix Window
+     * Respond to the New Conditional Button in Edit Logix Window.
+     *
+     * @param e The event heard
      */
     void newConditionalPressed(ActionEvent e) {
         if (checkEditConditional()) {
@@ -1531,7 +1635,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to Edit Button in the Conditional table of the Edit Logix Window
+     * Respond to Edit Button in the Conditional table of the Edit Logix Window.
+     *
+     * @param rx index (row number) of Conditional te be edited
      */
     void editConditionalPressed(int rx) {
         if (inEditConditionalMode) {
@@ -1558,8 +1664,9 @@ public class LogixTableAction extends AbstractTableAction {
 
 
     /**
-     * Checks if edit of a conditional is in progress Returns true after sending
-     * message if this is the case
+     * Check if edit of a conditional is in progress.
+     *
+     * @return true if this is the case, after showing dialog to user
      */
     boolean checkEditConditional() {
         if (inEditConditionalMode) {
@@ -1591,6 +1698,12 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Check form of Conditional systemName.
+     *
+     * @param sName system name of bean to be checked
+     * @return false if sName is empty string or null
+     */
     boolean checkConditionalSystemName(String sName) {
         if ((sName != null) && (!(sName.equals("")))) {
             Conditional p = _conditionalManager.getBySystemName(sName);
@@ -1603,14 +1716,13 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    // ********************* Edit Conditional Window and Methods *******************
+
     /**
-     * ********************* Edit Conditional Window and
-     * Methods*******************
-     */
-    /**
-     * Creates and/or initializes the Edit Conditional window Note: you can get
-     * here via the New Conditional button (newConditionalPressed) or via an
-     * Edit button in the Conditional table of the Edit Logix window.
+     * Create and/or initialize the Edit Conditional window.
+     * <p>
+     * Note: you can get here via the New Conditional button (newConditionalPressed)
+     * or via an Edit button in the Conditional table of the Edit Logix window.
      */
     void makeEditConditionalWindow() {
         // deactivate this Logix
@@ -1947,7 +2059,9 @@ public class LogixTableAction extends AbstractTableAction {
 
 
     /**
-     * Responds to the Add State Variable Button in the Edit Conditional window
+     * Respond to the Add State Variable Button in the Edit Conditional window.
+     *
+     * @param e The event heard
      */
     void addVariablePressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -1990,7 +2104,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Negation column in the Edit Conditional window
+     * Respond to the Negation column in the Edit Conditional window.
+     *
+     * @param row index of the Conditional to change the setting on
+     * @param oper NOT (i18n) as negation of condition
      */
     void variableNegationChanged(int row, String oper) {
         ConditionalVariable variable = _variableList.get(row);
@@ -2006,7 +2123,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Operator column in the Edit Conditional window
+     * Respond to the Operator column in the Edit Conditional window.
+     *
+     * @param row index of the Conditional to change the setting on
+     * @param oper AND or OR (i18n) as operand on the list of conditions
      */
     void variableOperatorChanged(int row, String oper) {
         ConditionalVariable variable = _variableList.get(row);
@@ -2025,8 +2145,10 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-    /*
-     * Responds to Add action button in the EditConditional window
+    /**
+     * Respond to Add action button in the EditConditional window.
+     *
+     * @param e The event heard
      */
     void addActionPressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -2041,7 +2163,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Reorder Button in the Edit Conditional window
+     * Respond to the Reorder Button in the Edit Conditional window.
+     *
+     * @param e The event heard
      */
     void reorderActionPressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -2062,7 +2186,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the First/Next (Delete) Button in the Edit Conditional window
+     * Respond to the First/Next (Delete) Button in the Edit Conditional window.
+     *
+     * @param row index of the row to put as next in line (instead of the one that was supposed to be next)
      */
     void swapActions(int row) {
         ConditionalAction temp = _actionList.get(row);
@@ -2079,7 +2205,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Update Conditional Button in the Edit Conditional window
+     * Respond to the Update Conditional Button in the Edit Conditional window.
+     *
+     * @param e The event heard
      */
     void updateConditionalPressed(ActionEvent e) {
         if (alreadyEditingActionOrVariable()) {
@@ -2150,9 +2278,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Cancel button in the Edit Conditional frame Does the
-     * cleanup from deleteConditionalPressed, updateConditionalPressed and
-     * editConditionalFrame window closer.
+     * Respond to the Cancel button in the Edit Conditional frame.
+     * <p>
+     * Does the cleanup from deleteConditionalPressed, updateConditionalPressed
+     * and editConditionalFrame window closer.
+     *
+     * @param e The event heard
      */
     void cancelConditionalPressed(ActionEvent e) {
         if (_pickTables != null) {
@@ -2190,7 +2321,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Delete Conditional Button in the Edit Conditional window
+     * Respond to the Delete Conditional Button in the Edit Conditional window.
+     *
+     * @param sName system name of Conditional to be deleted
      */
     void deleteConditionalPressed(String sName) {
         if (_curConditional == null) {
@@ -2222,6 +2355,11 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Respond to a change of Conditional Type in the Edit Conditional pane.
+     *
+     * @param e The event heard
+     */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
@@ -2253,6 +2391,11 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Respond to Help button press in the Edit Conditional pane.
+     *
+     * @param e The event heard
+     */
     void helpPressed(ActionEvent e) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                 new String[]{
@@ -2268,7 +2411,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * build the antecedent statement
+     * Build the antecedent statement.
      */
     void makeAntecedent() {
         String str = "";
@@ -2307,6 +2450,11 @@ public class LogixTableAction extends AbstractTableAction {
         _showReminder = true;
     }
 
+    /**
+     * Add a part to the antecedent statement.
+     *
+     * @param variable the current Conditional Variable, ignored in method
+     */
     void appendToAntecedent(ConditionalVariable variable) {
         if (_variableList.size() > 1) {
             if (_logicType == Conditional.OPERATOR_OR) {
@@ -2320,7 +2468,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Check the antecedent and logic type
+     * Check the antecedent and logic type.
      */
     boolean validateAntecedent() {
         if (_logicType != Conditional.MIXED || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
@@ -2340,9 +2488,12 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    // *********************** Methods for Edit Variable Pane *******************
+
     /**
-     * *********************** Methods for Edit Variable Window
-     * *******************
+     * Check if an editing session on (another) Logix is going on.
+     * <p>
+     * If it is, display a message to user.
      */
     boolean alreadyEditingActionOrVariable() {
         OpenPickListTable();
@@ -2366,7 +2517,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Creates and/or initializes the Edit a Variable window Note: you can get
+     * Create and/or initialize the Edit a Variable pane.
+     * <p>
+     * Note: you can get
      * here via the New Variable button (addVariablePressed) or via an Edit
      * button in the Variable table of the EditConditional window.
      */
@@ -2377,20 +2530,20 @@ public class LogixTableAction extends AbstractTableAction {
         _curVariableRowNumber = row;
         _curVariable = _variableList.get(row);
         _editVariableFrame = new JmriJFrame(rbx.getString("TitleEditVariable"), true, true);
-//        _editVariableFrame.setLocation(10, 100);
+        //        _editVariableFrame.setLocation(10, 100);
         JPanel topPanel = makeTopPanel(_editVariableFrame, "TitleAntecedentPhrase", 500, 160);
 
         Box panel1 = Box.createHorizontalBox();
         panel1.add(Box.createHorizontalGlue());
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Item Type
+        // Item Type
         _variableTypeBox = new JComboBox<String>();
         for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
             _variableTypeBox.addItem(ConditionalVariable.getItemTypeString(i));
         }
         panel1.add(makeEditPanel(_variableTypeBox, "LabelVariableType", "VariableTypeHint"));
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Item Name
+        // Item Name
         _variableNameField = new JTextField(30);
         _variableNamePanel = makeEditPanel(_variableNameField, "LabelItemName", null);
         _variableNamePanel.setMaximumSize(
@@ -2398,21 +2551,21 @@ public class LogixTableAction extends AbstractTableAction {
         _variableNamePanel.setVisible(false);
         panel1.add(_variableNamePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// State Box
+        // State Box
         _variableStateBox = new JComboBox<String>();
         _variableStateBox.addItem("XXXXXXX");
         _variableStatePanel = makeEditPanel(_variableStateBox, "LabelVariableState", "VariableStateHint");
         _variableStatePanel.setVisible(false);
         panel1.add(_variableStatePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Aspects
+        // Aspects
         _variableSignalBox = new JComboBox<String>();
         _variableSignalBox.addItem("XXXXXXXXX");
         _variableSignalPanel = makeEditPanel(_variableSignalBox, "LabelVariableAspect", "VariableAspectHint");
         _variableSignalPanel.setVisible(false);
         panel1.add(_variableSignalPanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Compare operator
+        // Compare operator
         _variableComparePanel = new JPanel();
         _variableComparePanel.setLayout(new BoxLayout(_variableComparePanel, BoxLayout.X_AXIS));
         _variableCompareOpBox = new JComboBox<String>();
@@ -2421,7 +2574,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         _variableComparePanel.add(makeEditPanel(_variableCompareOpBox, "LabelCompareOp", "CompareHintMemory"));
         _variableComparePanel.add(Box.createHorizontalStrut(STRUT));
-// Compare type
+        // Compare type
         _variableCompareTypeBox = new JComboBox<String>();
         for (int i = 0; i < Conditional.ITEM_TO_MEMORY_TEST.length; i++) {
             _variableCompareTypeBox.addItem(ConditionalVariable.describeState(Conditional.ITEM_TO_MEMORY_TEST[i]));
@@ -2437,7 +2590,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         panel1.add(_variableComparePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Data 1
+        // Data 1
         _variableData1Field = new JTextField(30);
         _variableData1Panel = makeEditPanel(_variableData1Field, "LabelStartTime", "DataHintTime");
         _variableData1Panel.setMaximumSize(
@@ -2445,7 +2598,7 @@ public class LogixTableAction extends AbstractTableAction {
         _variableData1Panel.setVisible(false);
         panel1.add(_variableData1Panel);
         panel1.add(Box.createHorizontalStrut(STRUT));
-// Data 2
+        // Data 2
         _variableData2Field = new JTextField(30);
         _variableData2Panel = makeEditPanel(_variableData2Field, "LabelEndTime", "DataHintTime");
         _variableData2Panel.setMaximumSize(
@@ -2502,14 +2655,16 @@ public class LogixTableAction extends AbstractTableAction {
         _editVariableFrame.setVisible(true);
     }
 
+    // *************************** Edit Action Window and methods **********************
+
     /**
-     * *************************** Edit Action Window and methods
-     * **********************
-     */
-    /**
-     * Creates and/or initializes the Edit Action window Note: you can get here
+     * Create and/or initialize the Edit Action window.
+     * <p>
+     * Note: you can get here
      * via the New Action button (addActionPressed) or via an Edit button in the
      * Action table of the EditConditional window.
+     *
+     * @param row index in the table of the Action to be edited
      */
     void makeEditActionWindow(int row) {
         if (alreadyEditingActionOrVariable()) {
@@ -2518,7 +2673,7 @@ public class LogixTableAction extends AbstractTableAction {
         _curActionRowNumber = row;
         _curAction = _actionList.get(row);
         _editActionFrame = new JmriJFrame(rbx.getString("TitleEditAction"), true, true);
-//        _editActionFrame.setLocation(10, 300);
+        //        _editActionFrame.setLocation(10, 300);
         JPanel topPanel = makeTopPanel(_editActionFrame, "TitleConsequentPhrase", 600, 160);
 
         Box panel1 = Box.createHorizontalBox();
@@ -2660,14 +2815,12 @@ public class LogixTableAction extends AbstractTableAction {
         initializeActionVariables();
         _editActionFrame.setVisible(true);
         _editActionFrame.pack();
-    } /* makeEditActionWindow */
+    }
 
+    // ***** Methods shared by Edit Variable and Edit Action Windows *********
 
     /**
-     * ***** Methods shared by Edit Variable and Edit Action Windows *********
-     */
-    /**
-     * Utility for making Variable and Action editing Windows
+     * Create Variable and Action editing pane top part.
      */
     JPanel makeTopPanel(JFrame frame, String title, int width, int height) {
         Container contentPane = frame.getContentPane();
@@ -2684,7 +2837,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Utility for making Variable and Action editing Windows
+     * Create Variable and Action editing pane center part.
      */
     JPanel makeEditPanel(JComponent comp, String label, String hint) {
         JPanel panel = new JPanel();
@@ -2702,7 +2855,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Utility for making Variable and Action editing Windows
+     * Create Variable and Action editing pane bottom part.
+     * <p>
+     * Called from {@link #makeEditVariableWindow(int)}
+     * @param updateListener listener for Update pressed
+     * @param cancelListener listener for Cancel pressed
+     * @param deleteListener listener for Delete pressed
      */
     JPanel makeButtonPanel(ActionListener updateListener,
             ActionListener cancelListener,
@@ -2729,12 +2887,10 @@ public class LogixTableAction extends AbstractTableAction {
         return panel3;
     }
 
+    // *********** Responses for Edit Action and Edit Variable Buttons **********
+
     /**
-     * *********** Responses for Edit Action and Edit Variable Buttons
-     * **********
-     */
-    /*
-     * Responds to Update action button in the Edit Action window 
+     * Respond to Update Action button in the Edit Action pane.
      */
     void updateActionPressed() {
         if (!validateAction()) {
@@ -2748,8 +2904,8 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-    /*
-     * Responds to Update action button in the Edit Action window 
+    /**
+     * Respond to Update Variable button in the Edit Action pane.
      */
     void updateVariablePressed() {
         if (!validateVariable()) {
@@ -2763,10 +2919,11 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-    /*
-     * Responds to Cancel action button and window closer of the 
-     * Edit Action window.  Also does cleanup of Update and Delete
-     * buttons.  
+    /**
+     * Respond to Cancel action button and window closer of the
+     * Edit Action window.
+     * <p>
+     * Also does cleanup of Update and Delete buttons.
      */
     void cancelEditActionPressed() {
         if (_newItem) {
@@ -2779,6 +2936,9 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Clean up Update and Delete Action buttons.
+     */
     void cleanUpAction() {
         _newItem = false;
         if (_editActionFrame != null) {
@@ -2790,10 +2950,10 @@ public class LogixTableAction extends AbstractTableAction {
         _curActionRowNumber = -1;
     }
 
-    /*
-     * Responds to Cancel action button and window closer of the 
-     * Edit Variable window.  Also does cleanup of Update and Delete
-     * buttons.  
+    /**
+     * Respond to Cancel action button and window closer of the
+     * Edit Variable pane.
+     * <p>Also does cleanup of Update and Delete Variable buttons.
      */
     void cancelEditVariablePressed() {
         if (_newItem) {
@@ -2806,6 +2966,9 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    /**
+     * Clean up Update and Delete Variable buttons.
+     */
     void cleanUpVariable() {
         _newItem = false;
         if (_editVariableFrame != null) {
@@ -2816,16 +2979,18 @@ public class LogixTableAction extends AbstractTableAction {
         _curVariableRowNumber = -1;
     }
 
-    /*
-     * Responds to Delete action button in the Edit Action window 
+    /**
+     * Respond to Delete action button in the Edit Action window.
      */
     void deleteActionPressed() {
         deleteActionPressed(_curActionRowNumber);
     }
 
-    /*
-     * Responds to Delete action button in an action row of the
-     * Edit Conditional window 
+    /**
+     * Respond to Delete action button in an action row of the
+     * Edit Conditional pane.
+     *
+     * @param row index in table of action to be deleted
      */
     void deleteActionPressed(int row) {
         if (row != _curActionRowNumber && alreadyEditingActionOrVariable()) {
@@ -2840,16 +3005,18 @@ public class LogixTableAction extends AbstractTableAction {
         _showReminder = true;
     }
 
-    /*
-     * Responds to Delete action button in the Edit Variable window 
+    /**
+     * Respond to Delete action button in the Edit Variable window.
      */
     void deleteVariablePressed() {
         deleteVariablePressed(_curVariableRowNumber);
     }
 
     /**
-     * Responds to the Delete Button in the State Variable Table of the Edit
-     * Conditional window
+     * Respond to the Delete Button in the State Variable Table of the Edit
+     * Conditional window.
+     *
+     * @param row index in table of variable to be deleted
      */
     void deleteVariablePressed(int row) {
         if (row != _curVariableRowNumber && alreadyEditingActionOrVariable()) {
@@ -2873,7 +3040,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * set display to show current state variable (curVariable) parameters
+     * Set display to show current state variable (curVariable) parameters.
      */
     void initializeStateVariables() {
         int testType = _curVariable.getType();
@@ -3255,7 +3422,7 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Responds to a change in an Action Type Box of Edit Action Window Set
-     * components visible for the selected type
+     * components visible for the selected type.
      */
     void actionItemChanged(int type) {
         int actionType = _curAction.getType();
@@ -4955,7 +5122,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Formats time to hh:mm given integer hour and minute
+     * Format time to hh:mm given integer hour and minute.
+     *
+     * @param hour value for time hours
+     * @param minute value for time minutes
+     * @return Formatted time string
      */
     public static String formatTime(int hour, int minute) {
         String s = "";
@@ -4978,8 +5149,10 @@ public class LogixTableAction extends AbstractTableAction {
         return s;
     }
 
+    // ********************** Error Dialogs *********************************
+
     /**
-     * ********************** Error Dialogs *********************************
+     * Send an Invalid Conditional SignalHead state message for Edit Logix pane.
      */
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -4988,6 +5161,9 @@ public class LogixTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Send an Invalid Conditional Action user name message for Edit Logix pane.
+     */
     void messageInvalidActionItemName(String name, String itemType) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                 java.text.MessageFormat.format(rbx.getString("Error22"),
@@ -4996,7 +5172,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Sends a duplicate Conditional user name message for Edit Logix window
+     * Send a duplicate Conditional user name message for Edit Logix pane.
      */
     void messageDuplicateConditionalUserName(String svName) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -5006,8 +5182,9 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     // *********** Special Table Models ********************
+
     /**
-     * Table model for Conditionals in Edit Logix window
+     * Table model for Conditionals in the Edit Logix pane.
      */
     public class ConditionalTableModel extends AbstractTableModel implements
             PropertyChangeListener {
@@ -5062,10 +5239,10 @@ public class LogixTableAction extends AbstractTableAction {
         }
 
         /**
-         * Is this property event announcing a change this table should display?
-         * <P>
-         * Note that events will come both from the NamedBeans and also from the
-         * manager
+         * Check if this property event is announcing a change this table should display.
+         * <p>
+         * Note that events will come both from the NamedBeans and from the
+         * manager.
          */
         boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
             return (e.getPropertyName().indexOf("State") >= 0 || e
@@ -5232,7 +5409,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for State Variables in Edit Conditional window
+     * Table model for State Variables in Edit Conditional pane.
      */
     public class VariableTableModel extends AbstractTableModel {
 
@@ -5441,7 +5618,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Table model for Actions in Edit Conditional window
+     * Table model for Actions in Edit Conditional pane.
      */
     public class ActionTableModel extends AbstractTableModel {
 
