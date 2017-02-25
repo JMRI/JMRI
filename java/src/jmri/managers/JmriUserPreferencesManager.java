@@ -102,23 +102,13 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.allowSave = false;
 
         //I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
-        this.preferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage")); // NOI18N
+        this.setPreferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage")); // NOI18N
         //I18N in ManagersBundle.properties (this is the title of prefs tab Messages|Misc items)
         this.classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences")); // NOI18N
 
         // allow attempts to write
         this.allowSave = true;
         this.dirty = false;
-    }
-
-    @Override
-    public synchronized void allowSave() {
-        this.setSaveAllowed(true);
-    }
-
-    @Override
-    public synchronized void disallowSave() {
-        this.setSaveAllowed(false);
     }
 
     @Override
@@ -178,25 +168,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return new ArrayList<>(simplePreferenceList);
     }
 
-    /**
-     * Used to save the state of checkboxes which can suppress messages from
-     * being displayed. This method should be used by the initiating code in
-     * conjunction with the preferenceItemDetails. Here the items are stored
-     * against a specific class and access to change them is made available via
-     * the GUI, in the preference manager.
-     * <p>
-     * The strClass parameter does not have to be the exact class name of the
-     * initiating code, but can be one where the information is related and
-     * therefore can be grouped together with.
-     * <p>
-     * Both the strClass and item although free form, should make up a unique
-     * reference.
-     *
-     * @param strClass The class that this preference should be stored or
-     *                 grouped with.
-     * @param item     The specific item that is to be stored
-     * @param state    Boolean state of the item.
-     */
     @Override
     public void setPreferenceState(String strClass, String item, boolean state) {
         // convert old manager preferences to new manager preferences
@@ -236,19 +207,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return false;
     }
 
-    /**
-     * Register details about a perticular preference, so that it can be
-     * displayed in the GUI and provide a meaningful description when presented
-     * to the user.
-     *
-     * @param strClass    A string form of the class that the preference is
-     *                    stored or grouped with
-     * @param item        The specific item that is being stored.
-     * @param description A meaningful decription of the item that the user will
-     *                    understand.
-     */
     @Override
-    public final void preferenceItemDetails(String strClass, String item, String description) {
+    public final void setPreferenceItemDetails(String strClass, String item, String description) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }

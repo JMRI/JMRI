@@ -128,16 +128,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     @Override
-    public synchronized void allowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = true;
-    }
-
-    @Override
-    public synchronized void disallowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = false;
-    }
-
-    @Override
     public Dimension getScreen() {
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
@@ -261,7 +251,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      *                    understand.
      */
     @Override
-    public void preferenceItemDetails(String strClass, String item, String description) {
+    public void setPreferenceItemDetails(String strClass, String item, String description) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }

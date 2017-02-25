@@ -105,8 +105,27 @@ public interface UserPreferencesManager {
      * @param item        The specific item that is being stored
      * @param description A meaningful description of the item that the user
      *                    will understand
+     * @deprecated since 4.7.2; use
+     * {@link #setPreferenceItemDetails(java.lang.String, java.lang.String, java.lang.String)}
+     * instead
      */
-    public void preferenceItemDetails(String strClass, String item, String description);
+    @Deprecated // prefix with "set"
+    public default void preferenceItemDetails(String strClass, String item, String description) {
+        this.setPreferenceItemDetails(strClass, item, description);
+    }
+
+    /**
+     * Register details about a particular preference, so that it can be
+     * displayed in the GUI and provide a meaning full description when
+     * presented to the user.
+     *
+     * @param strClass    A string form of the class that the preference is
+     *                    stored or grouped with
+     * @param item        The specific item that is being stored
+     * @param description A meaningful description of the item that the user
+     *                    will understand
+     */
+    public void setPreferenceItemDetails(String strClass, String item, String description);
 
     /**
      * Returns a list of preferences that are registered against a specific
@@ -293,7 +312,9 @@ public interface UserPreferencesManager {
      * instead
      */
     @Deprecated
-    public void allowSave();
+    public default void allowSave() {
+        this.setSaveAllowed(true);
+    }
 
     /**
      * Convenience method set allow saving preferences to false.
@@ -302,7 +323,9 @@ public interface UserPreferencesManager {
      * instead
      */
     @Deprecated
-    public void disallowSave();
+    public default void disallowSave() {
+        this.setSaveAllowed(false);
+    }
 
     /**
      * Check if saving preferences is allowed.
