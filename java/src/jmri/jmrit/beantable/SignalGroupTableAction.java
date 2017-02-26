@@ -994,7 +994,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     /**
      * Respond to the Delete button in the Add/Edit pane.
      *
-     * @param the event heard
+     * @param e the event heard
      */
     void deletePressed(ActionEvent e) {
         InstanceManager.getDefault(jmri.SignalGroupManager.class).deleteSignalGroup(curSignalGroup);

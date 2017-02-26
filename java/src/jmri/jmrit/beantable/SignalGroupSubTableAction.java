@@ -572,7 +572,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Configure colum widths for the Turnout and Sensor Conditional tables
+     * Configure colum widths for the Turnout and Sensor Conditional tables.
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
         // install a button renderer & editor
@@ -587,7 +587,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane
+     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane.
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<SignalGroupTurnout>();
@@ -608,6 +608,7 @@ public class SignalGroupSubTableAction {
      * Set the Turnout information for adding or editing.
      *
      * @param g The Signal Group being configured
+     * @return total number of turnouts included in group
      */
     int setTurnoutInformation(SignalGroup g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -621,7 +622,7 @@ public class SignalGroupSubTableAction {
      * Set the Sensor information for adding or editing.
      *
      * @param g The Signal Group being configured
-     * @return
+     * @return total number of sensors included in group
      */
     int setSensorInformation(SignalGroup g) {
         for (int i = 0; i < _includedSensorList.size(); i++) {
@@ -985,7 +986,9 @@ public class SignalGroupSubTableAction {
 
         /**
          * Store a uniform value for the On state of the Control Sensor Conditional.
+         * <p>
          * Pairs should correspond with values in getSetToState()
+         *
          * @param state Choice from the comboBox, localizable i.e. Active
          */
         @Override
