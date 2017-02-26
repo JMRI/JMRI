@@ -82,10 +82,10 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText(Bundle.getMessage("CLICK TO OPEN THE PROGRAMMER"));
+                    go2.setToolTipText(Bundle.getMessage("TipClickToOpen"));
                 } else {
                     go2.setEnabled(false);
-                    go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+                    go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
                 }
             }
         });
@@ -169,10 +169,10 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText(Bundle.getMessage("CLICK TO OPEN THE PROGRAMMER"));
+                    go2.setToolTipText(Bundle.getMessage("TipClickToOpen"));
                 } else {
                     go2.setEnabled(false);
-                    go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+                    go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
                 }
             }
         });
@@ -245,7 +245,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         });
         go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         go2.setEnabled(false);
-        go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+        go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
         pane3a.add(progFormat);
         pane3a.add(go2);
         return pane3a;

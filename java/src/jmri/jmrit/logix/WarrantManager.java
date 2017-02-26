@@ -55,8 +55,8 @@ public class WarrantManager extends AbstractManager
      * @param userName   the user name
      * @return an existing warrant if found or a new warrant
      */
-    public Warrant createNewWarrant(String systemName, String userName) {
-        log.debug("createNewWarrant " + systemName);
+    public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
+        log.debug("createNewWarrant " + systemName + " SCWa="+SCWa);
         // Check that Warrant does not already exist
         Warrant r;
         if (userName != null && userName.trim().length() > 0) {
@@ -75,7 +75,11 @@ public class WarrantManager extends AbstractManager
             return null;
         }
         // Warrant does not exist, create a new Warrant
-        r = new Warrant(sName, userName);
+        if (SCWa) {
+            r = new SCWarrant(sName, userName, TTP);
+        } else {
+            r = new Warrant(sName, userName);
+        }
         // save in the maps
         register(r);
         return r;
@@ -121,7 +125,7 @@ public class WarrantManager extends AbstractManager
             w = getBySystemName(name);
         }
         if (w == null) {
-            w = createNewWarrant(name, null);
+            w = createNewWarrant(name, null, false, 0);
         }
         return w;
     }
