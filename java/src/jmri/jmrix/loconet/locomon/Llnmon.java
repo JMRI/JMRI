@@ -1856,6 +1856,53 @@ public class Llnmon {
                     break;
             }
         }
+
+        if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
+                && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
+            // throttle semaphore symbol message
+            return Bundle.getMessage("LN_MSG_THROTTLE_SEMAPHORE",
+                    ((d[0] * 128) + d[1]),
+                    Bundle.getMessage(((d[2] & 0x10) == 0x10)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x08) == 0x08)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x04) == 0x04)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x02) == 0x02)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
+                    Bundle.getMessage(((d[2] & 0x01) == 0x01)
+                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_BLINKING"
+                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNBLINKING")
+            );
+        }
+
+        if ((src == 0x7F) && ((pxct1 & 0x70) == 0x00)) {
+
+            if ((dst_l == 0x00) && (dst_h == 0x00)) {
+                char c[] = new char[]{0, 0, 0, 0, 0, 0, 0, 0};
+                c[0] = (char) d[0];
+                c[1] = (char) d[1];
+                c[2] = (char) d[2];
+                c[3] = (char) d[3];
+                c[4] = (char) d[4];
+                c[5] = (char) d[5];
+                c[6] = (char) d[6];
+                c[7] = (char) d[7]; 
+                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_ALL_THROTTLES",
+                        c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]);
+            } else {
+                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_SPECIFIC_THROTTLE",
+                    (char) d[0], (char) d[1],
+                    (char) d[2], (char) d[3],
+                    (char) d[4], (char) d[5],
+                    (char) d[6], (char) d[7],
+                    convertToMixed(dst_l, dst_h));
+            }
+        }
         if (src == 0x50) {
             // Packets from the LocoBuffer
             String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0)
@@ -1892,8 +1939,8 @@ public class Llnmon {
                 }
             }
         }
-        if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
-                && ((pxct2 & 0xF0) == 0x00)) {
+        if (dst_h == 0x01 && ((pxct1 & 0x70) == 0x00)
+                && ((pxct2 & 0x70) == 0x00)) {
             // (Jabour/Deloof LocoIO), SV Programming messages format 1
             String src_subaddrx = ((d[4] != 0) ? "/"
                     + StringUtil.twoHexFromInt(d[4]) : ""); // should this be same as next line?
@@ -1968,6 +2015,17 @@ public class Llnmon {
             }
         }
         // check for a specific type - SV Programming messages format 2
+        String result = interpretSV2Message(l);
+        if (result.length() > 0) {
+            return result;
+        }
+        
+
+        return "";
+        
+    }
+    
+    private String interpretSV2Message(LocoNetMessage l) {
         // (New Designs)
         String svReply = "";
         LnSv2MessageContents svmc = null;
@@ -1987,80 +2045,10 @@ public class Llnmon {
             } catch (IllegalArgumentException e) {
                 // message is not a properly-formatted SV2 message.  Ignore the exception.
             }
-
-            if (svReply.length() > 1) {
-                // was able to interpret message as an SV format 2 message, so
-                // return its interpreted value
-                return svReply;
-            }
         }
-
-        if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
-                && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
-            // throttle semaphore symbol message
-            return Bundle.getMessage("LN_MSG_THROTTLE_SEMAPHORE",
-                    ((d[0] * 128) + d[1]),
-                    Bundle.getMessage(((d[2] & 0x10) == 0x10)
-                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                    Bundle.getMessage(((d[2] & 0x08) == 0x08)
-                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                    Bundle.getMessage(((d[2] & 0x04) == 0x04)
-                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                    Bundle.getMessage(((d[2] & 0x02) == 0x02)
-                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_LIT"
-                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNLIT"),
-                    Bundle.getMessage(((d[2] & 0x01) == 0x01)
-                            ? "LN_MSG_THROTTLE_SEMAPHORE_HELPER_BLINKING"
-                            : "LN_MSG_THROTTLE_SEMAPHORE_HELPER_UNBLINKING")
-            );
-        }
-        if ((src == 0x7F) && ((pxct1 & 0x70) == 0x00)) {
-
-            if ((dst_l == 0x00) && (dst_h == 0x00)) {
-                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_ALL_THROTTLES",
-                    (char) d[0],
-                    (char) d[1],
-                    (char) d[2],
-                    (char) d[3],
-                    (char) d[4],
-                    (char) d[5],
-                    (char) d[6],
-                    (char) d[7]);
-            } else {
-                return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_SPECIFIC_THROTTLE",
-                    (char) d[0],
-                    (char) d[1],
-                    (char) d[2],
-                    (char) d[3],
-                    (char) d[4],
-                    (char) d[5],
-                    (char) d[6],
-                    (char) d[7],
-                    idString(dst_l, dst_h));
-            }
-        }
-
-        // no specific interpretation is available, so simply return a generic format
-        return Bundle.getMessage("LN_MSG_GENERIC_PEER_TO_PEER",
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(src)),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_h)),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(pxct1)),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(pxct2)),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[0])),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[1])),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[2])),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4])),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[5])),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[6])),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7]))
-                );
-
+        return svReply;
     }
+    
     private String interpretOpcPeerXfer10(LocoNetMessage l) {
         // throttle status
         int tcntrl = l.getElement(2);
@@ -2258,6 +2246,7 @@ public class Llnmon {
                 if (result.length() > 0) {
                     return result;
                 }
+                break;
             } //  //l.getZElement(1) case 0x10
 
             case 0x0A: {
@@ -2265,6 +2254,7 @@ public class Llnmon {
                 if (result.length() > 0) {
                     return result;
                 }
+                break;
 
             } //  //l.getZElement(1)case 0x0A
 
@@ -2289,6 +2279,7 @@ public class Llnmon {
                 if (result.length() > 0) {
                     return result;
                 }
+                break;
             } // end of  //l.getZElement(1) case 0x07:
 
             default: {
@@ -2598,12 +2589,7 @@ public class Llnmon {
                     return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_DEV_TYPE_RPT",
                             device, bdaddr, versionNumber);
                 } else {
-                    // beats me
-                    forceHex = true;
-                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_UNKNOWN_OP",
-                        (l.getElement(2) + 1),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(pCMD)));
+                    break;
                 }
 
             case LnConstants.OPC_MULTI_SENSE_PRESENT:
@@ -2649,11 +2635,9 @@ public class Llnmon {
 
                 Reporter reporter = reporterManager.provideReporter(reporterSystemName);
                 reporterUserName = "";
-                if (reporter != null) {
-                    String uname = reporter.getUserName();
-                    if ((uname != null) && (!uname.isEmpty())) {
-                        reporterUserName = uname;
-                    }
+                String uname = reporter.getUserName();
+                if ((uname != null) && (!uname.isEmpty())) {
+                    reporterUserName = uname;
                 }
                 int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
 
@@ -2741,11 +2725,9 @@ public class Llnmon {
         String sensorUserName = "";
         Sensor sensor = sensorManager.provideSensor(sensorSystemName);
         sensorUserName = "";
-        if (sensor != null) {
-            String uname = sensor.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                sensorUserName = uname;
-            }
+        String uname = sensor.getUserName();
+        if ((uname != null) && (!uname.isEmpty())) {
+            sensorUserName = uname;
         }
         int sensorid = (SENSOR_ADR(in1, in2) - 1) * 2
                 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
@@ -2790,13 +2772,11 @@ public class Llnmon {
                 + SENSOR_ADR(sn1, sn2);
         
         Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
-        if (turnout != null) {
-            String uname = turnout.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                turnoutUserName = uname;
-            } else {
-                turnoutUserName = "";
-            }
+        String uname = turnout.getUserName();
+        if ((uname != null) && (!uname.isEmpty())) {
+            turnoutUserName = uname;
+        } else {
+            turnoutUserName = "";
         }
 
         if ((sn2 & LnConstants.OPC_SW_REP_INPUTS) != 0) {
@@ -2831,11 +2811,9 @@ public class Llnmon {
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
 
         Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
-        if (turnout != null) {
-            String uname = turnout.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                turnoutUserName = uname;
-            }
+        String uname = turnout.getUserName();
+        if ((uname != null) && (!uname.isEmpty())) {
+            turnoutUserName = uname;
         }
 
         String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
@@ -2859,11 +2837,9 @@ public class Llnmon {
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
         Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
         String uname = "";
-        if (turnout != null) {
-            uname = turnout.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                turnoutUserName = uname;
-            }
+        uname = turnout.getUserName();
+        if ((uname != null) && (!uname.isEmpty())) {
+            turnoutUserName = uname;
         }
         return Bundle.getMessage("LN_MSG_SW_STATE", turnoutSystemName,
                 turnoutUserName);
@@ -3022,11 +2998,9 @@ public class Llnmon {
             turnoutSystemName = locoNetTurnoutPrefix
                     + SENSOR_ADR(l.getElement(1), l.getElement(2));
             Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
-            if (turnout != null) {
-                String uname = turnout.getUserName();
-                if ((uname != null) && (!uname.isEmpty())) {
-                    turnoutUserName = uname;
-                }
+            String uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
             }
             String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
                     ? Bundle.getMessage("LN_MSG_SW_POS_CLOSED")
@@ -3087,7 +3061,6 @@ public class Llnmon {
             addrListB.append("-").append(hval); // NOI18N
             count++;
         }
-        addrListB.append("\n"); // NOI18N
 
         String addrList = addrListB.toString();
 
@@ -3095,13 +3068,11 @@ public class Llnmon {
             // broadcast address LPU V1.0 page 12
             return Bundle.getMessage("LN_MSG_OPC_SW_REQ_INTERROGATE_TURNOUTS",
                     a, c, b, addrList);
-        } else if (((sw2 & 0xCF) == 0x07) && ((sw1 & 0xFC) == 0x78)) {
+        } else  {
             // broadcast address LPU V1.0 page 13
             return Bundle.getMessage("LN_MSG_OPC_SW_REQ_INTERROGATE_SENSORS_TURNOUTS",
                     a, c, b, addrList);
         }
-        // Odd case - should not get here!
-        return "";
     }
     
     private String interpretFastClockSlot(LocoNetMessage l, String mode, int id1, int id2) {
