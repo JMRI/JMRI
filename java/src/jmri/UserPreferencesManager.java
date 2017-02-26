@@ -141,7 +141,7 @@ public interface UserPreferencesManager {
      *
      * @param strClass the name of the class
      * @param n        the position in an array
-     * @return the name of the preference
+     * @return the name of the preference or null if non-existent
      */
     public String getPreferenceItemName(String strClass, int n);
 
