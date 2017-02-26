@@ -830,7 +830,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 highlightBlockNamed(newName);
             }
 
-            LayoutBlock b = provideLayoutBlock(newName);
+            LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
             if (b != null) {
                 // if there is an occupancy sensor assigned already
                 String sensorName = b.getOccupancySensorName();
@@ -7768,14 +7768,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * LayoutBlockManager if needed.
      */
     public LayoutBlock provideLayoutBlock(String blockName) {
+    	//log.info("provideLayoutBlock :: '{}'", blockName);
         LayoutBlock result = null, newBlk = null; // assume failure (pessimist!)
         if (blockName.length() < 1) {
-            // nothing entered
+            // nothing entered, try autoAssign
             if (autoAssignBlocks) {
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
             } else {
-                // No name supplied and auto not enabled, give up.
-                return null;
+            	// No name supplied and auto not enabled, give up.
+            	return null;
             }
         } else {
             // check if this Layout Block already exists
@@ -7789,20 +7790,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // but we created a new one
             if (newBlk != null) {
                 // initialize the new block
+		    	//log.info("provideLayoutBlock :: Init new block {}", blockName);
                 newBlk.initializeLayoutBlock();
                 newBlk.initializeLayoutBlockRouting();
                 newBlk.setBlockTrackColor(defaultTrackColor);
                 newBlk.setBlockOccupiedColor(defaultOccupiedTrackColor);
                 newBlk.setBlockExtraColor(defaultAlternativeTrackColor);
-                // set both new and previously existing block
-                newBlk.addLayoutEditor(this);
-                setDirty(true);
-                newBlk.incrementUse();
-                result = newBlk;
+				result = newBlk;
             } else {
                 log.error("Failure to create LayoutBlock '{}'.", blockName);
+                return null;
             }
         }
+		// set both new and previously existing block
+		result.addLayoutEditor(this);
+		result.incrementUse();
+		setDirty(true);
         return result;
     }
 
@@ -9341,11 +9344,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // highlight the block named inBlockName; (pass null to un-highlight)
     //
     private boolean highlightBlockNamed(String inBlockName) {
-        boolean result = false;
+        boolean result = false; // assume failure (pessimist!)
+
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+
         int count = blockIDComboBox.getItemCount();
         for (int i = 0; i < count; i++) {
             String blockNameI = blockIDComboBox.getItemAt(i);
-            LayoutBlock bI = provideLayoutBlock(blockNameI);
+            LayoutBlock bI = lbm.getByUserName(blockNameI);
             if (bI != null) {
                 boolean enable = ((null != inBlockName) && inBlockName.equals(blockNameI));
                 bI.setUseExtraColor(enable);
@@ -9356,7 +9362,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             count = blockContentsComboBox.getItemCount();
             for (int i = 0; i < count; i++) {
                 String blockNameI = blockContentsComboBox.getItemAt(i);
-                LayoutBlock bI = provideLayoutBlock(blockNameI);
+                LayoutBlock bI = lbm.getByUserName(blockNameI);
                 if (bI != null) {
                     boolean enable = ((null != inBlockName) && inBlockName.equals(blockNameI));
                     bI.setUseExtraColor(enable);
