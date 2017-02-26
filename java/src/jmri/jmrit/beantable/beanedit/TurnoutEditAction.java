@@ -19,7 +19,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.util.swing.JmriBeanComboBox;
 
 /**
- * Provides an edit panel for a block object
+ * Provides an edit panel for a block object.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
@@ -28,7 +28,7 @@ public class TurnoutEditAction extends BeanEditAction {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
-    } //IN18N
+    } //NOI18N
 
     @Override
     public void actionPerformed(ActionEvent e) {
