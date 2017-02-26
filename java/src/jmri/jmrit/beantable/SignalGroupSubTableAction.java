@@ -76,6 +76,7 @@ public class SignalGroupSubTableAction {
 
     /**
      * Set choice for conditional evaluation.
+     * <p>
      * Set to AND when you want all conditionals to be met for the Signal Head to turn On when an included Aspect is shown on the main Mast.
      * Set to OR when you at least one of the conditionals to be met for the Signal Head to turn On when an included Aspect is shown.
      * @see operFromBox operFromBox()
@@ -604,7 +605,8 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set the Turnout information for adding or editing
+     * Set the Turnout information for adding or editing.
+     *
      * @param g The Signal Group being configured
      */
     int setTurnoutInformation(SignalGroup g) {
@@ -616,8 +618,10 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set the Sensor information for adding or editing
+     * Set the Sensor information for adding or editing.
+     *
      * @param g The Signal Group being configured
+     * @return
      */
     int setSensorInformation(SignalGroup g) {
         for (int i = 0; i < _includedSensorList.size(); i++) {
@@ -628,7 +632,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Respond to the Cancel button - clean up
+     * Respond to the Cancel button - clean up.
+     *
+     * @param e the event heard
      */
     void cancelSubPressed(ActionEvent e) {
         log.debug("Edit Signal Group Head canceled in SGSTA line 569");
@@ -638,7 +644,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Respond to the Update button on the Edit Head sub pane - update to SignalGroup
+     * Respond to the Update button on the Edit Head sub pane - update to SignalGroup.
+     *
+     * @param e the event heard
      * @param newSignalGroup True if this is a newly created Signal Group for which additional actions are required
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup) {
