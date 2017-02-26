@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.locomon;
 
+import static jmri.jmrix.loconet.LnConstants.PCMD_BYTE_MODE;
+
 import java.time.LocalTime;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
@@ -3360,12 +3362,12 @@ public class Llnmon {
                                     cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)), StringUtil.to8Bits(cvData, true)));
                         case LnConstants.SRVC_TRK_RESERVED:
-                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK:
+                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_BYTE_MODE:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_RD_RESERVED",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_READ_REQ",
                                             cvNumber));
                         case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_RW:
-                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW:
+                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_REQUEST_SRVC_TRK_WR_RESERVED",
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_WRITE_REQ",
                                             cvNumber, cvData, Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
@@ -3540,7 +3542,7 @@ public class Llnmon {
                                                     StringUtil.twoHexFromInt(cvData)),
                                             StringUtil.to8Bits(cvData, true)));
                         case LnConstants.SRVC_TRK_RESERVED:
-                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK:
+                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_BYTE_MODE:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_RD_RESERVED",
                                     responseMessage,
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
@@ -3549,7 +3551,7 @@ public class Llnmon {
                                                     StringUtil.twoHexFromInt(cvData)),
                                             StringUtil.to8Bits(cvData, true)));
                         case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_RW:
-                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW:
+                        case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
                             return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_WR_RESERVED",
                                     responseMessage,
                                     Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_CV_INFO_HELPER_REPLY",
