@@ -637,7 +637,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 method = cl.getDeclaredMethod("getClassDescription");
                 desc = (String) method.invoke(t);
                 classDesFound = true;
-            } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                 log.debug(ex.toString());
                 classDesFound = false;
             }
@@ -645,7 +645,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 try {
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
-                } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                     log.debug(ex.toString());
                     classDesFound = false;
                 }
@@ -663,7 +663,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 method = cl.getDeclaredMethod("setMessagePreferencesDetails");
                 method.invoke(t);
                 classSetFound = true;
-            } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                 log.debug(ex.toString()); // *TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
                 classSetFound = false;
             }
@@ -671,14 +671,14 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 try {
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
-                } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                     log.debug(ex.toString());
                 }
             }
 
-        } catch (java.lang.ClassNotFoundException ex) {
-            log.error("class name \"{}\" is invalid", strClass, ex);
-        } catch (java.lang.IllegalAccessException ex) {
+        } catch (ClassNotFoundException ex) {
+            log.warn("class name \"{}\" cannot be found, perhaps an expected plugin is missing?", strClass);
+        } catch (IllegalAccessException ex) {
             log.error("unable to access class \"{}\"", strClass, ex);
         } catch (InstantiationException ex) {
             log.error("unable to get a class name \"{}\"", strClass, ex);
