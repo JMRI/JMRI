@@ -2093,8 +2093,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Check State Variable Button in the Edit Conditional
-     * window
+     * Respond to the Check State Variable Button in the Edit Conditional
+     * window.
+     *
+     * @param e the event heard
      */
     void checkVariablePressed(ActionEvent e) {
         for (int i = 0; i < _variableList.size(); i++) {
@@ -2356,9 +2358,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Respond to a change of Conditional Type in the Edit Conditional pane.
+     * Respond to a change of Conditional Type in the Edit Conditional pane
+     * by showing/hiding the _antecedentPanel when Mixed is selected.
      *
      * @param e The event heard
+     * @return false if there is no change in operator
      */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
@@ -2469,6 +2473,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Check the antecedent and logic type.
+     *
+     * @return false if antecedent can't be validated
      */
     boolean validateAntecedent() {
         if (_logicType != Conditional.MIXED || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
@@ -2493,7 +2499,9 @@ public class LogixTableAction extends AbstractTableAction {
     /**
      * Check if an editing session on (another) Logix is going on.
      * <p>
-     * If it is, display a message to user.
+     * If it is, display a message to user and bring current editing pane to front.
+     *
+     * @return true if an _editActionFrame or _editVariableFrame exists
      */
     boolean alreadyEditingActionOrVariable() {
         OpenPickListTable();
@@ -2519,9 +2527,10 @@ public class LogixTableAction extends AbstractTableAction {
     /**
      * Create and/or initialize the Edit a Variable pane.
      * <p>
-     * Note: you can get
-     * here via the New Variable button (addVariablePressed) or via an Edit
-     * button in the Variable table of the EditConditional window.
+     * Note: you can get here via the New Variable button (addVariablePressed)
+     * or via an Edit button in the Variable table of the EditConditional window.
+     *
+     * @param row index of item to be edited in _variableList
      */
     void makeEditVariableWindow(int row) {
         if (alreadyEditingActionOrVariable()) {
@@ -2821,6 +2830,12 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Create Variable and Action editing pane top part.
+     *
+     * @param frame JFrame to add to
+     * @param title property key for border title
+     * @param width fixed dimension to use
+     * @param height fixed dimension to use
+     * @return JPanel containing interface
      */
     JPanel makeTopPanel(JFrame frame, String title, int width, int height) {
         Container contentPane = frame.getContentPane();
@@ -2838,6 +2853,11 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Create Variable and Action editing pane center part.
+     *
+     * @param comp Field or comboBox to include on sub pane
+     * @param label property key for label
+     * @param hint property key for tooltip for this sub pane
+     * @return JPanel containing interface
      */
     JPanel makeEditPanel(JComponent comp, String label, String hint) {
         JPanel panel = new JPanel();
@@ -2848,7 +2868,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (hint != null) {
             panel.setToolTipText(rbx.getString(hint));
         }
-        comp.setMaximumSize(comp.getPreferredSize());  // override for  text fields
+        comp.setMaximumSize(comp.getPreferredSize());  // override for text fields
         panel.add(comp);
         panel.add(Box.createVerticalGlue());
         return panel;
@@ -2861,6 +2881,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @param updateListener listener for Update pressed
      * @param cancelListener listener for Cancel pressed
      * @param deleteListener listener for Delete pressed
+     * @return JPanel containing Update etc. buttons
      */
     JPanel makeButtonPanel(ActionListener updateListener,
             ActionListener cancelListener,
@@ -3083,7 +3104,7 @@ public class LogixTableAction extends AbstractTableAction {
                         || Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR == testType) {
                     _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS
                             ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[1]));
-                    loadJComboBoxWithSignalAspects(_variableSignalBox, _curVariable.getName());
+                    loadJComboBoxWithHeadAppearances(_variableSignalBox, _curVariable.getName());
                     _variableSignalBox.setSelectedItem(
                             ConditionalVariable.describeState(_curVariable.getType()));
                     _variableSignalPanel.setVisible(true);
@@ -3152,7 +3173,8 @@ public class LogixTableAction extends AbstractTableAction {
         }
         _editVariableFrame.pack();
         _editVariableFrame.transferFocusBackward();
-    }       /* initializeStateVariables */
+    }
+
     /*
      String getConditionalUserName(String name) {
      Conditional c = _conditionalManager.getBySystemName(name);
@@ -3163,10 +3185,8 @@ public class LogixTableAction extends AbstractTableAction {
      }
 
      /**
-     * set display to show current action (curAction) parameters
+     * Set display to show current action (curAction) parameters.
      */
-
-
     void initializeActionVariables() {
         int actionType = _curAction.getType();
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
@@ -3253,7 +3273,7 @@ public class LogixTableAction extends AbstractTableAction {
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_SIGNAL_HEAD_ACTION, actionType) + 1);
                 if (actionType == Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
-                    loadJComboBoxWithSignalAspects(_actionBox, _actionNameField.getText().trim());
+                    loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
@@ -3371,7 +3391,11 @@ public class LogixTableAction extends AbstractTableAction {
     JFileChooser defaultFileChooser = null;
 
     /**
-     * Responds to the (...) Set button in the Edit Action window action section.
+     * Respond to the [...] button in the Edit Action window action section.
+     * <p>
+     * Ask user to select an audio or python script file on disk.
+     *
+     * @param e the event heard
      */
     void setFileLocation(ActionEvent e) {
         ConditionalAction action = _actionList.get(_curActionRowNumber);
@@ -3421,8 +3445,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to a change in an Action Type Box of Edit Action Window Set
-     * components visible for the selected type.
+     * Respond to a change in an Action Type comboBox on the Edit Conditional Action pane.
+     * <p>
+     * Set components visible for the selected type.
+     *
+     * @param type index of the newly selected Action type
      */
     void actionItemChanged(int type) {
         int actionType = _curAction.getType();
@@ -3535,7 +3562,7 @@ public class LogixTableAction extends AbstractTableAction {
                     JLabel l = (JLabel) p.getComponent(0);
                     l.setText(rbx.getString("LabelActionSignal"));
 
-                    loadJComboBoxWithSignalAspects(_actionBox, _actionNameField.getText().trim());
+                    loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
 
                     _actionPanel.setToolTipText(rbx.getString("SignalSetHint"));
                     _actionPanel.setVisible(true);
@@ -3753,9 +3780,15 @@ public class LogixTableAction extends AbstractTableAction {
             log.debug("Exit actionItemChanged size: " + _editActionFrame.getWidth()
                     + " X " + _editActionFrame.getHeight());
         }
-    } /* actionItemChanged */
+    }
 
-
+    /**
+     * Check if Memory type in a Conditional was changed by the user.
+     * <p>
+     * Update GUI if it has. Called from {@link #makeEditVariableWindow(int)}
+     *
+     * @param selection index of the currently selected type in the _variableCompareTypeBox
+     */
     private void compareTypeChanged(int selection) {
         JPanel p = (JPanel) _variableData1Panel.getComponent(0);
         JLabel l = (JLabel) p.getComponent(0);
@@ -3781,7 +3814,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD || itemType == Conditional.ITEM_TYPE_SIGNALMAST) {
                 // index 1 is Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS or Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS
                 if (_variableStateBox.getSelectedIndex() == 1) {
-                    loadJComboBoxWithSignalAspects(_variableSignalBox, _variableNameField.getText().trim());
+                    loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
                 } else {
                     _variableSignalPanel.setVisible(false);
@@ -3802,7 +3835,7 @@ public class LogixTableAction extends AbstractTableAction {
             // fired when signal mast name changes, but only
             // while in signal mast mode
             log.debug("variableSignalHeadNameListener fires; _variableNameField : " + _variableNameField.getText().trim());
-            loadJComboBoxWithSignalAspects(_variableSignalBox, _variableNameField.getText().trim());
+            loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
         }
     };
 
@@ -3812,16 +3845,24 @@ public class LogixTableAction extends AbstractTableAction {
             // fired when signal mast name changes, but only
             // while in signal mast mode
             log.debug("actionSignalHeadNameListener fires; _actionNameField : " + _actionNameField.getText().trim());
-            loadJComboBoxWithSignalAspects(_actionBox, _actionNameField.getText().trim());
+            loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
         }
     };
 
-    void loadJComboBoxWithSignalAspects(JComboBox<String> box, String signalName) {
+    /**
+     * Fetch valid appearances for a given Signal Head.
+     * <p>
+     * Warn if head is not found.
+     *
+     * @param box the comboBox on the setup pane to fill
+     * @param signalHeadName user or system name of the Signal Head
+     */
+    void loadJComboBoxWithHeadAppearances(JComboBox<String> box, String signalHeadName) {
         box.removeAllItems();
-        log.debug("loadJComboBoxWithSignalAspects called with name: " + signalName);
-        SignalHead h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalName);
+        log.debug("loadJComboBoxWithSignalHeadAppearances called with name: " + signalHeadName);
+        SignalHead h = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHeadName);
         if (h == null) {
-            box.addItem(rbx.getString("PromptLoadSignalName"));
+            box.addItem(rbx.getString("PromptLoadHeadName"));
         } else {
             String[] v = h.getValidStateNames();
             for (int i = 0; i < v.length; i++) {
@@ -3851,6 +3892,14 @@ public class LogixTableAction extends AbstractTableAction {
         }
     };
 
+    /**
+     * Fetch valid aspects for a given Signal Mast.
+     * <p>
+     * Warn if mast is not found.
+     *
+     * @param box the comboBox on the setup pane to fill
+     * @param mastName user or system name of the Signal Mast
+     */
     void loadJComboBoxWithMastAspects(JComboBox<String> box, String mastName) {
         box.removeAllItems();
         log.debug("loadJComboBoxWithMastAspects called with name: " + mastName);
@@ -3867,9 +3916,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to change in variable type in State Variable Table in the Edit
-     * Conditional window Also used to set up for Edit of a Conditional with
-     * state variables.
+     * Respond to change in variable type chosen in the State Variable Table
+     * in the Edit Conditional pane.
+     * <p>
+     * Also used to set up for Edit of a Conditional with state variables.
+     *
+     * @param itemType value representing the newly selected Conditional type, i.e. ITEM_TYPE_SENSOR
      */
     private void variableTypeChanged(int itemType) {
         int testType = _curVariable.getType();
@@ -3919,7 +3971,7 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 _variableNameField.addActionListener(variableSignalHeadNameListener);
                 _variableStateBox.addActionListener(variableSignalTestStateListener);
-                loadJComboBoxWithSignalAspects(_variableSignalBox, _variableNameField.getText().trim());
+                loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
 
                 for (int i = 0; i < Conditional.ITEM_TO_SIGNAL_HEAD_TEST.length; i++) {
                     _variableStateBox.addItem(
@@ -4018,18 +4070,17 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
         }
         _variableStateBox.setMaximumSize(_variableStateBox.getPreferredSize());
-    } /* variableTypeChanged */
-
+    }
 
     /**
-     * Validates Variable data from Edit Variable Window, and transfers it to
-     * current action object as appropriate
-     * <P>
-     * Returns true if all data checks out OK, otherwise false.
-     * <P>
+     * Validate Variable data from Edit Variable Window, and transfer it to
+     * current action object as appropriate.
+     * <p>
      * Messages are sent to the user for any errors found. This routine returns
-     * false immediately after finding an error, even if there might be more
+     * false immediately after finding the first error, even if there might be more
      * errors.
+     *
+     * @return true if all data checks out OK, otherwise false
      */
     boolean validateVariable() {
         String name = _variableNameField.getText().trim();
@@ -4229,14 +4280,14 @@ public class LogixTableAction extends AbstractTableAction {
 
 
     /**
-     * Validates Action data from Edit Action Window, and transfers it to
-     * current action object as appropriate
-     * <P>
-     * Returns true if all data checks out OK, otherwise false.
-     * <P>
+     * Validate Action data from Edit Action Window, and transfer it to
+     * current action object as appropriate.
+     * <p>
      * Messages are sent to the user for any errors found. This routine returns
      * false immediately after finding an error, even if there might be more
      * errors.
+     *
+     * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
         int itemType = _actionItemTypeBox.getSelectedIndex();
@@ -4579,6 +4630,13 @@ public class LogixTableAction extends AbstractTableAction {
         return (true);
     }
 
+    /**
+     * Convert user setting in Conditional Action configuration pane to integer for processing.
+     *
+     * @param itemType value for current item type
+     * @param actionTypeSelection index of selected item in configuration comboBox
+     * @return integer representing the selected action
+     */
     static int getActionTypeFromBox(int itemType, int actionTypeSelection) {
         if (itemType < 0 || actionTypeSelection < 0) {
             return Conditional.ACTION_NONE;
@@ -4615,8 +4673,13 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     // *********** Utility Methods ********************
+
     /**
-     * Checks if String is an integer or references an integer
+     * Check if String is an integer or references an integer.
+     *
+     * @param actionType Conditional action to check for, i.e. ACTION_SET_LIGHT_INTENSITY
+     * @param intReference string referencing a decimal for light intensity or the name of a memory
+     * @return true if either correct decimal format or a memory with the given name is present
      */
     boolean validateIntensityReference(int actionType, String intReference) {
         if (intReference == null || intReference.trim().length() == 0) {
@@ -4655,8 +4718,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
     
     /**
-     * Checks text represents an integer suitable for percentage
-     * NumberFormatException
+     * Check if text represents an integer is suitable for percentage
+     * w/o NumberFormatException.
+     *
+     * @param time value to use as light intensity percentage
+     * @return true if time is an integer in range 0 - 100
      */
     boolean validateIntensity(int time) {
         if (time < 0 || time > 100) {
@@ -4669,7 +4735,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
     
     /**
-     * Checks if String is decimal or references a decimal
+     * Check if a string is decimal or references a decimal.
+     *
+     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
+     * @param ref entry to check
+     * @return true if ref is itself a decimal or user will provide one from a Memory at run time
      */
     boolean validateTimeReference (int actionType, String ref) {
         if (ref == null || ref.trim().length() == 0) {
@@ -4678,6 +4748,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
         try {
             return validateTime(actionType, Float.valueOf(ref).floatValue());
+            // return true if ref is decimal within allowed range
         } catch (NumberFormatException e) {
             String memRef = ref;
             if (ref.length() > 1 && ref.charAt(0) == '@') {
@@ -4708,7 +4779,11 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Range check time (assumes seconds)
+     * Range check time entry (assumes seconds).
+     *
+     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
+     * @param time value to be checked
+     * @return false if time &gt; 3600 (seconds) or too small
      */
     boolean validateTime(int actionType, float time) {
         float maxTime = 3600;     // more than 1 hour
@@ -4742,6 +4817,11 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
+    /**
+     * Display an error message to user when an invalid number is provided in Conditional set up.
+     *
+     * @param actionType integer representing the Conditional action type being checked, i.e. ACTION_DELAYED_TURNOUT
+     */
     void displayBadNumberReference(int actionType) {
         String errorNum = " ";
         switch (actionType) {
@@ -4774,7 +4854,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Memory reference of text.
+     * Check Memory reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Memory, null if not found
      */
     String validateMemoryReference(String name) {
         Memory m = null;
@@ -4793,7 +4878,13 @@ public class LogixTableAction extends AbstractTableAction {
         }
         return name;
     }
-    
+
+    /**
+     * Check if user will provide a valid item name in a Memory variable
+     *
+     * @param memName Memory location to provide item name at run time
+     * @return false if user replies No
+     */
     boolean confirmIndirectMemory(String memName) {
         if (!_suppressIndirectRef) {
             int response = JOptionPane.showConfirmDialog(_editActionFrame, java.text.MessageFormat.format(
@@ -4810,7 +4901,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Turnout reference of text.
+     * Check Turnout reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Turnout, null if not found
      */
     String validateTurnoutReference(String name) {
         Turnout t = null;
@@ -4831,7 +4927,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks SignalHead reference of text.
+     * Check SignalHead reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding SignalHead, null if not found
      */
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
@@ -4852,7 +4953,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks SignalMast reference of text.
+     * Check SignalMast reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Signal Mast, null if not found
      */
     String validateSignalMastReference(String name) {
         SignalMast h = null;
@@ -4876,6 +4982,14 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check Warrant reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Warrant, null if not found
+     */
     String validateWarrantReference(String name) {
         Warrant w = null;
         if (name != null) {
@@ -4894,6 +5008,14 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check OBlock reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding OBlock, null if not found
+     */
     String validateOBlockReference(String name) {
         OBlock b = null;
         if (name != null) {
@@ -4913,7 +5035,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Sensor reference of text.
+     * Check Sensor reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Sensor, null if not found
      */
     String validateSensorReference(String name) {
         Sensor s = null;
@@ -4934,7 +5061,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Light reference of text.
+     * Check Light reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Light, null if not found
      */
     String validateLightReference(String name) {
         Light l = null;
@@ -4955,7 +5087,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Conditional reference of text. Forces name to System name
+     * Check Conditional reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Conditional, null if not found
      */
     String validateConditionalReference(String name) {
         Conditional c = null;
@@ -4976,7 +5113,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Logix reference of text.
+     * Check Logix reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Logix, null if not found
      */
     String validateLogixReference(String name) {
         Logix l = null;
@@ -4997,7 +5139,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Checks Route reference of text.
+     * Check Route reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding Route, null if not found
      */
     String validateRouteReference(String name) {
         Route r = null;
@@ -5017,6 +5164,14 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check an Audio reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system or user name of the corresponding AudioManager, null if not found
+     */
     String validateAudioReference(String name) {
         Audio a = null;
         if (name != null) {
@@ -5035,6 +5190,14 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    /**
+     * Check an EntryExit reference of text.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name the name to look for
+     * @return the system name of the corresponding EntryExit pair, null if not found
+     */
     String validateEntryExitReference(String name) {
         NamedBean nb = null;
         if (name != null) {
@@ -5050,7 +5213,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * get Light instance.
+     * Get Light instance.
+     * <p>
+     * Show a message if not found.
+     *
+     * @param name user or system name of an existing light
+     * @return the Light object
      */
     Light getLight(String name) {
         if (name == null) {
@@ -5153,6 +5321,9 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Send an Invalid Conditional SignalHead state message for Edit Logix pane.
+     *
+     * @param name proposed appearance description
+     * @param appearance to compare to
      */
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -5162,7 +5333,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
-     * Send an Invalid Conditional Action user name message for Edit Logix pane.
+     * Send an Invalid Conditional Action name message for Edit Logix pane.
+     *
+     * @param name user or system name to look up
+     * @param itemType type of Bean to look for
      */
     void messageInvalidActionItemName(String name, String itemType) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -5173,6 +5347,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Send a duplicate Conditional user name message for Edit Logix pane.
+     *
+     * @param svName proposed name that duplicates an existing name
      */
     void messageDuplicateConditionalUserName(String svName) {
         javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -5243,6 +5419,9 @@ public class LogixTableAction extends AbstractTableAction {
          * <p>
          * Note that events will come both from the NamedBeans and from the
          * manager.
+         *
+         * @param e the event heard
+         * @return true if a change in State or Appearance was heard
          */
         boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
             return (e.getPropertyName().indexOf("State") >= 0 || e
