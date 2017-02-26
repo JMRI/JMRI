@@ -19,7 +19,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.util.swing.JmriBeanComboBox;
 
 /**
- * Provides an edit panel for a block object
+ * Provides an edit panel for a block object.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
@@ -28,7 +28,7 @@ public class TurnoutEditAction extends BeanEditAction {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
-    } //IN18N
+    } //NOI18N
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -115,11 +115,11 @@ public class TurnoutEditAction extends BeanEditAction {
 
         sensorFeedBack1Field = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Turnout) bean).getFirstSensor(), JmriBeanComboBox.DISPLAYNAME);
         sensorFeedBack1Field.setFirstItemBlank(true);
-        feedback.addItem(new BeanEditItem(sensorFeedBack1Field, Bundle.getMessage("FeedbackSensor1"), Bundle.getMessage("FeedbackSensorToolTip1")));
+        feedback.addItem(new BeanEditItem(sensorFeedBack1Field, Bundle.getMessage("FeedbackSensor1"), Bundle.getMessage("FeedbackSensorToolTip")));
 
         sensorFeedBack2Field = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Turnout) bean).getSecondSensor(), JmriBeanComboBox.DISPLAYNAME);
         sensorFeedBack2Field.setFirstItemBlank(true);
-        feedback.addItem(new BeanEditItem(sensorFeedBack2Field, Bundle.getMessage("FeedbackSensor2"), Bundle.getMessage("FeedbackSensorToolTip2")));
+        feedback.addItem(new BeanEditItem(sensorFeedBack2Field, Bundle.getMessage("FeedbackSensor2"), Bundle.getMessage("FeedbackSensorToolTip")));
 
         String[] str = new String[]{"empty"};
         automationBox = new JComboBox<String>(str);
