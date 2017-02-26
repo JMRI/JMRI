@@ -755,6 +755,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         layoutSingleSlipButton.setToolTipText(rb.getString("SingleSlipToolTip"));
         layoutDoubleSlipButton.setToolTipText(rb.getString("DoubleSlipToolTip"));
 
+		// Change the row 1 sub-panels from flow mode to box mode
+		turnoutNamePanel.setLayout(new BoxLayout(turnoutNamePanel, BoxLayout.LINE_AXIS));
+		extraTurnoutPanel.setLayout(new BoxLayout(extraTurnoutPanel, BoxLayout.LINE_AXIS));
+		rotationPanel.setLayout(new BoxLayout(rotationPanel, BoxLayout.LINE_AXIS));
+
         String turnoutNameString = Bundle.getMessage("Name");
         JLabel turnoutNameLabel = new JLabel(turnoutNameString);
         turnoutNamePanel.add(turnoutNameLabel);
@@ -783,7 +788,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rotationPanel.add(rotationLabel);
         rotationPanel.add(rotationComboBox);
 
-        zoomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// Change the row 2 sub-panels from flow mode to box mode
+		trackSegmentPropertiesPanel.setLayout(new BoxLayout(trackSegmentPropertiesPanel, BoxLayout.LINE_AXIS));
+		zoomPanel.setLayout(new BoxLayout(zoomPanel, BoxLayout.LINE_AXIS));
+		locationPanel.setLayout(new BoxLayout(locationPanel, BoxLayout.LINE_AXIS));
+
         zoomPanel.add(new JLabel(rb.getString("ZoomLabel") + ":"));
         zoomPanel.add(zoomLabel);
 
@@ -792,7 +801,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xLabel.setPreferredSize(coordSize);
         yLabel.setPreferredSize(coordSize);
 
-        locationPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         locationPanel.add(new JLabel("    " + rb.getString("Location") + ":"));
         locationPanel.add(new JLabel("{x:"));
         locationPanel.add(xLabel);
@@ -805,7 +813,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         trackButton.setToolTipText(rb.getString("TrackSegmentToolTip"));
 
         // this is enabled/disabled via selectionListAction above
-        trackSegmentPropertiesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         trackSegmentPropertiesPanel.add(mainlineTrack);
 
         mainlineTrack.setSelected(false);
@@ -818,7 +825,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dashedLine.setToolTipText(rb.getString("DashedCheckBoxTip"));
 
         // the blockPanel is enabled/disabled via selectionListAction above
-        setupComboBox(blockIDComboBox, true, true);
+        setupComboBox(blockIDComboBox, false, true);
         blockIDComboBox.setToolTipText(rb.getString("BlockIDToolTip"));
 
         // change the block name
@@ -1318,6 +1325,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // first row properties
             JPanel turnoutPropertiesPanel = new JPanel();
+			turnoutPropertiesPanel.setLayout(new BoxLayout(turnoutPropertiesPanel, BoxLayout.LINE_AXIS));
             //turnoutPropertiesPanel.setBorder(BorderFactory.createLineBorder(Color.red));
             turnoutPropertiesPanel.add(turnoutNamePanel);
             turnoutPropertiesPanel.add(extraTurnoutPanel);
@@ -1357,6 +1365,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             hTop2Panel.add(trackSegmentPropertiesPanel);
 
             JPanel blockPropertiesPanel = new JPanel();
+            blockPropertiesPanel.setLayout(new BoxLayout(blockPropertiesPanel, BoxLayout.LINE_AXIS));
             blockNameLabel = new JLabel("    " + blockNameString);
             blockPropertiesPanel.add(blockNameLabel);
             blockPropertiesPanel.add(blockIDComboBox);
@@ -1367,7 +1376,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (wideFlag) { // WIDE
                 hTop2Panel.add(Box.createHorizontalGlue());
                 JPanel panelPropertiesPanel = new JPanel();
-                panelPropertiesPanel.add(Box.createHorizontalGlue());
+	            panelPropertiesPanel.setLayout(new BoxLayout(panelPropertiesPanel, BoxLayout.LINE_AXIS));
                 panelPropertiesPanel.add(zoomPanel);
                 panelPropertiesPanel.add(locationPanel);
                 hTop2Panel.add(panelPropertiesPanel);
@@ -1376,15 +1385,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             editToolBarPanel.add(hTop2Panel);
 
             JPanel hTop3Panel = new JPanel();
-            hTop3Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            //hTop3Panel.setLayout(new BoxLayout(hTop3Panel, BoxLayout.LINE_AXIS));
+            hTop3Panel.setLayout(new BoxLayout(hTop3Panel, BoxLayout.LINE_AXIS));
             nodesLabel = new JLabel(rb.getString("Nodes") + ":  ");
 
             hTop3Panel.add(nodesLabel);
             hTop3Panel.add(endBumperButton);
             hTop3Panel.add(anchorButton);
             hTop3Panel.add(edgeButton);
-            hTop3Panel.add(Box.createHorizontalGlue());
             labelsLabel = new JLabel("    " + rb.getString("Labels") + ":  ");
             hTop3Panel.add(labelsLabel);
             hTop3Panel.add(Box.createHorizontalGlue());
@@ -1394,28 +1401,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             hTop3Panel.add(textMemoryComboBox);
             hTop3Panel.add(blockContentsButton);
             hTop3Panel.add(blockContentsComboBox);
-            hTop3Panel.add(Box.createHorizontalGlue());
 
             editToolBarPanel.add(hTop3Panel);
 
             JPanel hTop4Panel = new JPanel();
             hTop4Panel.setLayout(new BoxLayout(hTop4Panel, BoxLayout.LINE_AXIS));
             hTop4Panel.add(multiSensorButton);
-            hTop4Panel.add(signalMastButton);
-            hTop4Panel.add(signalMastComboBox);
-            hTop4Panel.add(Box.createHorizontalGlue());
-
+            hTop4Panel.add(changeIconsButton);
             hTop4Panel.add(sensorButton);
             hTop4Panel.add(sensorComboBox);
+            hTop4Panel.add(signalMastButton);
+            hTop4Panel.add(signalMastComboBox);
 
             hTop4Panel.add(signalButton);
             hTop4Panel.add(signalHeadComboBox);
 
             hTop4Panel.add(new JLabel("    "));
             hTop4Panel.add(iconLabelButton);
-            hTop4Panel.add(changeIconsButton);
-
-            hTop4Panel.add(Box.createHorizontalGlue());
             editToolBarPanel.add(hTop4Panel);
         }
 
@@ -2993,7 +2995,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // save the window specific saved zoom user preference
             UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
+            if (null != prefsMgr) {
+                prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
+            }
         }
         return getPaintScale();
     }
@@ -4032,22 +4036,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         upperLeftY = pt.y;
 
         UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-        String windowFrameRef = getWindowFrameRef();
-        // the restore code for this isn't working…
-//             prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
-//             prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
-        // we're going to use this instead
-        if (true) {    // (Nope, it's not working ether)
-            // save it in the user preferences for the window
-            Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
-            prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
-            Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-            log.info("testing prefsProp: " + prefsProp);
+        if (null != prefsMgr) {
+            String windowFrameRef = getWindowFrameRef();
+            // the restore code for this isn't working…
+            // prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
+            // prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
+            // we're going to use this instead
+            if (true) {    // (Nope, it's not working ether)
+                // save it in the user preferences for the window
+                Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
+                prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
+                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+                log.info("testing prefsProp: " + prefsProp);
+            }
         }
 
         log.debug("setCurrentPositionAndSize Position - " + upperLeftX + "," + upperLeftY + " WindowSize - " + windowWidth + "," + windowHeight + " PanelSize - " + panelWidth + "," + panelHeight);
         setDirty(true);
-
     }   // setCurrentPositionAndSize()
 
     void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {
