@@ -20,6 +20,18 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         return "PSP" + i;
     }
 
+    /**
+     * Number of sensor to test. Made a separate method so it can be overridden
+     * in subclasses that do or don't support various numbers
+     */
+    protected int getNumToTest1() {
+        return 8;
+    }
+
+    protected int getNumToTest2() {
+        return 9;
+    }
+
     @Test
     public void testSensorCreationAndRegistration() {
         l.provideSensor("PSA3");
@@ -66,6 +78,20 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
+
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("PSP" + getNumToTest1());
+        Sensor t2 = l.provideSensor("PSP" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
+    }
+
 
     // The minimal setup for log4J
     @Override

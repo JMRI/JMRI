@@ -105,7 +105,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     /**
-     * Set the current time
+     * Set the current time.
+     *
      * @param i java.time.Instant
      */
     @Override
@@ -389,6 +390,16 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     @Override
+    public void setShowStopButton(boolean displayed) {
+        showStopButton = displayed;
+    }
+
+    @Override
+    public boolean getShowStopButton() {
+        return showStopButton;
+    }
+
+    @Override
     public void setStartSetTime(boolean set, Date time) {
         startSetTime = set;
         startTime = new Date(time.getTime());
@@ -519,7 +530,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
-     *
      */
     @Override
     public void dispose() {
@@ -551,6 +561,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private Date startTime = new Date();	// specified time for setting fast clock at start up
     private int startClockOption = NONE;	// request start of a clock at start up
     private boolean notInitialized = true;  // true before initialization received from start up
+    private boolean showStopButton = false; // true indicates start up with start/stop button displayed
 
     java.text.SimpleDateFormat timeStorageFormat = null;
 
@@ -603,7 +614,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             pcMinutes.firePropertyChange("minutes", Double.valueOf(oldMinutes), Double.valueOf(minutes));
         }
         oldMinutes = minutes;
-
     }
 
     void updateMemory(Date date) {

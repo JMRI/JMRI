@@ -34,6 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.BlockManagerTest.suite());
         suite.addTest(jmri.DccLocoAddressTest.suite());
         suite.addTest(jmri.InstanceManagerTest.suite());
+        suite.addTest(jmri.NamedBeanTest.suite());
         suite.addTest(jmri.LightTest.suite());
         suite.addTest(new JUnit4TestAdapter(NmraPacketTest.class));
         suite.addTest(jmri.ConditionalVariableTest.suite());
