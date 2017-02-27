@@ -243,8 +243,8 @@ public class PrintRosterEntry implements PaneContainer {
             }
         });
         select.add(selectAll);
-        JButton cancel = new JButton("Cancel");
-        JButton ok = new JButton("Okay");
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+        JButton ok = new JButton(Bundle.getMessage("ButtonOkay"));
 
         cancel.addActionListener(new java.awt.event.ActionListener() {
             @Override
