@@ -26,7 +26,12 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.excel.PackageTest"); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramManifestFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetupExcelProgramSwitchListFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCustomManifestTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCustomSwitchListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
         return suite;
     }
 

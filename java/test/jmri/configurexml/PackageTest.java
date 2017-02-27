@@ -42,7 +42,17 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(DccLocoAddressXmlTest.class));
         suite.addTest(new JUnit4TestAdapter(JmriConfigureXmlExceptionTest.class));
-
+        suite.addTest(new JUnit4TestAdapter(jmri.configurexml.turnoutoperations.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.configurexml.swing.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(ErrorHandlerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoadXmlConfigActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoadXmlUserActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoAddressXmlTest.class));
+        suite.addTest(new JUnit4TestAdapter(SaveMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(StoreXmlAllActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(StoreXmlConfigActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(StoreXmlUserActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutOperationManagerXmlTest.class));
         return suite;
     }
 
@@ -58,3 +68,4 @@ public class PackageTest extends TestCase {
     }
 
 }
+

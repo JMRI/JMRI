@@ -68,6 +68,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SlipIconAdderTest.class));
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutIconTest.class));
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutTextEditTest.class));
+        suite.addTest(new JUnit4TestAdapter(NewPanelActionTest.class));
         return suite;
     }
 

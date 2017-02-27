@@ -11,7 +11,6 @@ import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
-import jmri.jmrix.dccpp.DCCppReplyParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -261,7 +260,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     // directly create a DCCppReply from the incoming string without translation/parsing.
 
                     //  Note: the substring call below also strips off the "< >"
-                    DCCppReply msg = DCCppReplyParser.parseReply(rxLine.substring(rxLine.indexOf("<") + 1,
+                    DCCppReply msg = DCCppReply.parseDCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
                             rxLine.lastIndexOf(">")));
                     //DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
                     //                                rxLine.lastIndexOf(">")));
