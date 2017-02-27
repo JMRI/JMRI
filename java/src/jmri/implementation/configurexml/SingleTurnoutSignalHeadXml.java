@@ -125,8 +125,12 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
     }
 
     /**
-     * Needs to handle two types of element: turnoutname is new form turnout is
-     * old form
+     * Load a turnout.
+     * Needs to handle two types of element: turnoutname is new form, turnout is
+     * old form.
+     *
+     * @param o Object read from storage, of type Turnout
+     * @return Turnout bean
      */
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element) o;
