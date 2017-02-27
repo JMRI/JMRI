@@ -48,6 +48,7 @@
       <xs:attribute name="sync" type="yesNoType"/>
       <xs:attribute name="correct" type="yesNoType"/>
       <xs:attribute name="display" type="yesNoType"/>
+      <xs:attribute name="showbutton" type="yesNoType"/>
       <xs:attribute name="startstopped" type="yesNoType"/>
       <xs:attribute name="startsettime" type="yesNoType"/>
       <xs:attribute name="startclockoption" type="xs:nonNegativeInteger"/>

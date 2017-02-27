@@ -66,6 +66,20 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("ABCS2:" + getNumToTest1());
+        Sensor t2 = l.provideSensor("ABCS2:" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
+    }
+
+
 
     // The minimal setup for log4J
     @Override
