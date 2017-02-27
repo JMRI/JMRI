@@ -161,6 +161,8 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
 
             String userName = getUserName(sensorList.get(i));
 
+            checkNameNormalization(sysName, userName, tm);
+
             if (sensorList.get(i).getAttribute("inverted") != null) {
                 if (sensorList.get(i).getAttribute("inverted").getValue().equals("true")) {
                     inverted = true;
