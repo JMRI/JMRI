@@ -223,8 +223,9 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     /**
      * Local method to do specific configuration.
      *
-     * @throws gnu.io.UnsupportedCommOperationException if unable to configure
-     *                                                  the serial port
+     * @throws purejavacomm.UnsupportedCommOperationException if unable to
+     *                                                        configure the
+     *                                                        serial port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
