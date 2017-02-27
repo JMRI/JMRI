@@ -768,8 +768,8 @@ public class DefaultLogix extends AbstractNamedBean
                     nb.removePropertyChangeListener(listener);
                     return;
             }
-        } catch (Throwable t) {
-            log.error("Bad name for listener on \"" + listener.getDevName() + "\": " + t);
+        } catch (Exception ex) {
+            log.error("Bad name for listener on \"{}\": ", listener.getDevName(), ex);
         }
         log.error("Bad name for " + msg + " listener on \"" + listener.getDevName()
                 + "\" when removing");

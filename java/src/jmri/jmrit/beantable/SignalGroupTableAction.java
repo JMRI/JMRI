@@ -57,7 +57,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -69,7 +69,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         if (jmri.InstanceManager.getNullableDefault(jmri.SignalGroupManager.class) == null) {
             setEnabled(false);
         }
-
     }
 
     public SignalGroupTableAction() {
@@ -95,7 +94,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of SignalGroups
+     * of SignalGroups.
      */
     @Override
     protected void createModel() {
@@ -337,8 +336,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Read Appearance for a Signal Group Signal Head from the state comboBox.
-     * Called from SignalGroupSubTableAction
+     * <p>
+     * Called from SignalGroupSubTableAction.
+     *
      * @param box comboBox to read from
+     * @return index representing selected set to appearance for head
      */
     int signalStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
@@ -990,7 +992,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Respond to the Delete button in the Add/Edit pane
+     * Respond to the Delete button in the Add/Edit pane.
+     *
+     * @param e the event heard
      */
     void deletePressed(ActionEvent e) {
         InstanceManager.getDefault(jmri.SignalGroupManager.class).deleteSignalGroup(curSignalGroup);
@@ -1000,7 +1004,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Respond to the Update button on the Edit Signal Group pane - store new properties in the Signal Group
+     * Respond to the Update button on the Edit Signal Group pane - store new properties in the Signal Group.
      * @param e Event from origin, null if invoked by clicking the Edit button in a Signal Group Table row
      * @param newSignalGroup False when called as Update, True after editing Signal Head details
      * @param close True if the pane is closing, False if it stays open
@@ -1046,7 +1050,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Clean up the Edit Signal Group pane
+     * Clean up the Edit Signal Group pane.
      */
     void finishUpdate() {
         if (curSignalGroup != null) {
@@ -1079,6 +1083,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         if (addFrame != null) {addFrame.setVisible(false);}
     }
 
+    /**
+     * Table Model for masts and their set to aspect.
+     */
     public class SignalMastAspectModel extends AbstractTableModel implements PropertyChangeListener {
 
         @Override
@@ -1333,8 +1340,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Fetch User Name (System Name if User Name is empty) for a row in the Signal Head table
-         * @return bean object
+         * Fetch User Name (System Name if User Name is empty) for a row in the Signal Head table.
+         *
+         * @param r index in the signal head table of head to be edited
+         * @return name of signal head
          */
         public String getDisplayName(int r) {
             if (((String) getValueAt(r, UNAME_COLUMN) != null) && (!((String) getValueAt(r, UNAME_COLUMN)).equals(""))) {
@@ -1345,8 +1354,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Fetch existing bean object for a row in the Signal Head table
-         * @return bean object
+         * Fetch existing bean object for a row in the Signal Head table.
+         *
+         * @param r index in the signal head table of head to be edited
+         * @return bean object of the head
          */
         public SignalHead getBean(int r) {
             return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead((String) getValueAt(r, SNAME_COLUMN));

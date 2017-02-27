@@ -139,7 +139,7 @@ public class Beans extends java.beans.Beans {
                 if (tex instanceof IndexOutOfBoundsException) {
                     throw (IndexOutOfBoundsException) tex;
                 } else {
-                    log.warn(ex.toString(), ex);
+                    log.error(ex.toString(), ex);
                 }
             } catch (IllegalAccessException | IllegalArgumentException | IntrospectionException ex) {
                 log.warn(ex.toString(), ex);

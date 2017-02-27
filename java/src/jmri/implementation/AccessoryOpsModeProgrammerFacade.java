@@ -115,7 +115,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         byte[] b;
 
         // Send DCC commands to implement prog.writeCV(cv, val, this);
-        if ((_addrType != null) && _addrType.equalsIgnoreCase("accessory")) {  // interpret address as accessory address
+        if ((_addrType != null) && (_addrType.equalsIgnoreCase("accessory") || _addrType.equalsIgnoreCase("output"))) {  // interpret address as accessory address
             // Send a basic ops mode accessory CV programming packet for newer decoders
             b = NmraPacket.accDecoderPktOpsMode(aprog.getAddressNumber(), Integer.parseInt(cv), val);
             InstanceManager.getDefault(CommandStation.class).sendPacket(b, 1);

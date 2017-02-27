@@ -15,12 +15,14 @@
     <name xml:lang="de">Bedienelemente</name>
     <name xml:lang="cs">Ovládání</name>
     <name xml:lang="ca">Controls</name>
+    <name xml:lang="nl">Bediening</name>
     <node>
       <name>Power Control</name>
       <name xml:lang="it">Controllo Alimentazione</name>
       <name xml:lang="de">Hauptschalter</name>
       <name xml:lang="cs">Ovládání napájení</name>
       <name xml:lang="ca">Control d'Alimentació</name>
+      <name xml:lang="nl">Hoofdschakelaar</name>
       <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
     </node>
     <node>
@@ -29,6 +31,7 @@
       <name xml:lang="de">Weichensteuerung...</name>
       <name xml:lang="cs">Ovládání výhybek</name>
       <name xml:lang="ca">Control d'Agulles</name>
+      <name xml:lang="nl">Wisselaansturing...</name>
     </node>
     <node>
       <name>Light Control</name>
@@ -36,6 +39,7 @@
       <name xml:lang="de">Lichtsteuerung...</name>
       <name xml:lang="cs">Ovládání osvětlení</name>
       <name xml:lang="ca">Control de Llums...</name>
+      <name xml:lang="nl">Lichtaansturing...</name>
     </node>
     <node>
       <name>Send DCC Packet</name>
@@ -43,6 +47,7 @@
       <name xml:lang="de">Sende DCC Paket</name>
       <name xml:lang="cs">Odeslat DCC paket</name>
       <name xml:lang="ca">Envia Paquet DCC</name>
+      <name xml:lang="nl">Verstuur DCC Pakket</name>
     </node>
     <node>
       <name>Speedometer</name>
@@ -50,6 +55,7 @@
       <name xml:lang="de">Geschwindigkeitsmesser</name>
       <name xml:lang="cs">Měřič rychlosti</name>
       <name xml:lang="ca">Velocímetre</name>
+      <name xml:lang="nl">Snelheidsmeter</name>
     </node>
   </node>
 
@@ -58,6 +64,8 @@
     <name xml:lang="it">Esercizio</name>
     <name xml:lang="cs">Správa</name>
     <name xml:lang="ca">Operacions</name>
+    <name xml:lang="de">Betrieb</name>
+    <name xml:lang="nl">Operations</name>
   </node>
 
   <node>
@@ -65,29 +73,39 @@
     <name xml:lang="it">Orologi</name>
     <name xml:lang="cs">Hodiny</name>
     <name xml:lang="ca">rellotges</name>
+    <name xml:lang="de">Uhren</name>
+    <name xml:lang="nl">Klokken</name>
     <node>
       <name>Setup Fast Clock</name>
       <name xml:lang="it">Imposta orologio Accellerato</name>
       <name xml:lang="cs">Nastavit modelové hodiny</name>
       <name xml:lang="ca">Configuració del rellotge Accelerat</name>
+      <name xml:lang="de">Modelluhr</name>
+      <name xml:lang="nl">Modelklok</name>
     </node>
     <node>
       <name>Nixie Clock</name>
       <name xml:lang="it">Orologio Nixie</name>
       <name xml:lang="cs">Digitrony</name>
       <name xml:lang="ca">Rellotge Nixie</name>
+      <name xml:lang="de">Nixie Uhr</name>
+      <name xml:lang="nl">Nixie Klok</name>
     </node>
     <node>
       <name>LCD Clock</name>
       <name xml:lang="it">Orologio LCD</name>
       <name xml:lang="cs">LCD hodiny</name>
       <name xml:lang="ca">Rellotge LCD</name>
+      <name xml:lang="de">LCD Uhr</name>
+      <name xml:lang="nl">LCD Uhr</name>
     </node>
     <node>
       <name>Analog Clock</name>
       <name xml:lang="it">Orologio Analogico</name>
       <name xml:lang="cs">Analogové hodiny</name>
       <name xml:lang="ca">Rellotge d'agulles</name>
+      <name xml:lang="de">Analoguhr</name>
+      <name xml:lang="nl">Analoge Klok</name>
     </node>
   </node>
 

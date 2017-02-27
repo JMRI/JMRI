@@ -37,11 +37,7 @@ public class JTableUtil {
 
         TableSorter sorter;
 
-        try {   // following might fail due to a missing method on Mac Classic
-            sorter = new TableSorter(dataModel);
-        } catch (Throwable e) {
-            return new JTable(dataModel);
-        }
+        sorter = new TableSorter(dataModel);
 
         JTable dataTable = new JTable(sorter) {
             @Override
@@ -55,12 +51,7 @@ public class JTableUtil {
             }
         };
 
-        try {   // following might fail due to a missing method on Mac Classic
-            sorter.setTableHeader(dataTable.getTableHeader());
-        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            // nothing to do here
-            log.error("Unexpected error: " + e);
-        }
+        sorter.setTableHeader(dataTable.getTableHeader());
         return dataTable;
     }
 
