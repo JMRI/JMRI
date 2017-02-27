@@ -506,12 +506,10 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 # memory start and max limits
 OPTIONS="${OPTIONS} ${OS_OPTIONS-} ${jmri_xms} ${jmri_xmx}"
 
-# handle ports in command line
+# handle ports in --settings argument or JMRI_SERIAL_PORTS environment variable
+# but not if already in OPTIONS
 ALTPORTS=
-if [[ ${OPTIONS} =~ "-Dpurejavacomm.portnamepattern=" ]] ; then
-    # ports were set in command line
-    ALTPORTS=
-elif [ -n "${JMRI_SERIAL_PORTS}" ] ; then
+if [[ -n "${JMRI_SERIAL_PORTS}" && ! ${OPTIONS} =~ "-Dpurejavacomm.portnamepattern=" ]] ; then
     ALTPORTS="-Dpurejavacomm.portnamepattern=${JMRI_SERIAL_PORTS}"
 fi
 
