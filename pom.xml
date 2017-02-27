@@ -519,7 +519,7 @@
                     </bottom>
                     <links>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
-                        <link>http://users.frii.com/jarvi/rxtx/doc/</link>
+                        <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>http://javacsv.sourceforge.net/</link>
                         <link>http://fasterxml.github.io/jackson-databind/javadoc/2.0.6</link>
@@ -826,9 +826,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.sparetimelabs</groupId>
+            <groupId>com.github.purejavacomm</groupId>
             <artifactId>purejavacomm</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.1.RELEASE</version>
         </dependency>    
         <dependency>
             <groupId>org.powermock</groupId>
@@ -870,14 +870,6 @@
                 <enabled>false</enabled>
             </snapshots>
             <url>file://${project.basedir}/lib</url>
-        </repository>
-        <repository>
-            <id>sparetimelabs</id>
-            <name>sparetimelabs</name>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <url>http://www.sparetimelabs.com/maven2/</url>
         </repository>
     </repositories>
 
