@@ -1,4 +1,3 @@
-// ChannelStartEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import jmri.jmrix.loconet.sdf.SdfMacro;
@@ -11,15 +10,8 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  */
 class ChannelStartEditor extends SdfMacroEditor {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4814718693465031006L;
-
     public ChannelStartEditor(SdfMacro inst) {
         super(inst);
         // No editor needed, leave default message in place.
     }
 }
-
-/* @(#)ChannelStartEditor.java */

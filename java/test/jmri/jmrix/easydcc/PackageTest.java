@@ -33,13 +33,13 @@ public class PackageTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.easydcc.EasyDccTest");
 
-        suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EasyDccTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EasyDccTurnoutManagerTest.class));
         suite.addTest(jmri.jmrix.easydcc.EasyDccProgrammerTest.suite());
-        suite.addTest(jmri.jmrix.easydcc.EasyDccTrafficControllerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EasyDccTrafficControllerTest.class));
         suite.addTest(jmri.jmrix.easydcc.EasyDccMessageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
-        suite.addTest(jmri.jmrix.easydcc.EasyDccPowerManagerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(EasyDccPowerManagerTest.class));
         suite.addTest(jmri.jmrix.easydcc.EasyDccConsistManagerTest.suite());
         suite.addTest(new JUnit4TestAdapter(EasyDccConsistTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.serialdriver.PackageTest.class));
@@ -47,15 +47,23 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.class));
         suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccNetworkPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDCCMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccConnectionTypeListTest.class));
+
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

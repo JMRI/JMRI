@@ -115,12 +115,12 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F15</label>
     </variable>
-    <variable CV="15" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 2" default="0" tooltip="Set this to match value below and decoder will unlock">
-        <decVal max="16"/>
+    <variable CV="15" item="ESU V4 Advanced Decoder Lock Option 2" default="0" tooltip="Set this to match value below and decoder will unlock">
+        <decVal/>
         <label>Decoder Lock ID number</label>
     </variable>
-    <variable CV="16" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 3" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
-        <decVal max="16"/>
+    <variable CV="16" item="ESU V4 Advanced Decoder Lock Option 3" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
+        <decVal/>
         <label>Preset Lock ID number</label>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
@@ -357,6 +357,10 @@
     <variable CV="124" mask="XXVXXXXX" default="0" include="ESU LokSound V4.0" item="Motor Option 2" exclude="LokSound Micro V4.0,LokSound XL V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Motor Overload Protection</label>
+    </variable>
+    <variable CV="124" mask="VXXXXXXX" default="1" item="ESU V4 Function Settings General Check 3" include="LokPilot Fx V4.0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Enable Output Driver on AUX3 and AUX4</label>
     </variable>
     <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" exclude="LokSound Micro V4.0,LokSound XL V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

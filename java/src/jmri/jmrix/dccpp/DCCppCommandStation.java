@@ -59,6 +59,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
 	//String syntax = "iDCC\\+\\+BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: BUILD ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
 	// V1.0/V1.1 Simplified
 	//String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
+        // V1.2.1 Syntax
+        // String syntax = "iDCC++ BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+        // Changes from v1.1: space between "DCC++" and "BASE", and "BUILD" is removed.
+        // V1.0/V1.1/V1.2 Simplified
+        // String syntax = "iDCC\\+\\+\\s?(.*):\\s?(?:BUILD)? (.*)";
         
         baseStationType = l.getStatusVersionString();
         codeBuildDate = l.getStatusBuildDateString();
@@ -134,6 +139,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission.
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (_tc == null) {
@@ -165,6 +171,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     DCCppSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "DCC++";
@@ -172,6 +179,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "DCCPP";

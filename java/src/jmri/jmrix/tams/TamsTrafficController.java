@@ -1,6 +1,6 @@
-// TamsTrafficController.java
 package jmri.jmrix.tams;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -48,6 +48,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
     TamsSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "Tams";
@@ -55,6 +56,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "TM";
@@ -63,10 +65,12 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     }
 
     // The methods to implement the TamsInterface
+    @Override
     public synchronized void addTamsListener(TamsListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeTamsListener(TamsListener l) {
         this.removeListener(l);
     }
@@ -81,6 +85,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     /**
      * CommandStation implementation
      */
+    @Override
     public void sendPacket(byte[] packet, int count) {
         //log.debug("*** sendPacket ***");
     }
@@ -88,6 +93,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a TamsMessage to all registered TamsInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         //log.debug("*** forwardMessage ***");
         //This also forwards the messages to the Tams Monitor etc
@@ -102,6 +108,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a TamsReply to the appropriate TamsInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply tr) {
         //log.debug("*** forwardReply ***");
         log.debug("Client = " + client);
@@ -208,6 +215,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
      * Check Tams MC for status updates
      */
 
+    @Override
     protected TamsMessage pollMessage() {
         //log.debug("*** pollMessage ***");
         if (disablePoll) {
@@ -225,6 +233,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         //log.debug("*** pollReplyHandler ***");
         if (disablePoll) {
@@ -244,6 +253,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a pre-formatted message to the actual interface.
      */
+    @Override
     public void sendTamsMessage(TamsMessage m, TamsListener tl) {
         //log.debug("*** TamsMessage ***");
         tm = m;
@@ -259,10 +269,12 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
     protected boolean unsolicitedSensorMessageSeen = false;
 
+    @Override
     protected TamsMessage enterProgMode() {
         return null;
     }
 
+    @Override
     protected TamsMessage enterNormalMode() {
         return null;
     }
@@ -272,7 +284,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected TamsTrafficController self = null;
@@ -315,6 +327,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected int messageLength = 0; //Helper variable used hold the length of the message
     protected int index = 0; //Helper variable used keep track of where we are in the message
     
+    @Override
     protected TamsReply newReply() {
         //log.debug("*** TamsReply ***");
         //log.debug("myCounter = " + myCounter);
@@ -343,6 +356,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
     // Has the message been completely received?
     // The length depends on the message type
+    @Override
     protected boolean endOfMessage(AbstractMRReply reply) {
         TamsReply tr = (TamsReply)reply;
         //log.debug("*** endOfMessage ***");
@@ -506,6 +520,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected int _nDataChars = 0;
 
     // display format
+    @Override
     public String toString() {
         String s = "";
         for (int i = 0; i < _nDataChars; i++) {
@@ -526,4 +541,4 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 
 }
 
-/* @(#)TamsTrafficController.java */
+

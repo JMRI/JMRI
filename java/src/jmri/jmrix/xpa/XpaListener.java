@@ -1,4 +1,3 @@
-// XpaListener.java
 package jmri.jmrix.xpa;
 
 /**
@@ -14,4 +13,4 @@ public interface XpaListener extends java.util.EventListener {
     public void reply(XpaMessage m);
 }
 
-/* @(#)XpaListener.java */
+

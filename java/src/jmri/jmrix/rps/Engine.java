@@ -1,5 +1,6 @@
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
@@ -140,6 +141,7 @@ public class Engine implements ReadingListener {
 
     String algorithm = "Ash 2.1";  // default value, configured separately
 
+    @Override
     public void notify(Reading r) {
         // This implementation creates a new Calculator
         // each time to ensure that the most recent
@@ -461,6 +463,7 @@ public class Engine implements ReadingListener {
     void startpoll() {
         // time to start operation
         pollThread = new Thread() {
+            @Override
             public void run() {
                 log.debug("Polling starts");
                 while (true) {
@@ -582,10 +585,10 @@ public class Engine implements ReadingListener {
     }
 
     // for now, we only allow one Engine
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
+    @SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
     static volatile protected Engine _instance = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
+    @SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
     static public Engine instance() {
         if (_instance == null) {
             // NOTE: _instance has to be initialized before loadValues()

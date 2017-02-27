@@ -210,7 +210,11 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * @param message is the String received
      * @return an ArrayList of Attributes of the constituent pieces of the
      *         message
+     * @deprecated since 4.7.1
      */
+    // This should never have been a public method, Deprecating so we can 
+    // make it private or eliminate it later.
+    @Deprecated
     public static ArrayList<Attribute> parseOperationsMessage(String message) {
         ArrayList<Attribute> contents = new ArrayList<Attribute>();
         int start;
@@ -386,6 +390,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         log.debug("property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {

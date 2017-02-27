@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.locormi;
 
 import javax.swing.JLabel;
@@ -40,10 +39,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     public JTextField host;
     String hostName = "";
 
+    @Override
     public String name() {
         return "LocoNet Server";
     }
 
+    @Override
     public String getConnectionName() {
         if ((lmc != null) && (lmc.getAdapterMemo() != null)) {
             return lmc.getAdapterMemo().getUserName();
@@ -51,6 +52,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return name();
     }
 
+    @Override
     public String getInfo() {
         return hostName;
     }
@@ -65,6 +67,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return lmc;
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         //details.setLayout(new BoxLayout(details, BoxLayout.X_AXIS));
         details.add(new JLabel("Server hostname:"));
@@ -77,6 +80,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return false;
     }
 
+    @Override
     protected void setInstance() {
         log.error("Unexpected call to setInstance");
         new Exception().printStackTrace();
@@ -84,20 +88,24 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     String manufacturerName = jmri.jmrix.loconet.LnConnectionTypeList.DIGITRAX;
 
+    @Override
     public String getManufacturer() {
         return manufacturerName;
     }
 
+    @Override
     public void setManufacturer(String manu) {
         manufacturerName = manu;
     }
 
     boolean disabled = false;
 
+    @Override
     public boolean getDisabled() {
         return disabled;
     }
 
+    @Override
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
         if ((lmc != null) && (lmc.getAdapterMemo() != null)) {

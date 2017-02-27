@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.oaktree.serialdriver;
 
 import javax.swing.BoxLayout;
@@ -28,6 +27,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
 
@@ -46,10 +46,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     }
 
+    @Override
     public String name() {
         return "RCI bus";
     }
 
+    @Override
     protected void setInstance() {
         adapter = SerialDriverAdapter.instance();
     }

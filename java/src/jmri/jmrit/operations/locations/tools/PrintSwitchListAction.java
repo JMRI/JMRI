@@ -1,4 +1,3 @@
-// PrintSwitchListAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
@@ -34,4 +33,4 @@ public class PrintSwitchListAction extends AbstractAction {
     }
 }
 
-/* @(#)ModifyLocationsAction.java */
+

@@ -1,8 +1,9 @@
-// Region.java
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
+import java.util.Arrays;
 import javax.vecmath.Point3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,6 @@ import org.slf4j.LoggerFactory;
 @net.jcip.annotations.Immutable
 public class Region {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Region(Point3d[] points) {
         super();
 
@@ -34,10 +34,10 @@ public class Region {
         if (points.length < 3) {
             log.error("Not enough points to define region");
         }
-        this.points = points;
+        this.points = Arrays.copyOf(points, points.length);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS", justification = "internal state, not changeable from outside")
+    @SuppressFBWarnings(value = "JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS", justification = "internal state, not changeable from outside")
     GeneralPath path;
 
     /**
@@ -88,9 +88,10 @@ public class Region {
         initPath(points);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
         String retval = "";
         for (int i = 0; i < points.length; i++) {
@@ -106,6 +107,7 @@ public class Region {
         return path.contains(p.x, p.y);
     }
 
+    @Override
     public boolean equals(Object ro) {
         if (ro == null) {
             return false;
@@ -126,6 +128,7 @@ public class Region {
         }
     }
 
+    @Override
     public int hashCode() {
         int code = 0;
         if (points.length >= 1) {
@@ -142,4 +145,4 @@ public class Region {
     private final static Logger log = LoggerFactory.getLogger(Region.class.getName());
 }
 
-/* @(#)Region.java */
+

@@ -10,7 +10,6 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.TurnoutManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
@@ -31,9 +30,9 @@ import org.junit.Assert;
 public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
-    PortalManager _portalMgr;
+//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-    TurnoutManager _turnoutMgr;
+//    TurnoutManager _turnoutMgr;
     
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testLearnWarrant() throws Exception {
@@ -67,6 +66,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
 
         pressButton(frame, Bundle.getMessage("Calculate"));
+        flushAWT();  
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
         

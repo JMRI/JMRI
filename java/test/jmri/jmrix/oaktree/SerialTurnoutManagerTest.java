@@ -1,7 +1,6 @@
 package jmri.jmrix.oaktree;
 
 import jmri.Turnout;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Before
     @Override

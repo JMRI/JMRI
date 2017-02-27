@@ -30,15 +30,22 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BeanItemPanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorDebounceEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TurnoutEditActionTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

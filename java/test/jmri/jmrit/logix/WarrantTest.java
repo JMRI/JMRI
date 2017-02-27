@@ -128,13 +128,13 @@ public class WarrantTest extends TestCase {
             sNorth.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.ACTIVE);            
         } catch (JmriException je) { }
-        Assert.assertEquals("Block Detection", OBlock.UNOCCUPIED, bWest.getState());
-        Assert.assertEquals("Block Detection", OBlock.OCCUPIED, bEast.getState());
+        Assert.assertEquals("Block Detection 1", OBlock.UNOCCUPIED, bWest.getState());
+        Assert.assertEquals("Block Detection 2", OBlock.OCCUPIED, bEast.getState());
         Warrant warrant = new Warrant("IW0", "AllTestWarrant");
         bWest.allocate(warrant);
         bEast.allocate(warrant);
-        Assert.assertEquals("Block Detection", OBlock.UNOCCUPIED | OBlock.ALLOCATED, bWest.getState());
-        Assert.assertEquals("Block Detection", OBlock.OCCUPIED | OBlock.ALLOCATED, bEast.getState());
+        Assert.assertEquals("Block Detection 3", OBlock.UNOCCUPIED | OBlock.ALLOCATED, bWest.getState());
+        Assert.assertEquals("Block Detection 4", OBlock.OCCUPIED | OBlock.ALLOCATED, bEast.getState());
         try{
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);            
@@ -142,8 +142,8 @@ public class WarrantTest extends TestCase {
         } catch (JmriException je) { }
         bWest.deAllocate(warrant);
         bEast.deAllocate(warrant);
-        Assert.assertEquals("Block Detection", OBlock.UNOCCUPIED, bWest.getState());
-        Assert.assertEquals("Block Detection", OBlock.UNOCCUPIED, bEast.getState());
+        Assert.assertEquals("Block Detection 5", OBlock.UNOCCUPIED, bWest.getState());
+        Assert.assertEquals("Block Detection 6", OBlock.UNOCCUPIED, bEast.getState());
 
         ArrayList <BlockOrder> orders = new ArrayList <BlockOrder>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
@@ -224,6 +224,7 @@ public class WarrantTest extends TestCase {
         WarrantListener( Warrant w) {
             warrant = w;
         }
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
 //            String property = e.getPropertyName();
 //            System.out.println("propertyChange \""+property+

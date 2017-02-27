@@ -19,6 +19,7 @@ public class Ib2ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
         log.debug("Ib2ThrottleManager created");
     }
 
+    @Override
     DccThrottle createThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot s) {
         return new Ib2Throttle(memo, s);
     }

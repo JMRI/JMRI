@@ -29,6 +29,10 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.direct.MakePacketTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.direct.serial.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.direct.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DirectMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ThrottleManagerTest.class));
         return suite;
     }
 

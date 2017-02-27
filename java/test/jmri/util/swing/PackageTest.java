@@ -34,7 +34,18 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.util.swing.mdi.PackageTest.class));
         suite.addTest(jmri.util.swing.JCBHandleTest.suite());
         suite.addTest(new JUnit4TestAdapter(FontComboUtilTest.class));
-        suite.addTest(jmri.util.swing.GuiUtilBaseTest.suite());
+        suite.addTest(new JUnit4TestAdapter(EditableResizableImagePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(GuiUtilBaseTest.class));
+        suite.addTest(new JUnit4TestAdapter(JMenuUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(JToolBarUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(JTreeUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ResizableImagePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(SliderSnapTest.class));
+        suite.addTest(new JUnit4TestAdapter(StatusBarTest.class));
+        suite.addTest(new JUnit4TestAdapter(SwingSettingsTest.class));
+        suite.addTest(new JUnit4TestAdapter(VerticalLabelUITest.class));
+        suite.addTest(new JUnit4TestAdapter(XTableColumnModelTest.class));
 
         return suite;
     }

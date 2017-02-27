@@ -1,6 +1,7 @@
 //NceTournoutMonitor.java
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,6 +138,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         // This protects pollMessage (xmt) and reply threads if there's lockup!
         if (NceTurnoutMonitorThread == null) {
             NceTurnoutMonitorThread = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     turnoutUpdate();
                 }
@@ -169,13 +171,15 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
+    @Override
     public void message(NceMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("unexpected message");
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked, command station is shared state
+    @Override
     public void reply(NceReply r) {
         if (r.getNumDataElements() == REPLY_LEN) {
 
@@ -459,6 +463,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("feedbackchange")) {
             if (((Integer) e.getNewValue()).intValue() == Turnout.MONITORING) {
@@ -471,4 +476,4 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             .getLogger(NceTurnoutMonitor.class.getName());
 
 }
-/* @(#)NceTurnoutMonitor.java */
+

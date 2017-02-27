@@ -1,4 +1,3 @@
-// LI100XNetInitializationManager.java
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;
@@ -19,6 +18,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

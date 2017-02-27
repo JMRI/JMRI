@@ -1,13 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -16,7 +12,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
-import com.digi.xbee.api.exceptions.OperationNotSupportedException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
@@ -36,7 +31,7 @@ import org.powermock.core.classloader.annotations.MockPolicy;
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 @RunWith(PowerMockRunner.class)
-public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private static final String NODE_ID = "id";
         
@@ -93,10 +88,13 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
 
         XBeeTrafficController tc = new XBeeTrafficController() {
+            @Override
             public void setInstance() {
             }
+            @Override
             public void sendXBeeMessage(XBeeMessage m,XBeeListener l){
             }
+            @Override
             public XBeeDevice getXBee() {
                return localDevice;
             }

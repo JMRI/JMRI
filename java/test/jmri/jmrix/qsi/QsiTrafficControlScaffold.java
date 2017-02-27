@@ -16,6 +16,7 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
     }
 
     // override some QsiTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -25,6 +26,7 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
      */
     public Vector<QsiMessage> outbound = new Vector<QsiMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendQsiMessage(QsiMessage m, QsiListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendQsiMessage [" + m + "]");

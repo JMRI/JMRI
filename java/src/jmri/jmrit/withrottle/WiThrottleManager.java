@@ -1,12 +1,13 @@
 package jmri.jmrit.withrottle;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.util.FileUtil;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="ISC_INSTANTIATE_STATIC_CLASS", justification="False Positive (April 2016)")
+@SuppressFBWarnings(value="ISC_INSTANTIATE_STATIC_CLASS", justification="False Positive (April 2016)")
         // FindBugs is flagging "This class allocates an object that is based on a class that only supplies static methods. This object does not need to be created, just access the static methods directly using the class name as a qualifier."
         // so it's confused about the access to the instance() variable.
 public class WiThrottleManager {

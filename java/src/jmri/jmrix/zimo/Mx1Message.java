@@ -186,6 +186,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
      * check whether the message has a valid parity in fact check for CR or LF
      * as end of message
      */
+    @Override
     public boolean checkParity() {
         //javax.swing.JOptionPane.showMessageDialog(null, "A-Programma komt tot hier!");
         int len = getNumDataElements();
@@ -194,6 +195,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     // programma komt hier volgens mij nooit
     // in fact set CR as end of message
 
+    @Override
     public void setParity() {
         javax.swing.JOptionPane.showMessageDialog(null, "B-Programma komt tot hier!");
         int len = getNumDataElements();

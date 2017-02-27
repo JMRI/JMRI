@@ -2,14 +2,10 @@
 package jmri.jmrix.loconet.locomon;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import apps.tests.Log4JFixture;
-import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
@@ -23,7 +19,7 @@ import jmri.jmrix.AbstractMonPaneScaffold;
  *
  * @author	Bob Jacobsen   Copyright 2015
  */
-public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
     public void testLifeCycle() throws Exception {

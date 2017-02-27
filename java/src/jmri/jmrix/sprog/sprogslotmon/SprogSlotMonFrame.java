@@ -62,6 +62,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
         // add listener object so checkboxes function
         showAllCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.showAllSlots(showAllCheckBox.isSelected());
                 slotModel.fireTableDataChanged();
@@ -70,6 +71,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
         // add listener object so stop all button functions
         estopAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 log.debug("Estop all button pressed");
                 _memo.getCommandStation().estopAll();
@@ -77,19 +79,24 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         });
 
         estopAllButton.addMouseListener(new MouseListener() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 _memo.getCommandStation().estopAll();
             }
 
+            @Override
             public void mouseExited(MouseEvent e) {
             }
 
+            @Override
             public void mouseEntered(MouseEvent e) {
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
             }
 
+            @Override
             public void mouseClicked(MouseEvent e) {
             }
         });
@@ -121,6 +128,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
     }
 
+    @Override
     public void initComponents() {
         // add help menu to window
         addHelpMenu("package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame", true);
@@ -145,6 +153,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
     private boolean mShown = false;
 
+    @Override
     public void addNotify() {
         super.addNotify();
 
@@ -163,6 +172,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         mShown = true;
     }
 
+    @Override
     public void dispose() {
         // deregister with the command station.
         _memo.getCommandStation().setSprogSlotMonFrame(null);

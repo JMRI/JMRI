@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.easydcc.serialdriver;
 
 /**
@@ -24,10 +23,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "EasyDCC via Serial";
     }
 
+    @Override
     protected void setInstance() {
         adapter = SerialDriverAdapter.instance();
     }

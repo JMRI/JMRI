@@ -2,8 +2,6 @@ package jmri.jmrix.rfid;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -29,7 +27,9 @@ import org.slf4j.LoggerFactory;
      RfidSensorManagerTest.class,
      TimeoutRfidSensorTest.class,
      TimeoutRfidReporterTest.class,
-     jmri.jmrix.rfid.swing.PackageTest.class
+     jmri.jmrix.rfid.swing.PackageTest.class,
+     RfidNetworkPortControllerTest.class,
+     RfidPortControllerTest.class
 })
 
 /**

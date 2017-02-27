@@ -1,4 +1,3 @@
-// MonitoringPane.java
 package jmri.jmrix.loconet.sdfeditor;
 
 
@@ -8,11 +7,6 @@ package jmri.jmrix.loconet.sdfeditor;
  * @author	Bob Jacobsen Copyright (C) 2007
   */
 public class MonitoringLabel extends javax.swing.JTextArea implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 266331403840457618L;
 
     public MonitoringLabel() {
         super();
@@ -25,6 +19,7 @@ public class MonitoringLabel extends javax.swing.JTextArea implements java.beans
     /**
      * Listening method, diplays results
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         setText(evt.getNewValue().toString());
     }

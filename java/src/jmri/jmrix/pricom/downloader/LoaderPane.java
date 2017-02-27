@@ -1,5 +1,6 @@
 package jmri.jmrix.pricom.downloader;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class LoaderPane extends javax.swing.JPanel {
     //private     boolean opened = false;
     DataInputStream serialStream = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
@@ -73,6 +74,7 @@ public class LoaderPane extends javax.swing.JPanel {
         openPortButton.setText(res.getString("ButtonOpen"));
         openPortButton.setToolTipText(res.getString("TipOpenPort"));
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
@@ -170,6 +172,7 @@ public class LoaderPane extends javax.swing.JPanel {
          * PortController via <code>connectPort</code>. Terminates with the
          * input stream breaking out of the try block.
          */
+        @Override
         public void run() {
             // have to limit verbosity!
 
@@ -276,6 +279,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // update progress bar via the queue to ensure synchronization
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     updateGUI();
                 }
@@ -299,6 +303,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // signal end to GUI via the queue to ensure synchronization
             r = new Runnable() {
+                @Override
                 public void run() {
                     enableGUI();
                 }
@@ -372,6 +377,7 @@ public class LoaderPane extends javax.swing.JPanel {
             /**
              * when invoked, format and display the message
              */
+            @Override
             public void run() {
                 traffic.setText(message);
             }
@@ -505,6 +511,7 @@ public class LoaderPane extends javax.swing.JPanel {
             fileButton.setEnabled(false);
             fileButton.setToolTipText(res.getString("TipFileDisabled"));
             fileButton.addActionListener(new AbstractAction() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     selectInputFile();
                 }
@@ -541,6 +548,7 @@ public class LoaderPane extends javax.swing.JPanel {
             loadButton.setToolTipText(res.getString("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new AbstractAction() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }

@@ -46,7 +46,8 @@ public class LoadVSDFileAction extends AbstractAction {
     }
 
     public LoadVSDFileAction() {
-        this(Bundle.getMessage("LoadVSDFileChoserTitle")); // Shouldn't this be in the resource bundle?
+        this(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")); // File Chooser Title
+        // Shouldn't this be in the resource bundle?
     }
 
     JFileChooser fileChooser;
@@ -58,6 +59,7 @@ public class LoadVSDFileAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fileChooser == null) {
             // Need to somehow give the user a history...

@@ -1,4 +1,3 @@
-// AutomationsTableAction.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Frame;
@@ -30,4 +29,4 @@ public class AutomationsTableFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)AutomationsTableAction.java */
+

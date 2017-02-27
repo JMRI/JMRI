@@ -1,4 +1,3 @@
-// IEEE802154PortController.java
 package jmri.jmrix.ieee802154;
 
 /**
@@ -23,14 +22,17 @@ public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerial
     }
 
     // returns the InputStream from the port
+    @Override
     public abstract java.io.DataInputStream getInputStream();
 
     // returns the outputStream to the port
+    @Override
     public abstract java.io.DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
+    @Override
     public abstract boolean status();
 }
 
 
-/* @(#)IEEE802154PortController.java */
+

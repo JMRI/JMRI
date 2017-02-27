@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
+import java.util.Arrays;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -37,6 +38,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in XPressNet mode, check ability to set moderators
         try {
@@ -89,6 +91,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
             }
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
+                @Override
                 public void serialEvent(SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
@@ -209,6 +212,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
      * set up all of the other objects to operate with a LI101 connected to this
      * port
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
@@ -222,6 +226,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
     }
 
     // base class methods for the XNetSerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -230,6 +235,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -242,6 +248,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -276,13 +283,9 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
          checkBuffer = true;*/
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"19,200 baud", "38,400 baud", "57,600 baud", "115,200 baud"};

@@ -51,6 +51,7 @@ public class SampleAutomaton extends AbstractAutomaton {
      * This also sets the turnout to the current (initial) state to make sure
      * everything is consistent at the start.
      */
+    @Override
     protected void init() {
 
         log.info("SampleAutomaton monitors sensor " + sensorName
@@ -75,6 +76,7 @@ public class SampleAutomaton extends AbstractAutomaton {
      *
      * @return Always returns true to continue operation
      */
+    @Override
     protected boolean handle() {
         log.debug("Waiting for state change");
 

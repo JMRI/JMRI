@@ -613,6 +613,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     /**
      * Define the siglet's input and output.
      */
+    @Override
     public void defineIO() {
         NamedBean[] tempArray = new NamedBean[10];
         int n = 0;
@@ -692,6 +693,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         // avoid a loop, or avoid somebody changing appearance
         // manually and having it instantly recomputed & changed back
         driveSignal.getBean().addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals(rb.getString("Held"))) {
                     setOutput();
@@ -703,6 +705,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     /**
      * Recompute new output state and apply it.
      */
+    @Override
     public void setOutput() {
         if (log.isTraceEnabled()) {
             log.trace("setOutput for " + name);
@@ -736,7 +739,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 doFacing();
                 break;
             default:
-                log.error(rb.getString("Unexpected_mode:_") + mode + "_Signal_" + getDrivenSignal());
+                log.error(rb.getString("UnexpectedMode") + mode + "_Signal_" + getDrivenSignal());
         }
     }
 
@@ -1191,6 +1194,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return (new BlockBossLogic(sh.getDisplayName()));
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N

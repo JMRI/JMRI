@@ -1,4 +1,3 @@
-// SprogInterface.java
 package jmri.jmrix.sprog;
 
 /**
@@ -30,4 +29,4 @@ public interface SprogInterface {
 }
 
 
-/* @(#)SprogInterface.java */
+

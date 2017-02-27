@@ -115,9 +115,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
-
-            opened = true;
-
+ 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (UnsupportedCommOperationException | IOException ex) {

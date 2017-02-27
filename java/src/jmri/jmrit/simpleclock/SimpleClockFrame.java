@@ -83,6 +83,7 @@ public class SimpleClockFrame extends JmriJFrame
      * Initialize the config window
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void initComponents() throws Exception {
         setTitle(Bundle.getMessage("SimpleClockWindowTitle"));
 
@@ -115,6 +116,7 @@ public class SimpleClockFrame extends JmriJFrame
         }
         timeSourceBox.setToolTipText(Bundle.getMessage("TipTimeSource"));
         timeSourceBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setTimeSourceChanged();
             }
@@ -132,6 +134,7 @@ public class SimpleClockFrame extends JmriJFrame
             synchronizeCheckBox.setToolTipText(Bundle.getMessage("TipSynchronize"));
             synchronizeCheckBox.setSelected(clock.getSynchronize());
             synchronizeCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     synchronizeChanged();
                 }
@@ -144,6 +147,7 @@ public class SimpleClockFrame extends JmriJFrame
                 correctCheckBox.setToolTipText(Bundle.getMessage("TipCorrect"));
                 correctCheckBox.setSelected(clock.getCorrectHardware());
                 correctCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         correctChanged();
                     }
@@ -157,6 +161,7 @@ public class SimpleClockFrame extends JmriJFrame
                 displayCheckBox.setToolTipText(Bundle.getMessage("TipDisplay"));
                 displayCheckBox.setSelected(clock.use12HourDisplay());
                 displayCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         displayChanged();
                     }
@@ -175,6 +180,7 @@ public class SimpleClockFrame extends JmriJFrame
         panel12.add(new JLabel(":1 "));
         setRateButton.setToolTipText(Bundle.getMessage("TipSetRateButton"));
         setRateButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setRateButtonActionPerformed();
             }
@@ -194,6 +200,7 @@ public class SimpleClockFrame extends JmriJFrame
         minutesField.setToolTipText(Bundle.getMessage("TipMinutesField"));
         setTimeButton.setToolTipText(Bundle.getMessage("TipSetTimeButton"));
         setTimeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setTimeButtonActionPerformed();
             }
@@ -209,6 +216,7 @@ public class SimpleClockFrame extends JmriJFrame
         startStoppedCheckBox.setToolTipText(Bundle.getMessage("TipStartStopped"));
         startStoppedCheckBox.setSelected(clock.getStartStopped());
         startStoppedCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startStoppedChanged();
             }
@@ -220,6 +228,7 @@ public class SimpleClockFrame extends JmriJFrame
         startSetTimeCheckBox.setToolTipText(Bundle.getMessage("TipStartSetTime"));
         startSetTimeCheckBox.setSelected(clock.getStartSetTime());
         startSetTimeCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startSetTimeChanged();
             }
@@ -235,6 +244,7 @@ public class SimpleClockFrame extends JmriJFrame
         panel62.add(startMinutesField);
         setStartTimeButton.setToolTipText(Bundle.getMessage("TipSetStartTimeButton"));
         setStartTimeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startSetTimeChanged();
             }
@@ -263,6 +273,7 @@ public class SimpleClockFrame extends JmriJFrame
         }
         clockStartBox.setToolTipText(Bundle.getMessage("TipClockStartOption"));
         clockStartBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setClockStartChanged();
             }
@@ -297,6 +308,7 @@ public class SimpleClockFrame extends JmriJFrame
         JPanel panel4 = new JPanel();
         startButton.setToolTipText(Bundle.getMessage("TipStartButton"));
         startButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startButtonActionPerformed();
             }
@@ -304,6 +316,7 @@ public class SimpleClockFrame extends JmriJFrame
         panel4.add(startButton);
         stopButton.setToolTipText(Bundle.getMessage("TipStopButton"));
         stopButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 stopButtonActionPerformed();
             }
@@ -325,6 +338,7 @@ public class SimpleClockFrame extends JmriJFrame
 
         // request callback to update time
         clock.addMinuteChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 updateTime();
             }
@@ -608,6 +622,7 @@ public class SimpleClockFrame extends JmriJFrame
     /**
      * Handle a change to clock properties
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         updateRunningButton();
         updateRate();
@@ -616,6 +631,7 @@ public class SimpleClockFrame extends JmriJFrame
     /**
      * Method to handle window closing event
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         if (changed) {
             // remind to save		
@@ -632,4 +648,4 @@ public class SimpleClockFrame extends JmriJFrame
     private final static Logger log = LoggerFactory.getLogger(SimpleClockFrame.class.getName());
 }
 
-/* @(#)SimpleClockFrame.java */
+

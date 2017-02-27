@@ -14,6 +14,7 @@ public class FollowerFrame extends jmri.util.JmriJFrame {
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         addHelpMenu("package.jmri.jmrit.ussctc.FollowerFrame", true);
 

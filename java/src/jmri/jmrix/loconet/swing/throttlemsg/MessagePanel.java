@@ -1,4 +1,3 @@
-// MessagePanel.java
 package jmri.jmrix.loconet.swing.throttlemsg;
 
 import java.awt.FlowLayout;
@@ -14,10 +13,6 @@ import javax.swing.JTextField;
  */
 public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -729914131632149918L;
     // GUI member declarations
     JButton button = new JButton("Send");
     JTextField text = new JTextField(10);
@@ -31,16 +26,19 @@ public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
         add(text);
         add(button);
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 memo.getLnMessageManager().sendMessage(text.getText());
             }
         });
     }
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame";
+        return "package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemThrottleMessages"));
     }

@@ -34,6 +34,7 @@ public class SensorIconXml extends PositionableLabelXml {
      * @param o Object to store, of type SensorIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SensorIcon p = (SensorIcon) o;
         if (!p.isActive()) {
@@ -157,6 +158,7 @@ public class SensorIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         Editor ed = (Editor) o;
         SensorIcon l;

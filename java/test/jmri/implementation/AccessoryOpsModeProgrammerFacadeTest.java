@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2014
  *
  */
- // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
+// @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
 // @ToDo("test mode handling")
 // @ToDo("test packet contents in each mode")
 // @ToDo("test address handling")
@@ -27,8 +27,9 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
     public void testWriteDirect() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger(true, 123);
-        Programmer p = new AccessoryOpsModeProgrammerFacade(dp);
+        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, null);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -48,7 +49,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
         dp.setTestReadLimit(1024);
         dp.setTestWriteLimit(1024);
 
-        Programmer p = new AccessoryOpsModeProgrammerFacade(dp);
+        Programmer p = new AccessoryOpsModeProgrammerFacade(dp, null);
 
         Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));
         Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));
@@ -59,14 +60,17 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
     // from here down is testing infrastructure
     class MockCommandStation implements CommandStation {
 
+        @Override
         public void sendPacket(byte[] packet, int repeats) {
             lastPacket = packet;
         }
 
+        @Override
         public String getUserName() {
             return "I";
         }
 
+        @Override
         public String getSystemPrefix() {
             return "I";
         }
@@ -84,6 +88,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -92,6 +97,7 @@ public class AccessoryOpsModeProgrammerFacadeTest extends TestCase {
         lastPacket = null;
     }
 
+    @Override
     protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();

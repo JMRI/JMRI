@@ -1,9 +1,7 @@
 package jmri.jmrix.jmriclient;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JMRIClientReporterManagerTest.java
@@ -13,7 +11,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
  */
-public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

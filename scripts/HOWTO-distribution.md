@@ -95,7 +95,13 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Commit any changes in your local web site directory, as these can end up in help, xml, etc (See the JMRI page on local web sites for details)
 
-- Remake the help index (need a command line approach, so can put in ant!)
+- Remake the help map, search, index and TOC by doing
+```
+        cd help/en/
+        ant
+```
+
+Be patient, it might take a couple minutes. That will pop some frames, etc, but should be entirely automatic. If you have to do it manually for some reason:
 
 ```
         cd help/en/
@@ -104,12 +110,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
         (click "Create All", takes a bit of time, wait for button to release)
         (quit)
-```
-
-- In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
-
-```
-        ant
+        ant index TOC
 ```
 
 - [ ] We need to consider whether to do this in help/fr, the French translation; there will perhaps be eventually other translations too, so keep that in mind
@@ -188,15 +189,14 @@ where the date at the end should be the date (and optionally time) of the last r
         ant make-test-release-branch
 ```
  
-  This will have done (more or less) the following actions:
+  This will have done (more or less) the following actions (assumes 'github' is a remote pointing at https://github.com/JMRI/JMRI.git ):
 
 ```    
         git checkout master
         git pull
         (commit a version number increment to master)
-        git push JMRI/JMRI master
         git checkout -b {branch}
-        git push JMRI/JMRI {branch}
+        git push github {branch}
         git checkout master    
         git pull
 ```
@@ -356,7 +356,7 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
     (clean up and logout)
 ```
 
-- Create and upload the JavaDocs (As of May 2016, the [Jenkins server](http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just have that run. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
+- Create and upload the Javadocs (As of May 2016, the [Jenkins server](http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just have that run. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
 ```
     ant javadoc-uml uploadjavadoc
 ```

@@ -17,11 +17,6 @@ import org.slf4j.LoggerFactory;
 public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -7955184289782860199L;
-
-    /**
      * Enhanced constructor for placing the pane in various GUIs
      */
     public MrcNamedPaneAction(String s, WindowInterface wi, String paneClass, MrcSystemConnectionMemo memo) {
@@ -36,6 +31,7 @@ public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     MrcSystemConnectionMemo memo;
 
+    @Override
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();
         if (p == null) {
@@ -56,4 +52,4 @@ public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
     private final static Logger log = LoggerFactory.getLogger(MrcNamedPaneAction.class.getName());
 }
 
-/* @(#)MrcNamedPaneAction.java */
+

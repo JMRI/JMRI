@@ -1,6 +1,6 @@
-// RoutesTableAction.java
 package jmri.jmrit.operations.routes;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -24,7 +24,7 @@ public class RoutesTableAction extends AbstractAction {
     private static RoutesTableFrame routesTableFrame = null;
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one RouteTableFrame")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one RouteTableFrame")
     public void actionPerformed(ActionEvent e) {
         // create a route table frame
         if (routesTableFrame == null || !routesTableFrame.isVisible()) {
@@ -35,4 +35,4 @@ public class RoutesTableAction extends AbstractAction {
     }
 }
 
-/* @(#)RoutesTableAction.java */
+

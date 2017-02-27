@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -26,6 +25,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         setBinary(true);
     }
 
+    @Override
     public String toMonitorString() {
         // check for valid length
         int len = getNumDataElements();
@@ -148,4 +148,4 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
 }
 
-/* @(#)SpecificReply.java */
+

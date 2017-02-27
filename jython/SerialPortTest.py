@@ -48,7 +48,7 @@ class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
     def handle(self) : 
         
         # get next character
-        next = a.inputStream.read()
+        next = self.inputStream.read()
         
         # this sample doesn't do anything with that character except echo it
         print "rcv", next

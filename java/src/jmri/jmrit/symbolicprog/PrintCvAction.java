@@ -65,6 +65,7 @@ public class PrintCvAction extends AbstractAction {
         w.setFontStyle(Font.PLAIN);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this

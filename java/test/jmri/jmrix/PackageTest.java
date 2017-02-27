@@ -25,11 +25,11 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.PackageTest");
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRNodeTrafficControllerTest.class));
 
         suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonPaneTest.class));
         suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
-        suite.addTest(jmri.jmrix.AbstractPortControllerTest.suite());
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
         suite.addTest(new TestSuite(jmri.jmrix.AbstractThrottleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
@@ -41,7 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.configurexml.PackageTest.class));
         //suite.addTest(jmri.jmrix.cmri.serial.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.cmri.PackageTest.class));
-        suite.addTest(jmri.jmrix.dcc.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dcc.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dcc4pc.PackageTest.class));
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.dccpp.PackageTest.suite());
@@ -55,6 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.loconet.PackageTest.suite());
         suite.addTest(jmri.jmrix.maple.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.marklin.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.merg.PackageTest.class));
         suite.addTest(jmri.jmrix.modbus.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.PackageTest.class));
         suite.addTest(jmri.jmrix.nce.PackageTest.suite());
@@ -78,15 +79,27 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.jinput.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.serialsensor.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ncemonitor.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NetworkConfigExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConfigExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionStatusTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ActiveSystemsMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCManufacturerListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OtherConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemsMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.debugthrottle.PackageTest.class));
         return suite;
 
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

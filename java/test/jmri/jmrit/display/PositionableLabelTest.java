@@ -54,6 +54,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // test button in upper left
         JButton doButton = new JButton("change label");
         doButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (to.getText().equals("one"))
                     to.setText("two");
@@ -238,7 +239,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         }
 
         if (System.getProperty("jmri.migrationtests", "false").equals("false")) { // skip test for migration, but warn about it
-            log.warn("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
+            log.info("skipping testDisplayAnimatedRGB because jmri.migrationtests not set true");
             return;
         }
 
@@ -323,7 +324,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         }
 
          if (System.getProperty("jmri.migrationtests","false").equals("false")) { // skip test for migration, but warn about it
-            log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
+            log.info("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
             return;
         }
 
@@ -569,6 +570,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -576,6 +578,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
+    @Override
     protected void tearDown() {
         // now close panel window
         if (panel != null) {

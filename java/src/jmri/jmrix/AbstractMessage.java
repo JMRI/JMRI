@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ public abstract class AbstractMessage implements Message {
     }
 
     @SuppressWarnings("null")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
             justification = "we want to force an exception")
     public AbstractMessage(AbstractMessage m) {
         if (m == null) {
@@ -46,15 +47,18 @@ public abstract class AbstractMessage implements Message {
         }
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
@@ -91,6 +95,7 @@ public abstract class AbstractMessage implements Message {
     /**
      * Hash code from base data
      */
+    @Override
     public int hashCode() {
         int retval = 0;
         for(int i = 0;i<this.getNumDataElements();i++){ 

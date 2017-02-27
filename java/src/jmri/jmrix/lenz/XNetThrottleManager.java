@@ -116,6 +116,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     }
 
     // Handle incoming messages for throttles.
+    @Override
     public void message(XNetReply r) {
         // We want to check to see if a throttle has taken over an address
         if (r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
@@ -133,10 +134,12 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
     }
 

@@ -11,6 +11,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.WarrantManager;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -40,6 +41,7 @@ public class WarrantManagerXml //extends XmlFile
      * @param o Object to store, of type warrantManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
@@ -59,6 +61,12 @@ public class WarrantManagerXml //extends XmlFile
             if (uname==null) uname = "";
             if (uname.length()>0) {
                 elem.setAttribute("userName", uname);
+            }
+            if (warrant instanceof SCWarrant) {
+                elem.setAttribute("wtype", "SC");
+                elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
+            } else {
+                elem.setAttribute("wtype", "normal");
             }
             String comment = warrant.getComment();
             if (comment != null) {
@@ -171,7 +179,7 @@ public class WarrantManagerXml //extends XmlFile
             return;
         }
         Element elem = new Element("nxparams");
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         Element e = new Element("maxspeed");
         e.addContent(Float.toString(nxFrame.getMaxSpeed()));
         elem.addContent(e);
@@ -188,10 +196,12 @@ public class WarrantManagerXml //extends XmlFile
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         
         // don't continue on to build NXFrame if no content
-        if (shared.getChildren().size() == 0) return true;
+        if (shared.getChildren().isEmpty()) {
+            return true;
+        }
         
         if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame nxFrame = NXFrame.getInstance();
+            NXFrame nxFrame = NXFrame.getDefault();
             loadNXParams(nxFrame, shared.getChild("nxparams"));
 //            nxFrame.init();   don't make visible
         }
@@ -232,7 +242,7 @@ public class WarrantManagerXml //extends XmlFile
                 }
             }
 
-            Warrant warrant = manager.createNewWarrant(sysName, userName);
+            Warrant warrant = manager.createNewWarrant(sysName, userName, SCWa, timeToPlatform);
             if (warrant==null) {
                 log.info("Warrant \""+sysName+"("+userName+")\" previously loaded. This version not loaded.");
                 continue;
@@ -286,6 +296,7 @@ public class WarrantManagerXml //extends XmlFile
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) throws Exception {
         log.error("load called. Invalid method.");
     }
@@ -399,6 +410,7 @@ public class WarrantManagerXml //extends XmlFile
         }
     }
     
+    @Override
     public int loadOrder(){
         return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }

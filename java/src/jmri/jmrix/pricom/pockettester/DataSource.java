@@ -1,5 +1,6 @@
 package jmri.jmrix.pricom.pockettester;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
 import java.io.DataInputStream;
 import java.io.OutputStream;
@@ -67,6 +68,7 @@ public class DataSource extends jmri.util.JmriJFrame {
      *
      * @since 1.7.7
      */
+    @Override
     public void initComponents() {
         setTitle(rb.getString("TitleSource"));
 
@@ -86,6 +88,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         openPortButton.setText(rb.getString("ButtonOpen"));
         openPortButton.setToolTipText(rb.getString("TooltipOpen"));
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
@@ -118,6 +121,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         JPanel p2 = new JPanel();
         p2.add(checkButton);
         checkButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendBytes(new byte[]{(byte) 'G'});
                 sendBytes(new byte[]{(byte) 'F'});
@@ -134,6 +138,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             p.add(b);
             b.setSelected(true);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'F'});
                 }
@@ -142,6 +147,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'A'});
                 }
@@ -151,6 +157,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'M'});
                 }
@@ -161,6 +168,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         {
             JButton b = new JButton(rb.getString("ButtonGetVersion"));
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     version.setText(rb.getString("LabelWaitVersion"));
                     sendBytes(new byte[]{(byte) 'V'});
@@ -185,6 +193,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             MonitorAction a = new MonitorAction() {
+                @Override
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                 }
@@ -196,6 +205,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             PacketTableAction p = new PacketTableAction() {
+                @Override
                 public void connect(DataListener l) {
                     DataSource.this.addListener(l);
                     ((PacketTableFrame) l).setSource(DataSource.this);
@@ -208,6 +218,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
         {
             StatusAction a = new StatusAction() {
+                @Override
                 public void connect(StatusFrame l) {
                     DataSource.this.addListener(l);
                     l.setSource(DataSource.this);
@@ -272,6 +283,7 @@ public class DataSource extends jmri.util.JmriJFrame {
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
     @SuppressWarnings("deprecation")
+    @Override
     public void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread != null) {
@@ -389,7 +401,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     DataInputStream serialStream = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
@@ -407,6 +419,7 @@ public class DataSource extends jmri.util.JmriJFrame {
          * PortController via <code>connectPort</code>. Terminates with the
          * input stream breaking out of the try block.
          */
+        @Override
         public void run() {
             // have to limit verbosity!
 
@@ -453,6 +466,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                 // retain a copy of the message at startup
                 String msgForLater = msgString;
 
+                @Override
                 public void run() {
                     nextLine(msgForLater);
                 }

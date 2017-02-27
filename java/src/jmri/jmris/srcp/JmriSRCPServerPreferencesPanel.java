@@ -1,6 +1,3 @@
-/**
- * @author Randall Wood Copyright (C) 2012
- */
 package jmri.jmris.srcp;
 
 import javax.swing.Box;
@@ -16,9 +13,11 @@ import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 
+/**
+ * @author Randall Wood Copyright (C) 2012
+ */
 public class JmriSRCPServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = 03_16_2015L;
     private JSpinner port;
     private JmriSRCPServerPreferences preferences;
     private JFrame parentFrame = null;
@@ -164,6 +163,7 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
      *
      * @return true if the preferences are valid, false otherwise
      */
+    @Override
     public boolean isPreferencesValid() {
         return false;
     }

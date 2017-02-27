@@ -1,4 +1,3 @@
-// LZ100Frame.java
 package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.event.ActionEvent;
@@ -18,11 +17,6 @@ import javax.swing.JToggleButton;
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4830621452390220529L;
-
     public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         this("LZ100 Configuration Utility", memo);
     }
@@ -46,6 +40,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -57,6 +52,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
     JToggleButton closeButton = new JToggleButton("Close");
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

@@ -1,4 +1,3 @@
-// JMRIClientReporter.java
 package jmri.jmrix.jmriclient;
 
 import jmri.implementation.AbstractReporter;
@@ -16,10 +15,6 @@ import org.slf4j.LoggerFactory;
   */
 public class JMRIClientReporter extends AbstractReporter implements JMRIClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1164767908120216920L;
     // data members
     private int _number;   // reporter number
     private JMRIClientTrafficController tc = null;
@@ -52,6 +47,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
     }
 
     // to listen for status changes from JMRIClient system
+    @Override
     public void reply(JMRIClientReply m) {
         String message = m.toString();
         log.debug("Message Received: " + m);
@@ -75,15 +71,18 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         }
     }
 
+    @Override
     public void message(JMRIClientMessage m) {
     }
 
     private int state = UNKNOWN;
 
+    @Override
     public void setState(int s) {
         state = s;
     }
 
+    @Override
     public int getState() {
         return state;
     }
@@ -93,4 +92,4 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
 }
 
 
-/* @(#)JMRIClientReporter.java */
+

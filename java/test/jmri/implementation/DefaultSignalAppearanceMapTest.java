@@ -3,27 +3,35 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the SignalAppearanceMap interface
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalAppearanceMapTest extends TestCase {
+public class DefaultSignalAppearanceMapTest {
 
+    private SignalHead h1;
+    private SignalHead h2;
+
+    private List<NamedBeanHandle<SignalHead>> l1;
+    private List<NamedBeanHandle<SignalHead>> l2;
+
+    @Test
     public void testCtor() {
-        new DefaultSignalAppearanceMap("sys", "user");
+        DefaultSignalAppearanceMap map = new DefaultSignalAppearanceMap("sys", "user");
+        Assert.assertNotNull(map);
     }
 
+    @Test
     public void testSearchOrder() throws Exception {
         try {  // need try-finally to ensure junk deleted from user area
             SignalSystemTestUtil.createMockSystem();
@@ -37,6 +45,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         }
     }
 
+    @Test
     public void testDefaultMap() {
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:h1");
         DefaultSignalAppearanceMap t = (DefaultSignalAppearanceMap) s.getAppearanceMap();
@@ -58,6 +67,7 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         s.dispose();
     }
 
+    @Test
     public void testDefaultAspects() {
         DefaultSignalAppearanceMap t = new DefaultSignalAppearanceMap("sys", "user");
         t.loadDefaults();
@@ -71,9 +81,11 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         Assert.assertTrue(!e.hasMoreElements());
     }
 
+    @Test
     public void testTwoHead() {
 
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:h1:h2") {
+            @Override
             void configureAspectTable(String signalSystemName, String aspectMapName) {
                 map = new DefaultSignalAppearanceMap("sys", "user");
             }
@@ -99,57 +111,49 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         s.dispose();
     }
 
-    // from here down is testing infrastructure
-    public DefaultSignalAppearanceMapTest(String s) {
-        super(s);
+    @Test
+    public void testGetState() {
+        DefaultSignalAppearanceMap map = new DefaultSignalAppearanceMap("sys", "user");
+        Assert.assertEquals(NamedBean.INCONSISTENT, map.getState());
     }
 
-    SignalHead h1;
-    SignalHead h2;
-
-    List<NamedBeanHandle<SignalHead>> l1;
-    List<NamedBeanHandle<SignalHead>> l2;
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DefaultSignalAppearanceMapTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Test
+    public void testSetState() {
+        DefaultSignalAppearanceMap map = new DefaultSignalAppearanceMap("sys", "user");
+        map.setState(NamedBean.UNKNOWN);
+        // verify getState did not change
+        Assert.assertEquals(NamedBean.INCONSISTENT, map.getState());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultSignalAppearanceMapTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        super.setUp(); 
         jmri.util.JUnitUtil.resetInstanceManager();
         h1 = new DefaultSignalHead("h1", "head1") {
+            @Override
             protected void updateOutput() {
             }
         };
         h2 = new DefaultSignalHead("h2", "head2") {
+            @Override
             protected void updateOutput() {
             }
         };
-        l1 = new ArrayList<NamedBeanHandle<SignalHead>>();
-        l1.add(new NamedBeanHandle<SignalHead>("h1", h1));
-        l2 = new ArrayList<NamedBeanHandle<SignalHead>>();
-        l2.add(new NamedBeanHandle<SignalHead>("h1", h1));
-        l2.add(new NamedBeanHandle<SignalHead>("h2", h2));
+        l1 = new ArrayList<>();
+        l1.add(new NamedBeanHandle<>("h1", h1));
+        l2 = new ArrayList<>();
+        l2.add(new NamedBeanHandle<>("h1", h1));
+        l2.add(new NamedBeanHandle<>("h2", h2));
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h1);
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h2);
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h1);
         h1.dispose();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h2);
         h2.dispose();
         apps.tests.Log4JFixture.tearDown();
     }
-    static protected Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMapTest.class.getName());
 }

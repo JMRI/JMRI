@@ -1,4 +1,3 @@
-// ClientRxHandler.java
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.io.BufferedReader;
@@ -41,6 +40,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
     }
 
     @SuppressWarnings("null")
+    @Override
     public void run() {
 
         try {
@@ -158,6 +158,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             parentThread = creator;
         }
 
+        @Override
         public void run() {
 
             try {
@@ -210,6 +211,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         }
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         synchronized (msgQueue) {
             msgQueue.add(msg);

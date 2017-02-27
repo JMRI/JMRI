@@ -43,6 +43,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -132,6 +133,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
      * set up all of the other objects to operate with an Sprog command station
      * connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         this.getSystemConnectionMemo().getTrafficController().connectPort(this);
@@ -143,6 +145,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
 
     // base class methods for the SprogPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -151,6 +154,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -163,6 +167,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -170,6 +175,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     /**
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
     }

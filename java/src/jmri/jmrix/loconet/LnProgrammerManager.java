@@ -1,4 +1,3 @@
-/* LnProgrammerManager.java */
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
@@ -30,14 +29,17 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new LnOpsModeProgrammer(mSlotManager, memo, pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
@@ -60,6 +62,3 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     }
 
 }
-
-
-/* @(#)DefaultProgrammerManager.java */

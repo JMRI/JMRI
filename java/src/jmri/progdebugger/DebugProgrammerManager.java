@@ -31,6 +31,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      */
     Hashtable<Integer, ProgDebugger> opsProgrammers = new Hashtable<Integer, ProgDebugger>();
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         int address = pAddress;
         if (!pLongAddress) {
@@ -54,6 +55,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         return saw;
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
@@ -63,6 +65,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }

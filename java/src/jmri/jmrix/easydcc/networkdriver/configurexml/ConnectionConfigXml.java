@@ -22,6 +22,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     /*public ConnectionConfigXml() {
      super();
      }*/
+    @Override
     protected void getInstance() {
         adapter = NetworkDriverAdapter.instance();
     }

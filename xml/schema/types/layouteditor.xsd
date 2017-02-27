@@ -40,7 +40,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded" >
-        
+
         <xs:element name="positionablelabel"  type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablepoint"  type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="turnouticon"        type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
@@ -57,8 +57,11 @@
         <xs:element name="multisensoricon"    type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="levelxing"          type="EditorLevelXingType"         minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutturntable"    type="EditorLayoutTurntableType"   minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="linkinglabel"       type="EditorLinkingLabelType"      minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="locoicon"           type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
-            
+        <xs:element name="BlockContentsIcon"  type="EditorBlockContentsIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LightIcon"          type="EditorLightIconType"         minOccurs="0" maxOccurs="unbounded" />
+
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="name" type="xs:string"/>
@@ -112,6 +115,7 @@
       <xs:attribute name="gridSize" type="xs:integer"/>
       <xs:attribute name="openDispatcher" type="yesNoType" default="no"/>
       <xs:attribute name="useDirectTurnoutControl" type="yesNoType" default="no"/>
+      <xs:attribute name="zoom" type="xs:float" default="1.0"/>
     </xs:complexType>
 
     <xs:simpleType name="trackAsColourType">
@@ -119,7 +123,7 @@
         <xs:enumeration value="track"/>
       </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="turnoutCircleColourType">
        <xs:union memberTypes="screenColorType trackAsColourType"/>
     </xs:simpleType>

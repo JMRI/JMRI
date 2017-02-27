@@ -4,7 +4,6 @@ import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -35,11 +34,14 @@ public class AddNodeFrameTest {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new XBeeTrafficController() {
+            @Override
             public void setInstance() {
             }
+            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
+            @Override
             public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
                 return null;
             }

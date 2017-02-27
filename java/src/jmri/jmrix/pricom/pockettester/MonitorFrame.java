@@ -17,9 +17,11 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
         super();
     }
 
+    @Override
     public void init() {
     }
 
+    @Override
     protected String title() {
         String title = filter;
         if (filter == null) {
@@ -29,11 +31,13 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
                 (Object[]) new String[]{title});
     }
 
+    @Override
     public void dispose() {
         // and clean up parent
         super.dispose();
     }
 
+    @Override
     public void asciiFormattedMessage(String m) {
         if ((filter == null) || m.startsWith(filter)) {
             nextLine(m, "");

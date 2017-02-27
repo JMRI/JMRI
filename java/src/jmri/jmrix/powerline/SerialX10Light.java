@@ -1,4 +1,3 @@
-// SerialX10Light.java
 package jmri.jmrix.powerline;
 
 import org.slf4j.Logger;
@@ -27,11 +26,6 @@ import org.slf4j.LoggerFactory;
 public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
     // System-dependent instance variables
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8432585767207210483L;
-
     /**
      * Current output step 0 to maxDimStep.
      * <p>
@@ -77,6 +71,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
      *
      * @param intensity The next intensity value that will be set
      */
+    @Override
     protected void initIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("initIntensity(" + intensity + ")");
@@ -130,6 +125,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
      * <p>
      * This sends "Dim" commands.
      */
+    @Override
     protected void sendIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
@@ -170,6 +166,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
      * Number of steps from dim to bright is maintained in specific
      * SerialTrafficController implementation
      */
+    @Override
     protected int getNumberOfSteps() {
         return tc.getNumberOfIntensitySteps();
     }
@@ -177,6 +174,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
     /**
      * Send a On/Off Command to the hardware
      */
+    @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
             log.debug("sendOnOff(" + newState + ") Current: " + mState);
@@ -213,4 +211,4 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
     private final static Logger log = LoggerFactory.getLogger(SerialX10Light.class.getName());
 }
 
-/* @(#)SerialX10Light.java */
+

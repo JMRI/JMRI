@@ -27,6 +27,7 @@ public class AcelaPacketGenAction extends AbstractAction {
         this("Generate Acela message",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         AcelaPacketGenFrame f = new AcelaPacketGenFrame(_memo);
         try {
@@ -39,5 +40,3 @@ public class AcelaPacketGenAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class.getName());
 }
-
-/* @(#)AcelaPacketGenAction.java */

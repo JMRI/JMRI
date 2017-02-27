@@ -1,6 +1,6 @@
-// NceMacroRestore.java
 package jmri.jmrix.nce.consist;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,6 +50,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
         this.tc = t;
     }
 
+    @Override
     public void run() {
 
         // Get file to read from
@@ -205,10 +206,12 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
         return m;
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("waiting for " + waiting + " responses ");
@@ -240,6 +243,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
     private static class textFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -252,6 +256,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             }
         }
 
+        @Override
         public String getDescription() {
             return "Text Documents (*.txt)";
         }

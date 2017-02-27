@@ -126,7 +126,9 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
                 socketConn = new Socket(m_HostName, m_port);
                 socketConn.setSoTimeout(READ_TIMEOUT);
             } catch (UnknownHostException e) {
-                ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+                ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
                 throw (e);
             }
             // get and save input stream
@@ -137,17 +139,23 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
             // Connection established.
             opened = true;
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_UP);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_UP);
 
         } // Report possible errors encountered while opening the connection
         catch (SocketException se) {
             log.error("Socket exception while opening TCP connection with " + outName + " trace follows: " + se);
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
             throw (se);
         }
         catch (IOException e) {
             log.error("Unexpected exception while opening TCP connection with " + outName + " trace follows: " + e);
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
             throw (e);
         }
     }
@@ -231,7 +239,9 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     synchronized protected void xnTcpError() {
         // If the error message was already posted, simply ignore this call
         if (opened) {
-            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
+                        outName, ConnectionStatus.CONNECTION_DOWN);
             // Clear open status, in order to avoid issuing the error 
             // message more than than once.
             opened = false;
@@ -261,6 +271,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     /**
      * set up all of the other objects to operate with a XnTcp interface
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
@@ -323,6 +334,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             count = -1; // First byte should contain packet's length
         }
 
+        @Override
         public void write(int b) throws java.io.IOException {
             // Make sure that we don't interleave bytes, if called
             // at the same time by different threads
@@ -346,6 +358,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             }
         }
 
+        @Override
         public void write(byte[] b, int off, int len) throws java.io.IOException {
             // Make sure that we don't mix bytes of different packets, 
             // if called at the same time by different threads

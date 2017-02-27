@@ -1,6 +1,6 @@
-// TrainCsvSwitchLists.java
 package jmri.jmrit.operations.trains;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,7 +37,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
      *
      * @return File
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public File buildSwitchList(Location location) {
 
         // create csv switch list file
@@ -69,7 +69,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         }
         addLine(fileOut, VT + getDate(true));
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        // get a list of trains sorted by arrival time
+        List<Train> trains = TrainManager.instance().getTrainsArrivingThisLocationList(location);
+        for (Train train : trains) {
             if (!train.isBuilt()) {
                 continue; // train wasn't built so skip
             }

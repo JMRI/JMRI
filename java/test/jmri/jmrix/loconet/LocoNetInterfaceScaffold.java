@@ -19,6 +19,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
     }
 
     // override some LnTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -28,6 +29,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
      */
     public Vector<LocoNetMessage> outbound = new Vector<LocoNetMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("sendLocoNetMessage [" + m + "]");
@@ -38,6 +40,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
         // separately tested
     }
 
+    @Override
     public boolean isXmtBusy() {
         return false;
     }
@@ -74,4 +77,4 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

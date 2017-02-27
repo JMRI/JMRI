@@ -34,14 +34,15 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * record the single instance *
      */
-    private static ScheduleManager _instance = null;
     private int _id = 0;
 
     public static synchronized ScheduleManager instance() {
+        ScheduleManager _instance = jmri.InstanceManager.getNullableDefault(ScheduleManager.class);
         if (_instance == null) {
             log.debug("ScheduleManager creating instance");
             // create and load
             _instance = new ScheduleManager();
+            jmri.InstanceManager.setDefault(ScheduleManager.class,_instance);
         }
         if (Control.SHOW_INSTANCE) {
             log.debug("ScheduleManager returns instance {}", _instance);
@@ -384,4 +385,4 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 
 }
 
-/* @(#)ScheduleManager.java */
+

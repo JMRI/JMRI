@@ -1,8 +1,7 @@
-// SprogPortController.java
 package jmri.jmrix.sprog;
 
 /*
- * Identifying class representing a ECOS communications port
+ * Identifying class representing a SPROG communications port
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  */
 public abstract class SprogPortController extends jmri.jmrix.AbstractSerialPortController {
@@ -20,4 +19,4 @@ public abstract class SprogPortController extends jmri.jmrix.AbstractSerialPortC
 }
 
 
-/* @(#)SprogPortController.java */
+

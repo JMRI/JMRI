@@ -19,10 +19,12 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.secsi.configurexml.SerialTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -2,12 +2,10 @@ package jmri.jmrix.mrc.swing.monitor;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JmriJFrame;
@@ -19,7 +17,7 @@ import jmri.jmrix.AbstractMonPaneScaffold;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTest {
+public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.mrc.MrcSystemConnectionMemo memo = null;
 

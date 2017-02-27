@@ -1,6 +1,8 @@
 The resources module contains various non-source-code files used
 by JMRI classes.
 
+See the COPYING file for the license.
+
 Icon-like images are organized by size, e.g. in directories
 with names like:
 

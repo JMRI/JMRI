@@ -1,6 +1,8 @@
 package jmri.jmrit.logix;
 
 import jmri.managers.AbstractManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a PortalManager.
@@ -36,23 +38,18 @@ public class PortalManager extends AbstractManager
     public PortalManager() {
         super();
     }
-    /*    
-     public void setNextSysNum(int next) {
-     _nextSName = next;
-     }
-     public int getNextSysNum() {
-     return _nextSName;
-     }
-     */
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'P';
     }
@@ -76,6 +73,8 @@ public class PortalManager extends AbstractManager
         }
         if (sName == null) {
             sName = generateSystemName();
+        } else {
+            if (log.isDebugEnabled()) log.debug("createNewPortal called with system name \"{}\"", sName);
         }
         if (!sName.startsWith("IP")) {
             sName = "IP" + sName;
@@ -140,6 +139,7 @@ public class PortalManager extends AbstractManager
         return portal;
     }
 
+    @Override
     protected void registerSelf() {
         // Override, don't register, OBlockManager does store and load of Portals
     }
@@ -153,9 +153,12 @@ public class PortalManager extends AbstractManager
         return (_instance);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNamePortal");
     }
+
+    private final static Logger log = LoggerFactory.getLogger(PortalManager.class.getName());
 }
 
-/* @(#)PortalManager.java */
+

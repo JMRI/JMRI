@@ -39,6 +39,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         reportedError = null;
         DccLocoAddressSelector sel = new DccLocoAddressSelector() {
+            @Override
             void reportError(String msg) {
                 reportedError = msg;
             }

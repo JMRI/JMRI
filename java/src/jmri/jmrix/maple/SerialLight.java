@@ -1,4 +1,3 @@
-// SerialLight.java
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractLight;
@@ -15,11 +14,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004, 2009, 2010
  */
 public class SerialLight extends AbstractLight {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7484666573192742681L;
 
     /**
      * Create a Light object, with only system name.
@@ -65,6 +59,7 @@ public class SerialLight extends AbstractLight {
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         if (newState == ON) {
             OutputBits.instance().setOutputBit(mBit, false);
@@ -77,5 +72,3 @@ public class SerialLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
-
-/* @(#)SerialLight.java */

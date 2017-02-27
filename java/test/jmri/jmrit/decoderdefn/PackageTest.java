@@ -1,5 +1,6 @@
 package jmri.jmrit.decoderdefn;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,7 +29,8 @@ public class PackageTest extends TestCase {
         suite.addTest(IdentifyDecoderTest.suite());
         suite.addTest(DecoderIndexFileTest.suite());
         suite.addTest(DecoderFileTest.suite());
-        suite.addTest(SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
+        suite.addTest(new JUnit4TestAdapter(DecoderIndexBuilderTest.class));
         return suite;
     }
 

@@ -1,8 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.models.ATCommandResponse;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import com.digi.xbee.api.XBeeDevice;
-import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.RemoteXBeeDevice;
@@ -38,6 +37,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     public IEEE802154Message getIEEE802154Message(int length) {
         return null;
     }
@@ -47,6 +47,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     protected AbstractMRReply newReply() {
         return new XBeeReply();
     }
@@ -55,7 +56,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * Make connection to existing PortController object.
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
     public void connectPort(AbstractPortController p) {
         // Attach XBee to the port
         try {
@@ -205,6 +206,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
 
     // XBee IPacketReceiveListener interface methods
+    @Override
     public void packetReceived(XBeePacket response) {
 
         log.debug("packetReceived called with {}",response);
@@ -212,11 +214,13 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     // XBee IModemStatusReceiveListener interface methods
+    @Override
     public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
        log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
     }
 
     // XBee IDataReceiveListener interface methods
+    @Override
     public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
        log.debug("dataReceived called with message {} ", xbm);
     }
@@ -257,18 +261,22 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * Build a new IEEE802154 Node.
      * @return new IEEE802154Node.
      */
+    @Override
     public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
         return new XBeeNode();
     }
 
+    @Override
     public void addXBeeListener(XBeeListener l) {
         this.addListener(l);
     }
 
+    @Override
     public void removeXBeeListener(XBeeListener l) {
         this.addListener(l);
     }
 
+    @Override
     public void sendXBeeMessage(XBeeMessage m, XBeeListener l) {
         sendMessage(m, l);
     }

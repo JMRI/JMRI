@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.zimo.mx1;
 
 import java.util.ResourceBundle;
@@ -18,6 +17,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p the associated serial port
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -30,6 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
             log.debug("init called for " + name());
@@ -46,10 +47,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.zimo.ZimoActionListBundle");
     }
 
+    @Override
     public String name() {
         return "MX-1";
     }
 
+    @Override
     protected void setInstance() {
         adapter = Mx1Adapter.instance();
     }

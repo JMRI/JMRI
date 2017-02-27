@@ -41,6 +41,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         setLayout(new java.awt.GridBagLayout());
         add(_textBox, new java.awt.GridBagConstraints());
         _textBox.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent e) {
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
@@ -65,10 +66,12 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         return super.finishClone(pos);
     }
 
+    @Override
     public JComponent getTextComponent() {
         return _textBox;
     }
 
+    @Override
     public void mouseExited(java.awt.event.MouseEvent e) {
         updateMemory();
         super.mouseExited(e);
@@ -133,12 +136,14 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     // update icon as state of Memory changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("value")) {
             displayState();
         }
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (namedMemory == null) {
@@ -159,9 +164,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         getMemory().setValue(str);
     }
 
+    @Override
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new javax.swing.AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -174,10 +181,12 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      */
     SpinnerNumberModel _spinModel = new SpinnerNumberModel(3, 1, 100, 1);
 
+    @Override
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
             JSpinner spinner = new JSpinner(_spinModel);
 
+            @Override
             protected void addAdditionalButtons(JPanel p) {
                 ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(2);
                 spinner.setMaximumSize(spinner.getPreferredSize());
@@ -195,6 +204,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         makeIconEditorFrame(this, "Memory", true, _iconEditor);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
@@ -231,6 +241,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         }
     }
 
+    @Override
     void cleanup() {
         if (namedMemory != null) {
             getMemory().removePropertyChangeListener(this);

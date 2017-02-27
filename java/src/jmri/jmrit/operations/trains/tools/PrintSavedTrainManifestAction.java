@@ -1,4 +1,3 @@
-// PrintSavedTrainManifestAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
@@ -39,6 +38,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
     boolean _isPreview;
     Train _train;
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

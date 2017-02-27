@@ -1,4 +1,3 @@
-// EliteXNetTurnoutManager.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.Turnout;
@@ -21,6 +20,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     // XNet-specific methods
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t = new EliteXNetTurnout(prefix, addr, tc);
@@ -29,6 +29,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
     }
 
     // listen for turnouts, creating them as needed
+    @Override
     public void message(jmri.jmrix.lenz.XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -85,4 +86,4 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
 
 }
 
-/* @(#)EliteXNetTurnoutManager.java */
+

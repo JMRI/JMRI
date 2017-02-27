@@ -61,6 +61,7 @@ public class SwingTestCase extends JFCTestCase {
         BLACK       (0xFF000000),
         YELLOW      (0xFFFFFF00);
     
+        @Override
         public String toString() { return formatPixel(value); }
         public boolean equals(int v) { return value == v; }
         private final int value;
@@ -126,6 +127,7 @@ public class SwingTestCase extends JFCTestCase {
         }
     }
     
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         // Choose the test Helper
@@ -137,6 +139,7 @@ public class SwingTestCase extends JFCTestCase {
         TestHelper.addSystemWindow(".");  // all windows left open
     }
 
+    @Override
     protected void tearDown() throws Exception {
         leaveAllWindowsOpen();
         TestHelper.cleanUp(this);

@@ -32,6 +32,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @param o Object to store, of type ConditionalManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 //    	long numCond = 0;
 //    	long numStateVars = 0;
@@ -153,6 +154,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         conditionals.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -394,6 +396,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.CONDITIONALS);
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.ConditionalManager.class).getXMLOrder();
     }

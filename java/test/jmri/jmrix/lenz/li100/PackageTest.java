@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(LI100XNetProgrammerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.li100.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LI100XNetPacketizerTest.class));
         return suite;
     }
 

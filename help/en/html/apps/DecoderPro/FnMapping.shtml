@@ -114,14 +114,14 @@
         "output" element can be used to modify what is displayed in
         Function Map columns. For details see this <a href=
         "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanel.html"
-        target="_blank">JavaDoc page</a>.</li>
+        target="_blank">Javadoc page</a>.</li>
 
         <li>extFnsESU - when set to "yes" invokes the specialised
         Function Map page required for later model ESU decoders.
         The requirements and meaning of some fnmapping elements are
         also changed. For details see this <a href=
         "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanelESU.html"
-        target="_blank">JavaDoc page</a>.</li>
+        target="_blank">Javadoc page</a>.</li>
       </ul>
 
       <h2>Mapping Example</h2>These examples are taken from the

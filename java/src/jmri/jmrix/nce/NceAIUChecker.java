@@ -48,12 +48,14 @@ public class NceAIUChecker implements NceListener {
 
     }
 
+    @Override
     public void message(NceMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("unexpected message");
         }
     }
 
+    @Override
     public void reply(NceReply r) {
         if (!EXPECT_REPLY && log.isDebugEnabled()) {
             log.debug("Unexpected reply in AIU broadcast checker");
@@ -89,4 +91,4 @@ public class NceAIUChecker implements NceListener {
             .getLogger(NceAIUChecker.class.getName());
 
 }
-/* @(#)NceAIUChecker.java */
+

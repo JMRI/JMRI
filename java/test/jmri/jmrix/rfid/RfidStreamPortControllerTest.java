@@ -4,10 +4,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+
+
 
 /**
  * RfidStreamPortControllerTest.java
@@ -16,10 +19,19 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class RfidStreamPortControllerTest extends TestCase {
+public class RfidStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
+    @Test
     public void testCtor() {
+        Assert.assertNotNull("exists", apc);
+    }
 
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
@@ -27,38 +39,16 @@ public class RfidStreamPortControllerTest extends TestCase {
             tempPipe = new PipedInputStream();
             DataInputStream istream = new DataInputStream(tempPipe);
 
-            RfidStreamPortController xspc = new RfidStreamPortController(istream, ostream, "Test");
-            Assert.assertNotNull("exists", xspc);
+            apc = new RfidStreamPortController(istream, ostream, "Test");
         } catch (java.io.IOException ioe) {
             Assert.fail("IOException creating stream");
         }
     }
 
-    // from here down is testing infrastructure
-    public RfidStreamPortControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RfidStreamPortControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RfidStreamPortControllerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
-    }
-
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @Override
+    @After
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

@@ -50,6 +50,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         // add sensor
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive") {
 
+            @Override
             void create(String name) {
                 if (memo != null) {
                     ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor("MS" + name);
@@ -63,11 +64,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
         // add turnout
         makeTurnout = new MakeNamedBean("LabelEventThrown", "LabelEventClosed") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5143711808149483844L;
-
+            @Override
             void create(String name) {
                 if (memo != null) {
                     ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout("MS" + name);
@@ -83,12 +80,14 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
     TrafficController tc;
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
     }
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " Event Capture Tool");
@@ -100,6 +99,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     MakeNamedBean makeSensor;
     MakeNamedBean makeTurnout;
 
+    @Override
     public void reply(jmri.jmrix.can.CanReply m) {
         // forward to anybody waiting to capture
         makeSensor.reply(m);
@@ -112,6 +112,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
     }
 
+    @Override
     public void message(jmri.jmrix.can.CanMessage m) {
         // forward to anybody waiting to capture
         makeSensor.message(m);
@@ -124,6 +125,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
     }
 
+    @Override
     public void dispose() {
         // disconnect from the CBUS
         tc.removeCanListener(this);
@@ -134,10 +136,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      */
     class MakeNamedBean extends JPanel implements CanListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7057190769757489242L;
         JTextField f1 = new JTextField(20);
         JTextField f2 = new JTextField(20);
 
@@ -150,6 +148,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             // actions
             bc = new JButton(rb.getString("ButtonCreate"));
             bc.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (f2.getText().equals("")) {
                         create(f1.getText());
@@ -204,6 +203,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         void create(String name) {
         }
 
+        @Override
         public void reply(jmri.jmrix.can.CanReply m) {
             if (b1.isSelected()) {
                 f1.setText(CbusMessage.toAddress(m));
@@ -215,6 +215,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             }
         }
 
+        @Override
         public void message(jmri.jmrix.can.CanMessage m) {
             if (b1.isSelected()) {
                 f1.setText(CbusMessage.toAddress(m));
@@ -231,11 +232,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      * Class to handle recording and presenting one event.
      */
     static class CbusEventRecorder extends JPanel implements CanListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7826599461789753830L;
 
         CbusEventRecorder() {
             super();
@@ -255,6 +251,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             return capture.isSelected();
         }
 
+        @Override
         public void reply(jmri.jmrix.can.CanReply m) {
             if (capture.isSelected()) {
                 event.setText(CbusMessage.toAddress(m));
@@ -262,6 +259,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             }
         }
 
+        @Override
         public void message(jmri.jmrix.can.CanMessage m) {
             if (capture.isSelected()) {
                 event.setText(CbusMessage.toAddress(m));

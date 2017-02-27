@@ -37,12 +37,14 @@ public class IndexedPairVarSlider extends JSlider implements ChangeListener {
         addChangeListener(this);
         // listen for changes to associated variable
         _iVar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 originalPropertyChanged(e);
             }
         });
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         // called for new values of a slider - set the variable value as needed
         // e.getSource() points to the JSlider object - find it in the list

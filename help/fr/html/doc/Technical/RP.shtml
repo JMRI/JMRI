@@ -108,7 +108,7 @@ Pour ce faire, changez cette ligne de build.xml:
 Cela vous permet d'&#234;tre attentif aux nouveaux avertissements de d&#233;sapprobation que vous code.
 
 <p>
-Il existe deux formes pour marquer quelque chose comme obsol&#232;te (tag JavaDoc et Annotation),
+Il existe deux formes pour marquer quelque chose comme obsol&#232;te (tag Javadoc et Annotation),
 et tous deux vous permettent d'ajouter des informations suppl&#233;mentaires. Une belle discussion
 des techniques est
 <A href="http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">ici</a>.

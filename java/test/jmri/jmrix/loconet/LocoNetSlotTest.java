@@ -14,6 +14,7 @@ public class LocoNetSlotTest extends TestCase {
     public void testGetSlotSend() {
         SlotManager slotmanager = new SlotManager(lnis);
         SlotListener p2 = new SlotListener() {
+            @Override
             public void notifyChangedSlot(LocoNetSlot l) {
             }
         };
@@ -38,6 +39,7 @@ public class LocoNetSlotTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
@@ -45,6 +47,7 @@ public class LocoNetSlotTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

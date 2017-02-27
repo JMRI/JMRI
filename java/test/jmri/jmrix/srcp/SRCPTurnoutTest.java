@@ -1,9 +1,10 @@
 package jmri.jmrix.srcp;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * SRCPTurnoutTest.java
@@ -11,47 +12,58 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPTurnout class
  *
  * @author	Bob Jacobsen
+ * @author  Paul Bender Copyright (C) 2017
  */
-public class SRCPTurnoutTest extends TestCase {
+public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
-    public void testCtor() {
-        SRCPTrafficController et = new SRCPTrafficController() {
-            @Override
-            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
-                // we aren't actually sending anything to a layout.
-            }
-        };
-        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et, "TEST", 1);
-        memo.setTurnoutManager(new SRCPTurnoutManager(memo, memo.getBus()));
-        SRCPTurnout m = new SRCPTurnout(1, memo);
-        Assert.assertNotNull(m);
+    private SRCPTrafficControlScaffold stc = null;
+
+    @Override
+    public int numListeners() {
+        return stc.numListeners();
     }
 
-    // from here down is testing infrastructure
-    public SRCPTurnoutTest(String s) {
-        super(s);
+    @Override
+    public void checkThrownMsgSent() {
+       Assert.assertTrue("message sent", stc.outbound.size()>0);
+       Assert.assertEquals("content", "SET 1 GA 1 0 1 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    public void checkClosedMsgSent() {
+       Assert.assertTrue("message sent", stc.outbound.size()>0);
+       Assert.assertEquals("content", "SET 1 GA 1 0 0 -1\n", stc.outbound.elementAt(stc.outbound.size()-1).toString());  // THROWN message
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPTurnoutTest.class);
-        return suite;
+    @Test
+    public void testGetNumber(){
+        Assert.assertEquals("Number",1,((SRCPTurnout) t).getNumber());
     }
+
+    @Override
+    @Test
+    public void testDispose() {
+        t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
+        //is deferred to after first use
+        t.dispose();
+        Assert.assertEquals("controller listeners remaining", 1, numListeners());
+    }
+
 
     // The minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() {
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        stc = new SRCPTrafficControlScaffold();
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(stc, "TEST", 1);
+        memo.setTurnoutManager(new SRCPTurnoutManager(memo, memo.getBus()));
+        t = new SRCPTurnout(1, memo);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 }

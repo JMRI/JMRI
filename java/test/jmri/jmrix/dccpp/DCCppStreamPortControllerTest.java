@@ -4,62 +4,49 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+import jmri.util.JUnitUtil;
 
 /**
  * DCCppStreamPortControllerTest.java
  *
  * Description:	tests for the jmri.jmrix.dccpp.DCCppStreamPortController class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppStreamPortControllerTest extends TestCase {
+public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
+    @Test
     public void testCtor() {
+       Assert.assertNotNull("exists", apc);
+    }
 
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
             DataOutputStream ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
             tempPipe = new PipedInputStream();
             DataInputStream istream = new DataInputStream(tempPipe);
-            DCCppStreamPortController xspc = new DCCppStreamPortController(istream, ostream, "Test");
-            Assert.assertNotNull("exists", xspc);
+            apc = new DCCppStreamPortController(istream, ostream, "Test");
         } catch (java.io.IOException ioe) {
             Assert.fail("IOException creating stream");
         }
-
     }
 
-    // from here down is testing infrastructure
-    public DCCppStreamPortControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppStreamPortControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppStreamPortControllerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
-    }
-
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @Override
+    @After 
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

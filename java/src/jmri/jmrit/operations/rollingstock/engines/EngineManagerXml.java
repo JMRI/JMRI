@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -24,15 +25,15 @@ public class EngineManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
      */
-    private static EngineManagerXml _instance = null;
-
     public static synchronized EngineManagerXml instance() {
+        EngineManagerXml _instance = jmri.InstanceManager.getNullableDefault(EngineManagerXml.class);
         if (_instance == null) {
             log.debug("EngineManagerXml creating instance");
             // create and load
             _instance = new EngineManagerXml();
+            jmri.InstanceManager.setDefault(EngineManagerXml.class,_instance);
             _instance.load();
         }
         if (Control.SHOW_INSTANCE) {
@@ -114,10 +115,7 @@ public class EngineManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
     public void dispose() {
-        _instance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());

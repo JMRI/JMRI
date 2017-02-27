@@ -1,4 +1,3 @@
-// SpecificLightManagerXml.java
 package jmri.jmrix.powerline.cm11.configurexml;
 
 /**

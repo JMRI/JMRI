@@ -18,11 +18,14 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     }
 
     // returns the InputStream from the port
+    @Override
     public abstract DataInputStream getInputStream();
 
     // returns the outputStream to the port
+    @Override
     public abstract DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
+    @Override
     public abstract boolean status();
 }
