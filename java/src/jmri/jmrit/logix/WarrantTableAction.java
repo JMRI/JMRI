@@ -275,7 +275,7 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
 
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = NXFrame.getInstance();
         if (nxFrame.isVisible()) {
             nxFrame.mouseClickedOnBlock(block);
             return;

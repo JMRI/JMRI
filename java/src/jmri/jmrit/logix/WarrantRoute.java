@@ -207,6 +207,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_train == null) {
             if (name == null || name.trim().length() == 0) {
                 _trainId = null;
+                setTrainName(null);
+                setAddress(null);
                 return Bundle.getMessage("NoLoco");
             }
             int index = name.indexOf('(');
