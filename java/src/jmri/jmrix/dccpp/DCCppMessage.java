@@ -1169,11 +1169,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public String getProgValueString() {
-        int idx = 4;
+        int idx = 2;
         if (this.isProgWriteByteMessage()) {
-            idx = 4;
+            idx = 2;
         } else if (this.isProgWriteBitMessage()) {
-            idx = 5;
+            idx = 3;
         } else {
             return("0");
         }
@@ -1181,11 +1181,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public int getProgValueInt() {
-        int idx = 4;
+        int idx = 2;
         if (this.isProgWriteByteMessage()) {
-            idx = 4;
+            idx = 2;
         } else if (this.isProgWriteBitMessage()) {
-            idx = 5;
+            idx = 3;
         } else {
             return(0);
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.7.1ish-201702191610-jake-Re6f936e on Sun Feb 19 08:11:15 PST 2017 $Id$-->
-  <decoderIndex version="800">
+  <!--Written by JMRI version 4.7.2ish-201702262104-heap-Rc699363 on Mon Feb 27 08:04:49 AEDT 2017 $Id$-->
+  <decoderIndex version="802">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -6646,7 +6646,7 @@
             <functionlabel num="7" lockable="true">LEDs 10-11</functionlabel>
           </functionlabels>
         </model>
-        <model model="Scale Trains Tender Light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777345">
+        <model model="Scale Trains Tender Light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" lowVersionID="208" highVersionID="208" productID="16777345">
           <output name="1" label="Front|Light" maxcurrent="20 mA" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" maxcurrent="100 mA" />
