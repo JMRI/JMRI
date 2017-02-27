@@ -361,8 +361,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // Option menu items
     private JCheckBoxMenuItem editModeItem = null;
 
-    //private JRadioButtonMenuItem toolBarSideTopButton = null;
-
     private JRadioButtonMenuItem toolBarSideTopButton = null;
     private JRadioButtonMenuItem toolBarSideLeftButton = null;
     private JRadioButtonMenuItem toolBarSideBottomButton = null;
@@ -7779,14 +7777,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // nothing entered, try autoAssign
             if (autoAssignBlocks) {
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
-            } else {
-            	// No name supplied and auto not enabled, give up.
-            	return null;
             }
         } else {
             // check if this Layout Block already exists
             result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockName);
-            if (result == null) {
+            if (result == null) {   // (no)
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, blockName);
             }
         }
@@ -7804,13 +7799,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 				result = newBlk;
             } else {
                 log.error("Failure to create LayoutBlock '{}'.", blockName);
-                return null;
             }
         }
-		// set both new and previously existing block
-		result.addLayoutEditor(this);
-		result.incrementUse();
-		setDirty(true);
+        if (null != result) {
+            // set both new and previously existing block
+            result.addLayoutEditor(this);
+            result.incrementUse();
+            setDirty(true);
+        }
         return result;
     }
 
@@ -7821,18 +7817,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * nothing to the block.
      */
     public boolean validateSensor(String sensorName, LayoutBlock blk, Component openFrame) {
+        boolean result = false; // assume failure (pessimist!)
+
         // check if anything entered
-        if (sensorName.length() < 1) {
-            // no sensor entered
-            return false;
+        if (sensorName.length() > 0) {
+            // get a validated sensor corresponding to this name and assigned to block
+            Sensor s = blk.validateSensor(sensorName, openFrame);
+            result = (null != s);   // if sensor returned result is true.
         }
-        // get a validated sensor corresponding to this name and assigned to block
-        Sensor s = blk.validateSensor(sensorName, openFrame);
-        if (s == null) {
-            // There is no sensor corresponding to this name
-            return false;
-        }
-        return true;
+        return result;
     }
 
     /**
@@ -9274,8 +9267,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (helpBarPanel != null) {
                 helpBarPanel.setVisible(isEditable() && showHelpBar);
             }
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar);
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar);
+            });
         }
     }
 
@@ -9308,8 +9302,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (antialiasingOnItem != null) {
                 antialiasingOnItem.setSelected(antialiasingOn);
             }
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn);
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn);
+            });
         }
     }
 
