@@ -941,11 +941,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         // X=0 to X=25 25/2 * 3 = 38 mSec
         // Y=0 to Y=25 25/2 * 3 = 38 mSec
         // need to wait for icon to finish moving
-        for (int i = 0; i < 200; i++) {
-            if (ti2.getX() == 25 && ti2.getY() == 25) {
-                break;
-            }
-        }
+        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 25 && ti2.getY() == 25),"Train 2 Move 0");
 
         Assert.assertEquals("Train 1 icon X", 25, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
@@ -957,11 +953,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
         // icon uses TrainIconAnimation 2 pixels every 3 mSec
         // need to wait for icon to finish moving
-        for (int i = 0; i < 200; i++) {
-            if (ti1.getX() == 75 && ti1.getY() == 25) {
-                break;
-            }
-        }
+        jmri.util.JUnitUtil.waitFor(() -> (ti1.getX() == 75 && ti1.getY() == 25),"Train 1 Move");
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
@@ -972,11 +964,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         train2.move();
 
         // need to wait for icon to finish moving
-        for (int i = 0; i < 200; i++) {
-            if (ti2.getX() == 75 && ti2.getY() == 25) {
-                break;
-            }
-        }
+        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 75 && ti2.getY() == 25),"Train 2 Move");
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
@@ -986,11 +974,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         train2.move();
 
         // need to wait for icon to finish moving
-        for (int i = 0; i < 200; i++) {
-            if (ti2.getX() == 125 && ti2.getY() == 35) {
-                break;
-            }
-        }
+        jmri.util.JUnitUtil.waitFor(() -> (ti2.getX() == 125 && ti2.getY() == 35),"Train 2 Move 2");
 
         Assert.assertEquals("Train 1 icon X", 75, ti1.getX());
         Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());

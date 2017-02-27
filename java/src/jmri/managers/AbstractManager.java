@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -23,6 +24,10 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
+ * <P>
+ * It does include, with AbstractNamedBean, the implementation of the 
+ * normalized user name.  
+ * @see jmri.NamedBean#normalizeUserName
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
@@ -32,16 +37,12 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
         registerSelf();
     }
 
-    /*public AbstractManager(int order) {
-     // register the result for later configuration
-     xmlorder = order;
-     registerSelf();
-     }*/
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
      *
      */
+    @OverridingMethodsMustInvokeSuper
     protected void registerSelf() {
         log.debug("registerSelf for config of type {}", getClass());
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -60,6 +61,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     }
 
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void dispose() {
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
@@ -95,7 +97,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @return requested Turnout object or null if none exists
      */
     protected Object getInstanceByUserName(String userName) {
-        return _tuser.get(userName);
+        return _tuser.get(NamedBean.normalizeUserName(userName));
     }
 
     /**
@@ -119,7 +121,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      */
     @Override
     public NamedBean getBeanByUserName(String userName) {
-        return _tuser.get(userName);
+        return _tuser.get(NamedBean.normalizeUserName(userName));
     }
 
     /**
@@ -131,7 +133,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      */
     @Override
     public NamedBean getNamedBean(String name) {
-        NamedBean b = getBeanByUserName(name);
+        NamedBean b = getBeanByUserName(NamedBean.normalizeUserName(name));
         if (b != null) {
             return b;
         }
@@ -152,6 +154,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      *                               be aborted.
      */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void deleteBean(@Nonnull NamedBean bean, @Nonnull String property) throws PropertyVetoException {
         try {
             fireVetoableChange(property, bean, null);
@@ -172,11 +175,19 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @param s the bean to register
      */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void register(NamedBean s) {
         String systemName = s.getSystemName();
         _tsys.put(systemName, s);
         String userName = s.getUserName();
+        
         if (userName != null) {
+            // enforce uniqueness of user names
+            // by setting username to null in any existing bean with the same name
+            // Note that this is not a "move" operation for the user name
+            if (_tuser.get(userName)!=null && _tuser.get(userName)!=s ) _tuser.get(userName).setUserName(null);
+            
+            // store the new bean under the name
             _tuser.put(userName, s);
         }
         firePropertyChange("length", null, _tsys.size());
@@ -192,6 +203,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @param s the bean to forget
      */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void deregister(NamedBean s) {
         s.removePropertyChangeListener(this);
         String systemName = s.getSystemName();
@@ -213,16 +225,23 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @param e the event
      */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
-            String old = (String) e.getOldValue();  // OldValue is actually system name
-            String now = (String) e.getNewValue();
+            String old = (String) e.getOldValue();  // previous user name
+            String now = (String) e.getNewValue();  // current user name
             NamedBean t = (NamedBean) e.getSource();
             if (old != null) {
-                _tuser.remove(old);
+                _tuser.remove(old); // remove old name for this bean
             }
             if (now != null) {
-                _tuser.put(now, t);
+                // was there previously a bean with the new name?
+                if (_tuser.get(now) != null) {
+                    // If so, clear. Note that this is not a "move" operation
+                    _tuser.get(now).setUserName(null);
+                }
+                
+                _tuser.put(now, t); // put new name for this bean
             }
 
             //called DisplayListName, as DisplayName might get used at some point by a NamedBean
@@ -271,15 +290,18 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
+    @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }
@@ -287,11 +309,13 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     VetoableChangeSupport vcs = new VetoableChangeSupport(this);
 
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void addVetoableChangeListener(VetoableChangeListener l) {
         vcs.addVetoableChangeListener(l);
     }
 
     @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void removeVetoableChangeListener(VetoableChangeListener l) {
         vcs.removeVetoableChangeListener(l);
     }
@@ -313,6 +337,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @throws PropertyVetoException - if the recipients wishes the delete to be
      *                               aborted.
      */
+    @OverridingMethodsMustInvokeSuper
     protected void fireVetoableChange(String p, Object old, Object n) throws PropertyVetoException {
         PropertyChangeEvent evt = new PropertyChangeEvent(this, p, old, n);
         if (p.equals("CanDelete")) { //IN18N
@@ -340,6 +365,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     }
 
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
 
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N

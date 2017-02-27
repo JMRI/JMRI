@@ -209,7 +209,7 @@ abstract class BeanEditAction extends AbstractAction {
             return;
         }
         if (f == null) {
-            f = new JmriJFrame("Edit " + getBeanType() + " " + bean.getDisplayName(), false, false);
+            f = new JmriJFrame(Bundle.getMessage("EditBean", getBeanType(), bean.getDisplayName()), false, false);
             f.addHelpMenu(helpTarget(), true);
             java.awt.Container containerPanel = f.getContentPane();
             initPanelsFirst();
