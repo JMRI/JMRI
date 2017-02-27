@@ -215,7 +215,7 @@ and paste that line to execute it. <a name="pull" id="pull"></a>
                 and publishing JMRI.  This change is to that infrastructure, not the 
                 released JMRI code itself.
             <li>"Cleanup" - a change that improves the code, but doesn't really affect JMRI users directly
-            <li>"! Support" - "Not support" or "no support"
+            <li>"! Support" - A support request. The "!" is to move it to the top of alphabetic lists.
           </ul>
         
         
