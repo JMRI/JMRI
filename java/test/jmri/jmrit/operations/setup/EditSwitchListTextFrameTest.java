@@ -17,12 +17,25 @@ import java.awt.GraphicsEnvironment;
 public class EditSwitchListTextFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditSwitchListTextFrame t = new EditSwitchListTextFrame();
         Assert.assertNotNull("exists",t);
     }
+
+    @Test
+    public void testEditSwitchListTextFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EditSwitchListTextFrame f = new EditSwitchListTextFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+
+        // TODO do more testing
+
+        // done
+        f.dispose();
+    }
+
 
     // The minimal setup for log4J
     @Before

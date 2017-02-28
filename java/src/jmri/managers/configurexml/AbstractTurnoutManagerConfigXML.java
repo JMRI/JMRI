@@ -223,6 +223,9 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 break;
             }
             String userName = getUserName(elem);
+
+            checkNameNormalization(sysName, userName, tm);
+
             if (log.isDebugEnabled()) {
                 log.debug("create turnout: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
             }

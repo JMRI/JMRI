@@ -135,6 +135,8 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
             String userName = getUserName(memoryList.get(i));
 
+            checkNameNormalization(sysName, userName, tm);
+
             if (log.isDebugEnabled()) {
                 log.debug("create Memory: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
             }

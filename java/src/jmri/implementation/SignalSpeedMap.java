@@ -41,7 +41,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
     private float _stepIncrement = 0.04f;       // ramp step throttle increment
     private float _throttleFactor = 0.75f;
-    private float _scale;
+    private float _scale = 87.1f;
 
     static public final int PERCENT_NORMAL = 1;
     static public final int PERCENT_THROTTLE = 2;
