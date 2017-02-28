@@ -1395,6 +1395,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 hTop5Left.add(textMemoryComboBox);
                 hTop5Left.add(blockContentsButton);
                 hTop5Left.add(blockContentsComboBox);
+                hTop5Left.add(Box.createHorizontalGlue());
+                editToolBarPanel.add(hTop5Left);
             }
 
             // Row 6
