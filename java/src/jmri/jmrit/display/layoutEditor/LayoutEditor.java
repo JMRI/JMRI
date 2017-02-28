@@ -181,16 +181,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton layoutSingleSlipButton = new JRadioButton(rb.getString("LayoutSingleSlip"));
     private JRadioButton layoutDoubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
 
+	// Default flow layout definiitons for JPanels
+	private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);  // 5 pixel gap between items, no vertical gap
+	private FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);  // 5 pixel gap between items, no vertical gap
+	private FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);  // 5 pixel gap between items, no vertical gap
+
     // top row of check boxes
     private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
 
-    private JPanel turnoutNamePanel = new JPanel();
-    private JPanel extraTurnoutPanel = new JPanel();
+    private JPanel turnoutNamePanel = new JPanel(leftRowLayout);
+    private JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
     private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
     private JComboBox<String> rotationComboBox = null;
-    private JPanel rotationPanel = new JPanel();
+    private JPanel rotationPanel = new JPanel(leftRowLayout);
 
     // 2nd row of radio buttons
     private JLabel trackLabel = new JLabel();
@@ -198,7 +203,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton trackButton = new JRadioButton(rb.getString("TrackSegment"));
 
     // 2nd row of check boxes
-    private JPanel trackSegmentPropertiesPanel = new JPanel();
+    private JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
     private JCheckBox mainlineTrack = new JCheckBox(rb.getString("MainlineBox"));
     private JCheckBox dashedLine = new JCheckBox(rb.getString("Dashed"));
 
@@ -219,7 +224,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private JLabel labelsLabel = new JLabel();
     private JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
-    private JTextField textLabelTextField = new JTextField(8);
+    private JTextField textLabelTextField = new JTextField(12);
 
     private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
     private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
@@ -753,11 +758,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         layoutSingleSlipButton.setToolTipText(rb.getString("SingleSlipToolTip"));
         layoutDoubleSlipButton.setToolTipText(rb.getString("DoubleSlipToolTip"));
 
-		// Change the row 1 sub-panels from flow mode to box mode
-		turnoutNamePanel.setLayout(new BoxLayout(turnoutNamePanel, BoxLayout.LINE_AXIS));
-		extraTurnoutPanel.setLayout(new BoxLayout(extraTurnoutPanel, BoxLayout.LINE_AXIS));
-		rotationPanel.setLayout(new BoxLayout(rotationPanel, BoxLayout.LINE_AXIS));
-
         String turnoutNameString = Bundle.getMessage("Name");
         JLabel turnoutNameLabel = new JLabel(turnoutNameString);
         turnoutNamePanel.add(turnoutNameLabel);
@@ -785,11 +785,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JLabel rotationLabel = new JLabel(rb.getString("Rotation"));
         rotationPanel.add(rotationLabel);
         rotationPanel.add(rotationComboBox);
-
-		// Change the row 2 sub-panels from flow mode to box mode
-		trackSegmentPropertiesPanel.setLayout(new BoxLayout(trackSegmentPropertiesPanel, BoxLayout.LINE_AXIS));
-		zoomPanel.setLayout(new BoxLayout(zoomPanel, BoxLayout.LINE_AXIS));
-		locationPanel.setLayout(new BoxLayout(locationPanel, BoxLayout.LINE_AXIS));
 
         zoomPanel.add(new JLabel(rb.getString("ZoomLabel") + ":"));
         zoomPanel.add(zoomLabel);
@@ -857,7 +852,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         edgeButton.setToolTipText(rb.getString("EdgeConnectorToolTip"));
         textLabelButton.setToolTipText(rb.getString("TextLabelToolTip"));
 
-        textLabelTextField.setMinimumSize(new Dimension(48, 22));
         textLabelTextField.setToolTipText(rb.getString("TextToolTip"));
         textLabelTextField.setEnabled(false);
 
@@ -1125,68 +1119,61 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 
         if (toolBarIsVertical) {
-            JPanel vTop1TitlePanel = new JPanel();
-            vTop1TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ":");
+			FlowLayout verticalTitleLayout = new FlowLayout(FlowLayout.CENTER, 5, 5);  // 5 pixel gap between items, 5 vertical gap
+			FlowLayout verticalContentLayout = new FlowLayout(FlowLayout.LEFT, 5, 2);  // 5 pixel gap between items, 2 vertical gap
+
+            JPanel vTop1TitlePanel = new JPanel(verticalTitleLayout);
+            turnoutLabel = new JLabel("-- " + Bundle.getMessage("BeanNameTurnout") + " --");
             vTop1TitlePanel.add(turnoutLabel);
             vTop1TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1TitlePanel.getPreferredSize().height));
             editToolBarPanel.add(vTop1TitlePanel);
 
-            JPanel vTop1Panel = new JPanel();
-            vTop1Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop1Panel = new JPanel(verticalContentLayout);
             vTop1Panel.add(turnoutLHButton);
             vTop1Panel.add(turnoutRHButton);
             vTop1Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop1Panel);
 
-            JPanel vTop2Panel = new JPanel();
-            vTop2Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop2Panel = new JPanel(verticalContentLayout);
             vTop2Panel.add(turnoutWYEButton);
             vTop2Panel.add(doubleXoverButton);
             vTop2Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop2Panel.getPreferredSize().height * 2));
             editToolBarPanel.add(vTop2Panel);
 
-            JPanel vTop3Panel = new JPanel();
-            vTop3Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop3Panel = new JPanel(verticalContentLayout);
             vTop3Panel.add(lhXoverButton);
             vTop3Panel.add(rhXoverButton);
             vTop3Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop3Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop3Panel);
 
-            JPanel vTop4Panel = new JPanel();
-            vTop4Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop4Panel = new JPanel(verticalContentLayout);
             vTop4Panel.add(layoutSingleSlipButton);
             vTop4Panel.add(layoutDoubleSlipButton);
             vTop4Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop4Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop4Panel);
 
-            JPanel vTop5Panel = new JPanel();
-            vTop5Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop5Panel = new JPanel(verticalContentLayout);
             vTop5Panel.add(turnoutNamePanel);
             vTop5Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop5Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop5Panel);
 
-            JPanel vTop6Panel = new JPanel();
-            vTop6Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop6Panel = new JPanel(verticalContentLayout);
             vTop6Panel.add(extraTurnoutPanel);
             vTop6Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop6Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop6Panel);
 
-            JPanel vTop7Panel = new JPanel();
-            vTop7Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop7Panel = new JPanel(verticalContentLayout);
             vTop7Panel.add(rotationPanel);
             vTop7Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop7Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop7Panel);
 
-            JPanel vTop8TitlePanel = new JPanel();
-            vTop8TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            trackLabel = new JLabel(rb.getString("Track") + ":");
+            JPanel vTop8TitlePanel = new JPanel(verticalTitleLayout);
+            trackLabel = new JLabel("-- " + rb.getString("Track") + " --");
             vTop8TitlePanel.add(trackLabel);
             vTop8TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8TitlePanel.getPreferredSize().height));
             editToolBarPanel.add(vTop8TitlePanel);
 
-            JPanel vTop8Panel = new JPanel();
-            vTop8Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop8Panel = new JPanel(verticalContentLayout);
             vTop8Panel.add(levelXingButton);
             vTop8Panel.add(trackButton);
             vTop8Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8Panel.getPreferredSize().height));
@@ -1197,16 +1184,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 trackSegmentPropertiesPanel.getPreferredSize().height));
             editToolBarPanel.add(trackSegmentPropertiesPanel);
 
-            JPanel vTop10Panel = new JPanel();
-            vTop10Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop10Panel = new JPanel(verticalContentLayout);
             blockNameLabel = new JLabel(blockNameString);
             vTop10Panel.add(blockNameLabel);
             vTop10Panel.add(blockIDComboBox);
             vTop10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop10Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop10Panel);
 
-            JPanel vTop11Panel = new JPanel();
-            vTop11Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop11Panel = new JPanel(verticalContentLayout);
             blockSensorNameLabel = new JLabel(blockNameString);
             vTop11Panel.add(blockSensorNameLabel);
             vTop11Panel.add(blockSensorLabel);
@@ -1214,87 +1199,81 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             vTop11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop11Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop11Panel);
 
-            JPanel vTop12TitlePanel = new JPanel();
-            vTop12TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            nodesLabel = new JLabel(rb.getString("Nodes") + ":");
+            JPanel vTop12TitlePanel = new JPanel(verticalTitleLayout);
+            nodesLabel = new JLabel("-- " + rb.getString("Nodes") + " --");
             vTop12TitlePanel.add(nodesLabel);
             vTop12TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12TitlePanel.getPreferredSize().height));
             editToolBarPanel.add(vTop12TitlePanel);
 
-            JPanel vTop12Panel = new JPanel();
-            vTop12Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop12Panel.add(anchorButton);
+            JPanel vTop12Panel = new JPanel(verticalContentLayout);
             vTop12Panel.add(endBumperButton);
+            vTop12Panel.add(anchorButton);
             vTop12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop12Panel);
 
-            JPanel vTop13Panel = new JPanel();
-            vTop13Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop13Panel = new JPanel(verticalContentLayout);
             vTop13Panel.add(edgeButton);
             vTop13Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop13Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop13Panel);
 
-            JPanel vTop14TitlePanel = new JPanel();
-            vTop14TitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            labelsLabel = new JLabel(rb.getString("Labels") + ":");
+            JPanel vTop14TitlePanel = new JPanel(verticalTitleLayout);
+            labelsLabel = new JLabel("-- " + rb.getString("Labels") + " --");
             vTop14TitlePanel.add(labelsLabel);
             vTop14TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14TitlePanel.getPreferredSize().height));
             editToolBarPanel.add(vTop14TitlePanel);
 
-            JPanel vTop14Panel = new JPanel();
-            vTop14Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop14Panel = new JPanel(verticalContentLayout);
             vTop14Panel.add(textLabelButton);
             vTop14Panel.add(textLabelTextField);
             vTop14Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop14Panel);
 
-            JPanel vTop15Panel = new JPanel();
-            vTop15Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop15Panel = new JPanel(verticalContentLayout);
             vTop15Panel.add(memoryButton);
             vTop15Panel.add(textMemoryComboBox);
             vTop15Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop15Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop15Panel);
 
-            JPanel vTop16Panel = new JPanel();
-            vTop16Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            JPanel vTop16Panel = new JPanel(verticalContentLayout);
             vTop16Panel.add(blockContentsButton);
             vTop16Panel.add(blockContentsComboBox);
             vTop16Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop16Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop16Panel);
 
-            JPanel vTop17Panel = new JPanel();
-            vTop17Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop17Panel.add(multiSensorButton);
-            vTop17Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop17Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop17Panel);
+            JPanel vTop17TitlePanel = new JPanel(verticalTitleLayout);
+            labelsLabel = new JLabel("-- " + rb.getString("IconsTitle") + " --");
+            vTop17TitlePanel.add(labelsLabel);
+            vTop17TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop17TitlePanel.getPreferredSize().height));
+            editToolBarPanel.add(vTop17TitlePanel);
 
-            JPanel vTop18Panel = new JPanel();
-            vTop18Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop18Panel.add(signalMastButton);
-            vTop18Panel.add(signalMastComboBox);
+            JPanel vTop18Panel = new JPanel(verticalContentLayout);
+            vTop18Panel.add(multiSensorButton);
+            vTop18Panel.add(changeIconsButton);
             vTop18Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop18Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop18Panel);
 
-            JPanel vTop19Panel = new JPanel();
-            vTop19Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop19Panel.add(sensorButton);
-            vTop19Panel.add(sensorComboBox);
-            vTop19Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop19Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop19Panel);
-
-            JPanel vTop20Panel = new JPanel();
-            vTop20Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop20Panel.add(signalButton);
-            vTop20Panel.add(signalHeadComboBox);
+            JPanel vTop20Panel = new JPanel(verticalContentLayout);
+            vTop20Panel.add(sensorButton);
+            vTop20Panel.add(sensorComboBox);
             vTop20Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop20Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop20Panel);
 
-            JPanel vTop21Panel = new JPanel();
-            vTop21Panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            vTop21Panel.add(iconLabelButton);
-            vTop21Panel.add(changeIconsButton);
+            JPanel vTop19Panel = new JPanel(verticalContentLayout);
+            vTop19Panel.add(signalMastButton);
+            vTop19Panel.add(signalMastComboBox);
+            vTop19Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop19Panel.getPreferredSize().height));
+            editToolBarPanel.add(vTop19Panel);
+
+            JPanel vTop21Panel = new JPanel(verticalContentLayout);
+            vTop21Panel.add(signalButton);
+            vTop21Panel.add(signalHeadComboBox);
             vTop21Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop21Panel.getPreferredSize().height));
             editToolBarPanel.add(vTop21Panel);
+
+            JPanel vTop22Panel = new JPanel(verticalContentLayout);
+            vTop22Panel.add(iconLabelButton);
+            vTop22Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop22Panel.getPreferredSize().height));
+            editToolBarPanel.add(vTop22Panel);
 
             editToolBarPanel.add(Box.createVerticalGlue());
 
@@ -1306,116 +1285,112 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, bottomPanel.getPreferredSize().height));
             editToolBarPanel.add(bottomPanel, BorderLayout.SOUTH);
         } else {
-            // first row buttons
+            // Row 1
             JPanel hTop1Panel = new JPanel();
             hTop1Panel.setLayout(new BoxLayout(hTop1Panel, BoxLayout.LINE_AXIS));
-            turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ": ");
-            hTop1Panel.add(turnoutLabel);
-            hTop1Panel.add(turnoutRHButton);
-            hTop1Panel.add(turnoutLHButton);
-            hTop1Panel.add(turnoutWYEButton);
-            hTop1Panel.add(doubleXoverButton);
-            hTop1Panel.add(rhXoverButton);
-            hTop1Panel.add(lhXoverButton);
-            hTop1Panel.add(layoutSingleSlipButton);
-            hTop1Panel.add(layoutDoubleSlipButton);
-            hTop1Panel.add(Box.createHorizontalGlue());
 
-            // first row properties
-            JPanel turnoutPropertiesPanel = new JPanel();
-			turnoutPropertiesPanel.setLayout(new BoxLayout(turnoutPropertiesPanel, BoxLayout.LINE_AXIS));
-            //turnoutPropertiesPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-            turnoutPropertiesPanel.add(turnoutNamePanel);
-            turnoutPropertiesPanel.add(extraTurnoutPanel);
-            turnoutPropertiesPanel.add(rotationPanel);
-            if (wideFlag) { // WIDE
-                hTop1Panel.add(turnoutPropertiesPanel);
-                editToolBarPanel.add(hTop1Panel);
-            } else {
-                editToolBarPanel.add(hTop1Panel);
+            // Row 1 : Left Components
+            JPanel hTop1Left = new JPanel(leftRowLayout);
+            turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ":  ");
+            hTop1Left.add(turnoutLabel);
+            hTop1Left.add(turnoutRHButton);
+            hTop1Left.add(turnoutLHButton);
+            hTop1Left.add(turnoutWYEButton);
+            hTop1Left.add(doubleXoverButton);
+            hTop1Left.add(rhXoverButton);
+            hTop1Left.add(lhXoverButton);
+            hTop1Left.add(layoutSingleSlipButton);
+            hTop1Left.add(layoutDoubleSlipButton);
+            hTop1Left.add(turnoutNamePanel);
+            hTop1Left.add(extraTurnoutPanel);
+            hTop1Left.add(rotationPanel);
 
-                //turnoutPropertiesPanel.add(Box.createHorizontalGlue());
-                turnoutPropertiesPanel.setMaximumSize(turnoutPropertiesPanel.getPreferredSize());
+            hTop1Panel.add(hTop1Left);
+			editToolBarPanel.add(hTop1Panel);
 
-                JPanel hTop1pPanel = new JPanel();
-                hTop1pPanel.setLayout(new BoxLayout(hTop1pPanel, BoxLayout.LINE_AXIS));
-                hTop1pPanel.add(turnoutPropertiesPanel);
-
-                JPanel panelPropertiesPanel = new JPanel();
-                panelPropertiesPanel.add(Box.createHorizontalGlue());
-                panelPropertiesPanel.add(zoomPanel);
-                panelPropertiesPanel.add(locationPanel);
-
-                hTop1pPanel.add(panelPropertiesPanel);
-
-                editToolBarPanel.add(hTop1pPanel);
-            }
-
-            // second row buttons
+            // Row 2
             JPanel hTop2Panel = new JPanel();
             hTop2Panel.setLayout(new BoxLayout(hTop2Panel, BoxLayout.LINE_AXIS));
+
+            // Row 2 : Left Components
+            JPanel hTop2Left = new JPanel(leftRowLayout);
             trackLabel = new JLabel(rb.getString("Track") + ":  ");
-            hTop2Panel.add(trackLabel);
-            hTop2Panel.add(levelXingButton);
-            hTop2Panel.add(trackButton);
+            hTop2Left.add(trackLabel);
+            hTop2Left.add(levelXingButton);
+            hTop2Left.add(trackButton);
+            hTop2Left.add(trackSegmentPropertiesPanel);
 
-            // second row properties
-            hTop2Panel.add(trackSegmentPropertiesPanel);
+            hTop2Panel.add(hTop2Left);
+			hTop2Panel.add(Box.createHorizontalGlue());
 
-            JPanel blockPropertiesPanel = new JPanel();
-            blockPropertiesPanel.setLayout(new BoxLayout(blockPropertiesPanel, BoxLayout.LINE_AXIS));
-            blockNameLabel = new JLabel("    " + blockNameString);
-            blockPropertiesPanel.add(blockNameLabel);
-            blockPropertiesPanel.add(blockIDComboBox);
-            blockPropertiesPanel.add(blockSensorLabel);
-            blockPropertiesPanel.add(blockSensorComboBox);
-            hTop2Panel.add(blockPropertiesPanel);
+            // Row 2 : Center Components
+            JPanel hTop2Center = new JPanel(centerRowLayout);
+            blockNameLabel = new JLabel(blockNameString);
+            hTop2Center.add(blockNameLabel);
+            hTop2Center.add(blockIDComboBox);
+            hTop2Center.add(blockSensorLabel);
+            hTop2Center.add(blockSensorComboBox);
 
-            if (wideFlag) { // WIDE
-                hTop2Panel.add(Box.createHorizontalGlue());
-                JPanel panelPropertiesPanel = new JPanel();
-	            panelPropertiesPanel.setLayout(new BoxLayout(panelPropertiesPanel, BoxLayout.LINE_AXIS));
-                panelPropertiesPanel.add(zoomPanel);
-                panelPropertiesPanel.add(locationPanel);
-                hTop2Panel.add(panelPropertiesPanel);
-            }
+            hTop2Panel.add(hTop2Center);
+			hTop2Panel.add(Box.createHorizontalGlue());
 
+            // Row 2 : Right Components
+            JPanel hTop2Right = new JPanel(rightRowLayout);
+			hTop2Right.add(zoomPanel);
+			hTop2Right.add(locationPanel);
+
+            hTop2Panel.add(hTop2Right);
             editToolBarPanel.add(hTop2Panel);
 
+            // Row 3
             JPanel hTop3Panel = new JPanel();
             hTop3Panel.setLayout(new BoxLayout(hTop3Panel, BoxLayout.LINE_AXIS));
-            nodesLabel = new JLabel(rb.getString("Nodes") + ":  ");
 
-            hTop3Panel.add(nodesLabel);
-            hTop3Panel.add(endBumperButton);
-            hTop3Panel.add(anchorButton);
-            hTop3Panel.add(edgeButton);
-            labelsLabel = new JLabel("    " + rb.getString("Labels") + ":  ");
-            hTop3Panel.add(labelsLabel);
-            hTop3Panel.add(Box.createHorizontalGlue());
-            hTop3Panel.add(textLabelButton);
-            hTop3Panel.add(textLabelTextField);
-            hTop3Panel.add(memoryButton);
-            hTop3Panel.add(textMemoryComboBox);
-            hTop3Panel.add(blockContentsButton);
-            hTop3Panel.add(blockContentsComboBox);
+            // Row 3 : Left Components
+            JPanel hTop3Left = new JPanel(leftRowLayout);
+            nodesLabel = new JLabel(rb.getString("Nodes") + ":  ");
+            hTop3Left.add(nodesLabel);
+            hTop3Left.add(endBumperButton);
+            hTop3Left.add(anchorButton);
+            hTop3Left.add(edgeButton);
+
+            hTop3Panel.add(hTop3Left);
+			hTop3Panel.add(Box.createHorizontalGlue());
+
+            // Row 3 : Center Components
+            JPanel hTop3Center = new JPanel(centerRowLayout);
+            labelsLabel = new JLabel(rb.getString("Labels") + ":  ");
+            hTop3Center.add(labelsLabel);
+            hTop3Center.add(textLabelButton);
+            hTop3Center.add(textLabelTextField);
+            hTop3Center.add(memoryButton);
+            hTop3Center.add(textMemoryComboBox);
+            hTop3Center.add(blockContentsButton);
+            hTop3Center.add(blockContentsComboBox);
+
+            hTop3Panel.add(hTop3Center);
+			hTop3Panel.add(Box.createHorizontalGlue());
 
             editToolBarPanel.add(hTop3Panel);
 
+            // Row 4
             JPanel hTop4Panel = new JPanel();
             hTop4Panel.setLayout(new BoxLayout(hTop4Panel, BoxLayout.LINE_AXIS));
-            hTop4Panel.add(multiSensorButton);
-            hTop4Panel.add(changeIconsButton);
-            hTop4Panel.add(sensorButton);
-            hTop4Panel.add(sensorComboBox);
-            hTop4Panel.add(signalMastButton);
-            hTop4Panel.add(signalMastComboBox);
 
-            hTop4Panel.add(signalButton);
-            hTop4Panel.add(signalHeadComboBox);
+            // Row 4 : Left Components
+            JPanel hTop4Left = new JPanel(leftRowLayout);
+            hTop4Left.add(multiSensorButton);
+            hTop4Left.add(changeIconsButton);
+            hTop4Left.add(sensorButton);
+            hTop4Left.add(sensorComboBox);
+            hTop4Left.add(signalMastButton);
+            hTop4Left.add(signalMastComboBox);
+            hTop4Left.add(signalButton);
+            hTop4Left.add(signalHeadComboBox);
+            hTop4Left.add(new JLabel("    "));
+            hTop4Left.add(iconLabelButton);
 
-            hTop4Panel.add(new JLabel("    "));
-            hTop4Panel.add(iconLabelButton);
+            hTop4Panel.add(hTop4Left);
             editToolBarPanel.add(hTop4Panel);
         }
 
@@ -1471,7 +1446,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (toolBarIsVertical) {
             editToolBarContainer.add(helpBarPanel);
         } else {
-            helpBarPanel.add(Box.createHorizontalGlue());
             contentPane.add(helpBarPanel);
         }
 
@@ -7770,27 +7744,27 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * LayoutBlock, and a system name is automatically created by
      * LayoutBlockManager if needed.
      */
-    public LayoutBlock provideLayoutBlock(String blockName) {
-    	//log.info("provideLayoutBlock :: '{}'", blockName);
+    public LayoutBlock provideLayoutBlock(String inBlockName) {
+    	//log.info("provideLayoutBlock :: '{}'", inBlockName);
         LayoutBlock result = null, newBlk = null; // assume failure (pessimist!)
-        if (blockName.length() < 1) {
+        if (inBlockName.length() < 1) {
             // nothing entered, try autoAssign
             if (autoAssignBlocks) {
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
             }
         } else {
             // check if this Layout Block already exists
-            result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockName);
-            if (result == null) {   // (no)
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, blockName);
+            result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(inBlockName);
+            if (null == result) {   // (no)
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, inBlockName);
             }
         }
         // if we didn't find an existing block
-        if (result == null) {
+        if (null == result) {
             // but we created a new one
             if (newBlk != null) {
                 // initialize the new block
-		    	//log.info("provideLayoutBlock :: Init new block {}", blockName);
+		    	//log.info("provideLayoutBlock :: Init new block {}", inBlockName);
                 newBlk.initializeLayoutBlock();
                 newBlk.initializeLayoutBlockRouting();
                 newBlk.setBlockTrackColor(defaultTrackColor);
@@ -7798,7 +7772,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 newBlk.setBlockExtraColor(defaultAlternativeTrackColor);
 				result = newBlk;
             } else {
-                log.error("Failure to create LayoutBlock '{}'.", blockName);
+                log.error("Failure to create LayoutBlock '{}'.", inBlockName);
             }
         }
         if (null != result) {
