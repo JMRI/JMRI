@@ -261,8 +261,14 @@ public interface UserPreferencesManager {
      *
      * @param comboBoxName the combo box name
      * @param lastValue    the value to append
+     * @deprecated since 4.7.2; use
+     * {@link #setComboBoxLastSelection(java.lang.String, java.lang.String)}
+     * instead
      */
-    public void addComboBoxLastSelection(String comboBoxName, String lastValue);
+    @Deprecated
+    public default void addComboBoxLastSelection(String comboBoxName, String lastValue) {
+        this.setComboBoxLastSelection(comboBoxName, lastValue);
+    }
 
     /**
      * The last selected value in a given combo box.
@@ -274,34 +280,15 @@ public interface UserPreferencesManager {
 
     /**
      * Set the last selected value in a given combo box.
+     * <p>
+     * The name is free-form, but to avoid ambiguity it should start with the
+     * package name (package.Class) for the primary using class, followed by an
+     * identifier for the combo box.
      *
      * @param comboBoxName the combo box name
      * @param lastValue    the selected value
      */
     public void setComboBoxLastSelection(String comboBoxName, String lastValue);
-
-    /**
-     * The number of combo box options saved.
-     *
-     * @return the number of saved options
-     */
-    public int getComboBoxSelectionSize();
-
-    /**
-     * Get the combo box name at position n.
-     *
-     * @param n the position
-     * @return the name
-     */
-    public String getComboBoxName(int n);
-
-    /**
-     * Get the selection of the combo box at position n.
-     *
-     * @param n the position
-     * @return the selected value
-     */
-    public String getComboBoxLastSelection(int n);
 
     public Dimension getScreen();
 

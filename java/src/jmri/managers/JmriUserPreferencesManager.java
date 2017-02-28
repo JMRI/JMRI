@@ -92,7 +92,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private ArrayList<String> simplePreferenceList = new ArrayList<>();
     //sessionList is used for messages to be suppressed for the current JMRI session only
     private ArrayList<String> sessionPreferenceList = new ArrayList<>();
-    private ArrayList<ComboBoxLastSelection> _comboBoxLastSelection = new ArrayList<>();
+    protected final HashMap<String, String> comboBoxLastSelection = new HashMap<>();
     private final HashMap<String, WindowLocations> windowDetails = new HashMap<>();
     private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
     private File file;
@@ -402,57 +402,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
-    public void addComboBoxLastSelection(String comboBoxName, String lastValue) {
-        if (getComboBoxLastSelection(comboBoxName) == null) {
-            ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
-            _comboBoxLastSelection.add(combo);
-        } else {
-            setComboBoxLastSelection(comboBoxName, lastValue);
-        }
-        setChangeMade(false);
-    }
-
-    @Override
     public String getComboBoxLastSelection(String comboBoxName) {
-        for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
-            if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
-                return _comboBoxLastSelection.get(i).getLastValue();
-            }
-        }
-        return null;
+        return this.comboBoxLastSelection.get(comboBoxName);
     }
 
     @Override
     public void setComboBoxLastSelection(String comboBoxName, String lastValue) {
-        for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
-            if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
-                _comboBoxLastSelection.get(i).setLastValue(lastValue);
-            }
-        }
+        comboBoxLastSelection.put(comboBoxName, lastValue);
+        setChangeMade(false);
         this.saveComboBoxLastSelections();
-    }
-
-    @Override
-    public int getComboBoxSelectionSize() {
-        return _comboBoxLastSelection.size();
-    }
-
-    @Override
-    public String getComboBoxName(int n) {
-        try {
-            return _comboBoxLastSelection.get(n).getComboBoxName();
-        } catch (IndexOutOfBoundsException ioob) {
-            return null;
-        }
-    }
-
-    @Override
-    public String getComboBoxLastSelection(int n) {
-        try {
-            return _comboBoxLastSelection.get(n).getLastValue();
-        } catch (IndexOutOfBoundsException ioob) {
-            return null;
-        }
     }
 
     public synchronized boolean getChangeMade() {
@@ -530,7 +488,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (!windowDetails.containsKey(strClass)) {
             windowDetails.put(strClass, new WindowLocations());
         }
-            windowDetails.get(strClass).setSaveSize(b);
+        windowDetails.get(strClass).setSaveSize(b);
         this.saveWindowDetails();
     }
 
@@ -542,7 +500,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (!windowDetails.containsKey(strClass)) {
             windowDetails.put(strClass, new WindowLocations());
         }
-            windowDetails.get(strClass).setSaveLocation(b);
+        windowDetails.get(strClass).setSaveLocation(b);
         this.saveWindowDetails();
     }
 
@@ -1015,20 +973,21 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         Element element = this.readElement(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
         if (element != null) {
             element.getChildren("comboBox").stream().forEach((combo) -> {
-                _comboBoxLastSelection.add(new ComboBoxLastSelection(combo.getAttributeValue("name"), combo.getAttributeValue("lastSelected")));
+                comboBoxLastSelection.put(combo.getAttributeValue("name"), combo.getAttributeValue("lastSelected"));
             });
         }
     }
 
     private void saveComboBoxLastSelections() {
         this.setChangeMade(false);
-        if (this.allowSave && getComboBoxSelectionSize() > 0) {
+        if (this.allowSave && !comboBoxLastSelection.isEmpty()) {
             Element element = new Element(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
             // Do not store blank last entered/selected values
-            _comboBoxLastSelection.stream().filter((cbls) -> (cbls.getLastValue() != null && !cbls.getLastValue().isEmpty())).map((cbls) -> {
+            comboBoxLastSelection.entrySet().stream().
+                    filter((cbls) -> (cbls.getValue() != null && !cbls.getValue().isEmpty())).map((cbls) -> {
                 Element combo = new Element("comboBox");
-                combo.setAttribute("name", cbls.getComboBoxName());
-                combo.setAttribute("lastSelected", cbls.getLastValue());
+                combo.setAttribute("name", cbls.getKey());
+                combo.setAttribute("lastSelected", cbls.getValue());
                 return combo;
             }).forEach((combo) -> {
                 element.addContent(combo);
@@ -1253,30 +1212,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (manager != null) {
             manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
         }
-    }
-
-    protected final static class ComboBoxLastSelection {
-
-        String comboBoxName = null;
-        String lastValue = null;
-
-        ComboBoxLastSelection(String comboBoxName, String lastValue) {
-            this.comboBoxName = comboBoxName;
-            this.lastValue = lastValue;
-        }
-
-        String getLastValue() {
-            return lastValue;
-        }
-
-        void setLastValue(String lastValue) {
-            this.lastValue = lastValue;
-        }
-
-        String getComboBoxName() {
-            return comboBoxName;
-        }
-
     }
 
     /**

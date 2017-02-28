@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -386,18 +387,50 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testAddComboBoxLastSelection() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        m.addComboBoxLastSelection("test1", "value1");
+        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        m.addComboBoxLastSelection("test1", "value2");
+        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        m.addComboBoxLastSelection("test2", "value1");
+        Assert.assertEquals(2, m.getComboBoxLastSelection().size());
     }
 
     @Test
     public void testGetComboBoxLastSelection_String() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        m.setComboBoxLastSelection("test1", "value2");
+        m.setComboBoxLastSelection("test2", "value1");
+        Assert.assertEquals("value2", m.getComboBoxLastSelection("test1"));
+        Assert.assertEquals("value1", m.getComboBoxLastSelection("test2"));
+        Assert.assertNull(m.getComboBoxLastSelection("test3"));
     }
 
     @Test
     public void testSetComboBoxLastSelection() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        m.setComboBoxLastSelection("test1", "value1");
+        Assert.assertEquals("value1", m.getComboBoxLastSelection("test1"));
+        m.setComboBoxLastSelection("test1", "value2");
+        Assert.assertEquals("value2", m.getComboBoxLastSelection("test1"));
+        m.setComboBoxLastSelection("test2", "value1");
+        Assert.assertEquals("value1", m.getComboBoxLastSelection("test2"));
+        Assert.assertNull(m.getComboBoxLastSelection("test3"));
     }
 
     @Test
     public void testGetComboBoxSelectionSize() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertEquals(0, m.getComboBoxLastSelection().size());
+        m.setComboBoxLastSelection("test1", "value1");
+        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        m.setComboBoxLastSelection("test1", "value2");
+        Assert.assertEquals(1, m.getComboBoxLastSelection().size());
+        m.setComboBoxLastSelection("test2", "value1");
+        Assert.assertEquals(2, m.getComboBoxLastSelection().size());
     }
 
     @Test
@@ -679,6 +712,16 @@ public class JmriUserPreferencesManagerTest {
             this.type = type;
             // Uncomment to force failure if wanting to verify that showMessage does not get called.
             //org.slf4j.LoggerFactory.getLogger(TestUserPreferencesManager.class).error("showMessage called.", new Exception());
+        }
+
+        /**
+         * Expose the HashMap of comboBox last selections for testing purposes
+         * (this could also be done using introspection).
+         *
+         * @return the map of combo box last selections
+         */
+        public HashMap<String, String> getComboBoxLastSelection() {
+            return this.comboBoxLastSelection;
         }
     }
 }

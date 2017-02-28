@@ -506,28 +506,33 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      */
     @Override
     public void setComboBoxLastSelection(String comboBoxName, String lastValue) {
-        for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
-            if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
-                _comboBoxLastSelection.get(i).setLastValue(lastValue);
+        if (getComboBoxLastSelection(comboBoxName) == null) {
+            ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
+            _comboBoxLastSelection.add(combo);
+        } else {
+            for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
+                if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
+                    _comboBoxLastSelection.get(i).setLastValue(lastValue);
+                }
             }
         }
         setChangeMade(false);
     }
 
     /**
-     * returns the number of comboBox options saved
-     *
+     * @return the number of comboBox options saved
      */
-    @Override
     public int getComboBoxSelectionSize() {
         return _comboBoxLastSelection.size();
     }
 
     /**
-     * returns the ComboBox Name at position n
+     * Get the combo box name at position n in the array of combo box
+     * selections.
      *
+     * @param n the position in the array
+     * @return the ComboBox Name at position n
      */
-    @Override
     public String getComboBoxName(int n) {
         try {
             return _comboBoxLastSelection.get(n).getComboBoxName();
@@ -537,10 +542,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     /**
-     * returns the ComboBox Value at position n
+     * Get the ComboBox Value at position n in the array of combo box
+     * selections.
      *
+     * @param n the position in the array
+     * @return the ComboBox value at position n
      */
-    @Override
     public String getComboBoxLastSelection(int n) {
         try {
             return _comboBoxLastSelection.get(n).getLastValue();
