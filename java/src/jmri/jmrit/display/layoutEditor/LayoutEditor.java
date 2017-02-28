@@ -1273,7 +1273,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             hTop1Panel.setLayout(new BoxLayout(hTop1Panel, BoxLayout.LINE_AXIS));
 
             // Row 1 : Left Components
-            JPanel hTop1Left = new JPanel(toolBarIsWide ? leftRowLayout : centerRowLayout);
+            //JPanel hTop1Left = new JPanel(toolBarIsWide ? leftRowLayout : centerRowLayout);
+            JPanel hTop1Left = new JPanel(leftRowLayout);
             turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ":  ");
             hTop1Left.add(turnoutLabel);
             hTop1Left.add(turnoutRHButton);
@@ -1401,7 +1402,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             hTop6Panel.setLayout(new BoxLayout(hTop6Panel, BoxLayout.LINE_AXIS));
 
             // Row 6 : Left Components
-            JPanel hTop6Left = new JPanel(centerRowLayout);
+            //JPanel hTop6Left = new JPanel(centerRowLayout);
+            JPanel hTop6Left = new JPanel(leftRowLayout);
             hTop6Left.add(multiSensorButton);
             hTop6Left.add(changeIconsButton);
             hTop6Left.add(sensorButton);
