@@ -524,17 +524,25 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setSaveWindowSize(String strClass, boolean b) {
-        if (windowDetails.containsKey(strClass)) {
-            windowDetails.get(strClass).setSaveSize(b);
+        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+            return;
         }
+        if (!windowDetails.containsKey(strClass)) {
+            windowDetails.put(strClass, new WindowLocations());
+        }
+            windowDetails.get(strClass).setSaveSize(b);
         this.saveWindowDetails();
     }
 
     @Override
     public void setSaveWindowLocation(String strClass, boolean b) {
-        if (windowDetails.containsKey(strClass)) {
-            windowDetails.get(strClass).setSaveLocation(b);
+        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+            return;
         }
+        if (!windowDetails.containsKey(strClass)) {
+            windowDetails.put(strClass, new WindowLocations());
+        }
+            windowDetails.get(strClass).setSaveLocation(b);
         this.saveWindowDetails();
     }
 
@@ -552,7 +560,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setWindowSize(String strClass, Dimension dim) {
-        if (strClass.equals("jmri.util.JmriJFrame")) {
+        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
             return;
         }
         if (!windowDetails.containsKey(strClass)) {

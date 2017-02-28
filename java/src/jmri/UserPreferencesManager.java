@@ -558,8 +558,22 @@ public interface UserPreferencesManager {
 
     public boolean getSaveWindowLocation(String strClass);
 
+    /**
+     * Set if window sizes should be saved for a given class. Method has no
+     * effect if strClass is null or equals {@code jmri.util.JmriJFrame}.
+     *
+     * @param strClass name of the class
+     * @param b        true if window sizes should be saved; false otherwise
+     */
     public void setSaveWindowSize(String strClass, boolean b);
 
+    /**
+     * Set if window locations should be saved for a given class. Method has no
+     * effect if strClass is null or equals {@code jmri.util.JmriJFrame}.
+     *
+     * @param strClass name of the class
+     * @param b        true if window locations should be saved; false otherwise
+     */
     public void setSaveWindowLocation(String strClass, boolean b);
 
     /**

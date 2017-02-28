@@ -454,18 +454,42 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetSaveWindowSize() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertFalse(m.getSaveWindowSize(this.getClass().getName()));
+        m.setSaveWindowSize(this.getClass().getName(), true);
+        Assert.assertTrue(m.getSaveWindowSize(this.getClass().getName()));
+        m.setSaveWindowSize(this.getClass().getName(), false);
+        Assert.assertFalse(m.getSaveWindowSize(this.getClass().getName()));
     }
 
     @Test
     public void testGetSaveWindowLocation() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertFalse(m.getSaveWindowLocation(this.getClass().getName()));
+        m.setSaveWindowLocation(this.getClass().getName(), true);
+        Assert.assertTrue(m.getSaveWindowLocation(this.getClass().getName()));
+        m.setSaveWindowLocation(this.getClass().getName(), false);
+        Assert.assertFalse(m.getSaveWindowLocation(this.getClass().getName()));
     }
 
     @Test
     public void testSetSaveWindowSize() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertFalse(m.getSaveWindowSize(this.getClass().getName()));
+        m.setSaveWindowSize(this.getClass().getName(), true);
+        Assert.assertTrue(m.getSaveWindowSize(this.getClass().getName()));
+        m.setSaveWindowSize(this.getClass().getName(), false);
+        Assert.assertFalse(m.getSaveWindowSize(this.getClass().getName()));
     }
 
     @Test
     public void testSetSaveWindowLocation() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertFalse(m.getSaveWindowLocation(this.getClass().getName()));
+        m.setSaveWindowLocation(this.getClass().getName(), true);
+        Assert.assertTrue(m.getSaveWindowLocation(this.getClass().getName()));
+        m.setSaveWindowLocation(this.getClass().getName(), false);
+        Assert.assertFalse(m.getSaveWindowLocation(this.getClass().getName()));
     }
 
     @Test
