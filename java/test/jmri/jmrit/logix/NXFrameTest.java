@@ -40,7 +40,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = NXFrame.getInstance();
         Assert.assertNotNull("NXFrame", nxFrame);
     }
 
@@ -64,7 +64,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = NXFrame.getInstance();
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame.setThrottleIncrement(0.075f);
@@ -78,7 +78,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // after cancel, try again
-        nxFrame = NXFrame.getDefault();
+        nxFrame = NXFrame.getInstance();
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame._maxSpeedBox.setText("0.30");
@@ -107,7 +107,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, list.get(1)));
         pressButton(pickDia, Bundle.getMessage("ButtonReview"));
 
-        nxFrame.setRampIncrement(0.05f);
+        nxFrame.setThrottleIncrement(0.05f);
         pressButton(pickDia, Bundle.getMessage("ButtonSelect"));
         flushAWT();     //pause for NXFrame to make commands
         

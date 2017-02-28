@@ -2,6 +2,7 @@ package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.NamedBean;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -140,6 +141,38 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
             return elem.getAttribute("systemName").getValue();
         }
         return null;
+    }
+
+    /**
+     * Common service routine to check for and report on
+     * normalization (errors) in the incoming NamedBean's 
+     * name(s)
+     * <p>
+     * If NamedBeam.normalizeUserName changes, this may want to be updated.
+     * <p>
+     * Right now, this just logs. Someday, perhaps it should notify
+     * upward of found issues by e.g. throwing or returning a error object.
+     *
+     * Package-level access to allow testing
+     *
+     * @param rawSystemName The proposed system name string, before normalization
+     * @param rawUserName The proposed user name string, before normalization
+     * @param manager The NamedBeanManager that will be storing this
+     */
+    void checkNameNormalization(@Nonnull String rawSystemName, String rawUserName, @Nonnull jmri.Manager manager) {
+        // just check and log
+        if (rawUserName!= null) {
+            String normalizedUserName = NamedBean.normalizeUserName(rawUserName);
+            if (! rawUserName.equals(normalizedUserName)) {
+                log.warn("Requested user name \"{}\" for system name \"{}\" was normalized to \"{}\"",
+                        rawUserName, rawSystemName, normalizedUserName);
+            }
+            
+            NamedBean bean = manager.getBeanByUserName(normalizedUserName);
+            if (bean != null && !bean.getSystemName().equals(rawSystemName)) {
+                log.warn("User name \"{}\" already exists as system name \"{}\"", normalizedUserName, bean.getSystemName());
+            }
+        }
     }
 
     /**

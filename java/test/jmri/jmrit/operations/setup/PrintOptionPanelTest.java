@@ -20,6 +20,29 @@ public class PrintOptionPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void checkPrintOptionPanelDefaults() {
+        PrintOptionPanel p = new PrintOptionPanel();
+
+        // confirm defaults
+        Assert.assertFalse(p.tabFormatCheckBox.isSelected());
+        Assert.assertTrue(p.formatSwitchListCheckBox.isSelected());
+        Assert.assertFalse(p.editManifestCheckBox.isSelected());
+        Assert.assertFalse(p.printLocCommentsCheckBox.isSelected());
+        Assert.assertFalse(p.printRouteCommentsCheckBox.isSelected());
+        Assert.assertFalse(p.printLoadsEmptiesCheckBox.isSelected());
+        Assert.assertFalse(p.printTimetableNameCheckBox.isSelected());
+        Assert.assertTrue(p.printValidCheckBox.isSelected());
+        Assert.assertFalse(p.sortByTrackCheckBox.isSelected());
+        Assert.assertFalse(p.printHeadersCheckBox.isSelected());
+        Assert.assertFalse(p.truncateCheckBox.isSelected());
+        Assert.assertFalse(p.departureTimeCheckBox.isSelected());
+        Assert.assertTrue(p.trackSummaryCheckBox.isSelected());
+        Assert.assertTrue(p.routeLocationCheckBox.isSelected());
+
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

@@ -17,11 +17,23 @@ import java.awt.GraphicsEnvironment;
 public class EditManifestHeaderTextFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EditManifestHeaderTextFrame t = new EditManifestHeaderTextFrame();
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testEditManifestHeaderTextFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EditManifestHeaderTextFrame f = new EditManifestHeaderTextFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+
+        // TODO do more testing
+
+        // done
+        f.dispose();
     }
 
     // The minimal setup for log4J
