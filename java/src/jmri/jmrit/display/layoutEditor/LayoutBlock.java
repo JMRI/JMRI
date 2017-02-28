@@ -137,6 +137,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Note: initializeLayoutBlock() must be called to complete the process. They are split
      *       so  that loading of panel files will be independent of whether LayoutBlocks or
      *       Blocks are loaded first.
+     * @param sName System name of this LayoutBlock; will be converted to upper case
+     * @param uName User name of this LayoutBlock but also the user name of the associated Block
      */
     public LayoutBlock(String sName, String uName) {
         super(sName.toUpperCase(), uName);
@@ -3116,32 +3118,21 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return false;
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         if (l == this) {
             if (enableAddRouteLogging) {
-                log.info("adding ourselves as a listener for some strange reason!");
+                log.info("adding ourselves as a listener for some strange reason! Skipping");
             }
             return;
         }
 
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
+        super.addPropertyChangeListener(l);
     }
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
