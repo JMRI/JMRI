@@ -192,7 +192,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     /**
-     *  provide to panel for edit
+     *  Provide Unlit bits to panel for editing.
+     *
+     *  @return char[] containing a series of 1's and 0's set for Unlit mast
      */
     @Nonnull public char[] getUnLitBits() {
         if (unLitBits != null) {
@@ -380,6 +382,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      * If the signal mast driver requires the previous state to be cleared down
      * before the next state is set.
+     *
+     * @param boo true to configure for intermediate reset step
      */
     public void resetPreviousStates(boolean boo) {
         resetPreviousStates = boo;

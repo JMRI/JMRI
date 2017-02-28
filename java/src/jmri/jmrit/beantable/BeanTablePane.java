@@ -74,19 +74,19 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
         // set preferred scrolling options
         dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
     }
 
     /**
-     * Hook to allow sub-types to install more items in GUI
+     * Hook to allow sub-types to install more items in GUI.
      */
     void extras() {
     }
 
     /**
-     * Hook to allow sub-typing of JTable created
+     * Hook to allow sub-typing of JTable created.
      *
      * @param sorter the sorter model
+     * @return JTable created
      * @deprecated since 4.5.4; use
      * {@link jmri.jmrit.beantable.BeanTableDataModel#makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
      * instead.
@@ -101,8 +101,9 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Add a component to the bottom box. Takes care of organising glue, struts
-     * etc
+     * Add a component to the bottom box.
+     * <p>
+     * Takes care of organising glue, struts etc.
      *
      * @param comp {@link Component} to add
      */
