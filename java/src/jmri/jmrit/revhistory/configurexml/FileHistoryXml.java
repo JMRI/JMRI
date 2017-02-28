@@ -95,7 +95,7 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      *
      * @param e Top-level XML element containing the description
      * @param o Implementation-specific Object needed for the conversion
-     * @throws Exception when a error prevents creating the objects as as
+     * @throws Exception when an error prevents creating the objects as as
      *                   required by the input XML.
      */
     @Override

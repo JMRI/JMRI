@@ -573,6 +573,10 @@ public class SignalGroupSubTableAction {
 
     /**
      * Configure colum widths for the Turnout and Sensor Conditional tables.
+     *
+     * @param table JTable to put button in
+     * @param column index of column in table
+     * @param sample sample button to use as spacer
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
         // install a button renderer & editor
