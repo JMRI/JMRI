@@ -73,7 +73,7 @@ public class SignallingGuiTools {
      *
      * @param frame the frame initiating the dialog
      * @param mast the main signal mast (object) selected on that frame
-     * @return
+     * @return true if user confirmed delete request
      */
     static public boolean removeSignalMastLogic(JmriJFrame frame, SignalMast mast) {
         Object[] options = {rb.getString("RemoveButton"),

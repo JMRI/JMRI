@@ -250,7 +250,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    /** getOpCode()
+    /**
      * 
      * Not really used inside of DCC++.  Just here
      * to play nicely with the inheritance.
@@ -261,7 +261,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * the _datachars element, which we don't use, and which
      * will contain garbage data.  Better to return something
      * meaningful.
-     * @return 
+     * @return first char of myReply as integer
      */
     @Override
     public int getOpCode() {
@@ -272,7 +272,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    /* Get the opcode as a one character string */
+    /** Get the opcode as a one character string.
+     * @return first char of myReply
+     */
     public char getOpCodeChar() {
         if (myReply.length() > 0) {
             return(myReply.charAt(0));
