@@ -260,7 +260,8 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     /**
      * Get a descriptive name for a given color value.
      *
-     * @param color Integer value of a color
+     * @param color Integer value of a color to display on screen
+     * @return lower case color name in English; None if color entered is null
      */
     public static String colorToString(Color color) {
         if (color == Color.black) {
@@ -300,6 +301,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * Get a color value for a color name.
      *
      * @param string String describing a color
+     * @return integer representing a screen color
      */
     public static Color stringToColor(String string) {
         if (string.equals("black")) {
