@@ -48,8 +48,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ActiveFlagTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPConnectionTypeListTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPInterfaceTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPListenerTest.class));
 
         return suite;
     }
