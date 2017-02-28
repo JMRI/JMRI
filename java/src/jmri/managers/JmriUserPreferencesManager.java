@@ -341,7 +341,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      */
     @Override
     public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
-        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
+        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

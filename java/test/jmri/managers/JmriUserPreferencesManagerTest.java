@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.JUnitAppender;
@@ -261,6 +262,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertNull(m.item);
         Assert.assertNull(m.alwaysRemember);
         Assert.assertNull(m.sessionOnly);
+        Assert.assertEquals(-1, m.type);
         m.showInfoMessage("title1", "message1", this.getClass().getName(), "item1");
         Assert.assertEquals("title1", m.title);
         Assert.assertEquals("message1", m.message);
@@ -268,22 +270,118 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("item1", m.item);
         Assert.assertTrue(m.alwaysRemember);
         Assert.assertFalse(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
     public void testShowErrorMessage() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertNull(m.title);
+        Assert.assertNull(m.message);
+        Assert.assertNull(m.strClass);
+        Assert.assertNull(m.item);
+        Assert.assertNull(m.alwaysRemember);
+        Assert.assertNull(m.sessionOnly);
+        Assert.assertEquals(-1, m.type);
+        m.showErrorMessage("title1", "message1", this.getClass().getName(), "item1", true, true);
+        Assert.assertEquals("title1", m.title);
+        Assert.assertEquals("message1", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item1", m.item);
+        Assert.assertTrue(m.alwaysRemember);
+        Assert.assertTrue(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.ERROR_MESSAGE, m.type);
+        m.showErrorMessage("title2", "message2", this.getClass().getName(), "item2", false, false);
+        Assert.assertEquals("title2", m.title);
+        Assert.assertEquals("message2", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item2", m.item);
+        Assert.assertFalse(m.alwaysRemember);
+        Assert.assertFalse(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.ERROR_MESSAGE, m.type);
     }
 
     @Test
     public void testShowInfoMessage_6args() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertNull(m.title);
+        Assert.assertNull(m.message);
+        Assert.assertNull(m.strClass);
+        Assert.assertNull(m.item);
+        Assert.assertNull(m.alwaysRemember);
+        Assert.assertNull(m.sessionOnly);
+        Assert.assertEquals(-1, m.type);
+        m.showInfoMessage("title1", "message1", this.getClass().getName(), "item1", true, true);
+        Assert.assertEquals("title1", m.title);
+        Assert.assertEquals("message1", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item1", m.item);
+        Assert.assertTrue(m.alwaysRemember);
+        Assert.assertTrue(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
+        m.showInfoMessage("title2", "message2", this.getClass().getName(), "item2", false, false);
+        Assert.assertEquals("title2", m.title);
+        Assert.assertEquals("message2", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item2", m.item);
+        Assert.assertFalse(m.alwaysRemember);
+        Assert.assertFalse(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
     public void testShowWarningMessage() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertNull(m.title);
+        Assert.assertNull(m.message);
+        Assert.assertNull(m.strClass);
+        Assert.assertNull(m.item);
+        Assert.assertNull(m.alwaysRemember);
+        Assert.assertNull(m.sessionOnly);
+        Assert.assertEquals(-1, m.type);
+        m.showWarningMessage("title1", "message1", this.getClass().getName(), "item1", true, true);
+        Assert.assertEquals("title1", m.title);
+        Assert.assertEquals("message1", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item1", m.item);
+        Assert.assertTrue(m.alwaysRemember);
+        Assert.assertTrue(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.WARNING_MESSAGE, m.type);
+        m.showWarningMessage("title2", "message2", this.getClass().getName(), "item2", false, false);
+        Assert.assertEquals("title2", m.title);
+        Assert.assertEquals("message2", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item2", m.item);
+        Assert.assertFalse(m.alwaysRemember);
+        Assert.assertFalse(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.WARNING_MESSAGE, m.type);
     }
 
     @Test
     public void testShowMessage() {
+        // TODO: Use Jemmy to test showing real message
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertNull(m.title);
+        Assert.assertNull(m.message);
+        Assert.assertNull(m.strClass);
+        Assert.assertNull(m.item);
+        Assert.assertNull(m.alwaysRemember);
+        Assert.assertNull(m.sessionOnly);
+        Assert.assertEquals(-1, m.type);
+        m.showMessage("title1", "message1", this.getClass().getName(), "item1", true, true, JOptionPane.INFORMATION_MESSAGE);
+        Assert.assertEquals("title1", m.title);
+        Assert.assertEquals("message1", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item1", m.item);
+        Assert.assertTrue(m.alwaysRemember);
+        Assert.assertTrue(m.sessionOnly);
+        m.showMessage("title2", "message2", this.getClass().getName(), "item2", false, false, JOptionPane.INFORMATION_MESSAGE);
+        Assert.assertEquals("title2", m.title);
+        Assert.assertEquals("message2", m.message);
+        Assert.assertEquals(this.getClass().getName(), m.strClass);
+        Assert.assertEquals("item2", m.item);
+        Assert.assertFalse(m.alwaysRemember);
+        Assert.assertFalse(m.sessionOnly);
     }
 
     @Test
