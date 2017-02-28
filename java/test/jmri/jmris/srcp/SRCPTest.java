@@ -19,7 +19,9 @@ import org.junit.runners.Suite;
         JmriSRCPThrottleServerTest.class,
 	JmriSRCPServerMenuTest.class,
 	JmriSRCPServerPreferencesPanelTest.class,
-	JmriSRCPServerPreferencesTest.class
+	JmriSRCPServerPreferencesTest.class,
+	srcp/JmriSRCPServiceHandlerTest.class
+	srcp/TimeStampedOutputTest.class
 })
 
 /**
