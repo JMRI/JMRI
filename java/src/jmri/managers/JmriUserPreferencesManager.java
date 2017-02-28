@@ -289,16 +289,16 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString {@literal &} item parameters should form a
-     * unique value
+     * in the future. The combination of the classString and item parameters
+     * should form a unique value.
      *
-     * @param title    Message Box title
-     * @param message  Message to be displayed
-     * @param strClass String value of the calling class
-     * @param item     String value of the specific item this is used for
+     * @param title    message Box title
+     * @param message  message to be displayed
+     * @param strClass name of the calling class
+     * @param item     name of the specific item this is used for
      */
     @Override
-    public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
+    public void showInfoMessage(String title, String message, String strClass, String item) {
         showInfoMessage(title, message, strClass, item, false, true);
     }
 
