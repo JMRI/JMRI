@@ -20,8 +20,8 @@ import org.junit.runners.Suite;
 	JmriSRCPServerMenuTest.class,
 	JmriSRCPServerPreferencesPanelTest.class,
 	JmriSRCPServerPreferencesTest.class,
-	srcp/JmriSRCPServiceHandlerTest.class
-	srcp/TimeStampedOutputTest.class
+	JmriSRCPServiceHandlerTest.class,
+	TimeStampedOutputTest.class
 })
 
 /**
