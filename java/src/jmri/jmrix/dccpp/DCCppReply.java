@@ -80,7 +80,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     @Override
     public String toString() {
-        log.debug("DCCppReply.toString(): msg {}", myReply.toString());
+        log.trace("DCCppReply.toString(): msg {}", myReply.toString());
         return(myReply.toString());
     }
 
@@ -166,12 +166,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return(r);
             case DCCppConstants.PROGRAM_REPLY:
                 if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
+                    log.debug("Matches ProgBitReply");
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
+                    log.debug("Matches ProgReply");
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
                 } else {
+                    log.debug("Does not match ProgReply Regex");
                     return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
