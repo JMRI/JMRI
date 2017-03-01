@@ -675,12 +675,12 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @param defaultOption The default option for the given item.
      */
     @Override
-    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
+    public void setMessageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
         HashMap<Integer, String> options = new HashMap<>(msgOption.length);
         for (int i = 0; i < msgOption.length; i++) {
             options.put(msgNumber[i], msgOption[i]);
         }
-        messageItemDetails(strClass, description, item, options, defaultOption);
+        setMessageItemDetails(strClass, description, item, options, defaultOption);
     }
 
     /**
@@ -697,7 +697,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @param defaultOption The default option for the given item.
      */
     @Override
-    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
+    public void setMessageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }

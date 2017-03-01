@@ -705,11 +705,11 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    public void testMessageItemDetails_6args() {
+    public void testSetMessageItemDetails_6args() {
     }
 
     @Test
-    public void testMessageItemDetails_5args() {
+    public void testSetMessageItemDetails_5args() {
     }
 
     @Test

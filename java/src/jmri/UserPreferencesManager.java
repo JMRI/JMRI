@@ -381,8 +381,51 @@ public interface UserPreferencesManager {
      * @param msgNumber     The references number against which the Description
      *                      is referring too.
      * @param defaultOption The default option for the given item.
+     * @deprecated since 4.7.2; use
+     * {@link #setMessageItemDetails(java.lang.String, java.lang.String, java.lang.String, java.lang.String[], int[], int)}
+     * instead
      */
-    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption);
+    @Deprecated
+    public default void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
+        this.setMessageItemDetails(strClass, item, description, msgOption, msgNumber, defaultOption);
+    }
+
+    /**
+     * Add descriptive details about a specific message box, so that if it needs
+     * to be reset in the preferences, then it is easily identifiable. displayed
+     * to the user in the preferences GUI.
+     *
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param msgOption     Description of each option valid option.
+     * @param msgNumber     The references number against which the Description
+     *                      is referring too.
+     * @param defaultOption The default option for the given item.
+     */
+    public void setMessageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption);
+
+    /**
+     * Add descriptive details about a specific message box, so that if it needs
+     * to be reset in the preferences, then it is easily identifiable. displayed
+     * to the user in the preferences GUI.
+     *
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param options       A map of the integer value of the option against a
+     *                      meaningful description.
+     * @param defaultOption The default option for the given item.
+     * @deprecated since 4.7.2; use
+     * {@link #setMessageItemDetails(java.lang.String, java.lang.String, java.lang.String, java.util.HashMap, int)}
+     * instead
+     */
+    @Deprecated
+    public default void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
+        this.setMessageItemDetails(strClass, item, description, options, defaultOption);
+    }
 
     /**
      * Add descriptive details about a specific message box, so that if it needs
@@ -397,7 +440,7 @@ public interface UserPreferencesManager {
      *                      meaningful description.
      * @param defaultOption The default option for the given item.
      */
-    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption);
+    public void setMessageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption);
 
     /**
      * Returns a map of the value against description of the different items in
