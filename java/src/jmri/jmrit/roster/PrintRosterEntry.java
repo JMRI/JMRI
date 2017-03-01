@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -196,7 +197,7 @@ public class PrintRosterEntry implements PaneContainer {
     }
 
     public void printPanes(final boolean preview) {
-        final JFrame frame = new JFrame("Select Items to Print");
+        final JFrame frame = new JFrame(Bundle.getMessage("TitleSelectItemsToPrint"));
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
         JLabel l1 = new JLabel(Bundle.getMessage("LabelSelectLine1"));
@@ -204,6 +205,7 @@ public class PrintRosterEntry implements PaneContainer {
         l1 = new JLabel(Bundle.getMessage("LabelSelectLine2"));
         p1.add(l1);
         JPanel select = new JPanel();
+        select.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ItemsLabel")));
         final Hashtable<JCheckBox, PaneProgPane> printList = new Hashtable<JCheckBox, PaneProgPane>();
         select.setLayout(new BoxLayout(select, BoxLayout.PAGE_AXIS));
         final JCheckBox funct = new JCheckBox(Bundle.getMessage("LabelFunctionList"));
@@ -228,7 +230,10 @@ public class PrintRosterEntry implements PaneContainer {
             });
             select.add(item);
         }
-        select.add(new JLabel(" ")); // spacer
+        p1.add(select);
+
+        // Select All checkbox below tiled set of item boxes
+        JPanel selectAllBox = new JPanel();
         final JCheckBox selectAll = new JCheckBox(Bundle.getMessage("SelectAll"));
         selectAll.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -243,10 +248,11 @@ public class PrintRosterEntry implements PaneContainer {
                 }
             }
         });
-        select.add(selectAll);
+        selectAllBox.add(selectAll);
+        p1.add(selectAllBox);
+
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
-
         cancel.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,7 +269,6 @@ public class PrintRosterEntry implements PaneContainer {
         JPanel buttons = new JPanel();
         buttons.add(cancel);
         buttons.add(ok);
-        p1.add(select);
         p1.add(buttons);
 
         frame.add(p1);
