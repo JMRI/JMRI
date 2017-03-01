@@ -134,7 +134,11 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
-    /* This allows a meaning full list of places where the bean is in use!*/
+    /**
+     * Get a meaningful list of places where the bean is in use.
+     *
+     * @return ArrayList of the listeners
+     */
     @Override
     public synchronized ArrayList<String> getListenerRefs() {
         ArrayList<String> list = new ArrayList<String>();
@@ -160,8 +164,9 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
 
     /**
-     * Number of current listeners. May return -1 if the information is not
-     * available for some reason.
+     * Get the number of current listeners.
+     *
+     * @return -1 if the information is not available for some reason.
      */
     @Override
     public synchronized int getNumPropertyChangeListeners() {

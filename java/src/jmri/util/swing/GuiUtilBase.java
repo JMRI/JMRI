@@ -190,12 +190,8 @@ public class GuiUtilBase {
         public void actionPerformed(java.awt.event.ActionEvent e) {
             try {
                 method.invoke(obj, args);
-            } catch (IllegalArgumentException ex) {
-                System.out.println("IllegalArgument " + ex);
-            } catch (IllegalAccessException ex) {
-                System.out.println("IllegalAccess " + ex);
-            } catch (java.lang.reflect.InvocationTargetException ex) {
-                System.out.println("InvocationTarget " + ex.toString());
+            } catch (IllegalArgumentException |  IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
+               log.error("Exception in actionPerformed", ex);
             }
         }
     }

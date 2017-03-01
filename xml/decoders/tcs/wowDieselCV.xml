@@ -223,7 +223,7 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Light Mode/Sound Mode Audio Feedback</label>
 	</variable>
-	<variable item="Sound Group 7 Checkbox 7" CV="T2CV.4.19" default="0" mask="XXXXXXXXXVXXXXXX">
+	<variable item="Sound Group 7 Checkbox 7" CV="T2CV.4.19" default="1" mask="XXXXXXXXXVXXXXXX">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Audio Auto Shut-off Timer</label>
 	</variable>
@@ -245,7 +245,11 @@
 		<label>Reverse Directional Horns</label>
 		<tooltip>If set the directional horns (if enabled) are played in opposite direction from normal, use along with Normal Direction Of Motion setting</tooltip>
 	</variable>
-	<variable item="Sound Setting 2" CV="T2CV.4.21" default="256" mask="VVVVVVVVVVVVVVVV" tooltip="a value of 256 is about 3 minutes">
+	<variable item="Sound Setting 2" CV="T2CV.4.21" default="256" mask="VVVVVVVVVVVVVVVV" include="WOW Diesel Sound Set 1 EMD,WOW Diesel Sound Set 2,WOW Diesel Sound Set 3" tooltip="a value of 256 is about 3 minutes">
+		<decVal max="65535"/>
+		<label>Audio Auto Shut-off Time</label>
+	</variable>
+	<variable item="Sound Setting 2" CV="T2CV.4.21" default="2600" mask="VVVVVVVVVVVVVVVV" exclude="WOW Diesel Sound Set 1 EMD,WOW Diesel Sound Set 2,WOW Diesel Sound Set 3" tooltip="a value of 256 is about 3 minutes">
 		<decVal max="65535"/>
 		<label>Audio Auto Shut-off Time</label>
 	</variable>

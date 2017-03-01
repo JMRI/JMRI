@@ -27,6 +27,7 @@ import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,10 +132,16 @@ public class PrintRosterEntry implements PaneContainer {
 
         @SuppressWarnings("unchecked")
         List<Element> rawPaneList = base.getChildren("pane");
-        for (int i = 0; i < rawPaneList.size(); i++) {
+        for (Element elPane : rawPaneList) {
             // load each pane
-            String name = rawPaneList.get(i).getAttribute("name").getValue();
-            PaneProgPane p = new PaneProgPane(this, name, rawPaneList.get(i), cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
+            Attribute attr = elPane.getAttribute("name");
+            String name = "";
+            if (attr != null) {
+                name = attr.getValue();
+            } else {
+                log.debug("Did not find name attribute in pane");
+            }
+            PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
             _paneList.add(p);
         }
     }
