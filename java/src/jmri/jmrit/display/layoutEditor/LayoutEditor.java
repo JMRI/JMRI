@@ -44,6 +44,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -70,6 +71,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.text.JTextComponent;
@@ -1015,69 +1018,70 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // Note: We have to invoke this later because everything's not really setup yet
         SwingUtilities.invokeLater(() -> {
             // initialize preferences
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            String windowFrameRef = getWindowFrameRef();
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                String windowFrameRef = getWindowFrameRef();
 
-            Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
-            //log.info("{}.toolBarSide is {}", windowFrameRef, prefsProp);
-            if (prefsProp != null) {
-                eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
-                setToolBarSide(newToolBarSide);
-            }
-
-            // Note: since prefs default to false and we want wide to be the default
-            // we invert it and save it as thin
-            boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
-            log.info("{}.toolBarThin is {}", windowFrameRef, prefsProp);
-            setToolBarWide(prefsToolBarIsWide);
-
-            boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
-            //log.info("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
-            setShowHelpBar(prefsShowHelpBar);
-
-            boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
-            //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
-            setAntialiasingOn(prefsAntialiasingOn);
-
-            boolean prefsHighlightSelectedBlockFlag = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
-            //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
-            setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
-
-            prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
-            log.info("{} prefsProp 1075 is {}", windowFrameRef, prefsProp);
-            if (null != prefsProp) {
-                float toolBarFontSize = Float.parseFloat(prefsProp.toString());
-                setupToolBarFontSizes(toolBarFontSize);
-            }
-
-            updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
-
-            // this doesn't work as expected (1st one called messes up 2nd?)
-//                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-//                 Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-//                 log.info("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
-//                 log.info("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
-            Point prefsWindowLocation = null;
-            Dimension prefsWindowSize = null;
-
-            // use this instead?
-            if (true) {    // (Nope, it's not working ether: prefsProp always comes back null)
-                prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                log.info("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
-                if (null != prefsProp) {
-                    Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
-                    prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
-                    prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
+                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
+                //log.info("{}.toolBarSide is {}", windowFrameRef, prefsProp);
+                if (prefsProp != null) {
+                    eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
+                    setToolBarSide(newToolBarSide);
                 }
-            }
-            if (prefsWindowLocation != null && prefsWindowSize != null
-                    && prefsWindowSize.width >= 640 && prefsWindowSize.height >= 480) {
-                // note: panel width & height comes from the saved (xml) panel (file) on disk
-                setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
-                        prefsWindowLocation.x, prefsWindowLocation.y,
-                        panelWidth, panelHeight);
+
+                // Note: since prefs default to false and we want wide to be the default
+                // we invert it and save it as thin
+                boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
+                log.info("{}.toolBarThin is {}", windowFrameRef, prefsProp);
+                setToolBarWide(prefsToolBarIsWide);
+
+                boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
+                //log.info("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
+                setShowHelpBar(prefsShowHelpBar);
+
+                boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
+                //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
                 setAntialiasingOn(prefsAntialiasingOn);
-            }
+
+                boolean prefsHighlightSelectedBlockFlag = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
+                //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+                setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
+
+                prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
+                log.info("{} prefsProp 1075 is {}", windowFrameRef, prefsProp);
+                if (null != prefsProp) {
+                    float toolBarFontSize = Float.parseFloat(prefsProp.toString());
+                    setupToolBarFontSizes(toolBarFontSize);
+                }
+
+                updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
+
+                // this doesn't work as expected (1st one called messes up 2nd?)
+    //                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+    //                 Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+    //                 log.info("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
+    //                 log.info("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
+                Point prefsWindowLocation = null;
+                Dimension prefsWindowSize = null;
+
+                // use this instead?
+                if (true) {    // (Nope, it's not working ether: prefsProp always comes back null)
+                    prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+                    log.info("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
+                    if (null != prefsProp) {
+                        Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
+                        prefsWindowLocation.setLocation(windowRectangle2D.getX(), windowRectangle2D.getY());
+                        prefsWindowSize.setSize(windowRectangle2D.getWidth(), windowRectangle2D.getHeight());
+                    }
+                }
+                if (prefsWindowLocation != null && prefsWindowSize != null
+                        && prefsWindowSize.width >= 640 && prefsWindowSize.height >= 480) {
+                    // note: panel width & height comes from the saved (xml) panel (file) on disk
+                    setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
+                            prefsWindowLocation.x, prefsWindowLocation.y,
+                            panelWidth, panelHeight);
+                    setAntialiasingOn(prefsAntialiasingOn);
+                }
+            });
         }); // SwingUtilities.invokeLater
     }   // LayoutEditor (constructor)
 
@@ -1097,6 +1101,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editToolBarPanel = new JPanel();
         editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
 
+        JPanel outerBorderPanel = editToolBarPanel;
+        JPanel innerBorderPanel = editToolBarPanel;
+
+        Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
+        
+        boolean useBorders = true;
+        if (useBorders) {
+            outerBorderPanel = new JPanel();
+            outerBorderPanel.setLayout(new BoxLayout(outerBorderPanel, BoxLayout.PAGE_AXIS));
+            TitledBorder outerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, rb.getString("Track"));
+            outerTitleBorder.setTitleJustification(TitledBorder.CENTER);
+            outerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+            outerBorderPanel.setBorder(outerTitleBorder);
+            
+            innerBorderPanel = new JPanel();
+            innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
+            TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnout"));
+            innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
+            innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+            innerBorderPanel.setBorder(innerTitleBorder);
+        }
+        
         String blockNameString = rb.getString("BlockID");
 
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -1105,74 +1131,82 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             FlowLayout verticalTitleLayout = new FlowLayout(FlowLayout.CENTER, 5, 5);  // 5 pixel gap between items, 5 vertical gap
             FlowLayout verticalContentLayout = new FlowLayout(FlowLayout.LEFT, 5, 2);  // 5 pixel gap between items, 2 vertical gap
 
-            JPanel vTop1TitlePanel = new JPanel(verticalTitleLayout);
             turnoutLabel = new JLabel("-- " + Bundle.getMessage("BeanNameTurnout") + " --");
-            vTop1TitlePanel.add(turnoutLabel);
-            vTop1TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1TitlePanel.getPreferredSize().height));
-            editToolBarPanel.add(vTop1TitlePanel);
+            if (!useBorders) {
+                JPanel vTop1TitlePanel = new JPanel(verticalTitleLayout);
+                vTop1TitlePanel.add(turnoutLabel);
+                vTop1TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1TitlePanel.getPreferredSize().height));
+                innerBorderPanel.add(vTop1TitlePanel);
+            }
 
             JPanel vTop1Panel = new JPanel(verticalContentLayout);
             vTop1Panel.add(turnoutLHButton);
             vTop1Panel.add(turnoutRHButton);
             vTop1Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop1Panel);
+            innerBorderPanel.add(vTop1Panel);
 
             JPanel vTop2Panel = new JPanel(verticalContentLayout);
             vTop2Panel.add(turnoutWYEButton);
             vTop2Panel.add(doubleXoverButton);
             vTop2Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop2Panel.getPreferredSize().height * 2));
-            editToolBarPanel.add(vTop2Panel);
+            innerBorderPanel.add(vTop2Panel);
 
             JPanel vTop3Panel = new JPanel(verticalContentLayout);
             vTop3Panel.add(lhXoverButton);
             vTop3Panel.add(rhXoverButton);
             vTop3Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop3Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop3Panel);
+            innerBorderPanel.add(vTop3Panel);
 
             JPanel vTop4Panel = new JPanel(verticalContentLayout);
             vTop4Panel.add(layoutSingleSlipButton);
             vTop4Panel.add(layoutDoubleSlipButton);
             vTop4Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop4Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop4Panel);
+            innerBorderPanel.add(vTop4Panel);
 
             JPanel vTop5Panel = new JPanel(verticalContentLayout);
             vTop5Panel.add(turnoutNamePanel);
             vTop5Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop5Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop5Panel);
+            innerBorderPanel.add(vTop5Panel);
 
             JPanel vTop6Panel = new JPanel(verticalContentLayout);
             vTop6Panel.add(extraTurnoutPanel);
             vTop6Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop6Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop6Panel);
+            innerBorderPanel.add(vTop6Panel);
 
             JPanel vTop7Panel = new JPanel(verticalContentLayout);
             vTop7Panel.add(rotationPanel);
             vTop7Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop7Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop7Panel);
+            innerBorderPanel.add(vTop7Panel);
 
-            JPanel vTop8TitlePanel = new JPanel(verticalTitleLayout);
+            if (useBorders) {
+                outerBorderPanel.add(innerBorderPanel);
+            }
+            
             trackLabel = new JLabel("-- " + rb.getString("Track") + " --");
-            vTop8TitlePanel.add(trackLabel);
-            vTop8TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8TitlePanel.getPreferredSize().height));
-            editToolBarPanel.add(vTop8TitlePanel);
+            if (!useBorders) {
+                JPanel vTop8TitlePanel = new JPanel(verticalTitleLayout);
+                vTop8TitlePanel.add(trackLabel);
+                vTop8TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8TitlePanel.getPreferredSize().height));
+                outerBorderPanel.add(vTop8TitlePanel);
+            }
 
             JPanel vTop8Panel = new JPanel(verticalContentLayout);
             vTop8Panel.add(levelXingButton);
             vTop8Panel.add(trackButton);
             vTop8Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop8Panel);
+            outerBorderPanel.add(vTop8Panel);
 
             // this would be vTop9Panel
             trackSegmentPropertiesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE,
                     trackSegmentPropertiesPanel.getPreferredSize().height));
-            editToolBarPanel.add(trackSegmentPropertiesPanel);
+            outerBorderPanel.add(trackSegmentPropertiesPanel);
 
             JPanel vTop10Panel = new JPanel(verticalContentLayout);
             blockNameLabel = new JLabel(blockNameString);
             vTop10Panel.add(blockNameLabel);
             vTop10Panel.add(blockIDComboBox);
             vTop10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop10Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop10Panel);
+            outerBorderPanel.add(vTop10Panel);
 
             JPanel vTop11Panel = new JPanel(verticalContentLayout);
             blockSensorNameLabel = new JLabel(blockNameString);
@@ -1180,84 +1214,131 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             vTop11Panel.add(blockSensorLabel);
             vTop11Panel.add(blockSensorComboBox);
             vTop11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop11Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop11Panel);
+            outerBorderPanel.add(vTop11Panel);
 
-            JPanel vTop12TitlePanel = new JPanel(verticalTitleLayout);
+            if (useBorders) {
+                editToolBarPanel.add(outerBorderPanel);
+            }
+
+            JPanel nodesBorderPanel = editToolBarPanel;
             nodesLabel = new JLabel("-- " + rb.getString("Nodes") + " --");
-            vTop12TitlePanel.add(nodesLabel);
-            vTop12TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12TitlePanel.getPreferredSize().height));
-            editToolBarPanel.add(vTop12TitlePanel);
+ 
+            if (useBorders) {
+                nodesBorderPanel = new JPanel();
+                nodesBorderPanel.setLayout(new BoxLayout(nodesBorderPanel, BoxLayout.PAGE_AXIS));
+                TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, rb.getString("Nodes"));
+                innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
+                innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+                nodesBorderPanel.setBorder(innerTitleBorder);
+            } else {
+                JPanel vTop12TitlePanel = new JPanel(verticalTitleLayout);
+                vTop12TitlePanel.add(nodesLabel);
+                vTop12TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12TitlePanel.getPreferredSize().height));
+                editToolBarPanel.add(vTop12TitlePanel);
+            }
 
             JPanel vTop12Panel = new JPanel(verticalContentLayout);
             vTop12Panel.add(endBumperButton);
             vTop12Panel.add(anchorButton);
             vTop12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop12Panel);
+            nodesBorderPanel.add(vTop12Panel);
 
             JPanel vTop13Panel = new JPanel(verticalContentLayout);
             vTop13Panel.add(edgeButton);
             vTop13Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop13Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop13Panel);
+            nodesBorderPanel.add(vTop13Panel);
 
-            JPanel vTop14TitlePanel = new JPanel(verticalTitleLayout);
+            if (useBorders) {
+                editToolBarPanel.add(nodesBorderPanel);
+            }
+    
+            JPanel labelsBorderPanel = editToolBarPanel;
             labelsLabel = new JLabel("-- " + rb.getString("Labels") + " --");
-            vTop14TitlePanel.add(labelsLabel);
-            vTop14TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14TitlePanel.getPreferredSize().height));
-            editToolBarPanel.add(vTop14TitlePanel);
+            if (useBorders) {
+                labelsBorderPanel = new JPanel();
+                labelsBorderPanel.setLayout(new BoxLayout(labelsBorderPanel, BoxLayout.PAGE_AXIS));
+                TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, rb.getString("Labels"));
+                innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
+                innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+                labelsBorderPanel.setBorder(innerTitleBorder);
+            } else {
+                JPanel vTop14TitlePanel = new JPanel(verticalTitleLayout);
+                vTop14TitlePanel.add(labelsLabel);
+                vTop14TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14TitlePanel.getPreferredSize().height));
+                editToolBarPanel.add(vTop14TitlePanel);
+            }
 
             JPanel vTop14Panel = new JPanel(verticalContentLayout);
             vTop14Panel.add(textLabelButton);
             vTop14Panel.add(textLabelTextField);
             vTop14Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop14Panel);
+            labelsBorderPanel.add(vTop14Panel);
 
             JPanel vTop15Panel = new JPanel(verticalContentLayout);
             vTop15Panel.add(memoryButton);
             vTop15Panel.add(textMemoryComboBox);
             vTop15Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop15Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop15Panel);
+            labelsBorderPanel.add(vTop15Panel);
 
             JPanel vTop16Panel = new JPanel(verticalContentLayout);
             vTop16Panel.add(blockContentsButton);
             vTop16Panel.add(blockContentsComboBox);
             vTop16Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop16Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop16Panel);
+            labelsBorderPanel.add(vTop16Panel);
 
-            JPanel vTop17TitlePanel = new JPanel(verticalTitleLayout);
-            labelsLabel = new JLabel("-- " + rb.getString("IconsTitle") + " --");
-            vTop17TitlePanel.add(labelsLabel);
-            vTop17TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop17TitlePanel.getPreferredSize().height));
-            editToolBarPanel.add(vTop17TitlePanel);
+            if (useBorders) {
+                editToolBarPanel.add(labelsBorderPanel);
+            }
+     
+            JPanel iconsBorderPanel = editToolBarPanel;
+            if (useBorders) {
+                iconsBorderPanel = new JPanel();
+                iconsBorderPanel.setLayout(new BoxLayout(iconsBorderPanel, BoxLayout.PAGE_AXIS));
+                TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, rb.getString("IconsTitle"));
+                innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
+                innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+                iconsBorderPanel.setBorder(innerTitleBorder);
+            } else {
+                JPanel vTop17TitlePanel = new JPanel(verticalTitleLayout);
+                JLabel iconsLabel = new JLabel("-- " + rb.getString("IconsTitle") + " --");
+                vTop17TitlePanel.add(iconsLabel);
+                vTop17TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop17TitlePanel.getPreferredSize().height));
+                editToolBarPanel.add(vTop17TitlePanel);
+            }
 
             JPanel vTop18Panel = new JPanel(verticalContentLayout);
             vTop18Panel.add(multiSensorButton);
             vTop18Panel.add(changeIconsButton);
             vTop18Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop18Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop18Panel);
+            iconsBorderPanel.add(vTop18Panel);
 
             JPanel vTop20Panel = new JPanel(verticalContentLayout);
             vTop20Panel.add(sensorButton);
             vTop20Panel.add(sensorComboBox);
             vTop20Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop20Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop20Panel);
+            iconsBorderPanel.add(vTop20Panel);
 
             JPanel vTop19Panel = new JPanel(verticalContentLayout);
             vTop19Panel.add(signalMastButton);
             vTop19Panel.add(signalMastComboBox);
             vTop19Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop19Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop19Panel);
+            iconsBorderPanel.add(vTop19Panel);
 
             JPanel vTop21Panel = new JPanel(verticalContentLayout);
             vTop21Panel.add(signalButton);
             vTop21Panel.add(signalHeadComboBox);
             vTop21Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop21Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop21Panel);
+            iconsBorderPanel.add(vTop21Panel);
 
             JPanel vTop22Panel = new JPanel(verticalContentLayout);
             vTop22Panel.add(iconLabelButton);
             vTop22Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop22Panel.getPreferredSize().height));
-            editToolBarPanel.add(vTop22Panel);
+            iconsBorderPanel.add(vTop22Panel);
 
+            if (useBorders) {
+                editToolBarPanel.add(iconsBorderPanel);
+            }
+  
             editToolBarPanel.add(Box.createVerticalGlue());
 
             JPanel bottomPanel = new JPanel();
@@ -1276,7 +1357,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //JPanel hTop1Left = new JPanel(toolBarIsWide ? leftRowLayout : centerRowLayout);
             JPanel hTop1Left = new JPanel(leftRowLayout);
             turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ":  ");
-            hTop1Left.add(turnoutLabel);
+            if (!useBorders) {
+                hTop1Left.add(turnoutLabel);
+            }
             hTop1Left.add(turnoutRHButton);
             hTop1Left.add(turnoutLHButton);
             hTop1Left.add(turnoutWYEButton);
@@ -1295,7 +1378,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 hTop1Right.add(rotationPanel);
                 hTop1Panel.add(hTop1Right);
             }
-            editToolBarPanel.add(hTop1Panel);
+            innerBorderPanel.add(hTop1Panel);
 
             // row 2
             if (!toolBarIsWide) {
@@ -1309,9 +1392,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 hTop2Center.add(rotationPanel);
                 hTop2Panel.add(hTop2Center);
 
-                editToolBarPanel.add(hTop2Panel);
+                innerBorderPanel.add(hTop2Panel);
             }
 
+            if (useBorders) {
+                outerBorderPanel.add(innerBorderPanel);
+            }
+           
             // Row 3 (2 wide)
             JPanel hTop3Panel = new JPanel();
             hTop3Panel.setLayout(new BoxLayout(hTop3Panel, BoxLayout.LINE_AXIS));
@@ -1319,7 +1406,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // Row 3 : Left Components
             JPanel hTop3Left = new JPanel(leftRowLayout);
             trackLabel = new JLabel(rb.getString("Track") + ":  ");
-            hTop3Left.add(trackLabel);
+            if (!useBorders) {
+                hTop3Left.add(trackLabel);
+            }
             hTop3Left.add(levelXingButton);
             hTop3Left.add(trackButton);
             hTop3Left.add(trackSegmentPropertiesPanel);
@@ -1345,7 +1434,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 hTop3Right.add(locationPanel);
                 hTop3Panel.add(hTop3Right);
             }
-            editToolBarPanel.add(hTop3Panel);
+            outerBorderPanel.add(hTop3Panel);
+
+            if (useBorders) {
+                editToolBarPanel.add(outerBorderPanel);
+            }
 
             // Row 4
             JPanel hTop4Panel = new JPanel();
@@ -1486,32 +1579,33 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
                 setupToolBarFontSizes(manager.getFontSize());
             } else {
-                // if it's been set as a preference for this panel use that
-                // calculate the largest font size that will fill the current window
-                // (without scrollbars)
-                // font size 13 ==> min windowWidth width = 1592 pixels
-                // font size 8 ==> min windowWidth width = 1132 pixels
-                // (1592 - 1132) (UserPreferencesManager.class)./ (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
-                // 1592 - (13 * 92) ==> 396 pixels
-                // therefore:
-                float newToolBarFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
-                newToolBarFontSize = (float) MathUtil.pin(newToolBarFontSize, 9.0, 12.0); // keep it between 9 & 12
-
                 // see if the user preferences for the panel have a setting for it
-                UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-                String windowFrameRef = getWindowFrameRef();
-                Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
-                //log.debug("{} prefsProp is {}", windowFrameRef, prefsProp);
-                if (prefsProp != null) {    // (yes)
-                    newToolBarFontSize = Float.parseFloat(prefsProp.toString());
-                } else {    // (no)
-                    // use the GuiLafPreferencesManager value
-                    GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
-                    newToolBarFontSize = manager.getFontSize();
-                    // save it in user preferences for the panel
-                    prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", newToolBarFontSize);
-                }
-                setupToolBarFontSizes(newToolBarFontSize);
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    // if it's been set as a preference for this panel use that
+                    // calculate the largest font size that will fill the current window
+                    // (without scrollbars)
+                    // font size 13 ==> min windowWidth width = 1592 pixels
+                    // font size 8 ==> min windowWidth width = 1132 pixels
+                    // (1592 - 1132) / (13 - 8) ==> 460 / 5 ==> 92 pixel per font size
+                    // 1592 - (13 * 92) ==> 396 pixels
+                    // therefore:
+                    float newToolBarFontSize = (float) Math.floor(((windowWidth - 396.f) / 92.f) - 0.5f);
+                    newToolBarFontSize = (float) MathUtil.pin(newToolBarFontSize, 9.0, 12.0); // keep it between 9 & 12
+
+                    String windowFrameRef = getWindowFrameRef();
+                    Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
+                    //log.debug("{} prefsProp is {}", windowFrameRef, prefsProp);
+                    if (prefsProp != null) {    // (yes)
+                        newToolBarFontSize = Float.parseFloat(prefsProp.toString());
+                    } else {    // (no)
+                        // use the GuiLafPreferencesManager value
+                        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+                        newToolBarFontSize = manager.getFontSize();
+                        // save it in user preferences for the panel
+                        prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", newToolBarFontSize);
+                    }
+                    setupToolBarFontSizes(newToolBarFontSize);
+                });
             }
 
             if (false) { ////// TODO: fetch this preference (WORK-IN-PROGRESS) & setup all comboboxes
@@ -1630,8 +1724,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     private void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
         inComboBox.setEditable(true);
-        inComboBox.getEditor().setItem("");
         inComboBox.setSelectedIndex(-1);
+        inComboBox.getEditor().setItem("");
         inComboBox.setEnabled(inEnable);
 
         // fires when drop down list item is selected
@@ -2022,8 +2116,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 // save it in the user preferences for the window
                 String windowFrameRef = getWindowFrameRef();
-                UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-                prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", fontSizeFloat);
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    prefsMgr.setProperty(windowFrameRef, "toolBarFontSize", fontSizeFloat);
+                });
 
                 /// doing this for now (since window prefs seem to be whacked)
                 GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
@@ -2072,33 +2167,34 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 JPopupMenu parentMenu = (JPopupMenu) ddldoMenuItem.getParent();
                 int ddldo = parentMenu.getComponentZOrder(ddldoMenuItem);
 
-                // change this comboboxes ddldo
-                String windowFrameRef = getWindowFrameRef();
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    // change this comboboxes ddldo
+                    String windowFrameRef = getWindowFrameRef();
 
                 // this is the preference name
-                String ddldoPrefName = "DropDownListsDisplayOrder";
+                    String ddldoPrefName = "DropDownListsDisplayOrder";
 
-                // make a focused component specific preference name
-                Component focusedComponent = getFocusOwner();
-                if (focusedComponent instanceof JTextField) {
-                    focusedComponent = SwingUtilities.getUnwrappedParent(focusedComponent);
-                }
-                if (focusedComponent instanceof JmriBeanComboBox) {
-                    JmriBeanComboBox focusedJBCB = (JmriBeanComboBox) focusedComponent;
-                    // now try to get a preference specific to this combobox
-                    String ttt = focusedJBCB.getToolTipText();
-                    if (null != ttt) {
-                        // change the name of the preference based on the tool tip text
-                        ddldoPrefName = ddldoPrefName + "." + ttt;
+                    // make a focused component specific preference name
+                    Component focusedComponent = getFocusOwner();
+                    if (focusedComponent instanceof JTextField) {
+                        focusedComponent = SwingUtilities.getUnwrappedParent(focusedComponent);
                     }
+                    if (focusedComponent instanceof JmriBeanComboBox) {
+                        JmriBeanComboBox focusedJBCB = (JmriBeanComboBox) focusedComponent;
+                        // now try to get a preference specific to this combobox
+                        String ttt = focusedJBCB.getToolTipText();
+                        if (null != ttt) {
+                            // change the name of the preference based on the tool tip text
+                            ddldoPrefName = ddldoPrefName + "." + ttt;
+                        }
 
-                    // now set the combo box display order
-                    focusedJBCB.setDisplayOrder(ddldo);
-                }
-                // update the users preference
-                UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-                String[] ddldoPrefs = {"DISPLAYNAME", "USERNAME", "SYSTEMNAME", "USERNAMESYSTEMNAME", "SYSTEMNAMEUSERNAME"};
-                prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPrefs[ddldo]);
+                        // now set the combo box display order
+                        focusedJBCB.setDisplayOrder(ddldo);
+                    }
+                    // update the users preference
+                    String[] ddldoPrefs = {"DISPLAYNAME", "USERNAME", "SYSTEMNAME", "USERNAMESYSTEMNAME", "SYSTEMNAMEUSERNAME"};
+                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPrefs[ddldo]);
+                });
             }); // addActionListener
 
             dropDownListsDisplayOrderMenu.add(ddldoChoiceMenuItem);
@@ -2669,59 +2765,59 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     private void updateComboBoxDropDownListDisplayOrderFromPrefs(Component inComponent) {
         if (inComponent instanceof JmriBeanComboBox) {
-            String windowFrameRef = getWindowFrameRef();
-
-            // this is the preference name
-            String ddldoPrefName = "DropDownListsDisplayOrder";
-
-            // this is the default value if we can't find it in any preferences
-            String ddldoPref = "DISPLAYNAME";
-
             // try to get the preference
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
-            if (null != ddldoProp) {
-                // this will be the value if this combo box doesn't have a saved preference.
-                ddldoPref = ddldoProp.toString();
-            } else {
-                // save a default preference
-                prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                String windowFrameRef = getWindowFrameRef();
 
-            // now try to get a preference specific to this combobox
-            JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
-            String ttt = jbcb.getToolTipText();
-            if (null != ttt) {
-                // change the name of the preference based on the tool tip text
-                ddldoPrefName = ddldoPrefName + "." + ttt;
-                // try to get the preference
-                ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                if (null != ddldoProp) { // if we found it…
-                    ddldoPref = ddldoProp.toString();   // get it's (string value
-                } else {    // …otherwise…
-                    // save it in the users preferences
+                // this is the preference name
+                String ddldoPrefName = "DropDownListsDisplayOrder";
+
+                // this is the default value if we can't find it in any preferences
+                String ddldoPref = "DISPLAYNAME";
+
+                Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
+                if (null != ddldoProp) {
+                    // this will be the value if this combo box doesn't have a saved preference.
+                    ddldoPref = ddldoProp.toString();
+                } else {
+                    // save a default preference
                     prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                 }
-            }
 
-            // now set the combo box display order
-            if (ddldoPref.equals("DISPLAYNAME")) {
-                jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
-            } else if (ddldoPref.equals("USERNAME")) {
-                jbcb.setDisplayOrder(JmriBeanComboBox.USERNAME);
-            } else if (ddldoPref.equals("SYSTEMNAME")) {
-                jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAME);
-            } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
-                jbcb.setDisplayOrder(JmriBeanComboBox.USERNAMESYSTEMNAME);
-            } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
-                jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAMEUSERNAME);
-            } else {
-                // must be a bogus value… lets re-set everything to DISPLAYNAME
-                ddldoPref = "DISPLAYNAME";
-                prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
-            }
-        } else if (inComponent instanceof Container) {
+                // now try to get a preference specific to this combobox
+                JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
+                String ttt = jbcb.getToolTipText();
+                if (null != ttt) {
+                    // change the name of the preference based on the tool tip text
+                    ddldoPrefName = ddldoPrefName + "." + ttt;
+                    // try to get the preference
+                    ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                    if (null != ddldoProp) { // if we found it…
+                        ddldoPref = ddldoProp.toString();   // get it's (string value
+                    } else {    // …otherwise…
+                        // save it in the users preferences
+                        prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                    }
+                }
+                // now set the combo box display order
+                if (ddldoPref.equals("DISPLAYNAME")) {
+                    jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+                } else if (ddldoPref.equals("USERNAME")) {
+                    jbcb.setDisplayOrder(JmriBeanComboBox.USERNAME);
+                } else if (ddldoPref.equals("SYSTEMNAME")) {
+                    jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAME);
+                } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
+                    jbcb.setDisplayOrder(JmriBeanComboBox.USERNAMESYSTEMNAME);
+                } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
+                    jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+                } else {
+                    // must be a bogus value… lets re-set everything to DISPLAYNAME
+                    ddldoPref = "DISPLAYNAME";
+                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                    jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+                }
+             });
+           } else if (inComponent instanceof Container) {
             for (Component c : ((Container) inComponent).getComponents()) {
                 updateComboBoxDropDownListDisplayOrderFromPrefs(c);
             }
@@ -2737,8 +2833,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // null if edit toolbar not setup yet…
         if (editToolBarContainer != null && !newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
+            });
             toolBarIsVertical = (toolBarSide.equals(eToolBarSide.eRIGHT) || toolBarSide.equals(eToolBarSide.eLEFT));
             setupToolBar(); // re-layout all the toolbar items
             editToolBarContainer.setVisible(isEditable());
@@ -2771,10 +2868,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             toolBarIsWideItem.setSelected(toolBarIsWide);
 
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            // Note: since prefs default to false and we want wide to be the default
-            // we invert it and save it as thin
-            prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".toolBarThin", !toolBarIsWide);
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                // Note: since prefs default to false and we want wide to be the default
+                // we invert it and save it as thin
+                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".toolBarThin", !toolBarIsWide);
+            });
 
             setupToolBar(); // re-layout all the toolbar items
 
@@ -2890,12 +2988,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // Note: We have to invoke this later because everything's not setup yet
         SwingUtilities.invokeLater(() -> {
             // get the window specific saved zoom user preference
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
-            log.debug("{} zoom is {}", getWindowFrameRef(), zoomProp);
-            if (zoomProp != null) {
-                setZoom((Double) zoomProp);
-            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
+                log.debug("{} zoom is {}", getWindowFrameRef(), zoomProp);
+                if (zoomProp != null) {
+                    setZoom((Double) zoomProp);
+                }
+            });
         });
     }
 
@@ -2930,8 +3029,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             selectZoomMenuItem(newZoom);
 
             // save the window specific saved zoom user preference
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
+            });
         }
         return getPaintScale();
     }
@@ -3950,9 +4050,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         upperLeftX = pt.x;
         upperLeftY = pt.y;
 
-        UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-        //if (null != prefsMgr) 
-        {
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
             String windowFrameRef = getWindowFrameRef();
             // the restore code for this isn't working…
             // prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
@@ -3965,7 +4063,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
                 log.info("testing prefsProp: " + prefsProp);
             }
-        }
+        });
 
         log.debug("setCurrentPositionAndSize Position - " + upperLeftX + "," + upperLeftY + " WindowSize - " + windowWidth + "," + windowHeight + " PanelSize - " + panelWidth + "," + panelHeight);
         setDirty(true);
@@ -9235,8 +9333,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (highlightSelectedBlockItem != null) {
                 highlightSelectedBlockItem.setSelected(highlightSelectedBlockFlag);
             }
-            UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
+            });
 
             if (highlightSelectedBlockFlag) {
                 // use the "Extra" color to highlight the selected block
