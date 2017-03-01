@@ -749,38 +749,6 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    public void testSetTableColumnPreferences() {
-    }
-
-    @Test
-    public void testGetTableColumnOrder() {
-    }
-
-    @Test
-    public void testGetTableColumnWidth() {
-    }
-
-    @Test
-    public void testGetTableColumnSort() {
-    }
-
-    @Test
-    public void testGetTableColumnHidden() {
-    }
-
-    @Test
-    public void testGetTableColumnAtNum() {
-    }
-
-    @Test
-    public void testGetTablesList() {
-    }
-
-    @Test
-    public void testGetTablesColumnList() {
-    }
-
-    @Test
     public void testGetClassDescription_0args() {
     }
 
