@@ -430,6 +430,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         dirty = false;
     }
 
+    /**
+     * Check if this object is loading preferences from storage.
+     *
+     * @return true if loading preferences; false otherwise
+     */
+    protected boolean isLoading() {
+        return loading;
+    }
+
     @Override
     public void setLoading() {
         loading = true;

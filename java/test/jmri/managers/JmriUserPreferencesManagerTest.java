@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
@@ -13,6 +15,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -434,35 +437,98 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    public void testGetComboBoxName() {
-    }
-
-    @Test
-    public void testGetComboBoxLastSelection_int() {
-    }
-
-    @Test
     public void testGetChangeMade() {
+        JmriUserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertFalse(m.getChangeMade());
+        m.setChangeMade(false);
+        Assert.assertTrue(m.getChangeMade());
+        m.resetChangeMade();
+        Assert.assertFalse(m.getChangeMade());
     }
 
     @Test
+    @Ignore // what is best way to verify property event was fired?
     public void testSetChangeMade() {
+        JmriUserPreferencesManager m = new JmriUserPreferencesManager();
+        Listener l = new Listener();
+        m.addPropertyChangeListener(l);
+        Assert.assertFalse(m.getChangeMade());
+        m.setChangeMade(false);
+        Assert.assertTrue(m.getChangeMade());
+        Assert.assertNull(l.event);
+        m.setChangeMade(true);
+        Assert.assertNotNull(l.event);
+        Assert.assertEquals(UserPreferencesManager.PREFERENCES_UPDATED, l.event.getPropertyName());
+        Assert.assertNull(l.event.getOldValue());
+        Assert.assertNull(l.event.getNewValue());
     }
 
     @Test
     public void testResetChangeMade() {
+        JmriUserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertFalse(m.getChangeMade());
+        m.setChangeMade(false);
+        Assert.assertTrue(m.getChangeMade());
+        m.resetChangeMade();
+        Assert.assertFalse(m.getChangeMade());
+        m.resetChangeMade();
+        Assert.assertFalse(m.getChangeMade());
+    }
+
+    @Test
+    public void testIsLoading() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertFalse(m.isLoading());
+        m.setLoading();
+        Assert.assertTrue(m.isLoading());
+        m.finishLoading();
+        Assert.assertFalse(m.isLoading());
     }
 
     @Test
     public void testSetLoading() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertFalse(m.isLoading());
+        m.setLoading();
+        Assert.assertTrue(m.isLoading());
+        m.finishLoading();
+        Assert.assertFalse(m.isLoading());
     }
 
     @Test
     public void testFinishLoading() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertFalse(m.isLoading());
+        m.finishLoading();
+        Assert.assertFalse(m.isLoading());
+        m.setLoading();
+        Assert.assertTrue(m.isLoading());
+        m.finishLoading();
+        Assert.assertFalse(m.isLoading());
     }
 
     @Test
     public void testDisplayRememberMsg() {
+        TestJmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        m.setLoading();
+        m.displayRememberMsg();
+        Assert.assertNull(m.title);
+        Assert.assertNull(m.message);
+        Assert.assertNull(m.strClass);
+        Assert.assertNull(m.item);
+        Assert.assertNull(m.alwaysRemember);
+        Assert.assertNull(m.sessionOnly);
+        Assert.assertEquals(-1, m.type);
+        m.finishLoading();
+        //Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), "reminder"
+        m.displayRememberMsg();
+        Assert.assertEquals(Bundle.getMessage("Reminder"), m.title);
+        Assert.assertEquals(Bundle.getMessage("ReminderLine"), m.message);
+        Assert.assertEquals(m.getClass().getName(), m.strClass);
+        Assert.assertEquals("reminder", m.item);
+        Assert.assertTrue(m.alwaysRemember);
+        Assert.assertFalse(m.sessionOnly);
+        Assert.assertEquals(JOptionPane.INFORMATION_MESSAGE, m.type);
     }
 
     @Test
@@ -715,13 +781,33 @@ public class JmriUserPreferencesManagerTest {
         }
 
         /**
-         * Expose the HashMap of comboBox last selections for testing purposes
-         * (this could also be done using introspection).
+         * Expose the HashMap of comboBox last selections for testing purposes.
          *
          * @return the map of combo box last selections
          */
         public HashMap<String, String> getComboBoxLastSelection() {
             return this.comboBoxLastSelection;
         }
+
+        /**
+         * Expose the loading flag for testing purposes by changing the method
+         * scope from protected to public.
+         *
+         * {@inheritDoc}
+         */
+        public boolean isLoading() {
+            return super.isLoading();
+        }
+    }
+
+    private static class Listener implements PropertyChangeListener {
+
+        public PropertyChangeEvent event = null;
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            this.event = evt;
+        }
+
     }
 }
