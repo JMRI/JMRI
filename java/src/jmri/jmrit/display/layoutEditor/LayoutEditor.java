@@ -2931,9 +2931,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // save the window specific saved zoom user preference
             UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-            if (null != prefsMgr) {
-                prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
-            }
+            prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor);
         }
         return getPaintScale();
     }
@@ -3953,7 +3951,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         upperLeftY = pt.y;
 
         UserPreferencesManager prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
-        if (null != prefsMgr) {
+        //if (null != prefsMgr) 
+        {
             String windowFrameRef = getWindowFrameRef();
             // the restore code for this isn't working…
             // prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
