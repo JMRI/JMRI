@@ -2991,7 +2991,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 String value = var.getTextValue();
                 String originalName = name;
                 String originalValue = value;
-                name = name + " (CV" + var.getCvNum() + ")";
+                name = name + " (CV" + var.getCvNum() + ")"; // NO I18N
 
                 //define index values for name and value substrings
                 int nameLeftIndex = 0;
@@ -3109,11 +3109,11 @@ public class PaneProgPane extends javax.swing.JPanel
                         barCvLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
                         speedWindow.getContentPane().add(barCvLabel);
                     }
-                    JLabel cvLabel = new JLabel("Value");
+                    JLabel cvLabel = new JLabel(Bundle.getMessage("Value"));
                     cvLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
                     cvLabel.setBounds(25, 4, 26, 15);
                     speedWindow.getContentPane().add(cvLabel);
-                    JLabel valueLabel = new JLabel("CV");
+                    JLabel valueLabel = new JLabel("CV"); // I18N seems undesirable for support
                     valueLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
                     valueLabel.setBounds(37, 150, 13, 15);
                     speedWindow.getContentPane().add(valueLabel);
@@ -3134,12 +3134,14 @@ public class PaneProgPane extends javax.swing.JPanel
 //            Check how many Cvs there are to print
                 int cvCount = cvList.size();
                 w.setFontStyle(Font.BOLD); //set font to Bold
-                // print a simple heading
-                s = "                 Value                       Value                       Value";
+                // print a simple heading with I18N
+                s = String.format("%1$21s", Bundle.getMessage("Value")) + String.format("%1$28s", Bundle.getMessage("Value")) +
+                        String.format("%1$28s", Bundle.getMessage("Value"));
                 w.write(s, 0, s.length());
                 w.writeBorders();
                 s = "\n";
                 w.write(s, 0, s.length());
+                // NO I18N
                 s = "            CV  Dec Hex                 CV  Dec Hex                 CV  Dec Hex";
                 w.write(s, 0, s.length());
                 w.writeBorders();

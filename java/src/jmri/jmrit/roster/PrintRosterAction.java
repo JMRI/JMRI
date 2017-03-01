@@ -69,7 +69,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         if (rosterGroup == null) {
             title = title + " " + Bundle.getMessage("ALLENTRIES");
         } else {
-            title = title + " " + Bundle.getMessage("TitleGroup") + " - " + Bundle.getMessage("TitleEntries", rosterGroup);
+            title = title + " " + Bundle.getMessage("TitleGroup") + " " + Bundle.getMessage("TitleEntries", rosterGroup);
         }
         HardcopyWriter writer = null;
         try {

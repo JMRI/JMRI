@@ -111,9 +111,13 @@ public class PrintCvAction extends AbstractAction {
             writer.write(tableBottomRow, tableLeft, tableBottomRow, tableRight);
 
             writer.setFontStyle(1);  //set font to Bold
-            // print a simple heading
-            s = "                 Value                   Value                   Value\n";
+            // print a simple heading with I18N
+            s = String.format("%1$21s", Bundle.getMessage("Value")) + String.format("%1$24s", Bundle.getMessage("Value")) +
+                    String.format("%1$24s", Bundle.getMessage("Value"));
             writer.write(s, 0, s.length());
+            s = "\n";
+            writer.write(s, 0, s.length());
+            // NO I18N
             s = "            CV  Dec Hex             CV  Dec Hex             CV  Dec Hex\n";
             writer.write(s, 0, s.length());
             writer.setFontStyle(0); //set font back to Normal

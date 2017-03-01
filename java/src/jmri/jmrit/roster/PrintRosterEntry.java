@@ -213,6 +213,7 @@ public class PrintRosterEntry implements PaneContainer {
         p1.add(l1);
         JPanel select = new JPanel();
         select.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ItemsLabel")));
+        // add checkboxes for all items
         final Hashtable<JCheckBox, PaneProgPane> printList = new Hashtable<JCheckBox, PaneProgPane>();
         select.setLayout(new BoxLayout(select, BoxLayout.PAGE_AXIS));
         final JCheckBox funct = new JCheckBox(Bundle.getMessage("LabelFunctionList"));
@@ -224,6 +225,7 @@ public class PrintRosterEntry implements PaneContainer {
         });
         _flPane.includeInPrint(false);
         select.add(funct);
+        // Error as list is always 1 item long, even if empty
         for (int i = 0; i < _paneList.size(); i++) {
             final PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             pane.includeInPrint(false);

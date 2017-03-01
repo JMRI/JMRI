@@ -284,8 +284,8 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                 spaces.append(" ");
             }
             // start with pane name in bold
-            String heading1 = "Function";
-            String heading2 = "Description";
+            String heading1 = Bundle.getMessage("ColumnHeadingFunction");
+            String heading2 = Bundle.getMessage("ColumnHeadingDescription");
             String s;
             int interval = spaces.length() - heading1.length();
             w.setFontStyle(Font.BOLD);
