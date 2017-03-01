@@ -16,6 +16,11 @@ public class DoubleTurnoutSignalHeadTest {
 
     @Test
     public void testCTor() {
+        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT1");
+        NamedBeanHandle green = new NamedBeanHandle("green handle",it);
+        Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT3");
+        NamedBeanHandle red = new NamedBeanHandle("red handle",it2);
+        DoubleOutputSignalHead t = new DoubleOutputSignalHead("Test Head",green,red);
         DoubleTurnoutSignalHead t = new DoubleTurnoutSignalHead();
         Assert.assertNotNull("exists",t);
     }
@@ -25,6 +30,7 @@ public class DoubleTurnoutSignalHeadTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
     @After

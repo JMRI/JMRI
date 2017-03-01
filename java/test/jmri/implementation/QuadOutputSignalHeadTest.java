@@ -24,9 +24,7 @@ public class QuadOutputSignalHeadTest {
         NamedBeanHandle yellow = new NamedBeanHandle("yellpw handle",it3);
         Turnout it4 = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT4");
         NamedBeanHandle lunar = new NamedBeanHandle("lunar handle",it4);
-
-
-        QuadOutputSignalHead t = new QuadOutputSignalHead();
+        QuadOutputSignalHead t = new QuadOutputSignalHead("Test Head",green,red,yellow,lunar);
         Assert.assertNotNull("exists",t);
     }
 
