@@ -769,7 +769,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     @Override
-    public boolean isWindowPositionSaved(String strClass) {
+    public boolean hasProperties(String strClass) {
         return windowDetails.containsKey(strClass);
     }
 

@@ -571,7 +571,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
-    public boolean isWindowPositionSaved(String strClass) {
+    public boolean hasProperties(String strClass) {
         return windowDetails.containsKey(strClass);
     }
 

@@ -534,12 +534,25 @@ public interface UserPreferencesManager {
     public ArrayList<String> getWindowList();
 
     /**
-     * Do we have a saved window position for the class
+     * Do we have a saved set of properties for the class
      *
      * @param strClass class to check
-     * @return true if the window position details are stored, false if not.
+     * @return true if the window position details are stored; false otherwise
+     * @deprecated since 4.7.2; use {@link #hasProperties(java.lang.String)}
+     * instead
      */
-    public boolean isWindowPositionSaved(String strClass);
+    @Deprecated
+    public default boolean isWindowPositionSaved(String strClass) {
+        return this.hasProperties(strClass);
+    }
+
+    /**
+     * Check if there are properties for the given class
+     *
+     * @param strClass class to check
+     * @return true if properties for strClass are maintained; false otherwise
+     */
+    public boolean hasProperties(String strClass);
 
     public boolean getSaveWindowSize(String strClass);
 
