@@ -72,7 +72,7 @@ public class PrintRosterEntry implements PaneContainer {
         IndexedCvTableModel iCvModel = new IndexedCvTableModel(progStatus, mProgrammer);
 
         VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"},
-                cvModel, iCvModel);
+                cvModel, iCvModel); // NOI18N
 
         String decoderModel = _rosterEntry.getDecoderModel();
         String decoderFamily = _rosterEntry.getDecoderFamily();
@@ -199,14 +199,14 @@ public class PrintRosterEntry implements PaneContainer {
         final JFrame frame = new JFrame("Select Items to Print");
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
-        JLabel l1 = new JLabel("Select the items that you");
+        JLabel l1 = new JLabel(Bundle.getMessage("LabelSelectLine1"));
         p1.add(l1);
-        l1 = new JLabel("wish to appear in the print out");
+        l1 = new JLabel(Bundle.getMessage("LabelSelectLine2"));
         p1.add(l1);
         JPanel select = new JPanel();
         final Hashtable<JCheckBox, PaneProgPane> printList = new Hashtable<JCheckBox, PaneProgPane>();
         select.setLayout(new BoxLayout(select, BoxLayout.PAGE_AXIS));
-        final JCheckBox funct = new JCheckBox("Function List");
+        final JCheckBox funct = new JCheckBox(Bundle.getMessage("LabelFunctionList"));
         funct.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,7 +228,8 @@ public class PrintRosterEntry implements PaneContainer {
             });
             select.add(item);
         }
-        final JCheckBox selectAll = new JCheckBox("Select All");
+        select.add(new JLabel(" ")); // spacer
+        final JCheckBox selectAll = new JCheckBox(Bundle.getMessage("SelectAll"));
         selectAll.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,7 +245,7 @@ public class PrintRosterEntry implements PaneContainer {
         });
         select.add(selectAll);
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
-        JButton ok = new JButton(Bundle.getMessage("ButtonOkay"));
+        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
 
         cancel.addActionListener(new java.awt.event.ActionListener() {
             @Override
