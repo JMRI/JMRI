@@ -942,29 +942,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param item          String value of the specific item this is used for.
      * @param description   A meaningful description that can be used in a label
      *                      to describe the item
-     * @param msgOption     Description of each option valid option.
-     * @param msgNumber     The references number against which the Description
-     *                      is refering too.
-     * @param defaultOption The default option for the given item.
-     */
-    @Override
-    public void setMessageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
-        HashMap<Integer, String> options = new HashMap<Integer, String>(msgOption.length);
-        for (int i = 0; i < msgOption.length; i++) {
-            options.put(msgNumber[i], msgOption[i]);
-        }
-        setMessageItemDetails(strClass, description, item, options, defaultOption);
-    }
-
-    /**
-     * Add descriptive details about a specific message box, so that if it needs
-     * to be reset in the preferences, then it is easily identifiable. displayed
-     * to the user in the preferences GUI.
-     *
-     * @param strClass      String value of the calling class/group
-     * @param item          String value of the specific item this is used for.
-     * @param description   A meaningful description that can be used in a label
-     *                      to describe the item
      * @param options       A map of the integer value of the option against a
      *                      meaningful description.
      * @param defaultOption The default option for the given item.

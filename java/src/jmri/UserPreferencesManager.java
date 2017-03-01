@@ -403,8 +403,18 @@ public interface UserPreferencesManager {
      * @param msgNumber     The references number against which the Description
      *                      is referring too.
      * @param defaultOption The default option for the given item.
+     * @deprecated since 4.7.2; use
+     * {@link #setMessageItemDetails(java.lang.String, java.lang.String, java.lang.String, java.util.HashMap, int)}
+     * instead
      */
-    public void setMessageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption);
+    @Deprecated
+    public default void setMessageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
+        HashMap<Integer, String> options = new HashMap<>(msgOption.length);
+        for (int i = 0; i < msgOption.length; i++) {
+            options.put(msgNumber[i], msgOption[i]);
+        }
+        setMessageItemDetails(strClass, description, item, options, defaultOption);
+    }
 
     /**
      * Add descriptive details about a specific message box, so that if it needs
