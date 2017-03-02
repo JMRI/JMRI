@@ -1194,10 +1194,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveSimplePreferenceState();
         this.saveWindowDetails();
         this.resetChangeMade();
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((manager) -> {
             manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
-        }
+        });
     }
 
     /**
