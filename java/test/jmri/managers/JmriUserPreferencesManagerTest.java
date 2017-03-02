@@ -7,18 +7,28 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.profile.NullProfile;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
+import jmri.util.node.NodeIdentity;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +39,9 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright 2017
  */
 public class JmriUserPreferencesManagerTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManagerTest.class);
     private final String strClass = JmriUserPreferencesManagerTest.class.getName();
@@ -705,39 +718,84 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    public void testSetMessageItemDetails_6args() {
-    }
-
-    @Test
-    public void testSetMessageItemDetails_5args() {
+    public void testSetMessageItemDetails() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertTrue(m.getChoiceOptions(strClass, "item1").isEmpty());
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals(options, m.getChoiceOptions(strClass, "item1"));
     }
 
     @Test
     public void testGetChoiceOptions() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertTrue(m.getChoiceOptions(strClass, "item1").isEmpty());
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals(options, m.getChoiceOptions(strClass, "item1"));
     }
 
     @Test
     public void testGetMultipleChoiceSize() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertEquals(0, m.getMultipleChoiceSize(strClass));
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals(1, m.getMultipleChoiceSize(strClass));
     }
 
     @Test
     public void testGetMultipleChoiceList() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertTrue(m.getMultipleChoiceList(strClass).isEmpty());
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals(1, m.getMultipleChoiceList(strClass).size());
+        Assert.assertEquals("item1", m.getMultipleChoiceList(strClass).get(0));
     }
 
     @Test
     public void testGetChoiceName() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertNull(m.getChoiceName(strClass, 0));
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals("item1", m.getChoiceName(strClass, 0));
     }
 
     @Test
     public void testGetChoiceDescription() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertNull(m.getChoiceDescription(strClass, "item1"));
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals("description1", m.getChoiceDescription(strClass, "item1"));
     }
 
     @Test
     public void testGetMultipleChoiceOption() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals(0, m.getMultipleChoiceOption(strClass, "item1"));
     }
 
     @Test
     public void testGetMultipleChoiceDefaultOption() {
+        UserPreferencesManager m = new JmriUserPreferencesManager();
+        HashMap<Integer, String> options = new HashMap<>();
+        options.put(1, "test1");
+        Assert.assertEquals(0, m.getMultipleChoiceDefaultOption(strClass, "item1"));
+        m.setMessageItemDetails(strClass, "item1", "description1", options, 0);
+        Assert.assertEquals(0, m.getMultipleChoiceDefaultOption(strClass, "item1"));
     }
 
     @Test
@@ -750,33 +808,114 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testGetClassDescription_0args() {
+        JmriUserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertEquals("Preference Manager", m.getClassDescription());
     }
 
     @Test
     public void testGetClassName() {
+        JmriUserPreferencesManager m = new JmriUserPreferencesManager();
+        Assert.assertEquals(JmriUserPreferencesManager.class.getName(), m.getClassName());
     }
 
     @Test
     public void testGetClassPreferences() {
+        JmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertNull(m.getClassPreferences(strClass));
+        m.setPreferenceState(strClass, "test1", true);
+        Assert.assertNotNull(m.getClassPreferences(strClass));
+        Assert.assertEquals(1, m.getClassPreferences(strClass).getPreferenceListSize());
+        Assert.assertEquals("test1", m.getClassPreferences(strClass).getPreferenceList().get(0).getItem());
     }
 
     @Test
     public void testGetPreferencesSize() {
+        JmriUserPreferencesManager m = new TestJmriUserPreferencesManager();
+        Assert.assertNull(m.getClassPreferences(strClass));
+        Assert.assertEquals(0, m.getPreferencesSize(strClass));
+        m.setPreferenceState(strClass, "test1", true);
+        Assert.assertNotNull(m.getClassPreferences(strClass));
+        Assert.assertEquals(1, m.getPreferencesSize(strClass));
+
     }
 
     @Test
-    public void testReadUserPreferences() {
+    @Ignore // identical to testSaveElement; I do not understand why it fails
+    public void testReadUserPreferences() throws IOException {
+        File profile = folder.newFolder(Profile.PROFILE);
+        JUnitUtil.resetProfileManager(new NullProfile(profile));
+        log.debug("profile path: {}", ProfileManager.getDefault().getActiveProfile().getPath());
+        Point location = new Point(69, 96);
+        Dimension windowSize = new Dimension(100, 200);
+        UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
+        m1.setSaveAllowed(false);
+        m1.setProperty(strClass, "test1", "value1");
+        m1.setWindowLocation(strClass, location);
+        m1.setWindowSize(strClass, windowSize);
+        m1.setPreferenceState(strClass, "test2", true);
+        m1.setSimplePreferenceState(strClass, true);
+        m1.setComboBoxLastSelection(strClass, "selection1");
+        m1.setSaveAllowed(true);
+        File sub = new File(profile, "profile");
+        log.debug("node identity: {}", NodeIdentity.identity());
+        File node = new File(sub, NodeIdentity.identity());
+        Assert.assertTrue(node.exists());
+        Assert.assertTrue(node.isDirectory());
+        for (String name : node.list()) {
+            log.debug(name);
+        }
+        File target = new File(new File(new File(profile, "profile"), NodeIdentity.identity()), "user-interface.xml");
+        log.debug("UI preferences file: {}", target);
+        Files.lines(target.toPath()).forEach((line) -> log.debug(line));
+        JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
+        m2.readUserPreferences();
+        Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
+        Assert.assertEquals(location, m2.getWindowLocation(strClass));
+        Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
+        Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
+        Assert.assertEquals(true, m2.getSimplePreferenceState(strClass));
+        Assert.assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
     }
 
     @Test
-    public void testSaveElement() {
+    public void testSaveElement() throws IOException {
+        File profile = folder.newFolder(Profile.PROFILE);
+        JUnitUtil.resetProfileManager(new NullProfile(profile));
+        log.debug("profile path: {}", ProfileManager.getDefault().getActiveProfile().getPath());
+        Point location = new Point(69, 96);
+        Dimension windowSize = new Dimension(100, 200);
+        UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
+        m1.setSaveAllowed(false);
+        m1.setProperty(strClass, "test1", "value1");
+        m1.setWindowLocation(strClass, location);
+        m1.setWindowSize(strClass, windowSize);
+        m1.setPreferenceState(strClass, "test2", true);
+        m1.setSimplePreferenceState(strClass, true);
+        m1.setComboBoxLastSelection(strClass, "selection1");
+        m1.setSaveAllowed(true);
+        File sub = new File(profile, "profile");
+        log.debug("node identity: {}", NodeIdentity.identity());
+        File node = new File(sub, NodeIdentity.identity());
+        for (String name : node.list()) {
+            log.debug(name);
+        }
+        File target = new File(new File(new File(profile, "profile"), NodeIdentity.identity()), "user-interface.xml");
+        log.debug("UI preferences file: {}", target);
+        Files.lines(target.toPath()).forEach((line) -> log.debug(line));
+        JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
+        m2.readUserPreferences();
+        Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
+        Assert.assertEquals(location, m2.getWindowLocation(strClass));
+        Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
+        Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
+        Assert.assertEquals(true, m2.getSimplePreferenceState(strClass));
+        Assert.assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
     }
 
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        System.setProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");
     }
 
     @After
@@ -799,7 +938,7 @@ public class JmriUserPreferencesManagerTest {
         protected TestJmriUserPreferencesManager() {
             super();
         }
-        
+
         @Override
         protected void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
             this.title = title;
@@ -828,6 +967,7 @@ public class JmriUserPreferencesManagerTest {
          *
          * {@inheritDoc}
          */
+        @Override
         protected boolean isLoading() {
             return super.isLoading();
         }
