@@ -3018,6 +3018,8 @@ public class TrainBuilder extends TrainCommon {
             return true;
         }
         if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
+                    new Object[]{terminateStageTrack.getName(), _train.getName()}));
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildOptionRestrictStaging"));
             return false;
         }
