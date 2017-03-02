@@ -511,6 +511,8 @@ public class TrainBuilder extends TrainCommon {
                                     Integer.toString(track.getNumberCars())}));
                     // is the departure track available?
                     if (!checkDepartureStagingTrack(track)) {
+                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
+                                new Object[]{track.getName(), _train.getName()}));
                         continue;
                     }
                     _departStageTrack = track;
