@@ -16,7 +16,9 @@ public class SignalMastRepeaterTest {
 
     @Test
     public void testCTor() {
-        SignalMastRepeater t = new SignalMastRepeater();
+        VirtualSignalMast s1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
+        VirtualSignalMast s2 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($2)");
+        SignalMastRepeater t = new SignalMastRepeater(s1,s2);
         Assert.assertNotNull("exists",t);
     }
 

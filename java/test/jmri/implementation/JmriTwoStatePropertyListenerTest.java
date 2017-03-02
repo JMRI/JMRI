@@ -16,7 +16,7 @@ public class JmriTwoStatePropertyListenerTest {
 
     @Test
     public void testCTor() {
-        JmriTwoStatePropertyListener t = new JmriTwoStatePropertyListener();
+        JmriTwoStatePropertyListener t = new JmriTwoStatePropertyListener("foo",0,"bar",1,new DefaultConditional("foo"));
         Assert.assertNotNull("exists",t);
     }
 

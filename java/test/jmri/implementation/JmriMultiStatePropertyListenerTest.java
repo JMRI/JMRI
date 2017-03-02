@@ -16,7 +16,7 @@ public class JmriMultiStatePropertyListenerTest {
 
     @Test
     public void testCTor() {
-        JmriMultiStatePropertyListener t = new JmriMultiStatePropertyListener();
+        JmriMultiStatePropertyListener t = new JmriMultiStatePropertyListener("foo",0,"bar",1,new DefaultConditional("foo"),0);
         Assert.assertNotNull("exists",t);
     }
 

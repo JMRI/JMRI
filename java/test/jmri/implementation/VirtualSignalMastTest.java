@@ -16,7 +16,7 @@ public class VirtualSignalMastTest {
 
     @Test
     public void testCTor() {
-        VirtualSignalMast t = new VirtualSignalMast("Virtual Signal Mast Test");
+        VirtualSignalMast t = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
         Assert.assertNotNull("exists",t);
     }
 

@@ -15,14 +15,8 @@ import org.slf4j.LoggerFactory;
 public class NamedBeanHandleTest {
 
     @Test
-    public void testCTor() {
-        NamedBeanHandle t = new NamedBeanHandle();
-        Assert.assertNotNull("exists",t);
-    }
-
-    @Test
     public void testParmaterizedCTor(){
-        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT1");
+        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
         NamedBeanHandle t = new NamedBeanHandle("test handle",it);
         Assert.assertNotNull("exists",t);
        

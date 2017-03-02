@@ -7,6 +7,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.TurnoutManager;
+import jmri.Turnout;
 
 /**
  *
@@ -16,7 +19,9 @@ public class RawTurnoutOperatorTest {
 
     @Test
     public void testCTor() {
-        RawTurnoutOperator t = new RawTurnoutOperator();
+        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
+        RawTurnoutOperator t = new RawTurnoutOperator((AbstractTurnout)it,5,5);
+        jmri.util.JUnitAppender.assertErrorMessage("No match against the command station for IT1, so will use the default");
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +30,7 @@ public class RawTurnoutOperatorTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
     @After

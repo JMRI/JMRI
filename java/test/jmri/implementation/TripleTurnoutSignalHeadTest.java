@@ -7,6 +7,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.TurnoutManager;
+import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 /**
  *
@@ -16,7 +20,13 @@ public class TripleTurnoutSignalHeadTest {
 
     @Test
     public void testCTor() {
-        TripleTurnoutSignalHead t = new TripleTurnoutSignalHead();
+        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
+        NamedBeanHandle green = new NamedBeanHandle("green handle",it);
+        Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT3");
+        NamedBeanHandle red = new NamedBeanHandle("red handle",it2);
+        Turnout it3 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT2");
+        NamedBeanHandle yellow = new NamedBeanHandle("yellpw handle",it3);
+        TripleTurnoutSignalHead t = new TripleTurnoutSignalHead("Test Head",green,red,yellow);
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +35,7 @@ public class TripleTurnoutSignalHeadTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
     @After

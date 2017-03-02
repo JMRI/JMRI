@@ -16,7 +16,8 @@ public class DefaultSignalMastLogicTest {
 
     @Test
     public void testCTor() {
-        DefaultSignalMastLogic t = new DefaultSignalMastLogic();
+        VirtualSignalMast s1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
+        DefaultSignalMastLogic t = new DefaultSignalMastLogic(s1);
         Assert.assertNotNull("exists",t);
     }
 

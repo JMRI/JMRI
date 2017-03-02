@@ -16,7 +16,7 @@ public class JmriSimplePropertyListenerTest {
 
     @Test
     public void testCTor() {
-        JmriSimplePropertyListener t = new JmriSimplePropertyListener();
+        JmriSimplePropertyListener t = new JmriSimplePropertyListener("foo",0,"bar",1,new DefaultConditional("foo"));
         Assert.assertNotNull("exists",t);
     }
 

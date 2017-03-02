@@ -16,7 +16,7 @@ public class SensorGroupConditionalTest {
 
     @Test
     public void testCTor() {
-        SensorGroupConditional t = new SensorGroupConditional();
+        SensorGroupConditional t = new SensorGroupConditional("testSystem","testUser");
         Assert.assertNotNull("exists",t);
     }
 

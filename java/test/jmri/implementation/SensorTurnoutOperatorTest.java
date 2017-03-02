@@ -7,6 +7,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.TurnoutManager;
+import jmri.Turnout;
 
 /**
  *
@@ -16,7 +19,8 @@ public class SensorTurnoutOperatorTest {
 
     @Test
     public void testCTor() {
-        SensorTurnoutOperator t = new SensorTurnoutOperator();
+        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
+        SensorTurnoutOperator t = new SensorTurnoutOperator((AbstractTurnout)it,5,5);
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +29,7 @@ public class SensorTurnoutOperatorTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
     @After

@@ -16,7 +16,7 @@ public class JmriMemoryPropertyListenerTest {
 
     @Test
     public void testCTor() {
-        JmriMemoryPropertyListener t = new JmriMemoryPropertyListener();
+        JmriMemoryPropertyListener t = new JmriMemoryPropertyListener("foo",0,"bar",1,new DefaultConditional("foo"),"test");
         Assert.assertNotNull("exists",t);
     }
 

@@ -7,6 +7,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.TurnoutManager;
+import jmri.Turnout;
+import jmri.NamedBeanHandle;
 
 /**
  *
@@ -16,13 +20,13 @@ public class QuadOutputSignalHeadTest {
 
     @Test
     public void testCTor() {
-        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT1");
+        Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
         NamedBeanHandle green = new NamedBeanHandle("green handle",it);
-        Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT3");
+        Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT3");
         NamedBeanHandle red = new NamedBeanHandle("red handle",it2);
-        Turnout it3 = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT2");
+        Turnout it3 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT2");
         NamedBeanHandle yellow = new NamedBeanHandle("yellpw handle",it3);
-        Turnout it4 = (InstanceManager.getDefault(TurnoutManager.class)).proivdeTurnout("IT4");
+        Turnout it4 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT4");
         NamedBeanHandle lunar = new NamedBeanHandle("lunar handle",it4);
         QuadOutputSignalHead t = new QuadOutputSignalHead("Test Head",green,red,yellow,lunar);
         Assert.assertNotNull("exists",t);

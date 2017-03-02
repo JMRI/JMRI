@@ -16,7 +16,7 @@ public class AbstractRailComReporterTest {
 
     @Test
     public void testCTor() {
-        AbstractRailComReporter t = new AbstractRailComReporter();
+        AbstractRailComReporter t = new AbstractRailComReporter("IR1");
         Assert.assertNotNull("exists",t);
     }
 
