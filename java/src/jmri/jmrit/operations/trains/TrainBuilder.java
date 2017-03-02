@@ -511,6 +511,8 @@ public class TrainBuilder extends TrainCommon {
                                     Integer.toString(track.getNumberCars())}));
                     // is the departure track available?
                     if (!checkDepartureStagingTrack(track)) {
+                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
+                                new Object[]{track.getName(), _train.getName()}));
                         continue;
                     }
                     _departStageTrack = track;
@@ -3018,6 +3020,8 @@ public class TrainBuilder extends TrainCommon {
             return true;
         }
         if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
+                    new Object[]{terminateStageTrack.getName(), _train.getName()}));
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildOptionRestrictStaging"));
             return false;
         }
