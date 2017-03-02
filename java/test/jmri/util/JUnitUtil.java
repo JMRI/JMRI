@@ -461,15 +461,17 @@ public class JUnitUtil {
 
     /**
      * Use if the profile needs to be written to or cleared as part of the test.
-     * Suggested use in the {@link org.junit.Before} annotated method is: {@code
+     * Suggested use in the {@link org.junit.Before} annotated method is:
+     * <code>
      *
-     * @Rule public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
+     * @Rule
+     * public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
      *
      * @Before
      * public void setUp() {
-     *     resetProfileManager(new jmri.profile.NullProfile(new java.io.File(folder.newFolder(jmri.profile.Profile.PROFILE), "test")));
+     *     resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
      * }
-     * }
+     * </code>
      *
      * @param profile the provided profile
      */
