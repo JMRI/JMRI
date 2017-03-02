@@ -22,7 +22,7 @@ public class DefaultConditionalTest extends NamedBeanTest {
     }
 
     public void testCtor() {
-        new DefaultConditional("IXIC 1");
+        Assert.assertNotNull("exists",new DefaultConditional("IXIC 1"));
     }
 
     public void testBasicBeanOperations() {
