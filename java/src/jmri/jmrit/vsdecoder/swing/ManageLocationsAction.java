@@ -136,7 +136,7 @@ public class ManageLocationsAction extends AbstractAction {
         f.setExtendedState(Frame.NORMAL);
     }
 
-    static private Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(ManageLocationsAction.class.getName());
 
 }
