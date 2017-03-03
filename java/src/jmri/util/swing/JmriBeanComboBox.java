@@ -152,19 +152,28 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
     
     /**
+     * Get the selected namedBean
+     *
+     * @return the selected bean or null if there is no selection
+     */
+    public NamedBean getSelectedNamedBean() {
+        String selectedName = (String) super.getSelectedItem();
+        return displayToBean.get(selectedName);
+    }
+
+    /**
      * Get the User name of the selected namedBean
      *
      * @return the user name of the selected bean or null if there is no
      *         selection
      */
     public String getSelectedUserName() {
-        String selectedName = (String) super.getSelectedItem();
-        NamedBean nBean = displayToBean.get(selectedName);
+        String result = null;
+        NamedBean nBean = getSelectedNamedBean();
         if (nBean != null) {
-            return nBean.getDisplayName();
+            result = nBean.getDisplayName();
         }
-        return null;
-
+        return result;
     }
 
     /**
@@ -174,12 +183,12 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *         selection
      */
     public String getSelectedSystemName() {
-        String selectedName = (String) super.getSelectedItem();
-        NamedBean nBean = displayToBean.get(selectedName);
+        String result = null;
+        NamedBean nBean = getSelectedNamedBean();
         if (nBean != null) {
-            return nBean.getSystemName();
+            result = nBean.getSystemName();
         }
-        return null;
+        return result;
     }
 
     /**
@@ -189,13 +198,13 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *         selection
      */
     public String getSelectedDisplayName() {
-        String selectedName = (String) super.getSelectedItem();
-        NamedBean nBean = displayToBean.get(selectedName);
+          String result = null;
+        NamedBean nBean = getSelectedNamedBean();
         if (nBean != null) {
-            return nBean.getDisplayName();
+            result = nBean.getDisplayName();
         }
-        return null;
-    }
+        return result;
+   }
 
     /**
      * Get the display order of the combobox

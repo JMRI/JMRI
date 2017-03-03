@@ -27,6 +27,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -854,14 +856,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //change the block name
         blockIDComboBox.addActionListener((ActionEvent a) -> {
-            String newName = getUserNameForComboBox(blockIDComboBox);
-
             //use the "Extra" color to highlight the selected block
             if (highlightSelectedBlockFlag) {
-                highlightBlockNamed(newName);
+                highlightBlockInComboBox(blockIDComboBox);
             }
+            String newName = getUserNameForComboBox(blockIDComboBox);
             LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
-
             if (b != null) {
                 //if there is an occupancy sensor assigned already
                 String sensorName = b.getOccupancySensorName();
@@ -900,7 +900,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockContentsComboBox.addActionListener((ActionEvent a) -> {
             //use the "Extra" color to highlight the selected block
             if (highlightSelectedBlockFlag) {
-                highlightSelectedBlock(blockContentsComboBox);
+                highlightBlockInComboBox(blockContentsComboBox);
             }
         });
 
@@ -1092,24 +1092,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
                 prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
-                log.info("{} prefsProp 1075 is {}", windowFrameRef, prefsProp);
+                //log.info("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
 
                 if (null != prefsProp) {
                     float toolBarFontSize = Float.parseFloat(prefsProp.toString());
-                    setupToolBarFontSizes(toolBarFontSize);
+                    //setupToolBarFontSizes(toolBarFontSize);
                 }
                 updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
 
                 //this doesn't work as expected (1st one called messes up 2nd?)
-                //Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-                //Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                //log.info("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
-                //log.info("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
-                Point prefsWindowLocation = null;
-                Dimension prefsWindowSize = null;
+                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                log.info("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
+                log.info("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
+                //Point prefsWindowLocation = null;
+                //Dimension prefsWindowSize = null;
 
                 //use this instead?
-                if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
+                if (false) { //(Nope, it's not working ether: prefsProp always comes back null)
                     prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
                     log.info("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
 
@@ -1126,7 +1126,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     setLayoutDimensions(prefsWindowSize.width, prefsWindowSize.height,
                             prefsWindowLocation.x, prefsWindowLocation.y,
                             panelWidth, panelHeight);
-                    setAntialiasingOn(prefsAntialiasingOn);
                 }
             }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
         });     //SwingUtilities.invokeLater
@@ -1151,7 +1150,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         FlowLayout floatContentLayout = new FlowLayout(FlowLayout.CENTER, 5, 2);  //5 pixel gap between items, 2 vertical gap
 
         //Contains the block and sensor combo boxes.  It is moved to the appropriate detail pane when the tab changes.
-///zzz
+    ///zzz
         blockPropertiesPanel = new JPanel(floatContentLayout);
         String blockNameString = rb.getString("BlockID");
         blockSensorNameLabel = new JLabel(blockNameString);
@@ -1330,9 +1329,52 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 floatEditTrack.add(blockPropertiesPanel);
             }
         });
+
+        floatingEditTools.addWindowFocusListener(new WindowAdapter() {
+            public void windowLostFocus(WindowEvent e) {
+                if (!checkName(e)) {
+                    floatingEditTools.setVisible(false);
+                }
+            }
+
+            public void windowGainedFocus(WindowEvent e) {
+            }
+
+            private boolean checkName(WindowEvent e) {
+                String arg = "(.*)=" + layoutName + "(.*)";
+                String evt = e.toString();
+                return evt.matches(arg);
+            }
+        });
+
+        thisPanel.addWindowFocusListener(new WindowAdapter() {
+            public void windowLostFocus(WindowEvent e) {
+                if (!checkName(e)) {
+                    floatingEditTools.setVisible(false);
+                }
+            }
+
+            public void windowGainedFocus(WindowEvent e) {
+                if (!checkName(e) &&isEditable() ) {
+                    floatingEditTools.setVisible(true);
+                }
+            }
+
+            private boolean checkName(WindowEvent e) {
+                String arg = "(.*)=Edit: " + layoutName + "(.*)";
+                String evt = e.toString();
+                return evt.matches(arg);
+            }
+        });
     }   //setupFloatingEditTools
 
     private void setupToolBar() {
+        //Initial setup for float
+        if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+            setupFloatingEditTools();
+            return;
+        }
+
         //Initial setup for both horizontal and vertical
         Container contentPane = getContentPane();
 
@@ -1343,11 +1385,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         if (helpBarPanel != null) {
             contentPane.remove(helpBarPanel);
-        }
-
-        if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-            setupFloatingEditTools();
-            return;
         }
 
         boolean toolBarIsVertical = (toolBarSide.equals(eToolBarSide.eRIGHT) || toolBarSide.equals(eToolBarSide.eLEFT));
@@ -1873,10 +1910,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //recursive routine to walk a container hierarchy and set all conponent fonts
     //
     private void recursiveSetFont(Container inContainer, Font inFont) {
-        for (Component c : inContainer.getComponents()) {
-            c.setFont(inFont);
-            if (c instanceof Container) {
-                recursiveSetFont((Container) c, toolBarFont);
+        if (false) {    //<<== disabled as per <https://github.com/JMRI/JMRI/pull/3145#issuecomment-283940658>
+            for (Component c : inContainer.getComponents()) {
+                c.setFont(inFont);
+                if (c instanceof Container) {
+                    recursiveSetFont((Container) c, toolBarFont);
+                }
             }
         }
     } //recursiveSetFont
@@ -2024,7 +2063,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //
     //
-    private NamedBean getBeanForComboBoxEntry(JmriBeanComboBox inComboBox) {
+    private NamedBean getBeanForComboBox(JmriBeanComboBox inComboBox) {
         NamedBean result = null;
 
         jmri.Manager uDaManager = inComboBox.getManager();
@@ -2076,13 +2115,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
         return result;
-    } //getBeanForComboBoxEntry
+    } //getBeanForComboBox
 
     //
     //is the combo box text valid?
     //
     private boolean validateComboBoxEntry(JmriBeanComboBox inComboBox) {
-        return (null != getBeanForComboBoxEntry(inComboBox));
+        return (null != getBeanForComboBox(inComboBox));
     }
 
     //
@@ -2093,7 +2132,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         result = (null != result) ? result.trim() : "";
 
-        NamedBean b = getBeanForComboBoxEntry(inComboBox);
+        NamedBean b = getBeanForComboBox(inComboBox);
 
         if (null != b) {
             result = b.getUserName();
@@ -2296,15 +2335,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 setAllShowTooltip(tooltipsInEditMode);
                 //redo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
-                    if (!highlightSelectedBlock(blockIDComboBox)) {
-                        highlightSelectedBlock(blockContentsComboBox);
+                    if (!highlightBlockInComboBox(blockIDComboBox)) {
+                        highlightBlockInComboBox(blockContentsComboBox);
                     }
                 }
             } else {
                 setAllShowTooltip(tooltipsWithoutEditMode);
                 //undo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
-                    highlightBlockNamed(null);
+                    highlightBlock(null);
                 }
             }
             awaitingIconChange = false;
@@ -2425,7 +2464,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             public void menuCanceled(MenuEvent e) {
             }
         });
-        toolBarMenu.add(toolBarFontSizeMenu);
+        //toolBarMenu.add(toolBarFontSizeMenu); //<<== disabled as per <https://github.com/JMRI/JMRI/pull/3145#issuecomment-283940658>
 
         //
         //setup drop down list display order menu
@@ -3040,6 +3079,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void updateAllComboBoxesDropDownListDisplayOrderFromPrefs() {
         //1st call the recursive funtion starting from the edit toolbar container
         updateComboBoxDropDownListDisplayOrderFromPrefs(editToolBarContainer);
+        updateComboBoxDropDownListDisplayOrderFromPrefs(floatingEditTools);
 
         //and now that that's done update the drop down menu display order menu
         updateDropDownMenuDisplayOrderMenu();
@@ -3050,70 +3090,72 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //note: recursive function that walks down the component / container tree
     //
     private void updateComboBoxDropDownListDisplayOrderFromPrefs(Component inComponent) {
-        if (inComponent instanceof JmriBeanComboBox) {
-            //try to get the preference
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                String windowFrameRef = getWindowFrameRef();
+        if (null != inComponent) {
+            if (inComponent instanceof JmriBeanComboBox) {
+                //try to get the preference
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                    String windowFrameRef = getWindowFrameRef();
 
-                //this is the preference name
-                String ddldoPrefName = "DropDownListsDisplayOrder";
+                    //this is the preference name
+                    String ddldoPrefName = "DropDownListsDisplayOrder";
 
-                //this is the default value if we can't find it in any preferences
-                String ddldoPref = "DISPLAYNAME";
+                    //this is the default value if we can't find it in any preferences
+                    String ddldoPref = "DISPLAYNAME";
 
-                Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
+                    Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
 
-                if (null != ddldoProp) {
-                    //this will be the value if this combo box doesn't have a saved preference.
-                    ddldoPref = ddldoProp.toString();
-                } else {
-                    //save a default preference
-                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                }
-                //now try to get a preference specific to this combobox
-                JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
-                String ttt = jbcb.getToolTipText();
-
-                if (null != ttt) {
-                    //change the name of the preference based on the tool tip text
-                    ddldoPrefName = ddldoPrefName + "." + ttt;
-
-                    //try to get the preference
-                    ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-
-                    if (null != ddldoProp) {                //if we found it…
-                        ddldoPref = ddldoProp.toString();   //get it's (string value
-                    } else {                                //…otherwise…
-                        //save it in the users preferences
+                    if (null != ddldoProp) {
+                        //this will be the value if this combo box doesn't have a saved preference.
+                        ddldoPref = ddldoProp.toString();
+                    } else {
+                        //save a default preference
                         prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                     }
-                }
+                    //now try to get a preference specific to this combobox
+                    JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
+                    String ttt = jbcb.getToolTipText();
 
-                //now set the combo box display order
-                if (ddldoPref.equals("DISPLAYNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
-                } else if (ddldoPref.equals("USERNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.USERNAME);
-                } else if (ddldoPref.equals("SYSTEMNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAME);
-                } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.USERNAMESYSTEMNAME);
-                } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
-                    jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAMEUSERNAME);
-                } else {
-                    //must be a bogus value… lets re-set everything to DISPLAYNAME
-                    ddldoPref = "DISPLAYNAME";
-                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                    jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+                    if (null != ttt) {
+                        //change the name of the preference based on the tool tip text
+                        ddldoPrefName = ddldoPrefName + "." + ttt;
+
+                        //try to get the preference
+                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+
+                        if (null != ddldoProp) {                //if we found it…
+                            ddldoPref = ddldoProp.toString();   //get it's (string value
+                        } else {                                //…otherwise…
+                            //save it in the users preferences
+                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                        }
+                    }
+
+                    //now set the combo box display order
+                    if (ddldoPref.equals("DISPLAYNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+                    } else if (ddldoPref.equals("USERNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.USERNAME);
+                    } else if (ddldoPref.equals("SYSTEMNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAME);
+                    } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.USERNAMESYSTEMNAME);
+                    } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
+                        jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+                    } else {
+                        //must be a bogus value… lets re-set everything to DISPLAYNAME
+                        ddldoPref = "DISPLAYNAME";
+                        prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+                    }
+                });
+            } else if (inComponent instanceof Container) {
+                for (Component c : ((Container) inComponent).getComponents()) {
+                    updateComboBoxDropDownListDisplayOrderFromPrefs(c);
                 }
-            });
-        } else if (inComponent instanceof Container) {
-            for (Component c : ((Container) inComponent).getComponents()) {
-                updateComboBoxDropDownListDisplayOrderFromPrefs(c);
+            } else {
+                //nothing to do here… move along…
             }
-        } else {
-            //nothing to do here… move along
-        }
+        }   // if (null != inComponent) {
     }   //updateComboBoxDropDownListDisplayOrderFromPrefs
 
     //
@@ -3122,7 +3164,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void setToolBarSide(eToolBarSide newToolBarSide) {
         //null if edit toolbar not setup yet…
         //TODO Question:  Does this apply to the float toolbar
-        if ((editToolBarContainer != null) && !newToolBarSide.equals(toolBarSide)) {
+        if ((editToolBarContainer != null) && !toolBarSide.equals(newToolBarSide)) {
             toolBarSide = newToolBarSide;
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
@@ -3131,10 +3173,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setupToolBar(); //re-layout all the toolbar items
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-                floatingEditTools.setVisible(isEditable());
+                editToolBarContainer.setVisible(false);
             } else {
                 editToolBarContainer.setVisible(isEditable());
             }
+
             toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));
             toolBarSideLeftButton.setSelected(toolBarSide.equals(eToolBarSide.eLEFT));
             toolBarSideBottomButton.setSelected(toolBarSide.equals(eToolBarSide.eBOTTOM));
@@ -4443,10 +4486,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             String windowFrameRef = getWindowFrameRef();
 
             //the restore code for this isn't working…
-            //prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
-            //prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
+            prefsMgr.setWindowLocation(windowFrameRef, new Point(upperLeftX, upperLeftY));
+            prefsMgr.setWindowSize(windowFrameRef, new Dimension(windowWidth, windowHeight));
+            
+            if (true) {
+                Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                if ((prefsWindowLocation.x != upperLeftX) || (prefsWindowLocation.y != upperLeftY)) {
+                    log.error("setWindowLocation failure.");
+                }
+                Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                if ((prefsWindowSize.width != windowWidth) || (prefsWindowSize.height != windowHeight)) {
+                    log.error("setWindowSize failure.");
+                }
+            }
+            
             //we're going to use this instead
-            if (true) { //(Nope, it's not working ether)
+            if (false) { //(Nope, it's not working ether)
                 //save it in the user preferences for the window
                 Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
                 prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
@@ -10626,7 +10681,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     } //setAntialiasingOn
 
-    //HACK: enable/disable using the "Extra" color to highlight the selected block
+    // enable/disable using the "Extra" color to highlight the selected block
     public void setHighlightSelectedBlock(boolean state) {
         if (highlightSelectedBlockFlag != state) {
             highlightSelectedBlockFlag = state;
@@ -10641,12 +10696,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if (highlightSelectedBlockFlag) {
                 //use the "Extra" color to highlight the selected block
-                if (!highlightSelectedBlock(blockIDComboBox)) {
-                    highlightSelectedBlock(blockContentsComboBox);
+                if (!highlightBlockInComboBox(blockIDComboBox)) {
+                    highlightBlockInComboBox(blockContentsComboBox);
                 }
             } else {
                 //undo using the "Extra" color to highlight the selected block
-                highlightBlockNamed(null);
+                highlightBlock(null);
             }
         }
     } //setHighlightSelectedBlock
@@ -10654,50 +10709,36 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //highlight the block selected by the specified combo Box
     //
-    private boolean highlightSelectedBlock(JmriBeanComboBox inComboBox) {
-        String newName = getUserNameForComboBox(inComboBox);
-
-        return highlightBlockNamed(((null != newName) && (newName.length() > 0)) ? newName : null);
-    } //highlightSelectedBlock
+    private boolean highlightBlockInComboBox(JmriBeanComboBox inComboBox) {
+        boolean result = false;
+        if (null != inComboBox) {
+            jmri.Block b = (jmri.Block) getBeanForComboBox(inComboBox);
+            result = highlightBlock(b);
+        }
+        return result;
+    } //highlightBlockInComboBox
 
     //
-    //highlight the block named inBlockName; (pass null to un-highlight)
     //
-    private boolean highlightBlockNamed(String inBlockName) {
-        boolean result = false; //assume failure (pessimist!)
+    //
+    private boolean highlightBlock(jmri.Block inBlock) {
+        boolean result = false; // assume failure (pessimist!)
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        jmri.Manager m = blockIDComboBox.getManager();
+        List<NamedBean> l = m.getNamedBeanList();
 
-        int count = blockIDComboBox.getItemCount();
-
-        for (int i = 0; i < count; i++) {
-            String blockNameI = blockIDComboBox.getItemAt(i);
-            LayoutBlock bI = lbm.getByUserName(blockNameI);
-
-            if (bI != null) {
-                boolean enable = ((null != inBlockName) && inBlockName.equals(blockNameI));
-                bI.setUseExtraColor(enable);
+        for (NamedBean nb : l) {
+            jmri.Block b = (jmri.Block) nb;
+            LayoutBlock lb = lbm.getLayoutBlock(b);
+            if (null != lb) {
+                boolean enable = ((null != inBlock) && b.equals(inBlock));
+                lb.setUseExtraColor(enable);
                 result |= enable;
             }
         }
-
-        if ((null != inBlockName) && !result) {
-            count = blockContentsComboBox.getItemCount();
-
-            for (int i = 0; i < count; i++) {
-                String blockNameI = blockContentsComboBox.getItemAt(i);
-                LayoutBlock bI = lbm.getByUserName(blockNameI);
-
-                if (bI != null) {
-                    boolean enable = ((null != inBlockName) && inBlockName.equals(blockNameI));
-                    bI.setUseExtraColor(enable);
-                    result |= enable;
-                    break;
-                }
-            }
-        }
         return result;
-    } //highlightBlockNamed
+    } //highlightBlock
 
     public void setTurnoutCircles(boolean state) {
         if (turnoutCirclesWithoutEditMode != state) {
