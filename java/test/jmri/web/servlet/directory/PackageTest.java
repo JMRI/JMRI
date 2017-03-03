@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    DirectoryHandlerTest.class
+    DirectoryHandlerTest.class,
+    DirectoryResourceTest.class
 })
 
 /**

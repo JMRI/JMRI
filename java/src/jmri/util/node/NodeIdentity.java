@@ -44,13 +44,13 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2013, 2014, 2016
  */
 public class NodeIdentity {
-    
+
     private final ArrayList<String> formerIdentities = new ArrayList<>();
     private String identity = null;
-    
+
     private static NodeIdentity instance = null;
     private final static Logger log = LoggerFactory.getLogger(NodeIdentity.class);
-    
+
     private final static String ROOT_ELEMENT = "nodeIdentityConfig"; // NOI18N
     private final static String NODE_IDENTITY = "nodeIdentity"; // NOI18N
     private final static String FORMER_IDENTITIES = "formerIdentities"; // NOI18N
@@ -58,7 +58,7 @@ public class NodeIdentity {
     private NodeIdentity() {
         init(); // init as a method so the init can be synchronized.
     }
-    
+
     synchronized private void init() {
         File identityFile = this.identityFile();
         if (identityFile.exists()) {
@@ -243,7 +243,7 @@ public class NodeIdentity {
         }
         return sb.toString();
     }
-    
+
     private File identityFile() {
         return new File(FileUtil.getPreferencesPath() + "nodeIdentity.xml"); // NOI18N
     }

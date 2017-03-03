@@ -37,7 +37,8 @@ import org.slf4j.LoggerFactory;
  * next time"
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager} instead.
+ * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager}
+ * instead.
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
 @SuppressFBWarnings(
@@ -54,9 +55,11 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     DefaultUserMessagePreferences(boolean doInit) {
-        if (doInit) init();
+        if (doInit) {
+            init();
+        }
     }
-    
+
     void init() {
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
@@ -98,7 +101,18 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         readUserPreferences();
     }
 
+    @Override
+    public boolean isSaveAllowed() {
+        return DefaultUserMessagePreferencesHolder.instance.allowSave;
+    }
+
+    @Override
+    public void setSaveAllowed(boolean saveAllowed) {
+        DefaultUserMessagePreferencesHolder.instance.allowSave = saveAllowed;
+    }
+
     private static class DefaultUserMessagePreferencesHolder {
+
         static DefaultUserMessagePreferences instance = null;
     }
 
@@ -111,16 +125,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     public static void resetInstance() {
         DefaultUserMessagePreferencesHolder.instance = null;
-    }
-
-    @Override
-    public synchronized void allowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = true;
-    }
-
-    @Override
-    public synchronized void disallowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = false;
     }
 
     @Override
@@ -247,7 +251,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      *                    understand.
      */
     @Override
-    public void preferenceItemDetails(String strClass, String item, String description) {
+    public void setPreferenceItemDetails(String strClass, String item, String description) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
@@ -317,7 +321,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name  A unique identifer for preference.
+     * @param name A unique identifer for preference.
      */
     @Override
     public void setSessionPreferenceState(String name, boolean state) {
@@ -502,28 +506,33 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      */
     @Override
     public void setComboBoxLastSelection(String comboBoxName, String lastValue) {
-        for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
-            if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
-                _comboBoxLastSelection.get(i).setLastValue(lastValue);
+        if (getComboBoxLastSelection(comboBoxName) == null) {
+            ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
+            _comboBoxLastSelection.add(combo);
+        } else {
+            for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
+                if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
+                    _comboBoxLastSelection.get(i).setLastValue(lastValue);
+                }
             }
         }
         setChangeMade(false);
     }
 
     /**
-     * returns the number of comboBox options saved
-     *
+     * @return the number of comboBox options saved
      */
-    @Override
     public int getComboBoxSelectionSize() {
         return _comboBoxLastSelection.size();
     }
 
     /**
-     * returns the ComboBox Name at position n
+     * Get the combo box name at position n in the array of combo box
+     * selections.
      *
+     * @param n the position in the array
+     * @return the ComboBox Name at position n
      */
-    @Override
     public String getComboBoxName(int n) {
         try {
             return _comboBoxLastSelection.get(n).getComboBoxName();
@@ -533,10 +542,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     /**
-     * returns the ComboBox Value at position n
+     * Get the ComboBox Value at position n in the array of combo box
+     * selections.
      *
+     * @param n the position in the array
+     * @return the ComboBox value at position n
      */
-    @Override
     public String getComboBoxLastSelection(int n) {
         try {
             return _comboBoxLastSelection.get(n).getLastValue();
@@ -758,7 +769,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     @Override
-    public boolean isWindowPositionSaved(String strClass) {
+    public boolean hasProperties(String strClass) {
         return windowDetails.containsKey(strClass);
     }
 
@@ -931,35 +942,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param item          String value of the specific item this is used for.
      * @param description   A meaningful description that can be used in a label
      *                      to describe the item
-     * @param msgOption     Description of each option valid option.
-     * @param msgNumber     The references number against which the Description
-     *                      is refering too.
-     * @param defaultOption The default option for the given item.
-     */
-    @Override
-    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
-        HashMap<Integer, String> options = new HashMap<Integer, String>(msgOption.length);
-        for (int i = 0; i < msgOption.length; i++) {
-            options.put(msgNumber[i], msgOption[i]);
-        }
-        messageItemDetails(strClass, description, item, options, defaultOption);
-    }
-
-    /**
-     * Add descriptive details about a specific message box, so that if it needs
-     * to be reset in the preferences, then it is easily identifiable. displayed
-     * to the user in the preferences GUI.
-     *
-     * @param strClass      String value of the calling class/group
-     * @param item          String value of the specific item this is used for.
-     * @param description   A meaningful description that can be used in a label
-     *                      to describe the item
      * @param options       A map of the integer value of the option against a
      *                      meaningful description.
      * @param defaultOption The default option for the given item.
      */
     @Override
-    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
+    public void setMessageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
