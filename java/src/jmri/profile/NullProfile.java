@@ -31,7 +31,6 @@ public class NullProfile extends Profile {
      */
     public NullProfile(@Nonnull File path) throws IOException {
         super(path, false);
-        System.err.println("Setting id to " + this.getId() + " (path)");
     }
 
     /**
@@ -44,7 +43,6 @@ public class NullProfile extends Profile {
      */
     public NullProfile(@Nonnull File path, @Nonnull String id) throws IOException {
         super(path, id, false);
-        System.err.println("Setting id to " + this.getId() + " (path, id)");
     }
 
     /**
@@ -65,7 +63,6 @@ public class NullProfile extends Profile {
     public NullProfile(String name, String id, @Nonnull File path) throws IOException, IllegalArgumentException {
         this(path, (null != id) ? id : ProfileManager.createUniqueId());
         this.setNameInConstructor(name);
-        System.err.println("Setting id to " + this.getId() + " (name, id, path)");
     }
 
     @Override

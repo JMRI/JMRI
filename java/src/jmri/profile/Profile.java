@@ -120,7 +120,6 @@ public class Profile implements Comparable<Profile> {
     protected Profile(@Nonnull File path, @Nonnull String id, boolean isReadable) throws IOException {
         this.path = path;
         this.id = id;
-        System.err.println("Creating profile with id " + this.id + " at path " + this.path);
         if (isReadable) {
             this.readProfile();
         }
