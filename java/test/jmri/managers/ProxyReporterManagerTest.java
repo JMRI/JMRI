@@ -18,18 +18,18 @@ import org.junit.Test;
 public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "IR" + i;
     }
 
     @Test
     public void testReporterPutGet() {
         // create
-        Reporter t = l.newReporter(getSystemName(getNumToTest1()), "mine");
+        Reporter t = l.newReporter(getSystemName(getNameToTest1()), "mine");
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
     }
 
     @Test
@@ -66,6 +66,14 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
 
         Reporter l4 = l.getReporter("JLuser 1");
         Assert.assertNull(l4);
+    }
+
+    @Test
+    public void testNormalizeName() {
+        // create
+        String name = l.provideReporter("" + getNameToTest1()).getSystemName();
+        // check
+        Assert.assertEquals(name, l.normalizeSystemName(name));
     }
 
     @Test
