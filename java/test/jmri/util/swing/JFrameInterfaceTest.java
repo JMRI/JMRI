@@ -16,7 +16,7 @@ public class JFrameInterfaceTest {
 
     @Test
     public void testCTor() {
-        JFrameInterface t = new JFrameInterface(new jmri.util.JMRIJFrame("foo"));
+        JFrameInterface t = new JFrameInterface(new jmri.util.JmriJFrame("foo"));
 
         Assert.assertNotNull("exists",t);
     }
