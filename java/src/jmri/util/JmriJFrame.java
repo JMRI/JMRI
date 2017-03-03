@@ -1008,5 +1008,5 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return this;
     }
 
-    static private Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
 }

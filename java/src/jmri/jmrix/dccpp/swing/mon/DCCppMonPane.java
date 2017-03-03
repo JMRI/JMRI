@@ -62,7 +62,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         // display the raw data if requested
         // Since DCC++ is text-based traffic, this is good enough for now.
         // TODO: Provide "beautified" output later.
-        StringBuilder raw = new StringBuilder();
+        StringBuilder raw = new StringBuilder("RX: ");
         if (rawCheckBox.isSelected()) {
             raw.append(l.toString());
         }
@@ -119,10 +119,20 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 }
                 break;
             case DCCppConstants.PROGRAM_REPLY:
-                text = "Program Reply: \n";
-                text += "\tCallback Num: " + l.getCallbackNumString() + "\n";
-                text += "\tCallback Sub: " + l.getCallbackSubString() + "\n";
-                text += "\tCV Value: " + l.getCVString();
+                if (l.isProgramBitReply()) {
+                    text = "Program Bit Reply: \n";
+                    text += "\tCallback Num: " + l.getCallbackNumString() + "\n";
+                    text += "\tCallback Sub: " + l.getCallbackSubString() + "\n";
+                    text += "\tCV: " + l.getCVString() + "\n";
+                    text += "\tCV Bit: " + l.getProgramBitString() + "\n";
+                    text += "\tValue: " + l.getReadValueString();
+                } else {
+                    text = "Program Reply: \n";
+                    text += "\tCallback Num: " + l.getCallbackNumString() + "\n";
+                    text += "\tCallback Sub: " + l.getCallbackSubString() + "\n";
+                    text += "\tCV: " + l.getCVString() + "\n";
+                    text += "\tValue: " + l.getReadValueString();
+                }
                 break;
             case DCCppConstants.STATUS_REPLY:
                 text = "Base Station Status: \n";
@@ -153,7 +163,9 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 text += "\tFree Memory: " + l.getFreeMemoryString();
                 break;
             case DCCppConstants.COMM_TYPE_REPLY:
-                text = "Comm Port: " + l.getValueString(2);
+                text = "Comm Type Reply ";
+                text += "Type: " + Integer.toString(l.getCommTypeInt());
+                text += " Port: " + l.getCommTypeValueString();
                 break;
             case DCCppConstants.MADC_FAIL_REPLY:
                 text = "No Sensor/Turnout/Output Reply ";
@@ -167,8 +179,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 text += l.toString().replace("", " ").trim(); // inserts a space for every character
         }
 
-        // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(text + "\n", new String(raw));
+        nextLine(text + "\n", raw.toString());
     }
 
     // listen for the messages to the Base Station
@@ -178,7 +189,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         // display the raw data if requested  
         // Since DCC++ is text-based traffic, this is good enough for now.
         // TODO: Provide "beautified" output later.
-        StringBuilder raw = new StringBuilder("packet: ");
+        StringBuilder raw = new StringBuilder("TX: ");
         if (rawCheckBox.isSelected()) {
             raw.append(l.toString());
         }
@@ -321,8 +332,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 text = "Unknown Message: ";
         }
 
-        // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(text + "\n", new String(raw));
+        nextLine(text + "\n", raw.toString());
 
     }
 

@@ -45,6 +45,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppStreamPortControllerTest.class));
         suite.addTest(new TestSuite(DCCppSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppSensorManagerTest.class));
+        suite.addTest(new TestSuite(DCCppTurnoutTest.class));
         suite.addTest(jmri.jmrix.dccpp.network.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.swing.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.dccpp.dccppovertcp.PackageTest.class));
@@ -57,7 +58,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMessageExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppConstantsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppRegisterManagerTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppReplyParserTest.class));
         return suite;
     }
 

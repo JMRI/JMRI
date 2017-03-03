@@ -33,23 +33,24 @@ public class CarManager extends RollingStockManager {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
     public static synchronized CarManager instance() {
-        CarManager _instance = jmri.InstanceManager.getNullableDefault(CarManager.class);
-        if (_instance == null) {
+        CarManager instance = jmri.InstanceManager.getNullableDefault(CarManager.class);
+        if (instance == null) {
             log.debug("CarManager creating instance");
             // create and load
-            _instance = new CarManager();
-            jmri.InstanceManager.setDefault(CarManager.class,_instance);
+            instance = new CarManager();
+            jmri.InstanceManager.setDefault(CarManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             // create manager to load cars and their attributes
             CarManagerXml.instance();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("CarManager returns instance {}", _instance);
+            log.debug("CarManager returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     /**
