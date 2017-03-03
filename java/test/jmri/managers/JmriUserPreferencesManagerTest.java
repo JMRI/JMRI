@@ -919,22 +919,34 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
         m1.setSaveAllowed(false);
         m1.setProperty(strClass, "test1", "value1");
+        m1.setProperty(strClass, "intTest", 42);
+        m1.setProperty(strClass, "doubleTest", Math.PI);
+        m1.setProperty(strClass, "booleanTest", true);
         m1.setWindowLocation(strClass, location);
         m1.setWindowSize(strClass, windowSize);
         m1.setPreferenceState(strClass, "test2", true);
+        m1.setPreferenceState(strClass, "test3", false);
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
         File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        Assert.assertTrue(target.exists());
+        Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
             Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         }
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetPreferencesProviders();
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
+        Assert.assertEquals((Object) 42, m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals((Object) Math.PI, m2.getProperty(strClass, "doubleTest"));
+        Assert.assertEquals((Object) true, m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
+        Assert.assertEquals(false, m2.getPreferenceState(strClass, "test3"));
         Assert.assertEquals(true, m2.getSimplePreferenceState(strClass));
         Assert.assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
     }
@@ -947,22 +959,34 @@ public class JmriUserPreferencesManagerTest {
         UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
         m1.setSaveAllowed(false);
         m1.setProperty(strClass, "test1", "value1");
+        m1.setProperty(strClass, "intTest", 42);
+        m1.setProperty(strClass, "doubleTest", Math.PI);
+        m1.setProperty(strClass, "booleanTest", true);
         m1.setWindowLocation(strClass, location);
         m1.setWindowSize(strClass, windowSize);
         m1.setPreferenceState(strClass, "test2", true);
+        m1.setPreferenceState(strClass, "test3", false);
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
         File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        Assert.assertTrue(target.exists());
+        Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
             Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         }
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetPreferencesProviders();
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
+        Assert.assertEquals((Object) 42, m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals((Object) Math.PI, m2.getProperty(strClass, "doubleTest"));
+        Assert.assertEquals((Object) true, m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
+        Assert.assertEquals(false, m2.getPreferenceState(strClass, "test3"));
         Assert.assertEquals(true, m2.getSimplePreferenceState(strClass));
         Assert.assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
     }
@@ -970,13 +994,14 @@ public class JmriUserPreferencesManagerTest {
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetPreferencesProviders();
     }
 
     @After
     public void tearDown() throws Exception {
         apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
     }
 
     private static class TestJmriUserPreferencesManager extends JmriUserPreferencesManager {
