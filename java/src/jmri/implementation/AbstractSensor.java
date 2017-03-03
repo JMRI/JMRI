@@ -282,6 +282,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         return _inverted;
     }
 
+    /**
+     * By default, all implementations based on this can invert
+     */
+    public boolean canInvert() { return true; }
+
     protected boolean _inverted = false;
 
     // internal data members

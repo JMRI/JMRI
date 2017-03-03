@@ -16,7 +16,7 @@ public class TurnoutSignalMastTest {
 
     @Test
     public void testCTor() {
-        TurnoutSignalMast t = new TurnoutSignalMast("Turnout Signal Mast Test");
+        TurnoutSignalMast t = new TurnoutSignalMast("IF$tsm:basic:one-searchlight($1)");
         Assert.assertNotNull("exists",t);
     }
 
