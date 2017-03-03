@@ -2433,13 +2433,20 @@ public class LayoutTurnout extends LayoutTrack {
 
             // add combobox to select turnout
             firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
-            firstTurnoutComboBox.setEditable(true);
+            if (true) {
+                layoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
+            } else {
+                firstTurnoutComboBox.setEditable(true);
+            }
             panel1.add(firstTurnoutComboBox);
             contentPane.add(panel1);
 
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
             secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
+            if (true) {
+                layoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
+            }
             additionalTurnout.addActionListener((ActionEvent e) -> {
                 if (additionalTurnout.isSelected()) {
                     secondTurnoutLabel.setEnabled(true);
@@ -2491,9 +2498,13 @@ public class LayoutTurnout extends LayoutTrack {
             panel2.setBorder(border);
             panel2.setLayout(new FlowLayout());
             panel2.add(blockNameComboBox);
-            blockNameComboBox.setEditable(true);
-            blockNameComboBox.getEditor().setItem("");
-            blockNameComboBox.setSelectedIndex(-1);
+            if (true) {
+                layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            } else {
+                blockNameComboBox.setEditable(true);
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
+            }
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
             turnoutEditBlock.addActionListener((ActionEvent e) -> {
@@ -2506,9 +2517,13 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
                 panel21.setBorder(borderblk2);
-                blockBNameComboBox.setEditable(true);
-                blockBNameComboBox.getEditor().setItem("");
-                blockBNameComboBox.setSelectedIndex(-1);
+                if (true) {
+                    layoutEditor.setupComboBox(blockBNameComboBox, false, true);
+                } else {
+                    blockBNameComboBox.setEditable(true);
+                    blockBNameComboBox.getEditor().setItem("");
+                    blockBNameComboBox.setSelectedIndex(-1);
+                }
                 blockBNameComboBox.setToolTipText(rb.getString("EditBlockBNameHint"));
                 panel21.add(blockBNameComboBox);
 
@@ -2524,9 +2539,13 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
                 panel22.setBorder(borderblk3);
-                blockCNameComboBox.setEditable(true);
-                blockCNameComboBox.getEditor().setItem("");
-                blockCNameComboBox.setSelectedIndex(-1);
+                if (true) {
+                    layoutEditor.setupComboBox(blockCNameComboBox, false, true);
+                } else {
+                    blockCNameComboBox.setEditable(true);
+                    blockCNameComboBox.getEditor().setItem("");
+                    blockCNameComboBox.setSelectedIndex(-1);
+                }
                 blockCNameComboBox.setToolTipText(rb.getString("EditBlockCNameHint"));
                 panel22.add(blockCNameComboBox);
                 panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
@@ -2541,9 +2560,13 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
                 panel23.setBorder(borderblk4);
-                blockDNameComboBox.setEditable(true);
-                blockDNameComboBox.getEditor().setItem("");
-                blockDNameComboBox.setSelectedIndex(-1);
+                if (true) {
+                    layoutEditor.setupComboBox(blockDNameComboBox, false, true);
+                } else {
+                    blockDNameComboBox.setEditable(true);
+                    blockDNameComboBox.getEditor().setItem("");
+                    blockDNameComboBox.setSelectedIndex(-1);
+                }
                 blockDNameComboBox.setToolTipText(rb.getString("EditBlockDNameHint"));
                 panel23.add(blockDNameComboBox);
                 panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));

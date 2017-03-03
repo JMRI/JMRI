@@ -22,8 +22,6 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -67,6 +65,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -149,6 +148,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // dashed line parameters
     //private static int minNumDashes = 3;
     //private static double maxDashLength = 10;
+    private JFrame floatingEditTools = null;
+    private JPanel floatEditHelpPanel = null;
     private JPanel editToolBarPanel = null;
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
@@ -371,6 +372,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButtonMenuItem toolBarSideLeftButton = null;
     private JRadioButtonMenuItem toolBarSideBottomButton = null;
     private JRadioButtonMenuItem toolBarSideRightButton = null;
+    private JRadioButtonMenuItem toolBarSideFloatButton = null;
 
     private JMenu toolBarFontSizeMenu = new JMenu(Bundle.getMessage("FontSize"));
     private JCheckBoxMenuItem toolBarIsWideItem = new JCheckBoxMenuItem(rb.getString("ToolBarWide"));
@@ -494,8 +496,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private int panelWidth = 0;
     private int panelHeight = 0;
 
-    private Dimension toolBarDimension = new Dimension(0, 0);
-
     private int upperLeftX = 0;
     private int upperLeftY = 0;
     private float mainlineTrackWidth = 4.0F;
@@ -543,6 +543,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private double stepOverOne = 0.5;   // when the zoom is greater than 1
     private double stepOverTwo = 1.0;   // when the zoom is greater than 2
 
+    // Special sub group for color treatment when active
+    JPanel blockPropertiesPanel = null;
+
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<String, Integer>();
 
@@ -555,7 +558,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         eTOP("top"),
         eLEFT("left"),
         eBOTTOM("bottom"),
-        eRIGHT("right");
+        eRIGHT("right"),
+        eFLOAT("float");
 
         private String name;
         private static final Map<String, eToolBarSide> ENUM_MAP;
@@ -583,7 +587,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private eToolBarSide toolBarSide = eToolBarSide.eTOP;
-    private boolean toolBarIsVertical = false;
     private boolean toolBarIsWide = true;
 
     public LayoutEditor() {
@@ -702,11 +705,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || levelXingButton.isSelected()
                     || trackButton.isSelected());
             log.debug("blockPanel is " + (e ? "enabled" : "disabled"));
-            blockNameLabel.setEnabled(e);
-            blockIDComboBox.setEnabled(e);
-            blockSensorNameLabel.setEnabled(e);
-            blockSensorLabel.setEnabled(e);
-            blockSensorComboBox.setEnabled(e);
+            if (null != blockPropertiesPanel) {
+                for (Component i : blockPropertiesPanel.getComponents()) {
+                    i.setEnabled(e);
+                }
+                if (e) {
+                    blockPropertiesPanel.setBackground(Color.lightGray);
+                } else {
+                    blockPropertiesPanel.setBackground(new Color(238, 238, 238));
+                }
+            } else {
+                blockNameLabel.setEnabled(e);
+                blockIDComboBox.setEnabled(e);
+                blockSensorNameLabel.setEnabled(e);
+                blockSensorLabel.setEnabled(e);
+                blockSensorComboBox.setEnabled(e);
+            }
 
             // enable/disable text label, memory & block contents text fields
             textLabelTextField.setEnabled(textLabelButton.isSelected());
@@ -796,7 +810,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         xLabel.setPreferredSize(coordSize);
         yLabel.setPreferredSize(coordSize);
 
-        locationPanel.add(new JLabel("    " + rb.getString("Location") + ":"));
+//        locationPanel.add(new JLabel("    " + rb.getString("Location") + ":"));
+        locationPanel.add(new JLabel(rb.getString("Location") + ":"));
         locationPanel.add(new JLabel("{x:"));
         locationPanel.add(xLabel);
         locationPanel.add(new JLabel(", y:"));
@@ -1056,10 +1071,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
 
                 // this doesn't work as expected (1st one called messes up 2nd?)
-    //                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-    //                 Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-    //                 log.info("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
-    //                 log.info("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
+                //                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                //                 Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                //                 log.info("prefsMgr.prefsWindowLocation({}) is {}", windowFrameRef, prefsWindowLocation);
+                //                 log.info("prefsMgr.prefsWindowSize is({}) {}", windowFrameRef, prefsWindowSize);
                 Point prefsWindowLocation = null;
                 Dimension prefsWindowSize = null;
 
@@ -1081,14 +1096,212 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             panelWidth, panelHeight);
                     setAntialiasingOn(prefsAntialiasingOn);
                 }
-            });
+            }); // InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
         }); // SwingUtilities.invokeLater
     }   // LayoutEditor (constructor)
 
+    private void setupFloatingEditTools() {
+        /*
+         * JFrame - floatingEditTools
+         *     JScrollPane - floatingEditScroll
+         *         JPanel - floatingEditContent
+         *             JPanel - floatEditTabsPanel
+         *                 JTabbedPane - floatEditTabsPane
+         *                     ...
+         *             JPanel - floatEditLocationPanel
+         *                 ...
+         *             JPanel - floatEditActionPanel  (currently disabled)
+         *                 ...
+         *             JPanel - floatEditHelpPanel
+         *                 ...
+         */
+
+        FlowLayout floatContentLayout = new FlowLayout(FlowLayout.CENTER, 5, 2);  // 5 pixel gap between items, 2 vertical gap
+
+        // Contains the block and sensor combo boxes.  It is moved to the appropriate detail pane when the tab changes.
+///zzz
+        blockPropertiesPanel = new JPanel(floatContentLayout);
+        String blockNameString = rb.getString("BlockID");
+        blockSensorNameLabel = new JLabel(blockNameString);
+        blockPropertiesPanel.add(blockNameLabel);
+        blockPropertiesPanel.add(blockIDComboBox);
+        blockPropertiesPanel.add(blockSensorLabel);
+        blockPropertiesPanel.add(blockSensorComboBox);
+
+        // Build the window content
+        JPanel floatingEditContent = new JPanel();
+        floatingEditContent.setLayout(new BoxLayout(floatingEditContent, BoxLayout.Y_AXIS));
+        // Begin the tabs structure
+        JPanel floatEditTabsPanel = new JPanel();
+        JTabbedPane floatEditTabsPane = new JTabbedPane();
+        // Tab 0 - Turnouts
+        JPanel floatEditTurnout = new JPanel();
+        floatEditTurnout.setLayout(new BoxLayout(floatEditTurnout, BoxLayout.Y_AXIS));
+
+        JPanel turnoutGroup1 = new JPanel(floatContentLayout);
+        turnoutGroup1.add(turnoutRHButton);
+        turnoutGroup1.add(turnoutLHButton);
+        turnoutGroup1.add(turnoutWYEButton);
+        floatEditTurnout.add(turnoutGroup1);
+
+        JPanel turnoutGroup2 = new JPanel(floatContentLayout);
+        turnoutGroup2.add(doubleXoverButton);
+        turnoutGroup2.add(rhXoverButton);
+        turnoutGroup2.add(lhXoverButton);
+        floatEditTurnout.add(turnoutGroup2);
+
+        JPanel turnoutGroup3 = new JPanel(floatContentLayout);
+        turnoutGroup3.add(layoutSingleSlipButton);
+        turnoutGroup3.add(layoutDoubleSlipButton);
+        floatEditTurnout.add(turnoutGroup3);
+
+        JPanel turnoutGroup4 = new JPanel(floatContentLayout);
+        turnoutGroup4.add(turnoutNamePanel);
+        turnoutGroup4.add(extraTurnoutPanel);
+        floatEditTurnout.add(turnoutGroup4);
+
+        JPanel turnoutGroup5 = new JPanel(floatContentLayout);
+        turnoutGroup5.add(rotationPanel);
+        floatEditTurnout.add(turnoutGroup5);
+
+        floatEditTurnout.add(blockPropertiesPanel);
+        floatEditTabsPane.addTab("Turnouts", null, floatEditTurnout, null);  // TODO - Bundle
+
+        // Tab 1 - Track
+        JPanel floatEditTrack = new JPanel();
+        floatEditTrack.setLayout(new BoxLayout(floatEditTrack, BoxLayout.Y_AXIS));
+
+        JPanel trackGroup1 = new JPanel(floatContentLayout);
+        trackGroup1.add(endBumperButton);
+        trackGroup1.add(anchorButton);
+        trackGroup1.add(edgeButton);
+        floatEditTrack.add(trackGroup1);
+
+        JPanel trackGroup2 = new JPanel(floatContentLayout);
+        trackGroup2.add(trackButton);
+        trackGroup2.add(levelXingButton);
+        floatEditTrack.add(trackGroup2);
+
+        JPanel trackGroup3 = new JPanel(floatContentLayout);
+        trackGroup3.add(trackSegmentPropertiesPanel);
+        floatEditTrack.add(trackGroup3);
+
+        floatEditTabsPane.addTab("Track", null, floatEditTrack, null);  // TODO - Bundle
+
+        // Tab 2 - Labels
+        JPanel floatEditLabel = new JPanel();
+        floatEditLabel.setLayout(new BoxLayout(floatEditLabel, BoxLayout.Y_AXIS));
+
+        JPanel labelGroup1 = new JPanel(floatContentLayout);
+        labelGroup1.add(textLabelButton);
+        labelGroup1.add(textLabelTextField);
+        floatEditLabel.add(labelGroup1);
+
+        JPanel labelGroup2 = new JPanel(floatContentLayout);
+        labelGroup2.add(memoryButton);
+        labelGroup2.add(textMemoryComboBox);
+        floatEditLabel.add(labelGroup2);
+
+        JPanel labelGroup3 = new JPanel(floatContentLayout);
+        labelGroup3.add(blockContentsButton);
+        labelGroup3.add(blockContentsComboBox);
+        floatEditLabel.add(labelGroup3);
+
+        floatEditTabsPane.addTab("Labels", null, floatEditLabel, null);  // TODO - Bundle
+
+        // Tab 3 - Icons
+        JPanel floatEditIcon = new JPanel();
+        floatEditIcon.setLayout(new BoxLayout(floatEditIcon, BoxLayout.Y_AXIS));
+
+        JPanel iconGroup1 = new JPanel(floatContentLayout);
+        iconGroup1.add(multiSensorButton);
+        iconGroup1.add(changeIconsButton);
+        floatEditIcon.add(iconGroup1);
+
+        JPanel iconGroup2 = new JPanel(floatContentLayout);
+        iconGroup2.add(sensorButton);
+        iconGroup2.add(sensorComboBox);
+        floatEditIcon.add(iconGroup2);
+
+        JPanel iconGroup3 = new JPanel(floatContentLayout);
+        iconGroup3.add(signalMastButton);
+        iconGroup3.add(signalMastComboBox);
+        floatEditIcon.add(iconGroup3);
+
+        JPanel iconGroup4 = new JPanel(floatContentLayout);
+        iconGroup4.add(signalButton);
+        iconGroup4.add(signalHeadComboBox);
+        floatEditIcon.add(iconGroup4);
+
+        JPanel iconGroup5 = new JPanel(floatContentLayout);
+        iconGroup5.add(iconLabelButton);
+        floatEditIcon.add(iconGroup5);
+
+        floatEditTabsPane.addTab("Icons", null, floatEditIcon, null);  // TODO - Bundle
+        floatEditTabsPanel.add(floatEditTabsPane);
+        floatingEditContent.add(floatEditTabsPanel);
+        // End the tabs structure
+
+        // The next 3 groups reside under the tab secton
+        JPanel floatEditLocationPanel = new JPanel();
+        floatEditLocationPanel.add(zoomPanel);
+        floatEditLocationPanel.add(locationPanel);
+        floatingEditContent.add(floatEditLocationPanel);
+
+        JPanel floatEditActionPanel = new JPanel();
+        floatEditActionPanel.add(new JLabel("floatEditActionPanel", JLabel.CENTER));
+//  TODO?       floatingEditContent.add(floatEditActionPanel);
+
+        floatEditHelpPanel = new JPanel();
+        floatingEditContent.add(floatEditHelpPanel);
+        // Notice:  End tree structure indenting
+
+        // Create a scroll pane to hold the window content.
+        JScrollPane floatingEditScroll = new JScrollPane(floatingEditContent);
+        floatingEditScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        floatingEditScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // Create the window and add the scrollable content
+        floatingEditTools = new JFrame("Edit: " + layoutName);  // TODO - Bundle
+        floatingEditTools.setContentPane(floatingEditScroll);
+        floatingEditTools.pack();
+        floatingEditTools.setAlwaysOnTop(true);
+
+        SwingUtilities.invokeLater(() -> {
+            // Deferred action -- Force the help panel width to the same as the tabs section
+            int tabSectionWidth = floatEditTabsPanel.getWidth();
+
+            // Change the textarea settings
+            for (Component c : helpBar.getComponents()) {
+                if (c instanceof JTextArea) {
+                    JTextArea j = (JTextArea) c;
+                    j.setSize(new Dimension(tabSectionWidth, j.getSize().height));
+                    j.setLineWrap(true);
+                    j.setWrapStyleWord(true);
+                }
+            }
+
+            // Change the width of the help panel section
+            floatEditHelpPanel.setMaximumSize(new Dimension(tabSectionWidth, Integer.MAX_VALUE));
+            floatEditHelpPanel.add(helpBar);
+            floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
+        });
+
+        floatEditTabsPane.addChangeListener((e) -> {
+            // Move the block group between the turnouts and track tabs
+            int selIndex = floatEditTabsPane.getSelectedIndex();
+            if (selIndex == 0) {
+                floatEditTurnout.add(blockPropertiesPanel);
+            } else if (selIndex == 1) {
+                floatEditTrack.add(blockPropertiesPanel);
+            }
+        });
+    } // setupFloatingEditTools
+
     private void setupToolBar() {
-        // setup edit toolbar(s)
+
+        // Initial setup for both horizontal and vertical
         Container contentPane = getContentPane();
-        toolBarDimension = contentPane.getSize();
 
         // remove these (if present) so we can add them back (without duplicates)
         if (editToolBarContainer != null) {
@@ -1098,6 +1311,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             contentPane.remove(helpBarPanel);
         }
 
+        if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+            setupFloatingEditTools();
+            return;
+        }
+
+        boolean toolBarIsVertical = (toolBarSide.equals(eToolBarSide.eRIGHT) || toolBarSide.equals(eToolBarSide.eLEFT));
+
         editToolBarPanel = new JPanel();
         editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
 
@@ -1105,7 +1325,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JPanel innerBorderPanel = editToolBarPanel;
 
         Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
-        
+
         boolean useBorders = toolBarIsVertical;
         if (useBorders) {
             outerBorderPanel = new JPanel();
@@ -1114,7 +1334,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             outerTitleBorder.setTitleJustification(TitledBorder.CENTER);
             outerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
             outerBorderPanel.setBorder(outerTitleBorder);
-            
+
             innerBorderPanel = new JPanel();
             innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
             TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnout"));
@@ -1122,7 +1342,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
             innerBorderPanel.setBorder(innerTitleBorder);
         }
-        
+
         String blockNameString = rb.getString("BlockID");
 
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -1181,7 +1401,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (useBorders) {
                 outerBorderPanel.add(innerBorderPanel);
             }
-            
+
             trackLabel = new JLabel("-- " + rb.getString("Track") + " --");
             if (!useBorders) {
                 JPanel vTop8TitlePanel = new JPanel(verticalTitleLayout);
@@ -1222,7 +1442,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             JPanel nodesBorderPanel = editToolBarPanel;
             nodesLabel = new JLabel("-- " + rb.getString("Nodes") + " --");
- 
+
             if (useBorders) {
                 nodesBorderPanel = new JPanel();
                 nodesBorderPanel.setLayout(new BoxLayout(nodesBorderPanel, BoxLayout.PAGE_AXIS));
@@ -1251,7 +1471,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (useBorders) {
                 editToolBarPanel.add(nodesBorderPanel);
             }
-    
+
             JPanel labelsBorderPanel = editToolBarPanel;
             labelsLabel = new JLabel("-- " + rb.getString("Labels") + " --");
             if (useBorders) {
@@ -1289,7 +1509,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (useBorders) {
                 editToolBarPanel.add(labelsBorderPanel);
             }
-     
+
             JPanel iconsBorderPanel = editToolBarPanel;
             if (useBorders) {
                 iconsBorderPanel = new JPanel();
@@ -1338,7 +1558,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (useBorders) {
                 editToolBarPanel.add(iconsBorderPanel);
             }
-  
+
             editToolBarPanel.add(Box.createVerticalGlue());
 
             JPanel bottomPanel = new JPanel();
@@ -1354,7 +1574,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             hTop1Panel.setLayout(new BoxLayout(hTop1Panel, BoxLayout.LINE_AXIS));
 
             // Row 1 : Left Components
-            //JPanel hTop1Left = new JPanel(toolBarIsWide ? leftRowLayout : centerRowLayout);
             JPanel hTop1Left = new JPanel(leftRowLayout);
             turnoutLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + ":  ");
             if (!useBorders) {
@@ -1398,7 +1617,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (useBorders) {
                 outerBorderPanel.add(innerBorderPanel);
             }
-           
+
             // Row 3 (2 wide)
             JPanel hTop3Panel = new JPanel();
             hTop3Panel.setLayout(new BoxLayout(hTop3Panel, BoxLayout.LINE_AXIS));
@@ -1607,15 +1826,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     setupToolBarFontSizes(newToolBarFontSize);
                 });
             }
-
-            if (false) { ////// TODO: fetch this preference (WORK-IN-PROGRESS) & setup all comboboxes
-                //     DropDownListsDisplayOrder = Drop Down Lists Display...
-                //     DropDownListsDisplayOrderDisplayName = Display Name (User else System)
-                //     DropDownListsDisplayOrderUserName = User Name
-                //     DropDownListsDisplayOrderSystemName = System Name
-                //     DropDownListsDisplayOrderUserNameSystemName = User Name followed by System Name
-                //     DropDownListsDisplayOrderSystemNameUserName = System Name followed by User Name
-            }
         }); // SwingUtilities.invokeLater
     }    // setupToolBar()
 
@@ -1645,7 +1855,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             toolBarFont = zoomLabel.getFont();
             toolBarFont = toolBarFont.deriveFont(newToolBarFontSize);
 
-            recursiveSetFont(editToolBarPanel, toolBarFont);
+            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+                recursiveSetFont(floatingEditTools, toolBarFont);
+            } else {
+                recursiveSetFont(editToolBarPanel, toolBarFont);
+            }
         }
     }
 
@@ -1680,24 +1894,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             default:
                 break;
         }
-
-        Container contentPane = getContentPane();
-        contentPane.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                //int wideWidth = editToolBarScroll.getPreferredSize().width;
-                //boolean oldWideFlag = (toolBarDimension.width >= wideWidth);
-
-                Container contentPane = getContentPane();
-                toolBarDimension = contentPane.getSize();
-                log.info("toolBarDimension: " + toolBarDimension);
-
-                //boolean newWideFlag = (toolBarDimension.width >= wideWidth);
-                //if (oldWideFlag != newWideFlag) {
-                //  setupToolBar(newWideFlag);
-                //}
-            }
-        });
     }
 
     @Override
@@ -1722,10 +1918,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     // note: inValidateMode if true valid == green, invalid == red background
     //                      if false valid == green, invalid == yellow background
     //
-    private void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
+    public void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
         inComboBox.setEditable(true);
-        inComboBox.setSelectedIndex(-1);
         inComboBox.getEditor().setItem("");
+        inComboBox.setSelectedIndex(-1);
         inComboBox.setEnabled(inEnable);
 
         // fires when drop down list item is selected
@@ -2026,7 +2222,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editModeItem.addActionListener((ActionEvent event) -> {
             setAllEditable(editModeItem.isSelected());
             // show/hide the help bar
-            helpBarPanel.setVisible(isEditable() && showHelpBar);
+            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+                floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
+            } else {
+                helpBarPanel.setVisible(isEditable() && showHelpBar);
+            }
             if (isEditable()) {
                 setAllShowTooltip(tooltipsInEditMode);
                 // redo using the "Extra" color to highlight the selected block
@@ -2079,17 +2279,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         toolBarSideRightButton.setSelected(toolBarSide.equals(eToolBarSide.eRIGHT));
 
+//        toolBarSideFloatButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideFloat"));
+        toolBarSideFloatButton = new JRadioButtonMenuItem("Float");  // TODO - Bundle
+        toolBarSideFloatButton.addActionListener((ActionEvent event) -> {
+            setToolBarSide(eToolBarSide.eFLOAT);
+        });
+        toolBarSideFloatButton.setSelected(toolBarSide.equals(eToolBarSide.eFLOAT));
+
         JMenu toolBarSideMenu = new JMenu(Bundle.getMessage("ToolBarSide")); // used for ScrollBarsSubMenu
         toolBarSideMenu.add(toolBarSideTopButton);
         toolBarSideMenu.add(toolBarSideLeftButton);
         toolBarSideMenu.add(toolBarSideBottomButton);
         toolBarSideMenu.add(toolBarSideRightButton);
+        toolBarSideMenu.add(toolBarSideFloatButton);
 
         ButtonGroup toolBarSideGroup = new ButtonGroup();
         toolBarSideGroup.add(toolBarSideTopButton);
         toolBarSideGroup.add(toolBarSideLeftButton);
         toolBarSideGroup.add(toolBarSideBottomButton);
         toolBarSideGroup.add(toolBarSideRightButton);
+        toolBarSideGroup.add(toolBarSideFloatButton);
         toolBarMenu.add(toolBarSideMenu);
 
         //
@@ -2171,7 +2380,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     // change this comboboxes ddldo
                     String windowFrameRef = getWindowFrameRef();
 
-                // this is the preference name
+                    // this is the preference name
                     String ddldoPrefName = "DropDownListsDisplayOrder";
 
                     // make a focused component specific preference name
@@ -2816,8 +3025,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                     jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
                 }
-             });
-           } else if (inComponent instanceof Container) {
+            });
+        } else if (inComponent instanceof Container) {
             for (Component c : ((Container) inComponent).getComponents()) {
                 updateComboBoxDropDownListDisplayOrderFromPrefs(c);
             }
@@ -2831,21 +3040,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     private void setToolBarSide(eToolBarSide newToolBarSide) {
         // null if edit toolbar not setup yet…
+        // TODO Question:  Does this apply to the float toolbar
         if (editToolBarContainer != null && !newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
             });
-            toolBarIsVertical = (toolBarSide.equals(eToolBarSide.eRIGHT) || toolBarSide.equals(eToolBarSide.eLEFT));
+
             setupToolBar(); // re-layout all the toolbar items
-            editToolBarContainer.setVisible(isEditable());
+            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+                floatingEditTools.setVisible(isEditable());
+            } else {
+                editToolBarContainer.setVisible(isEditable());
+            }
 
             toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));
             toolBarSideLeftButton.setSelected(toolBarSide.equals(eToolBarSide.eLEFT));
             toolBarSideBottomButton.setSelected(toolBarSide.equals(eToolBarSide.eBOTTOM));
             toolBarSideRightButton.setSelected(toolBarSide.equals(eToolBarSide.eRIGHT));
+            toolBarSideFloatButton.setSelected(toolBarSide.equals(eToolBarSide.eFLOAT));
 
-            if (showHelpBar) {
+            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+                floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
+            } else if (showHelpBar) {
                 // not sure why… but this is the only way I could
                 // get everything to layout correctly
                 // when the helpbar is visible…
@@ -3145,7 +3362,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 df.getActiveTrainFrame().showActivateFrame(null);
             }
-
         });
         menuBar.add(dispMenu);
 
@@ -3231,12 +3447,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(trackWidthDone);
-                        rootPane.setDefaultButton(trackWidthDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(trackWidthDone);
+                rootPane.setDefaultButton(trackWidthDone);
+            });
 
             // Cancel
             panel5.add(trackWidthCancel = new JButton(Bundle.getMessage("ButtonCancel")));
@@ -3381,12 +3595,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(reporterDone);
-                        rootPane.setDefaultButton(reporterDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(reporterDone);
+                rootPane.setDefaultButton(reporterDone);
+            });
 
             // Cancel
             panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
@@ -3568,12 +3780,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(scaleTrackDiagramDone);
-                        rootPane.setDefaultButton(scaleTrackDiagramDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(scaleTrackDiagramDone);
+                rootPane.setDefaultButton(scaleTrackDiagramDone);
+            });
 
             panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             scaleTrackDiagramCancel.addActionListener((ActionEvent event) -> {
@@ -3806,12 +4016,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(
-                    () -> {
-                        JRootPane rootPane = SwingUtilities.getRootPane(moveSelectionDone);
-                        rootPane.setDefaultButton(moveSelectionDone);
-                    }
-            );
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(moveSelectionDone);
+                rootPane.setDefaultButton(moveSelectionDone);
+            });
 
             panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             moveSelectionCancel.addActionListener((ActionEvent event) -> {
@@ -7793,30 +8001,33 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             // nothing entered, try autoAssign
             if (autoAssignBlocks) {
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
+                if (null == newBlk) {
+                    log.error("Failure to auto-assign LayoutBlock '{}'.", inBlockName);
+                }
             }
         } else {
             // check if this Layout Block already exists
             result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(inBlockName);
             if (null == result) {   // (no)
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, inBlockName);
+                if (null == newBlk) {
+                    log.error("Failure to create new LayoutBlock '{}'.", inBlockName);
+                }
             }
         }
-        // if we didn't find an existing block
-        if (null == result) {
-            // but we created a new one
-            if (newBlk != null) {
-                // initialize the new block
-                //log.info("provideLayoutBlock :: Init new block {}", inBlockName);
-                newBlk.initializeLayoutBlock();
-                newBlk.initializeLayoutBlockRouting();
-                newBlk.setBlockTrackColor(defaultTrackColor);
-                newBlk.setBlockOccupiedColor(defaultOccupiedTrackColor);
-                newBlk.setBlockExtraColor(defaultAlternativeTrackColor);
-                result = newBlk;
-            } else {
-                log.error("Failure to create LayoutBlock '{}'.", inBlockName);
-            }
+
+        // if we created a new block
+        if (newBlk != null) {
+            // initialize the new block
+            //log.info("provideLayoutBlock :: Init new block {}", inBlockName);
+            newBlk.initializeLayoutBlock();
+            newBlk.initializeLayoutBlockRouting();
+            newBlk.setBlockTrackColor(defaultTrackColor);
+            newBlk.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            newBlk.setBlockExtraColor(defaultAlternativeTrackColor);
+            result = newBlk;
         }
+
         if (null != result) {
             // set both new and previously existing block
             result.addLayoutEditor(this);
@@ -9001,7 +9212,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int restoreScroll = _scrollState;
         super.setAllEditable(editable);
 
-        editToolBarContainer.setVisible(editable);
+        if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+            floatingEditTools.setVisible(editable);
+        } else {
+            editToolBarContainer.setVisible(editable);
+        }
 
         setShowHidden(editable);
         if (editable) {
@@ -9013,7 +9228,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         // these may not be setup yet…
         if (helpBarPanel != null) {
-            helpBarPanel.setVisible(editable && showHelpBar);
+            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+                floatEditHelpPanel.setVisible(editable && showHelpBar);
+            } else {
+                helpBarPanel.setVisible(editable && showHelpBar);
+            }
         }
 
         awaitingIconChange = false;
@@ -9280,8 +9499,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (showHelpItem != null) {
                 showHelpItem.setSelected(showHelpBar);
             }
-            if (helpBarPanel != null) {
-                helpBarPanel.setVisible(isEditable() && showHelpBar);
+            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
+                if (floatEditHelpPanel != null) {
+                    floatEditHelpPanel.setVisible(isEditable() && showHelpBar);
+                }
+            } else {
+                if (helpBarPanel != null) {
+                    helpBarPanel.setVisible(isEditable() && showHelpBar);
+                }
             }
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar);
@@ -9940,7 +10165,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             pix += gridSize;
         }
-        
+
         // draw vertical lines
         pix = gridSize;
         while (pix < maxX) {

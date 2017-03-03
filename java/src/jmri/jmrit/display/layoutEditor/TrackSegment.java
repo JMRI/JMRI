@@ -591,9 +591,13 @@ public class TrackSegment extends LayoutTrack {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
-            blockNameComboBox.setEditable(true);
-            blockNameComboBox.getEditor().setItem("");
-            blockNameComboBox.setSelectedIndex(-1);
+            if (true) {
+                layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            } else {
+                blockNameComboBox.setEditable(true);
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
+            }
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
 

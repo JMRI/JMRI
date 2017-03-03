@@ -843,9 +843,13 @@ public class LayoutSlip extends LayoutTurnout {
             JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
             panel3.add(block1NameLabel);
             panel3.add(blockNameComboBox);
-            blockNameComboBox.setEditable(true);
-            blockNameComboBox.getEditor().setItem("");
-            blockNameComboBox.setSelectedIndex(-1);
+            if (true) {
+                layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            } else {
+                blockNameComboBox.setEditable(true);
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
+            }
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
 
             contentPane.add(panel3);
