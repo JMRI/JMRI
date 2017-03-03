@@ -1109,7 +1109,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //Dimension prefsWindowSize = null;
 
                 //use this instead?
-                if (false) { //(Nope, it's not working ether: prefsProp always comes back null)
+                if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
                     prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
                     log.info("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
 
@@ -1341,9 +1341,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             private boolean checkName(WindowEvent e) {
-                String arg = "(.*)=" + layoutName + "(.*)";
+                String arg = "=" + layoutName;
                 String evt = e.toString();
-                return evt.matches(arg);
+                return evt.contains(arg);
             }
         });
 
@@ -1361,9 +1361,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             private boolean checkName(WindowEvent e) {
-                String arg = "(.*)=Edit: " + layoutName + "(.*)";
+                String arg = "=Edit: "+ layoutName;
                 String evt = e.toString();
-                return evt.matches(arg);
+                return evt.contains(arg);
             }
         });
     }   //setupFloatingEditTools
@@ -4501,7 +4501,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
             
             //we're going to use this instead
-            if (false) { //(Nope, it's not working ether)
+            if (true) { //(Nope, it's not working ether)
                 //save it in the user preferences for the window
                 Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
                 prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
