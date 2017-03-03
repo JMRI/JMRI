@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.locations;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
@@ -22,21 +21,22 @@ public class LocationManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
     public static synchronized LocationManagerXml instance() {
-        LocationManagerXml _instance = jmri.InstanceManager.getNullableDefault(LocationManagerXml.class);
-        if (_instance == null) {
+        LocationManagerXml instance = jmri.InstanceManager.getNullableDefault(LocationManagerXml.class);
+        if (instance == null) {
             log.debug("LocationManagerXml creating instance");
             // create and load
-            _instance = new LocationManagerXml();
-            jmri.InstanceManager.setDefault(LocationManagerXml.class,_instance);
-            _instance.load();
+            instance = new LocationManagerXml();
+            jmri.InstanceManager.setDefault(LocationManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("LocationManagerXml returns instance {}", _instance);
+            log.debug("LocationManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override

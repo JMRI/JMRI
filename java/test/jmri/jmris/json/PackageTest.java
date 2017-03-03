@@ -41,6 +41,17 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(JsonServerPreferencesPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(JsonServerPreferencesTest.class));
         suite.addTest(new JUnit4TestAdapter(JsonUtilTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonConnectionTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonClientHandlerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonConsistServerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonProgrammerServerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonRosterServerTest.class)); 
+        suite.addTest(new JUnit4TestAdapter(JsonRouteServerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonSignalHeadServerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonSignalMastServerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonThrottleServerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(JsonTimeServerTest.class));
         return suite;
     }
 

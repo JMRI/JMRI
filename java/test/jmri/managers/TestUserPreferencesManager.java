@@ -17,7 +17,7 @@ public class TestUserPreferencesManager extends JmriUserPreferencesManager {
             jmri.InstanceManager.store(this, jmri.UserPreferencesManager.class);
         }
 
-        preferenceItemDetails(getClassName(), "reminder", "Hide Reminder Location Message");
+        this.setPreferenceItemDetails(getClassName(), "reminder", "Hide Reminder Location Message");
         this.getClassPreferences(getClassName()).setDescription("User Preferences");
     }
 

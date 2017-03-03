@@ -165,5 +165,5 @@ public class PollingFile extends XmlFile {
     }
 
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(PollingFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollingFile.class.getName());
 }

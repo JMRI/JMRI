@@ -41,7 +41,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
     private float _stepIncrement = 0.04f;       // ramp step throttle increment
     private float _throttleFactor = 0.75f;
-    private float _scale;
+    private float _scale = 87.1f;
 
     static public final int PERCENT_NORMAL = 1;
     static public final int PERCENT_THROTTLE = 2;
@@ -172,6 +172,8 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     }
 
     /**
+     * @param aspect appearance (not called head in US) to check
+     * @param system system name of head
      * @return speed from SignalMast Aspect name
      */
     public String getAspectSpeed(@Nonnull String aspect, @Nonnull jmri.SignalSystem system) {
@@ -181,7 +183,9 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     }
 
     /**
-     * @return speed from SignalMast Aspect name
+     * @param aspect appearance (not called head in US) to check
+     * @param system system name of head
+     * @return speed2 from SignalMast Aspect name
      */
     public String getAspectExitSpeed(@Nonnull String aspect, @Nonnull jmri.SignalSystem system) {
         String property = (String) system.getProperty(aspect, "speed2");
@@ -190,6 +194,9 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault /
     }
 
     /**
+     * Get speed for a given signal head appearance.
+     *
+     * @param name appearance default name
      * @return speed from SignalHead Appearance name
      */
     public String getAppearanceSpeed(@Nonnull String name) throws NumberFormatException {

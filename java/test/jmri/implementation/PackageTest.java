@@ -71,6 +71,28 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(JmriConfigurationManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(NmraConsistManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(ProgrammerFacadeSelectorTest.class));
+        suite.addTest(new JUnit4TestAdapter(AbstractRailComReporterTest.class));
+        suite.addTest(new JUnit4TestAdapter(DefaultConditionalTest.class));
+        suite.addTest(new JUnit4TestAdapter(DefaultSignalMastLogicTest.class));
+        suite.addTest(new JUnit4TestAdapter(DoubleTurnoutSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriClockPropertyListenerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriMemoryPropertyListenerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriMultiStatePropertyListenerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriSimplePropertyListenerTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriTwoStatePropertyListenerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LsDecSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(MergSD2SignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(NoFeedbackTurnoutOperatorTest.class));
+        suite.addTest(new JUnit4TestAdapter(QuadOutputSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(RawTurnoutOperatorTest.class));
+        suite.addTest(new JUnit4TestAdapter(SensorGroupConditionalTest.class));
+        suite.addTest(new JUnit4TestAdapter(SensorTurnoutOperatorTest.class));
+        suite.addTest(new JUnit4TestAdapter(SignalMastRepeaterTest.class));
+        suite.addTest(new JUnit4TestAdapter(TripleOutputSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(TripleTurnoutSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutSignalMastTest.class));
+        suite.addTest(new JUnit4TestAdapter(VirtualSignalMastTest.class));
+
 
         return suite;
     }

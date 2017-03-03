@@ -88,6 +88,9 @@
       
       <h3>2: Add the Turnout to the JMRI Turnout Table</h3>
       
+      <p>NOTE: Turnout configurations stored in the Base Station's EEPROM will be automatically added to the JMRI Sensor Table
+          on startup.</p>
+
       <p>In the JMRI Turnout Table...</p>
       <ol>
           <li>Click the "Add" button</li>
@@ -105,6 +108,9 @@
       
       <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store
       the turnout ID and DCC Address in the Base Station.</p>
+      <p>Note: DCC++ requires the use of an Address/Subaddress pair.  If your Stationary Decoder does not have
+          subaddresses, take the address and divide by 4.  The result is the address, the remainder is the subaddress.
+          For example, Address 51 (no subaddress) is DCC++ Address 12, Subaddress 3.
       <ol>
           <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors & Turnouts")</li>
           <li>Choose the "Turnouts" tab</li>
@@ -116,7 +122,7 @@
           <li>Click "Save Turnouts" or "Close" and answer the prompts</li>
       </ol>
       
-      <p>Note: On JMRI versions 4.7.1 and earlier, if you choose "Save Turnouts" you will <em>not</em> be given the
+      <p>Note: On JMRI versions 4.6.x and earlier, if you choose "Save Turnouts" you will <em>not</em> be given the
           opportunity to write the changes to the Base Station's EEPROM.  To write to EEPROM, you must choose 
           "Close" <em>instead</em> of "Save Changes".</p>
       
@@ -141,6 +147,9 @@
       
       <h3>2: Add the Turnout to the JMRI Turnout Table</h3>
       
+      <p>NOTE: Output configurations stored in the Base Station's EEPROM will be automatically added to the JMRI Sensor Table
+          on startup.</p>
+
       <p>In the JMRI Turnout Table...</p>
       <ol>
           <li>Click the "Add" button</li>
@@ -191,6 +200,12 @@
           address 2 turnout on a stand-alone LocoNet interface.</p>
       <p>Having said that, such overlapping address spaces can be very confusing, so we recommend allocating certain
           address spaces for each interface so that there is only one "Turnout #42" on the whole system</p>
+      
+      <h3>On Inverting Outputs (BSOUTPUT mode Turnouts)</h3>
+      <p>The DCC++ Base Station Output table allows the output signal to be inverted.  JMRI <em>also</em>
+      allows JMRI Turnouts to be inverted in the JMRI Turnout Table entries.  This means that a BSOUTPUT mode Turnout can be
+      inverted <em>twice</em>.  Please be sure to check both the Base Station settings and the Turnout Table settings
+      to be sure that you achieve the intended result.</p>
       
       <h3>On Using the JMRI "Configure Base Station" Tool</h3>
       

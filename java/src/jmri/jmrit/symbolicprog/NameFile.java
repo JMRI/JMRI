@@ -122,6 +122,6 @@ public class NameFile extends XmlFile {
     static String fileLocation = "";
     static String nameFileName = "names.xml";
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(NameFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NameFile.class.getName());
 
 }

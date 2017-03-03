@@ -70,9 +70,13 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         iconAspect = 24. / 32.;
 
         // determine the aspect ratio of the 4 digit base graphic plus a half digit for the colon
-        // this DOES NOT allow space for the Run/Stop button, if it is
-        // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
-        aspect = (4.5 * 24.) / 32.;
+        // This DOES NOT allow space for the Run/Stop button, if it is enabled.
+        // When the Run/Stop button is enabled, the layout will change accordingly.
+        if (!clock.getShowStopButton()) {
+            aspect = (4.5 * 24.) / 32.; // pick up clock prefs choice: no button
+        } else {
+            aspect = (4.5 * 24. + 20.) / 32.; // pick up clock prefs choice: add 20. for a stop/start button
+        }
 
         // listen for changes to the Timebase parameters
         clock.addPropertyChangeListener(this);
@@ -91,11 +95,10 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
         getContentPane().add(m1);
         getContentPane().add(m2);
 
-        getContentPane().add(b = new JButton("Stop"));
+        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonPauseClock")));
         b.addActionListener(new ButtonListener());
-        // since Run/Stop button looks crummy, don't display for now
-        b.setVisible(false);
-
+        // since Run/Stop button looks crummy, user may turn it on in clock prefs
+        b.setVisible(clock.getShowStopButton()); // pick up clock prefs choice
         update();
         pack();
 
@@ -146,7 +149,9 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
 //      doLayout() doesn't work either
         this.setVisible(false);
         this.remove(b);
-        this.getContentPane().add(b);
+        if (clock.getShowStopButton()) {
+            this.getContentPane().add(b); // pick up clock prefs choice
+        }
         this.setVisible(true);
         return;
     }
@@ -175,9 +180,9 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         boolean now = clock.getRun();
         if (now) {
-            b.setText("Stop");
+            b.setText(Bundle.getMessage("ButtonPauseClock"));
         } else {
-            b.setText("Run");
+            b.setText(Bundle.getMessage("ButtonRunClock"));
         }
     }
 
@@ -190,9 +195,9 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
             boolean next = !clock.getRun();
             clock.setRun(next);
             if (next) {
-                b.setText("Stop");
+                b.setText(Bundle.getMessage("ButtonPauseClock"));
             } else {
-                b.setText("Run ");
+                b.setText(Bundle.getMessage("ButtonRunClock"));
             }
         }
     }
