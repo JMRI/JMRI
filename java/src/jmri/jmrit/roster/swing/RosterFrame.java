@@ -870,11 +870,17 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void printLoco(boolean boo) {
+        log.debug("Selected entry: {}", re.getDisplayName());
         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer2 + ".xml");
         pre.printPanes(boo);
     }
 
-    //Matches the first argument in the array against a locally-known method
+    /**
+     * Match the first argument in the array against a locally-known method.
+     *
+     * @param args Array of arguments, we take with element 0
+     */
+
     @Override
     public void remoteCalls(String[] args) {
         args[0] = args[0].toLowerCase();

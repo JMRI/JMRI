@@ -174,11 +174,22 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public RosterEntry() {
     }
 
+    /**
+     * Constructor based on a given file name.
+     *
+     * @param fileName xml file name for the user's Roster entry
+     */
     public RosterEntry(String fileName) {
         this();
         _fileName = fileName;
     }
 
+    /**
+     * Constructor based on a given RosterEntry object and name/ID.
+     *
+     * @param fileName xml file name for the user's Roster entry
+     * @param pID unique name/ID for the roster entry
+     */
     public RosterEntry(RosterEntry pEntry, String pID) {
         this();
         // The ID is different for this element
@@ -233,6 +244,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
     }
 
+    /**
+     * Set the roster ID for this roster entry.
+     *
+     * @param s new ID
+     */
     public void setId(String s) {
         String oldID = _id;
         _id = s;
@@ -246,6 +262,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _id;
     }
 
+    /**
+     * Set the file name for this roster entry.
+     *
+     * @param s the new roster entry file name
+     */
     public void setFileName(String s) {
         String oldName = _fileName;
         _fileName = s;
@@ -261,8 +282,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Ensure the entry has a valid filename. If none exists, create one based
-     * on the ID string. Does _not_ enforce any particular naming; you have to
+     * Ensure the entry has a valid filename.
+     * <p>
+     * If none exists, create one based on the ID string.
+     * Does _not_ enforce any particular naming; you have to
      * check separately for {@literal "<none>"} or whatever your convention is
      * for indicating an invalid name. Does replace the space, period, colon,
      * slash and backslash characters so that the filename will be generally
@@ -504,8 +527,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Set the date modified given a string representing a date. Tries ISO 8601
-     * and the current Java defaults as formats for parsing a date.
+     * Set the date modified given a string representing a date.
+     * <p>
+     * Tries ISO 8601 and the current Java defaults as formats for parsing a date.
      *
      * @param date the string to parse into a date
      * @throws ParseException if the date cannot be parsed
@@ -588,7 +612,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Construct this Entry from XML. This member has to remain synchronized
+     * Construct this Entry from XML.
+     * <p>
+     * This member has to remain synchronized
      * with the detailed DTD in roster-config.xml
      *
      * @param e Locomotive XML element
@@ -625,7 +651,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             _dccAddress = a.getValue();
         }
 
-        // file path were saved without default xml config path 
+        // file path was saved without default xml config path
         if ((a = e.getAttribute("imageFilePath")) != null && !a.getValue().isEmpty()) {
             try {
                 if (FileUtil.getFile(a.getValue()).isFile()) {
@@ -1011,7 +1037,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Provide access to the set of attributes.
-     * <p>This is directly backed access, so e.g. removing an item from this
+     * <p>
+     * This is directly backed access, so e.g. removing an item from this
      * Set removes it from the RosterEntry too.
      *
      * @return a set of attribute keys
@@ -1082,7 +1109,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Create an XML element to represent this Entry. This member has to remain
+     * Create an XML element to represent this Entry.
+     * <p>
+     * This member has to remain
      * synchronized with the detailed DTD in roster-config.xml.
      *
      * @return Contents in a JDOM Element
@@ -1625,8 +1654,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Read a file containing the contents of this RosterEntry. This has to be
-     * done before a call to loadCvModel, for example.
+     * Read a file containing the contents of this RosterEntry.
+     * <p>
+     * This has to be done before a call to loadCvModel, for example.
      */
     public void readFile() {
         if (getFileName() == null) {

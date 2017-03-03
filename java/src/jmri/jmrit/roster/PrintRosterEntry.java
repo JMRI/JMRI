@@ -41,6 +41,13 @@ public class PrintRosterEntry implements PaneContainer {
     RosterMediaPane _rMPane = null;
     JmriJFrame _parent = null;
 
+    /**
+     * Constructor for a Print items selection pane.
+     *
+     * @param rosterEntry Roster item, either as a selection or object
+     * @param parent
+     * @param filename
+     */
     public PrintRosterEntry(RosterEntry rosterEntry, JmriJFrame parent, String filename) {
         _rosterEntry = rosterEntry;
         _flPane = new FunctionLabelPane(rosterEntry);
@@ -50,6 +57,7 @@ public class PrintRosterEntry implements PaneContainer {
         jmri.Programmer mProgrammer = null;
         ResetTableModel resetModel = new ResetTableModel(progStatus, mProgrammer);
 
+        log.debug("Try PrintRosterEntry from file {}", filename);
         XmlFile pf = new XmlFile() {
         };
         Element base = null;
@@ -60,9 +68,10 @@ public class PrintRosterEntry implements PaneContainer {
                 return;
             }
             if ((base = root.getChild("programmer")) == null) {
-                log.error("xml file top element is not programmer");
+                log.error("xml file top element is not a programmer");
                 return;
             }
+            log.debug("Success: xml file top element is a programmer");
         } catch (Exception e) {
             log.error("exception reading programmer file: " + filename, e);
             // provide traceback too
@@ -132,6 +141,7 @@ public class PrintRosterEntry implements PaneContainer {
 
         @SuppressWarnings("unchecked")
         List<Element> rawPaneList = base.getChildren("pane");
+        log.debug("rawPaneList size = {}", rawPaneList.size());
         for (Element elPane : rawPaneList) {
             // load each pane
             Attribute attr = elPane.getAttribute("name");
@@ -143,6 +153,7 @@ public class PrintRosterEntry implements PaneContainer {
             }
             PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
             _paneList.add(p);
+            log.debug("_paneList size = {}", _paneList.size());
         }
     }
 
@@ -168,6 +179,15 @@ public class PrintRosterEntry implements PaneContainer {
         return false;
     }
 
+    /**
+     * Configure variable fields in class.
+     *
+     * @param rosterEntry an item in the Roster
+     * @param paneList list of programmer tabs
+     * @param flPane pane w/checkbox to select printing of "Function List"
+     * @param rMPane pane containing roster media (image)
+     * @param parent Roster JFrame calling this method
+     */
     public PrintRosterEntry(RosterEntry rosterEntry, List<JPanel> paneList, FunctionLabelPane flPane, RosterMediaPane rMPane, JmriJFrame parent) {
         _rosterEntry = rosterEntry;
         _paneList = paneList;
@@ -190,6 +210,7 @@ public class PrintRosterEntry implements PaneContainer {
         if (_flPane.includeInPrint()) {
             _flPane.printPane(w);
         }
+        log.debug("List size length: {}", _paneList.size());
         for (int i = 0; i < _paneList.size(); i++) {
             if (log.isDebugEnabled()) {
                 log.debug("start printing page " + i);
@@ -207,10 +228,14 @@ public class PrintRosterEntry implements PaneContainer {
         final JFrame frame = new JFrame(Bundle.getMessage("TitleSelectItemsToPrint"));
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
+
+        JPanel instruct = new JPanel();
         JLabel l1 = new JLabel(Bundle.getMessage("LabelSelectLine1"));
-        p1.add(l1);
-        l1 = new JLabel(Bundle.getMessage("LabelSelectLine2"));
-        p1.add(l1);
+        instruct.add(l1);
+        l1 = new JLabel(Bundle.getMessage("LabelSelectLine2") + "");
+        instruct.add(l1);
+        p1.add(instruct);
+
         JPanel select = new JPanel();
         select.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ItemsLabel")));
         // add checkboxes for all items
@@ -225,7 +250,9 @@ public class PrintRosterEntry implements PaneContainer {
         });
         _flPane.includeInPrint(false);
         select.add(funct);
+
         // Error as list is always 1 item long, even if empty
+        log.debug("List size length: {}", _paneList.size());
         for (int i = 0; i < _paneList.size(); i++) {
             final PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             pane.includeInPrint(false);
@@ -241,7 +268,7 @@ public class PrintRosterEntry implements PaneContainer {
         }
         p1.add(select);
 
-        // Select All checkbox below tiled set of item boxes
+        // Select All checkbox below titled set of item boxes
         JPanel selectAllBox = new JPanel();
         final JCheckBox selectAll = new JCheckBox(Bundle.getMessage("SelectAll"));
         selectAll.addActionListener(new java.awt.event.ActionListener() {
