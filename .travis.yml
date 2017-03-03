@@ -37,7 +37,9 @@ env:
 matrix:
   exclude:
   - os: osx
-    env: HEADLESS=true
+    env:
+    - HEADLESS=true
+    - TRAVIS_PULL_REQUEST=false
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
