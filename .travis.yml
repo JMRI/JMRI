@@ -37,6 +37,8 @@ env:
 matrix:
   exclude:
   - os: osx
+    env: HEADLESS=true
+  - os: osx
     env: TRAVIS_PULL_REQUEST=true
 
 after_success:
