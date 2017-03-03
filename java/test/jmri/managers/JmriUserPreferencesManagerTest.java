@@ -25,7 +25,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -484,7 +483,6 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    @Ignore // what is best way to verify property event was fired?
     public void testSetChangeMade() {
         JmriUserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);
@@ -495,10 +493,9 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertTrue(m.getChangeMade());
         Assert.assertNull(l.event);
         m.setChangeMade(true);
-        Assert.assertNotNull(l.event);
-        Assert.assertEquals(UserPreferencesManager.PREFERENCES_UPDATED, l.event.getPropertyName());
-        Assert.assertNull(l.event.getOldValue());
-        Assert.assertNull(l.event.getNewValue());
+        JUnitUtil.waitFor(() -> {
+            return l.event != null && l.event.getPropertyName().equals(UserPreferencesManager.PREFERENCES_UPDATED);
+        }, "event change notification fired");
     }
 
     @Test
@@ -1039,6 +1036,5 @@ public class JmriUserPreferencesManagerTest {
         public void propertyChange(PropertyChangeEvent evt) {
             this.event = evt;
         }
-
     }
 }
