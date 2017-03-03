@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.managers.JmriUserPreferencesManagerTest class.
+ * Tests for the jmri.managers.JmriUserPreferencesManager class.
  *
  * @author Bob Jacobsen Copyright 2009
  * @author Randall Wood Copyright 2017
@@ -915,11 +915,8 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    @Ignore // identical to testSaveElement; I do not understand why it fails
     public void testReadUserPreferences() throws IOException {
-        File profile = folder.newFolder(Profile.PROFILE);
-        JUnitUtil.resetProfileManager(new NullProfile(profile));
-        log.debug("profile path: {}", ProfileManager.getDefault().getActiveProfile().getPath());
+        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
         Point location = new Point(69, 96);
         Dimension windowSize = new Dimension(100, 200);
         UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
@@ -931,17 +928,10 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File sub = new File(profile, "profile");
-        log.debug("node identity: {}", NodeIdentity.identity());
-        File node = new File(sub, NodeIdentity.identity());
-        Assert.assertTrue(node.exists());
-        Assert.assertTrue(node.isDirectory());
-        for (String name : node.list()) {
-            log.debug(name);
+        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        if (log.isDebugEnabled()) {
+            Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         }
-        File target = new File(new File(new File(profile, "profile"), NodeIdentity.identity()), "user-interface.xml");
-        log.debug("UI preferences file: {}", target);
-        Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
@@ -954,9 +944,7 @@ public class JmriUserPreferencesManagerTest {
 
     @Test
     public void testSaveElement() throws IOException {
-        File profile = folder.newFolder(Profile.PROFILE);
-        JUnitUtil.resetProfileManager(new NullProfile(profile));
-        log.debug("profile path: {}", ProfileManager.getDefault().getActiveProfile().getPath());
+        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
         Point location = new Point(69, 96);
         Dimension windowSize = new Dimension(100, 200);
         UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
@@ -968,15 +956,10 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File sub = new File(profile, "profile");
-        log.debug("node identity: {}", NodeIdentity.identity());
-        File node = new File(sub, NodeIdentity.identity());
-        for (String name : node.list()) {
-            log.debug(name);
+        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        if (log.isDebugEnabled()) {
+            Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         }
-        File target = new File(new File(new File(profile, "profile"), NodeIdentity.identity()), "user-interface.xml");
-        log.debug("UI preferences file: {}", target);
-        Files.lines(target.toPath()).forEach((line) -> log.debug(line));
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
