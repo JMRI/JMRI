@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.routes;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
@@ -21,23 +20,24 @@ public class RouteManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
 
     public static synchronized RouteManagerXml instance() {
-        RouteManagerXml _instance = jmri.InstanceManager.getNullableDefault(RouteManagerXml.class);
-        if (_instance == null) {
+        RouteManagerXml instance = jmri.InstanceManager.getNullableDefault(RouteManagerXml.class);
+        if (instance == null) {
             log.debug("RouteManagerXml creating instance");
             // create and load
-            _instance = new RouteManagerXml();
-            jmri.InstanceManager.setDefault(RouteManagerXml.class,_instance);
-            _instance.load();
+            instance = new RouteManagerXml();
+            jmri.InstanceManager.setDefault(RouteManagerXml.class,instance);
+            instance.load();
             log.debug("Routes have been loaded!");
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("RouteManagerXml returns instance {}", _instance);
+            log.debug("RouteManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override

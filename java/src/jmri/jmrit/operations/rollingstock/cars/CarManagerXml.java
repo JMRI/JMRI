@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -25,21 +24,22 @@ public class CarManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
     public static synchronized CarManagerXml instance() {
-        CarManagerXml _instance = jmri.InstanceManager.getNullableDefault(CarManagerXml.class);
-        if (_instance == null) {
+        CarManagerXml instance = jmri.InstanceManager.getNullableDefault(CarManagerXml.class);
+        if (instance == null) {
             log.debug("CarManagerXml creating instance");
             // create and load
-            _instance = new CarManagerXml();
-            jmri.InstanceManager.setDefault(CarManagerXml.class,_instance);
-            _instance.load();
+            instance = new CarManagerXml();
+            jmri.InstanceManager.setDefault(CarManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("CarManagerXml returns instance {}", _instance);
+            log.debug("CarManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
