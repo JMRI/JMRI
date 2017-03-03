@@ -6,7 +6,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   PackageTest.class,
    PanedTest.class,
    PanelProActionTest.class,
    PanelProFrameTest.class,
