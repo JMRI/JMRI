@@ -90,6 +90,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SignalMastRepeaterTest.class));
         suite.addTest(new JUnit4TestAdapter(TripleOutputSignalHeadTest.class));
         suite.addTest(new JUnit4TestAdapter(TripleTurnoutSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutSignalMastTest.class));
+        suite.addTest(new JUnit4TestAdapter(VirtualSignalMastTest.class));
 
 
         return suite;
