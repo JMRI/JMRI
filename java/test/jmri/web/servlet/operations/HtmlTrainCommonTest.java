@@ -7,6 +7,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  *
@@ -15,8 +17,9 @@ import org.slf4j.LoggerFactory;
 public class HtmlTrainCommonTest {
 
     @Test
-    public void testCTor() {
-        HtmlTrainCommon t = new HtmlTrainCommon();
+    public void testCTor() throws java.io.IOException {
+        HtmlTrainCommon t = new HtmlTrainCommon(java.util.Locale.US,
+                     (InstanceManager.getDefault(TrainManager.class)).getTrainById("2"));
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +28,8 @@ public class HtmlTrainCommonTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        jmri.util.JUnitOperationsUtil.initOperationsData();     
     }
 
     @After

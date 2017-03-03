@@ -16,7 +16,7 @@ public class DirectoryResourceTest {
 
     @Test
     public void testCTor() {
-        DirectoryResource t = new DirectoryResource();
+        DirectoryResource t = new DirectoryResource(java.util.Locale.US,org.eclipse.jetty.util.resource.EmptyResource.INSTANCE);
         Assert.assertNotNull("exists",t);
     }
 
