@@ -14,6 +14,7 @@
     <name xml:lang="de">Neues PanelPro Fenster</name>
     <name xml:lang="cs">Nové okno PanelPro</name>
     <name xml:lang="ca">Nova Finestra de PanelPro</name>
+    <name xml:lang="nl">Nieuw PanelPro venster</name>
     <adapter>apps.gui3.paned.PanelProAction</adapter>
   </node>
   <node>
@@ -26,6 +27,7 @@
     <name xml:lang="de">Voreinstellungen</name>
     <name xml:lang="cs">Předvolby</name>
     <name xml:lang="ca">Preferències</name>
+    <name xml:lang="nl">Voorkeuren</name>
     <panel>apps.gui3.TabbedPreferences</panel>
   </node>
   <node>
@@ -34,6 +36,7 @@
     <name xml:lang="de">Hilfe</name>
     <name xml:lang="cs">Nápověda</name>
     <name xml:lang="ca">Ajuda</name>
+    <name xml:lang="nl">Help</name>
     <help>index</help>
   </node>
 
