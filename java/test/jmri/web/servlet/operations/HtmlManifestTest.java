@@ -1,4 +1,4 @@
-package jmri.implementation;
+package jmri.web.servlet.operations;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,16 +7,19 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TurnoutSignalMastTest {
+public class HtmlManifestTest {
 
     @Test
-    public void testCTor() {
-        TurnoutSignalMast t = new TurnoutSignalMast("IF$tsm:basic:one-searchlight($1)");
+    public void testCTor() throws java.io.IOException {
+        HtmlManifest t = new HtmlManifest(java.util.Locale.US,
+                     (InstanceManager.getDefault(TrainManager.class)).getTrainById("2"));
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +28,8 @@ public class TurnoutSignalMastTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        jmri.util.JUnitOperationsUtil.initOperationsData();     
     }
 
     @After
@@ -33,6 +38,6 @@ public class TurnoutSignalMastTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HtmlManifestTest.class.getName());
 
 }
