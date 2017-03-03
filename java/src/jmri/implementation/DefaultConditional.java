@@ -1351,7 +1351,7 @@ public class DefaultConditional extends AbstractNamedBean
     static private Memory getMemory(String name) {
         Memory m = InstanceManager.memoryManagerInstance().getMemory(name);
         if (m == null) {
-            String sName = name.toUpperCase().trim();
+            String sName = name.toUpperCase().trim();  // N11N
             m = InstanceManager.memoryManagerInstance().getMemory(sName);
         }
         return m;

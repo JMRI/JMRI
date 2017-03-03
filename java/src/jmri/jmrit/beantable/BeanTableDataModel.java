@@ -652,7 +652,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         if (retval != 1) {
             return;
         }
-        String value = _newName.getText().trim();
+        String value = _newName.getText().trim(); // N11N
 
         if (value.equals(oldName)) {
             //name not changed.
