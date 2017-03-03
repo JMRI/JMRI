@@ -412,7 +412,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * @return A system name in standard normalized form 
      */
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws jmri.Manager.BadUserNameException {
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws jmri.Manager.BadSystemNameException {
         return inputName;
     }
 

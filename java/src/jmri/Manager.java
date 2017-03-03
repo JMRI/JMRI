@@ -248,6 +248,6 @@ public interface Manager {
      * @return A system name in standard normalized form 
      */
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws BadUserNameException;
-    public class BadUserNameException extends IllegalArgumentException {}
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws BadSystemNameException;
+    public class BadSystemNameException extends IllegalArgumentException {}
 }
