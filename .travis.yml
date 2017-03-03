@@ -40,8 +40,8 @@ matrix:
     env: HEADLESS=true
   - os: osx
     env:
-    - HEADLESS=false
-    - TRAVIS_PULL_REQUEST=true
+      HEADLESS=false
+      TRAVIS_PULL_REQUEST=true
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
