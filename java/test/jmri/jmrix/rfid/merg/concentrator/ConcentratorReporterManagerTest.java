@@ -16,30 +16,21 @@ import jmri.Reporter;
 public class ConcentratorReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "RR" + "A";
     }
 
-    @Test
     @Override
-    public void testDefaultSystemName() {
-        // create - Merg Concentrator uses letters instead of numbers
-        Reporter t = l.provideReporter("" + "A");
-        // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest3())));
-    }
-
-
-    @Test
+    protected int maxN() { return 1; }
+    
     @Override
-    public void testUpperLower() {
-        // Merg concentrator uses letters instead of numbers.
-        Reporter t = l.provideReporter("" + "C");
-        String name = t.getSystemName();
-        Assert.assertNull(l.getReporter(name.toLowerCase()));
+    protected String getNameToTest1() {
+        return "A";
     }
-
+    @Override
+    protected String getNameToTest2() {
+        return "C";
+    }
 
     ConcentratorTrafficController tc = null;
 
