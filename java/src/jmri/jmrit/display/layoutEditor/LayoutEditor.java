@@ -1397,7 +1397,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
 
-        boolean useBorders = toolBarIsVertical;
+        boolean useBorders = !(toolBarSide.equals(eToolBarSide.eTOP) || toolBarSide.equals(eToolBarSide.eBOTTOM));
         if (useBorders) {
             outerBorderPanel = new JPanel();
             outerBorderPanel.setLayout(new BoxLayout(outerBorderPanel, BoxLayout.PAGE_AXIS));
