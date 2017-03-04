@@ -36,10 +36,12 @@ import org.slf4j.LoggerFactory;
 public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param top      CVs above this use the indirect method
-     * @param addrCV   CV to which the high part of address is to be written
-     * @param cvFactor CV to which the low part of address is to be written
-     * @param modulo   Modulus for determining high/low address parts
+     * @param prog      the programmer this facade is attached to
+     * @param top       CVs above this use the indirect method
+     * @param addrCV    CV to which the high part of address is to be written
+     * @param cvFactor  CV to which the low part of address is to be written
+     * @param modulo    Modulus for determining high/low address parts
+     * @param indicator
      */
     public ResettingOffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo, String indicator) {
         super(prog);
@@ -119,7 +121,6 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
