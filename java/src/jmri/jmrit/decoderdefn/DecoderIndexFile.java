@@ -605,6 +605,6 @@ public class DecoderIndexFile extends XmlFile {
 
     static final protected String decoderIndexFileName = "decoderIndex.xml";
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(DecoderIndexFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderIndexFile.class.getName());
 
 }

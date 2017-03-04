@@ -17,12 +17,26 @@ import java.awt.GraphicsEnvironment;
 public class BuildReportOptionFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         BuildReportOptionFrame t = new BuildReportOptionFrame();
         Assert.assertNotNull("exists",t);
     }
+
+    @Test
+    public void testBuildReportOptionFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        BuildReportOptionFrame f = new BuildReportOptionFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+
+        // TODO do more testing
+
+        // done
+        f.dispose();
+    }
+
+
 
     // The minimal setup for log4J
     @Before

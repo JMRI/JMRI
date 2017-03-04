@@ -15,7 +15,7 @@ import org.junit.Before;
 public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "DPR" + i;
     }
 

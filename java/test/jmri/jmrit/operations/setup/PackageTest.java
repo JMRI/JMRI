@@ -28,7 +28,6 @@ public class PackageTest extends TestCase {
         suite.addTest(OperationsSetupTest.suite());
         suite.addTest(OperationsBackupTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsSetupGuiTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsBackupGuiTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AutoBackupTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AutoSaveTest.class));

@@ -80,7 +80,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     @Override
     public String toString() {
-        log.debug("DCCppReply.toString(): msg {}", myReply.toString());
+        log.trace("DCCppReply.toString(): msg {}", myReply.toString());
         return(myReply.toString());
     }
 
@@ -166,12 +166,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return(r);
             case DCCppConstants.PROGRAM_REPLY:
                 if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
+                    log.debug("Matches ProgBitReply");
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
+                    log.debug("Matches ProgReply");
                     r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
                 } else {
+                    log.debug("Does not match ProgReply Regex");
                     return(new DCCppReply());
                 }
                 r._nDataChars = r.toString().length();
@@ -250,7 +253,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    /** getOpCode()
+    /**
      * 
      * Not really used inside of DCC++.  Just here
      * to play nicely with the inheritance.
@@ -261,7 +264,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * the _datachars element, which we don't use, and which
      * will contain garbage data.  Better to return something
      * meaningful.
-     * @return 
+     * @return first char of myReply as integer
      */
     @Override
     public int getOpCode() {
@@ -272,7 +275,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    /* Get the opcode as a one character string */
+    /** Get the opcode as a one character string.
+     * @return first char of myReply
+     */
     public char getOpCodeChar() {
         if (myReply.length() > 0) {
             return(myReply.charAt(0));

@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
@@ -77,19 +76,19 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     private int _id = 0; // train ids
 
     public static synchronized TrainManager instance() {
-        TrainManager _instance = jmri.InstanceManager.getNullableDefault(TrainManager.class);
-        if (_instance == null) {
+        TrainManager instance = jmri.InstanceManager.getNullableDefault(TrainManager.class);
+        if (instance == null) {
             log.debug("TrainManager creating instance");
             // create and load
-            _instance = new TrainManager();
-            jmri.InstanceManager.setDefault(TrainManager.class,_instance);
+            instance = new TrainManager();
+            jmri.InstanceManager.setDefault(TrainManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             TrainManagerXml.instance(); // load trains
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManager returns instance " + _instance);
+            log.debug("TrainManager returns instance " + instance);
         }
-        return _instance;
+        return instance;
     }
 
     /**

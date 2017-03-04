@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -400,6 +401,19 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
                 }
             }
         }
+    }
+
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a system name
+     * for the NamedBeans handled by this manager.
+     *
+     * @param inputName System name to be normalized
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
+     * @return A system name in standard normalized form 
+     */
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        return inputName;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractManager.class.getName());

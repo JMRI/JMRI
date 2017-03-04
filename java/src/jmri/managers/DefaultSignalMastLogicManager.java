@@ -22,6 +22,9 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Default implementation of a SignalMastLogicManager.
@@ -262,6 +265,20 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     @Override
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a system name
+     * for the NamedBeans handled by this manager.
+     *
+     * @param inputName System name to be normalized
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
+     * @return A system name in standard normalized form 
+     */
+    @Override
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        return inputName;
     }
 
     @Override

@@ -1077,6 +1077,7 @@
         <xs:element name="sensorA" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
