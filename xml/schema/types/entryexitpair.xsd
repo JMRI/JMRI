@@ -35,8 +35,17 @@
       </xs:annotation>
       <xs:sequence>
         <xs:element name="cleardown" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="dispatcherintegration" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="colourwhilesetting" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        
+        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
+        <xs:element name="settingTimer" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
         <xs:element name="logicDelay" type="xs:string" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="layoutPanel" type="EntryExitPanelType" minOccurs="0" maxOccurs="unbounded" />      
+        
+        <!-- code in EntryExitPairsXml that writes the following is distinct from usual panel code -->
+        <xs:element name="layoutPanel" type="EntryExitPanelType" minOccurs="0" maxOccurs="unbounded" />   
+           
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>

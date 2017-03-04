@@ -46,7 +46,7 @@
       
       <h3>2: Add the Sensor to the JMRI Turnout Table</h3>
       
-      <p>NOTE: Sensors configurations stored in the Base Station's EEPROM will be automatically added to the JMRI Sensor Table
+      <p>NOTE: Sensor configurations stored in the Base Station's EEPROM will be automatically added to the JMRI Sensor Table
           on startup.</p>
       <p>In the JMRI Sensor Table...</p>
       <ol>
@@ -72,7 +72,7 @@
           <li>Click "Save Sensors" or "Close" and answer the prompts</li>
       </ol>
       
-      <p>Note: On JMRI versions 4.7.1 and earlier, if you choose "Save Sensors" you will <em>not</em> be given the
+      <p>Note: On JMRI versions 4.6.x and earlier, if you choose "Save Sensors" you will <em>not</em> be given the
           opportunity to write the changes to the Base Station's EEPROM.  To write to EEPROM, you must choose 
           "Close" <em>instead</em> of "Save Sensors".</p>
       

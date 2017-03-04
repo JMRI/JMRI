@@ -541,7 +541,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             this.setDateModified(s);
         } catch (ParseException ex) {
-            log.warn("Unable to parse {} as a date.", s);
+            log.warn("Unable to parse \"{}\" as a date in roster entry \"{}\".", s, getId());
             // property change is fired by setDateModified if s parses as a date
             firePropertyChange(RosterEntry.DATE_UPDATED, old, s);
         }

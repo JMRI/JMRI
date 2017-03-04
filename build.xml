@@ -963,7 +963,7 @@
     <!-- ============================================================================= -->
 
 
-    <!-- Force false language/country to check I8N -->
+    <!-- Force false language/country to check I18N -->
     <target name="locale"
             description="check DecoderPro I8N"
             depends="debug, runtime-library-selection">

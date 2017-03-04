@@ -90,8 +90,13 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     /**
-     * Needs to handle two types of element: turnoutname is new form turnout is
-     * old form
+     * Process stored signal head output (turnout).
+     * <p>
+     * Needs to handle two types of element: turnoutname is new form; turnout is
+     * old form.
+     *
+     * @param o xml object defining a turnout on an SE8C signal head
+     * @return named bean for the turnout
      */
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element) o;
