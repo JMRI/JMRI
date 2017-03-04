@@ -187,7 +187,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Constructor based on a given RosterEntry object and name/ID.
      *
-     * @param fileName xml file name for the user's Roster entry
+     * @param pEntry RosterEntry object
      * @param pID unique name/ID for the roster entry
      */
     public RosterEntry(RosterEntry pEntry, String pID) {

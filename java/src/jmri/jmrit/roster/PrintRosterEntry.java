@@ -45,8 +45,8 @@ public class PrintRosterEntry implements PaneContainer {
      * Constructor for a Print items selection pane.
      *
      * @param rosterEntry Roster item, either as a selection or object
-     * @param parent
-     * @param filename
+     * @param parent window over which this dialog will be centered
+     * @param xml file name for the user's Roster entry
      */
     public PrintRosterEntry(RosterEntry rosterEntry, JmriJFrame parent, String filename) {
         _rosterEntry = rosterEntry;
@@ -68,10 +68,10 @@ public class PrintRosterEntry implements PaneContainer {
                 return;
             }
             if ((base = root.getChild("programmer")) == null) {
-                log.error("xml file top element is not a programmer");
+                log.error("xml file top element is not 'programmer'");
                 return;
             }
-            log.debug("Success: xml file top element is a programmer");
+            log.debug("Success: xml file top element is 'programmer'");
         } catch (Exception e) {
             log.error("exception reading programmer file: " + filename, e);
             // provide traceback too
@@ -186,7 +186,7 @@ public class PrintRosterEntry implements PaneContainer {
      * @param paneList list of programmer tabs
      * @param flPane pane w/checkbox to select printing of "Function List"
      * @param rMPane pane containing roster media (image)
-     * @param parent Roster JFrame calling this method
+     * @param parent window over which this dialog will be centered
      */
     public PrintRosterEntry(RosterEntry rosterEntry, List<JPanel> paneList, FunctionLabelPane flPane, RosterMediaPane rMPane, JmriJFrame parent) {
         _rosterEntry = rosterEntry;
@@ -196,6 +196,11 @@ public class PrintRosterEntry implements PaneContainer {
         _parent = parent;
     }
 
+    /**
+     * Write a series of 'pages' to graphic output using HardcopyWriter.
+     *
+     * @param preview true if output sould got to the Preview panel, false to output to a printer
+     */
     public void doPrintPanes(boolean preview) {
         //choosePrintItems();
         HardcopyWriter w = null;
@@ -224,6 +229,11 @@ public class PrintRosterEntry implements PaneContainer {
         w.close();
     }
 
+    /**
+     * Ceate and display a pane to the user to select which Programmer tabs to include in printout.
+     *
+     * @param preview true if output should got to a Preview pane on screen, false to output to a printer (dialog)
+     */
     public void printPanes(final boolean preview) {
         final JFrame frame = new JFrame(Bundle.getMessage("TitleSelectItemsToPrint"));
         JPanel p1 = new JPanel();
@@ -268,7 +278,7 @@ public class PrintRosterEntry implements PaneContainer {
         }
         p1.add(select);
 
-        // Select All checkbox below titled set of item boxes
+        // Add "Select All" checkbox below titled set of item boxes
         JPanel selectAllBox = new JPanel();
         final JCheckBox selectAll = new JCheckBox(Bundle.getMessage("SelectAll"));
         selectAll.addActionListener(new java.awt.event.ActionListener() {
@@ -313,6 +323,13 @@ public class PrintRosterEntry implements PaneContainer {
 
     }
 
+    /**
+     * Write the page header to graphic output, using HardcopyWriter w.
+     * <p>
+     * Includes the DecoderPro logo image at top right.
+     *
+     * @param w the active HardcopyWriter instance to be used
+     */
     public void printInfoSection(HardcopyWriter w) {
         ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
