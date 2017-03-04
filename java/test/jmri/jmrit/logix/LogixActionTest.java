@@ -45,19 +45,24 @@ public class LogixActionTest extends TestCase {
         sensor.setState(Sensor.INACTIVE);
         sensor.setState(Sensor.ACTIVE);
         SignalHead sh1 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH1");
+        Assert.assertNotNull("shi null", sh1);
         Assert.assertEquals("SignalHead IH1", SignalHead.RED, sh1.getAppearance());
 
         // do some buttons -Sensors
         sensor = InstanceManager.sensorManagerInstance().getSensor("ISLITERAL");
+        Assert.assertNotNull("sensor null", sensor);
         sensor.setState(Sensor.ACTIVE);		// activate direct logix action
         Sensor is1 = InstanceManager.sensorManagerInstance().getSensor("sensor1");
+        Assert.assertNotNull("is1 null", is1);
         Assert.assertEquals("direct set Sensor IS1 active", Sensor.ACTIVE, is1.getState());		// action
         sensor = InstanceManager.sensorManagerInstance().getSensor("ISINDIRECT");
+        Assert.assertNotNull("sensor null", sensor);
         sensor.setState(Sensor.ACTIVE);		// activate Indirect logix action
         Assert.assertEquals("Indirect set Sensor IS1 inactive", Sensor.INACTIVE, is1.getState());		// action
 
         // SignalHead buttons
         Sensor is4 = InstanceManager.sensorManagerInstance().getSensor("IS4");
+        Assert.assertNotNull("is4 null", is4);
         is4.setState(Sensor.ACTIVE);		// activate direct logix action
         Assert.assertEquals("direct set SignalHead IH1 to Green", SignalHead.GREEN, sh1.getAppearance());
         is4.setState(Sensor.INACTIVE);		// activate direct logix action
@@ -67,6 +72,7 @@ public class LogixActionTest extends TestCase {
         Assert.assertNotNull("Memory IM3", im3);
         Assert.assertEquals("Contents IM3", "IH1", im3.getValue());
         Sensor is3 = InstanceManager.sensorManagerInstance().getSensor("IS3");
+        Assert.assertNotNull("is3 null", is3);
         is3.setState(Sensor.ACTIVE);		// activate indirect logix action
         Assert.assertEquals("Indirect set SignalHead IH1 to Green", SignalHead.GREEN, sh1.getAppearance());
         is3.setState(Sensor.INACTIVE);		// activate indirect logix action
@@ -76,18 +82,24 @@ public class LogixActionTest extends TestCase {
         is3.setState(Sensor.ACTIVE);		// activate logix action
         Assert.assertEquals("Contents IM3", "IH2", im3.getValue());
         SignalHead sh2 = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead("IH2");
+        Assert.assertNotNull("sh2 null", sh2);
         Assert.assertEquals("Indirect SignalHead IH2", SignalHead.GREEN, sh2.getAppearance());
 
         // Turnout Buttons
         Sensor is6 = InstanceManager.sensorManagerInstance().getSensor("IS6");
+        Assert.assertNotNull("is6 null", is6);
         is6.setState(Sensor.ACTIVE);		// activate direct logix action
         Turnout it2 = InstanceManager.turnoutManagerInstance().getTurnout("IT2");
+        Assert.assertNotNull("it2 null", it2);
         Assert.assertEquals("direct set Turnout IT2 to Closed", Turnout.CLOSED, it2.getState());
         Memory im4 = InstanceManager.memoryManagerInstance().getMemory("IM4");
+        Assert.assertNotNull("im4 null", im4);
         Assert.assertEquals("Contents IM4", "IT3", im4.getValue());
         Sensor is7 = InstanceManager.sensorManagerInstance().getSensor("IS7");
+        Assert.assertNotNull("is7 null", is7);
         is7.setState(Sensor.INACTIVE);		// activate indirect logix action
         Turnout it3 = InstanceManager.turnoutManagerInstance().getTurnout("IT3");
+        Assert.assertNotNull("it3 null", it3);
         Assert.assertEquals("Indirect set Turnout IT2 to Thrown", Turnout.THROWN, it3.getState());
         is7.setState(Sensor.ACTIVE);		// activate indirect logix action
         Assert.assertEquals("Indirect set Turnout IT2 to Closed", Turnout.CLOSED, it3.getState());
@@ -105,15 +117,18 @@ public class LogixActionTest extends TestCase {
         OBlock ob2 = InstanceManager.getDefault(OBlockManager.class).getOBlock("Right");
         Assert.assertEquals("OBlock OB2", (OBlock.TRACK_ERROR | Sensor.INACTIVE), ob2.getState());
         Sensor is8 = InstanceManager.sensorManagerInstance().getSensor("IS8");
+        Assert.assertNotNull("is8 null", is8);
         is8.setState(Sensor.ACTIVE);			// direct action
         Assert.assertEquals("Direct set OBlock OB1 to normal", Sensor.INACTIVE, ob1.getState());
         is8.setState(Sensor.INACTIVE);			// direct action
         Assert.assertEquals("Direct set OBlock OB1 to OOS", (OBlock.OUT_OF_SERVICE | Sensor.INACTIVE), ob1.getState());
         Sensor is9 = InstanceManager.sensorManagerInstance().getSensor("IS9");
+        Assert.assertNotNull("is9 null", is9);
         is9.setState(Sensor.ACTIVE);			// indirect action
         Assert.assertEquals("Indirect set OBlock OB2 to normal", Sensor.INACTIVE, ob2.getState());
         // change memory value
         Memory im5 = InstanceManager.memoryManagerInstance().getMemory("IM5");
+        Assert.assertNotNull("im5 null", im5);
         im5.setValue("OB1");
         is9.setState(Sensor.INACTIVE);			// indirect action
         Assert.assertEquals("Indirect set OBlock OB1 to normal",
@@ -124,10 +139,12 @@ public class LogixActionTest extends TestCase {
 
         // Warrant buttons
         Sensor is14 = InstanceManager.sensorManagerInstance().getSensor("IS14");
+        Assert.assertNotNull("is14 null", is14);
         is14.setState(Sensor.ACTIVE);			// indirect action
         Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant("EastToWestOnSiding");
         Assert.assertTrue("warrant EastToWestOnSiding allocated", w.isAllocated());
         Sensor is15 = InstanceManager.sensorManagerInstance().getSensor("IS15");
+        Assert.assertNotNull("is15 null", is15);
         is15.setState(Sensor.ACTIVE);			// indirect action
         Assert.assertFalse("warrant EastToWestOnSiding deallocated", w.isAllocated());
         // change memory value
@@ -160,6 +177,7 @@ public class LogixActionTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -175,6 +193,7 @@ public class LogixActionTest extends TestCase {
         JUnitUtil.initConditionalManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();

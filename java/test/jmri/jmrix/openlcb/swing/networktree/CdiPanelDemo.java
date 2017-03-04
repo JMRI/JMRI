@@ -14,7 +14,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
@@ -44,6 +43,7 @@ public class CdiPanelDemo {
 
         m.initComponents(demoRepFromSample(SampleFactory.getBasicSample()),
                 new CdiPanel.GuiItemFactory() {
+                    @Override
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
                         button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));
@@ -101,6 +101,7 @@ public class CdiPanelDemo {
 
         m.initComponents(demoRepFromFile(new File(fileName)),
                 new CdiPanel.GuiItemFactory() {
+                    @Override
                     public JButton handleReadButton(JButton button) {
                         //System.out.println("process button");
                         button.setBorder(BorderFactory.createLineBorder(java.awt.Color.yellow));

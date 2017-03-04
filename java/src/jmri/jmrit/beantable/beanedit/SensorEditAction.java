@@ -13,6 +13,7 @@ import jmri.Sensor;
  */
 public class SensorEditAction extends BeanEditAction {
 
+    @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";
     } //IN18N
@@ -27,10 +28,12 @@ public class SensorEditAction extends BeanEditAction {
         bei.add(debounce.sensorDebounce(null));
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
 
+    @Override
     public NamedBean getByUserName(String name) {
         return InstanceManager.sensorManagerInstance().getByUserName(name);
     }

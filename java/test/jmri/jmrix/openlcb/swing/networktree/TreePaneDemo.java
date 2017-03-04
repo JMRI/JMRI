@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
@@ -60,6 +59,7 @@ public class TreePaneDemo {
     JFrame frame;
     TreePane pane;
     Connection connection = new AbstractConnection() {
+        @Override
         public void put(Message msg, Connection sender) {
         }
     };
@@ -76,8 +76,10 @@ public class TreePaneDemo {
         pane = new TreePane();
         pane.initComponents(store, null, null,
                 new NodeTreeRep.SelectionKeyLoader() {
+                    @Override
                     public NodeTreeRep.SelectionKey cdiKey(String name, NodeID node) {
                         return new NodeTreeRep.SelectionKey(name, node) {
+                            @Override
                             public void select(DefaultMutableTreeNode rep) {
                                 System.out.println("Making special fuss over: " + rep + " for " + name + " on " + node);
                             }
@@ -158,6 +160,7 @@ public class TreePaneDemo {
         frame.setTitle("listener test");
 
         pane.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 JTree tree = (JTree) e.getSource();
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();

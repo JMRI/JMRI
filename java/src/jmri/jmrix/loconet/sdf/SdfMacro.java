@@ -57,6 +57,7 @@ public abstract class SdfMacro implements SdfConstants {
      *
      * @return newline-terminated string; never null
      */
+    @Override
     abstract public String toString();
 
     /**

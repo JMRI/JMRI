@@ -25,6 +25,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         setBinary(true);
     }
 
+    @Override
     public String toMonitorString() {
         // check for valid length
         int len = getNumDataElements();

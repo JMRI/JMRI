@@ -25,7 +25,7 @@ public interface Sensor extends NamedBean {
     // states are parameters; both closed and thrown is possible!
     public static final int ACTIVE = 0x02;
     public static final int INACTIVE = 0x04;
-
+    
     /**
      * Known state on layout is a bound parameter
      *
@@ -34,9 +34,12 @@ public interface Sensor extends NamedBean {
     public int getKnownState();
 
     /**
-     * Potentially allow the user to set the known state on the layout. This
-     * might not always be available, depending on the limits of the underlying
-     * system and implementation.
+     * Set the known state on the layout. This might not always be available, or
+     * effective, depending on the limits of the underlying system and
+     * implementation.
+     *
+     * @param newState the state to set
+     * @throws jmri.JmriException if unable to set the state
      */
     public void setKnownState(int newState) throws jmri.JmriException;
 
@@ -53,71 +56,77 @@ public interface Sensor extends NamedBean {
      * <p>
      * Changing this changes the state from ACTIVE to INACTIVE and vice-versa,
      * with notifications; UNKNOWN and INCONSISTENT are left unchanged.
+     *
+     * @param inverted true if the sensor should be inverted; false otherwise
      */
     public void setInverted(boolean inverted);
 
     /**
-     * Get the inverted state. If true, the electrical signal that results in an
-     * ACTIVE state now results in an INACTIVE state.
+     * Get the inverted state.
+     *
+     * @return true if the electrical signal that normally results in an ACTIVE
+     *         state now results in an INACTIVE state; false otherwise
      */
     public boolean getInverted();
-
-    /**
-     * Request a call-back when the bound KnownState property changes.
-     */
-    public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
-
-    /**
-     * Remove a request for a call-back when a bound property changes.
-     */
-    public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
 
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();  // remove _all_ connections!
 
     /**
      * Used to return the Raw state of a sensor prior to the known state of a
-     * sensor being set. The raw state value can be different when the sensor
-     * debounce option is used.
+     * sensor being set. The raw state value can be different from the known
+     * state when the sensor debounce option is used.
      *
      * @return raw state value
      */
     public int getRawState();
 
     /**
-     * Set the Active debounce delay in milliSeconds. If a zero value is entered
-     * then debounce delay is de-activated.
+     * Set the active debounce delay.
+     *
+     * @param timer delay in milliseconds; set to zero to de-activate debounce
      */
     public void setSensorDebounceGoingActiveTimer(long timer);
 
     /**
-     * Get the Active debounce delay in milliSeconds.
+     * Get the active debounce delay.
+     *
+     * @return delay in milliseconds
      */
     public long getSensorDebounceGoingActiveTimer();
 
     /**
-     * Set the InActive debounce delay in milliSeconds. If a zero value is
-     * entered then debounce delay is de-activated.
+     * Set the inactive debounce delay.
+     *
+     * @param timer delay in milliseconds; set to zero to de-activate debounce
      */
     public void setSensorDebounceGoingInActiveTimer(long timer);
 
     /**
-     * Get the InActive debounce delay in milliSeconds.
+     * Get the inactive debounce delay.
+     *
+     * @return delay in milliseconds
      */
     public long getSensorDebounceGoingInActiveTimer();
 
     /**
-     * Use the timers specified in the Sensor manager for the debounce delay
-     * @param flag set to current defaults if true now and not previously true
+     * Use the timers specified in the {@link jmri.SensorManager} for the
+     * debounce delay.
+     *
+     * @param flag true to set to current defaults if not previously true
      */
     public void useDefaultTimerSettings(boolean flag);
 
     /**
-     * Does this sensor use the default timers values?
-     * (A remarkably unfortunate name given the one above)
+     * Does this sensor use the default timers values? (A remarkably unfortunate
+     * name given the one above)
+     *
+     * @return true if using default debounce values from the
+     *         {@link jmri.SensorManager}
      */
     public boolean useDefaultTimerSettings();
 
@@ -126,13 +135,16 @@ public interface Sensor extends NamedBean {
      * train identities via such methods as RailCom. The setting and creation of
      * the reporter against the sensor should be done when the sensor is
      * created. This information is not saved.
+     *
+     * @param re the reporter to associate with the sensor
      */
     public void setReporter(@CheckForNull Reporter re);
 
     /**
      * Retrieve the reporter associated with this sensor if there is one.
-     * <p>
-     * returns null if there is no direct reporter.
+     *
+     * @return the reporter or null if there is no associated reporter
      */
-    @CheckForNull public Reporter getReporter();
+    @CheckForNull
+    public Reporter getReporter();
 }

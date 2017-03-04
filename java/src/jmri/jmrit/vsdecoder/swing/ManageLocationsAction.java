@@ -48,6 +48,7 @@ public class ManageLocationsAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             // Handle the Listener

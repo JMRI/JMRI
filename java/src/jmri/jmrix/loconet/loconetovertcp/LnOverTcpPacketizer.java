@@ -109,6 +109,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
         @SuppressWarnings({"deprecation", "null"})
+        @Override
         public void run() {
 
             String rxLine;
@@ -196,6 +197,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater);
                             }
@@ -229,6 +231,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently

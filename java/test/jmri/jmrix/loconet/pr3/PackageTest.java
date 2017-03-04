@@ -28,6 +28,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.pr3.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.pr3.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PR3AdapterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PR3SystemConnectionMemoTest.class));
         return suite;
     }
 

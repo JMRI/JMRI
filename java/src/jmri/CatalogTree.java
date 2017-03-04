@@ -65,5 +65,6 @@ public interface CatalogTree extends NamedBean, TreeModel {
      * Get the root element of the tree as a jmri.CatalogTreeNode object.
      * (Instead of Object, as parent swing.TreeModel provides)
      */
+    @Override
     public CatalogTreeNode getRoot();
 }

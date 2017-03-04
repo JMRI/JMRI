@@ -22,6 +22,7 @@ public class LnMessageServerAction extends AbstractAction {
         super("Start LocoNet server");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         try {
             // start server

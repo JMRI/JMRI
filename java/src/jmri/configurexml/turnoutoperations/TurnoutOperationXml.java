@@ -26,6 +26,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * Load one operation, using the appropriate adapter
      *
      * @param e	element for operation
+     * @return the loaded TurnoutOperation or null if unable to load from e
      */
     public static TurnoutOperation loadOperation(Element e) {
         TurnoutOperation result = null;
@@ -41,14 +42,11 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
                 if (result.getName().charAt(0) == '*') {
                     result.setNonce(true);
                 }
-            } catch (ClassNotFoundException e1) {
+            } catch (ClassNotFoundException | InstantiationException e1) {
                 log.error("while creating TurnoutOperation", e1);
                 return null;
             } catch (IllegalAccessException e2) {
                 log.error("while creating CommonTurnoutOperation", e2);
-                return null;
-            } catch (InstantiationException e3) {
-                log.error("while creating TurnoutOperation", e3);
                 return null;
             }
         }
@@ -67,6 +65,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * @param	o	TurnoutOperation object
      * @return	partially filled element
      */
+    @Override
     public Element store(Object o) {
         TurnoutOperation myOp = (TurnoutOperation) o;
         Element elem = new Element("operation");
@@ -97,7 +96,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         try {
             Class<?> configClass = Class.forName(fullConfigName);
             adapter = (TurnoutOperationXml) configClass.newInstance();
-        } catch (Throwable e) { // too many possible to list them all
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             log.error("exception in getAdapter", e);
         }
         if (adapter == null) {

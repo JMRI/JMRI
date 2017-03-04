@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
    LnOverTcpPacketizerTest.class,
    ServerTest.class,
    ServerActionTest.class,
-   ServerFrameTest.class
+   ServerFrameTest.class,
+   LnTcpDriverAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.loconetovertcp package.

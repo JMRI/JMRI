@@ -23,6 +23,7 @@ public class PR2Adapter extends LocoBufferAdapter {
     /**
      * Always use flow control, not considered a user-setable option
      */
+    @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
@@ -55,6 +56,7 @@ public class PR2Adapter extends LocoBufferAdapter {
      * duplicate much of the functionality there, so the code is basically
      * copied.
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -80,6 +82,7 @@ public class PR2Adapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         return new String[]{"57,600 baud"}; // NOI18N
     }
@@ -88,6 +91,7 @@ public class PR2Adapter extends LocoBufferAdapter {
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
      */
+    @Override
     public int[] validBaudNumber() {
         return new int[]{57600};
     }

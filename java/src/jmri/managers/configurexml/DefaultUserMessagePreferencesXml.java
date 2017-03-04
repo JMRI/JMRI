@@ -32,6 +32,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      *          comes from the DefaultUserMessagePreferences
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         jmri.UserPreferencesManager p = (jmri.UserPreferencesManager) o;
 
@@ -214,6 +215,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         messages.setAttribute("class", "jmri.managers.configurexml.DefaultUserMessagePreferencesXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

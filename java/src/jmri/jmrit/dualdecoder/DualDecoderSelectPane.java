@@ -31,8 +31,8 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
     JLabel[] labels = new JLabel[NENTRIES];
     JRadioButton[] buttons = new JRadioButton[NENTRIES];
 
-    JLabel status = new JLabel("Idle");
-    JToggleButton searchButton = new JToggleButton("Search");
+    JLabel status = new JLabel(Bundle.getMessage("ButtonIdle")); // is in jmrit.Bundle
+    JToggleButton searchButton = new JToggleButton(Bundle.getMessage("ButtonSearch"));
     jmri.jmrit.progsupport.ProgModePane modePane = new jmri.jmrit.progsupport.ProgModePane(BoxLayout.Y_AXIS);
 
     public DualDecoderSelectPane() {
@@ -43,15 +43,16 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         pane1.setLayout(new GridLayout(NENTRIES, 1));
         for (int i = 0; i < NENTRIES; i++) {
             JPanel p = new JPanel();
-            String name = "ID number " + i;
+            String name = Bundle.getMessage("IDnumber", i);
             if (i == NENTRIES - 1) {
-                name = "   Legacy ";
+                name = Bundle.getMessage("Legacy");
             }
             p.add(labels[i] = new JLabel(name));
             JRadioButton b = new JRadioButton();
             buttons[i] = b;
             b.setActionCommand("" + i);
             b.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     select(e.getActionCommand());
                 }
@@ -67,12 +68,14 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         JButton t;
         pane2.add(searchButton);
         searchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 search();
             }
         });
-        pane2.add(t = new JButton("Reset"));
+        pane2.add(t = new JButton(Bundle.getMessage("ButtonReset")));
         t.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 reset();
             }
@@ -80,9 +83,10 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         add(pane2);
 
         JPanel pane3 = new JPanel();
-        pane3.add(t = new JButton("Init DH163 + Soundtraxx"));
-        t.setToolTipText("This will configure a loco contains a DH163 and a decoder not supporting the proposed protocol");
+        pane3.add(t = new JButton(Bundle.getMessage("InitDH163")));
+        t.setToolTipText(Bundle.getMessage("InitDH163Tooltip"));
         t.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doInit();
             }
@@ -143,10 +147,10 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         Programmer p = modePane.getProgrammer();
         if (p == null) {
             state = IDLE;
-            status.setText("No programmer connected");
+            status.setText(Bundle.getMessage("NoProgrammerConnected"));
         } else {
             try {
-                status.setText("writing...");
+                status.setText(Bundle.getMessage("StateWriting"));
                 p.writeCV(cv, value, this);
             } catch (jmri.ProgrammerException ex) {
                 state = IDLE;
@@ -159,10 +163,10 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         Programmer p = modePane.getProgrammer();
         if (p == null) {
             state = IDLE;
-            status.setText("No programmer connected");
+            status.setText(Bundle.getMessage("NoProgrammerConnected"));
         } else {
             try {
-                status.setText("reading...");
+                status.setText(Bundle.getMessage("StateReading"));
                 state = READCV16;
                 p.readCV(16, this);
             } catch (jmri.ProgrammerException ex) {
@@ -186,6 +190,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
     final int SECONDCV16 = 13;
     int state = IDLE;
 
+    @Override
     public void programmingOpReply(int value, int retcode) {
         switch (mode) {
             case SEARCH:
@@ -214,7 +219,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                 break;
             case READCV16:
                 // was it OK?
-                String result = "OK";
+                String result = Bundle.getMessage("ButtonOK");
                 if (retcode != ProgListener.OK) {
                     log.debug("Readback error: " + retcode + " " + value);
                     labels[next].setEnabled(false);
@@ -226,7 +231,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                         labels[next].setEnabled(false);
                         buttons[next].setEnabled(false);
                     }
-                    result = "Unexpected ID read: " + value;
+                    result = Bundle.getMessage("UnexpectedID_Read", value);
                 }
                 // go on to next?
                 if (scanning) {
@@ -235,7 +240,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                         state = IDLE;
                         next = 0;
                         scanning = false;
-                        status.setText("Idle");
+                        status.setText(Bundle.getMessage("StateIdle"));
                         searchButton.setSelected(false);
                         break;
                     }
@@ -268,14 +273,14 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             case IDLE:
             default:
                 // shouldn't happen, reset and ignore
-                log.warn("Unexpected init programming reply: " + value + " " + retcode);
+                log.warn("Unexpected init programming reply: {0} {1}", value, retcode);
                 state = IDLE;
                 break;
             case FIRSTCV16:
                 state = FIRSTCV15;
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: " + retcode + " " + value);
-                    status.setText("Write CV15=7 failed!");
+                    log.debug("Readback error: {0} {1}", retcode, value);
+                    status.setText(Bundle.getMessage("WriteCVFailed", 15, 7));
                     state = IDLE;
                 } else { // is OK
                     writeCV15(7);
@@ -284,8 +289,8 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             case FIRSTCV15:
                 state = SECONDCV16;
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: " + retcode + " " + value);
-                    status.setText("Write CV16=7 failed!");
+                    log.debug("Readback error: {0} {1}", retcode, value);
+                    status.setText(Bundle.getMessage("WriteCVFailed", 16, 7));
                     state = IDLE;
                 } else { // is OK
                     writeCV16(7);
@@ -293,12 +298,12 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                 break;
             case SECONDCV16:
                 if (retcode != ProgListener.OK) {
-                    log.debug("Readback error: " + retcode + " " + value);
-                    status.setText("Write CV16=1 failed!");
+                    log.debug("Readback error: {0} {1}", retcode, value);
+                    status.setText(Bundle.getMessage("WriteCVFailed", 16, 1));
                     state = IDLE;
                 } else { // is OK
                     state = IDLE;
-                    status.setText("Initialized");
+                    status.setText(Bundle.getMessage("StateInitialized"));
                 }
                 break;
         }

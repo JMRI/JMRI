@@ -19,6 +19,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -41,6 +42,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         getContentPane().add(Box.createVerticalGlue());
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
                 packetTextField.addItem((String) packetTextField.getSelectedItem());

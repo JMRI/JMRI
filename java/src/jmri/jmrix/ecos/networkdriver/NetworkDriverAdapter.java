@@ -29,6 +29,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
      * set up all of the other objects to operate with an ECOS command station
      * connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         EcosTrafficController control = new EcosTrafficController();
@@ -53,6 +54,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         opened = false;
     }
 
+    @Override
     protected void resetupConnection() {
         log.info("reconnected to ECOS after lost connection");
         if (opened) {

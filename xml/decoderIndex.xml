@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.7.1ish-201612232359-heap-R742ac76 on Sat Dec 24 10:59:24 AEDT 2016 $Id$-->
-  <decoderIndex version="794">
+  <!--Written by JMRI version 4.7.2ish-201702262104-heap-Rc699363 on Mon Feb 27 08:04:49 AEDT 2017 $Id$-->
+  <decoderIndex version="802">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1562,6 +1562,16 @@
           <output name="6" label="Pad (White/Yellow)" connection="solder" />
           <size length="1.074" width="0.672" height="0.259" units="inches" />
         </model>
+        <model model="DH166MT" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-Scale, with 21MTC plug">
+          <versionCV lowVersionID="64" highVersionID="64" />
+          <output name="1" label="Pin 8 (F0F)" connection="plug" />
+          <output name="2" label="Pin 7 (F0R)" connection="plug" />
+          <output name="3" label="Pin 15 (Aux 1)" connection="plug" />
+          <output name="4" label="Pin 14 (Aux 2)" connection="plug" />
+          <output name="5" label="Pin 13 (Aux 3)" connection="plug" />
+          <output name="6" label="Pin 4 (Aux 4)" connection="plug" />
+          <size length=".824" width="0.64" height="0.17" units="inches" />
+        </model>
         <model model="DH166P" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Long Harness">
           <output name="1" label="White" connection="plug" />
           <output name="2" label="Yellow" connection="plug" />
@@ -1719,42 +1729,42 @@
         </model>
       </family>
       <family name="SFX Sound Decoders" mfg="Digitrax" file="Digitrax_0SFX.xml">
-        <model model="SDN144A0" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1444" comment="for Atlas N-Scale GP38 &amp; similar locos">
+        <model model="SDN144A0" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1444" comment="for Atlas N-Scale GP38 &amp; similar locos">
           <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
           <size length="2.63" width="0.37" height="0.128" units="inches" />
         </model>
-        <model model="SDN144A1" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1445" comment="for Atlas N-Scale SD50/60">
+        <model model="SDN144A1" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1445" comment="for Atlas N-Scale SD50/60">
           <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
           <size length="3.26" width="0.669" height="0.132" units="inches" />
         </model>
-        <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1442" comment="for Kato N-Scale P42, E8, PA1, F40 &amp; similar locos">
+        <model model="SDN144K0A" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1442" comment="for Kato N-Scale P42, E8, PA1, F40 &amp; similar locos">
           <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="solder" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
           <size length="2.22" width="0.55" height="0.10" units="inches" />
         </model>
-        <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1443" comment="for Kato N-Scale SD40-2 &amp; similar locos">
+        <model model="SDN144K1E" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1443" comment="for Kato N-Scale SD40-2 &amp; similar locos">
           <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
           <output name="4" label="F2 Pad" connection="solder" />
-          <size length="x.x" width="x.x" height="x.x" units="inches" />
+          <size length="2.97" width="0.40" height="0.11" units="inches" />
         </model>
-        <model model="SDN144PS" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="1441" comment="N-Scale, with medium plug, SoundFX">
+        <model model="SDN144PS" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="1441" comment="N-Scale, with medium plug, SoundFX">
           <output name="1" label="F0F Pad" connection="plug" />
           <output name="2" label="F0R Pad" connection="plug" />
           <output name="3" label="F1 Pad" connection="plug" />
           <output name="4" label="F2 Pad" connection="plug" />
           <size length="1.22" width="0.4" height="0.164" units="inches" />
         </model>
-        <model model="SDH164D" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="1641" comment="HO-Scale, wired, SoundFX">
+        <model model="SDH164D" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="1641" comment="HO-Scale, wired, SoundFX">
           <output name="1" label="F0F Pad" connection="solder" />
           <output name="2" label="F0R Pad" connection="solder" />
           <output name="3" label="F1 Pad" connection="solder" />
@@ -1763,7 +1773,7 @@
           <output name="6" label="F4 Pad" connection="solder" />
           <size length="1.28" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1642" comment="for Kato HO-Scale AC4400 Locos">
+        <model model="SDH164K1A" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1642" comment="for Kato HO-Scale AC4400 Locos">
           <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
@@ -1772,7 +1782,7 @@
           <output name="6" label="F4 Pad" connection="solder" />
           <size length="2.877" width="0.667" height="0.173" units="inches" />
         </model>
-        <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1643" comment="for Kato HO-Scale SD38-2 locos">
+        <model model="SDH164K1B" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1643" comment="for Kato HO-Scale SD38-2 locos">
           <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="solder" />
           <output name="3" label="F1 Pad" connection="solder" />
@@ -1781,7 +1791,7 @@
           <output name="6" label="F4 Pad" connection="solder" />
           <size length="3.11" width="0.64" height="0.23" units="inches" />
         </model>
-        <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1644" comment="for Kato HO-Scale F40PH Locos">
+        <model model="SDH164K1C" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1644" comment="for Kato HO-Scale F40PH Locos">
           <output name="1" label="F0F Pad" connection="LED" />
           <output name="2" label="F0R Pad" connection="LED" />
           <output name="3" label="F1 Pad" connection="solder" />
@@ -1790,7 +1800,7 @@
           <output name="6" label="F4 Pad" connection="solder" />
           <size length="3.35" width="0.64" height="0.23" units="inches" />
         </model>
-        <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
+        <model model="EVO GE Diesel" numOuts="12" numFns="12" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
           <output name="1" label="F0F Pad" connection="solder" />
           <output name="2" label="F0R Pad" connection="solder" />
           <output name="3" label="F1 Pad" connection="solder" />
@@ -1951,7 +1961,40 @@
         </functionlabels>
       </family>
       <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16" file="Digitrax_0SFX_Series6.xml">
-        <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
+        <model model="SDN136PS" numOuts="3" numFns="12" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDN136PS" comment="N/H0-Scale 8-bit Sound Decoder, with medium plug">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <size length="1.0" width="0.41" height="0.19" units="inches" />
+        </model>
+        <model model="SDXN136PS" numOuts="3" numFns="12" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDXN136PS" comment="N/H0-Scale 16-bit Sound Decoder, with medium plug">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <size length="1.0" width="0.41" height="0.19" units="inches" />
+        </model>
+        <model model="SDXN146K1E" numOuts="4" numFns="12" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="DropIn" productID="SDXN146K1E" comment="16-bit Sound Decoder, for Kato N-Scale SD40-2 &amp; similar locos">
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <size length="2.97" width="0.40" height="0.11" units="inches" />
+        </model>
+        <model model="SDXN146K2" numOuts="4" numFns="12" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="DropIn" productID="SDXN146K2" comment="16-bit Sound Decoder, for Kato N-Scale SD80 MAC &amp; similar locos">
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <size length="3.11" width="0.426" height="0.195" units="inches" />
+        </model>
+        <model model="SDXN146K4" numOuts="4" numFns="12" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="DropIn" productID="SDXN146K4" comment="16-bit Sound Decoder, for Kato N Scale 4-8-4 FEF-3 &amp; similar locos">
+          <output name="1" label="F0F Pad" connection="LED" />
+          <output name="2" label="F0R Pad" connection="LED" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <size length="3.11" width="0.426" height="0.195" units="inches" />
+        </model>
+        <model model="SDH166D" numOuts="6" numFns="12" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <output name="3" label="Green" connection="wire" />
@@ -1960,7 +2003,7 @@
           <output name="6" label="F4-Yellow" connection="wire" />
           <size length="1.28" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="SDXH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166D" comment="H0-Scale 16-bit Sound Decoder, wired">
+        <model model="SDXH166D" numOuts="6" numFns="12" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166D" comment="H0-Scale 16-bit Sound Decoder, wired">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <output name="3" label="Green" connection="wire" />
@@ -1969,19 +2012,31 @@
           <output name="6" label="F4-Yellow" connection="wire" />
           <size length="1.28" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="SDN136PS" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDN136PS" comment="N/H0-Scale 8-bit Sound Decoder, with medium plug">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <size length="1.0" width="0.41" height="0.19" units="inches" />
+        <model model="SDH186MT" numOuts="8" numFns="12" maxMotorCurrent="1.25A (peak=2A)" formFactor="HO" connector="21MTC" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, with 21MTC plug">
+          <versionCV lowVersionID="64" highVersionID="64" />
+          <output name="1" label="Pin 8 (F0F)" connection="plug" />
+          <output name="2" label="Pin 7 (F0R)" connection="plug" />
+          <output name="3" label="Pin 15 (Aux 1)" connection="plug" />
+          <output name="4" label="Pin 14 (Aux 2)" connection="plug" />
+          <output name="5" label="Pin 13 (Aux 3)" connection="plug" />
+          <output name="6" label="Pin 4 (Aux 4)" connection="plug" />
+          <output name="7" label="Pin 17 (Aux 5)" connection="plug" />
+          <output name="8" label="Pin 5 (Aux 6)" connection="plug" />
+          <size length="1.15" width="0.64" height="0.21" units="inches" />
         </model>
-        <model model="SDXN136PS" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDXN136PS" comment="N/H0-Scale 16-bit Sound Decoder, with medium plug">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <size length="1.0" width="0.41" height="0.19" units="inches" />
+        <model model="SDXH186MT" numOuts="8" numFns="12" maxMotorCurrent="1.25A (peak=2A)" formFactor="HO" connector="21MTC" productID="SDXH166D" comment="H0-Scale 16-bit Sound Decoder, with 21MTC plug">
+          <versionCV lowVersionID="64" highVersionID="64" />
+          <output name="1" label="Pin 8 (F0F)" connection="plug" />
+          <output name="2" label="Pin 7 (F0R)" connection="plug" />
+          <output name="3" label="Pin 15 (Aux 1)" connection="plug" />
+          <output name="4" label="Pin 14 (Aux 2)" connection="plug" />
+          <output name="5" label="Pin 13 (Aux 3)" connection="plug" />
+          <output name="6" label="Pin 4 (Aux 4)" connection="plug" />
+          <output name="7" label="Pin 17 (Aux 5)" connection="plug" />
+          <output name="8" label="Pin 5 (Aux 6)" connection="plug" />
+          <size length="1.15" width="0.64" height="0.21" units="inches" />
         </model>
-        <model model="Extended Series 6" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExt" comment="SDXH166D Extended Sound projects v1 v2 by John McMasters">
+        <model model="Extended Series 6" numOuts="6" numFns="28" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExt" comment="SDXH166D Extended Sound projects v1 v2 by John McMasters">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <output name="3" label="Green" connection="wire" />
@@ -2021,7 +2076,7 @@
             <functionlabel num="28" lockable="false">Select Notch 8</functionlabel>
           </functionlabels>
         </model>
-        <model model="Extended Series 6 Steam" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtS" comment="SDXH166D Extended Steam Sound projects v3.5 by John McMasters">
+        <model model="Extended Series 6 Steam" numOuts="6" numFns="28" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtS" comment="SDXH166D Extended Steam Sound projects v3.5 by John McMasters">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <output name="3" label="Green" connection="wire" />
@@ -2062,7 +2117,7 @@
             <functionlabel num="28" lockable="false">AIR PUMP</functionlabel>
           </functionlabels>
         </model>
-        <model model="Extended Series 6 Diesel" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtD" comment="SDXH166D Extended Diesel Sound projects v3.5 by John McMasters">
+        <model model="Extended Series 6 Diesel" numOuts="6" numFns="28" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtD" comment="SDXH166D Extended Diesel Sound projects v3.5 by John McMasters">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <output name="3" label="Green" connection="wire" />
@@ -2111,11 +2166,11 @@
           <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
           <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
           <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
-          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
           <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
-          <functionlabel num="10" lockable="false">Xing Gate Airhorn/Wheel Slip</functionlabel>
-          <functionlabel num="11" lockable="false">Handbrake/Greaser</functionlabel>
+          <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
+          <functionlabel num="11" lockable="false">Greaser</functionlabel>
           <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
         </functionlabels>
       </family>
@@ -6591,7 +6646,7 @@
             <functionlabel num="7" lockable="true">LEDs 10-11</functionlabel>
           </functionlabels>
         </model>
-        <model model="Scale Trains Tender Light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777345">
+        <model model="Scale Trains Tender Light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" lowVersionID="208" highVersionID="208" productID="16777345">
           <output name="1" label="Front|Light" maxcurrent="20 mA" />
           <output name="2" label="Rear|Light" />
           <output name="3" label="AUX|1" maxcurrent="100 mA" />
@@ -6626,6 +6681,78 @@
           <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
           <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
+        </model>
+      </family>
+      <family name="ESU SwitchPilot" lowVersionID="0" highVersionID="254" mfg="Electronic Solutions Ulm GmbH" file="ESU_SwitchPilot.xml">
+        <model model="SwitchPilot" connector="Wires">
+          <output name="1" label="Output|1" />
+          <output name="2" label="Output|2" />
+          <output name="3" label="Output|3" />
+          <output name="4" label="Output|4" />
+          <output name="5" label="Servo|1" />
+          <output name="6" label="Servo|2" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo" connector="Wires">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo (MA)" connector="Wires">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo (2013)" connector="Wires">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot V2.0" lowVersionID="115" highVersionID="115" connector="Wires" productID="33554520">
+          <output name="1" label="Output|1" />
+          <output name="2" label="Output|2" />
+          <output name="3" label="Output|3" />
+          <output name="4" label="Output|4" />
+          <output name="5" label="Servo|1" />
+          <output name="6" label="Servo|2" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="SwitchPilot Servo V2.0" lowVersionID="153" highVersionID="153" connector="Wires" productID="33554522">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <size length="86" width="86" height="25" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
         </model>
       </family>
       <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_FMZ_DCC.xml">
@@ -21159,13 +21286,29 @@
           <output name="BEMF" />
           <output name="Brake" />
         </model>
-        <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="44">
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+        <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="21MTC" lowVersionID="86" highVersionID="88" productID="44">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.78" width="0.59" height="0.13" units="inches" />
+        </model>
+        <model model="EU821" numOuts="8" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="21MTC" lowVersionID="88" highVersionID="88" productID="65">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="logic level" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="logic level" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="logic level" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="logic level" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
@@ -23959,6 +24102,20 @@
           <output name="7" label="Signal" />
           <output name="8" label="Main Sw" />
           <output name="9" label="Vmid" />
+        </model>
+      </family>
+      <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="5" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom" file="Viessmann_45xx_Point_motor.xml">
+        <model model="4557" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4557" comment="TT Point motor for Tillig road bed point">
+          <size length="68.4" width="24.5" height="5.3" units="mm" />
+        </model>
+        <model model="4558" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4558" comment="H0 Point motor for Märklin/Trix C track">
+          <size length="104.9" width="24.5" height="5.3" units="mm" />
+        </model>
+        <model model="4559" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4559" comment="H0 Point motor for Roco geo-Line points">
+          <size length="68.4" width="24.2" height="5.3" units="mm" />
+        </model>
+        <model model="4560" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="all" connector="other" productID="4560" comment="Motorized point and universal drive (scale independent)">
+          <size length="50" width="20.2" height="5.8" units="mm" />
         </model>
       </family>
       <family name="Multi-Protocol Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="1" highVersionID="255" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom, SUSI interface" file="Viessmann_524x.xml">

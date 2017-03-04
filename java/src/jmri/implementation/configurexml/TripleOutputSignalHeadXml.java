@@ -28,6 +28,7 @@ public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
      * @param o Object to store, of type TripleOutputSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         TripleOutputSignalHead p = (TripleOutputSignalHead) o;
 
@@ -73,6 +74,7 @@ public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

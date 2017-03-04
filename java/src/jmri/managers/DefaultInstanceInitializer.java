@@ -53,6 +53,7 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
+    @Override
     public <T> Object getDefault(Class<T> type) {
 
         if (type == AudioManager.class) {

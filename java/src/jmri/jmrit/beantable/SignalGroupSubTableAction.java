@@ -76,6 +76,7 @@ public class SignalGroupSubTableAction {
 
     /**
      * Set choice for conditional evaluation.
+     * <p>
      * Set to AND when you want all conditionals to be met for the Signal Head to turn On when an included Aspect is shown on the main Mast.
      * Set to OR when you at least one of the conditionals to be met for the Signal Head to turn On when an included Aspect is shown.
      * @see operFromBox operFromBox()
@@ -345,6 +346,7 @@ public class SignalGroupSubTableAction {
             selGroup.add(allButton);
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
                     if (!showAll) {
@@ -358,6 +360,7 @@ public class SignalGroupSubTableAction {
             selGroup.add(includedButton);
             py.add(includedButton);
             includedButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of included Turnouts only, if needed
                     if (showAll) {
@@ -495,6 +498,7 @@ public class SignalGroupSubTableAction {
             // add Cancel button
             pb.add(cancelButton);
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelSubPressed(e);
                 }
@@ -502,6 +506,7 @@ public class SignalGroupSubTableAction {
             // add Update SignalGroup button
             pb.add(updateSubButton);
             updateSubButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updateSubPressed(e, false);
                 }
@@ -516,6 +521,7 @@ public class SignalGroupSubTableAction {
         }
         // set listener for window closing
         addSubFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 addSubFrame.setVisible(false);
                 cancelSubEdit();
@@ -566,7 +572,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Configure colum widths for the Turnout and Sensor Conditional tables
+     * Configure colum widths for the Turnout and Sensor Conditional tables.
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
         // install a button renderer & editor
@@ -581,7 +587,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane
+     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane.
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<SignalGroupTurnout>();
@@ -599,8 +605,10 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set the Turnout information for adding or editing
+     * Set the Turnout information for adding or editing.
+     *
      * @param g The Signal Group being configured
+     * @return total number of turnouts included in group
      */
     int setTurnoutInformation(SignalGroup g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -611,8 +619,10 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set the Sensor information for adding or editing
+     * Set the Sensor information for adding or editing.
+     *
      * @param g The Signal Group being configured
+     * @return total number of sensors included in group
      */
     int setSensorInformation(SignalGroup g) {
         for (int i = 0; i < _includedSensorList.size(); i++) {
@@ -623,7 +633,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Respond to the Cancel button - clean up
+     * Respond to the Cancel button - clean up.
+     *
+     * @param e the event heard
      */
     void cancelSubPressed(ActionEvent e) {
         log.debug("Edit Signal Group Head canceled in SGSTA line 569");
@@ -633,7 +645,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Respond to the Update button on the Edit Head sub pane - update to SignalGroup
+     * Respond to the Update button on the Edit Head sub pane - update to SignalGroup.
+     *
+     * @param e the event heard
      * @param newSignalGroup True if this is a newly created Signal Group for which additional actions are required
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup) {
@@ -959,6 +973,7 @@ public class SignalGroupSubTableAction {
          * Get the configured On state for the Control Sensor Conditional to be True
          * @return A string describing the On state for use in the GUI (read from a Properties file, localizable)
          */
+        @Override
         String getSetToState() {
             switch (_setToState) {
                 case Sensor.INACTIVE:
@@ -971,9 +986,12 @@ public class SignalGroupSubTableAction {
 
         /**
          * Store a uniform value for the On state of the Control Sensor Conditional.
+         * <p>
          * Pairs should correspond with values in getSetToState()
+         *
          * @param state Choice from the comboBox, localizable i.e. Active
          */
+        @Override
         void setSetToState(String state) {
             if (SET_TO_INACTIVE.equals(state)) {
                 _setToState = Sensor.INACTIVE;
@@ -1008,6 +1026,7 @@ public class SignalGroupSubTableAction {
          * Get the configured On state for the Control Turnout Conditional to be True
          * @return A string describing the On state for use in the GUI
          */
+        @Override
         String getSetToState() {
             switch (_setToState) {
                 case Turnout.CLOSED:
@@ -1023,6 +1042,7 @@ public class SignalGroupSubTableAction {
          * Pairs should correspond with values in getSetToState()
          * @param state Choice from the comboBox, localizable i.e. Thrown.
          */
+        @Override
         void setSetToState(String state) {
             if (SET_TO_CLOSED.equals(state)) {
                 _setToState = Turnout.CLOSED;

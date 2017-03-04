@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 
 /**
@@ -54,12 +52,15 @@ public class FloatTriggerTest {
         Assert.assertEquals("set trigger type", Trigger.TriggerType.FLOAT,
                 uut.getTriggerType());
         TriggerListener tl = new TriggerListener() {
+            @Override
             public void takeAction() {
             }
 
+            @Override
             public void takeAction(int i) {
             }
 
+            @Override
             public void takeAction(float f) {
             }
         };
@@ -76,14 +77,17 @@ public class FloatTriggerTest {
         uut.setMatchValue(0.5f);
         uut.setCompareType(Trigger.CompareType.GT);
         uut.setCallback(new TriggerListener() {
+            @Override
             public void takeAction() {
                 Assert.assertTrue("callback called", true);
             }
 
+            @Override
             public void takeAction(int i) {
                 Assert.fail("wrong callback called");
             }
 
+            @Override
             public void takeAction(float f) {
                 Assert.fail("wrong callback called");
             }

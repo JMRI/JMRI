@@ -20,6 +20,7 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         this.node = node;
     }
 
+    @Override
     public boolean equals(Object a) {
         if (a == null) {
             return false;
@@ -32,6 +33,7 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         }
     }
 
+    @Override
     public int hashCode() {
         return node.hashCode();
     }

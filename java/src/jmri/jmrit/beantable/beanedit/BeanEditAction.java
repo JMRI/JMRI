@@ -93,11 +93,13 @@ abstract class BeanEditAction extends AbstractAction {
         basic.addItem(new BeanEditItem(commentFieldScroller, Bundle.getMessage("ColumnComment"), null));
 
         basic.setSaveItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveBasicItems(e);
             }
         });
         basic.setResetItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 resetBasicItems(e);
             }
@@ -152,11 +154,13 @@ abstract class BeanEditAction extends AbstractAction {
         jsp.setPreferredSize(tableDim);
         properties.addItem(new BeanEditItem(jsp, "", null));
         properties.setSaveItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.updateModel(bean);
             }
         });
         properties.setResetItem(new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.setModel(bean);
             }
@@ -197,6 +201,7 @@ abstract class BeanEditAction extends AbstractAction {
         selectedTab = c;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (bean == null) {
             // add error dialog TODO
@@ -204,7 +209,7 @@ abstract class BeanEditAction extends AbstractAction {
             return;
         }
         if (f == null) {
-            f = new JmriJFrame("Edit " + getBeanType() + " " + bean.getDisplayName(), false, false);
+            f = new JmriJFrame(Bundle.getMessage("EditBean", getBeanType(), bean.getDisplayName()), false, false);
             f.addHelpMenu(helpTarget(), true);
             java.awt.Container containerPanel = f.getContentPane();
             initPanelsFirst();
@@ -220,12 +225,14 @@ abstract class BeanEditAction extends AbstractAction {
             JPanel buttons = new JPanel();
             JButton applyBut = new JButton(Bundle.getMessage("ButtonApply"));
             applyBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     applyButtonAction(e);
                 }
             });
             JButton okBut = new JButton(Bundle.getMessage("ButtonOK"));
             okBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     applyButtonAction(e);
                     f.dispose();
@@ -233,6 +240,7 @@ abstract class BeanEditAction extends AbstractAction {
             });
             JButton cancelBut = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelButtonAction(e);
                 }
@@ -493,18 +501,22 @@ abstract class BeanEditAction extends AbstractAction {
             return false;
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return attributes.size();
         }
 
+        @Override
         public String getColumnName(int col) {
             return titles[col];
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             if (row < attributes.size()) {
                 if (col == 0) {
@@ -517,6 +529,7 @@ abstract class BeanEditAction extends AbstractAction {
             return "...";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             KeyValueModel kv;
 
@@ -556,6 +569,7 @@ abstract class BeanEditAction extends AbstractAction {
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }

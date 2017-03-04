@@ -41,6 +41,7 @@ class JTreeWithPopup extends JTree implements ActionListener {
 
         addMouseListener(
                 new MouseAdapter() {
+                    @Override
                     public void mouseReleased(MouseEvent e) {
                         if (e.isPopupTrigger()) {
                             popup.show((JComponent) e.getSource(), e.getX(), e.getY());
@@ -51,6 +52,7 @@ class JTreeWithPopup extends JTree implements ActionListener {
 
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         DefaultMutableTreeNode dmtn, node;
 

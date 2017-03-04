@@ -48,6 +48,7 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent();
             }
@@ -85,6 +86,7 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 closingEvent();
             }
@@ -175,6 +177,7 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
     /**
      * *********************** end setup *************************
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
@@ -183,6 +186,7 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (_icon == null) {
             return;

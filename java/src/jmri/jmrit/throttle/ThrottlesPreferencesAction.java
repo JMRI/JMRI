@@ -22,6 +22,7 @@ public class ThrottlesPreferencesAction extends AbstractAction {
         this("Throttles preferences");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesPreferences();
     }

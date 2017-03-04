@@ -57,7 +57,7 @@ table.sortable th {
 
       <table class="sortable">
         <!-- The JMRI Glossary table, sort by clicking a header -->
-        <!-- Copy all edits to help/en/glossary/index.shtml as weel to keep both up to date -->
+        <!-- Copy all edits to help/en/glossary/index.shtml as well to keep both up to date -->
 
         <tr style="text-align: left">
           <th>App</th>
@@ -208,7 +208,9 @@ table.sortable th {
 
           <td class="en">Script</td>
 
-          <td class="descr"></td>
+          <td class="descr">A series of prewritten instructions to
+            operate (parts of) JMRI. <a href=
+            "../html/tools/scripting/index.shtml">...</a></td>
 
           <td class="de">Ablauf(-programm/ datei)/-skript</td>
 
@@ -539,7 +541,7 @@ table.sortable th {
 
           <td class="descr"></td>
 
-          <td class="de">Bedingungssatz</td>
+          <td class="de">Bedingung(ssatz)</td>
 
           <td class="it">Conditional</td>
 
@@ -597,7 +599,7 @@ table.sortable th {
 
           <td class="descr"></td>
 
-          <td class="de">Gleissloss</td>
+          <td class="de">Gleisschloss</td>
 
           <td class="it">Lock</td>
 
@@ -850,7 +852,7 @@ table.sortable th {
 
           <td class="descr"></td>
 
-          <td class="de">Eindziel</td>
+          <td class="de">Endziel</td>
 
           <td class="it">Destinazione</td>
 
@@ -1314,7 +1316,7 @@ table.sortable th {
 
           <td class="de">Fahrerlaubnis</td>
 
-          <td class="it"></td>
+          <td class="it">Autorizzazione</td>
 
           <td class="fr">Bulletin/Mandat</td>
 
@@ -1389,7 +1391,7 @@ table.sortable th {
           instead of a separate editing pane <a href=
           "../html/apps/PanelPro/PanelPro.shtml#cpe">...</a></td>
 
-          <td class="de">Control Panel Editor</td>
+          <td class="de">Kontrolltafeleditor</td>
 
           <td class="it">Editor Controlli</td>
 
@@ -1525,19 +1527,19 @@ table.sortable th {
 
           <td class="de">Unbeleuchtet</td>
 
-          <td class="it"></td>
+          <td class="it">Spento</td>
 
           <td class="fr">&Eacute;teint</td>
 
           <td class="en_UK"></td>
 
-          <td class="da"></td>
+          <td class="da">M&oslash;rk</td>
         </tr>
 
         <tr>
           <td class="app">Signals</td>
 
-          <td class="en">Signal Appearance</td>
+          <td class="en">Signal (Head) Appearance</td>
 
           <td class="descr"></td>
 
@@ -1555,7 +1557,7 @@ table.sortable th {
         <tr>
           <td class="app">Signals</td>
 
-          <td class="en">Signal Aspect</td>
+          <td class="en">Signal (Mast) Aspect</td>
 
           <td class="descr">One of a series of allowed options for
           the visual pattern of a Signal Mast using one or more
@@ -1568,7 +1570,7 @@ table.sortable th {
 
           <td class="de">Signalbegriff</td>
 
-          <td class="it"></td>
+          <td class="it">Aspetto</td>
 
           <td class="fr">Aspect</td>
 
@@ -1878,7 +1880,7 @@ table.sortable th {
 
           <td class="en_UK"></td>
 
-          <td class="da"></td>
+          <td class="da">Fortryd</td>
         </tr>
 
         <tr>
@@ -2019,7 +2021,7 @@ table.sortable th {
 
           <td class="it">Nascondi</td>
 
-          <td class="fr"></td>
+          <td class="fr">Cacher</td>
 
           <td class="en_UK"></td>
 
@@ -2033,7 +2035,7 @@ table.sortable th {
 
           <td class="descr"></td>
 
-          <td class="de">Grafik/Bild</td>
+          <td class="de">Grafik/ Sinnbild</td>
 
           <td class="it"></td>
 
@@ -2091,7 +2093,7 @@ table.sortable th {
 
           <td class="it">Ok</td>
 
-          <td class="fr"></td>
+          <td class="fr">OK</td>
 
           <td class="en_UK"></td>
 
@@ -2131,7 +2133,7 @@ table.sortable th {
 
           <td class="en_UK"></td>
 
-          <td class="da"></td>
+          <td class="da">Vis</td>
         </tr>
 
         <tr>
@@ -2185,7 +2187,7 @@ table.sortable th {
 
           <td class="en_UK"></td>
 
-          <td class="da"></td>
+          <td class="da">V&aelig;lg alt</td>
         </tr>
 
         <tr>
@@ -2203,7 +2205,7 @@ table.sortable th {
 
           <td class="en_UK"></td>
 
-          <td class="da"></td>
+          <td class="da">Vis</td>
         </tr>
 
         <tr>
@@ -2215,13 +2217,13 @@ table.sortable th {
 
           <td class="de">Starte</td>
 
-          <td class="it"></td>
+          <td class="it">Start</td>
 
           <td class="fr">D&eacute;marrer</td>
 
           <td class="en_UK"></td>
 
-          <td class="da"></td>
+          <td class="da">Start</td>
         </tr>
 
         <tr>
@@ -2239,7 +2241,7 @@ table.sortable th {
 
           <td class="en_UK"></td>
 
-          <td class="da"></td>
+          <td class="da">Stop</td>
         </tr>
 
         <tr>

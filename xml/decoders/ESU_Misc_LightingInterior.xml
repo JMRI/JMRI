@@ -49,7 +49,7 @@
                     <functionlabel num="7" lockable="true">LEDs 10-11</functionlabel>
                 </functionlabels>
             </model>
-            <model model="Scale Trains Tender Light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" productID="16777345">
+            <model model="Scale Trains Tender Light" numOuts="3" maxInputVolts="24 V" maxTotalCurrent="25mA" formFactor="HO" lowVersionID="208" highVersionID="208" productID="16777345">
                 <output name="1" label="Front|Light" maxcurrent="20 mA"/>
                 <output name="2" label="Rear|Light"/>
                 <output name="3" label="AUX|1" maxcurrent="100 mA"/>

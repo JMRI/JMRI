@@ -143,6 +143,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    @Override
     public void message(LocoNetMessage m) {
         // see if reply to LNSV 1 or LNSV2 request
         if ((m.getElement( 0) & 0xFF) != 0xE5) return;
@@ -268,6 +269,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    @Override
     public final ProgrammingMode getMode() {
         return mode;
     }
@@ -294,10 +296,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      *
      * @param listener The PropertyChangeListener to be added
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
@@ -332,18 +336,22 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         return getCanWrite() && Integer.parseInt(addr) <= 1024;
     }
 
+    @Override
     public String decodeErrorCode(int i) {
         return mSlotMgr.decodeErrorCode(i);
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }

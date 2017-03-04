@@ -376,12 +376,15 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     return this;
                 }
 
+                @Override
                 public void keyTyped(KeyEvent E) {
                 }
 
+                @Override
                 public void keyPressed(KeyEvent E) {
                 }
 
+                @Override
                 public void keyReleased(KeyEvent E) {
                     JTextField tmp = (JTextField) E.getSource();
                     sample.setText(tmp.getText());
@@ -400,6 +403,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         button.addActionListener(new ActionListener() {
             AJRadioButton button;
 
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (button.isSelected()) {
                     switch (button.which) {
@@ -440,6 +444,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         button.addActionListener(new ActionListener() {
             AJRadioButton button;
 
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (button.isSelected()) {
                     int prevButton = _selectedButton;
@@ -511,6 +516,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         Object obj = e.getSource();
         if (obj instanceof AJSpinner) {
@@ -645,6 +651,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         
     }
 
+    @Override
     public void itemStateChanged(ItemEvent e) {
         Object obj = e.getSource();
         if (obj instanceof AJComboBox) {

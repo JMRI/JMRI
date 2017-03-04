@@ -46,6 +46,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
     Roster roster;
     String lastGroupSelect = null;
 
+    @Override
     public void actionPerformed(ActionEvent event) {
 
         roster = Roster.getDefault();
@@ -58,6 +59,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
 
         rosterEntryUpdate();
         selections.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterEntryUpdate();
             }

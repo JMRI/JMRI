@@ -84,6 +84,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LnPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetMessageExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConstantsTest.class));
         return suite;
     }
 

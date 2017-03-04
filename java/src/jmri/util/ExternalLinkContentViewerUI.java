@@ -42,7 +42,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
                 log.debug("event has URL {}", he.getURL());
                 URL u = he.getURL();
                 activateURL(u);
-            } catch (Throwable t) {
+            } catch (IOException | URISyntaxException t) {
                 log.error("Error processing request", t);
             }
         }

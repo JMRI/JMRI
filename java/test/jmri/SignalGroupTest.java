@@ -1,7 +1,5 @@
 package jmri;
 
-import javax.swing.Action;
-import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalHead;
@@ -10,11 +8,7 @@ import jmri.Turnout;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.SignalGroup class

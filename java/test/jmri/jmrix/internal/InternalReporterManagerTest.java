@@ -1,11 +1,7 @@
 package jmri.jmrix.internal;
 
-import jmri.Reporter;
-import jmri.ReporterManager;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test the InternalReporterManager

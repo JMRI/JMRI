@@ -30,6 +30,7 @@ public class MDI extends apps.gui3.Apps3 {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
+    @Override
     protected void createMainFrame() {
         // create and populate main window
         mainFrame = new MdiMainFrame(Application.getApplicationName(),
@@ -43,6 +44,7 @@ public class MDI extends apps.gui3.Apps3 {
         new MDI(args);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
     }

@@ -12,6 +12,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
 
+    @Override
     public void initComponents() throws Exception {
         super.initComponents();
 
@@ -22,6 +23,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         pack();
     }
 
+    @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendz21Message(createPacket(packetTextField.getSelectedItem().toString()), null);
     }

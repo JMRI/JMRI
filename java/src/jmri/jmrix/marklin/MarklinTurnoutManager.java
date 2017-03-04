@@ -27,10 +27,12 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {

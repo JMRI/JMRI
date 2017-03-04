@@ -119,6 +119,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         // of this; that way a flash in process isn't disturbed.
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }

@@ -26,6 +26,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     boolean waiting = false;
     int onReply = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -59,11 +60,13 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         trafficController.removeSprogListener(this);
         trafficController = null;
@@ -76,6 +79,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     }
 
     // to listen for status changes from Sprog system
+    @Override
     public void notifyReply(SprogReply m) {
         if (waiting) {
             power = onReply;
@@ -84,6 +88,7 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         waiting = false;
     }
 
+    @Override
     public void notifyMessage(SprogMessage m) {
         if (m.isKillMain()) {
             // configure to wait for reply

@@ -20,6 +20,7 @@ public class ListAction extends AbstractAction {
         this("List C/MRI Assignments");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ListFrame f = new ListFrame();
         try {

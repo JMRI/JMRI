@@ -26,6 +26,7 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new MultiIndexProgrammerFacade(dp, "81", null, true);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -49,6 +50,7 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new MultiIndexProgrammerFacade(dp, "81", "82", true);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -78,6 +80,7 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new MultiIndexProgrammerFacade(dp, "81", "82", false);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -107,6 +110,7 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new MultiIndexProgrammerFacade(dp, "81", "82", true);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -135,6 +139,7 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new MultiIndexProgrammerFacade(dp, "81", "82", false);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;

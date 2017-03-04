@@ -3,19 +3,15 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
-import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.digi.xbee.api.exceptions.OperationNotSupportedException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.RemoteXBeeDevice;
@@ -52,6 +48,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("AddNodeWindowTitle"));
         Container contentPane = getContentPane();
@@ -98,6 +95,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
@@ -109,6 +107,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -122,6 +121,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Method to handle add button
      */
+    @Override
     public void addButtonActionPerformed() {
         if(nodeAddr64Field.getText().equals("") &&
            nodeAddrField.getText().equals("")) {
@@ -181,6 +181,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     /**
      * Method to handle cancel button
      */
+    @Override
     public void cancelButtonActionPerformed() {
         // Reset 
         curNode = null;
@@ -191,6 +192,7 @@ public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNode
     }
 
     // Initilize the text boxes for the addresses.
+    @Override
     protected void initAddressBoxes() {
         nodeAddrField.setText("");
         nodeAddr64Field.setText("");

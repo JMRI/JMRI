@@ -53,11 +53,13 @@ public class CbusEventFilterFrame extends JmriJFrame {
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         super.dispose();
 //        _console.filterFrameClosed();
     }
 
+    @Override
     public void initComponents() throws Exception {
         setTitle(title());
         // Panels will be added downwards

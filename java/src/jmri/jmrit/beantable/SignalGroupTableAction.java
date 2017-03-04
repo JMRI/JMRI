@@ -57,7 +57,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -69,13 +69,13 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         if (jmri.InstanceManager.getNullableDefault(jmri.SignalGroupManager.class) == null) {
             setEnabled(false);
         }
-
     }
 
     public SignalGroupTableAction() {
         this(Bundle.getMessage("TitleSignalGroupTable"));
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UpdateCondition")) {
             for (int i = _signalHeadsList.size() - 1; i >= 0; i--) {
@@ -94,8 +94,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of SignalGroups
+     * of SignalGroups.
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
             static public final int COMMENTCOL = 2;
@@ -211,6 +212,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                             row = r;
                         }
 
+                        @Override
                         public void run() {
                             addPressed(null); // set up add/edit panel addFrame (starts as Add pane)
                             _systemName.setText((String) getValueAt(row, SYSNAMECOL));
@@ -244,6 +246,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 super.configureTable(table);
             }
 
+            @Override
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 SignalGroupTableAction.this.setColumnToHoldButton(table, DELETECOL,
@@ -255,12 +258,14 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
              * <P>
              * (Deactivate the Signal Group), then use the superclass to delete it.
              */
+            @Override
             void doDelete(NamedBean bean) {
                 //((SignalGroup)bean).deActivateSignalGroup();
                 super.doDelete(bean);
             }
 
             // want to update when enabled parameter changes
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Enabled")) {
                     return true;
@@ -269,25 +274,31 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 }
             }
 
+            @Override
             public Manager getManager() {
                 return jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class);
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).getByUserName(name);
             }
 
+            @Override
             public int getDisplayDeleteMsg() {
                 return 0x00;/*return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnDeleteSignalGroup();*/ }
 
+            @Override
             public void setDisplayDeleteMsg(int boo) { /*InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnDeleteSignalGroup(boo); */
 
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
@@ -306,6 +317,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return new JButton(" Set ");
             }*/
 
+            @Override
             protected String getBeanType() {
                 return "Signal Group";
             }
@@ -324,8 +336,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     /**
      * Read Appearance for a Signal Group Signal Head from the state comboBox.
-     * Called from SignalGroupSubTableAction
+     * <p>
+     * Called from SignalGroupSubTableAction.
+     *
      * @param box comboBox to read from
+     * @return index representing selected set to appearance for head
      */
     int signalStateFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
@@ -388,6 +403,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      * Create JPanel with options for configuration.
      * @param e Event from origin; null when called from Edit button in Signal Group Table row
      */
+    @Override
     protected void addPressed(ActionEvent e) {
         if (inEditMode) {
             log.debug("Can not open another editing session for Signal Groups.");
@@ -466,6 +482,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             selGroup.add(allButton);
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Signal Masts & SingleTO Heads, if needed
                     if (!showAll) {
@@ -479,6 +496,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             selGroup.add(includedButton);
             py.add(includedButton);
             includedButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of included Turnouts only, if needed
                     if (showAll) {
@@ -542,10 +560,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             p3.add(p3xsi);
             p3xsi.setVisible(true);
 
-            mainSignal.addActionListener( // respond to comboBox selection
+            mainSignal.addActionListener(// respond to comboBox selection
                 new ActionListener() {
                     //public void focusGained(FocusEvent e) {
                     //}
+                @Override
                     public void actionPerformed(ActionEvent event) {
                         if (mainSignal.getSelectedBean() == null) { // ie. empty first row was selected or set
                             log.debug("Empty line in mainSignal comboBox");
@@ -646,6 +665,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             pb.add(cancelButton);
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
@@ -653,6 +673,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             cancelButton.setVisible(true);
             pb.add(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deletePressed(e);
                 }
@@ -661,6 +682,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             // [Update] Signal Group button in Add/Edit SignalGroup pane
             pb.add(updateButton);
             updateButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     updatePressed(e, false, true);
                 }
@@ -677,6 +699,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             addFrame.setTitle(Bundle.getMessage("AddSignalGroup")); // reset title for new group
         }
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 // remind to save, if Signal Group was created or edited
                 if (SignalGroupDirty) {
@@ -969,7 +992,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Respond to the Delete button in the Add/Edit pane
+     * Respond to the Delete button in the Add/Edit pane.
+     *
+     * @param e the event heard
      */
     void deletePressed(ActionEvent e) {
         InstanceManager.getDefault(jmri.SignalGroupManager.class).deleteSignalGroup(curSignalGroup);
@@ -979,7 +1004,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Respond to the Update button on the Edit Signal Group pane - store new properties in the Signal Group
+     * Respond to the Update button on the Edit Signal Group pane - store new properties in the Signal Group.
      * @param e Event from origin, null if invoked by clicking the Edit button in a Signal Group Table row
      * @param newSignalGroup False when called as Update, True after editing Signal Head details
      * @param close True if the pane is closing, False if it stays open
@@ -1025,7 +1050,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     /**
-     * Clean up the Edit Signal Group pane
+     * Clean up the Edit Signal Group pane.
      */
     void finishUpdate() {
         if (curSignalGroup != null) {
@@ -1058,6 +1083,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         if (addFrame != null) {addFrame.setVisible(false);}
     }
 
+    /**
+     * Table Model for masts and their set to aspect.
+     */
     public class SignalMastAspectModel extends AbstractTableModel implements PropertyChangeListener {
 
         @Override
@@ -1229,10 +1257,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             InstanceManager.getDefault(jmri.SignalHeadManager.class).addPropertyChangeListener(this);
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return ((c == INCLUDE_COLUMN) || (c == STATE_ON_COLUMN) || (c == STATE_OFF_COLUMN) || (c == EDIT_COLUMN));
         }
 
+        @Override
         public int getColumnCount() {
             return 6;
         }
@@ -1310,8 +1340,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Fetch User Name (System Name if User Name is empty) for a row in the Signal Head table
-         * @return bean object
+         * Fetch User Name (System Name if User Name is empty) for a row in the Signal Head table.
+         *
+         * @param r index in the signal head table of head to be edited
+         * @return name of signal head
          */
         public String getDisplayName(int r) {
             if (((String) getValueAt(r, UNAME_COLUMN) != null) && (!((String) getValueAt(r, UNAME_COLUMN)).equals(""))) {
@@ -1322,8 +1354,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         }
 
         /**
-         * Fetch existing bean object for a row in the Signal Head table
-         * @return bean object
+         * Fetch existing bean object for a row in the Signal Head table.
+         *
+         * @param r index in the signal head table of head to be edited
+         * @return bean object of the head
          */
         public SignalHead getBean(int r) {
             return jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead((String) getValueAt(r, SNAME_COLUMN));
@@ -1363,6 +1397,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                             row = r;
                         }
 
+                        @Override
                         public void run() {
                             signalHeadEditPressed(row);
                         }
@@ -1665,10 +1700,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     }
 
+    @Override
     protected String getClassName() {
         return SignalGroupTableAction.class.getName();
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSignalGroupTable");
     }

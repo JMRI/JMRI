@@ -18,10 +18,12 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnLightManagerXml"); // NOI18N
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

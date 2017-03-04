@@ -29,6 +29,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof Mx1SystemConnectionMemo) {
             try {
@@ -39,10 +40,12 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel";
     }//IN18N
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -55,6 +58,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
         return x.toString();
     }
 
+    @Override
     public void initComponents(Mx1SystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getMx1TrafficController();
@@ -79,6 +83,7 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
         add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }

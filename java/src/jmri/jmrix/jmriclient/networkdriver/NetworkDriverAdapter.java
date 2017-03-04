@@ -27,6 +27,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
      * set up all of the other objects to operate with an JMRI server connected
      * to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         JMRIClientTrafficController control = new JMRIClientTrafficController();
@@ -35,6 +36,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         this.getSystemConnectionMemo().configureManagers();
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

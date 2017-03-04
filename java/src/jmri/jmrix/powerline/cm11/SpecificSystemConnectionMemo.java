@@ -23,12 +23,14 @@ public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSys
      * Configure the common managers for Powerline connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
         InstanceManager.setLightManager(new jmri.jmrix.powerline.cm11.SpecificLightManager(getTrafficController()));
         InstanceManager.setSensorManager(new jmri.jmrix.powerline.cm11.SpecificSensorManager(getTrafficController()));
         InstanceManager.setTurnoutManager(new jmri.jmrix.powerline.SerialTurnoutManager(getTrafficController()));
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, SpecificSystemConnectionMemo.class);
         super.dispose();

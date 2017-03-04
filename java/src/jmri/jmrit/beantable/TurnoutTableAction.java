@@ -136,6 +136,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Turnouts
      */
+    @Override
     protected void createModel() {
         // store the terminology
         closedText = turnManager.getClosedText();
@@ -325,6 +326,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     JComboBox<String> c = new JComboBox<String>(t.getValidFeedbackNames());
                     c.setSelectedItem(t.getFeedbackModeName());
                     c.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             comboBoxAction(e);
                         }
@@ -344,6 +346,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     JComboBox<String> c = new JComboBox<String>(t.getValidDecoderNames());
                     c.setSelectedItem(t.getDecoderName());
                     c.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             comboBoxAction(e);
                         }
@@ -361,6 +364,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         c.setSelectedItem(noneText);
                     }
                     c.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             comboBoxAction(e);
                         }
@@ -438,6 +442,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                             this.t = t;
                         }
 
+                        @Override
                         public void run() {
                             editButton(t);
                         }
@@ -495,6 +500,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public String getValue(String name) {
                 int val = turnManager.getBySystemName(name).getCommandedState();
                 switch (val) {
@@ -511,22 +517,27 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
                 return turnManager;
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return turnManager.getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return turnManager.getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 int state = ((Turnout) t).getCommandedState();
                 if (state == Turnout.CLOSED) {
@@ -610,10 +621,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameTurnout");
             }
 
+            @Override
             public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
                 JTable table = this.makeJTable(model);
                 table.setName(name);
@@ -626,6 +639,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return table;
             }
 
+            @Override
             public JTable makeJTable(TableSorter sorter) {
                 JTable table = this.makeJTable((TableModel) sorter);
                 table.getTableHeader().setReorderingAllowed(true);
@@ -639,6 +653,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             private JTable makeJTable(TableModel model) {
                 return new JTable(model) {
 
+                    @Override
                     public TableCellRenderer getCellRenderer(int row, int column) {
                         //Convert the displayed index to the model index, rather than the displayed index
                         int modelColumn = this.convertColumnIndexToModel(column);
@@ -649,6 +664,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         }
                     }
 
+                    @Override
                     public TableCellEditor getCellEditor(int row, int column) {
                         //Convert the displayed index to the model index, rather than the displayed index
                         int modelColumn = this.convertColumnIndexToModel(column);
@@ -764,6 +780,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
@@ -772,16 +789,19 @@ public class TurnoutTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TurnoutAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener okListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
             ActionListener cancelListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
             };
             ActionListener rangeListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
                 }
@@ -834,6 +854,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         final Turnout myTurnout = t;
         updateAutomationBox(t, cb);
         cb.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setTurnoutOperation(myTurnout, cb);
                 cb.removeActionListener(this);		// avoid recursion
@@ -984,6 +1005,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             final TurnoutOperationEditor self = this;
             myOp = op;
             myOp.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent evt) {
                     if (evt.getPropertyName().equals("Deleted")) {
                         setVisible(false);
@@ -999,6 +1021,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 Box buttonBox = Box.createHorizontalBox();
                 JButton nameButton = new JButton(Bundle.getMessage("NameSetting"));
                 nameButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         String newName = JOptionPane.showInputDialog(Bundle.getMessage("NameParameterSetting"));
                         if (newName != null && !newName.equals("")) {
@@ -1014,6 +1037,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 });
                 JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
                 okButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         config.endConfigure();
                         if (myOp.isNonce() && myOp.equivalentTo(myOp.getDefinitive())) {
@@ -1026,6 +1050,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 });
                 JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
                 cancelButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         self.setVisible(false);
                     }
@@ -1109,6 +1134,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
             }
@@ -1116,6 +1142,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         f.addToBottomBox(showFeedbackBox, this.getClass().getName());
         showFeedbackBox.setToolTipText(Bundle.getMessage("TurnoutFeedbackToolTip"));
         showFeedbackBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showFeedbackChanged();
             }
@@ -1123,6 +1150,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         f.addToBottomBox(showLockBox, this.getClass().getName());
         showLockBox.setToolTipText(Bundle.getMessage("TurnoutLockToolTip"));
         showLockBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showLockChanged();
             }
@@ -1130,6 +1158,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         f.addToBottomBox(showTurnoutSpeedBox, this.getClass().getName());
         showTurnoutSpeedBox.setToolTipText(Bundle.getMessage("TurnoutSpeedToolTip"));
         showTurnoutSpeedBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showTurnoutSpeedChanged();
             }
@@ -1147,6 +1176,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
             }
@@ -1154,6 +1184,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         f.addToBottomBox(showFeedbackBox, systemPrefix);
         showFeedbackBox.setToolTipText(Bundle.getMessage("TurnoutFeedbackToolTip"));
         showFeedbackBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showFeedbackChanged();
             }
@@ -1161,6 +1192,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         f.addToBottomBox(showLockBox, systemPrefix);
         showLockBox.setToolTipText(Bundle.getMessage("TurnoutLockToolTip"));
         showLockBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showLockChanged();
             }
@@ -1168,6 +1200,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         f.addToBottomBox(showTurnoutSpeedBox, systemPrefix);
         showTurnoutSpeedBox.setToolTipText(Bundle.getMessage("TurnoutSpeedToolTip"));
         showTurnoutSpeedBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showTurnoutSpeedChanged();
             }
@@ -1247,6 +1280,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
             opsMenu.add(item);
             item.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     new TurnoutOperationFrame(finalF);
                 }
@@ -1257,6 +1291,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
             speedMenu.add(item);
             item.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setDefaultSpeeds(finalF);
                 }
@@ -1272,8 +1307,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     void okPressed(ActionEvent e) {
-        // Test if bit already in use as a light
-        //int iName=0;
+
         int numberOfTurnouts = 1;
 
         if (range.isSelected()) {
@@ -1433,6 +1467,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     private boolean noWarn = false;
 
+    @Override
     protected String getClassName() {
         return TurnoutTableAction.class.getName();
     }
@@ -1455,6 +1490,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             setFirstItemBlank(true);
         }
 
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
             if (isSelected) {

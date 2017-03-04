@@ -20,6 +20,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     DCCppInterfaceScaffold xnis = null;
 
+    @Override
     public String getSystemName(int i) {
         return "DCCPPL" + i;
     }
@@ -55,6 +56,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface, register

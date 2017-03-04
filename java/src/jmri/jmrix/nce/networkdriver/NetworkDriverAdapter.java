@@ -26,6 +26,7 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
      * set up all of the other objects to operate with an NCE command station
      * connected to this port
      */
+    @Override
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
