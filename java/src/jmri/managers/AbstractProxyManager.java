@@ -130,7 +130,7 @@ abstract public class AbstractProxyManager implements Manager {
      */
     @Override
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws Manager.BadSystemNameException {
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         int index = matchTentative(inputName);
         if (index >= 0) {
             return getMgr(index).normalizeSystemName(inputName);

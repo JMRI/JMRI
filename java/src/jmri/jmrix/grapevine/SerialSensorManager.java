@@ -1,6 +1,7 @@
 package jmri.jmrix.grapevine;
 
 import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Sensor;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -55,7 +56,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws Manager.BadSystemNameException {
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return SerialAddress.normalizeSystemName(inputName);
     }
 

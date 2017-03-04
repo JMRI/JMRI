@@ -321,4 +321,5 @@ public interface NamedBean {
         return inputName;
     }
     public class BadUserNameException extends IllegalArgumentException {}
+    public class BadSystemNameException extends IllegalArgumentException {}
 }

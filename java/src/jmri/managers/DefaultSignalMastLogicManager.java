@@ -277,7 +277,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      */
     @Override
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws Manager.BadSystemNameException {
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName;
     }
 

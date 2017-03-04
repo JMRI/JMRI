@@ -270,7 +270,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
      */
     @Override
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws Manager.BadSystemNameException {
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName;
     }
 
