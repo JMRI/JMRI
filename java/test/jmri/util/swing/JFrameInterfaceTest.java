@@ -2,11 +2,13 @@ package jmri.util.swing;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -16,6 +18,7 @@ public class JFrameInterfaceTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrameInterface t = new JFrameInterface(new jmri.util.JmriJFrame("foo"));
 
         Assert.assertNotNull("exists",t);
