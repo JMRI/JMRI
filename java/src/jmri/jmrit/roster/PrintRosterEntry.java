@@ -36,28 +36,33 @@ public class PrintRosterEntry implements PaneContainer {
 
     RosterEntry _rosterEntry;
 
+    /**
+     * List of {@link jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane} JPanels.
+     * Built up at line 158 or passed as argument paneList in line 196 via
+     * {link #PrintRosterEntry(RosterEntry, List, FunctionLabelPane, RosterMediaPane, JmriJFrame)}
+     */
     List<JPanel> _paneList = new ArrayList<JPanel>();
     FunctionLabelPane _flPane = null;
     RosterMediaPane _rMPane = null;
     JmriJFrame _parent = null;
 
     /**
-     * Constructor for a Print items selection pane.
+     * Constructor for a Print roster item (programmer tabs) selection pane.
      *
      * @param rosterEntry Roster item, either as a selection or object
      * @param parent window over which this dialog will be centered
-     * @param xml file name for the user's Roster entry
+     * @param filename xml file name for the user's Roster entry
      */
     public PrintRosterEntry(RosterEntry rosterEntry, JmriJFrame parent, String filename) {
         _rosterEntry = rosterEntry;
         _flPane = new FunctionLabelPane(rosterEntry);
         _rMPane = new RosterMediaPane(rosterEntry);
         _parent = parent;
-        JLabel progStatus = new JLabel("StateIdle");
+        JLabel progStatus = new JLabel(Bundle.getMessage("StateIdle"));
         jmri.Programmer mProgrammer = null;
         ResetTableModel resetModel = new ResetTableModel(progStatus, mProgrammer);
 
-        log.debug("Try PrintRosterEntry from file {}", filename);
+        log.debug("Try PrintRosterEntry {} from file {}", _rosterEntry.getDisplayName(), filename);
         XmlFile pf = new XmlFile() {
         };
         Element base = null;
@@ -89,19 +94,19 @@ public class PrintRosterEntry implements PaneContainer {
         String decoderFamily = _rosterEntry.getDecoderFamily();
 
         if (log.isDebugEnabled()) {
-            log.debug("selected loco uses decoder " + decoderFamily + " " + decoderModel);
+            log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
         }
         // locate a decoder like that.
         List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) {
-            log.debug("found " + l.size() + " matches");
+            log.debug("found {} matches", l.size());
         }
         if (l.size() == 0) {
             log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
             l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, decoderModel);
             if (log.isDebugEnabled()) {
-                log.debug("found " + l.size() + " matches without family key");
+                log.debug("found {} matches without family key", l.size());
             }
         }
         DecoderFile d = null;
@@ -116,6 +121,7 @@ public class PrintRosterEntry implements PaneContainer {
         }
 
         if (d == null) {
+            log.warn("no decoder file found for this loco");
             return;
         }
         Element decoderRoot;
@@ -143,15 +149,18 @@ public class PrintRosterEntry implements PaneContainer {
         List<Element> rawPaneList = base.getChildren("pane");
         log.debug("rawPaneList size = {}", rawPaneList.size());
         for (Element elPane : rawPaneList) {
-            // load each pane
-            Attribute attr = elPane.getAttribute("name");
-            String name = "";
-            if (attr != null) {
-                name = attr.getValue();
+            // load each pane to store in _paneList and fetch its name element (i18n) to show in Select items pane
+            Element _name = elPane.getChild("name"); // multiple languages
+            // There is no name attribute of pane in Basic.xml nor (for the Comprehensive programmer) in include.parts.Basic.xml
+            // Instead, it's a separate element inside programmer.pane, fixed 4.7.2ish
+            String name = "Tab name"; // temporary fake name
+            if (_name != null) {
+                name = _name.getText();
             } else {
-                log.debug("Did not find name attribute in pane");
+                log.debug("Did not find name element in pane");
             }
             PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
+            // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 278)
             _paneList.add(p);
             log.debug("_paneList size = {}", _paneList.size());
         }
@@ -180,11 +189,11 @@ public class PrintRosterEntry implements PaneContainer {
     }
 
     /**
-     * Configure variable fields in class.
+     * Configure variable fields and create a PrintRosterEntry instance while doing so.
      *
      * @param rosterEntry an item in the Roster
-     * @param paneList list of programmer tabs
-     * @param flPane pane w/checkbox to select printing of "Function List"
+     * @param paneList list of programmer tabs, including all properties
+     * @param flPane extra pane w/checkbox to select printing of "Function List"
      * @param rMPane pane containing roster media (image)
      * @param parent window over which this dialog will be centered
      */
@@ -261,12 +270,12 @@ public class PrintRosterEntry implements PaneContainer {
         _flPane.includeInPrint(false);
         select.add(funct);
 
-        // Error as list is always 1 item long, even if empty
         log.debug("List size length: {}", _paneList.size());
         for (int i = 0; i < _paneList.size(); i++) {
             final PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             pane.includeInPrint(false);
             final JCheckBox item = new JCheckBox(_paneList.get(i).getName());
+            // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 164)
             printList.put(item, pane);
             item.addActionListener(new java.awt.event.ActionListener() {
                 @Override

@@ -61,13 +61,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the individual panes for the TabbedPaneProgrammer. Note that this is
- * not only the panes carrying variables, but also the special purpose panes for
- * the CV table, etc.
+ * Provide the individual panes for the TabbedPaneProgrammer.
+ * <p>
+ * Note that this is not only the panes carrying variables, but also the special
+ * purpose panes for the CV table, etc.
  * <P>
  * This class implements PropertyChangeListener so that it can be notified when
  * a variable changes its busy status at the end of a programming read/write
- * operation
+ * operation.
  *
  * There are four read and write operation types, all of which have to be
  * handled carefully:
@@ -95,7 +96,6 @@ import org.slf4j.LoggerFactory;
  * @author Howard G. Penny Copyright (C) 2005
  * @author Dave Heap Copyright (C) 2014
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
- *
  */
 /*
  * @startuml jmri/jmrit/symbolicprog/tabbedframe/doc-files/PaneProgPane-ReadAllSequenceDiagram.png
@@ -173,7 +173,7 @@ import org.slf4j.LoggerFactory;
  * deactivate replyWhileProgrammingVar
  * deactivate propertyChange 
  * deactivate Programmer
- * == callaback triggered repeat occurs until no more values ==
+ * == Callback triggered repeat occurs until no more values ==
  * @enduml 
  */
 public class PaneProgPane extends javax.swing.JPanel
@@ -201,11 +201,15 @@ public class PaneProgPane extends javax.swing.JPanel
 
     boolean isCvTablePane = false;
 
+    /**
+     * Store name of this programmer Tab (pane)
+     */
     String mName = "";
 
     /**
-     * Create a null object. Normally only used for tests and to pre-load
-     * classes.
+     * Construct a null object.
+     * <p>
+     * Normally only used for tests and to pre-load classes.
      */
     public PaneProgPane() {
     }
@@ -247,7 +251,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // laid-out JPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // Add tooltip if present
+        // Add tooltip (if available)
         setToolTipText(jmri.util.jdom.LocaleSelector.getAttribute(pane, "tooltip"));
 
         // find out whether to display "label" (false) or "item" (true)

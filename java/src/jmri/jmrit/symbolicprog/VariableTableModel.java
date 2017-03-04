@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of variables in symbolic programmer.
- * Also responsible for loading from the XML file...
+ * Also responsible for loading from the XML file.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2010
  * @author Howard G. Penny Copyright (C) 2005
@@ -43,7 +43,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     private JLabel _status = null;
 
     /**
-     * Defines the columns; values understood are: "Name", "Value", "Range",
+     * Define the columns; values understood are: "Name", "Value", "Range",
      * "Read", "Write", "Comment", "CV", "Mask", "State".
      * For each, a property key in SymbolicProgBundle by the same name allows i18n
      */

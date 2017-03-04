@@ -104,13 +104,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A window for Roster management.
- *
+ * <p>
  * TODO: Several methods are copied from PaneProgFrame and should be refactored
- * No programmer support yet (dummy object below) Color only covering borders No
+ * No programmer support yet (dummy object below). Color only covering borders. No
  * reset toolbar support yet No glass pane support (See DecoderPro3Panes class
- * and usage below) Special panes (Roster entry, attributes, graphics) not
- * included How do you pick a programmer file? (hardcoded) Initialization needs
- * partial deferal, too for 1st pane to appear
+ * and usage below). Special panes (Roster entry, attributes, graphics) not
+ * included. How do you pick a programmer file? (hardcoded) Initialization needs
+ * partial deferal, too for 1st pane to appear.
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
@@ -869,9 +869,17 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange("closewindow", "setEnabled", true);
     }
 
+    /**
+     * Prepare a roster entry to be printed, and display a selection list.
+     *
+     * @see jmri.jmrit.roster.PrintRosterEntry#printPanes(boolean)
+     * @param boo true if output should got to a Preview pane on screen, false to output to a printer (dialog)
+     */
     protected void printLoco(boolean boo) {
         log.debug("Selected entry: {}", re.getDisplayName());
         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer2 + ".xml");
+        // uses Basic programmer when printing a selected entry from (this) top Roster frame
+        // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
         pre.printPanes(boo);
     }
 
@@ -1128,7 +1136,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     protected void selectLoco(int dccAddress, boolean isLong, int mfgId, int modelId) {
         // raise the button again
-        //idloco.setSelected(false);
+        // idloco.setSelected(false);
         // locate that loco
         inStartProgrammer = false;
         if (re != null) {
@@ -1190,9 +1198,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Simple method to change over the progDebugger buttons, this should be
-     * implemented button with the buttons in their own class etc, but this will
-     * work for now.
+     * Simple method to change over the progDebugger buttons.
+     * <p>
+     * TODO This should be implemented with the buttons in their own class etc.
+     * but this will work for now.
      *
      * @param buttonId   1 or 2; use 1 for basic programmer; 2 for comprehensive
      *                   programmer
@@ -1398,14 +1407,16 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         inStartProgrammer = false;
     }
 
-    /*
-     * This status bar needs sorting out properly
+    /**
+     * Create and display a status bar along the bottom edge of the Roster main pane.
+     * <p>
+     * TODO This status bar needs sorting out properly
      */
     protected void statusBar() {
         addToStatusBox(serviceModeProgrammerLabel, null);
         addToStatusBox(operationsModeProgrammerLabel, null);
         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
-        statusField.setText(Bundle.getMessage("Idle"));
+        statusField.setText(Bundle.getMessage("StateIdle"));
         addToStatusBox(programmerStatusLabel, statusField);
         addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())), null);
     }
@@ -1472,7 +1483,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /*
-     * this handles setting up and updating the GUI for the types of progDebugger
+     * Handle setting up and updating the GUI for the types of progDebugger
      * available.
      */
     protected void updateProgrammerStatus() {

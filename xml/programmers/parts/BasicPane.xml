@@ -12,18 +12,18 @@
       <text> </text>
     </label>
     <display item="Short Address" tooltip="Sets the primary (short) address">
-      <tooltip xml:lang="it">Indirizzo Corto"</tooltip>
+      <tooltip xml:lang="it">Indirizzo Corto</tooltip>
       <tooltip xml:lang="ca">Establir adreça primària (curta)</tooltip>
-      <tooltip xml:lang="de">Kurze Adresse einstellen</tooltip>
+      <tooltip xml:lang="de">Definiert die Kurze Adresse</tooltip>
       <tooltip xml:lang="cs">Nastavit primární (krátkou) adresu</tooltip>
-      <tooltip xml:lang="nl">Kort Adres instellen</tooltip>
+      <tooltip xml:lang="nl">Bepaalt het Korte Adres</tooltip>
     </display>
     <display item="Long Address" tooltip="Sets the extended (long) address">
       <tooltip xml:lang="it">Imposta l'indirizzo esteso</tooltip>
       <tooltip xml:lang="ca">Establir adreça llarga</tooltip>
-      <tooltip xml:lang="de">Lange Adresse einstellen</tooltip>
+      <tooltip xml:lang="de">Definiert die Lange Adresse</tooltip>
       <tooltip xml:lang="cs">Nastavit rozšířenou (dlouhou) adresu</tooltip>
-      <tooltip xml:lang="nl">Lang Adres instellen</tooltip>
+      <tooltip xml:lang="nl">Bepaalt het Lang Adres</tooltip>
     </display>
     <display item="Address Format" tooltip="Determines whether loco will use short or long address">
       <tooltip xml:lang="it">Determina se la Loco usa l'indirizzo corto o quello esteso</tooltip>
