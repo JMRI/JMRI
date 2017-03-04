@@ -3,7 +3,9 @@ package jmri.util;
 import apps.gui.GuiLafPreferencesManager;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -42,6 +44,9 @@ import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.DebugProgrammerManager;
+import jmri.util.prefs.JmriConfigurationProvider;
+import jmri.util.prefs.JmriPreferencesProvider;
+import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
 import org.junit.Assert;
 import org.netbeans.jemmy.TestOut;
 import org.slf4j.Logger;
@@ -461,20 +466,47 @@ public class JUnitUtil {
 
     /**
      * Use if the profile needs to be written to or cleared as part of the test.
-     * Suggested use in the {@link org.junit.Before} annotated method is: {@code
+     * Suggested use in the {@link org.junit.Before} annotated method is:      <code>
      *
-     * @Rule public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
+     * @Rule
+     * public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
      *
      * @Before
      * public void setUp() {
-     *     resetProfileManager(new jmri.profile.NullProfile(new java.io.File(folder.newFolder(jmri.profile.Profile.PROFILE), "test")));
+     *     resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
      * }
-     * }
+     * </code>
      *
      * @param profile the provided profile
      */
     public static void resetProfileManager(Profile profile) {
         ProfileManager.getDefault().setActiveProfile(profile);
+    }
+
+    /**
+     * PreferencesProviders retain per-profile objects; reset them to force that
+     * information to be dumped.
+     */
+    public static void resetPreferencesProviders() {
+        try {
+            // reset UI provider
+            Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("providers");
+            providers.setAccessible(true);
+            ((HashMap<?, ?>) providers.get(null)).clear();
+            // reset XML storage provider
+            providers = JmriConfigurationProvider.class.getDeclaredField("providers");
+            providers.setAccessible(true);
+            ((HashMap<?, ?>) providers.get(null)).clear();
+            // reset java.util.prefs.Preferences storage provider
+            Field shared = JmriPreferencesProvider.class.getDeclaredField("sharedProviders");
+            Field privat = JmriPreferencesProvider.class.getDeclaredField("privateProviders");
+            shared.setAccessible(true);
+            ((HashMap<?, ?>) shared.get(null)).clear();
+            privat.setAccessible(true);
+            ((HashMap<?, ?>) privat.get(null)).clear();
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            log.error("Unable to reset preferences providers", ex);
+        }
     }
 
     /**

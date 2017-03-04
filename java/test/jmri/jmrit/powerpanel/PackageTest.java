@@ -29,6 +29,10 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.powerpanel.PackageTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.powerpanel.PowerPaneTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PowerButtonActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PowerPanelActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PowerPanelFrameTest.class));
+
         return suite;
     }
 

@@ -24,6 +24,7 @@ public class ListedTableAction extends AbstractAction {
      * resulting frame. Perhaps this should be changed?
      *
      * @param s title of the action
+     * @param selection item representing this table in de index to the left side of the containing frame
      */
     public ListedTableAction(String s, String selection) {
         super(s);

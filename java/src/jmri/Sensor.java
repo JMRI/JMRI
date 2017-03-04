@@ -69,6 +69,14 @@ public interface Sensor extends NamedBean {
      */
     public boolean getInverted();
 
+     /**
+     * Determine if sensor can be inverted. When a turnout is inverted the
+     * {@link #ACTIVE} and {@link #INACTIVE} states are inverted on the layout.
+     *
+     * @return true if can be inverted; false otherwise
+     */
+    public boolean canInvert();
+
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.

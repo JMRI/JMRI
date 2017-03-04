@@ -6,7 +6,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     jmri.jmrix.srcp.swing.srcpmon.PackageTest.class,
-    jmri.jmrix.srcp.swing.packetgen.PackageTest.class
+    jmri.jmrix.srcp.swing.packetgen.PackageTest.class,
+    SRCPComponentFactoryTest.class,
+    SystemMenuTest.class
 })
 
 /**

@@ -26,8 +26,13 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.timetable.PackageTest"); // no tests in class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(OperationsTrainsGuiTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsTrainsGuiTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainScheduleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsScheduleTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
         return suite;
     }
 

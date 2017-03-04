@@ -81,7 +81,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JCheckBox lockTurnouts = new JCheckBox(rb.getString("LockTurnouts"));
     JButton Sizer = new JButton("Sizer");
 
-    // fields to store items currently being configured
+    // fields to store the items currently being configured
     SignalMast sourceMast;
     SignalMast destMast;
     SignalMastLogic sml;
@@ -92,12 +92,18 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     JFrame jFrame;
 
+    /**
+     * Create an empty JPanel to configure a new Signal Mast Logic.
+     *
+     * @param frame Name for the enclosing JFrame
+     */
     public SignallingPanel(JFrame frame) {
         this(null, null, frame);
     }
 
     /**
-     * Create and fill in the JPanel to configure Signal Mast Logic.
+     * Create and fill in the JPanel to edit an existing Signal Mast Logic.
+     *
      * @param source Bean of Source Signal Mast
      * @param dest Bean of Destination Signal Mast
      * @param frame Name for the enclosing JFrame
@@ -379,6 +385,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     /**
      * Compose GUI for setting up Blocks tab for an SML.
+     *
+     * @return a JPanel containing the SML control blocks configuration interface
      */
     JPanel buildBlocksPanel() {
         JPanel blockPanel = new JPanel();
@@ -506,6 +514,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     /**
      * Compose GUI for setting up the Turnouts tab for an SML.
+     *
+     * @return a JPanel containing the SML control turnouts configuration interface
      */
     JPanel buildTurnoutPanel() {
         JPanel turnoutPanel = new JPanel();
@@ -633,6 +643,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     /**
      * Compose GUI for setting up the Sensors tab for an SML.
+     *
+     * @return a JPanel containing the SML control sensors configuration interface
      */
     JPanel buildSensorPanel() {
         JPanel sensorPanel = new JPanel();
@@ -712,6 +724,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     /**
      * Compose GUI for setting up the Signal Masts tab for an SML.
+     *
+     * @return a JPanel containing the SML control signal masts configuration interface
      */
     JPanel buildSignalMastPanel() {
         JPanel SignalMastPanel = new JPanel();
@@ -821,6 +835,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     /**
      * Update changes in SML when Update button is pressed in the Edit Logic - Add Logic pane.
+     *
+     * @param e the event heard
      */
     void updatePressed(ActionEvent e) {
         sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
@@ -954,6 +970,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     /**
      * When Apply button is pressed, call updatePressed and afterwards close the edit pane.
+     *
+     * @param e the event heard
      */
     void applyPressed(ActionEvent e) {
         updatePressed(e); // store edits
@@ -964,6 +982,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
     /**
      * Clean up when Cancel button is pressed.
+     *
+     * @param e the event heard
      */
     void cancelPressed(ActionEvent e) {
         jFrame.setVisible(false);
@@ -1100,7 +1120,11 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
+     * Update items in a comboBox to select a destination signal mast for the SML.
      * @deprecated 4.7.1
+     *
+     * @param box comboBox to fill/update
+     * @param select the item (mast) in the comboBox to set as the selected item; null for no selection
      */
     @Deprecated
     void signalMastCombo(JComboBox<String> box, SignalMast select) {
@@ -2107,6 +2131,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         /**
          * Create a compact control Signal Mast table.
          * @deprecated since 4.5.7, use {@link #getAspectEditorBox(int) }
+         *
+         * @param model the selected SignalMastModel
+         * @return JTable contaning interface to configure a signal mast
          */
         @Deprecated
         protected JTable makeJTable(SignalMastModel model) {
