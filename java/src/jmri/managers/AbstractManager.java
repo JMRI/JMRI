@@ -408,7 +408,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
      * for the NamedBeans handled by this manager.
      *
      * @param inputName System name to be normalized
-     * @throws BadSystemNameException If the inputName can't be converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
      * @return A system name in standard normalized form 
      */
     @CheckReturnValue

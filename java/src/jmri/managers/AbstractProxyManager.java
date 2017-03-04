@@ -125,7 +125,7 @@ abstract public class AbstractProxyManager implements Manager {
      * <p> 
      *
      * @param inputName System name to be normalized
-     * @throws BadSystemNameException If the inputName can't be converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
      * @return A system name in standard normalized form 
      */
     @Override

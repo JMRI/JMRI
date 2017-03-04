@@ -51,7 +51,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * for the NamedBeans handled by this manager.
      *
      * @param inputName System name to be normalized
-     * @throws BadSystemNameException If the inputName can't be converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
      * @return A system name in standard normalized form 
      */
     @Override
