@@ -87,22 +87,30 @@ public class DefaultConditionalAction implements ConditionalAction {
         if (!(getClass() == obj.getClass())) {
             return false;
         } else {
-            DefaultConditionalAction p = (DefaultConditionalAction)obj;
-            if (p._option != this._option) return false;
-            if (p._type != this._type) return false;
-            if (p._actionData != this._actionData) return false;
+            DefaultConditionalAction p = (DefaultConditionalAction) obj;
+            if ((p._option != this._option)
+                    || (p._type != this._type)
+                    || (p._actionData != this._actionData)) {
+                return false;
+            }
 
-            if (p._namedBean == null &&  this._namedBean != null) return false;
-            if (p._namedBean != null &&  this._namedBean == null) return false;
-            if (p._namedBean != null &&  this._namedBean != null && !p._namedBean.equals(this._namedBean)) return false;
+            if ((p._namedBean == null && this._namedBean != null)
+                    || (p._namedBean != null && this._namedBean == null)
+                    || (p._namedBean != null && this._namedBean != null && !p._namedBean.equals(this._namedBean))) {
+                return false;
+            }
 
-            if (p._deviceName == null &&  this._deviceName != null) return false;
-            if (p._deviceName != null &&  this._deviceName == null) return false;
-            if (p._deviceName != null &&  this._deviceName != null && !p._deviceName.equals(this._deviceName)) return false;
+            if ((p._deviceName == null && this._deviceName != null)
+                    || (p._deviceName != null && this._deviceName == null)
+                    || (p._deviceName != null && this._deviceName != null && !p._deviceName.equals(this._deviceName))) {
+                return false;
+            }
 
-            if (p._actionString == null &&  this._actionString != null) return false;
-            if (p._actionString != null &&  this._actionString == null) return false;
-            if (p._actionString != null &&  this._actionString != null && !p._actionString.equals(this._actionString)) return false;
+            if ((p._actionString == null && this._actionString != null)
+                    || (p._actionString != null && this._actionString == null)
+                    || (p._actionString != null && this._actionString != null && !p._actionString.equals(this._actionString))) {
+                return false;
+            }
 
         }
         return true;
@@ -110,9 +118,11 @@ public class DefaultConditionalAction implements ConditionalAction {
 
     @Override
     public int hashCode() {
-        int hash = _option*1000+_type*1000*1000+_actionData;
-        if (_deviceName!=null) hash += _deviceName.hashCode();
-        
+        int hash = _option * 1000 + _type * 1000 * 1000 + _actionData;
+        if (_deviceName != null) {
+            hash += _deviceName.hashCode();
+        }
+
         return hash;
     }
 
@@ -414,7 +424,9 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * set Sound file
+     * Set the sound file.
+     *
+     * @param sound the new sound file
      */
     protected void setSound(Sound sound) {
         _sound = sound;
@@ -446,6 +458,9 @@ public class DefaultConditionalAction implements ConditionalAction {
 
     /**
      * Convert Variable Type to Text String
+     *
+     * @param t the type
+     * @return a human readable description of the type or an empty String
      */
     public static String getItemTypeString(int t) {
         switch (t) {
@@ -480,7 +495,10 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Convert Consequent Type to Text String
+     * Convert Consequent Type to Text String.
+     *
+     * @param t the type
+     * @return a human readable description of the type or an empty String
      */
     public static String getActionTypeString(int t) {
         switch (t) {
@@ -590,7 +608,11 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Convert consequent option to String
+     * Convert consequent option to String.
+     *
+     * @param opt  the option
+     * @param type true if option is a change; false if option is a trigger
+     * @return a human readable description of the option or an empty String
      */
     public static String getOptionString(int opt, boolean type) {
         switch (opt) {
@@ -618,8 +640,10 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Identifies action Type from Text String Note: if string does not
-     * correspond to an action type as defined in ConditionalAction, returns 0.
+     * Get action type from a String.
+     *
+     * @param str the string to get the type for
+     * @return the type or 0 if str is not a recognized action
      */
     public static int stringToActionType(String str) {
         if (str != null) {
@@ -634,8 +658,10 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Identifies action Data from Text String Note: if string does not
-     * correspond to an action Data as defined in ConditionalAction, returns -1.
+     * Get action Data from a String.
+     *
+     * @param str the string to get the action data for
+     * @return the action data of -1 is str is not recognized
      */
     public static int stringToActionData(String str) {
         if (str.equals(Bundle.getMessage("TurnoutStateClosed"))) {
@@ -837,7 +863,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + " " + rbx.getString("onWarrant") + " \"" + _deviceName + "\" "
                             + rbx.getString("to") + " " + getActionDataString();
                     break;
-                default: break; // nothing needed for others
+                default:
+                    break; // nothing needed for others
             }
         }
         if (_actionString.length() > 0) {
@@ -886,7 +913,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \"" + _actionString + "\" " + rbx.getString("onBlock")
                             + " \"" + _deviceName + "\".";
                     break;
-                default: break; // nothing needed for others
+                default:
+                    break; // nothing needed for others
             }
         }
         switch (_type) {
@@ -898,7 +926,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                 str = str + " " + rbx.getString("to") + " "
                         + LogixTableAction.formatTime(_actionData / 60, _actionData - ((_actionData / 60) * 60));
                 break;
-                default: break; // nothing needed for others
+            default:
+                break; // nothing needed for others
         }
         return str;
     }

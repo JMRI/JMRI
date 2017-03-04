@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>1</test>
+    <modifier>.1</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="IS1" inverted="false" userName="nx1">
+      <systemName>IS1</systemName>
+      <userName>nx1</userName>
+    </sensor>
+    <sensor systemName="IS2" inverted="false" userName="nx2">
+      <systemName>IS2</systemName>
+      <userName>nx2</userName>
+    </sensor>
+    <sensor systemName="IS3" inverted="false" userName="nx3">
+      <systemName>IS3</systemName>
+      <userName>nx3</userName>
+    </sensor>
+    <sensor systemName="IS4" inverted="false" userName="nx4">
+      <systemName>IS4</systemName>
+      <userName>nx4</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.can.cbus.configurexml.CbusTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="MTP4" feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>MTP4</systemName>
+    </turnout>
+  </turnouts>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="ITP3" userName="p3" feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>ITP3</systemName>
+      <userName>p3</userName>
+    </turnout>
+  </turnouts>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB1">
+      <systemName>IB1</systemName>
+      <userName>b1</userName>
+    </block>
+    <block systemName="IB13">
+      <systemName>IB13</systemName>
+      <userName>b12</userName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+      <userName>b2</userName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+      <userName>b4</userName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+      <userName>b5</userName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+      <userName>b6</userName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+      <userName>b7</userName>
+    </block>
+    <block systemName="IB8">
+      <systemName>IB8</systemName>
+      <userName>b8</userName>
+    </block>
+    <block systemName="IB1" length="0.0" curve="0" userName="b1">
+      <systemName>IB1</systemName>
+      <userName>b1</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB2" />
+    </block>
+    <block systemName="IB13" length="0.0" curve="0" userName="b12">
+      <systemName>IB13</systemName>
+      <userName>b12</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB5" />
+      <path todir="128" fromdir="64" block="IB2">
+        <beansetting setting="2">
+          <turnout systemName="p3" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB8">
+        <beansetting setting="4">
+          <turnout systemName="p3" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB2" length="0.0" curve="0" userName="b2">
+      <systemName>IB2</systemName>
+      <userName>b2</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB1" />
+      <path todir="64" fromdir="128" block="IB13">
+        <beansetting setting="2">
+          <turnout systemName="p3" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB4" length="0.0" curve="0" userName="b4">
+      <systemName>IB4</systemName>
+      <userName>b4</userName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96">
+        <beansetting setting="4">
+          <turnout systemName="p4" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64">
+        <beansetting setting="2">
+          <turnout systemName="p4" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" />
+    </block>
+    <block systemName="IB5" length="0.0" curve="0" userName="b5">
+      <systemName>IB5</systemName>
+      <userName>b5</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB6" />
+      <path todir="128" fromdir="64" block="IB13" />
+    </block>
+    <block systemName="IB6" length="0.0" curve="0" userName="b6">
+      <systemName>IB6</systemName>
+      <userName>b6</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB5" />
+    </block>
+    <block systemName="IB7" length="0.0" curve="0" userName="b7">
+      <systemName>IB7</systemName>
+      <userName>b7</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB8" />
+    </block>
+    <block systemName="IB8" length="0.0" curve="0" userName="b8">
+      <systemName>IB8</systemName>
+      <userName>b8</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB7" />
+      <path todir="64" fromdir="128" block="IB13">
+        <beansetting setting="4">
+          <turnout systemName="p3" />
+        </beansetting>
+      </path>
+    </block>
+  </blocks>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes">
+    <layoutblock systemName="ILB1" userName="b1" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>b1</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB12" userName="b12" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB12</systemName>
+      <userName>b12</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" userName="b2" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>b2</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" userName="b5" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>b5</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" userName="b6" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB6</systemName>
+      <userName>b6</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" userName="b7" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>b7</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB8" userName="b8" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
+      <systemName>ILB8</systemName>
+      <userName>b8</userName>
+    </layoutblock>
+  </layoutblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml">
+    <cleardown>0</cleardown>
+    <dispatcherintegration>yes</dispatcherintegration>
+    <layoutPanel name="My Layout">
+      <source type="sensor" item="nx3">
+        <destination type="sensor" item="nx2" nxType="turnoutsetting" uniqueid="03318a01-bc38-4c1c-b6d7-53402cd0a9b9" />
+      </source>
+    </layoutPanel>
+  </entryexitpairs>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="61" y="194" height="1320" width="4588" windowheight="637" windowwidth="1527" panelheight="1320" panelwidth="4588" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" gridSize="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <sensoricon sensor="nx1" x="146" y="31" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>nx1 (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="nx3" x="146" y="81" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>nx3 (IS3)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="nx2" x="426" y="31" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>nx2 (IS2)</tooltip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <layoutturnout ident="TO3" turnoutname="p3" blockname="b12" type="2" connectaname="T7" connectbname="T11" connectcname="T12" continuing="2" disabled="no" disableWhenOccupied="no" xcen="360.0" ycen="46.0" xa="380.0" ya="46.0" xb="340.0" yb="46.0" xc="340.0" yc="56.0" xd="380.0" yd="46.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T1" blockname="b1" connect1name="EB1" type1="1" connect2name="A1" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="b5" connect1name="TO3" type1="2" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="b6" connect1name="A3" type1="1" connect2name="EB4" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="b7" connect1name="EB2" type1="1" connect2name="A2" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T10" blockname="b8" connect1name="A2" type1="1" connect2name="A10" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T11" blockname="b2" connect1name="A1" type1="1" connect2name="TO3" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T12" blockname="b8" connect1name="A10" type1="1" connect2name="TO3" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB1" type="2" x="90.0" y="46.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="2" x="90.0" y="96.0" connect1name="T9" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="2" x="490.0" y="46.0" connect1name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="1" x="160.0" y="46.0" connect1name="T1" connect2name="T11" eastboundsensor="nx1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="160.0" y="96.0" connect1name="T9" connect2name="T10" eastboundsensor="nx3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="440.0" y="46.0" connect1name="T7" connect2name="T8" eastboundsensor="nx2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A10" type="1" x="230.0" y="96.0" connect1name="T10" connect2name="T12" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Feb 28 17:05:59 GMT 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Tue Feb 28 17:06:24 GMT 2017</date>
+      <filename>/home/andy/railwayShare/docs/jmri/DebugException/DebugPanelSimple-05.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Fri Jan 27 10:30:47 GMT 2017</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Fri Jan 27 10:31:08 GMT 2017</date>
+          <filename>/home/andy/railwayShare/docs/jmri/DebugException/DebugPanelSimple-05.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Fri Jan 27 10:15:13 GMT 2017</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Fri Jan 27 10:15:43 GMT 2017</date>
+              <filename>/home/andy/railwayShare/docs/jmri/DebugException/DebugPanelSimple-02.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Fri Jan 27 09:49:20 GMT 2017</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Fri Jan 27 09:53:40 GMT 2017</date>
+                  <filename>/home/andy/railwayShare/docs/jmri/DebugException/DebugPanelSimple-02.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Fri Jan 27 08:44:28 GMT 2017</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Fri Jan 27 08:57:30 GMT 2017</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Fri Jan 27 10:14:54 GMT 2017</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Fri Jan 27 10:30:27 GMT 2017</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Fri Jan 27 10:34:03 GMT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Feb 28 17:07:18 GMT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.7.1-R1b7dd65 on Tue Feb 28 17:07:18 GMT 2017 $Id$-->
+</layout-config>

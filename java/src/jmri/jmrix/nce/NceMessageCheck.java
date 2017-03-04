@@ -26,7 +26,7 @@ public class NceMessageCheck {
                 case NceBinaryCommand.READ16_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITEN_CMD:
+                case NceBinaryCommand.WRITE_N_CMD:
                     checkSerial_CMD(memo, m);
                     break;
                 case NceBinaryCommand.WRITE1_CMD:

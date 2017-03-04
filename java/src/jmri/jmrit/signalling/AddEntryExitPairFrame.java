@@ -26,6 +26,7 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
      * Create and set an AddEntryExitPairFrame on a given LE panel and add menuItems.
      *
      * @param panel the LE panel on which to create the NX frame
+     * @throws Exception when an error prevents creating the panel
      */
     public void initComponents(LayoutEditor panel) throws Exception {
         // the following code sets the frame's initial state
@@ -37,7 +38,7 @@ public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
         getContentPane().add(nxPanel);
 
-        JMenuBar menuBar = new JMenuBar();//getJMenuBar();
+        JMenuBar menuBar = new JMenuBar(); //getJMenuBar();
         JMenuItem options = new JMenuItem(Bundle.getMessage("MenuOptions")); // reuse existing key in jmrit.Bundle
         menuBar.add(options);
         options.addActionListener(new ActionListener() {

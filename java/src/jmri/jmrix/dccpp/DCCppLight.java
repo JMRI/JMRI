@@ -112,15 +112,9 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 	log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
 
         // get the right packet
-	// Going to use the Stationary Decoder here, with the convention/assumption that:
-	// mAddress = (address - 1) * 4 + subaddress + 1 for address>0;
 	if (mAddress > 0) {
-	    int addr = (mAddress - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
-	    int subaddr = (mAddress - 1) % (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
 	    boolean state = (newState == jmri.Light.ON);
-	    DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(addr,
-								    subaddr,
-								    state);
+	    DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
 	    //InternalState = COMMANDSENT;
 	    tc.sendDCCppMessage(msg, this);
 

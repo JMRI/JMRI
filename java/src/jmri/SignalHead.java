@@ -65,13 +65,19 @@ public interface SignalHead extends NamedBean {
     public static final int HELD = 0x100;
 
     /**
-     * Get the appearance. Changes in this value can be listened to using the
+     * Get the Signal Head Appearance.
+     * Changes in this value can be listened to using the
      * {@literal Appearance} property.
      *
      * @return the appearance
      */
     public int getAppearance();
 
+    /**
+     * Set the Signal Head Appearance.
+     *
+     * @param newAppearance integer representing a valid Appearance for this head
+     */
     public void setAppearance(int newAppearance);
 
     public String getAppearanceName();
@@ -79,7 +85,7 @@ public interface SignalHead extends NamedBean {
     public String getAppearanceName(int appearance);
 
     /**
-     * Get if the signal head is lit or dark. Changes to this value can be
+     * Get whether the signal head is lit or dark. Changes to this value can be
      * listened to using the {@literal Lit} property.
      *
      * @return true if lit; false if dark
@@ -89,7 +95,7 @@ public interface SignalHead extends NamedBean {
     public void setLit(boolean newLit);
 
     /**
-     * Get if the signal head is held. Changes to this value can be listened to
+     * Get whether the signal head is held. Changes to this value can be listened to
      * using the {@literal Held} property. It controls what mechanisms can
      * control the head's appearance. The actual semantics are defined by those
      * external mechanisms.

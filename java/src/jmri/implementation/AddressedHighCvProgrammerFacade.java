@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog       the programmer associated with this facade
      * @param top        CVs above this use the indirect method
      * @param addrCVhigh CV to which the high part of address is to be written
      * @param addrCVlow  CV to which the low part of address is to be written

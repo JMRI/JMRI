@@ -46,6 +46,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SwingSettingsTest.class));
         suite.addTest(new JUnit4TestAdapter(VerticalLabelUITest.class));
         suite.addTest(new JUnit4TestAdapter(XTableColumnModelTest.class));
+        suite.addTest(new JUnit4TestAdapter(JFrameInterfaceTest.class));
 
         return suite;
     }

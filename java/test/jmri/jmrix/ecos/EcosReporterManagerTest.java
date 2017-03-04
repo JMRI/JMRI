@@ -13,7 +13,7 @@ import org.junit.Before;
 public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "UR" + i;
     }
 

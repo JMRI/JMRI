@@ -147,6 +147,6 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    // static private Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());
 }
 
