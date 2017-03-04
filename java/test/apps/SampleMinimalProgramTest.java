@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 public class SampleMinimalProgramTest {
 
     @Test
+    @Ignore("Tries to setup connection with real hardware, that does not exist")
     public void testCTor() {
        String[] args = {"DecoderProConfig3.xml"};
         SampleMinimalProgram t = new SampleMinimalProgram(args);
