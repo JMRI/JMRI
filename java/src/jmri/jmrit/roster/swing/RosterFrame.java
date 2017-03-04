@@ -878,7 +878,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void printLoco(boolean boo) {
         log.debug("Selected entry: {}", re.getDisplayName());
         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer2 + ".xml");
-        // uses Basic programmer when printing a selected entry from (this) top Roster frame
+        // uses Basic programmer (programmer2) when printing a selected entry from (this) top Roster frame
         // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
         pre.printPanes(boo);
     }
@@ -1285,6 +1285,25 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
+
+        menuItem = new JMenuItem(Bundle.getMessage("PrintSelection"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            printLoco(false);
+        });
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
+        popupMenu.add(menuItem);
+        menuItem = new JMenuItem(Bundle.getMessage("PreviewSelection"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            printLoco(true);
+        });
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
+        popupMenu.add(menuItem);
+        popupMenu.addSeparator();
+
         menuItem = new JMenuItem(Bundle.getMessage("Duplicateddd"));
         menuItem.addActionListener((ActionEvent e1) -> {
             copyLoco();
@@ -1304,8 +1323,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Identify loco button pressed, start the identify operation This defines
-     * what happens when the identify is done.
+     * Start the identify operation after [Identify Loco] button pressed.
+     * <p>
+     * This defines what happens when the identify is done.
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {

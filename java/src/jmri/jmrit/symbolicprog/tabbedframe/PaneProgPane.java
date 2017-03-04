@@ -699,7 +699,7 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Set the "ToRead" parameter in all variables and CVs on this pane
+     * Set the "ToRead" parameter in all variables and CVs on this pane.
      *
      * @param justChanges  true if this is read changes, false if read all
      * @param startProcess true if this is the start of processing, false if

@@ -152,10 +152,11 @@ public class PrintRosterEntry implements PaneContainer {
             // load each pane to store in _paneList and fetch its name element (i18n) to show in Select items pane
             Element _name = elPane.getChild("name"); // multiple languages
             // There is no name attribute of pane in Basic.xml nor (for the Comprehensive programmer) in include.parts.Basic.xml
-            // Instead, it's a separate element inside programmer.pane, fixed 4.7.2ish
+            // Instead, it's a separate element inside programmer.pane, fixed 4.7.2
             String name = "Tab name"; // temporary fake name
             if (_name != null) {
-                name = _name.getText();
+                name = _name.getText(); // because it's used in line 163, can't translate it now, TODO I18N
+                log.debug("Tab '{}' added", name);
             } else {
                 log.debug("Did not find name element in pane");
             }
@@ -251,7 +252,7 @@ public class PrintRosterEntry implements PaneContainer {
         JPanel instruct = new JPanel();
         JLabel l1 = new JLabel(Bundle.getMessage("LabelSelectLine1"));
         instruct.add(l1);
-        l1 = new JLabel(Bundle.getMessage("LabelSelectLine2") + "");
+        l1 = new JLabel(Bundle.getMessage("LabelSelectLine2"));
         instruct.add(l1);
         p1.add(instruct);
 

@@ -13,17 +13,17 @@
                 <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
                   <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
                   <label xml:lang="ca">Selecciona aquest botó per fer servir taula de velocitats</label>
-                  <label xml:lang="de">Um die eine Geschwindikeitskennlinie zu benutzen, diesen Button markieren</label>
+                  <label xml:lang="de">Um die Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
                   <label xml:lang="cs">Pro použití rychlostní tabulky pro řízení rychlosti zvolte toto tlačítko</label>
-                  <label xml:lang="nl">Selecteer om de Snelheidsgrafiek toe te passen</label>
+                  <label xml:lang="nl">Selecteer deze knop om de Snelheidsgrafiek toe te passen</label>
                 </display>
                 <label>
                   <text>            To turn off, use Basic Speed Control pane</text>
-                  <text xml:lang="de">     Zum Ausschalten, die Lasche Einfache Geschwindigkeitseinstellung benutzen</text>
+                  <text xml:lang="de">     Zum Ausschalten, die Lasche Geschwindigkeit aktivieren</text>
                   <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
 				  <text xml:lang="ca">            per dishabilitar, Utilitza el panell de control Bàsic</text>
                   <text xml:lang="cs">            pro vypnutí použijte Základní řízení rychlosti</text>
-                  <text xml:lang="nl">       Om uit te schakelen, het tabblad Basissnelheidsregeling invullen</text>
+                  <text xml:lang="nl">         Om uit te schakelen, het tabblad Snelheid activeren</text>
                 </label>
               </column>
             </row>
