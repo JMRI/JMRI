@@ -1,4 +1,3 @@
-// SerialLight.java
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractVariableLight;
@@ -29,11 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011
  */
 abstract public class SerialLight extends AbstractVariableLight {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 544453820964921510L;
 
     /**
      * Create a Light object, with only system name.
@@ -96,6 +90,7 @@ abstract public class SerialLight extends AbstractVariableLight {
     /**
      * Send a On/Off Command to the hardware
      */
+    @Override
     protected void sendOnOffCommand(int newState) {
         if (log.isDebugEnabled()) {
             log.debug("sendOnOff(" + newState + ") Current: " + mState);
@@ -134,4 +129,4 @@ abstract public class SerialLight extends AbstractVariableLight {
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
 
-/* @(#)SerialLight.java */
+

@@ -20,6 +20,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     protected DCCppNetworkPortController() {
         super(new DCCppSystemConnectionMemo());
         setManufacturer(DCCppConnectionTypeList.DCCPP);
+        allowConnectionRecovery = true;
     }
     
     protected DCCppNetworkPortController(DCCppSystemConnectionMemo connectionMemo) {
@@ -90,6 +91,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      * Set the third port option. Only to be used after construction, but before
      * the openPort call
      */
+    @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
         log.debug("configureOption3: " + value);
@@ -101,18 +103,30 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public abstract boolean status();
 
     /**
      * Can the port accept additional characters? This might go false for short
      * intervals, but it might also stick off if something goes wrong.
      */
+    @Override
     public abstract boolean okToSend();
 
+    @Override
     public void setOutputBufferEmpty(boolean s) {
     } // Maintained for compatibility with DCCpptPortController. Simply ignore calls !!!
+
+    /**
+     * Customizable method to deal with resetting a system connection after a
+     * successful recovery of a connection.
+     */
+    @Override
+    protected void resetupConnection() {
+        this.getSystemConnectionMemo().getDCCppTrafficController().connectPort(this);
+    }
 
 }
 
 
-/* @(#)DCCppNetworkPortController.java */
+

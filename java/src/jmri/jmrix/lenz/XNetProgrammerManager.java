@@ -26,17 +26,20 @@ public class XNetProgrammerManager extends DefaultProgrammerManager {
      * return false based on what command station we're using but for now, we'll
      * return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return tc.getCommandStation().isOpsModePossible();
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new XNetOpsModeProgrammer(pAddress, tc);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }
 
-/* @(#)DefaultProgrammerManager.java */
+

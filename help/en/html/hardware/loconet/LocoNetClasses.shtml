@@ -37,7 +37,7 @@
       JMRI LocoNet&reg; implementation. Please also read the
       <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">
-      JavaDocs for the jmrix.loconet package</a>.</p>
+      Javadocs for the jmrix.loconet package</a>.</p>
 
       <h2>LocoNet-specific values</h2>The <a href=
       "http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnConstants.html">

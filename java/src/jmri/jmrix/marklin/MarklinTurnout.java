@@ -1,4 +1,3 @@
-// MarklinTurnout.java
 package jmri.jmrix.marklin;
 
 import jmri.Turnout;
@@ -21,10 +20,6 @@ import org.slf4j.LoggerFactory;
 public class MarklinTurnout extends AbstractTurnout
         implements MarklinListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8288482023350129321L;
     String prefix;
 
     /**
@@ -44,6 +39,7 @@ public class MarklinTurnout extends AbstractTurnout
     MarklinTrafficController tc;
 
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -106,6 +102,7 @@ public class MarklinTurnout extends AbstractTurnout
         }
     }
 
+    @Override
     public void turnoutPushbuttonLockout(boolean b) {
     }
 
@@ -136,6 +133,7 @@ public class MarklinTurnout extends AbstractTurnout
         meterTimer.schedule(new java.util.TimerTask() {
             boolean state = newstate;
 
+            @Override
             public void run() {
                 try {
                     sendOffMessage((state ? 1 : 0));
@@ -156,6 +154,7 @@ public class MarklinTurnout extends AbstractTurnout
     }
 
     // to listen for status changes from Marklin system
+    @Override
     public void reply(MarklinReply m) {
         if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.ACCCOMMANDSTART && m.getCommand() <= MarklinConstants.ACCCOMMANDEND) {
             if (protocol == UNKNOWN) {
@@ -183,6 +182,7 @@ public class MarklinTurnout extends AbstractTurnout
         }
     }
 
+    @Override
     public void message(MarklinMessage m) {
         // messages are ignored
     }
@@ -197,5 +197,3 @@ public class MarklinTurnout extends AbstractTurnout
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
 }
-
-/* @(#)MarklinTurnout.java */

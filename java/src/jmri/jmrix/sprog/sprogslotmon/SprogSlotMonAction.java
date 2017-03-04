@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
@@ -24,6 +23,7 @@ public class SprogSlotMonAction extends AbstractAction {
         this("SPROG Slot Monitor",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if(_memo.getCommandStation() == null) {
@@ -43,4 +43,4 @@ public class SprogSlotMonAction extends AbstractAction {
 }
 
 
-/* @(#)SprogSlotMonAction.java */
+

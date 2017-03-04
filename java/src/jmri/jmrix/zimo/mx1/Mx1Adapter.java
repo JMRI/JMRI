@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.TooManyListenersException;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
@@ -16,17 +17,13 @@ import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
 import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Zimo's MX-1 on an attached
- * serial comm port. Normally controlled by the zimo.mx1.Mx1Frame class.
+ * Provide access to Zimo's MX-1 on an attached serial comm port. Adapted for
+ * use with Zimo MX-1 by Sip Bosch.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- *
- * Adapted for use with Zimo MX-1 by Sip Bosch
- *
  */
 public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -39,6 +36,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in MX-1 mode, check ability to set moderators
         try {
@@ -87,47 +85,43 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
             }
             if (log.isDebugEnabled()) {
                 // arrange to notify later
-                activeSerialPort.addEventListener(new SerialPortEventListener() {
-                    public void serialEvent(SerialPortEvent e) {
-                        int type = e.getEventType();
-                        switch (type) {
-                            case SerialPortEvent.DATA_AVAILABLE:
-                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.CTS:
-                                log.info("SerialEvent: CTS is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.DSR:
-                                log.info("SerialEvent: DSR is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.RI:
-                                log.info("SerialEvent: RI is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.CD:
-                                log.info("SerialEvent: CD is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.OE:
-                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.PE:
-                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.FE:
-                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.BI:
-                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                                return;
-                            default:
-                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                                return;
-                        }
+                activeSerialPort.addEventListener((SerialPortEvent e) -> {
+                    int type = e.getEventType();
+                    switch (type) {
+                        case SerialPortEvent.DATA_AVAILABLE:
+                            log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+                            log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.CTS:
+                            log.info("SerialEvent: CTS is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.DSR:
+                            log.info("SerialEvent: DSR is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.RI:
+                            log.info("SerialEvent: RI is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.CD:
+                            log.info("SerialEvent: CD is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.OE:
+                            log.info("SerialEvent: OE (overrun error) is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.PE:
+                            log.info("SerialEvent: PE (parity error) is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.FE:
+                            log.info("SerialEvent: FE (framing error) is " + e.getNewValue());
+                            return;
+                        case SerialPortEvent.BI:
+                            log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue());
+                            return;
+                        default:
+                            log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
                     }
-                }
-                );
+                });
                 try {
                     activeSerialPort.notifyOnFramingError(true);
                 } catch (Exception e) {
@@ -159,8 +153,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException | TooManyListenersException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {} trace follows: ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -172,7 +165,10 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      * this, as there seems to be no way to check the number of queued bytes and
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
+     *
+     * @return true if more data can be sent; false otherwise
      */
+    @Override
     public boolean okToSend() {
         return activeSerialPort.isCTS();
     }
@@ -181,6 +177,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      * set up all of the other objects to operate with a MX-1 connected to this
      * port
      */
+    @Override
     public void configure() {
         Mx1CommandStation cs = new Mx1CommandStation();
         this.getSystemConnectionMemo().setCommandStation(cs);
@@ -196,6 +193,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
 
 // base class methods for the ZimoPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -204,6 +202,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -216,12 +215,17 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
+     *
+     * @throws purejavacomm.UnsupportedCommOperationException if unable to
+     *                                                        configure the
+     *                                                        serial port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -245,13 +249,9 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
@@ -263,11 +263,12 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     protected String[] validOption2 = new String[]{"3", "5"};
     //protected String selectedOption1=validOption1[0];
 
-    private boolean opened = false;
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @return the default adapter
+     * @deprecated since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public Mx1Adapter instance() {

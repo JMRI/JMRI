@@ -24,6 +24,7 @@ public class SRCPMonAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SRCPMonFrame
         SRCPMonFrame f = new SRCPMonFrame(_memo);
@@ -40,4 +41,4 @@ public class SRCPMonAction extends AbstractAction {
 }
 
 
-/* @(#)SRCPMonAction.java */
+

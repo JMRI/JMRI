@@ -1,4 +1,3 @@
-// JComponentQualifier.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JComponent;
@@ -24,10 +23,12 @@ public class JComponentQualifier extends ArithmeticQualifier {
         setWatchedAvailable(currentDesiredState());
     }
 
+    @Override
     public void setWatchedAvailable(boolean enable) {
         component.setVisible(enable);
     }
 
+    @Override
     protected boolean currentAvailableState() {
         return component.isVisible();
     }

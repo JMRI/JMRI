@@ -1,4 +1,3 @@
-// MergTrafficController.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -29,6 +28,7 @@ public class MergTrafficController extends GcTrafficController {
     }
 
     // New message for hardware protocol
+    @Override
     protected AbstractMRMessage newMessage() {
         log.debug("New MergMessage created");
         MergMessage msg = new MergMessage();
@@ -38,6 +38,7 @@ public class MergTrafficController extends GcTrafficController {
     /**
      * Make a CanReply from a MergReply reply
      */
+    @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
         log.debug("Decoding from hardware");
         MergReply gc = (MergReply) m;
@@ -48,6 +49,7 @@ public class MergTrafficController extends GcTrafficController {
     /**
      * Encode a CanMessage for the hardware
      */
+    @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
         MergMessage ret = new MergMessage(m);
@@ -56,6 +58,7 @@ public class MergTrafficController extends GcTrafficController {
     }
 
     // New reply from hardware
+    @Override
     protected AbstractMRReply newReply() {
         log.debug("New MergReply created");
         MergReply reply = new MergReply();
@@ -66,4 +69,4 @@ public class MergTrafficController extends GcTrafficController {
 }
 
 
-/* @(#)MergTrafficController.java */
+

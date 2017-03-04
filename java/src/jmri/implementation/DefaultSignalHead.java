@@ -1,11 +1,13 @@
 package jmri.implementation;
 
+import java.util.Arrays;
+
 /**
  * Default implementation of the basic logic of the SignalHead interface.
  *
  * This class only claims support for the Red, Yellow and Green appearances, and
- * their corressponding flashing forms. Support for Lunar is deferred to
- * DefaultLunarSignalHead.
+ * their corresponding flashing forms. Support for Lunar is deferred to
+ * DefaultLunarSignalHead or an extended class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
  */
@@ -19,8 +21,9 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         super(systemName);
     }
 
+    @Override
     public void setAppearance(int newAppearance) {
-        int oldAppearance = mAppearance;
+        int oldAppearance = mAppearance; // store the current appearance
         mAppearance = newAppearance;
         if (mLit && ((newAppearance == FLASHGREEN)
                 || (newAppearance == FLASHYELLOW)
@@ -45,6 +48,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         }
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -67,11 +71,14 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
 
     /**
      * Set the held parameter.
-     * <P>
+     * <p>
      * Note that this does not directly effect the output on the layout; the
      * held parameter is a local variable which effects the aspect only via
-     * higher-level logic
+     * higher-level logic.
+     *
+     * @param newHeld new Held state, true if Held, to be compared with current Held state
      */
+    @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
@@ -84,13 +91,13 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
 
     /**
      * Type-specific routine to handle output to the layout hardware.
-     *
+     * <p>
      * Does not notify listeners of changes; that's done elsewhere. Should use
      * the following variables to determine what to send:
-     * <UL>
-     * <LI>mAppearance
-     * <LI>mLit
-     * <LI>mFlashOn
+     * <ul>
+     * <li>mAppearance
+     * <li>mLit
+     * <li>mFlashOn
      * </ul>
      */
     abstract protected void updateOutput();
@@ -106,14 +113,15 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
      */
     int delay = 750;
 
-    /*
-     * Start the timer that controls flashing
+    /**
+     * Start the timer that controls flashing.
      */
     protected void startFlash() {
         // note that we don't force mFlashOn to be true at the start
         // of this; that way a flash in process isn't disturbed.
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }
@@ -136,9 +144,9 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
 
     /*
      * Stop the timer that controls flashing.
-     *
+     * <p>
      * This is only a resource-saver; the actual use of 
-     * flashing happens elsewere
+     * flashing happens elsewhere.
      */
     protected void stopFlash() {
         if (timer != null) {
@@ -154,7 +162,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         GREEN,
         FLASHRED,
         FLASHYELLOW,
-        FLASHGREEN,};
+        FLASHGREEN,}; // No int for Lunar
     final static private String[] validStateNames = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
         Bundle.getMessage("SignalHeadStateRed"),
@@ -162,18 +170,19 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         Bundle.getMessage("SignalHeadStateGreen"),
         Bundle.getMessage("SignalHeadStateFlashingRed"),
         Bundle.getMessage("SignalHeadStateFlashingYellow"),
-        Bundle.getMessage("SignalHeadStateFlashingGreen"),};
+        Bundle.getMessage("SignalHeadStateFlashingGreen"),}; // Lunar not included
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public int[] getValidStates() {
-        return validStates;
+        return Arrays.copyOf(validStates, validStates.length);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @Override
     public String[] getValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
+    @Override
     boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }

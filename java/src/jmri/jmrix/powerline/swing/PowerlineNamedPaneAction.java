@@ -1,4 +1,3 @@
-// PowerlineNamedPaneAction.java
 package jmri.jmrix.powerline.swing;
 
 import javax.swing.Icon;
@@ -18,11 +17,6 @@ import org.slf4j.LoggerFactory;
 public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 3525473344131355146L;
-
-    /**
      * Enhanced constructor for placing the pane in various GUIs
      */
     public PowerlineNamedPaneAction(String s, WindowInterface wi, String paneClass, SerialSystemConnectionMemo memo) {
@@ -37,6 +31,7 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
 
     SerialSystemConnectionMemo memo;
 
+    @Override
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();
         if (p == null) {
@@ -57,4 +52,4 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
     private final static Logger log = LoggerFactory.getLogger(PowerlineNamedPaneAction.class.getName());
 }
 
-/* @(#)PowerlineNamedPaneAction.java */
+

@@ -2,8 +2,6 @@ package apps;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -22,7 +20,32 @@ import org.slf4j.LoggerFactory;
         apps.PanelPro.PackageTest.class,
         apps.SignalPro.PackageTest.class,
         apps.SoundPro.PackageTest.class,
-        JmriFacelessTest.class
+        JmriFacelessTest.class,
+        apps.systemconsole.PackageTest.class,
+	AboutActionTest.class,
+	AppConfigBaseTest.class,
+	AppsTest.class,
+	CheckForUpdateActionTest.class,
+	CheckerFrameworkCheckTest.class,
+	CreateButtonModelTest.class,
+	FileLocationPaneTest.class,
+	FindBugsCheckTest.class,
+	GuiLafConfigPaneTest.class,
+	GuiLocalePreferencesPanelTest.class,
+	LicenseActionTest.class,
+	ManagerDefaultsConfigPaneTest.class,
+	PerformActionModelTest.class,
+	PerformFileModelTest.class,
+	PerformScriptModelTest.class,
+	ReportContextActionTest.class,
+	RestartActionTest.class,
+	RestartStartupActionFactoryTest.class,
+	SplashWindowTest.class,
+	StartupActionsManagerTest.class,
+	SystemConsoleActionTest.class,
+	SystemConsoleConfigPanelTest.class,
+        apps.gui.PackageTest.class,
+        SampleMinimalProgramTest.class
 })
 /**
  * Invoke complete set of tests for the apps package

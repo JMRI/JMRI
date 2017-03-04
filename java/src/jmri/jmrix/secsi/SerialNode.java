@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.secsi;
 
 import jmri.JmriException;
@@ -127,6 +126,7 @@ public class SerialNode extends AbstractNode {
      * Public method to return state of Sensors. Note: returns 'true' if at
      * least one sensor is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         return hasActiveSensors;
     }
@@ -158,6 +158,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Check for valid node address
      */
+    @Override
     protected boolean checkNodeAddress(int address) {
         return (address >= 0) && (address < 128);
     }
@@ -167,6 +168,7 @@ public class SerialNode extends AbstractNode {
      * node. There are currently no SECSI boards that need an init message, so
      * this returns null.
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         return null;
     }
@@ -174,6 +176,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         if (log.isDebugEnabled()) {
             log.debug("createOutPacket for nodeType "
@@ -298,6 +301,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         // normal to timeout in response to init, output
@@ -321,6 +325,7 @@ public class SerialNode extends AbstractNode {
         }
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");
@@ -331,4 +336,4 @@ public class SerialNode extends AbstractNode {
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
 
-/* @(#)SerialNode.java */
+

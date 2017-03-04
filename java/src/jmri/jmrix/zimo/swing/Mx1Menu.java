@@ -13,8 +13,9 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 public class Mx1Menu extends JMenu {
 
     /**
-     * Create a MRC menu. And loads the MrcSystemConnectionMemo to the various
-     * actions. Actions will open new windows.
+     * Create a MRC menu.
+     *
+     * @param memo the connection to associate actions with
      */
     public Mx1Menu(Mx1SystemConnectionMemo memo) {
         super();

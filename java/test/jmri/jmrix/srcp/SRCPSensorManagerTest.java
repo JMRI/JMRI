@@ -1,13 +1,8 @@
 package jmri.jmrix.srcp;
 
-import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * SRCPSensorManagerTest.java
@@ -17,7 +12,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016	
  */
-public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

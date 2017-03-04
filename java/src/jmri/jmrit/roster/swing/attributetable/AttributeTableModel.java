@@ -17,18 +17,22 @@ import jmri.jmrit.roster.RosterEntry;
  */
 public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
 
+    @Override
     public int getRowCount() {
         return Roster.getDefault().numEntries();
     }
 
+    @Override
     public int getColumnCount() {
         return Roster.getDefault().getAllAttributeKeys().size();
     }
 
+    @Override
     public String getColumnName(int col) {
         return (String) Roster.getDefault().getAllAttributeKeys().toArray()[col];
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         return String.class;
     }
@@ -36,6 +40,7 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
     /**
      * This implementation can't edit the values yet
      */
+    @Override
     public boolean isCellEditable(int row, int col) {
         return false;
     }
@@ -43,6 +48,7 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
     /**
      * Provides the empty String if attribute doesn't exist.
      */
+    @Override
     public Object getValueAt(int row, int col) {
         // get column key
         String key = getColumnName(col);
@@ -55,6 +61,7 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
         return "";
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
     }
 }

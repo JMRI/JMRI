@@ -1,4 +1,3 @@
-// AcelaSensor.java
 package jmri.jmrix.acela;
 
 import jmri.implementation.AbstractSensor;
@@ -12,11 +11,6 @@ import jmri.implementation.AbstractSensor;
  * example.
  */
 public class AcelaSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1398533852085475990L;
 
     public AcelaSensor(String systemName) {
         super(systemName);
@@ -33,8 +27,7 @@ public class AcelaSensor extends AbstractSensor {
      * <P>
      * Since status is continually being updated, this isn't active now.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 }
-
-/* @(#)AcelaSensor.java */

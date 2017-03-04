@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.mrc.serialdriver;
 
 /**
@@ -24,10 +23,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "Serial";
     }//IN18N
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

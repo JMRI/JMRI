@@ -45,21 +45,22 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-    private static TrainManagerXml _instance = null;
-
     public static synchronized TrainManagerXml instance() {
-        if (_instance == null) {
+        TrainManagerXml instance = jmri.InstanceManager.getNullableDefault(TrainManagerXml.class);
+        if (instance == null) {
             log.debug("TrainManagerXml creating instance");
             // create and load
-            _instance = new TrainManagerXml();
-            _instance.load();
+            instance = new TrainManagerXml();
+            jmri.InstanceManager.setDefault(TrainManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManagerXml returns instance " + _instance);
+            log.debug("TrainManagerXml returns instance " + instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
@@ -347,10 +348,7 @@ public class TrainManagerXml extends OperationsXml {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
     public void dispose() {
-        _instance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());

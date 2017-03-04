@@ -38,6 +38,7 @@ public class GenericImportAction extends AbstractAction {
 
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         log.debug("start to import " + mActionName);

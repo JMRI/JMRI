@@ -24,21 +24,22 @@ public class CarManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-    private static CarManagerXml _instance = null;
-
     public static synchronized CarManagerXml instance() {
-        if (_instance == null) {
+        CarManagerXml instance = jmri.InstanceManager.getNullableDefault(CarManagerXml.class);
+        if (instance == null) {
             log.debug("CarManagerXml creating instance");
             // create and load
-            _instance = new CarManagerXml();
-            _instance.load();
+            instance = new CarManagerXml();
+            jmri.InstanceManager.setDefault(CarManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("CarManagerXml returns instance {}", _instance);
+            log.debug("CarManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
@@ -121,10 +122,7 @@ public class CarManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
     public void dispose() {
-        _instance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarManagerXml.class.getName());

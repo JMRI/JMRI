@@ -39,7 +39,7 @@ public class Profile implements Comparable<Profile> {
      * @param path The Profile's directory
      * @throws java.io.IOException If unable to read the Profile from path
      */
-    public Profile(File path) throws IOException {
+    public Profile(@Nonnull File path) throws IOException {
         this(path, true);
     }
 
@@ -53,13 +53,13 @@ public class Profile implements Comparable<Profile> {
      * load a single profile with a given id.
      *
      * @param name Name of the profile. Will not be used to enforce uniqueness
-     *             contraints.
+     *             constraints.
      * @param id   Id of the profile. Will be prepended to a random String to
      *             enforce uniqueness constraints.
      * @param path Location to store the profile
      * @throws java.io.IOException If unable to create the profile at path
      */
-    public Profile(String name, String id, File path) throws IOException, IllegalArgumentException {
+    public Profile(@Nonnull String name, @Nonnull String id, @Nonnull File path) throws IOException, IllegalArgumentException {
         if (!path.getName().equals(id)) {
             throw new IllegalArgumentException(id + " " + path.getName() + " do not match"); // NOI18N
         }
@@ -89,7 +89,8 @@ public class Profile implements Comparable<Profile> {
 
     /**
      * Create a Profile object given just a path to it. If isReadable is true,
-     * the Profile must exist in storage on the computer.
+     * the Profile must exist in storage on the computer. Generates a random id
+     * for the profile.
      *
      * This method exists purely to support subclasses.
      *
@@ -99,8 +100,26 @@ public class Profile implements Comparable<Profile> {
      *                   where this is not true.
      * @throws java.io.IOException If the profile's preferences cannot be read.
      */
-    protected Profile(File path, boolean isReadable) throws IOException {
+    protected Profile(@Nonnull File path, boolean isReadable) throws IOException {
+        this(path, ProfileManager.createUniqueId(), isReadable);
+    }
+
+    /**
+     * Create a Profile object given just a path to it. If isReadable is true,
+     * the Profile must exist in storage on the computer.
+     *
+     * This method exists purely to support subclasses.
+     *
+     * @param path       The Profile's directory
+     * @param id         The Profile's id
+     * @param isReadable True if the profile has storage. See
+     *                   {@link jmri.profile.NullProfile} for a Profile subclass
+     *                   where this is not true.
+     * @throws java.io.IOException If the profile's preferences cannot be read.
+     */
+    protected Profile(@Nonnull File path, @Nonnull String id, boolean isReadable) throws IOException {
         this.path = path;
+        this.id = id;
         if (isReadable) {
             this.readProfile();
         }
@@ -119,6 +138,16 @@ public class Profile implements Comparable<Profile> {
         return name;
     }
 
+    /**
+     * Set the name for this profile.
+     * <p>
+     * Overriding classing must use
+     * {@link #setNameInConstructor(java.lang.String)} to set the name in a
+     * constructor since this method passes this Profile object to an object
+     * excepting a completely constructed Profile.
+     *
+     * @param name the new name
+     */
     public void setName(String name) {
         String oldName = this.name;
         this.name = name;
@@ -126,10 +155,23 @@ public class Profile implements Comparable<Profile> {
     }
 
     /**
+     * Set the name for this profile while constructing the profile.
+     * <p>
+     * Overriding classing must use this method to set the name in a constructor
+     * since this method passes this Profile object to an object excepting a
+     * completely constructed Profile.
+     *
+     * @param name the new name
+     */
+    protected final void setNameInConstructor(String name) {
+        this.name = name;
+    }
+
+    /**
      * @return the id
      */
-    public @Nonnull
-    String getId() {
+    @Nonnull
+    public String getId() {
         return id;
     }
 

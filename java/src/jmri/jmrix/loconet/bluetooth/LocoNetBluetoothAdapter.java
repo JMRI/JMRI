@@ -1,4 +1,3 @@
-// LocoNetBluetoothAdapter.java
 package jmri.jmrix.loconet.bluetooth;
 
 import java.io.DataInputStream;
@@ -44,6 +43,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     Vector<String> portNameVector = null;
     
+    @Override
     public Vector<String> getPortNames() {
         portNameVector = new Vector<String>();
         try {
@@ -61,6 +61,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         return portNameVector;
     }
     
+    @Override
     public String openPort(String portName, String appName) {
         int[] responseCode = new int[] { -1 };
         Exception[] exception = new Exception[] { null };

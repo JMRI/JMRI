@@ -8,20 +8,23 @@ import org.junit.Assert;
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppLightTest extends jmri.implementation.AbstractLightTest {
+public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 
+    @Override
     public int numListeners() {
         return xnis.numListeners();
     }
 
     DCCppInterfaceScaffold xnis;
 
+    @Override
     public void checkOnMsgSent() {
         Assert.assertEquals("ON message", "a 5 0 1",
                 xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
         Assert.assertEquals("ON state", jmri.Light.ON, t.getState());
     }
 
+    @Override
     public void checkOffMsgSent() {
         Assert.assertEquals("OFF message", "a 5 0 0",
                 xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
@@ -34,6 +37,7 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTest {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface
@@ -43,6 +47,7 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTest {
         t = new DCCppLight(xnis, xlm, "DCCppL21");
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

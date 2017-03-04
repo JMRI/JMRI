@@ -56,6 +56,7 @@ class IntTrigger extends Trigger implements PropertyChangeListener {
         return (compare_type);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         int next;
         boolean compare = false;

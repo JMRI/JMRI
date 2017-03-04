@@ -87,7 +87,7 @@
       <p>Use of WindowInterface to create subwindows, so as to put
       them in the right place.</p>
 
-      <p>(See the JavaDocs in that package, which are pretty
+      <p>(See the Javadocs in that package, which are pretty
       good)</p>
 
       <p>JmriJFrame is in the wrong place for now.</p>

@@ -1,4 +1,3 @@
-// TrainsScheduleTableFrame.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Color;
@@ -46,11 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    // public static SwingShutDownTask trainDirtyTask;
-
-    public static final String NAME = Bundle.getMessage("Name"); // Sort by choices
-    public static final String TIME = Bundle.getMessage("Time");
-
     TrainManager trainManager = TrainManager.instance();
     TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
     LocationManager locationManager = LocationManager.instance();
@@ -63,8 +57,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JLabel textSort = new JLabel(Bundle.getMessage("SortBy"));
 
     // radio buttons
-    JRadioButton sortByName = new JRadioButton(NAME);
-    JRadioButton sortByTime = new JRadioButton(TIME);
+    JRadioButton sortByName = new JRadioButton(Bundle.getMessage("Name"));
+    JRadioButton sortByTime = new JRadioButton(Bundle.getMessage("Time"));
 
     JRadioButton noneButton = new JRadioButton(Bundle.getMessage("None"));
 
@@ -440,21 +434,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             printButton.setToolTipText(Bundle.getMessage("PrintSelectedTip"));
         }
     }
-
-//    private void buildSwitchList() {
-//        TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
-//        for (Location location : locationManager.getLocationsByNameList()) {
-//            if (location.isSwitchListEnabled()) {
-//                trainSwitchLists.buildSwitchList(location);
-//                // // print or print changes
-//                if (Setup.isSwitchListRealTime() && !location.getStatus().equals(Location.PRINTED)) {
-//                    trainSwitchLists.printSwitchList(location, trainManager.isPrintPreviewEnabled());
-//                }
-//            }
-//        }
-//        // set trains switch lists printed
-//        trainManager.setTrainsSwitchListStatus(Train.PRINTED);
-//    }
 
     private void updateSwitchListButton() {
         log.debug("update switch list button");

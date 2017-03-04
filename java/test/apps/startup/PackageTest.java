@@ -8,7 +8,21 @@ import org.junit.runners.Suite;
    apps.startup.configurexml.PackageTest.class,
    BundleTest.class,
    AbstractStartupModelTest.class,
-   StartupPauseModelTest.class
+   StartupPauseModelTest.class,
+   AbstractActionModelTest.class,
+   CreateButtonModelFactoryTest.class,
+   PerformActionModelFactoryTest.class,
+   PerformFileModelFactoryTest.class,
+   PerformScriptModelFactoryTest.class,
+   ScriptButtonModelFactoryTest.class,
+   ScriptButtonModelTest.class,
+   StartupActionModelUtilTest.class,
+   StartupActionsPreferencesPanelTest.class,
+   StartupModelCellEditorTest.class,
+   StartupModelCellRendererTest.class,
+   StartupPauseFactoryTest.class,
+   TriggerRouteModelFactoryTest.class,
+   TriggerRouteModelTest.class,
 })
 /**
  * Tests for the apps.startup.configurexml package.

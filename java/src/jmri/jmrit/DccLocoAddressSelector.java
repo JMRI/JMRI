@@ -167,6 +167,7 @@ public class DccLocoAddressSelector extends JPanel {
 
         p.addComponentListener(
                 new ComponentAdapter() {
+                    @Override
                     public void componentResized(ComponentEvent e) {
                         changeFontSizes();
                     }
@@ -217,6 +218,7 @@ public class DccLocoAddressSelector extends JPanel {
      * Provide a common setEnable call for the GUI components in the
      * selector
      */
+    @Override
     public void setEnabled(boolean e) {
         text.setEditable(e);
         text.setEnabled(e);

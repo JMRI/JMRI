@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.After;
 import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import java.util.ResourceBundle;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.LI101Action class
@@ -46,6 +45,7 @@ public class LI101ActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LI101Frame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     @Before

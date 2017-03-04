@@ -32,14 +32,17 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
      * Returns the number of rows to be displayed. This can vary depending on
      * what has been seen
      */
+    @Override
     public int getRowCount() {
         return keys.size();
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ADDRESSCOLUMN:
@@ -55,6 +58,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ADDRESSCOLUMN:
@@ -68,6 +72,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case MONITORBUTTONCOLUMN:
@@ -80,6 +85,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     static final Boolean True = Boolean.valueOf(true);
     static final Boolean False = Boolean.valueOf(false);
 
+    @Override
     public Object getValueAt(int row, int col) {
 
         switch (col) {
@@ -112,6 +118,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case MONITORBUTTONCOLUMN:

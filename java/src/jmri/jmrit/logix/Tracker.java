@@ -304,7 +304,7 @@ public class Tracker {
         Iterator<Portal> iter = list.iterator();
         while (iter.hasNext()) {
             OBlock b = iter.next().getOpposingBlock(block);
-            if ((b.getState() & OBlock.DARK) !=0) {
+            if ((b.getState() & OBlock.UNDETECTED) !=0) {
                 _occupies.remove(b);                
                 removeName(b);
                 _lostRange.add(b);  // needed to find on recovery
@@ -395,7 +395,7 @@ public class Tracker {
             Iterator<OBlock> it = _headRange.iterator();
             while (it.hasNext()) {
                 OBlock b = it.next();
-                if ((b.getState() & (OBlock.DARK | OBlock.OCCUPIED)) != 0) {
+                if ((b.getState() & (OBlock.UNDETECTED | OBlock.OCCUPIED)) != 0) {
                     _lostRange.add(b);
                     if (log.isDebugEnabled()) {
                         log.debug("  _lostRange.add " + b.getDisplayName() + " value= " + b.getValue());
@@ -405,7 +405,7 @@ public class Tracker {
             it = _tailRange.iterator();
             while (it.hasNext()) {
                 OBlock b = it.next();
-                if ((b.getState() & (OBlock.DARK | OBlock.OCCUPIED)) != 0) {
+                if ((b.getState() & (OBlock.UNDETECTED | OBlock.OCCUPIED)) != 0) {
                     _lostRange.add(b);
                     if (log.isDebugEnabled()) {
                         log.debug("  _lostRange.add " + b.getDisplayName() + " value= " + b.getValue());
@@ -433,6 +433,7 @@ public class Tracker {
         return true;
     }
 
+    @Override
     public String toString() {
         return _trainName;
     }

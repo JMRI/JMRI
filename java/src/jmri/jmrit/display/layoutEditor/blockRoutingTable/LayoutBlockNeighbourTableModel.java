@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import org.slf4j.Logger;
@@ -15,13 +14,6 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4104722631566472444L;
-
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     public static final int NEIGHBOURCOL = 0;
     static final int DIRECTIONCOL = 1;
@@ -39,10 +31,12 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         lBlock.addPropertyChangeListener(this);
     }
 
+    @Override
     public int getRowCount() {
         return lBlock.getNumberOfNeighbours();
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOL;
     }
@@ -83,6 +77,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
         return false;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new NamedBean is available in the manager
@@ -106,6 +101,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     /**
      * Provides the empty String if attribute doesn't exist.
      */
+    @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         if (lBlock == null) {

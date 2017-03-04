@@ -33,6 +33,7 @@ public class SensorGroupConditional extends DefaultConditional
     }
 
     @SuppressWarnings("null")
+    @Override
     public int calculate(boolean enabled, PropertyChangeEvent evt) {
         int currentState = super.calculate(false, evt);
         if (!enabled || evt == null) {

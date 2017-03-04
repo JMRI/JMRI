@@ -97,6 +97,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Tells which managers this provides by class
      */
     @SuppressWarnings("deprecation")
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -142,6 +143,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide manager by class
      */
     @SuppressWarnings({"unchecked", "deprecation"})
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -257,10 +259,12 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return consistManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
     }
 
+    @Override
     public void dispose() {
         nceTrafficController = null;
         InstanceManager.deregister(this, NceSystemConnectionMemo.class);

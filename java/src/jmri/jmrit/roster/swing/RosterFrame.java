@@ -25,7 +25,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.help.SwingHelpUtilities;
 import javax.imageio.ImageIO;
@@ -363,11 +365,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         updateProgrammerStatus();
         ConnectionStatus.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
             if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
+                log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
                 updateProgrammerStatus();
             }
         });
         InstanceManager.addPropertyChangeListener((PropertyChangeEvent e) -> {
             if (e.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ProgrammerManager.class))) {
+                log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
                 updateProgrammerStatus();
             }
         });
@@ -484,7 +488,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         //Set all the sort and width details of the table first.
         String rostertableref = getWindowFrameRef() + ":roster";
         rtable.getTable().setName(rostertableref);
-        
+
         // Allow only one column to be sorted at a time - 
         // Java allows multiple column sorting, but to effectly persist that, we
         // need to be intelligent about which columns can be meaningfully sorted
@@ -526,12 +530,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
         } catch (RuntimeException e) {
-            try {
-                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time"));
-            } catch (RuntimeException ex) {
-                clickDelay = 500;
-                log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
-            }
+            clickDelay = 500;
+            log.debug("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
         }
 
         // assemble roster/groups splitpane
@@ -717,13 +717,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return getProperty(value);
     }
 
-    // cache selectedRosterEntries so that multiple calls to this
-    // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
-            justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
-        return rtable.getSelectedRosterEntries();
+        RosterEntry[] entries = rtable.getSelectedRosterEntries();
+        return Arrays.copyOf(entries, entries.length);
     }
 
     @Override
@@ -787,16 +784,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
-        try {
-            // create menu and standard items
-            JMenu helpMenu = HelpUtil.makeHelpMenu("package.apps.gui3.dp3.DecoderPro3", true);
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-            // use as main help menu
-            menuBar.add(helpMenu);
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help: " + e3);
-        }
+        // create menu and standard items
+        JMenu helpMenu = HelpUtil.makeHelpMenu("package.apps.gui3.dp3.DecoderPro3", true);
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        // use as main help menu
+        menuBar.add(helpMenu);
     }
 
     protected void hideGroups() {
@@ -1220,7 +1213,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             rtable.getTable().changeSelection(row, 0, false, false);
         }
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem = new JMenuItem("Program");
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("Program"));
         menuItem.addActionListener((ActionEvent e1) -> {
             startProgrammer(null, re, programmer1);
         });
@@ -1232,7 +1225,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         group.add(contextService);
         group.add(contextOps);
         group.add(contextEdit);
-        JMenu progMenu = new JMenu("Programmer type");
+        JMenu progMenu = new JMenu(Bundle.getMessage("ProgrammerType"));
         contextService.addActionListener((ActionEvent e1) -> {
             service.setSelected(true);
             updateProgMode();
@@ -1257,7 +1250,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         progMenu.add(contextEdit);
         popupMenu.add(progMenu);
         popupMenu.addSeparator();
-        menuItem = new JMenuItem("Labels and Media");
+        menuItem = new JMenuItem(Bundle.getMessage("LabelsAndMedia"));
         menuItem.addActionListener((ActionEvent e1) -> {
             editMediaButton();
         });
@@ -1265,7 +1258,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
-        menuItem = new JMenuItem("Throttle");
+        menuItem = new JMenuItem(Bundle.getMessage("Throttle"));
         menuItem.addActionListener((ActionEvent e1) -> {
             ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
             tf.toFront();
@@ -1277,7 +1270,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
-        menuItem = new JMenuItem("Duplicate");
+        menuItem = new JMenuItem(Bundle.getMessage("Duplicateddd"));
         menuItem.addActionListener((ActionEvent e1) -> {
             copyLoco();
         });
@@ -1433,7 +1426,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             locoImage.setImagePath(null);
         } else {
             filename.setText(re.getFileName());
-            dateUpdated.setText(re.getDateUpdated());
+            dateUpdated.setText((re.getDateModified() != null)
+                    ? DateFormat.getDateTimeInstance().format(re.getDateModified())
+                    : re.getDateUpdated());
             decoderModel.setText(re.getDecoderModel());
             decoderFamily.setText(re.getDecoderFamily());
             dccAddress.setText(re.getDccAddress());
@@ -1475,6 +1470,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * available.
      */
     protected void updateProgrammerStatus() {
+        log.debug("Updating Programmer Status");
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
 
@@ -1482,8 +1478,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         GlobalProgrammerManager gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
+            log.debug("GlobalProgrammerManager found of class {} name {} ", gpm.getClass(), serviceModeProgrammerName);
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                log.debug("Checking connection name {}", connection.getConnectionName());
                 if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
+                    log.debug("Connection found for GlobalProgrammermanager");
                     serModeProCon = connection;
                 }
             }
@@ -1493,21 +1492,45 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         AddressedProgrammerManager apm = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
+            log.debug("AddressedProgrammerManager found of class {} name {} ", apm.getClass(), opsModeProgrammerName);
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                log.debug("Checking connection name {}", connection.getConnectionName());
                 if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
+                    log.debug("Connection found for AddressedProgrammermanager");
                     opsModeProCon = connection;
                 }
             }
         }
 
         if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(), serModeProCon.getInfo())) {
+                log.debug("GPM Connection online");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
+                log.debug("GPM Connection onffline");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOffline", serModeProCon.getConnectionName()));
+                serviceModeProgrammerLabel.setForeground(Color.red);
+            }
+            if (oldServMode == null) {
+                contextService.setEnabled(true);
+                contextService.setVisible(true);
+                service.setEnabled(true);
+                service.setVisible(true);
+                firePropertyChange("setprogservice", "setEnabled", true);
+            }
+        } else if (gpm != null && gpm.isGlobalProgrammerAvailable()) {
+            if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
+                log.debug("GPM Connection online");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOnline", gpm.getUserName()));
+                serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("GPM Connection onffline");
+                serviceModeProgrammerLabel.setText(
+                        Bundle.getMessage("ServiceModeProgOffline", gpm.getUserName()));
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldServMode == null) {
@@ -1535,13 +1558,34 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(), opsModeProCon.getInfo())) {
+                log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
+                log.debug("Ops Mode Connection offline");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOffline", opsModeProCon.getConnectionName()));
+                operationsModeProgrammerLabel.setForeground(Color.red);
+            }
+            if (oldOpsMode == null) {
+                contextOps.setEnabled(true);
+                contextOps.setVisible(true);
+                ops.setEnabled(true);
+                ops.setVisible(true);
+                firePropertyChange("setprogops", "setEnabled", true);
+            }
+        } else if (apm != null && apm.isAddressedModePossible()) {
+            if (ConnectionStatus.instance().isSystemOk(apm.getUserName())) {
+                log.debug("Ops Mode Connection online");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOnline", apm.getUserName()));
+                operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
+            } else {
+                log.debug("Ops Mode Connection offline");
+                operationsModeProgrammerLabel.setText(
+                        Bundle.getMessage("OpsModeProgOffline", apm.getUserName()));
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldOpsMode == null) {

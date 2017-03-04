@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
 import jmri.jmrix.can.TrafficController;
@@ -30,6 +29,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
      * set up all of the other objects to operate with a CAN RS adapter
      * connected to this port
      */
+    @Override
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection

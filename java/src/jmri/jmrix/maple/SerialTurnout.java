@@ -1,4 +1,3 @@
-// SerialTurnout.java
 package jmri.jmrix.maple;
 
 import jmri.Turnout;
@@ -54,11 +53,6 @@ import org.slf4j.LoggerFactory;
 public class SerialTurnout extends AbstractTurnout {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -4128349882207745822L;
-
-    /**
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
@@ -76,6 +70,7 @@ public class SerialTurnout extends AbstractTurnout {
      *
      * @param newState desired new state, one of the Turnout class constants
      */
+    @Override
     protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -104,10 +99,12 @@ public class SerialTurnout extends AbstractTurnout {
     /**
      * Turnouts do support inversion
      */
+    @Override
     public boolean canInvert() {
         return true;
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
@@ -215,5 +212,3 @@ public class SerialTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
-
-/* @(#)SerialTurnout.java */

@@ -1,8 +1,7 @@
 package jmri.jmrit.logix;
 
-import java.io.File;
+import jmri.InstanceManager;
 import jmri.managers.AbstractManager;
-import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +27,6 @@ import org.slf4j.LoggerFactory;
 public class WarrantManager extends AbstractManager
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
-    static private WarrantPreferences warrantPreferences = null;
-
     public WarrantManager() {
         super();
     }
@@ -39,10 +36,12 @@ public class WarrantManager extends AbstractManager
         return jmri.Manager.WARRANTS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'W';
     }
@@ -51,9 +50,13 @@ public class WarrantManager extends AbstractManager
      * Method to create a new Warrant if it does not exist Returns null if a
      * Warrant with the same systemName or userName already exists, or if there
      * is trouble creating a new Warrant.
+     *
+     * @param systemName the system name
+     * @param userName   the user name
+     * @return an existing warrant if found or a new warrant
      */
-    public Warrant createNewWarrant(String systemName, String userName) {
-        log.debug("createNewWarrant "+systemName);
+    public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
+        log.debug("createNewWarrant " + systemName + " SCWa="+SCWa);
         // Check that Warrant does not already exist
         Warrant r;
         if (userName != null && userName.trim().length() > 0) {
@@ -72,7 +75,11 @@ public class WarrantManager extends AbstractManager
             return null;
         }
         // Warrant does not exist, create a new Warrant
-        r = new Warrant(sName, userName);
+        if (SCWa) {
+            r = new SCWarrant(sName, userName, TTP);
+        } else {
+            r = new Warrant(sName, userName);
+        }
         // save in the maps
         register(r);
         return r;
@@ -82,6 +89,9 @@ public class WarrantManager extends AbstractManager
      * Method to get an existing Warrant. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
+     *
+     * @param name the system name or user name
+     * @return the warrant if found or null
      */
     public Warrant getWarrant(String name) {
         Warrant r = getByUserName(name);
@@ -115,29 +125,43 @@ public class WarrantManager extends AbstractManager
             w = getBySystemName(name);
         }
         if (w == null) {
-            w = createNewWarrant(name, null);
+            w = createNewWarrant(name, null, false, 0);
         }
         return w;
     }
 
-    static WarrantManager _instance = null;
-
-    static public WarrantManager instance() {
-        if (_instance == null) {
-            _instance = new WarrantManager();
-        }
-        return (_instance);
+    /**
+     * Get the default WarrantManager.
+     *
+     * @return the default WarrantManager, creating it if necessary
+     */
+    public static WarrantManager getDefault() {
+        return InstanceManager.getOptionalDefault(WarrantManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(WarrantManager.class, new WarrantManager());
+        });
     }
 
+    /**
+     * Get the default WarrantManager.
+     *
+     * @return the default WarrantManager, creating it if necessary
+     * @deprecated since 4.7.1; use {@link #getDefault()} instead
+     */
+    @Deprecated
+    static public WarrantManager instance() {
+        return getDefault();
+    }
+
+    /**
+     * Get the default warrant preferences.
+     *
+     * @return the default preferences, created if necessary
+     * @deprecated since 4.7.1; use
+     * {@link jmri.jmrit.logix.WarrantPreferences#getDefault()} instead
+     */
+    @Deprecated
     static public WarrantPreferences warrantPreferencesInstance() {
-        if (warrantPreferences == null) {
-            if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.logix.WarrantPreferences.class) == null) {
-                jmri.InstanceManager.store(new jmri.jmrit.logix.WarrantPreferences(FileUtil.getUserFilesPath()
-                        + "signal" + File.separator + "WarrantPreferences.xml"), jmri.jmrit.logix.WarrantPreferences.class);
-            }
-            warrantPreferences = jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantPreferences.class);
-        }
-        return warrantPreferences;
+        return WarrantPreferences.getDefault();
     }
 
     @Override

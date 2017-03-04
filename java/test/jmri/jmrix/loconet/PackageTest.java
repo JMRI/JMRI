@@ -42,8 +42,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(LnPacketizerTest.class));
         suite.addTest(new TestSuite(LocoNetThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetConsistTest.class));
-        suite.addTest(LnPowerManagerTest.suite());
-        suite.addTest(LnTurnoutTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LnPowerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(LnTurnoutManagerTest.class));
         suite.addTest(LnReporterTest.suite());
         suite.addTest(LnSensorTest.suite());
@@ -79,6 +79,13 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LnReporterManagerTest.class));
         suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.locogen.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LnNetworkPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetSystemConnectionMemoTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetMessageExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConstantsTest.class));
         return suite;
     }
 

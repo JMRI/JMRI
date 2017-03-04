@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 /**
@@ -24,10 +23,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "Intellibox-II/IB-Com (USB)";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new UhlenbrockAdapter();

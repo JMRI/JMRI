@@ -163,10 +163,12 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         }
     }
 
+    @Override
     public void message(SRCPMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(SRCPReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -212,6 +214,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         }
     }
 
+    @Override
     synchronized public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
             log.debug("reply called with simpleNode " + n.jjtGetValue());
@@ -224,6 +227,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -274,4 +278,4 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 }
 
 
-/* @(#)SRCPProgrammer.java */
+

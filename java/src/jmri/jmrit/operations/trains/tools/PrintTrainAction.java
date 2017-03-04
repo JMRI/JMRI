@@ -1,4 +1,3 @@
-// PrintTrainAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -82,24 +81,24 @@ public class PrintTrainAction extends AbstractAction {
     protected void printTrain(HardcopyWriter writer, Train train) {
         try {
             String s = Bundle.getMessage("Name") + ": " + train.getName() + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = Bundle.getMessage("Description") + ": " + train.getDescription() + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = Bundle.getMessage("Departs") + ": " + train.getTrainDepartsName() + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = Bundle.getMessage("DepartTime") + ": " + train.getDepartureTime() + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = Bundle.getMessage("Terminates") + ": " + train.getTrainTerminatesName() + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             s = Bundle.getMessage("Route") + ": " + train.getTrainRouteName() + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             Route route = train.getRoute();
             if (route != null) {
                 for (RouteLocation rl : route.getLocationsBySequenceList()) {
                     s = TAB + rl.getName() + NEW_LINE;
-                    writer.write(s, 0, s.length());
+                    writer.write(s);
                 }
             }
             if (!train.getComment().equals(Train.NONE)) {

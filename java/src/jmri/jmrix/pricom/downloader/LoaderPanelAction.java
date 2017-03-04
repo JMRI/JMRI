@@ -22,6 +22,7 @@ public class LoaderPanelAction extends AbstractAction {
         this(res.getString("TitleLoader"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a PowerPanelFrame
         LoaderFrame f = new LoaderFrame();

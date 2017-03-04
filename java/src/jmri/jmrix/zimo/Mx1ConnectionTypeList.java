@@ -1,4 +1,3 @@
-// Mx1ConnectionTypeList.java
 package jmri.jmrix.zimo;
 
 /**

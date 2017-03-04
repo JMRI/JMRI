@@ -60,6 +60,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         this.jt = jt;
     }
 
+    @Override
     public void dispose() {
         jt = null;
         InstanceManager.deregister(this, JMRIClientSystemConnectionMemo.class);
@@ -197,6 +198,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
     private String transmitPrefix = null;
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
@@ -253,4 +255,4 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
 }
-/* @(#)JMRIClientSystemConnectionMemo.java */
+

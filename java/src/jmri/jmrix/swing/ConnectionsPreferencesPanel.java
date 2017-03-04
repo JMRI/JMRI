@@ -43,7 +43,6 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // for some items // NOI18N
     private static final Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanel.class);
-    private static final long serialVersionUID = 3007932795460089101L;
 
     private final ImageIcon deleteIcon;
     private final ImageIcon deleteIconRollOver;

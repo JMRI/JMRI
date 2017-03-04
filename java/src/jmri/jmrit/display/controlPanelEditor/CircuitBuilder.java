@@ -173,6 +173,7 @@ public class CircuitBuilder {
         JMenu blockNeeds = new JMenu(Bundle.getMessage("blockNeedsIconsItem"));
         _todoMenu.add(blockNeeds);
         ActionListener editCircuitAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 String sysName = event.getActionCommand();
                 editCircuitError(sysName);
@@ -217,6 +218,7 @@ public class CircuitBuilder {
         if (_unconvertedTrack.size() > 0) {
             iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedConversionItem"));
             iconNeeds.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     ArrayList<Positionable> group = new ArrayList<Positionable>();
                     for (int i = 0; i < _unconvertedTrack.size(); i++) {
@@ -233,6 +235,7 @@ public class CircuitBuilder {
         if (_darkTrack.size() > 0) {
             iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedsBlocksItem"));
             iconNeeds.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     ArrayList<Positionable> group = new ArrayList<Positionable>();
                     for (int i = 0; i < _darkTrack.size(); i++) {
@@ -253,6 +256,7 @@ public class CircuitBuilder {
         blockNeeds = new JMenu(Bundle.getMessage("portalsMisplaced"));
         _todoMenu.add(blockNeeds);
         ActionListener portalCircuitAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 String portalName = event.getActionCommand();
                 portalCircuitError(portalName);
@@ -279,6 +283,7 @@ public class CircuitBuilder {
         JMenuItem pError = new JMenuItem(Bundle.getMessage("CheckPortalPaths"));
         _todoMenu.add(pError);
         pError.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 errorCheck();
             }
@@ -306,6 +311,7 @@ public class CircuitBuilder {
         JMenuItem circuitItem = new JMenuItem(Bundle.getMessage("newCircuitItem"));
         _circuitMenu.add(circuitItem);
         circuitItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newCircuit();
             }
@@ -322,21 +328,25 @@ public class CircuitBuilder {
 
         if (_circuitMap.size() > 0) {
             editCircuitItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     editCircuit("editCircuitItem");
                 }
             });
             editPortalsItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     editPortals("editPortalsItem");
                 }
             });
             editCircuitPathsItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     editCircuitPaths("editCircuitPathsItem");
                 }
             });
             editDirectionItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     editPortalDirection("editDirectionItem");
                 }
@@ -344,6 +354,7 @@ public class CircuitBuilder {
             // delay error detection until ControlPanelEditor is fully loaded
             JMenuItem mi = new JMenuItem(Bundle.getMessage("circuitErrorsItem"));
             mi.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     checkCircuits();
                 }
@@ -532,7 +543,7 @@ public class CircuitBuilder {
         if (_editCircuitFrame != null || _editPathsFrame != null || _editPortalFrame != null || _editDirectionFrame != null) {
             // Already editing a circuit, ask for completion of that edit
             JOptionPane.showMessageDialog(_editCircuitFrame,
-                    Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("errorTitle"),
+                    Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
             if (_editPathsFrame != null) {
                 _editPathsFrame.toFront();
@@ -643,6 +654,7 @@ public class CircuitBuilder {
         if (add) {
             doneButton = new JButton(Bundle.getMessage("ButtonAddCircuit"));
             doneButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     if (doAddAction()) {
                         _dialog.dispose();
@@ -652,6 +664,7 @@ public class CircuitBuilder {
         } else {
             doneButton = new JButton(Bundle.getMessage("ButtonOpenCircuit"));
             doneButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     if (doOpenAction()) {
                         _dialog.dispose();
@@ -663,6 +676,7 @@ public class CircuitBuilder {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 _sysNameBox.setText("");
                 _currentBlock = null;
@@ -715,6 +729,7 @@ public class CircuitBuilder {
     private boolean doOpenAction() {
         int row = _oblockModel.getTable().getSelectedRow();
         if (row >= 0) {
+            row = _oblockModel.getTable().convertRowIndexToModel(row);
             _currentBlock = (OBlock) _oblockModel.getBeanAt(row);
             return true;
         }
@@ -1179,6 +1194,7 @@ public class CircuitBuilder {
             makePaletteFrame("IndicatorTO");
             _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
             ActionListener updateAction = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     convertTO();
                 }
@@ -1189,6 +1205,7 @@ public class CircuitBuilder {
             makePaletteFrame("IndicatorTrack");
             _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
             ActionListener updateAction = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     convertSeg();
                 }
@@ -1216,10 +1233,6 @@ public class CircuitBuilder {
      */
     static class convertFrame extends JmriJFrame {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6547026117570145767L;
         JDialog _dialog;
 
         convertFrame(JDialog dialog) {
@@ -1227,6 +1240,7 @@ public class CircuitBuilder {
             _dialog = dialog;
         }
 
+        @Override
         public void pack() {
             super.pack();
             _dialog.pack();
@@ -1278,10 +1292,17 @@ public class CircuitBuilder {
         finishConvert(t);
     }
 
+    /*
+     * Replace references to _oldIcon with pos 
+     */
     private void finishConvert(Positionable pos) {
+        ArrayList<Positionable> selectionGroup = _editor.getSelectionGroup();
+        selectionGroup.remove(_oldIcon);
+        selectionGroup.add(pos);
         _circuitIcons.remove(_oldIcon);
-        _oldIcon.remove();
+        _circuitIcons.add(pos);
         pos.setLocation(_oldIcon.getLocation());
+        _oldIcon.remove();
         _editor.putItem(pos);
         _circuitIcons.add(pos);
         pos.updateSize();
@@ -1541,7 +1562,7 @@ public class CircuitBuilder {
                     selects[i++] = iter.next().getNameString();
                 }
                 Object select = JOptionPane.showInputDialog(_editor, Bundle.getMessage("multipleSelections"),
-                        Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE,
+                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE,
                         null, selects, null);
                 if (select != null) {
                     iter = tracks.iterator();

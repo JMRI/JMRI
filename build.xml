@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2016                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2017                                      -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -24,14 +24,14 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2016"/>
+    <property name="jmri.copyright.year" value="1997-2017"/>
 
     <property environment="env"/>
 
     <!-- local.properties file      (not an error if doesn't exist)                      -->
     <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
-    <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
+    <!--    # Your SourceForge ID (used for Javadocs, distribution) if different         -->
     <!--    sourceforge.userid=                                                          -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
@@ -963,7 +963,7 @@
     <!-- ============================================================================= -->
 
 
-    <!-- Force false language/country to check I8N -->
+    <!-- Force false language/country to check I18N -->
     <target name="locale"
             description="check DecoderPro I8N"
             depends="debug, runtime-library-selection">
@@ -1117,22 +1117,14 @@
     </target>
 
     <!-- check for bad line ends, e.g. not ready to go into Git -->
-    <!-- May not (probably will not) work on Windows -->
 
     <target name="checklineends" description="check text files for proper LF line ends (Linux, Mac only)">
-      <exec executable="sh" outputproperty="checklineeds.files">
-        <arg value="-c" />
-        <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
-      </exec>
-
-      <fail message="${checklineeds.files}">
-        <condition>
-          <length string="${checklineeds.files}" when="greater" length="0" />
-        </condition>
-      </fail>
+        <property name="test.includes" value="jmri.util.FileLineEndingsTest" />
+        <antcall target="test-single" />
     </target>
 
     <!-- end of file-checking targets -->
+    <!-- should match list in jmri.util.FileEncodingsTest -->
 
     <target name="fixlineends" description="convert specific files to LF line ends">
         <fixcrlf eol="unix" srcdir="." encoding="UTF-8" includes="
@@ -1251,7 +1243,7 @@
 
           <check>
               <rule> 
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
               <rule element="PACKAGE">
@@ -1268,7 +1260,6 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1291,7 +1282,6 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1318,7 +1308,6 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1412,7 +1401,7 @@
 
           <check>
               <rule> 
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
               <rule element="PACKAGE">
@@ -1438,7 +1427,7 @@
 
           <check>
               <rule> 
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.28"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
               </rule>
               <rule element="PACKAGE">
@@ -1545,7 +1534,7 @@
         </jar>
     </target>
 
-    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs">
+    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1566,7 +1555,9 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="4540"/><!-- change from default 100 warnings -->
+            <arg value="3850"/><!-- change from default 100 warnings -->
+            <arg value="-quiet"/>
+            <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1613,7 +1604,7 @@
   <!-- use of the public option in the main task definition, and -->
   <!-- the execution of "dot" at the bottom.                     -->
   <!-- Requires Graphviz from http://www.graphviz.org            -->
-    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs with UML">
+    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs with UML">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1636,6 +1627,8 @@
             <arg value="500"/><!-- change from default 100 warnings -->
             <arg value="-Xmaxerrs"/>
             <arg value="500"/><!-- change from default 100 errors -->
+            <arg value="-quiet"/>
+            <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1707,7 +1700,7 @@
         </plantuml>
     </target>
 
-    <target name="uploadjavadoc" description="upload existing JavaDocs to jmri.org without recreating">
+    <target name="uploadjavadoc" description="upload existing Javadocs to jmri.org without recreating">
         <exec executable="rsync">
             <arg value="-avz"/>
             <arg value="--delete"/>
@@ -2168,7 +2161,6 @@
     <!-- CI Test runners -->
     <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <antcall target="checklineends" />
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
@@ -2180,7 +2172,6 @@
 
     <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <antcall target="checklineends" />
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />

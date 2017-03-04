@@ -25,18 +25,18 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.srcp.SRCPTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(SRCPReplyTest.class));
-        suite.addTest(new TestSuite(SRCPMessageTest.class));
-        suite.addTest(new TestSuite(SRCPTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPReplyTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTrafficControllerTest.class));
         suite.addTest(new TestSuite(SRCPSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(SRCPBusConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(SRCPTurnoutTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorManagerTest.class));
-        suite.addTest(new TestSuite(SRCPSensorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPSensorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPThrottleManagerTest.class));
         suite.addTest(new TestSuite(SRCPThrottleTest.class));
-        suite.addTest(new TestSuite(SRCPPowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPPowerManagerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerTest.class));
         suite.addTest(new TestSuite(SRCPProgrammerManagerTest.class));
         suite.addTest(new TestSuite(SRCPClockControlTest.class));
@@ -44,6 +44,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.networkdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.srcp.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SRCPConnectionTypeListTest.class));
 
         return suite;
     }

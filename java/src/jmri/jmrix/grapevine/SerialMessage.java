@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.grapevine;
 
 import jmri.util.StringUtil;
@@ -50,6 +49,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // no replies expected, don't wait for them
+    @Override
     public boolean replyExpected() {
         return false;
     }
@@ -263,4 +263,4 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
 }
 
-/* @(#)SerialMessage.java */
+

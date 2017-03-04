@@ -23,17 +23,20 @@ public class DCCppProgrammerManager extends DefaultProgrammerManager {
         tc = memo.getDCCppTrafficController();
     }
 
+    @Override
     public boolean isAddressedModePossible() {
         return tc.getCommandStation().isOpsModePossible();
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new DCCppOpsModeProgrammer(pAddress, tc);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }
 
-/* @(#)DefaultProgrammerManager.java */
+

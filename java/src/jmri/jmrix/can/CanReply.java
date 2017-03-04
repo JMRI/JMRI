@@ -1,6 +1,6 @@
-// CanReply.java
 package jmri.jmrix.can;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRReply;
 
@@ -77,6 +77,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     /**
      * Hash on the header
      */
+    @Override
     public int hashCode() {
         return _header;
     }
@@ -84,6 +85,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     /**
      * Note that a CanMessage and a CanReply can be tested for equality
      */
+    @Override
     public boolean equals(Object a) {
         if (a == null) {
             return false;
@@ -108,23 +110,28 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         }
     }
 
+    @Override
     protected int skipPrefix(int index) {
         return index;
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    @Override
     public void setNumDataElements(int n) {
         _nDataChars = (n <= 8) ? n : 8;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
@@ -136,32 +143,38 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
     public int[] getData() {
         return _dataChars;
     }
 
     // CAN header
+    @Override
     public int getHeader() {
         return _header;
     }
 
+    @Override
     public void setHeader(int h) {
         _header = h;
     }
 
+    @Override
     public boolean isExtended() {
         return _isExtended;
     }
 
+    @Override
     public void setExtended(boolean b) {
         _isExtended = b;
     }
 
+    @Override
     public boolean isRtr() {
         return _isRtr;
     }
 
+    @Override
     public void setRtr(boolean b) {
         _isRtr = b;
     }
@@ -172,4 +185,4 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     boolean _isRtr;
 }
 
-/* @(#)CanReply.java */
+

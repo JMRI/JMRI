@@ -1,4 +1,3 @@
-// OpenLcbLocoAddress.java
 package jmri.jmrix.openlcb;
 
 import jmri.DccLocoAddress;
@@ -21,6 +20,7 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         this.node = node;
     }
 
+    @Override
     public boolean equals(Object a) {
         if (a == null) {
             return false;
@@ -33,6 +33,7 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         }
     }
 
+    @Override
     public int hashCode() {
         return node.hashCode();
     }
@@ -46,4 +47,4 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
 }
 
 
-/* @(#)OpenLcbLocoAddress.java */
+

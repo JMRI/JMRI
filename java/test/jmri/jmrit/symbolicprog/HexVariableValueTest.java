@@ -12,9 +12,10 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2001
  */
-public class HexVariableValueTest extends VariableValueTest {
+public class HexVariableValueTest extends AbstractVariableValueTestBase {
 
-    // abstract members invoked by tests in parent VariableValueTest class
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
+    @Override
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
@@ -22,21 +23,25 @@ public class HexVariableValueTest extends VariableValueTest {
         return new HexVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
+    @Override
     void setValue(VariableValue var, String val) {
         String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
         ((JTextField) var.getCommonRep()).setText(hexval);
         ((JTextField) var.getCommonRep()).postActionEvent();
     }
 
+    @Override
     void setReadOnlyValue(VariableValue var, String val) {
         ((HexVariableValue) var).setValue(Integer.valueOf(val).intValue());
     }
 
+    @Override
     void checkValue(VariableValue var, String comment, String val) {
         String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
         Assert.assertEquals(comment, hexval, ((JTextField) var.getCommonRep()).getText());
     }
 
+    @Override
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
         String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
         Assert.assertEquals(comment, hexval, ((JLabel) var.getCommonRep()).getText());

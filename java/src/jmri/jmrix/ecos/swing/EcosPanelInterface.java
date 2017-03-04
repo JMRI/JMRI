@@ -1,4 +1,3 @@
-// EcosPanelInterface.java
 package jmri.jmrix.ecos.swing;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;

@@ -20,14 +20,17 @@ public class DCCppSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.dccpp.configurexml.DCCppSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
+    @Override
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual sensors
         return loadSensors(sensors);

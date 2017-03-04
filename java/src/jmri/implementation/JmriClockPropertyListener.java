@@ -78,6 +78,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
      * This method is invoked when the minute listener fires.
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Date currentTime = _fastClock.getTime();
         //int oldMinutes = _currentMinutes;

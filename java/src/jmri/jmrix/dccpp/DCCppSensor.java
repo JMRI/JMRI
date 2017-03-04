@@ -1,4 +1,3 @@
-// DCCppSensor.java
 package jmri.jmrix.dccpp;
 
 import jmri.Sensor;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
 public class DCCppSensor extends AbstractSensor implements DCCppListener {
 
     private boolean statusRequested = false;
-    private String prefix;
 
     private int address; // NOTE: For DCC++ this is the Base Station index #
     //private int baseaddress; /* The result of integer division of the 
@@ -56,18 +54,8 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         // store address
         systemName = id;
 	//prefix = jmri.InstanceManager.getDefault(jmri.jmrix.dccpp.DCCppSensorManager.class).getSystemPrefix();
-	// WARNING: This address assignment is brittle. If the user changes the System Name prefix
-	// it will fail.  Probably better to do a regex parse, or to look for the last instance of 'S'
-	// TODO: Fix this to be more robust.  And check the other things (T/O's, etc.) for the same bug
-        //address = Integer.parseInt(id.substring(6, id.length())); 
 	address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
-	log.debug("New sensor prefix {} address {}", prefix, address);
-        //        if (temp < 4) {
-//            // This address is in the lower nibble
-//            nibble = 0x00;
-//        } else {
-//            nibble = 0x10;
-//        }
+	log.debug("New sensor system name {} address {}", this.getSystemName(), address);
         if (log.isDebugEnabled()) {
             log.debug("Created Sensor " + systemName);
         }
@@ -80,6 +68,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     /**
      * request an update on status by sending a DCC++ message
      */
+    @Override
     public void requestUpdateFromLayout() {
 	// Yeah... this isn't really supported.  Yet.
 	//
@@ -103,8 +92,8 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     }
 
     /**
-     * initmessage is a package proteceted class which allows the Manger to send
-     * a feedback message at initilization without changing the state of the
+     * initmessage is a package protected class which allows the Manger to send
+     * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
      *
@@ -124,6 +113,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * directly)
      *
      */
+    @Override
     public synchronized void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -148,9 +138,9 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
 			  + " (Pin " + address + ")");
 	    }
 	    if (l.getSensorIsActive()) {
-		setOwnState(Sensor.ACTIVE);
+		setOwnState(_inverted ? Sensor.INACTIVE : Sensor.ACTIVE);
 	    } else if (l.getSensorIsInactive()){
-		setOwnState(Sensor.INACTIVE);
+		setOwnState(_inverted ? Sensor.ACTIVE : Sensor.INACTIVE);
 	    } else {
                 setOwnState(Sensor.UNKNOWN);
             }
@@ -158,17 +148,20 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         return;
     }
 
-    // listen for the messages to the LI100/LI101
+    // listen for the messages to the Base Station... but ignore them.
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -195,4 +188,4 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
 }
 
 
-/* @(#)DCCppSensor.java */
+

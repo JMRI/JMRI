@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.li100f;
 
 /**
@@ -28,10 +27,12 @@ public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnecti
         super();
     }
 
+    @Override
     public String name() {
         return "Lenz LI100F";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LI100Adapter();

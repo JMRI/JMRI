@@ -1,4 +1,3 @@
-// EcosLocoAddressManagerXml.java
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom2.Element;
@@ -18,6 +17,7 @@ public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.Abstra
     public EcosLocoAddressManagerXml() {
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -27,6 +27,7 @@ public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.Abstra
         return true;
     }
 
+    @Override
     public Element store(Object o) {
         return null;
     }

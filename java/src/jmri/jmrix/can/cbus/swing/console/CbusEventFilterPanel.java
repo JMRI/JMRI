@@ -127,6 +127,7 @@ public class CbusEventFilterPanel extends JPanel {
 
         // connect actions to buttons
         enableButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 enableButtonActionPerformed(e);
             }
@@ -134,6 +135,7 @@ public class CbusEventFilterPanel extends JPanel {
 
         // connect actions to buttons
         disableButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 disableButtonActionPerformed(e);
             }

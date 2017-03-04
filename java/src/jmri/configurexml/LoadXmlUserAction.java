@@ -54,9 +54,13 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
             setCurrentFile(null);
         }
     }
-    
+
     /**
      * Used by e.g. jmri.jmrit.mailreport.ReportPanel et al to know last load
+     *
+     * @return the last file loaded using this action; returns null if this
+     *         action was not called or if the last time this action was called,
+     *         no file was loaded
      */
     public static File getCurrentFile() {
         return currentFile;

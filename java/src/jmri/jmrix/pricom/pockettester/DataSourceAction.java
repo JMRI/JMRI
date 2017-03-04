@@ -26,6 +26,7 @@ public class DataSourceAction extends jmri.util.JmriJFrameAction {
      * Method to be overridden to make this work. Provide a completely qualified
      * class name, must be castable to JmriJFrame
      */
+    @Override
     public String getName() {
         return "jmri.jmrix.pricom.pockettester.DataSource";
     }

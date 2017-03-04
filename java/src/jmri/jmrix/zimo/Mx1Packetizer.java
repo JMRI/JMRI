@@ -2,6 +2,7 @@ package jmri.jmrix.zimo;
 
 import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
     }
 
     // The methods to implement the Mx1Interface
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
@@ -79,6 +81,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendMx1Message(Mx1Message m, Mx1Listener reply) {
         byte msg[];
         if (protocol) {
@@ -246,6 +249,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
             trafficController = lt;
         }
 
+        @Override
         public void run() {
             int opCode;
             if (protocol) {
@@ -307,6 +311,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             Mx1Message msgForLater = thisMsg;
                             Mx1Packetizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater, null);
                             }
@@ -314,7 +319,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         log.debug("schedule notify of incoming packet");
                         javax.swing.SwingUtilities.invokeLater(r);
 
-                    } // done with this one
+                    } // done with this one // done with this one
                     /*catch (java.io.EOFException e) {
                      // posted from idle port when enableReceiveTimeout used
                      log.debug("EOFException, is serial I/O using timeouts?");
@@ -364,6 +369,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 Mx1Message msgForLater = thisMsg;
                                 Mx1Packetizer myTC = thisTC;
 
+                                @Override
                                 public void run() {
                                     myTC.notify(msgForLater, null);
                                 }
@@ -371,7 +377,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             log.debug("schedule notify of incoming packet");
                             javax.swing.SwingUtilities.invokeLater(r);
                         }
-                    } // done with this one
+                    } // done with this one // done with this one
                     catch (java.io.EOFException e) {
                         // posted from idle port when enableReceiveTimeout used
                         log.debug("EOFException, is serial I/O using timeouts?");
@@ -397,6 +403,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
             Mx1Packetizer myTC = thisTC;
             Mx1Listener myListener = thisLst;
 
+            @Override
             public void run() {
                 myTC.notify(msgForLater, myListener);
             }
@@ -478,10 +485,11 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Captive class to handle transmission
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT",
             justification = "while loop controls access")
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
             while (true) {   // loop permanently
                 // any input?
@@ -543,6 +551,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
             trafficController = lt;
         }
 
+        @Override
         public void run() {
             while (true) {   // loop permanently
                 if (xmtPackets.isEmpty()) {

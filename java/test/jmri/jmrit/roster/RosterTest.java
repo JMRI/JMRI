@@ -23,6 +23,10 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Tests for the jmrit.roster.Roster class.
  *
+ * This separates tests of the DefaultRoster functionality from tests of Roster
+ * objects individually. Roster itself doesn't (yet) do go a good job of
+ * separating, those, so this is somewhat arbitrary.
+ *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
  */
 public class RosterTest {
@@ -198,18 +202,20 @@ public class RosterTest {
         File rosterDir = folder.newFolder();
         File backupDir = folder.newFolder();
         FileUtil.createDirectory(rosterDir);
-        Roster.getDefault().setRosterLocation(rosterDir.getAbsolutePath());
         File f = new File(rosterDir, "roster.xml");
-        // remove it if its there
-        f.delete();
-        // load a new one
+
+        // failure of test infrastructure if it exists already
+        Assert.assertTrue("test roster.xml should not exist in new folder", !f.exists());
+
+        // load a new one to ensure it exists
         String contents = "stuff" + "           ";
         PrintStream p = new PrintStream(new FileOutputStream(f));
         p.println(contents);
         p.close();
-        // delete previous backup file if there's one
+
         File bf = new File(rosterDir, "rosterBackupTest");
-        bf.delete();
+        // failure of test infrastructure if backup exists already
+        Assert.assertTrue("test backup file should not exist in new folder", !bf.exists());
 
         // now do the backup
         Roster r = new Roster() {
@@ -251,10 +257,11 @@ public class RosterTest {
         // create a test roster & store in file
         Roster r = createTestRoster();
         Assert.assertNotNull("exists", r);
-
+        // write it
+        r.writeFile(r.getRosterIndexPath());
         // create new roster & read
         Roster t = new Roster();
-        t.readFile(Roster.getDefault().getRosterIndexPath());
+        t.readFile(r.getRosterIndexPath());
 
         // check contents
         Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null, null).size());
@@ -310,6 +317,15 @@ public class RosterTest {
 
     }
 
+    @Test
+    public void testDefaultLocation() {
+        Assert.assertTrue("creates a default", Roster.getDefault() != null);
+        Assert.assertEquals("always same", Roster.getDefault(), Roster.getDefault());
+
+        // since we created it when we referenced it, should be in InstanceManager
+        Assert.assertTrue("registered a default", jmri.InstanceManager.getNullableDefault(Roster.class) != null);
+    }
+
     public Roster createTestRoster() throws IOException, FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
@@ -317,48 +333,45 @@ public class RosterTest {
         // store files in random temp directory
         File rosterDir = folder.newFolder();
         FileUtil.createDirectory(rosterDir);
-        Roster.getDefault().setRosterLocation(rosterDir.getAbsolutePath());
-        Roster.getDefault().setRosterIndexFileName("rosterTest.xml");
 
         File f = new File(rosterDir, "rosterTest.xml");
-        // remove existing roster if its there
-        f.delete();
+        // File should never be there is TemporaryFolder working
+        if (f.exists()) Assert.fail("rosterTest.xml in "+rosterDir+" already present: "+f);
 
         // create a roster with known contents
         Roster r = new Roster();
-        RosterEntry e;
-        e = new RosterEntry("file name Bob");
-        e.setId("Bob");
-        e.setDccAddress("123");
-        e.setRoadNumber("123");
-        e.setRoadName("SP");
-        e.ensureFilenameExists();
-        e.putAttribute("key a", "value a");
-        e.putAttribute("key b", "value b");
-        r.addEntry(e);
-        e = null;
-        e = new RosterEntry("file name Bill");
-        e.setId("Bill");
-        e.setDccAddress("456");
-        e.setRoadNumber("123");
-        e.setRoadName("ATSF");
-        e.setDecoderModel("81");
-        e.setDecoderFamily("33");
-        e.ensureFilenameExists();
-        e.putAttribute("key a", "value a");
-        r.addEntry(e);
-        e = null;
-        e = new RosterEntry("file name Ben");
-        e.setId("Ben");
-        e.setRoadNumber("123");
-        e.setRoadName("UP");
-        e.ensureFilenameExists();
-        e.putAttribute("key b", "value b");
-        r.addEntry(e);
+        r.setRosterLocation(rosterDir.getAbsolutePath());
+        r.setRosterIndexFileName("rosterTest.xml");
+
+        RosterEntry e1 = new RosterEntry("file name Bob");
+        e1.setId("Bob");
+        e1.setDccAddress("123");
+        e1.setRoadNumber("123");
+        e1.setRoadName("SP");
+        e1.ensureFilenameExists();
+        e1.putAttribute("key a", "value a");
+        e1.putAttribute("key b", "value b");
+        r.addEntry(e1);
+        RosterEntry e2 = new RosterEntry("file name Bill");
+        e2.setId("Bill");
+        e2.setDccAddress("456");
+        e2.setRoadNumber("123");
+        e2.setRoadName("ATSF");
+        e2.setDecoderModel("81");
+        e2.setDecoderFamily("33");
+        e2.ensureFilenameExists();
+        e2.putAttribute("key a", "value a");
+        r.addEntry(e2);
+        RosterEntry e3 = new RosterEntry("file name Ben");
+        e3.setId("Ben");
+        e3.setRoadNumber("123");
+        e3.setRoadName("UP");
+        e3.ensureFilenameExists();
+        e3.putAttribute("key b", "value b");
+        r.addEntry(e3);
 
         // write it
-        r.writeFile(Roster.getDefault().getRosterIndexPath());
-
+        //r.writeFile(r.getRosterIndexPath());
         return r;
     }
 

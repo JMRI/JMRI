@@ -1,4 +1,3 @@
-// Message.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -56,6 +55,7 @@ public class Message extends AbstractMRMessage {
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
@@ -64,10 +64,12 @@ public class Message extends AbstractMRMessage {
         _nDataChars = (n <= MAXLEN) ? n : MAXLEN;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
@@ -150,4 +152,4 @@ public class Message extends AbstractMRMessage {
     private final static Logger log = LoggerFactory.getLogger(Message.class.getName());
 }
 
-/* @(#)Message.java */
+

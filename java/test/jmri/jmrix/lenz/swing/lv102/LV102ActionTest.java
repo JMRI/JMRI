@@ -46,6 +46,7 @@ public class LV102ActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LV102Frame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
     @Before

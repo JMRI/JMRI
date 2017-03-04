@@ -30,12 +30,14 @@ public class Dcc4PcSensor extends AbstractSensor {
     private void init(String id) {
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 
     static String[] modeNames = null;
     static int[] modeValues = null;
 
+    @Override
     public void setOwnState(int state) {
         int stateConvert = UNKNOWN;
         realState = state;

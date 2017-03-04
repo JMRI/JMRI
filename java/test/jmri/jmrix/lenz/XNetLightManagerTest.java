@@ -16,10 +16,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     XNetInterfaceScaffold xnis = null;
 
+    @Override
     public String getSystemName(int i) {
         return "XL" + i;
     }
@@ -85,13 +86,14 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetLightManager(xnis, "X"); // l is defined in AbstractLightMgrTest.
+        l = new XNetLightManager(xnis, "X"); // l is defined in AbstractLightMgrTestBase.
         jmri.InstanceManager.setLightManager(l);
         
     }

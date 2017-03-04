@@ -1,4 +1,3 @@
-// UhlenbrockSystemConnectionMemo.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.InstanceManager;
@@ -32,16 +31,16 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
         return super.getProgrammerManager();
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, UhlenbrockSystemConnectionMemo.class);
         super.dispose();
     }
 
+    @Override
     public void configureManagers() {
         super.configureManagers();
         getTurnoutManager().setUhlenbrockMonitoring();
 }
 
 }
-
-/* @(#)UhlenbrockSystemConnectionMemo.java */

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -59,18 +60,21 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         getContentPane().add(panel);
 
         startButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 Server.getInstance().enable();
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 Server.getInstance().disable();
             }
         });
 
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 Server.getInstance().setAutoStart(autoStartCheckBox.isSelected());
                 Server.getInstance().setPortNumber(((Integer) portNumber.getValue()).intValue());
@@ -79,12 +83,14 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         });
 
         autoStartCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 saveButton.setEnabled(true);
             }
         });
 
         portNumber.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 saveButton.setEnabled(true);
             }
@@ -93,8 +99,9 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         pack();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         self = null;
@@ -103,6 +110,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         super.windowClosing(e);
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -138,16 +146,20 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         clientStatus.setText("   Client Count: " + Integer.toString(Server.getInstance().getClientCount()));
     }
 
+    @Override
     public void notifyServerStateChanged(Server s) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 updateServerStatus();
             }
         });
     }
 
+    @Override
     public void notifyClientStateChanged(Server s) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 updateClientStatus();
             }

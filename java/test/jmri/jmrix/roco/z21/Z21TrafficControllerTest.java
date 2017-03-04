@@ -1,45 +1,28 @@
 package jmri.jmrix.roco.z21;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21TrafficController class
  *
  * @author	Paul Bender
  */
-public class Z21TrafficControllerTest extends TestCase {
-
-    public void testCtor() {
-        Z21TrafficController a = new Z21TrafficController();
-        Assert.assertNotNull(a);
-    }
-
-    // from here down is testing infrastructure
-    public Z21TrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21TrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Z21TrafficControllerTest.class);
-        return suite;
-    }
+public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        tc = new Z21TrafficController();
     }
-
-    protected void tearDown() {
+    
+    @Override
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

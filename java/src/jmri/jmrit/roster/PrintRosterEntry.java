@@ -26,6 +26,7 @@ import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,27 +131,38 @@ public class PrintRosterEntry implements PaneContainer {
 
         @SuppressWarnings("unchecked")
         List<Element> rawPaneList = base.getChildren("pane");
-        for (int i = 0; i < rawPaneList.size(); i++) {
+        for (Element elPane : rawPaneList) {
             // load each pane
-            String name = rawPaneList.get(i).getAttribute("name").getValue();
-            PaneProgPane p = new PaneProgPane(this, name, rawPaneList.get(i), cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
+            Attribute attr = elPane.getAttribute("name");
+            String name = "";
+            if (attr != null) {
+                name = attr.getValue();
+            } else {
+                log.debug("Did not find name attribute in pane");
+            }
+            PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, iCvModel, variableModel, d.getModelElement(), _rosterEntry);
             _paneList.add(p);
         }
     }
 
+    @Override
     public BusyGlassPane getBusyGlassPane() {
         return null;
     }
 
+    @Override
     public void prepGlassPane(javax.swing.AbstractButton activeButton) {
     }
 
+    @Override
     public void enableButtons(boolean enable) {
     }
 
+    @Override
     public void paneFinished() {
     }
 
+    @Override
     public boolean isBusy() {
         return false;
     }
@@ -203,6 +215,7 @@ public class PrintRosterEntry implements PaneContainer {
         select.setLayout(new BoxLayout(select, BoxLayout.PAGE_AXIS));
         final JCheckBox funct = new JCheckBox("Function List");
         funct.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _flPane.includeInPrint(funct.isSelected());
             }
@@ -215,6 +228,7 @@ public class PrintRosterEntry implements PaneContainer {
             final JCheckBox item = new JCheckBox(_paneList.get(i).getName());
             printList.put(item, pane);
             item.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     pane.includeInPrint(item.isSelected());
                 }
@@ -223,6 +237,7 @@ public class PrintRosterEntry implements PaneContainer {
         }
         final JCheckBox selectAll = new JCheckBox("Select All");
         selectAll.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _flPane.includeInPrint(selectAll.isSelected());
                 funct.setSelected(selectAll.isSelected());
@@ -239,11 +254,13 @@ public class PrintRosterEntry implements PaneContainer {
         JButton ok = new JButton("Okay");
 
         cancel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 frame.dispose();
             }
         });
         ok.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 doPrintPanes(preview);
                 frame.dispose();

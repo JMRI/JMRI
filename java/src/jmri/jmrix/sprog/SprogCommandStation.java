@@ -5,7 +5,6 @@ import java.util.Queue;
 import java.util.Vector;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
-import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

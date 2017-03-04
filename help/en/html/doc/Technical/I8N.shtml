@@ -131,8 +131,7 @@ are a vestige of older version control systems; they can be ignored or deleted.
 <p>
 There are several .properties files that are used for internal control,
 and should not be translated. These are marked by a comment at the top
-of the file. Examples are the <code>apps/AppsStructureBundle.properties</code>,
-<code>jmri/web/server/Services.properties</code> and <code>jmri/web/server/FilePaths.properties</code> files.
+of the file. An example is the <code>apps/AppsStructureBundle.properties</code> file.
 
 <a name="commonkeys"><p>
 You are advised to start a new language translation by completing the highest level bundles, starting with the

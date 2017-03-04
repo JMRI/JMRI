@@ -99,6 +99,7 @@ public class SerialMonFrameTest {
         }
 
         // override some SerialInterfaceController methods for test purposes
+        @Override
         public boolean status() {
             return true;
         }
@@ -108,6 +109,7 @@ public class SerialMonFrameTest {
          */
         public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 
+        @Override
         public void sendSerialMessage(SerialMessage m, jmri.jmrix.tmcc.SerialListener l) {
             if (log.isDebugEnabled()) {
                 log.debug("sendMessage [" + m + "]");

@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.After;
 import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import java.util.ResourceBundle;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.LIUSBConfigAction class
@@ -46,6 +45,7 @@ public class LIUSBConfigActionTest {
         Assert.assertNotNull(frame);
         // verify the action provided the expected frame class
         Assert.assertEquals(LIUSBConfigFrame.class.getName(), frame.getClass().getName());
+        frame.dispose();
     }
 
 

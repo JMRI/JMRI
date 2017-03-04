@@ -145,6 +145,22 @@
       <p>If you do add new attributes or elements, don't forget to
       update the format definition, see below.</p>
 
+      <h3>Class Migration</h3>
+      Sometimes, classes need to be moved to another package as part of
+      code maintenance.  Since the fully-qualified class name, including package name,
+      has been written to files, if we just move the class it will break reading of those
+      files (in addition to breaking any user-written code that might refer to them).
+      To handle this:
+      <ul>
+        <li>Move the *Xml file to its new location, just below the class it's loading and storing
+        <li>Make an entry in the <code>java/src/jmri/configurexml/ClassMigration.properties</code> 
+            file to map the old location to the new location
+        <li>Optionally, create an empty *Xml class in the old location that just inherits from the
+            *Xml class in the new location (so that it will still work) and mark it deprecated.
+            This keeps functional other people's code that e.g. might inherit from it.
+            You can remove this after a decent interval.
+      </ul>
+      
       <h2><a id="schema" name="schema">Schema
       Management</a></h2><a id="schema" name="schema">JMRI controls
       XML semantics using</a> <a href="XmlSchema.shtml">XML

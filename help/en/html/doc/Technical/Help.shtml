@@ -178,6 +178,16 @@ confuses JavaHelp.
         <li>Make sure you've updated to the most recent version in
         the code repository before getting started.</li>
 
+        <li>You can run in batch mode by running <code>ant</code>
+        from the command line in the <code>help/en/</code>
+        directory. It'll still pop windows, but should run 
+        to completion by itself.  It might take a minute or so.</li>
+        
+        <li>If you'd like to operate it manually, please 
+        follow the rest of these bullets.
+        (Or if using Eclipse, right-click on the
+        help/en/build.xml file and select Run As Ant Build.)<li>
+        
         <li>Start the tool by clicking on the jhelpdev.jar file.
         (If that doesn't work, try running either JHelpDev.csh or
         JHelpDev.bat, depending on what kind of computer you
@@ -209,9 +219,8 @@ confuses JavaHelp.
         Index, etc.</li>
 
         <li>Then, back on the command line and in the help/en
-        directory, invoke "ant" to create the web index and table
-        of contents pages. (Or if using Eclipse, right-click on the
-        help/en/build.xml file and select Run As Ant Build.)</li>
+        directory, invoke "ant index TOC" to create the web index and table
+        of contents pages. </li>
       </ol>
 
       <p>The various control files that JavaHelp uses are stored in
@@ -256,7 +265,7 @@ confuses JavaHelp.
       JMRI.org site after a short while. There's a <a href=
       "http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">
       Jenkins job</a> that handles periodic updates for the static
-      (from repository, unlike e.g. JavaDoc) pages. 
+      (from repository, unlike e.g. Javadoc) pages. 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

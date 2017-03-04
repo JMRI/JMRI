@@ -1,5 +1,6 @@
 package jmri.jmrit.automat;
 
+import java.util.Arrays;
 import jmri.NamedBean;
 
 /**
@@ -51,6 +52,7 @@ public class Siglet extends AbstractAutomaton {
      * Implements AbstractAutomaton method to initialise connections to the
      * layout.
      */
+    @Override
     protected void init() {
         defineIO();
     }
@@ -59,6 +61,7 @@ public class Siglet extends AbstractAutomaton {
      * Implements AbstractAutomaton method to wait for state changes and
      * respond.
      */
+    @Override
     protected boolean handle() {
         // update the result
         setOutput();
@@ -68,8 +71,7 @@ public class Siglet extends AbstractAutomaton {
         return true;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public void setInputs(NamedBean[] in) {
-        inputs = in;
+        inputs = Arrays.copyOf(in, in.length);
     }
 }

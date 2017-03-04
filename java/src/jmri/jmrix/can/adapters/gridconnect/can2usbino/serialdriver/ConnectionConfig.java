@@ -1,5 +1,6 @@
-// ConnectionConfig.java
 package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Definition of objects to handle configuring a layout connection via a Canusb
@@ -9,7 +10,7 @@ package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
  * @author Andrew Crosland 2008
  * 
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
 public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
@@ -25,10 +26,12 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         super();
     }
 
+    @Override
     public String name() {
         return "CAN via TCH Tech CAN/USB adapter";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

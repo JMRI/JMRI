@@ -1,4 +1,3 @@
-// PrintTrainsAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -87,23 +86,18 @@ public class PrintTrainsAction extends PrintTrainAction {
             String s = Bundle.getMessage("Name") + TAB + TAB + Bundle.getMessage("Description") + TAB
                     + Bundle.getMessage("Route") + TAB + TAB + Bundle.getMessage("Departs") + TAB + TAB
                     + Bundle.getMessage("Time") + "  " + Bundle.getMessage("Terminates") + TAB + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             for (Train train : trains) {
                 if (train.isBuildEnabled() || trainsTableFrame.showAllBox.isSelected()) {
-                    String name = train.getName();
-                    name = truncate(name);
-                    String desc = train.getDescription();
-                    desc = truncate(desc);
-                    String route = train.getTrainRouteName();
-                    route = truncate(route);
-                    String departs = train.getTrainDepartsName();
-                    departs = truncate(departs);
-                    String terminates = train.getTrainTerminatesName();
-                    terminates = truncate(terminates);
-
+                    String name = truncate(train.getName());
+                    String desc = truncate(train.getDescription());
+                    String route = truncate(train.getTrainRouteName());
+                    String departs = truncate(train.getTrainDepartsName());        
+                    String terminates = truncate(train.getTrainTerminatesName());
+                    
                     s = name + " " + desc + " " + route + " " + departs + " " + train.getDepartureTime() + " "
                             + terminates + NEW_LINE;
-                    writer.write(s, 0, s.length());
+                    writer.write(s);
                 }
             }
 

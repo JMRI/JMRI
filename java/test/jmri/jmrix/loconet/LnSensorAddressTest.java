@@ -28,6 +28,7 @@ public class LnSensorAddressTest extends TestCase {
     public void testLnSensorInvalid() {
         LnSensorAddress a;
         a = new LnSensorAddress("foo", "L") {
+            @Override
             void reportParseError(String s) {
             }
         };
@@ -117,10 +118,12 @@ public class LnSensorAddressTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(LnSensorAddressTest.class.getName());
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

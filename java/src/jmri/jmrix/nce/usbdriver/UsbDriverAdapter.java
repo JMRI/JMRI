@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Vector;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -43,6 +44,7 @@ public class UsbDriverAdapter extends NcePortController {
         setOptionState(option2Name, getOptionChoices(option2Name)[1]);
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -114,6 +116,7 @@ public class UsbDriverAdapter extends NcePortController {
      * set up all of the other objects to operate with an NCE command station
      * connected to this port
      */
+    @Override
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
@@ -208,6 +211,7 @@ public class UsbDriverAdapter extends NcePortController {
     }
 
     // base class methods for the NcePortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -216,6 +220,7 @@ public class UsbDriverAdapter extends NcePortController {
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -228,16 +233,14 @@ public class UsbDriverAdapter extends NcePortController {
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     private String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};

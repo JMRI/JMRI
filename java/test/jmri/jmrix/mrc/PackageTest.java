@@ -2,8 +2,6 @@ package jmri.jmrix.mrc;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @RunWith(Suite.class)
@@ -13,7 +11,14 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.mrc.simulator.PackageTest.class,
    jmri.jmrix.mrc.serialdriver.PackageTest.class,
    jmri.jmrix.mrc.configurexml.PackageTest.class,
-   MrcSystemConnectionMemoTest.class
+   MrcSystemConnectionMemoTest.class,
+   MrcPortControllerTest.class,
+   MrcTrafficControllerTest.class,
+   MrcExceptionTest.class,
+   MrcMessageExceptionTest.class,
+   MrcConnectionTypeListTest.class,
+   MrcPacketizerTest.class,
+   MrcPacketsTest.class
 })
 
 /**

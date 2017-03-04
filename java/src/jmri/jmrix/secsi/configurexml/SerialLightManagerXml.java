@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.secsi.configurexml;
 
 import jmri.jmrix.secsi.SerialLightManager;
@@ -22,10 +21,12 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.secsi.configurexml.SerialLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

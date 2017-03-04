@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.util.Arrays;
 import jmri.SignalHead;
 import jmri.Turnout;
 
@@ -57,6 +58,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Default behavior for "lit" parameter is to track value and return it.
+     *
      * @return is lit
      */
     @Override
@@ -80,7 +82,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Implement a shorter name for setAppearance.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use setAppearance instead.
      * The is provided to make Jython script access easier to read.
      * @param s new state
@@ -92,7 +94,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Implement a shorter name for getAppearance.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use getAppearance instead.
      * The is provided to make Jython script access easier to read.
      * @return current state
@@ -102,16 +104,20 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return getAppearance();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"EI_EXPOSE_REP", "MS_EXPOSE_REP"}, justification = "OK until Java 1.6 allows return of cheap array copy")
     public static int[] getDefaultValidStates() {
-        return validStates;
+        return Arrays.copyOf(validStates, validStates.length);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"EI_EXPOSE_REP", "MS_EXPOSE_REP"}, justification = "OK until Java 1.6 allows return of cheap array copy")
     public static String[] getDefaultValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
+    /**
+     * Get a localized text describing appearance from the corresponding state index.
+     *
+     * @param appearance the index of the appearance
+     * @return translated name for appearance
+     */
     public static String getDefaultStateName(int appearance) {
         String ret = jmri.util.StringUtil.getNameFromState(
                 appearance, getDefaultValidStates(), getDefaultValidStateNames());
@@ -144,18 +150,22 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         Bundle.getMessage("SignalHeadStateFlashingGreen"),
         Bundle.getMessage("SignalHeadStateFlashingLunar"),};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public int[] getValidStates() {
-        return validStates;
+        return Arrays.copyOf(validStates, validStates.length); // includes int for Lunar
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows return of cheap array copy")
     @Override
     public String[] getValidStateNames() {
-        return validStateNames;
+        return Arrays.copyOf(validStateNames, validStateNames.length); // includes Lunar
     }
 
+    /**
+     * Check if a given turnout is used on this head.
+     *
+     * @param t Turnout object to check
+     * @return true if turnout is configured as output or driver of head
+     */
     abstract boolean isTurnoutUsed(Turnout t);
 
     @Override
@@ -166,7 +176,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("not clear DoDelete operated? {}", getSystemName()); //IN18N
+            log.warn("not clear DoDelete operated? {}", getSystemName()); //NOI18N
         }
     }
 

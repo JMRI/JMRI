@@ -98,7 +98,7 @@
         <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
         <dd>The JMRI JSON services used in the JMRI web services can be extended
           using service implementations of this class. See the
-          <a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory JavaDocs</a> for details.
+          <a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory Javadocs</a> for details.
         </dd>
         <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
         <dd>Add a new preferences manager to JMRI. Preferences managers store,
@@ -123,6 +123,15 @@
           Startup preferences can allow a user to set the parameters for a
           given action.
         </dd>
+        <dt><a href="http://docs.oracle.com/javaee/6/api/javax/servlet/http/HttpServletRequest.html">HttpServlet</a>
+            with <a href="http://docs.oracle.com/javaee/6/api/javax/servlet/annotation/WebServlet.html">WebServlet</a> annotation</dt>
+        <dd>Additional servlets in the web server can be added using these
+            mechanisms. Note that the WebServlet annotation needs to provide a
+            name and urlPatterns.</dd>
+        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
+        <dd>Additional file paths, redirections, explicitly blocked paths in the
+            JMRI web server can be specified by providing a service that
+            implements this.</dd>
       </dl>
 
       <h2 id="jmriPlugin">Override jmri.JmriPlugin</h2>

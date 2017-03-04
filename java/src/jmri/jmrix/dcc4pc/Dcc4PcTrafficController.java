@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.util.Calendar;
 import jmri.jmrix.AbstractMRListener;
@@ -42,10 +43,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     Dcc4PcSystemConnectionMemo adaptermemo;
 
+    @Override
     public synchronized void addDcc4PcListener(Dcc4PcListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeDcc4PcListener(Dcc4PcListener l) {
         this.removeListener(l);
     }
@@ -55,6 +58,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a Dcc4PcMessage to all registered Dcc4PcInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((Dcc4PcListener) client).message((Dcc4PcMessage) m);
     }
@@ -62,14 +66,17 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a Dcc4PcReply to all registered Dcc4PcInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((Dcc4PcListener) client).reply((Dcc4PcReply) r);
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -77,6 +84,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendDcc4PcMessage(Dcc4PcMessage m, Dcc4PcListener reply) {
         sendMessage(m, reply);
     }
@@ -84,11 +92,13 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     protected boolean unsolicitedSensorMessageSeen = false;
 
     //Dcc4Pc doesn't support this function.
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return Dcc4PcMessage.getProgMode();
     }
 
     //Dcc4Pc doesn't support this function!
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return Dcc4PcMessage.getExitProgMode();
     }
@@ -114,6 +124,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     public void setInstance() {
     }
 
+    @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
@@ -121,7 +132,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;
@@ -224,6 +235,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     }
     SerialPort port;
 
+    @Override
     public void connectPort(jmri.jmrix.AbstractPortController p) {
 
         super.connectPort(p);
@@ -231,6 +243,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         Dcc4PcReply reply = new Dcc4PcReply();
         return reply;
@@ -242,6 +255,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return true;
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         if (port.isDSR()) {
             return false;
@@ -265,6 +279,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return !port.isDSR();
     }
 
+    @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         ((Dcc4PcListener) l).handleTimeout((Dcc4PcMessage) msg);
         super.handleTimeout(msg, l);
@@ -282,6 +297,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
      */
+    @Override
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
@@ -489,6 +505,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     boolean normalFlushReceiveChars = false;
 
     //Need a way to detect that the dsr has gone low.
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream)
             throws java.io.IOException {
         int i;
@@ -555,6 +572,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     boolean readingData = false;
 
+    @Override
     protected void transmitWait(int waitTime, int state, String InterruptMessage) {
         // wait() can have spurious wakeup!
         // so we protect by making sure the entire timeout time is used

@@ -39,6 +39,7 @@ public class SimulatorAdapter extends MrcPortController implements
         super(new MrcSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -58,6 +59,7 @@ public class SimulatorAdapter extends MrcPortController implements
      * set up all of the other objects to simulate operation with an MRC command
      * station.
      */
+    @Override
     public void configure() {
         MrcPacketizer tc = new MrcPacketizer();
         tc.connectPort(this);
@@ -77,6 +79,7 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     // base class methods for the MrcPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");//IN18N
@@ -84,6 +87,7 @@ public class SimulatorAdapter extends MrcPortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");//IN18N
@@ -91,6 +95,7 @@ public class SimulatorAdapter extends MrcPortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -98,15 +103,18 @@ public class SimulatorAdapter extends MrcPortController implements
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");//IN18N
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe.  This is the heart

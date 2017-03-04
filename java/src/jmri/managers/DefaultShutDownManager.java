@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
@@ -80,7 +81,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean shutdown() {
         return shutdown(0, true);
@@ -96,7 +97,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
      * the java program.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean restart() {
         return shutdown(100, true);
@@ -116,7 +117,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      *               executed correctly.
      * @return false if shutdown or restart failed.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();
@@ -184,8 +185,18 @@ public class DefaultShutDownManager implements ShutDownManager {
                         log.info("Program termination aborted by \"{}\"", task.getName());
                         return false;  // abort early
                     }
-                } catch (Throwable e) {
+                } catch (Exception e) {
                     log.error("Error during processing of ShutDownTask \"{}\"", task.getName(), e);
+                } catch (Throwable e) {
+                    // try logging the error
+                    log.error("Unrecoverable error during processing of ShutDownTask \"{}\"", task.getName(), e);
+                    log.error("Terminating abnormally");
+                    // also dump error directly to System.err in hopes its more observable
+                    System.err.println("Unrecoverable error during processing of ShutDownTask \"" + task.getName() + "\"");
+                    System.err.println(e);
+                    System.err.println("Terminating abnormally");
+                    // forcably halt, do not restart, even if requested
+                    System.exit(1);
                 }
                 log.debug("Task \"{}\" took {} milliseconds to execute", task.getName(), new Date().getTime() - timer.getTime());
             }

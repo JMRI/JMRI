@@ -3,8 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing;
 import java.util.Locale;
 import junit.framework.Assert;
 import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
 
 /**
  * Tests for the Bundle class

@@ -43,7 +43,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -60,7 +59,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of NamedBean manager contents
+ * Table data model for display of NamedBean manager contents.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author  Dennis Miller Copyright (C) 2006
@@ -333,9 +332,11 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     /**
      * Delete the bean after all the checking has been done.
-     * <P>
+     * <p>
      * Separate so that it can be easily subclassed if other functionality is
      * needed.
+     *
+     * @param bean NamedBean to delete
      */
     void doDelete(NamedBean bean) {
         try {
@@ -621,14 +622,13 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("Delete"));
+        menuItem = new JMenuItem(Bundle.getMessage("ButtonDelete"));
         menuItem.addActionListener((ActionEvent e1) -> {
             deleteBean(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
-
     }
 
     public void copyName(int row, int column) {
@@ -763,7 +763,6 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                     showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
             //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
         }
-
     }
 
     protected void showTableHeaderPopup(MouseEvent e, JTable table) {

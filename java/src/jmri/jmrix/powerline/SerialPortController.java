@@ -1,4 +1,3 @@
-// SerialPortController.java
 package jmri.jmrix.powerline;
 
 /**
@@ -24,4 +23,4 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
 }
 
 
-/* @(#)SerialPortController.java */
+

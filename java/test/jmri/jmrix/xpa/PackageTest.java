@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.xpa package
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
   */
 public class PackageTest extends TestCase {
 
@@ -30,16 +30,13 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(XpaSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(XpaTurnoutTest.class));
         suite.addTest(new TestSuite(XpaThrottleTest.class));
-        //suite.addTest(new TestSuite(XpaPacketizerTest.class));
-        //suite.addTest(new TestSuite(jmri.jmrix.xpa.packetgen.PacketGenFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(XpaPowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XpaPowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XpaThrottleManagerTest.class));
-        //suite.addTest(new TestSuite(XpaTrafficControllerTest.class));
-        //suite.addTest(new TestSuite(XpaTrafficRouterTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.serialdriver.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XpaPortControllerTest.class));
         return suite;
     }
 

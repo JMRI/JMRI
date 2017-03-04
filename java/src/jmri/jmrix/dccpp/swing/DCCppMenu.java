@@ -1,4 +1,3 @@
-// DCCppMenu.java
 package jmri.jmrix.dccpp.swing;
 
 import java.util.ResourceBundle;
@@ -35,7 +34,7 @@ public class DCCppMenu extends JMenu {
         add(new jmri.jmrix.dccpp.swing.mon.DCCppMonAction());
         add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
 	add(new jmri.jmrit.ampmeter.AmpMeterAction());
-        add(new jmri.jmrix.dccpp.swing.ConfigSensorsAndTurnoutsAction(rb.getString("MenuItemConfigSensorsAndTurnouts"), null));
+        add(new jmri.jmrix.dccpp.swing.ConfigBaseStationAction(rb.getString("MenuItemConfigBaseStation"), null));
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.dccpp.dccppovertcp.ServerAction(rb.getString("MenuItemDCCppOverTCPServer")));
     }

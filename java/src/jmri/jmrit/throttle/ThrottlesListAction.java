@@ -22,6 +22,7 @@ public class ThrottlesListAction extends AbstractAction {
         this("Throttles list");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesList();
     }

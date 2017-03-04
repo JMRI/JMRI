@@ -89,6 +89,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
 
         // Add Get SystemInfo button handler
         getSystemInfoButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 getSystemInfo();
             }
@@ -97,6 +98,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -185,6 +187,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         
          // Add Get SystemInfo button handler
          setSystemInfoButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 writeSystemInfo();
             }
@@ -228,6 +231,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
     }
 
     // listen for responses from the Z21
+    @Override
     public void reply(Z21Reply zr) {
        switch(zr.getOpCode()){
           // handle replies with the serial number
@@ -273,9 +277,11 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
     }
 
     // listen for the messages sent to the Z21
+    @Override
     public void message(Z21Message zm) {
     }
 
+    @Override
     public void dispose() {
         // remove the listener for this object.
         tc.removez21Listener(this);

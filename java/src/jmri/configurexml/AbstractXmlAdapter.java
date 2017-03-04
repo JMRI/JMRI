@@ -25,6 +25,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      *                                   propagated upward to higher-level error
      *                                   handling
      */
+    @Override
     public void creationErrorEncountered(
             String description,
             String systemName,
@@ -63,6 +64,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
+    @Override
     public boolean loadDeferred() {
         return false;
     }
@@ -70,6 +72,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     /**
      * Used for determining which order to load items from XML files in.
      */
+    @Override
     public int loadOrder() {
         return 50;
     }

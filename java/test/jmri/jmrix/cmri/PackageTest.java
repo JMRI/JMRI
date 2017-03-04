@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    CMRISystemConnectionMemoTest.class,
    CMRIMenuTest.class,
-   jmri.jmrix.cmri.serial.PackageTest.class})
+   jmri.jmrix.cmri.serial.PackageTest.class,
+   jmri.jmrix.cmri.swing.PackageTest.class,
+   CMRIConnectionTypeListTest.class
+})
 
 /**
  * Tests for the jmri.jmrix.cmri package

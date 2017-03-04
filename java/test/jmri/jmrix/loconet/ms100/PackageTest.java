@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.ms100.configurexml.PackageTest.class
+   jmri.jmrix.loconet.ms100.configurexml.PackageTest.class,
+   MS100AdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.ms100 package.

@@ -1,17 +1,23 @@
 package jmri.jmrit.roster;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.Vector;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -91,6 +97,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SPEED_PROFILE = "speedprofile"; // NOI18N
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
 
+    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
+
     // members to remember all the info
     protected String _fileName = null;
 
@@ -98,9 +106,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner = ((InstanceManager.getNullableDefault(RosterConfigManager.class) == null) ? 
-                                "" :
-                                InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
+    protected String _owner = "";
     protected String _model = "";
     protected String _dccAddress = "3";
     //protected boolean _isLongAddress = false;
@@ -110,10 +116,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
     protected String _dateUpdated = "";
+    protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
 
     /**
-     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
+     * @return the default owner
+     * @deprecated since 4.1.4 use
+     * {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
      */
     @Deprecated
     public static String getDefaultOwner() {
@@ -121,7 +130,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)} instead
+     * @param n the default owner
+     * @deprecated since 4.1.4 use
+     * {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)}
+     * instead
      */
     @Deprecated
     public static void setDefaultOwner(String n) {
@@ -325,6 +337,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public String getOwner() {
+        if (_owner.isEmpty()) {
+            RosterConfigManager manager = InstanceManager.getNullableDefault(RosterConfigManager.class);
+            if (manager != null) {
+                _owner = manager.getDefaultOwner();
+            }
+        }
         return _owner;
     }
 
@@ -478,14 +496,74 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _URL;
     }
 
+    public void setDateModified(@Nonnull Date date) {
+        Date old = this.dateModified;
+        this.dateModified = date;
+        this.firePropertyChange(RosterEntry.DATE_UPDATED, old, date);
+    }
+
+    /**
+     * Set the date modified given a string representing a date. Tries ISO 8601
+     * and the current Java defaults as formats for parsing a date.
+     *
+     * @param date the string to parse into a date
+     * @throws ParseException if the date cannot be parsed
+     */
+    public void setDateModified(@Nonnull String date) throws ParseException {
+        try {
+            // parse using ISO 8601 date format(s)
+            this.setDateModified(new ISO8601DateFormat().parse(date));
+        } catch (IllegalArgumentException | ParseException ex) {
+            // IllegalArgumentException for Jackson 2.0.6
+            // ParseException for Jackson 2.8.5
+            // evaluating Jackson upgrade under separate branch
+            // parse using defaults since thats how it was saved if saved
+            // by earlier versions of JMRI
+            this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
+        }
+    }
+
+    @CheckForNull
+    public Date getDateModified() {
+        return this.dateModified;
+    }
+
+    /**
+     * Set the date last updated.
+     *
+     * @param s the string to parse into a date
+     * @deprecated since 4.7.1; not for removal, but to make access protected
+     */
+    @Deprecated
     public void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
-        firePropertyChange(RosterEntry.DATE_UPDATED, old, s);
+        try {
+            this.setDateModified(s);
+        } catch (ParseException ex) {
+            log.warn("Unable to parse \"{}\" as a date in roster entry \"{}\".", s, getId());
+            // property change is fired by setDateModified if s parses as a date
+            firePropertyChange(RosterEntry.DATE_UPDATED, old, s);
+        }
     }
 
+    /**
+     * Get the date this entry was last modified. Returns the value of
+     * {@link #getDateModified()} in ISO 8601 format if that is not null,
+     * otherwise returns the raw value for the last modified date from the XML
+     * file for the roster entry.
+     * <p>
+     * Use getDateModified() if control over formatting is required
+     *
+     * @return the string representation of the date last modified
+     */
     public String getDateUpdated() {
-        return _dateUpdated;
+        Date date = this.getDateModified();
+        if (date == null) {
+            return _dateUpdated;
+        } else {
+            return new ISO8601DateFormat().format(date);
+        }
     }
 
     //openCounter is used purely to indicate if the roster entry has been opened in an editing mode.
@@ -588,7 +666,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
         Element e3;
         if ((e3 = e.getChild("dateUpdated")) != null) {
-            _dateUpdated = e3.getText();
+            this.setDateUpdated(e3.getText());
         }
         if ((e3 = e.getChild("locoaddress")) != null) {
             DccLocoAddress la = (DccLocoAddress) ((new jmri.configurexml.LocoAddressXml()).getAddress(e3));
@@ -660,6 +738,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads function names from a JDOM element. Does not change values that are
      * already present!
+     *
+     * @param e3 the XML element containing functions
      */
     public void loadFunctions(Element e3) {
         this.loadFunctions(e3, "family");
@@ -668,6 +748,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads function names from a JDOM element. Does not change values that are
      * already present!
+     *
+     * @param e3     the XML element containing the functions
+     * @param source "family" if source is the decoder definition, or "model" if
+     *               source is the roster entry itself
      */
     public void loadFunctions(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
@@ -730,6 +814,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Loads sound names from a JDOM element. Does not change values that are
      * already present!
+     *
+     * @param e3     the XML element containing sound names
+     * @param source "family" if source is the decoder definition, or "model" if
+     *               source is the roster entry itself
      */
     public void loadSounds(Element e3, String source) {
         /*Load flag once, means that when the roster entry is edited only the first set of sound labels are displayed 
@@ -756,6 +844,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Loads attribute key/value pairs from a JDOM element.
+     *
+     * @param e3 XML element containing roster entry attributes
      */
     public void loadAttributes(Element e3) {
         if (e3 != null) {
@@ -771,7 +861,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Define label for a specific function
      *
-     * @param fn    function number, starting with 0
+     * @param fn function number, starting with 0
      */
     public void setFunctionLabel(int fn, String label) {
         if (functionLabels == null) {
@@ -803,6 +893,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Define label for a specific sound
      *
      * @param fn    sound number, starting with 0
+     * @param label display label for the sound function
      */
     public void setSoundLabel(int fn, String label) {
         if (soundLabels == null) {
@@ -866,6 +957,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Define whether a specific function is lockable.
      *
      * @param fn       function number, starting with 0
+     * @param lockable true if function is continuous; false if momentary
      */
     public void setFunctionLockable(int fn, boolean lockable) {
         if (functionLockables == null) {
@@ -947,6 +1039,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * {@link jmri.jmrit.roster.rostergroup.RosterGroup}s from the specified
      * {@link jmri.jmrit.roster.Roster} if they exist.
      *
+     * @param roster the roster to get matching groups from
      * @return list of roster groups
      */
     public List<RosterGroup> getGroups(Roster roster) {
@@ -980,9 +1073,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Warn user that the roster entry needs to be resaved.
      *
+     * @param id roster ID to warn about
      */
     protected void warnShortLong(String id) {
-        log.warn("Roster entry \"" + id + "\" should be saved again to store the short/long address value");
+        log.warn("Roster entry \"{}\" should be saved again to store the short/long address value", id);
     }
 
     /**
@@ -1010,10 +1104,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute("iconFilePath", (this.getIconPath() != null) ? FileUtil.getPortableFilename(this.getIconPath()) : "");
         e.setAttribute("URL", getURL());
         e.setAttribute(RosterEntry.SHUNTING_FUNCTION, getShuntingFunction());
-
-        if (!_dateUpdated.isEmpty()) {
-            e.addContent(new Element("dateUpdated").addContent(getDateUpdated()));
+        if (_dateUpdated.isEmpty()) {
+            // set date updated to now if never set previously
+            this.changeDateUpdated();
         }
+        e.addContent(new Element("dateUpdated").addContent(this.getDateUpdated()));
         Element d = new Element("decoder");
         d.setAttribute("model", getDecoderModel());
         d.setAttribute("family", getDecoderFamily());
@@ -1157,6 +1252,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * done in the LocoFile class.
      *
      * @param cvModel       CV contents to include in file
+     * @param iCvModel      indexed CV contents to include in file
      * @param variableModel Variable contents to include in file
      *
      */
@@ -1196,8 +1292,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Mark the date updated, e.g. from storing this roster entry
      */
     public void changeDateUpdated() {
-        java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
-        setDateUpdated(df.format(new java.util.Date()));
+        // used to create formatted string of now using defaults
+        // java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
+        // setDateUpdated(df.format(new java.util.Date()));
+        this.setDateModified(new Date());
     }
 
     /**
@@ -1206,10 +1304,12 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     private Element mRootElement = null;
 
     /**
-     * Load pre-existing Variable and CvTableModel object with the contents of this
-     * entry
+     * Load pre-existing Variable and CvTableModel object with the contents of
+     * this entry
      *
-     * @param cvModel  Model to load, must exist
+     * @param varModel the variable model to load
+     * @param cvModel  CV contents to load
+     * @param iCvModel Indexed CV contents to load
      */
     public void loadCvModel(VariableTableModel varModel, CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         if (cvModel == null) {
@@ -1279,6 +1379,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * decoder comment fields. Created separate write statements for text and
      * line feeds to work around the HardcopyWriter bug that misplaces borders
      *
+     * @param w the writer used to print
      */
     public void printEntryDetails(Writer w) {
         int linesadded = -1;
@@ -1520,9 +1621,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
 
     @Override
     public String getDisplayName() {

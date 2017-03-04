@@ -88,6 +88,7 @@ public class SlipIconAdder extends IconAdder {
         return doubleSlip;
     }
 
+    @Override
     public void reset() {
         _turnoutMap = new HashMap<String, NamedBeanHandle<Turnout>>();
         _lastIndex = 0;
@@ -107,6 +108,7 @@ public class SlipIconAdder extends IconAdder {
      * Override. First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
+    @Override
     public void makeIconPanel(boolean useDefaults) {
         if (_iconPanel != null) {
             this.remove(_iconPanel);
@@ -128,21 +130,25 @@ public class SlipIconAdder extends IconAdder {
         _typePanel.add(scissorButton);
         _iconPanel.add(_typePanel);
         doubleSlipButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 slipUpdate(0x00);
             }
         });
         singleSlipButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 slipUpdate(0x02);
             }
         });
         threeWayButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 slipUpdate(0x04);
             }
         });
         scissorButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 slipUpdate(0x08);
             }
@@ -165,11 +171,13 @@ public class SlipIconAdder extends IconAdder {
             _buttonSlipPanel.add(upperWestToUpperEastButton);
             _iconPanel.add(_buttonSlipPanel);
             lowerWestToLowerEastButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     updateSingleSlipRoute(false);
                 }
             });
             upperWestToUpperEastButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     updateSingleSlipRoute(true);
                 }
@@ -195,11 +203,13 @@ public class SlipIconAdder extends IconAdder {
             _buttonSlipPanel.add(upperWestToUpperEastButton);
             _iconPanel.add(_buttonSlipPanel);
             lowerWestToLowerEastButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     changeNumScissorTurnouts();
                 }
             });
             upperWestToUpperEastButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     changeNumScissorTurnouts();
                 }
@@ -432,6 +442,7 @@ public class SlipIconAdder extends IconAdder {
      * Override
      *
      */
+    @Override
     public void complete(ActionListener addIconAction, boolean changeIconAction,
             boolean addToTable, boolean update) {
         super.complete(addIconAction, changeIconAction, addToTable, update);
@@ -442,14 +453,17 @@ public class SlipIconAdder extends IconAdder {
 
     class ExportHandler extends TransferHandler {
 
+        @Override
         public int getSourceActions(JComponent c) {
             return COPY;
         }
 
+        @Override
         public Transferable createTransferable(JComponent c) {
             return new TransferableNamedBean();
         }
 
+        @Override
         public void exportDone(JComponent c, Transferable t, int action) {
         }
     }
@@ -466,16 +480,19 @@ public class SlipIconAdder extends IconAdder {
             }
         }
 
+        @Override
         public DataFlavor[] getTransferDataFlavors() {
             //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.getTransferDataFlavors ");
             return new DataFlavor[]{dataFlavor};
         }
 
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.isDataFlavorSupported ");
             return dataFlavor.equals(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (log.isDebugEnabled()) {
                 log.debug("TransferableNamedBean.getTransferData ");
@@ -491,6 +508,7 @@ public class SlipIconAdder extends IconAdder {
      * Override. Activate Add to Panel button when all icons are assigned
      * sensors.
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_addButton == null) {
             return;
@@ -592,7 +610,7 @@ public class SlipIconAdder extends IconAdder {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                         Bundle.getMessage("DupTurnoutName"),
                         new Object[]{name}),
-                        Bundle.getMessage("errorTitle"),
+                        Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -618,19 +636,24 @@ public class SlipIconAdder extends IconAdder {
             //if (log.isDebugEnabled()) log.debug("DropPanel ctor");
         }
 
+        @Override
         public void dragExit(DropTargetEvent dte) {
         }
 
+        @Override
         public void dragEnter(DropTargetDragEvent dtde) {
         }
 
+        @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropPanel.dragOver");
         }
 
+        @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
         }
 
+        @Override
         public void drop(DropTargetDropEvent e) {
             try {
                 Transferable tr = e.getTransferable();

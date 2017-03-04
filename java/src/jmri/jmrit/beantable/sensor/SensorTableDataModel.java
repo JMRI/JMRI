@@ -52,6 +52,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         updateNameList();
     }
 
+    @Override
     public String getValue(String name) {
         Sensor sen = senManager.getBySystemName(name);
         if (sen == null) {
@@ -88,6 +89,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         updateNameList();
     }
 
+    @Override
     protected Manager getManager() {
         if (senManager == null) {
             senManager = InstanceManager.sensorManagerInstance();
@@ -95,18 +97,22 @@ public class SensorTableDataModel extends BeanTableDataModel {
         return senManager;
     }
 
+    @Override
     protected NamedBean getBySystemName(String name) {
         return senManager.getBySystemName(name);
     }
 
+    @Override
     protected NamedBean getByUserName(String name) {
         return senManager.getByUserName(name);
     }
 
+    @Override
     protected String getMasterClassName() {
         return getClassName();
     }
 
+    @Override
     protected void clickOn(NamedBean t) {
         try {
             int state = ((Sensor) t).getKnownState();
@@ -120,10 +126,12 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    @Override
     public int getColumnCount() {
         return INACTIVEDELAY + 1;
     }
 
+    @Override
     public String getColumnName(int col) {
         if (col == INVERTCOL) {
             return Bundle.getMessage("Inverted");
@@ -144,6 +152,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         if (col == INVERTCOL) {
             return Boolean.class;
@@ -164,6 +173,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    @Override
     public int getPreferredWidth(int col) {
         if (col == INVERTCOL) {
             return new JTextField(4).getPreferredSize().width;
@@ -178,8 +188,15 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == INVERTCOL || col == EDITCOL) {
+        String name = sysNameList.get(row);
+        Sensor sen = senManager.getBySystemName(name);
+        if (sen == null) return false;
+        if (col == INVERTCOL) {
+            return sen.canInvert();
+        }
+        if (col == EDITCOL) {
             return true;
         }
         if (col == USEGLOBALDELAY) {
@@ -187,22 +204,17 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
         //Need to do something here to make it disable 
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
-            String name = sysNameList.get(row);
-            Sensor sen = senManager.getBySystemName(name);
-            if (sen == null) {
+            if (sen.useDefaultTimerSettings()) {
                 return false;
             } else {
-                if (sen.useDefaultTimerSettings()) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return true;
             }
         } else {
             return super.isCellEditable(row, col);
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (row >= sysNameList.size()) {
             log.debug("row is greater than name list");
@@ -231,6 +243,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (row >= sysNameList.size()) {
             log.debug("row is greater than name list");
@@ -265,6 +278,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
                     this.s = s;
                 }
 
+                @Override
                 public void run() {
                     editButton(s);
                 }
@@ -276,10 +290,12 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
     }
 
+    @Override
     protected String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
 
+    @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().indexOf("inverted") >= 0) || (e.getPropertyName().indexOf("GlobalTimer") >= 0)
                 || (e.getPropertyName().indexOf("ActiveTimer") >= 0) || (e.getPropertyName().indexOf("InActiveTimer") >= 0)) {

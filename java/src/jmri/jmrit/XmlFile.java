@@ -13,12 +13,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
 import org.jdom2.Comment;
+import org.jdom2.Content;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -45,6 +46,14 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  */
 public abstract class XmlFile {
+
+    static boolean verify = false;
+    static boolean include = true;
+
+    /**
+     * Specify a standard prefix for DTDs in new XML documents
+     */
+    static public final String dtdLocation = "/xml/DTD/";
 
     /**
      * Define root part of URL for XSLT style page processing instructions.
@@ -109,11 +118,8 @@ public abstract class XmlFile {
             log.debug("reading xml from file: " + file.getPath());
         }
 
-        FileInputStream fs = new FileInputStream(file);
-        try {
+        try (FileInputStream fs = new FileInputStream(file)) {
             return getRoot(verify, fs);
-        } finally {
-            fs.close();
         }
     }
 
@@ -149,10 +155,6 @@ public abstract class XmlFile {
         }
         return getRoot(verify, url.openConnection().getInputStream());
     }
-    /**
-     * Specify a standard prefix for DTDs in new XML documents
-     */
-    static public final String dtdLocation = "/xml/DTD/";
 
     /**
      * Get the root element from an XML document in a stream.
@@ -211,16 +213,13 @@ public abstract class XmlFile {
             FileUtil.createDirectory(file.getParent());
         }
         // write the result to selected file
-        FileOutputStream o = new FileOutputStream(file);
-        try {
+        try (FileOutputStream o = new FileOutputStream(file)) {
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                     .setLineSeparator(System.getProperty("line.separator"))
                     .setTextMode(Format.TextMode.TRIM_FULL_WHITE));
             fmt.output(doc, o);
             o.flush();
-        } finally {
-            o.close();
         }
     }
 
@@ -279,12 +278,10 @@ public abstract class XmlFile {
      *
      * @param name Element to print, should not be null
      */
-    @SuppressWarnings("unchecked")
-    static public void dumpElement(Element name) {
-        List<Element> l = name.getChildren();
-        for (Element l1 : l) {
-            System.out.println(" Element: " + l1.getName() + " ns: " + l1.getNamespace());
-        }
+    static public void dumpElement(@Nonnull Element name) {
+        name.getChildren().forEach((element) -> {
+            System.out.println(" Element: " + element.getName() + " ns: " + element.getNamespace());
+        });
     }
 
     /**
@@ -463,11 +460,12 @@ public abstract class XmlFile {
      *
      * JMRI only knows about certain ones; the others will be ignored.
      *
-     * @return the Document that results from the processing
+     * @param doc the document containing processing instructions
+     * @return the processed document
      */
     Document processInstructions(Document doc) {
         // this iterates over top level
-        for (Object c : doc.getContent()) { // type Content
+        for (Content c : doc.cloneContent()) {
             if (c instanceof ProcessingInstruction) {
                 try {
                     doc = processOneInstruction((ProcessingInstruction) c, doc);
@@ -572,8 +570,6 @@ public abstract class XmlFile {
     static public String xmlDir() {
         return FileUtil.getProgramPath() + "xml" + File.separator;
     }
-    static boolean verify = false;
-    static boolean include = true;
 
     static public boolean getVerify() {
         return verify;

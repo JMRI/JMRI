@@ -1,4 +1,3 @@
-// LNCPSignalMast.java
 package jmri.jmrix.loconet;
 
 import jmri.NmraPacket;
@@ -21,20 +20,15 @@ import org.slf4j.LoggerFactory;
  */
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4564372505227894262L;
-
     public LNCPSignalMast(String sys, String user) {
-        super(sys, user, "F$lncpsm");
+        super(sys, user, "F$lncpsm"); // NOI18N
         packetRepeatCount = 1;
         configureFromName(sys);
         init();
     }
 
     public LNCPSignalMast(String sys) {
-        super(sys, null, "F$lncpsm");
+        super(sys, null, "F$lncpsm"); // NOI18N
         packetRepeatCount = 1;
         configureFromName(sys);
         init();
@@ -67,6 +61,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     //						Object oldValue,
     //						Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
+    @Override
     public void message(LocoNetMessage l) {
         if (l.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return;
@@ -105,6 +100,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         }
     }
 
+    @Override
     public void setAspect(String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
             c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
@@ -116,10 +112,11 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     public void setKnownState(String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
-        this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
-        firePropertyChange("Aspect", oldAspect, aspect);
+        this.speed = (String) getSignalSystem().getProperty(aspect, "speed"); // NOI18N
+        firePropertyChange("Aspect", oldAspect, aspect); // NOI18N
     }
 
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
     }
@@ -140,6 +137,3 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class.getName());
 
 }
-
-
-/* @(#)LNCPSignalMast.java */

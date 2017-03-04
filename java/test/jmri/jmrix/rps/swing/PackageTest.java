@@ -1,6 +1,5 @@
 package jmri.jmrix.rps.swing;
 
-import jmri.jmrix.rps.swing.debugger.DebuggerTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -13,10 +12,13 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     AffineEntryPanelTest.class,
     jmri.jmrix.rps.swing.polling.PackageTest.class,
-    DebuggerTest.class,
+    jmri.jmrix.rps.swing.debugger.PackageTest.class,
     BundleTest.class,
     jmri.jmrix.rps.swing.debugger.DebuggerTest.class,
-    jmri.jmrix.rps.swing.soundset.PackageTest.class
+    jmri.jmrix.rps.swing.soundset.PackageTest.class,
+    CsvExportActionTest.class,
+    CsvExportMeasurementActionTest.class,
+    LoadStorePanelTest.class
 })
 public class PackageTest {
 }

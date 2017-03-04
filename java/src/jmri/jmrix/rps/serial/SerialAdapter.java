@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
@@ -40,6 +41,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
 
     transient SerialPort activeSerialPort = null;
 
+    @Override
     public synchronized String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -136,6 +138,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     /**
      * Set up all of the other objects to operate
      */
+    @Override
     public void configure() {
 
         // Connect the control objects:
@@ -152,6 +155,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     }
 
     // base class methods for the PortController interface
+    @Override
     public synchronized DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -160,6 +164,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public synchronized DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -172,16 +177,14 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"115,200 baud"};
@@ -192,6 +195,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     /**
      * Set the second port option.
      */
+    @Override
     public void configureOption1(String value) {
         setOptionState(option1Name, value);
         if (value.equals(validOptions1[0])) {
@@ -256,6 +260,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
          * PortController via <code>connectPort</code>. Terminates with the
          * input stream breaking out of the try block.
          */
+        @Override
         public void run() {
             // have to limit verbosity!
 
@@ -307,6 +312,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
                 // retain a copy of the message at startup
                 String msgForLater = msgString;
 
+                @Override
                 public void run() {
                     nextLine(msgForLater);
                 }

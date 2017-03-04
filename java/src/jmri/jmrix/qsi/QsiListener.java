@@ -1,4 +1,3 @@
-// QsiListener.java
 package jmri.jmrix.qsi;
 
 /**
@@ -14,4 +13,4 @@ public interface QsiListener extends java.util.EventListener {
     public void reply(QsiReply m);
 }
 
-/* @(#)QsiListener.java */
+

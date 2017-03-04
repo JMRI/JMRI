@@ -506,6 +506,13 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 # memory start and max limits
 OPTIONS="${OPTIONS} ${OS_OPTIONS-} ${jmri_xms} ${jmri_xmx}"
 
+# handle ports in --settings argument or JMRI_SERIAL_PORTS environment variable
+# but not if already in OPTIONS
+ALTPORTS=
+if [[ -n "${JMRI_SERIAL_PORTS}" && ! ${OPTIONS} =~ "-Dpurejavacomm.portnamepattern=" ]] ; then
+    ALTPORTS="-Dpurejavacomm.portnamepattern=${JMRI_SERIAL_PORTS}"
+fi
+
 declare -a DOCK_OPTIONS
 # Apple dock extensions to java get mangled by bash if included in ${OPTIONS}
 if [ "$OS" = "macosx" ] ; then
@@ -519,9 +526,9 @@ EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
 
     if [ "$OS" = "macosx" ] ; then
-        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
+        "${JAVACMD}" "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
     else
-        "${JAVACMD}" ${OPTIONS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
+        "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp "${CP}" "${CLASSNAME}" ${ARGS}
     fi
 
     EXIT_STATUS=$?

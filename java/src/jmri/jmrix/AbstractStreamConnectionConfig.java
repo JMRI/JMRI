@@ -34,6 +34,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         adapter = p;
     }
 
+    @Override
     public jmri.jmrix.AbstractStreamPortController getAdapter() {
         return adapter;
     }
@@ -49,6 +50,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     protected boolean init = false;
 
     @SuppressWarnings("unchecked")
+    @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
             log.debug("init called for " + name());
@@ -59,6 +61,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
@@ -67,6 +70,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                 }
             });
             systemPrefixField.addFocusListener(new FocusListener() {
+                @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
@@ -74,10 +78,12 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                     }
                 }
 
+                @Override
                 public void focusGained(FocusEvent e) {
                 }
             });
             connectionNameField.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
@@ -86,6 +92,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                 }
             });
             connectionNameField.addFocusListener(new FocusListener() {
+                @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
@@ -93,6 +100,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                     }
                 }
 
+                @Override
                 public void focusGained(FocusEvent e) {
                 }
             });
@@ -100,6 +108,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                 final String item = i;
                 if (options.get(i).getComponent() instanceof JComboBox) {
                     ((JComboBox<?>) options.get(i).getComponent()).addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             adapter.setOptionState(item, options.get(item).getItem());
                         }
@@ -111,6 +120,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         init = true;
     }
 
+    @Override
     public void updateAdapter() {
         for (String i : options.keySet()) {
             adapter.setOptionState(i, options.get(i).getItem());
@@ -131,11 +141,13 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
      * Load the adapter with an appropriate object
      * <i>unless</I> its already been set.
      */
+    @Override
     abstract protected void setInstance();
 
     /**
      * Returns the port the stream is connected to which is "none";
      */
+    @Override
     public String getInfo() {
         return rb.getString("none");
     }
@@ -143,6 +155,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
+    @Override
     public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
@@ -156,8 +169,9 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                 if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
                     // no, set 1st option choice
                     opt.setSelectedIndex(0);
-                    adapter.setOptionState(i, (String) opt.getSelectedItem());
+                    // log before setting new value to show old value
                     log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
+                    adapter.setOptionState(i, (String) opt.getSelectedItem());
                 }
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
@@ -171,8 +185,8 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
-        showAdvanced.addItemListener(
-                new ItemListener() {
+        showAdvanced.addItemListener(new ItemListener() {
+            @Override
                     public void itemStateChanged(ItemEvent e) {
                         showAdvancedItems();
                     }
@@ -182,6 +196,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         checkInitDone();
     }
 
+    @Override
     protected void showAdvancedItems() {
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
@@ -230,14 +245,17 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         }
     }
 
+    @Override
     public String getManufacturer() {
         return adapter.getManufacturer();
     }
 
+    @Override
     public void setManufacturer(String manufacturer) {
         adapter.setManufacturer(manufacturer);
     }
 
+    @Override
     public String getConnectionName() {
         if (adapter.getSystemConnectionMemo() != null) {
             return adapter.getSystemConnectionMemo().getUserName();
@@ -246,6 +264,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         }
     }
 
+    @Override
     public boolean getDisabled() {
         if (adapter == null) {
             return true;
@@ -253,6 +272,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         return adapter.getDisabled();
     }
 
+    @Override
     public void setDisabled(boolean disabled) {
         adapter.setDisabled(disabled);
     }

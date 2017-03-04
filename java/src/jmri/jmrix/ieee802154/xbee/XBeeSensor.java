@@ -1,4 +1,3 @@
-// XBeeSensor.java
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
@@ -8,10 +7,6 @@ import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
-import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
 import com.digi.xbee.api.RemoteXBeeDevice;
 
 import jmri.Sensor;
@@ -26,10 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1015365837178480016L;
     private String NodeIdentifier; /* This is a string representation of
      the XBee address in the system name
      It may be an address or it may be
@@ -119,6 +110,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     /**
      * request an update on status by sending an XBee message
      */
+    @Override
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
         // attached to.  
@@ -142,6 +134,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
 
     // IIOSampleReceiveListener methods
+    @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
@@ -161,6 +154,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         return;
     }
 
+    @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
         super.dispose();
@@ -170,5 +164,3 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
 }
 
-
-/* @(#)XBeeSensor.java */

@@ -24,11 +24,13 @@ import org.slf4j.LoggerFactory;
  */
 public class NceProgrammerTest extends TestCase {
 
+    @Override
     public void setUp() {
         tc = new NceTrafficController();
         saveCommandOptions = tc.getCommandOptions();
     }
 
+    @Override
     public void tearDown() {
         tc.setCommandOptions(saveCommandOptions);
     }
@@ -383,6 +385,7 @@ public class NceProgrammerTest extends TestCase {
             rcvdStatus = 0;
         }
 
+        @Override
         public void programmingOpReply(int value, int status) {
             rcvdValue = value;
             rcvdStatus = status;
@@ -400,6 +403,7 @@ public class NceProgrammerTest extends TestCase {
         }
 
         // override some NceInterfaceController methods for test purposes
+        @Override
         public boolean status() {
             return true;
         }
@@ -409,6 +413,7 @@ public class NceProgrammerTest extends TestCase {
          */
         public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
 
+        @Override
         public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
             if (log.isDebugEnabled()) {
                 log.debug("sendNceMessage [" + m + "]");
@@ -452,17 +457,21 @@ public class NceProgrammerTest extends TestCase {
     // internal class to simulate a NcePortController
     class NcePortControllerScaffold extends NcePortController {
 
+        @Override
         public java.util.Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -479,16 +488,19 @@ public class NceProgrammerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }

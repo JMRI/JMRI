@@ -1,4 +1,3 @@
-// LnSensorManager.java
 package jmri.jmrix.loconet.hexfile;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -27,6 +26,7 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implemen
     }
 
     // LocoNet-specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s = new LnSensor(systemName, userName, tc, prefix);
         if (defaultSensorState != Sensor.UNKNOWN) {
@@ -53,5 +53,3 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implemen
 
     private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
 }
-
-/* @(#)LnSensorManager.java */
