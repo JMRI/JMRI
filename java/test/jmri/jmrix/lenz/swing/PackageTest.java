@@ -17,7 +17,8 @@ import org.junit.runners.Suite;
    jmri.jmrix.lenz.swing.lv102.PackageTest.class,
    BundleTest.class,
    XNetMenuTest.class,
-   XNetComponentFactoryTest.class
+   XNetComponentFactoryTest.class,
+   AbstractXPressNetActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.lenz.swing package
