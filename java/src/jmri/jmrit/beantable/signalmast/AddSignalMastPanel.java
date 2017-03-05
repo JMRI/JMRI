@@ -67,7 +67,7 @@ public class AddSignalMastPanel extends JPanel {
 
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected";
-    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected";
+    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // N11N
     String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected";
     String matrixBitNumSelectionCombo = this.getClass().getName() + ".matrixBitNumSelected";
     List<NamedBean> alreadyUsed = new ArrayList<NamedBean>();
@@ -587,7 +587,7 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
 
-    JTextField userName = new JTextField(20);
+    JTextField userName = new JTextField(20); // N11N
     JComboBox<String> sigSysBox = new JComboBox<String>();
     JComboBox<String> mastBox = new JComboBox<String>(new String[]{Bundle.getMessage("MastEmpty")});
     JCheckBox includeUsed = new JCheckBox(Bundle.getMessage("IncludeUsedHeads"));
@@ -740,7 +740,7 @@ public class AddSignalMastPanel extends JPanel {
     void okPressed(ActionEvent e) {
         String mastname = mastNames.get(mastBox.getSelectedIndex()).getName();
 
-        String user = userName.getText().trim();
+        String user = userName.getText().trim(); // N11N
         if (user.equals("")) {
             int i = JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",
                     "No UserName Given",

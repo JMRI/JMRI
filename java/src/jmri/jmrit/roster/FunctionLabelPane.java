@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Display and edit the function labels in a RosterEntry
+ * Display and edit the function labels in a RosterEntry.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Randall Wood Copyright (C) 2014
@@ -284,13 +284,13 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                 spaces.append(" ");
             }
             // start with pane name in bold
-            String heading1 = "Function";
-            String heading2 = "Description";
+            String heading1 = Bundle.getMessage("ColumnHeadingFunction");
+            String heading2 = Bundle.getMessage("ColumnHeadingDescription");
             String s;
             int interval = spaces.length() - heading1.length();
             w.setFontStyle(Font.BOLD);
             // write the section name and dividing line
-            s = "FUNCTION LABELS";
+            s = Bundle.getMessage("HeadingFunctionLabels");
             w.write(s, 0, s.length());
             w.writeBorders();
             //Draw horizontal dividing line for each Pane section

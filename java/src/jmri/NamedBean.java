@@ -315,10 +315,11 @@ public interface NamedBean {
      * @return A user name in standard normalized form 
      */
     @CheckReturnValue
-    static public @Nonnull String normalizeUserName(@Nonnull String inputName) throws BadUserNameException {
+    static public @CheckForNull String normalizeUserName(@CheckForNull String inputName) throws BadUserNameException {
         // uncomment next line to allow debugging of trimmed user names
         // return inputName.trim();
         return inputName;
     }
     public class BadUserNameException extends IllegalArgumentException {}
+    public class BadSystemNameException extends IllegalArgumentException {}
 }
