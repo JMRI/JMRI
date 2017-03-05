@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
@@ -797,7 +798,8 @@ public class CircuitBuilder {
                 log.debug("setIconGroup: selectionGroup has "
                         + selections.size() + " icons.");
             }
-            NamedBeanHandle<OBlock> handle = new NamedBeanHandle<OBlock>(block.getSystemName(), block);
+            NamedBeanHandle<OBlock> handle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                                .getNamedBeanHandle(block.getSystemName(), block);
             for (int i = 0; i < selections.size(); i++) {
                 Positionable pos = selections.get(i);
                 if (pos instanceof IndicatorTrack) {
@@ -1249,7 +1251,8 @@ public class CircuitBuilder {
 
     private void convertTO() {
         IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
-        t.setOccBlockHandle(new NamedBeanHandle<OBlock>(_currentBlock.getSystemName(), _currentBlock));
+        t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                             .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
         t.setTurnout(((TurnoutIcon) _oldIcon).getNamedTurnout());
         t.setFamily(_trackTOPanel.getFamilyName());
 
@@ -1272,7 +1275,8 @@ public class CircuitBuilder {
 
     private void convertSeg() {
         IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
-        t.setOccBlockHandle(new NamedBeanHandle<OBlock>(_currentBlock.getSystemName(), _currentBlock));
+        t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class) 
+                                .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
         t.setFamily(_trackPanel.getFamilyName());
 
         HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
@@ -1440,7 +1444,8 @@ public class CircuitBuilder {
                         java.util.List<Positionable> ic = _circuitMap.get(block);
                         ic.remove(pos);
                         ((IndicatorTrack) pos).setOccBlockHandle(
-                                new NamedBeanHandle<OBlock>(editBlock.getSystemName(), editBlock));
+                                InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                     .getNamedBeanHandle(editBlock.getSystemName(), editBlock));
                         return true;
                     }
                     return false;

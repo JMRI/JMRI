@@ -723,11 +723,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                             }
                             JmriBeanComboBox c;
                             if (column == SENSOR1COL) {
-                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getFirstSensor(), JmriBeanComboBox.DISPLAYNAME);
+                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getFirstSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                                 retval = new BeanComboBoxEditor(c);
                                 editorMapSensor1.put(getModel().getValueAt(row, SYSNAMECOL), retval);
                             } else { //Must be two
-                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getSecondSensor(), JmriBeanComboBox.DISPLAYNAME);
+                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getSecondSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                                 retval = new BeanComboBoxEditor(c);
                                 editorMapSensor2.put(getModel().getValueAt(row, SYSNAMECOL), retval);
                             }

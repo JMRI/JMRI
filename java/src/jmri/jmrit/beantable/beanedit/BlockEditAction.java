@@ -75,7 +75,7 @@ public class BlockEditAction extends BeanEditAction {
         BeanItemPanel reporter = new BeanItemPanel();
         reporter.setName(Bundle.getMessage("BeanNameReporter"));
 
-        reporterField = new JmriBeanComboBox(InstanceManager.getDefault(jmri.ReporterManager.class), ((Block) bean).getReporter(), JmriBeanComboBox.DISPLAYNAME);
+        reporterField = new JmriBeanComboBox(InstanceManager.getDefault(jmri.ReporterManager.class), ((Block) bean).getReporter(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
         reporterField.setFirstItemBlank(true);
 
         reporter.addItem(new BeanEditItem(reporterField, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
@@ -295,7 +295,7 @@ public class BlockEditAction extends BeanEditAction {
         BeanItemPanel basic = new BeanItemPanel();
         basic.setName(Bundle.getMessage("BeanNameSensor"));
 
-        sensorField = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Block) bean).getSensor(), JmriBeanComboBox.DISPLAYNAME);
+        sensorField = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Block) bean).getSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
         sensorField.setFirstItemBlank(true);
         basic.addItem(new BeanEditItem(sensorField, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
 

@@ -9,6 +9,10 @@ import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * JComboBox varient for showing and selecting JMRI NamedBeans
+ * from a specific manager.
+ */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
     /*
@@ -16,16 +20,16 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @param manager the jmri manager that is used to populate the combo box
      */
     public JmriBeanComboBox(jmri.Manager manager) {
-        this(manager, null, DISPLAYNAME);
+        this(manager, null, DisplayOptions.DISPLAYNAME);
     }
 
     /*
      * Create a Jmri Combo box for the given bean manager, with the Namedbean already selected and the items displayed and ordered
      * @param manager the jmri manager that is used to populate the combo box
      * @param nBean the namedBean that should automatically be selected
-     * @param displayOrder the way in which the namedbeans should be displayed as
+     * @param displayOrder the way in which the namedbeans should be displayed
      */
-    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, int displayOrder) {
+    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, JmriBeanComboBox.DisplayOptions displayOrder) {
         _displayOrder = displayOrder;
         _manager = manager;
         setSelectedBean(nBean);
@@ -47,7 +51,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     String _lastSelected = "";
-    int _displayOrder;
+    JmriBeanComboBox.DisplayOptions _displayOrder;
     boolean _firstBlank = false;
 
     jmri.Manager _manager;
@@ -71,7 +75,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         String[] displayList = new String[nameList.size()];
 
-        if (_displayOrder == SYSTEMNAME) {
+        if (_displayOrder == DisplayOptions.SYSTEMNAME) {
             displayList = nameList.toArray(displayList);
         } else {
             //for(String name: nameList){
@@ -264,33 +268,35 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         updateComboBox(_lastSelected);
     }
 
-    /**
-     * constant used to format the entries in the combo box using the
-     * displayname
-     */
-    public final static int DISPLAYNAME = 0x00;
-    /**
-     * Constant used to format the entries in the combo box using the username
-     * if the username value is blank for a bean then the system name is used
-     */
-    public final static int USERNAME = 0x01;
+    public enum DisplayOptions {
+        /**
+         * Format the entries in the combo box using the
+         * displayname
+         */
+        DISPLAYNAME,
+        /**
+         * Format the entries in the combo box using the username.
+         * If the username value is blank for a bean then the system name is used
+         */
+        USERNAME,
 
-    /**
-     * constant used to format the entries in the combo box using the systemname
-     */
-    public final static int SYSTEMNAME = 0x02;
+        /**
+         * Format the entries in the combo box using the systemname
+         */
+        SYSTEMNAME,
 
-    /**
-     * constant used to format the entries in the combo box with the username
-     * followed by the systemname
-     */
-    public final static int USERNAMESYSTEMNAME = 0x03;
+        /**
+         * Format the entries in the combo box with the username
+         * followed by the systemname
+         */
+        USERNAMESYSTEMNAME,
 
-    /**
-     * constant used to format the entries in the combo box with the systemname
-     * followed by the userame
-     */
-    public final static int SYSTEMNAMEUSERNAME = 0x04;
+        /**
+         * Format the entries in the combo box with the systemname
+         * followed by the userame
+         */
+        SYSTEMNAMEUSERNAME
+    }
 
     public void dispose() {
         _manager.removePropertyChangeListener(this);
