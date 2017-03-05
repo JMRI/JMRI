@@ -622,6 +622,10 @@ public class ConditionalVariable {
         return (result);
     }
 
+    /**
+     * Note: _num1 determines the comparison used. Can be 0, LESS_THAN, LESS_THAN_OR_EQUAL,
+     * EQUAL, GREATER_THAN_OR_EQUAL or GREATER_THAN.
+     */
     boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {
             return value2 == null;

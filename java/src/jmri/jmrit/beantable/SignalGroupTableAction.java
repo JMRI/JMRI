@@ -364,8 +364,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         box.setSelectedItem(result);
     }
 
-    JTextField _systemName = new JTextField(10);
-    JTextField _userName = new JTextField(22);
+    JTextField _systemName = new JTextField(10); // N11N
+    JTextField _userName = new JTextField(22); // N11N
 
     JmriJFrame addFrame = null;
 
@@ -760,10 +760,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      */
     boolean checkNewNamesOK() {
         // Get system name and user name from Add Signal Group pane
-        String sName = _systemName.getText().toUpperCase().trim();
+        String sName = _systemName.getText().toUpperCase().trim(); // N11N
         // seems field _systemName is not properly filled in when editing an existing mast
         // so prevent it from being called (in line 900)
-        String uName = _userName.getText(); // may be empty
+        String uName = _userName.getText(); // may be empty // N11N
         if (sName.length() == 0) {
             javax.swing.JOptionPane.showMessageDialog(null, "System Name field can not be left blank.",
                     Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);

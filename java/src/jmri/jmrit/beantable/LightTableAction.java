@@ -1062,10 +1062,10 @@ public class LightTableAction extends AbstractTableAction {
     private int defaultControlIndex = 0;
     private boolean inEditControlMode = false;
     private LightControl lc = null;
-    private JTextField field1a = new JTextField(10);  // Sensor 
-    private JTextField field1a2 = new JTextField(10);  // Sensor 2 
+    private JTextField field1a = new JTextField(10);  // Sensor // N11N
+    private JTextField field1a2 = new JTextField(10);  // Sensor 2  // N11N
     private JTextField field1b = new JTextField(8);  // Fast Clock
-    private JTextField field1c = new JTextField(10);  // Turnout
+    private JTextField field1c = new JTextField(10);  // Turnout // N11N
     private JTextField field1d = new JTextField(10);  // Timed ON
     private JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor"));
     private JTextField field2a = new JTextField(8);  // Fast Clock
@@ -1395,7 +1395,7 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.SENSOR_CONTROL);
             // Get sensor control information
-            String sensorName = field1a.getText().trim();
+            String sensorName = field1a.getText().trim(); // N11N
             Sensor s = null;
             if (sensorName.length() < 1) {
                 // no sensor name entered
@@ -1503,7 +1503,7 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.TURNOUT_STATUS_CONTROL);
             // Get turnout control information
-            String turnoutName = field1c.getText().trim();
+            String turnoutName = field1c.getText().trim(); // N11N
             if (turnoutName.length() < 1) {
                 // valid turnout system name was not entered
                 g.setControlType(Light.NO_CONTROL);
@@ -1593,9 +1593,9 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.TWO_SENSOR_CONTROL);
             // Get sensor control information
-            String sensorName = field1a.getText().trim();
+            String sensorName = field1a.getText().trim(); // N11N
             Sensor s = null;
-            String sensor2Name = field1a2.getText().trim();
+            String sensor2Name = field1a2.getText().trim(); // N11N
             Sensor s2 = null;
             if ((sensorName.length() < 1) || (sensor2Name.length() < 1)) {
                 // no sensor name entered

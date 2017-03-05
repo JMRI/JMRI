@@ -14,9 +14,13 @@ import java.util.List;
 import java.util.Map.Entry;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -141,7 +145,8 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     /**
-     * Return the transparent JPanel for this EntryExitPairs.
+     * Get the transparent JPanel for this EntryExitPairs.
+     * @return JPanel overlay
      */
     public JPanel getGlassPane() {
         return glassPane;
@@ -253,6 +258,20 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     @Override
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a system name
+     * for the NamedBeans handled by this manager.
+     *
+     * @param inputName System name to be normalized
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
+     * @return A system name in standard normalized form 
+     */
+    @Override
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        return inputName;
     }
 
     @Override
@@ -946,6 +965,7 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
      * @param editor The Layout Editor panel
      * @param interlockType Integer value representing the type of interlocking, one of
      *                      SETUPTURNOUTSONLY, SETUPSIGNALMASTLOGIC or FULLINTERLOCK
+     * @throws JmriException when an error occurs during discovery
      */
     public void automaticallyDiscoverEntryExitPairs(LayoutEditor editor, int interlockType) throws JmriException {
         //This is almost a duplicate of that in the DefaultSignalMastLogicManager

@@ -17,11 +17,23 @@ import java.awt.GraphicsEnvironment;
 public class PrintMoreOptionFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PrintMoreOptionFrame t = new PrintMoreOptionFrame();
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testPrintMoreOptionFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PrintMoreOptionFrame f = new PrintMoreOptionFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents();
+
+        // TODO do more testing
+
+        // done
+        f.dispose();
     }
 
     // The minimal setup for log4J

@@ -59,7 +59,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of NamedBean manager contents
+ * Table data model for display of NamedBean manager contents.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author  Dennis Miller Copyright (C) 2006
@@ -332,9 +332,11 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     /**
      * Delete the bean after all the checking has been done.
-     * <P>
+     * <p>
      * Separate so that it can be easily subclassed if other functionality is
      * needed.
+     *
+     * @param bean NamedBean to delete
      */
     void doDelete(NamedBean bean) {
         try {
@@ -650,7 +652,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         if (retval != 1) {
             return;
         }
-        String value = _newName.getText().trim();
+        String value = _newName.getText().trim(); // N11N
 
         if (value.equals(oldName)) {
             //name not changed.

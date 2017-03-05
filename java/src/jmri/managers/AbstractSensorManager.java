@@ -83,10 +83,6 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         return (Sensor) _tuser.get(key);
     }
 
-    protected String normalizeSystemName(String sysName) {
-        return sysName;
-    }
-
     @Override
     public Sensor newSensor(String sysName, String userName) throws IllegalArgumentException {
         log.debug(" newSensor(\"{}\", \"{}\"", sysName, userName);
