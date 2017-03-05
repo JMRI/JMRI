@@ -104,6 +104,11 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public String normalizeSystemName(String inputName) throws NamedBean.BadSystemNameException {
+        return inputName;
+    }
+
+    @Override
     public void dispose() {
     }
 

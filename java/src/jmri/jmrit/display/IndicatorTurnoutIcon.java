@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
@@ -170,7 +171,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
         OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(pName);
         if (block != null) {
-            setOccBlockHandle(new NamedBeanHandle<OBlock>(pName, block));
+            setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(pName, block));
         } else {
             log.error("Detection OBlock '" + pName + "' not available, icon won't see changes");
         }

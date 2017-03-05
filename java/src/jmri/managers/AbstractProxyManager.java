@@ -8,6 +8,9 @@ import jmri.NamedBean;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Implementation of a Manager that can serves as a proxy for multiple
@@ -115,6 +118,28 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     /**
+     * Enforces, and as a user convenience converts to, the standard form for a system name
+     * for the NamedBeans handled by this manager and its submanagers.
+     * <p>
+     * Attempts to match by system prefix first.
+     * <p> 
+     *
+     * @param inputName System name to be normalized
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
+     * @return A system name in standard normalized form 
+     */
+    @Override
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        int index = matchTentative(inputName);
+        if (index >= 0) {
+            return getMgr(index).normalizeSystemName(inputName);
+        }
+        log.debug("normalizeSystemName did not find manager for name " + inputName + ", defer to default");
+        return getMgr(0).normalizeSystemName(inputName);
+    }
+
+    /**
      * Locate via user name, then system name if needed. If that fails, create a
      * new NamedBean: If the name is a valid system name, it will be used for
      * the new NamedBean. Otherwise, the makeSystemName method will attempt to
@@ -137,7 +162,7 @@ abstract public class AbstractProxyManager implements Manager {
         if (index >= 0) {
             return makeBean(index, name, null);
         }
-        log.debug("Did not find manager for name " + name + ", defer to default");
+        log.debug("provideNamedBean did not find manager for name " + name + ", defer to default");
         return makeBean(0, getMgr(0).makeSystemName(name), null);
     }
 

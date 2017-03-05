@@ -336,7 +336,7 @@ public class Maintenance {
      * @return 4 element String: {Type, userName, sysName, numListeners}
      */
     static String[] getTypeAndNames(String name) {
-        String userName = name.trim();
+        String userName = name.trim(); // N11N
         String sysName = userName;
         // String sysName = userName.toUpperCase();
         boolean found = false;

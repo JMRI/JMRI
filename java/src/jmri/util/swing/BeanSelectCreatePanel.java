@@ -53,7 +53,7 @@ public class BeanSelectCreatePanel extends JPanel {
 
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
-        existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.USERNAMESYSTEMNAME);
+        existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
         // If the combo list is empty we go straight to creation.
         if (existingCombo.getItemCount() == 0) {
             newItem.setSelected(true);

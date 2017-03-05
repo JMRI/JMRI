@@ -6,21 +6,24 @@
   <name xml:lang="de">Geschwindigkeitskennlinie</name>
   <name xml:lang="da">Hastigheds Tabel</name>
   <name xml:lang="cs">Rychlostní tabulka</name>
+  <name xml:lang="nl">Snelheidsgrafiek</name>
   <column>
             <row>
               <column>
                 <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
                   <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
                   <label xml:lang="ca">Selecciona aquest botó per fer servir taula de velocitats</label>
-                  <label xml:lang="de">Um die eine Geschwindikeitskennlinie zu benutzen, diesen Button markieren</label>
+                  <label xml:lang="de">Um die Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
                   <label xml:lang="cs">Pro použití rychlostní tabulky pro řízení rychlosti zvolte toto tlačítko</label>
+                  <label xml:lang="nl">Selecteer deze knop om de Snelheidsgrafiek toe te passen</label>
                 </display>
                 <label>
                   <text>            To turn off, use Basic Speed Control pane</text>
-                  <text xml:lang="de">Zum Ausschalten, die Lasche Einfache Geschwindigkeitseinstellung benutzen</text>
+                  <text xml:lang="de">     Zum Ausschalten, die Lasche Geschwindigkeit aktivieren</text>
                   <text xml:lang="it">            per disabilitare, Usa il pannello di controllo Basic</text>
 				  <text xml:lang="ca">            per dishabilitar, Utilitza el panell de control Bàsic</text>
                   <text xml:lang="cs">            pro vypnutí použijte Základní řízení rychlosti</text>
+                  <text xml:lang="nl">         Om uit te schakelen, het tabblad Snelheid activeren</text>
                 </label>
               </column>
             </row>
@@ -44,6 +47,7 @@
                   <tooltip xml:lang="ca">Selecciona taula de velocitats del fabricant o de l'usuari</tooltip>
                   <tooltip xml:lang="de">Die Geschwindigkeitskennlinie des Herstellers oder die des Benutzers verwenden</tooltip>
                   <tooltip xml:lang="cs">Vyberte rychlostní tabulku danou výrobcem nebo uživatelskou tabulku</tooltip>
+                  <tooltip xml:lang="nl">De Snelheidsgrafiek van de fabrikant of van de gebruiker toepassen</tooltip>
                 </display>
               </column>
             </row>
@@ -65,6 +69,7 @@
                 <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enrere</tooltip>
                 <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Vorwärts"</tooltip>
                 <tooltip xml:lang="cs">Jemné nastavení napětí pro směr vpřed</tooltip>
+                <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Vooruit"</tooltip>
               </display>
               <label>
                 <text> </text>
@@ -84,6 +89,7 @@
                 <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enrere</tooltip>
                 <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Rückwärts"</tooltip>
                 <tooltip xml:lang="cs">Jemné nastavení napětí pro směr vzad</tooltip>
+                <tooltip xml:lang="nl">Details voor de snelheidsgrafiek "Achteruit"</tooltip>
               </display>
               <label>
                 <text> </text>

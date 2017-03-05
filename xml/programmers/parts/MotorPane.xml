@@ -4,6 +4,7 @@
   <name xml:lang="it">Motore</name>
   <name xml:lang="de">Motor</name>
   <name xml:lang="cs">Motor</name>
+  <name xml:lang="nl">Motor</name>
   <column>
     <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction">
       <tooltip xml:lang="it">Fornisce un impulso di tensione iniziale per ovviare alla frizione in partenza</tooltip>

@@ -13,7 +13,7 @@ import org.junit.Before;
 public class InternalReporterManagerTest extends AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "IR" + i;
     }
 

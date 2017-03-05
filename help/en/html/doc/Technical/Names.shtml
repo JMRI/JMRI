@@ -396,7 +396,76 @@ knows to look for routes of this name.
         <li>There's no provision for a single program to deal with
         more than one layout. If that's needed, we'll have to
         understand what the program is trying to do.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      
+      <h2>For Programmers</h2>
+      
+          The code to make sure that names are in normal form 
+          has been localized to a single routine for user names:
+          <br><pre><code>
+          String userName = NamedBean.normalizeUserName(input);
+          </code></pre><br>
+          Because system names may vary from type to type 
+          and manager to manager, this is manager-specific for them:
+          <br><pre><code>
+          String systemName = manager.normalizeSystemName(input);
+          </code></pre><br>
+          For more information, see the Javadoc for
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>
+            and
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#normalizeSystemName-java.lang.String-">normalizeSystemName</a>
+      
+        <p>
+        In general, it's better to use an input method that already handles all this.  Two are available
+        now:
+        <ul>
+        <li>JComboBox format:
+            <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75"/></a>
+            
+            <pre><code>
+        import jmri.util.swing.JmriBeanComboBox;
+
+        // the first argument is the manager, the 2nd is a bean to select or null
+        // the third determines how the beans are displayed
+        selectComboBox = new <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.html">JmriBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
+                                                    currentSensor, 
+                                                    <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.DisplayOptions.html">JmriBeanComboBox.DisplayOptions</a>.DISPLAYNAME)
+        
+        // to get the selected item
+        selectComboBox.getSelectedItem()                                         
+            </code></pre>
+
+        <li>Table format:
+            <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
+            <pre><code>
+
+        import jmri.jmrit.picker.*;
+        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
+        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a> panel = new <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a>(tableModel);
+            
+        // to get the selected item as a NamedBeanHandle&lt;T&gt;
+        panel.getSelectedBeanHandle();
+
+        // you can listen for a selected value by inheriting from ListSelectionListener 
+        // and registering with panel.getTable().getSelectionModel().addListSelectionListener(this)
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            System.out.println("  Selected: "+panel.getSelectedBeanHandle());
+        }
+            </code></pre>
+        This allows the user to select either the system name or (non-blank) user name in a row,
+        which then becomes the preferred name for the resulting 
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.
+        For more information on
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>,
+        including how to get them from the 
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">NamedBeanHandleManager</a>
+        see the page on
+        <a href="Patterns.shtml">code patterns page</a>.
+        
+        
+        </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
