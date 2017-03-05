@@ -5,12 +5,26 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
- * Utility class for managing access to a NamedBean
+ * Utility class for managing access to a NamedBean.
+ * <p>
+ * This associates a particular name (either the user name or system name, typically)
+ * with a specific NamedBean.  Later, when the user wants to do a rename operation,
+ * this is used to decide whether this particular reference should be renamed. Note, however,
+ * that these should only be created and access via the {@link NamedBeanHandleManager} instance.
+ * 
+ * @see NamedBeanHandleManager
+ * @see NamedBean
  *
  * @author Bob Jacobsen Copyright 2009
  */
 public class NamedBeanHandle<T extends NamedBean> implements java.io.Serializable {
 
+    /**
+     * Create a handle to a particular bean accessed by a specific name.
+     * <p>
+     * Usually, defer to 
+     * {@link NamedBeanHandleManager} to create these
+     */
     public NamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
         this.name = name;
         this.bean = bean;
