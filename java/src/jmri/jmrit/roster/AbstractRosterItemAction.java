@@ -101,7 +101,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
         log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":\""
-                + selections.getSelectedItem() + "\"");
+                + selections.getSelectedItem() + "\""); // TODO I18N
         if (retval != 1) {
             return false;  // user didn't select
         }

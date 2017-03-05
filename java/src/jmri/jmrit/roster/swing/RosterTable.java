@@ -39,7 +39,7 @@ import jmri.util.swing.JmriPanel;
 import jmri.util.swing.XTableColumnModel;
 
 /**
- * Provide a table of roster entries as a JmriJPanel
+ * Provide a table of roster entries as a JmriJPanel.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  * @author Randall Wood Copyright (C) 2013

@@ -527,8 +527,8 @@ public class LogixTableAction extends AbstractTableAction {
 
     // Add Logix Variables
     JmriJFrame addLogixFrame = null;
-    JTextField _systemName = new JTextField(20);
-    JTextField _addUserName = new JTextField(20);
+    JTextField _systemName = new JTextField(20); // N11N
+    JTextField _addUserName = new JTextField(20); // N11N
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
@@ -865,7 +865,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @param e the event heard
      */
     void copyLogixPressed(ActionEvent e) {
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText().trim(); // N11N
         if (uName.length() == 0) {
             uName = null;
         }
@@ -879,7 +879,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (!checkLogixSysName()) {
                 return;
             }
-            String sName = _systemName.getText().trim();
+            String sName = _systemName.getText().trim(); // N11N
             // check if a Logix with this name already exists
             boolean createLogix = true;
             targetLogix = _logixManager.getBySystemName(sName);
@@ -1005,7 +1005,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @return false if name has length &lt; 1 after displaying a dialog
      */
     boolean checkLogixSysName() {
-        String sName = _systemName.getText().trim();
+        String sName = _systemName.getText().trim(); // N11N
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
             javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
@@ -1073,11 +1073,11 @@ public class LogixTableAction extends AbstractTableAction {
     void createPressed(ActionEvent e) {
         // possible change
         _showReminder = true;
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText().trim(); // N11N
         if (uName.length() == 0) {
             uName = null;
         }
-        String sName = _systemName.getText().trim();
+        String sName = _systemName.getText().trim(); // N11N
         if (_autoSystemName.isSelected()) {
             if (!checkLogixUserName(uName)) {
                 return;
@@ -1432,7 +1432,7 @@ public class LogixTableAction extends AbstractTableAction {
             return;
         }
         // Check if the User Name has been changed
-        String uName = editUserName.getText().trim();
+        String uName = editUserName.getText().trim(); // N11N
         if (!(uName.equals(_curLogix.getUserName()))) {
             // user name has changed - check if already in use
             if (uName.length() > 0) {
@@ -2250,7 +2250,7 @@ public class LogixTableAction extends AbstractTableAction {
             return;
         }
         // Check if the User Name has been changed
-        String uName = conditionalUserName.getText().trim();
+        String uName = conditionalUserName.getText().trim(); // N11N
         if (!uName.equals(_curConditional.getUserName())) {
             // user name has changed - check if already in use
             if (!checkConditionalUserName(uName, _curLogix)) {
@@ -5570,11 +5570,11 @@ public class LogixTableAction extends AbstractTableAction {
             } else if (col == UNAME_COLUMN) {
                 String uName = (String) value;
                 Conditional cn = _conditionalManager.getByUserName(_curLogix,
-                        uName.trim());
+                        uName.trim()); // N11N
                 if (cn == null) {
                     _conditionalManager.getBySystemName(
                             _curLogix.getConditionalByNumberOrder(rx))
-                            .setUserName(uName.trim());
+                            .setUserName(uName.trim()); // N11N
                     fireTableRowsUpdated(rx, rx);
                 } else {
                     String svName = _curLogix.getConditionalByNumberOrder(rx);

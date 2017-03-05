@@ -140,7 +140,7 @@ public class RestoreDialog extends JDialog {
                 buttonPane.add(restoreButton);
             }
             {
-                JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
+                JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
                 cancelButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {

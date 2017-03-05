@@ -194,16 +194,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     //top row of check boxes
     private JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
-        InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
+        InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private JPanel turnoutNamePanel = new JPanel(leftRowLayout);
     private JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
     private JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
-        InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
+        InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JComboBox<String> rotationComboBox = null;
     private JPanel rotationPanel = new JPanel(leftRowLayout);
 
-    //2nd row of radio buttons
+  //2nd row of radio buttons
     private JLabel trackLabel = new JLabel();
     private JRadioButton levelXingButton = new JRadioButton(rb.getString("LevelCrossing"));
     private JRadioButton trackButton = new JRadioButton(rb.getString("TrackSegment"));
@@ -215,14 +215,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private JLabel blockNameLabel = new JLabel();
     private JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private JLabel blockSensorNameLabel = new JLabel();
     private JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
     private JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    //3rd row of radio buttons (and any associated text fields)
+  //3rd row of radio buttons (and any associated text fields)
     private JLabel nodesLabel = new JLabel();
     private JRadioButton endBumperButton = new JRadioButton(rb.getString("EndBumper"));
     private JRadioButton anchorButton = new JRadioButton(rb.getString("Anchor"));
@@ -234,26 +234,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
     private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
-    private JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
-
-    //4th row of radio buttons (and any associated text fields)
+  //4th row of radio buttons (and any associated text fields)
     private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     private JRadioButton signalMastButton = new JRadioButton(rb.getString("SignalMastIcon"));
     private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private JRadioButton sensorButton = new JRadioButton(rb.getString("SensorIcon"));
     private JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private JRadioButton signalButton = new JRadioButton(rb.getString("SignalIcon"));
     private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
-        InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private JRadioButton iconLabelButton = new JRadioButton(rb.getString("IconLabel"));
 

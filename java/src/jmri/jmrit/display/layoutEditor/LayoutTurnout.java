@@ -2388,13 +2388,13 @@ public class LayoutTurnout extends LayoutTrack {
     private JmriBeanComboBox secondTurnoutComboBox;
     private JLabel secondTurnoutLabel;
     protected JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox blockBNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox blockCNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox blockDNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JComboBox<String> stateBox = new JComboBox<String>();
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTurnout"));
     private int turnoutClosedIndex;
@@ -2433,20 +2433,15 @@ public class LayoutTurnout extends LayoutTrack {
 
             // add combobox to select turnout
             firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
-            if (true) {
-                layoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
-            } else {
-                firstTurnoutComboBox.setEditable(true);
-            }
+            layoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
             panel1.add(firstTurnoutComboBox);
             contentPane.add(panel1);
 
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
+
             secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
-            if (true) {
-                layoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
-            }
+            layoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
             additionalTurnout.addActionListener((ActionEvent e) -> {
                 if (additionalTurnout.isSelected()) {
                     secondTurnoutLabel.setEnabled(true);

@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class RosterEntryPane extends javax.swing.JPanel {
 
     // Field sizes expanded to 30 from 12 to match comment
-// fields and allow for more text to be displayed
+    // fields and allow for more text to be displayed
     JTextField id = new JTextField(30);
     JTextField roadName = new JTextField(30);
     JTextField maxSpeed = new JTextField(3);
