@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(UnboundBeanTest.class));
         suite.addTest(new TestSuite(ArbitraryPropertySupportTest.class));
         suite.addTest(new TestSuite(UnboundArbitraryBeanTest.class));
+	suite.addTest(new junit.framework.JUnit4TestAdapter(ConstrainedArbitraryBeanTest.class));
         return suite;
     }
 
@@ -44,3 +45,4 @@ public class PackageTest extends TestCase {
     }
 
 }
+

@@ -384,5 +384,5 @@ public class XBeeNode extends IEEE802154Node {
               "," + getIdentifier() + ")";
     }
 
-    private static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }

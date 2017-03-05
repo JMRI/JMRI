@@ -3,6 +3,8 @@ package jmri.jmrit.consisttool;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -181,6 +183,22 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         locoSelector.setToolTipText(Bundle.getMessage("LocoSelectorToolTip"));
         locoSelector.setVisible(true);
+
+        locoSelector.addKeyListener(new KeyListener(){
+            @Override
+            public void keyPressed(KeyEvent e){
+               // if we start typing, set the selected index of the locoRosterbox to nothing.
+               locoRosterBox.setSelectedIndex(0);
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
         locoRosterBox = new GlobalRosterEntryComboBox();
         locoRosterBox.setNonSelectedItem("");
@@ -637,8 +655,12 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("AddressAlreadyInConsistError"));
             } else {
-                ConsistMan.getConsist(address).add(locoaddress,
-                        locoDirectionNormal.isSelected());
+                Consist tempConsist = ConsistMan.getConsist(address);
+                tempConsist.add(locoaddress,locoDirectionNormal.isSelected());
+                if(locoRosterBox.getSelectedRosterEntries().length == 1) {
+                   tempConsist.setRosterId(locoaddress,locoRosterBox.getSelectedRosterEntries()[0].titleString());
+                }
+                
             }
             if (consistAdrBox.getSelectedItem() != adrSelector.getAddress()) {
                 initializeConsistBox();

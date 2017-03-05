@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of SimpleTimebase objects
+ * Handle XML persistance of SimpleTimebase objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2017
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -22,7 +22,6 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
     /**
      * Default implementation for storing the contents of a SimpleTimebase.
      * <P>
-     *
      * @param o Object to start process, but not actually used
      * @return Element containing the complete info
      */
@@ -48,6 +47,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         elem.setAttribute("startsettime", (clock.getStartSetTime() ? "yes" : "no"));
         elem.setAttribute("startclockoption", Integer.toString(
                 clock.getStartClockOption()));
+        elem.setAttribute("showbutton", (clock.getShowStopButton() ? "yes" : "no"));
 
         return elem;
     }
@@ -94,6 +94,15 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             }
             if (val.equals("no")) {
                 clock.set12HourDisplay(false, false);
+            }
+        }
+        if (shared.getAttribute("showbutton") != null) {
+            val = shared.getAttributeValue("showbutton");
+            if (val.equals("yes")) {
+                clock.setShowStopButton(true);
+            }
+            if (val.equals("no")) {
+                clock.setShowStopButton(false);
             }
         }
         if (shared.getAttribute("run") != null) {

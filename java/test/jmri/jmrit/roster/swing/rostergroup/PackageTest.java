@@ -27,7 +27,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.rostergroup.PackageTest");
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RosterGroupTableModelTest.class));
         return suite;
     }
 

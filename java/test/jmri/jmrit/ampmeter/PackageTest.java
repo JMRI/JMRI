@@ -27,6 +27,8 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.ampmeter.PackageTest");   // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AmpMeterActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AmpMeterFrameTest.class));
 
         return suite;
     }

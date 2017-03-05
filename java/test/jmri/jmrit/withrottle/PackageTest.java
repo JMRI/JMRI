@@ -48,6 +48,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(ControllerFilterActionTest.class));
         suite.addTest(new JUnit4TestAdapter(ControllerFilterFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(UserInterfaceTest.class));
+        suite.addTest(new JUnit4TestAdapter(WiThrottleCreationActionTest.class));
 
         return suite;
     }

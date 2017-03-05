@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the Jmri package
+ * Tests for the Jmrit PowerPanel
  *
  * @author	Bob Jacobsen
  */

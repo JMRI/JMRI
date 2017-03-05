@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -139,11 +138,8 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         if (isEditable()) {
             popup.add(updateBlockItem);
             updateBlockItem.setSelected(updateBlockValueOnChange());
-            updateBlockItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    updateBlockValueOnChange(updateBlockItem.isSelected());
-                }
+            updateBlockItem.addActionListener((java.awt.event.ActionEvent e) -> {
+                updateBlockValueOnChange(updateBlockItem.isSelected());
             });
         }  // end of selectable
         return super.showPopUp(popup);

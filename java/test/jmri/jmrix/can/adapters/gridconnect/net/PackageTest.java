@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.can.adapters.gridconnect.net.configurexml.PackageTest.class
+   jmri.jmrix.can.adapters.gridconnect.net.configurexml.PackageTest.class,
+   MergConnectionConfigTest.class,
+   MergNetworkDriverAdapterTest.class,
+   NetworkDriverAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.net package.
