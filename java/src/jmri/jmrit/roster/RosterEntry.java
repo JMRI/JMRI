@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
@@ -41,20 +42,20 @@ import org.slf4j.LoggerFactory;
 /**
  * RosterEntry represents a single element in a locomotive roster, including
  * information on how to locate it from decoder information.
- * <P>
+ * <p>
  * The RosterEntry is the central place to find information about a locomotive's
  * configuration, including CV and "programming variable" information.
  * RosterEntry handles persistency through the LocoFile class. Creating a
  * RosterEntry does not necessarily read the corresponding file (which might not
  * even exist), please see readFile(), writeFile() member functions.
- * <P>
+ * <p>
  * All the data attributes have a content, not null. FileName, however, is
  * special. A null value for it indicates that no physical file is (yet)
  * associated with this entry.
- * <P>
+ * <p>
  * When the filePath attribute is non-null, the user has decided to organize the
  * roster into directories.
- * <P>
+ * <p>
  * Each entry can have one or more "Attributes" associated with it. These are
  * (key, value) pairs. The key has to be unique, and currently both objects have
  * to be Strings.
@@ -173,11 +174,22 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public RosterEntry() {
     }
 
+    /**
+     * Constructor based on a given file name.
+     *
+     * @param fileName xml file name for the user's Roster entry
+     */
     public RosterEntry(String fileName) {
         this();
         _fileName = fileName;
     }
 
+    /**
+     * Constructor based on a given RosterEntry object and name/ID.
+     *
+     * @param pEntry RosterEntry object
+     * @param pID unique name/ID for the roster entry
+     */
     public RosterEntry(RosterEntry pEntry, String pID) {
         this();
         // The ID is different for this element
@@ -232,6 +244,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
     }
 
+    /**
+     * Set the roster ID for this roster entry.
+     *
+     * @param s new ID
+     */
     public void setId(String s) {
         String oldID = _id;
         _id = s;
@@ -245,6 +262,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _id;
     }
 
+    /**
+     * Set the file name for this roster entry.
+     *
+     * @param s the new roster entry file name
+     */
     public void setFileName(String s) {
         String oldName = _fileName;
         _fileName = s;
@@ -260,8 +282,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Ensure the entry has a valid filename. If none exists, create one based
-     * on the ID string. Does _not_ enforce any particular naming; you have to
+     * Ensure the entry has a valid filename.
+     * <p>
+     * If none exists, create one based on the ID string.
+     * Does _not_ enforce any particular naming; you have to
      * check separately for {@literal "<none>"} or whatever your convention is
      * for indicating an invalid name. Does replace the space, period, colon,
      * slash and backslash characters so that the filename will be generally
@@ -503,8 +527,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Set the date modified given a string representing a date. Tries ISO 8601
-     * and the current Java defaults as formats for parsing a date.
+     * Set the date modified given a string representing a date.
+     * <p>
+     * Tries ISO 8601 and the current Java defaults as formats for parsing a date.
      *
      * @param date the string to parse into a date
      * @throws ParseException if the date cannot be parsed
@@ -587,7 +612,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Construct this Entry from XML. This member has to remain synchronized
+     * Construct this Entry from XML.
+     * <p>
+     * This member has to remain synchronized
      * with the detailed DTD in roster-config.xml
      *
      * @param e Locomotive XML element
@@ -624,7 +651,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             _dccAddress = a.getValue();
         }
 
-        // file path were saved without default xml config path 
+        // file path was saved without default xml config path
         if ((a = e.getAttribute("imageFilePath")) != null && !a.getValue().isEmpty()) {
             try {
                 if (FileUtil.getFile(a.getValue()).isFile()) {
@@ -736,8 +763,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     boolean loadedOnce = false;
 
     /**
-     * Loads function names from a JDOM element. Does not change values that are
-     * already present!
+     * Load function names from a JDOM element.
+     * <p>
+     * Does not change values that are already present!
      *
      * @param e3 the XML element containing functions
      */
@@ -843,7 +871,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Loads attribute key/value pairs from a JDOM element.
+     * Load attribute key/value pairs from a JDOM element.
      *
      * @param e3 XML element containing roster entry attributes
      */
@@ -877,7 +905,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * return null.
      *
      * @param fn function number, starting with 0
-     * @return function label or null
+     * @return function label or null if not defined
      */
     public String getFunctionLabel(int fn) {
         if (functionLabels == null) {
@@ -890,7 +918,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Define label for a specific sound
+     * Define label for a specific sound.
      *
      * @param fn    sound number, starting with 0
      * @param label display label for the sound function
@@ -1008,9 +1036,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Provide access to the set of attributes. This is directly backed access,
-     * so e.g. removing an item from this Set removes it from the RosterEntry
-     * too.
+     * Provide access to the set of attributes.
+     * <p>
+     * This is directly backed access, so e.g. removing an item from this
+     * Set removes it from the RosterEntry too.
      *
      * @return a set of attribute keys
      */
@@ -1080,7 +1109,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Create an XML element to represent this Entry. This member has to remain
+     * Create an XML element to represent this Entry.
+     * <p>
+     * This member has to remain
      * synchronized with the detailed DTD in roster-config.xml.
      *
      * @return Contents in a JDOM Element
@@ -1247,9 +1278,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Write the contents of this RosterEntry to a file. Information on the
-     * contents is passed through the parameters, as the actual XML creation is
-     * done in the LocoFile class.
+     * Write the contents of this RosterEntry to a file.
+     * <p>
+     * Information on the contents is passed through the parameters,
+     * as the actual XML creation is done in the LocoFile class.
      *
      * @param cvModel       CV contents to include in file
      * @param iCvModel      indexed CV contents to include in file
@@ -1289,7 +1321,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Mark the date updated, e.g. from storing this roster entry
+     * Mark the date updated, e.g. from storing this roster entry.
      */
     public void changeDateUpdated() {
         // used to create formatted string of now using defaults
@@ -1305,7 +1337,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     /**
      * Load pre-existing Variable and CvTableModel object with the contents of
-     * this entry
+     * this entry.
      *
      * @param varModel the variable model to load
      * @param cvModel  CV contents to load
@@ -1342,8 +1374,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void printEntry(HardcopyWriter w) {
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
-            // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
-            //we set the imagesize to 150x150 pixels
+            // We use an ImageIcon because it's guaranteed to have been loaded when ctor is complete.
+            // We set the imagesize to 150x150 pixels
             int imagesize = 150;
 
             Image img = icon.getImage();
@@ -1358,9 +1390,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
             ImageIcon newIcon = new ImageIcon(newImg);
             w.writeNoScale(newIcon.getImage(), new JLabel(newIcon));
-            //Work out the number of line approx that the image takes up.
-            //We might need to pad some areas of the roster out, so that things
-            //look correct and text doesn't overflow into the image.
+            // Work out the number of line approx that the image takes up.
+            // We might need to pad some areas of the roster out, so that things
+            // look correct and text doesn't overflow into the image.
             blanks = (newImg.getHeight(null) - w.getLineAscent()) / w.getLineHeight();
             textSpaceWithIcon = w.getCharactersPerLine() - ((newImg.getWidth(null) / w.getCharWidth())) - indentWidth - 1;
 
@@ -1375,81 +1407,96 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     String newLine = "\n";
 
     /**
-     * Prints the roster information. Updated to allow for multiline comment and
-     * decoder comment fields. Created separate write statements for text and
-     * line feeds to work around the HardcopyWriter bug that misplaces borders
+     * Print the roster information.
+     * <p>
+     * Updated to allow for multiline comment and decoder comment fields.
+     * Separate write statements for text and line feeds to work around
+     * the HardcopyWriter bug that misplaces borders.
      *
      * @param w the writer used to print
      */
     public void printEntryDetails(Writer w) {
         int linesadded = -1;
         String title;
+        String leftMargin = "   "; // 3 spaces in front of legend labels
+        int labelColumn = 19; // pad remaining spaces for legend using fixed width font, forms "%-19s" in line
         try {
             //int indentWidth = indent.length();
             HardcopyWriter ww = (HardcopyWriter) w;
             int textSpace = ww.getCharactersPerLine() - indentWidth - 1;
-            title = "   ID:                ";
+            title = String.format("%-" + labelColumn + "s",
+                    (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldID")))); // I18N ID:
             if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                linesadded = writeWrappedComment(w, _id, title, textSpaceWithIcon) + linesadded;
+                linesadded = writeWrappedComment(w, _id, leftMargin + title, textSpaceWithIcon) + linesadded;
             } else {
-                linesadded = writeWrappedComment(w, _id, title, textSpace) + linesadded;
+                linesadded = writeWrappedComment(w, _id, leftMargin + title, textSpace) + linesadded;
             }
-            title = "   Filename:          ";
+            title = String.format("%-" + labelColumn + "s",
+                    (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldFilename")))); // I18N Filename:
             if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", title, textSpaceWithIcon) + linesadded;
+                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title, textSpaceWithIcon) + linesadded;
             } else {
-                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", title, textSpace) + linesadded;
+                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title, textSpace) + linesadded;
             }
 
             if (!(_roadName.isEmpty())) {
-                title = "   Road name:         ";
+                title = String.format("%-" + labelColumn + "s", (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldRoadName")))); // I18N Road name:
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _roadName, title, textSpaceWithIcon) + linesadded;
+                    linesadded = writeWrappedComment(w, _roadName, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
-                    linesadded = writeWrappedComment(w, _roadName, title, textSpace) + linesadded;
+                    linesadded = writeWrappedComment(w, _roadName, leftMargin + title, textSpace) + linesadded;
                 }
             }
             if (!(_roadNumber.isEmpty())) {
-                title = "   Road number:       ";
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldRoadNumber")))); // I18N Road number:
+
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _roadNumber, title, textSpaceWithIcon) + linesadded;
+                    linesadded = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
-                    linesadded = writeWrappedComment(w, _roadNumber, title, textSpace) + linesadded;
+                    linesadded = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpace) + linesadded;
                 }
             }
             if (!(_mfg.isEmpty())) {
-                title = "   Manufacturer:      ";
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldManufacturer")))); // I18N Manufacturer:
+
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _mfg, title, textSpaceWithIcon) + linesadded;
+                    linesadded = writeWrappedComment(w, _mfg, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
-                    linesadded = writeWrappedComment(w, _mfg, title, textSpace) + linesadded;
+                    linesadded = writeWrappedComment(w, _mfg, leftMargin + title, textSpace) + linesadded;
                 }
             }
             if (!(_owner.isEmpty())) {
-                title = "   Owner:             ";
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldOwner")))); // I18N Owner:
+
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _owner, title, textSpaceWithIcon) + linesadded;
+                    linesadded = writeWrappedComment(w, _owner, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
-                    linesadded = writeWrappedComment(w, _owner, title, textSpace) + linesadded;
+                    linesadded = writeWrappedComment(w, _owner, leftMargin + title, textSpace) + linesadded;
                 }
             }
             if (!(_model.isEmpty())) {
-                title = "   Model:             ";
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldModel")))); // I18N Model:
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _model, title, textSpaceWithIcon) + linesadded;
+                    linesadded = writeWrappedComment(w, _model, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
-                    linesadded = writeWrappedComment(w, _model, title, textSpace) + linesadded;
+                    linesadded = writeWrappedComment(w, _model, leftMargin + title, textSpace) + linesadded;
                 }
             }
             if (!(_dccAddress.isEmpty())) {
                 w.write(newLine, 0, 1);
-                String s = "   DCC Address:       " + _dccAddress;
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldModel")))); // I18N DCC Address:
+                String s = leftMargin + title + _dccAddress;
                 w.write(s, 0, s.length());
                 linesadded++;
             }
 
-            //If there is a comment field, then wrap it using the new wrapCommment
-            //method and print it
+            // If there is a comment field, then wrap it using the new wrapCommment()
+            // method and print it
             if (!(_comment.isEmpty())) {
                 //Because the text will fill the width if the roster entry has an icon
                 //then we need to add some blank lines to prevent the comment text going
@@ -1462,23 +1509,26 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 if (blanks != 0) {
                     blanks = 0;
                 }
-                title = "   Comment:           ";
-                linesadded = writeWrappedComment(w, _comment, title, textSpace) + linesadded;
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldComment")))); // I18N Comment:
+                linesadded = writeWrappedComment(w, _comment, leftMargin + title, textSpace) + linesadded;
             }
             if (!(_decoderModel.isEmpty())) {
-                title = "   Decoder Model:     ";
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderModel")))); // I18N Decoder Model:
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _decoderModel, title, textSpaceWithIcon) + linesadded;
+                    linesadded = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
-                    linesadded = writeWrappedComment(w, _decoderModel, title, textSpace) + linesadded;
+                    linesadded = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpace) + linesadded;
                 }
             }
             if (!(_decoderFamily.isEmpty())) {
-                title = "   Decoder Family:    ";
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderFamily")))); // I18N Decoder Family:
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _decoderFamily, title, textSpaceWithIcon) + linesadded;
+                    linesadded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpaceWithIcon) + linesadded;
                 } else {
-                    linesadded = writeWrappedComment(w, _decoderFamily, title, textSpace) + linesadded;
+                    linesadded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpace) + linesadded;
                 }
             }
 
@@ -1495,8 +1545,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 if (blanks != 0) {
                     blanks = 0;
                 }
-                title = "   Decoder Comment:   ";
-                linesadded = writeWrappedComment(w, _decoderComment, title, textSpace) + linesadded;
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderComment")))); // I18N Decoder Comment:
+                linesadded = writeWrappedComment(w, _decoderComment, leftMargin + title, textSpace) + linesadded;
             }
             w.write(newLine, 0, 1);
             for (int i = -1; i < (blanks - linesadded); i++) {
@@ -1603,8 +1654,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Read a file containing the contents of this RosterEntry. This has to be
-     * done before a call to loadCvModel, for example.
+     * Read a file containing the contents of this RosterEntry.
+     * <p>
+     * This has to be done before a call to loadCvModel, for example.
      */
     public void readFile() {
         if (getFileName() == null) {
