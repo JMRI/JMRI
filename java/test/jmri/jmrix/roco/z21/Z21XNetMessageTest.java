@@ -16,7 +16,7 @@ public class Z21XNetMessageTest {
 
     @Test
     public void testCTor() {
-        Z21XNetMessage t = new Z21XNetMessage();
+        Z21XNetMessage t = new Z21XNetMessage(5);
         Assert.assertNotNull("exists",t);
     }
 

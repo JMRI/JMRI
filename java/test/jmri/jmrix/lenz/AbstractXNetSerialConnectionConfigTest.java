@@ -16,7 +16,15 @@ public class AbstractXNetSerialConnectionConfigTest {
 
     @Test
     public void testCTor() {
-        AbstractXNetSerialConnectionConfig t = new AbstractXNetSerialConnectionConfig();
+        AbstractXNetSerialConnectionConfig t = new AbstractXNetSerialConnectionConfig(){
+           @Override
+           public void setInstance(){
+           }
+           @Override
+           public String name(){
+              return "test";
+           }
+        };
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +33,7 @@ public class AbstractXNetSerialConnectionConfigTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After

@@ -16,7 +16,10 @@ public class StackMonDataModelTest {
 
     @Test
     public void testCTor() {
-        StackMonDataModel t = new StackMonDataModel();
+        jmri.jmrix.lenz.XNetInterfaceScaffold cs = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(cs);
+
+        StackMonDataModel t = new StackMonDataModel(1,4,memo);
         Assert.assertNotNull("exists",t);
     }
 

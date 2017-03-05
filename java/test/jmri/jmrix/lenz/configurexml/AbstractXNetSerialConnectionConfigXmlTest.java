@@ -16,7 +16,14 @@ public class AbstractXNetSerialConnectionConfigXmlTest {
 
     @Test
     public void testCTor() {
-        AbstractXNetSerialConnectionConfigXml t = new AbstractXNetSerialConnectionConfigXml();
+        AbstractXNetSerialConnectionConfigXml t = new AbstractXNetSerialConnectionConfigXml(){
+           @Override
+           public void register(){
+           }
+           @Override
+           public void getInstance(){
+           }
+        };
         Assert.assertNotNull("exists",t);
     }
 

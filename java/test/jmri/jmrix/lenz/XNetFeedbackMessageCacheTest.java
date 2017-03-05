@@ -16,7 +16,9 @@ public class XNetFeedbackMessageCacheTest {
 
     @Test
     public void testCTor() {
-        XNetFeedbackMessageCache t = new XNetFeedbackMessageCache();
+        jmri.jmrix.lenz.XNetInterfaceScaffold tc = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(tc);
+        XNetFeedbackMessageCache t = new XNetFeedbackMessageCache(tc);
         Assert.assertNotNull("exists",t);
     }
 

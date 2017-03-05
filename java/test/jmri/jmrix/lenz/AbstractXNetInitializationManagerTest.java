@@ -16,7 +16,13 @@ public class AbstractXNetInitializationManagerTest {
 
     @Test
     public void testCTor() {
-        AbstractXNetInitializationManager t = new AbstractXNetInitializationManager();
+        jmri.jmrix.lenz.XNetInterfaceScaffold tc = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(tc);
+        AbstractXNetInitializationManager t = new AbstractXNetInitializationManager(memo){
+            @Override
+            public void init(){
+            }
+        };
         Assert.assertNotNull("exists",t);
     }
 

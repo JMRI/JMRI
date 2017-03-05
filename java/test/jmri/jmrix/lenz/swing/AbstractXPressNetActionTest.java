@@ -16,7 +16,13 @@ public class AbstractXPressNetActionTest {
 
     @Test
     public void testCTor() {
-        AbstractXPressNetAction t = new AbstractXPressNetAction();
+        jmri.jmrix.lenz.XNetInterfaceScaffold tc = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(tc);
+        AbstractXPressNetAction t = new AbstractXPressNetAction("test",memo){
+           @Override
+           public void actionPerformed(java.awt.event.ActionEvent ae){
+           }
+        };
         Assert.assertNotNull("exists",t);
     }
 
