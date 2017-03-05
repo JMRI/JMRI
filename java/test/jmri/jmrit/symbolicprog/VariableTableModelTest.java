@@ -12,9 +12,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 /**
- * VariableTableModelTest.java
- *
- * Description:
+ * Test VariableTableModel table methods.
  *
  * @author	Bob Jacobsen Copyright 2005
  */
@@ -44,7 +42,7 @@ public class VariableTableModelTest extends TestCase {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, null, null);
         Assert.assertTrue(t.getColumnCount() == 2);
-        Assert.assertTrue(t.getColumnName(1) == "Name");
+        Assert.assertTrue(t.getColumnName(1) == Bundle.getMessage("Name")); // allow for I18N
     }
 
     // Check loading two columns, three rows
