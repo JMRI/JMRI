@@ -48,7 +48,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
     @CheckForNull
-    public <T> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
+    public <T extends NamedBean> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
         Objects.requireNonNull(bean, "bean must be nonnull");
         Objects.requireNonNull(name, "name must be nonnull");
         if (name.isEmpty()) {
@@ -77,7 +77,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      * @param bean    the bean being renamed
      */
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
+    public <T extends NamedBean> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
 
         /*Gather a list of the beans in the system with the oldName ref.
          Although when we get a new bean we always return the first one that exists
@@ -107,7 +107,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      */
     //Checks are performed to make sure that the beans are the same type before being moved
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> void moveBean(@Nonnull T oldBean, @Nonnull T newBean, @Nonnull String name) {
+    public <T extends NamedBean> void moveBean(@Nonnull T oldBean, @Nonnull T newBean, @Nonnull String name) {
         /*Gather a list of the beans in the system with the oldBean ref.
          Although when a new bean is requested, we always return the first one that exists
          when a move is performed it doesn't delete the namedbeanhandle with the oldBean
@@ -146,7 +146,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> boolean inUse(@Nonnull String name, @Nonnull T bean) {
+    public <T extends NamedBean> boolean inUse(@Nonnull String name, @Nonnull T bean) {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
@@ -157,7 +157,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     @CheckForNull
-    public <T> NamedBeanHandle<T> newNamedBeanHandle(@Nonnull String name, @Nonnull T bean, @Nonnull Class<T> type) {
+    public <T extends NamedBean> NamedBeanHandle<T> newNamedBeanHandle(@Nonnull String name, @Nonnull T bean, @Nonnull Class<T> type) {
         return getNamedBeanHandle(name, bean);
     }
 
