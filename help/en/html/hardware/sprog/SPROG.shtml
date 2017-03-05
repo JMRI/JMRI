@@ -201,7 +201,7 @@
 
       <h4>Firmware Update</h4>
 
-      <p>SPROG includes an "Firmware Update" tool that allows the
+      <p>SPROG includes a "Firmware Update" tool that allows the
       firmware (the internal software that operates the SPROG) to
       be updated by the user. The tool is only functional in
       <a href=
@@ -227,8 +227,7 @@
       <p>There's a <a href=
       "https://uk.groups.yahoo.com/neo/groups/sprog-dcc/info">SPROG
       Yahoo group</a>.</p>
-      <p>An <a href="https://www.mcdespoorstaaf.nl/download/file.php?id=376">SPROG instruction in Dutch</a>
-      is available as a PDF from Domburg Train Support.</p>
+      <p>A Dutch-language SPROG Beginner's Manual is available as a PDF from <a href="http://www.domburgtrainsupport.nl/producten.html">Domburg Train Support</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
