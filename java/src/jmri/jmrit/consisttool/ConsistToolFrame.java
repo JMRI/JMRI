@@ -637,8 +637,12 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("AddressAlreadyInConsistError"));
             } else {
-                ConsistMan.getConsist(address).add(locoaddress,
-                        locoDirectionNormal.isSelected());
+                Consist tempConsist = ConsistMan.getConsist(address);
+                tempConsist.add(locoaddress,locoDirectionNormal.isSelected());
+                if(locoRosterBox.getSelectedRosterEntries().length == 1) {
+                   tempConsist.setRosterId(locoaddress,locoRosterBox.getSelectedRosterEntries()[0].titleString());
+                }
+                
             }
             if (consistAdrBox.getSelectedItem() != adrSelector.getAddress()) {
                 initializeConsistBox();
