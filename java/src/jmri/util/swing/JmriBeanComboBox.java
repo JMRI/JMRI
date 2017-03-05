@@ -35,7 +35,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @param nBean the namedBean that should automatically be selected
      * @param displayOrder the way in which the namedbeans should be displayed
      */
-    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, JmriBeanComboBox.DisplayOptions displayOrder) {
+    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, DisplayOptions displayOrder) {
         _displayOrder = displayOrder;
         _manager = manager;
         setSelectedBean(nBean);
@@ -57,7 +57,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     String _lastSelected = "";
-    JmriBeanComboBox.DisplayOptions _displayOrder;
+    DisplayOptions _displayOrder;
     boolean _firstBlank = false;
 
     jmri.Manager _manager;
@@ -220,7 +220,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *
      * @return the display order of this combobox
      */
-    public JmriBeanComboBox.DisplayOptions getDisplayOrder() {
+    public DisplayOptions getDisplayOrder() {
         return _displayOrder;
     }
 
@@ -229,7 +229,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *
      * @param inDisplayOrder - the desired display order for this combobox
      */
-    public void setDisplayOrder(JmriBeanComboBox.DisplayOptions inDisplayOrder) {
+    public void setDisplayOrder(DisplayOptions inDisplayOrder) {
         if (_displayOrder != inDisplayOrder) {
             NamedBean selectedBean = getSelectedBean();
             _displayOrder = inDisplayOrder;
@@ -376,13 +376,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             }
             enumMap = Collections.unmodifiableMap(map);
         }
-
-        static {
-            for (DisplayOptions displayOption : DisplayOptions.values()) {
-                enumMap.put(displayOption.value, displayOption);
-            }
-        }
-
+        
         public static DisplayOptions valueOf(int displayOptionInt) {
             return enumMap.get(displayOptionInt);
         }
