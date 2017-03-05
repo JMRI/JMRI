@@ -12,14 +12,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Instance for controlling the issuing of NamedBeanHandles.
  * <hr>
- * The NamedBeanHandleManager, deals with controlling and updating {@link NamedBeans}
+ * The NamedBeanHandleManager, deals with controlling and updating {@link NamedBean} objects
  * across JMRI. When a piece of code requires persistent access to a bean, it
  * should use a {@link NamedBeanHandle}. The {@link NamedBeanHandle} stores not only the bean
  * that has been requested but also the named that was used to request it
  * (either User or System Name).
  * <p>
  * This Manager will only issue out one {@link NamedBeanHandle} per Bean/Name request.
- * The Manager also deals with updates and changes to the names of {@link NamedBeans}, along
+ * The Manager also deals with updates and changes to the names of {@link NamedBean} objects, along
  * with moving usernames between different beans.
  * <p>
  * If a beans username is changed by the user, then the name will be updated in
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @see jmri.NamedBean
- * @See jmri.NamedBeanHandle
+ * @see jmri.NamedBeanHandle
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
