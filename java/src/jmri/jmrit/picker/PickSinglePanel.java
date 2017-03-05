@@ -1,19 +1,14 @@
 package jmri.jmrit.picker;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import jmri.*;
+
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,35 +20,65 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen  Copyright (c) 2017
  * @author Pete Cressman Copyright (c) 2010
  */
-public class PickSinglePanel extends JPanel implements ListSelectionListener, ChangeListener {
+public class PickSinglePanel<T extends NamedBean> extends JPanel {
 
     private int ROW_HEIGHT;
 
     PickListModel _model;
-    JTabbedPane _tabPane;
 
     JPanel _addPanel;
     JPanel _cantAddPanel;
     JTextField _sysNametext;
     JTextField _userNametext;
-    jmri.jmrit.picker.PickFrame _pickTables; // Opened from LogixTableAction
+    JTable _table;
+    JScrollPane _scroll;
 
     public PickSinglePanel(PickListModel model) {
-        _tabPane = new JTabbedPane();
         _model = model;
-        JTable table = _model.makePickTable();
+        _table = _model.makePickTable();
+        _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        _table.setCellSelectionEnabled(true);
+        _table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                int row = getTable().getSelectedRow();
+                int col = getTable().getSelectedColumn(); // might be -1 if just inserted
+                if (col != 1) return;
+                String username = (String) _model.getTable().getValueAt(row, 1);
+                if (username != null) return;
+                // have to set selection to col 0
+                _model.getTable().setColumnSelectionInterval(0,0);
+            }
+        });
+        
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout(5, 5));
-        p.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
-        p.add(new JScrollPane(table), BorderLayout.CENTER);
-        ROW_HEIGHT = table.getRowHeight();
+        p.add(new JLabel(_model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
+        p.add(_scroll = new JScrollPane(_table), BorderLayout.CENTER);
+        ROW_HEIGHT = _table.getRowHeight();
 
         setLayout(new BorderLayout(5, 5));
         add(p, BorderLayout.CENTER);
         add(makeAddToTablePanel(), BorderLayout.SOUTH);
-        _tabPane.addChangeListener(this);
     }
 
+    public NamedBeanHandle<T> getSelectedBeanHandle() {
+        int row = getTable().getSelectedRow();
+        int col = getTable().getSelectedColumn(); // might be -1 if just inserted
+        System.out.println(" r c "+row+" "+col);
+        
+        // are we sure this is always col 0 for sysname and col 1 for user name?
+        String sysname = _model.getTable().getValueAt(row, 0).toString();
+        String username = (String) _model.getTable().getValueAt(row, 1);
+        
+        String beanName = sysname;
+        if (col == 1 && username != null) beanName = username;
+        jmri.NamedBean bean = _model.addBean(sysname, username);
+        return InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(beanName, (T)bean);
+    }
+    
+    public JTable getTable() { return _table; }
+    
     private JPanel makeAddToTablePanel() {
         _sysNametext = new JTextField();
         _userNametext = new JTextField();
@@ -82,16 +107,16 @@ public class PickSinglePanel extends JPanel implements ListSelectionListener, Ch
         JPanel p = new JPanel();
         p.add(_addPanel);
         p.add(_cantAddPanel);
-        stateChanged(null);
         int width = Math.max(100, this.getPreferredSize().width);
         _sysNametext.setPreferredSize(new java.awt.Dimension(width, _sysNametext.getPreferredSize().height));
         return p;
     }
 
     void addToTable() {
-        String sysname = _sysNametext.getText();
+        String sysname = _model.getManager().normalizeSystemName(_sysNametext.getText());
+        
         if (sysname != null && sysname.length() > 1) {
-            String uname = _userNametext.getText();
+            String uname = NamedBean.normalizeUserName(_userNametext.getText());
             if (uname != null && uname.trim().length() == 0) {
                 uname = null;
             }
@@ -99,29 +124,9 @@ public class PickSinglePanel extends JPanel implements ListSelectionListener, Ch
             if (bean != null) {
                 int setRow = _model.getIndexOf(bean);
                 _model.getTable().setRowSelectionInterval(setRow, setRow);
-                JPanel p = (JPanel) _tabPane.getSelectedComponent();
-                ((JScrollPane) p.getComponent(1)).getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
+                _scroll.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
                 _sysNametext.setText("");
             }
-        }
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        if (_model.canAddBean()) {
-            _cantAddPanel.setVisible(false);
-            _addPanel.setVisible(true);
-        } else {
-            _addPanel.setVisible(false);
-            _cantAddPanel.setVisible(true);
-        }
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("ListSelectionEvent from " + e.getSource().getClass().getName()
-                    + " idx= " + e.getFirstIndex());
         }
     }
 
