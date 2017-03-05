@@ -75,22 +75,23 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
             chooser.setCurrentDirectory(file);
         });
         pressButton(chooser, "Open");
+        flushAWT();
         
         // search a few directories
-/* Try limiting scope of directory searches to one directory.
- * hopefully this will pass Travis on Mac and Linux tests
         int cnt = 0;
         while (cnt<2) {     // was 5.  not enough memory on test machine?
             java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
             Assert.assertNotNull("Preview directory not found", pane);
             pressButton(pane, Bundle.getMessage("ButtonKeepLooking"));
             cnt++;
+            flushAWT();
         }
-*/
+
         // cancel search of more directories
         java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
         Assert.assertNotNull("Preview Cancel not found", pane);
         pressButton(pane, Bundle.getMessage("ButtonCancel"));
+        flushAWT();
 
         // dismiss info dialog of count of number of icons found
         pane = findContainer(Bundle.getMessage("info"));
