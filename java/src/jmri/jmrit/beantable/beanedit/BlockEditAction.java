@@ -75,8 +75,8 @@ public class BlockEditAction extends BeanEditAction {
         BeanItemPanel reporter = new BeanItemPanel();
         reporter.setName(Bundle.getMessage("BeanNameReporter"));
 
-        reporterField = new JmriBeanComboBox(InstanceManager.getDefault(jmri.ReporterManager.class), ((Block) bean).getReporter(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        reporterField.setFirstItemBlank(true);
+        reporterComboBox = new JmriBeanComboBox(InstanceManager.getDefault(jmri.ReporterManager.class), ((Block) bean).getReporter(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        reporterComboBox.setFirstItemBlank(true);
 
         reporter.addItem(new BeanEditItem(reporterComboBox, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
 
@@ -295,9 +295,9 @@ public class BlockEditAction extends BeanEditAction {
         BeanItemPanel basic = new BeanItemPanel();
         basic.setName(Bundle.getMessage("BeanNameSensor"));
 
-        sensorField = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Block) bean).getSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        sensorField.setFirstItemBlank(true);
-        basic.addItem(new BeanEditItem(sensorField, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
+        sensorComboBox = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Block) bean).getSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        sensorComboBox.setFirstItemBlank(true);
+        basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
 
       final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
         //debounce.setBean(bean);

@@ -2432,7 +2432,7 @@ public class LayoutTurnout extends LayoutTrack {
             panel1.add(turnoutNameLabel);
 
             // add combobox to select turnout
-            firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
+            firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             layoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
             panel1.add(firstTurnoutComboBox);
             contentPane.add(panel1);
@@ -2440,7 +2440,7 @@ public class LayoutTurnout extends LayoutTrack {
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
 
-            secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
+            secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             layoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
             additionalTurnout.addActionListener((ActionEvent e) -> {
                 if (additionalTurnout.isSelected()) {

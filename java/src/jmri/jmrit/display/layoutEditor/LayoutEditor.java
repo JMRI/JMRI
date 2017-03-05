@@ -203,7 +203,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JComboBox<String> rotationComboBox = null;
     private JPanel rotationPanel = new JPanel(leftRowLayout);
 
-  //2nd row of radio buttons
+    //2nd row of radio buttons
     private JLabel trackLabel = new JLabel();
     private JRadioButton levelXingButton = new JRadioButton(rb.getString("LevelCrossing"));
     private JRadioButton trackButton = new JRadioButton(rb.getString("TrackSegment"));
@@ -236,7 +236,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-  //4th row of radio buttons (and any associated text fields)
+    private JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
+    private JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+
+    //4th row of radio buttons (and any associated text fields)
     private JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     private JRadioButton signalMastButton = new JRadioButton(rb.getString("SignalMastIcon"));
@@ -2531,7 +2535,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             ddldoChoiceMenuItem.addActionListener((ActionEvent event) -> {
                 JRadioButtonMenuItem ddldoMenuItem = (JRadioButtonMenuItem) event.getSource();
                 JPopupMenu parentMenu = (JPopupMenu) ddldoMenuItem.getParent();
-                int ddldo = parentMenu.getComponentZOrder(ddldoMenuItem);
+                int ddldoInt = parentMenu.getComponentZOrder(ddldoMenuItem);
+                JmriBeanComboBox.DisplayOptions ddldo = JmriBeanComboBox.DisplayOptions.valueOf(ddldoInt);
 
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                     //change this comboboxes ddldo
@@ -2564,7 +2569,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                     //update the users preference
                     String[] ddldoPrefs = {"DISPLAYNAME", "USERNAME", "SYSTEMNAME", "USERNAMESYSTEMNAME", "SYSTEMNAMEUSERNAME"};
-                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPrefs[ddldo]);
+                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPrefs[ddldoInt]);
                 });
             }); //addActionListener
 
@@ -3119,7 +3124,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //update drop down menu display order menu
     //
-    private int gDDMDO = JmriBeanComboBox.DISPLAYNAME;
+    private JmriBeanComboBox.DisplayOptions gDDMDO = JmriBeanComboBox.DisplayOptions.DISPLAYNAME;
 
     private void updateDropDownMenuDisplayOrderMenu() {
         Component focusedComponent = getFocusOwner();
@@ -3129,12 +3134,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             gDDMDO = focusedJBCB.getDisplayOrder();
         }
 
-        int idx = 0;
+        int idx = 0, ddmdoInt = gDDMDO.getValue();
 
         for (Component c : dropDownListsDisplayOrderMenu.getMenuComponents()) {
             if (c instanceof JRadioButtonMenuItem) {
                 JRadioButtonMenuItem crb = (JRadioButtonMenuItem) c;
-                crb.setSelected(gDDMDO == idx);
+                crb.setSelected(ddmdoInt == idx);
                 idx++;
             }
         }
@@ -3199,20 +3204,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                     //now set the combo box display order
                     if (ddldoPref.equals("DISPLAYNAME")) {
-                        jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                     } else if (ddldoPref.equals("USERNAME")) {
-                        jbcb.setDisplayOrder(JmriBeanComboBox.USERNAME);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAME);
                     } else if (ddldoPref.equals("SYSTEMNAME")) {
-                        jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAME);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAME);
                     } else if (ddldoPref.equals("USERNAMESYSTEMNAME")) {
-                        jbcb.setDisplayOrder(JmriBeanComboBox.USERNAMESYSTEMNAME);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
                     } else if (ddldoPref.equals("SYSTEMNAMEUSERNAME")) {
-                        jbcb.setDisplayOrder(JmriBeanComboBox.SYSTEMNAMEUSERNAME);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
                     } else {
-    //must be a bogus value… lets re-set everything to DISPLAYNAME
+                        //must be a bogus value… lets re-set everything to DISPLAYNAME
                         ddldoPref = "DISPLAYNAME";
                         prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                        jbcb.setDisplayOrder(JmriBeanComboBox.DISPLAYNAME);
+                        jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                     }
                 });
             } else if (inComponent instanceof Container) {
