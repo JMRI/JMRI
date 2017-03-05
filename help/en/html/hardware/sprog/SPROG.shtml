@@ -81,14 +81,14 @@
       <h3>Settings</h3>
 
       <ol>
-        <li>USB-connected SPROGs on Windows10 will work using the standard
+        <li>USB-connected SPROGs on Windows 10 will work using the standard
         USB drivers installed in the OS. When you plug in the SPROG,
         it will show up under Hardware like this:<br>
         <img src="images/SprogWin10Devices.png" width="244" height="112"><br>
-        If you previously installed some special USB driver, uninstall it on Windows10 
+        If you previously installed some special USB driver, uninstall it on Windows 10 
         before proceeding.</li>
         
-        <li>On Windows7 and earlier users may need to have a
+        <li>On Windows 7 and earlier users may need to have a
         driver installed. For more information on that, see the
         <a href=
         "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">
