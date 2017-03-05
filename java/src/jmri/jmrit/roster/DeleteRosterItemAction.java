@@ -23,18 +23,6 @@ import org.slf4j.LoggerFactory;
  * posts a dialog box to select the loco to be deleted, and then posts an "are
  * you sure" dialog box before acting.
  *
- *
- * <hr> This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.XmlFile
  */
@@ -142,7 +130,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), selections}, null);
         log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":"
-                + selections.getSelectedItem());
+                + selections.getSelectedItem()); // TODO I18N
         if (retval != 1) {
             return null;
         }
@@ -153,7 +141,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
 
     /**
      * Can provide some mechanism to prompt for user for one last chance to
-     * change his/her mind
+     * change his/her mind.
      *
      * @return true if user says to continue
      */

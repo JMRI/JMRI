@@ -9,6 +9,9 @@ import java.util.Comparator;
  * the number case, this does a numeric comparison. If the number is appended
  * with letters, does the numeric sort on the digits followed by a lexigraphic
  * sort on the remainder.
+ * <p>
+ * Note this is intended to take names as provided:  It does not do normalization or 
+ * expansion.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author Howard Penny

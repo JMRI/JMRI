@@ -45,17 +45,17 @@ import org.slf4j.LoggerFactory;
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     final String blank = "       ";
-    JTextField startSensor = new JTextField(5);
+    JTextField startSensor = new JTextField(5); // N11N
     javax.swing.ButtonGroup startGroup = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton startOnExit = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    JTextField stopSensor1 = new JTextField(5);
+    JTextField stopSensor1 = new JTextField(5);  // N11N
     javax.swing.ButtonGroup stopGroup1 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    public JTextField stopSensor2 = new JTextField(5);
+    public JTextField stopSensor2 = new JTextField(5);  // N11N
     javax.swing.ButtonGroup stopGroup2 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));

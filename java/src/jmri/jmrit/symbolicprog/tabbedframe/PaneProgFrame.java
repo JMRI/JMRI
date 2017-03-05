@@ -130,7 +130,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * Abstract method to provide a JPanel setting the programming mode, if
-     * appropriate. A null value is ignored.
+     * appropriate.
+     * <p>
+     * A null value is ignored (?)
      */
     abstract protected JPanel getModePane();
 
@@ -369,7 +371,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Enable the read all and read changes button if possible. This checks to
+     * Enable the [Read all] and [Read changes] buttons if possible. This checks to
      * make sure this is appropriate, given the attached programmer's
      * capability.
      */
@@ -659,7 +661,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Data element holding the 'model' element representing the decoder type
+     * Data element holding the 'model' element representing the decoder type.
      */
     Element modelElem = null;
 
@@ -963,8 +965,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * reset all CV values to defaults stored earlier. This will in turn update
-     * the variables
+     * Reset all CV values to defaults stored earlier.
+     * <p>
+     * This will in turn update the variables.
      */
     protected void resetToDefaults() {
         int n = defaultCvValues.length;
@@ -994,7 +997,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     int defaultIndexedCvValues[] = null;
 
     /**
-     * Save all CV values. These stored values are used by resetToDefaults
+     * Save all CV values.
+     * <p>
+     * These stored values are used by {link #resetToDefaults()}
      */
     protected void saveDefaults() {
         int n = cvModel.getRowCount();
@@ -1141,8 +1146,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     protected JPanel makeMediaPane(RosterEntry r) {
-        // create the identification pane (not configured by programmer file now; maybe later?
 
+        // create the identification pane (not configured by programmer file now; maybe later?)
         JPanel outer = new JPanel();
         outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
         JPanel body = new JPanel();
@@ -1259,7 +1264,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * If there are any modifier elements, process them
+     * If there are any modifier elements, process them.
      */
     protected void processModifierElements(Element e, final PaneProgPane pane, VariableTableModel model, final JTabbedPane tabPane, final int index) {
         QualifierAdder qa = new QualifierAdder() {
@@ -1283,7 +1288,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
+     * Create a BusyGlassPane transparent layer over the panel
+     * blocking any other interaction, excluding a supplied button.
      *
+     * @param activeButton a button to put on top of the pane
      */
     @Override
     public void prepGlassPane(AbstractButton activeButton) {
@@ -1382,10 +1390,12 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * invoked by "Read Changes" button, this sets in motion a continuing
-     * sequence of "read changes" operations on the panes. Each invocation of
-     * this method reads one pane; completion of that request will cause it to
-     * happen again, reading the next pane, until there's nothing left to read.
-     * <P>
+     * sequence of "read changes" operations on the panes.
+     * <p>
+     * Each invocation of this method reads one pane; completion of that
+     * request will cause it to happen again, reading the next pane, until
+     * there's nothing left to read.
+     *
      * @return true if a read has been started, false if the operation is
      *         complete.
      */
@@ -1407,11 +1417,13 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * invoked by "Read All" button, this sets in motion a continuing sequence
-     * of "read all" operations on the panes. Each invocation of this method
-     * reads one pane; completion of that request will cause it to happen again,
-     * reading the next pane, until there's nothing left to read.
-     * <P>
+     * Invoked by the "Read All" button, this sets in motion a continuing sequence
+     * of "read all" operations on the panes.
+     * <p>
+     * Each invocation of this method reads one pane; completion of that request
+     * will cause it to happen again, reading the next pane, until there's nothing
+     * left to read.
+     *
      * @return true if a read has been started, false if the operation is
      *         complete.
      */
@@ -1477,7 +1489,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * of "write all" operations on each pane. Each invocation of this method
      * writes one pane; completion of that request will cause it to happen
      * again, writing the next pane, until there's nothing left to write.
-     * <P>
+     *
      * @return true if a write has been started, false if the operation is
      *         complete.
      */
@@ -1498,13 +1510,14 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * invoked by "Write Changes" button, this sets in motion a continuing
-     * sequence of "write changes" operations on each pane. Each invocation of
-     * this method writes one pane; completion of that request will cause it to
-     * happen again, writing the next pane, until there's nothing left to write.
-     * <P>
+     * Invoked by "Write Changes" button, this sets in motion a continuing
+     * sequence of "write changes" operations on each pane.
+     * <p>Each invocation of this method writes one pane; completion of that
+     * request will cause it to happen again, writing the next pane, until
+     * there's nothing left to write.
+     *
      * @return true if a write has been started, false if the operation is
-     *         complete.
+     *         complete
      */
     public boolean writeChanges() {
         if (log.isDebugEnabled()) {
@@ -1562,18 +1575,23 @@ abstract public class PaneProgFrame extends JmriJFrame
         return false;
     }
 
+    /**
+     * Prepare a roster entry to be printed, and display a selection list.
+     *
+     * @see jmri.jmrit.roster.PrintRosterEntry#doPrintPanes(boolean)
+     * @param preview true if output should got to a Preview pane on screen, false to output to a printer (dialog)
+     */
     public void printPanes(final boolean preview) {
         PrintRosterEntry pre = new PrintRosterEntry(_rosterEntry, paneList, _flPane, _rMPane, this);
         pre.printPanes(preview);
-
     }
 
     boolean _read = true;
     PaneProgPane _programmingPane = null;
 
     /**
-     * get notification of a variable property change in the pane, specifically
-     * "busy" going to false at the end of a programming operation
+     * Get notification of a variable property change in the pane, specifically
+     * "busy" going to false at the end of a programming operation.
      *
      * @param e Event, used to find source
      */
