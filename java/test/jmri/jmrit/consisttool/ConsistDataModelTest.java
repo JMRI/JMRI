@@ -80,7 +80,7 @@ public class ConsistDataModelTest {
         ConsistDataModel model = new ConsistDataModel(1,4);
         // this uses an internal detail (The private column number).  If the 
         // column numbering changes, the test may need to change.
-        Assert.assertEquals("roster column class",javax.swing.JComboBox.class, model.getColumnClass(1));
+        Assert.assertEquals("roster column class",String.class, model.getColumnClass(1));
     }
 
     @Test

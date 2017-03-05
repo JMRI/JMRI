@@ -153,6 +153,24 @@ public interface Consist {
     public int getPosition(DccLocoAddress address);
 
     /**
+     * Set the roster entry of a locomotive within the consist
+     *
+     * @param address  is the Locomotive address
+     * @param rosterId is the roster Identifer of the associated roster entry.
+     */
+    public void setRosterId(DccLocoAddress address, String rosterId);
+
+    /**
+     * Get the rosterId of a locomotive within the consist
+     *
+     * @param address is the Locomotive address of interest
+     * @return string roster Identifier associated with the given address 
+     *         in the consist.  Returns null if no roster entry is associated
+     *         with this entry.
+     */
+    public String getRosterId(DccLocoAddress address);
+
+    /**
      * Add a listener for consist events
      *
      * @param listener is a consistListener object
