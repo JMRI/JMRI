@@ -8,15 +8,20 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioProvider;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class RaspberryPiSensorTest {
 
+    private GpioProvider myprovider = null;
+
     @Test
     public void testCTor() {
-        RaspberryPiSensor t = new RaspberryPiSensor();
+        RaspberryPiSensor t = new RaspberryPiSensor("PiS1");
         Assert.assertNotNull("exists",t);
     }
 
@@ -24,6 +29,8 @@ public class RaspberryPiSensorTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        GpioProvider myprovider = new PiGpioProviderScaffold();
+        GpioFactory.setDefaultProvider(myprovider);
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 

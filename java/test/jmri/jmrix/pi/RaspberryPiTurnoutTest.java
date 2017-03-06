@@ -8,15 +8,20 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioProvider;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class RaspberryPiTurnoutTest {
 
+    private GpioProvider myprovider = null;
+
     @Test
     public void testCTor() {
-        RaspberryPiTurnout t = new RaspberryPiTurnout();
+        RaspberryPiTurnout t = new RaspberryPiTurnout("PiT2");
         Assert.assertNotNull("exists",t);
     }
 
@@ -24,6 +29,8 @@ public class RaspberryPiTurnoutTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        GpioProvider myprovider = new PiGpioProviderScaffold();
+        GpioFactory.setDefaultProvider(myprovider);
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
