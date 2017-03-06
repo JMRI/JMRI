@@ -6,6 +6,8 @@ import java.awt.Insets;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URI;
+import java.net.URISyntaxException;
+import jmri.util.FileUtil;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -17,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.VSDecoderPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  * <hr>
@@ -293,16 +297,17 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
             try {
                 URI base = null;
                 if (tfDefaultVSDFilePath.getText() != null) {
-                    base = URI.create(tfDefaultVSDFilePath.getText());
+                    base = FileUtil.findURL(tfDefaultVSDFilePath.getText()).toURI();
                 } else {
-                    base = URI.create(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath());
+                    base = FileUtil.findURL(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath()).toURI();
                 }
-                URI absolute = URI.create(fc.getSelectedFile().getCanonicalPath());
+                URI absolute = fc.getSelectedFile().toURI();
                 URI relative = base.relativize(absolute);
+                log.debug("URI absolute = {} relative = {}", absolute.toString(), relative.toString());
 
                 tfDefaultVSDFileName.setText(relative.getPath());
-            } catch (java.io.IOException e) {
-                // do nothing.
+            } catch (URISyntaxException ex) {
+                log.warn("Unable to get URI for {}", path, ex);
             }
         }
     }
@@ -351,6 +356,5 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         }
     }
 
-    // Unused - yet.
-    //private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class.getName());
 }
