@@ -22,8 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of variables in symbolic programmer. Also
- * responsible for loading from the XML file...
+ * Table data model for display of variables in symbolic programmer.
+ * Also responsible for loading from the XML file.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2010
  * @author Howard G. Penny Copyright (C) 2005
@@ -43,8 +43,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     private JLabel _status = null;
 
     /**
-     * Defines the columns; values understood are: "Name", "Value", "Range",
-     * "Read", "Write", "Comment", "CV", "Mask", "State"
+     * Define the columns; values understood are: "Name", "Value", "Range",
+     * "Read", "Write", "Comment", "CV", "Mask", "State".
+     * For each, a property key in SymbolicProgBundle by the same name allows i18n
      */
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         super();
@@ -55,6 +56,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     // basic methods for AbstractTableModel implementation
+
     @Override
     public int getRowCount() {
         return rowVector.size();
@@ -70,7 +72,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (log.isDebugEnabled()) {
             log.debug("getColumnName " + col);
         }
-        return headers[col];
+        return Bundle.getMessage(headers[col]); // I18N
     }
 
     @Override
@@ -152,7 +154,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public Object getValueAt(int row, int col) {
         // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
         if (row >= rowVector.size()) {
-            log.debug("row greater than row vector");
+            log.debug("row index greater than row vector size");
             return "Error";
         }
         VariableValue v = rowVector.elementAt(row);
@@ -162,19 +164,19 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         if (headers[col].equals("Value")) {
             return v.getCommonRep();
-        } else if (headers[col].equals("Read")) {
+        } else if (headers[col].equals("Read")) { // NOI18N
             return _readButtons.elementAt(row);
-        } else if (headers[col].equals("Write")) {
+        } else if (headers[col].equals("Write")) { // NOI18N
             return _writeButtons.elementAt(row);
-        } else if (headers[col].equals("CV")) {
+        } else if (headers[col].equals("CV")) { // NOI18N
             return "" + v.getCvNum();
-        } else if (headers[col].equals("Name")) {
+        } else if (headers[col].equals("Name")) { // NOI18N
             return "" + v.label();
-        } else if (headers[col].equals("Comment")) {
+        } else if (headers[col].equals("Comment")) { // NOI18N
             return v.getComment();
-        } else if (headers[col].equals("Mask")) {
+        } else if (headers[col].equals("Mask")) { // NOI18N
             return v.getMask();
-        } else if (headers[col].equals("State")) {
+        } else if (headers[col].equals("State")) { // NOI18N
             int state = v.getState();
             switch (state) {
                 case CvValue.UNKNOWN:
@@ -269,9 +271,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             }
         }
 
-        JButton bw = new JButton("Write");
+        JButton bw = new JButton(Bundle.getMessage("ButtonWrite"));
         _writeButtons.addElement(bw);
-        JButton br = new JButton("Read");
+        JButton br = new JButton(Bundle.getMessage("ButtonRead"));
         _readButtons.addElement(br);
         setButtonsReadWrite(readOnly, infoOnly, writeOnly, bw, br, row);
 

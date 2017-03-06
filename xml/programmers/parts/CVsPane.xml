@@ -5,6 +5,7 @@
   <name xml:lang="de">CV-Tabelle</name>
   <name xml:lang="ca">Taula-CV</name>
   <name xml:lang="cs">Tabulka CV</name>
+  <name xml:lang="nl">CV-tabel</name>
   <column>
     <cvtable/>
   </column>
