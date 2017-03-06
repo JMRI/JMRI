@@ -36,7 +36,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         pressButton(pane, "OK");
         junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor,this);
     }
-
+/*
     public void testOpenDirectory() {
         if (GraphicsEnvironment.isHeadless()) {
             return;
