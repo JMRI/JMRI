@@ -16,7 +16,8 @@ public class JsonClientLightTest {
 
     @Test
     public void testCTor() {
-        JsonClientLight t = new JsonClientLight();
+        JsonClientSystemConnectionMemo memo = new JsonClientSystemConnectionMemo();
+        JsonClientLight t = new JsonClientLight("JL1",memo);
         Assert.assertNotNull("exists",t);
     }
 

@@ -16,7 +16,15 @@ public class JMRIClientLightManagerTest {
 
     @Test
     public void testCTor() {
-        JMRIClientLightManager t = new JMRIClientLightManager();
+        JMRIClientTrafficController tc = new JMRIClientTrafficController() {
+            @Override
+            public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
+                // do nothing to avoid null pointer when sending to non-existant
+                // connection durring test.
+            }
+        };
+        JMRIClientSystemConnectionMemo memo = new JMRIClientSystemConnectionMemo(tc);
+        JMRIClientLightManager t = new JMRIClientLightManager(memo);
         Assert.assertNotNull("exists",t);
     }
 

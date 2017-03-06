@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonClientMessageTest {
 
-    @Test
+    @Test(expected=UnsupportedOperationException.class)
     public void testCTor() {
-        JsonClientMessage t = new JsonClientMessage();
+        JsonClientMessage t = new JsonClientMessage(5);
         Assert.assertNotNull("exists",t);
     }
 

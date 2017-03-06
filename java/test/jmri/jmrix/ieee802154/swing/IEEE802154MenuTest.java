@@ -16,7 +16,8 @@ public class IEEE802154MenuTest {
 
     @Test
     public void testCTor() {
-        IEEE802154Menu t = new IEEE802154Menu();
+        jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo = new jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo();
+        IEEE802154Menu t = new IEEE802154Menu("IEEE 802.15.4 test menu",memo);
         Assert.assertNotNull("exists",t);
     }
 

@@ -16,7 +16,8 @@ public class JsonClientPowerManagerTest {
 
     @Test
     public void testCTor() {
-        JsonClientPowerManager t = new JsonClientPowerManager();
+        JsonClientSystemConnectionMemo memo = new JsonClientSystemConnectionMemo();
+        JsonClientPowerManager t = new JsonClientPowerManager(memo);
         Assert.assertNotNull("exists",t);
     }
 

@@ -16,7 +16,8 @@ public class IEEE802154ComponentFactoryTest {
 
     @Test
     public void testCTor() {
-        IEEE802154ComponentFactory t = new IEEE802154ComponentFactory();
+        jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo = new jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo();
+        IEEE802154ComponentFactory t = new IEEE802154ComponentFactory(memo);
         Assert.assertNotNull("exists",t);
     }
 

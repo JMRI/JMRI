@@ -16,7 +16,8 @@ public class JsonClientComponentFactoryTest {
 
     @Test
     public void testCTor() {
-        JsonClientComponentFactory t = new JsonClientComponentFactory();
+        jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo memo = new jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo();
+        JsonClientComponentFactory t = new JsonClientComponentFactory(memo);
         Assert.assertNotNull("exists",t);
     }
 

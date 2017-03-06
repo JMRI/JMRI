@@ -16,7 +16,8 @@ public class XpaComponentFactoryTest {
 
     @Test
     public void testCTor() {
-        XpaComponentFactory t = new XpaComponentFactory();
+        jmri.jmrix.xpa.XpaSystemConnectionMemo memo = new jmri.jmrix.xpa.XpaSystemConnectionMemo();
+        XpaComponentFactory t = new XpaComponentFactory(memo);
         Assert.assertNotNull("exists",t);
     }
 

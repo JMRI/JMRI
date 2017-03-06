@@ -16,7 +16,8 @@ public class JsonPacketGenActionTest {
 
     @Test
     public void testCTor() {
-        JsonPacketGenAction t = new JsonPacketGenAction();
+        jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo memo = new jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo();
+        JsonPacketGenAction t = new JsonPacketGenAction(memo);
         Assert.assertNotNull("exists",t);
     }
 

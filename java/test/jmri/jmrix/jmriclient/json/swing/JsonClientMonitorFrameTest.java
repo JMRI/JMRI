@@ -16,7 +16,8 @@ public class JsonClientMonitorFrameTest {
 
     @Test
     public void testCTor() {
-        JsonClientMonitorFrame t = new JsonClientMonitorFrame();
+        jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo memo = new jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo();
+        JsonClientMonitorFrame t = new JsonClientMonitorFrame(memo);
         Assert.assertNotNull("exists",t);
     }
 

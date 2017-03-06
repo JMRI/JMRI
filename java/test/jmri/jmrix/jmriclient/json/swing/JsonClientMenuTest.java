@@ -16,7 +16,8 @@ public class JsonClientMenuTest {
 
     @Test
     public void testCTor() {
-        JsonClientMenu t = new JsonClientMenu();
+        jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo memo = new jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo();
+        JsonClientMenu t = new JsonClientMenu("Json Test Menu",memo);
         Assert.assertNotNull("exists",t);
     }
 

@@ -16,7 +16,8 @@ public class XpaMenuTest {
 
     @Test
     public void testCTor() {
-        XpaMenu t = new XpaMenu();
+        jmri.jmrix.xpa.XpaSystemConnectionMemo memo = new jmri.jmrix.xpa.XpaSystemConnectionMemo();
+        XpaMenu t = new XpaMenu("xpa test menu",memo);
         Assert.assertNotNull("exists",t);
     }
 
