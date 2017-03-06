@@ -175,13 +175,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         if (block != null) {
             //attach a listener for changes in the Block
-            block.addPropertyChangeListener(mBlockListener
-                    = new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
+            block.addPropertyChangeListener(mBlockListener =
+                (java.beans.PropertyChangeEvent e) -> {
                     handleBlockChange(e);
-                }
-            }, blockName, "Layout Block:" + blockName);
+                },
+            blockName, "Layout Block:" + blockName);
             if (occupancyNamedSensor != null) {
                 block.setNamedSensor(occupancyNamedSensor);
             }
@@ -2029,11 +2027,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         final LayoutBlock neighLBlock = neighbour.getLayoutBlock();
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                neighLBlock.updateNeighbourPacketFlow(block, flow);
-            }
+        Runnable r = () -> {
+            neighLBlock.updateNeighbourPacketFlow(block, flow);
         };
 
         Block neighBlock = neighbour.getBlock();
