@@ -28,6 +28,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private int _idxNoSpeedCommand;     // make non-speed commands only untilndex
     private float _normalSpeed = 0;       // current commanded throttle setting (unmodified)
     private String _speedType = Warrant.Normal;    // current speed name
+    private long et;    // elapsed time while waiting to do current command
     private float _timeRatio = 1.0f;     // ratio to extend scripted time when speed is modified
     private boolean _abort = false;
     private boolean _halt = false;  // halt/resume from user's control
@@ -71,11 +72,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     @Override
     @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
     public void run() {
-        if (log.isDebugEnabled()) log.debug("Engineer started warrant {}", _warrant.getDisplayName());
+        if (log.isDebugEnabled()) log.debug("Engineer started warrant {} _throttle= {}", 
+                _warrant.getDisplayName(), _throttle.getClass().getName());
 
         cmdBlockIdx = 0;
         while (_idxCurrentCommand < _warrant._commands.size()) {
-            long et = System.currentTimeMillis();
+            et = System.currentTimeMillis();
             ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand);
             int idx = _warrant.getIndexOfBlock(ts.getBlockName(), cmdBlockIdx);
             if (idx >= 0) {
@@ -440,7 +442,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     protected void setSpeed(float s) {
-        if (log.isTraceEnabled()) log.trace("setSpeed({}", s);
+        if (log.isTraceEnabled()) log.trace("setSpeed({})", s);
         float speed = s;
         _throttle.setSpeedSetting(speed);
         // Do asynchronously, already within a synchronized block
@@ -1052,10 +1054,47 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         @Override
         public void run() {
+            // time 'now' is at having done _idxCurrentCommand-1 and is waiting to do _idxCurrentCommand  
+            ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand-1);
+            float endSpeed = modifySpeed(_normalSpeed, endSpeedType);
+            float rampSpeed = modifySpeed(_normalSpeed, _speedType);
+            if (log.isDebugEnabled()) log.debug("Current calculated throttleSpeed= {}, actual throttleSpeed= {}",
+                    rampSpeed, _throttle.getSpeedSetting());
+            boolean increase = (endSpeed > rampSpeed);
+            long scriptTime = ts.getTime() - (System.currentTimeMillis() - et);
+            long ramptime = 0;
+            
+            boolean done = false;
+            while (!done) {
+                while (ramptime < scriptTime) {
+                    ramptime += _speedMap.getStepDelay();
+                    if (increase) {
+                        rampSpeed += _speedMap.getStepIncrement();
+                    } else {
+                        rampSpeed -= _speedMap.getStepIncrement();                    
+                    }
+                }
+                if (increase) {
+                    if (endSpeed <= rampSpeed) {
+                        done = true;
+                    }
+                } else {
+                    if (endSpeed >= rampSpeed) {
+                        done = true;
+                    } 
+                }                
+                ts = _warrant._commands.get(_idxCurrentCommand);
+                scriptTime += ts.getTime();
+                if ("SPEED".equals(ts.getCommand().toUpperCase())) {
+                    endSpeed = modifySpeed(Float.parseFloat(ts.getValue()), endSpeedType);
+                }
+            }
+            
+            
             _lock.lock();
             _speedOverride = true;
             try {
-                float endSpeed = modifySpeed(_normalSpeed, endSpeedType);
+//                float endSpeed = modifySpeed(_normalSpeed, endSpeedType);
                 float speed = _throttle.getSpeedSetting();
                 float incr = _speedMap.getStepIncrement();
                 int delay = _speedMap.getStepDelay();
