@@ -1344,9 +1344,9 @@ public class WarrantFrame extends WarrantRoute {
             _warrant = _saveWarrant;
             // _saveWarrant already registered, but might not be the correct class.
             InstanceManager.getDefault(WarrantManager.class).deregister(_saveWarrant);
-        } else {
-            _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(_sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
         }
+        _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(_sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+
         _warrant.setDccAddress(getTrainId());
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
