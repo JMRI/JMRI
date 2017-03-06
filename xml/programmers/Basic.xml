@@ -11,12 +11,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-  <!-- $Id$ -->
   <version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
   <!-- A very basic programmer, containing only the most important few CVs -->
   <programmer decoderFilePanes="no" showEmptyPanes="default" showFnLanelPane="no" showRosterMediaPane="no">
     <pane nameFmt="item">
       <name>Basic</name>
+      <name xml:lang="it">Basic</name>
+      <name xml:lang="ca">Bàsic</name>
+      <name xml:lang="cs">Základní</name>
+      <name xml:lang="de">Einfach</name>
+      <name xml:lang="nl">Basis</name>
       <column>
         <dccaddress/>
         <label>
@@ -25,13 +29,14 @@
         <label>
           <text> </text>
         </label>
-        <display item="Analog (DC) Operation"/>
+        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+          <tooltip xml:lang="it">Determina se la Loco può operare in DC (analogica)</tooltip>
+          <tooltip xml:lang="ca">Estableix que la locomotora pot circular en analògic [CC] (analògica)</tooltip>
+          <tooltip xml:lang="de">Legt fest, ob die Lok auch analog (DC) fahren kann</tooltip>
+          <tooltip xml:lang="cs">Určuje zdali lokomotiva může být provozována se stejnosměrným (DC) napájením (povoluje změnu napájecího zdroje)</tooltip>
+          <tooltip xml:lang="nl">Bepaalt of de Loc ook analoog (DC) kan rijden</tooltip>
+        </display>
       </column>
-      <name xml:lang="it">Basic</name>
-	  <name xml:lang="ca">Bàsic</name>
-      <name xml:lang="cs">Základní</name>
-      <name xml:lang="de">Einfach</name>
-      <name xml:lang="nl">Simpel</name>
     </pane>
   </programmer>
 </programmer-config>

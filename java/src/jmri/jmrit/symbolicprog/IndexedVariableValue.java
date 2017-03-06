@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extends VariableValue to represent an indexed variable
+ * Extends VariableValue to represent an indexed variable.
  *
  * @author Howard G. Penny Copyright (C) 2005
  * @author Bob Jacobsen Copyright (C) 2010, 2013
@@ -57,8 +57,9 @@ public class IndexedVariableValue extends VariableValue
     }
 
     /**
-     * Create a null object. Normally only used for tests and to pre-load
-     * classes.
+     * Create a null object.
+     * <p>
+     * Normally only used for tests and to pre-load classes.
      */
     protected IndexedVariableValue() {
     }
@@ -284,20 +285,21 @@ public class IndexedVariableValue extends VariableValue
     private static final int COMPARE_CV = 9;
 
     /**
-     * Count number of retries done
+     * Count number of retries done.
      */
     private int retries = 0;
 
     /**
-     * Define maximum number of retries of read/write operations before moving
-     * on
+     * Define maximum number of retries of read/write operations
+     * before moving on.
      */
     private static final int RETRY_MAX = 2;
 
     /**
-     * Set a new value, including notification as needed. This does the
-     * conversion from string to int, so if the place where formatting needs to
-     * be applied
+     * Set a new value, including notification as needed.
+     * <p>
+     * This does the conversion from string to int, so if the place where
+     * formatting needs to be applied.
      */
     public void setValue(int value) {
         int oldVal;
@@ -338,7 +340,7 @@ public class IndexedVariableValue extends VariableValue
     }
 
     /**
-     * Notify the connected CVs of a state change from above
+     * Notify the connected CVs of a state change from above.
      *
      */
     @Override
@@ -612,7 +614,7 @@ public class IndexedVariableValue extends VariableValue
     JTextField _value = null;
 
     /* Internal class extends a JTextField so that its color is consistent with
-     * an underlying variable
+     * an underlying variable.
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
      */

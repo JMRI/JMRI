@@ -188,7 +188,8 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Only close frame, etc, dispose() disposes of all cached panes
+     * Only close frame, etc.
+     * super.dispose() disposes of all cached panes.
      */
     @Override
     public void dispose() {

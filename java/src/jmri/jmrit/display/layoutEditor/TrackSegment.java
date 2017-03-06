@@ -530,7 +530,7 @@ public class TrackSegment extends LayoutTrack {
     private int mainlineTrackIndex;
     private int sideTrackIndex;
     private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JTextField arcField = new JTextField(5);
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
     private JButton segmentEditBlock;

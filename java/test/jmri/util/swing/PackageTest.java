@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(FontComboUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(EditableResizableImagePanelTest.class));
         suite.addTest(new JUnit4TestAdapter(GuiUtilBaseTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriBeanComboBoxTest.class));
         suite.addTest(new JUnit4TestAdapter(JMenuUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JToolBarUtilTest.class));
         suite.addTest(new JUnit4TestAdapter(JTreeUtilTest.class));

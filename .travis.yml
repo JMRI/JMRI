@@ -25,7 +25,7 @@ cache:
 
 os:
   - linux
-  - osx
+  - osx 
 
 sudo: required
 
