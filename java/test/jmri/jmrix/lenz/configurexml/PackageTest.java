@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    XNetLightManagerXmlTest.class,
    XNetSensorManagerXmlTest.class,
-   XNetTurnoutManagerXmlTest.class
+   XNetTurnoutManagerXmlTest.class,
+   AbstractXNetSerialConnectionConfigXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.lenz.configurexml package.

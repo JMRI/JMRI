@@ -148,8 +148,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             sml = null;
         }
 
-        sourceMastBox = new JmriBeanComboBox(smm, sourceMast, JmriBeanComboBox.DISPLAYNAME);
-        destMastBox = new JmriBeanComboBox(smm, destMast, JmriBeanComboBox.DISPLAYNAME);
+        sourceMastBox = new JmriBeanComboBox(smm, sourceMast, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        destMastBox = new JmriBeanComboBox(smm, destMast, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
         JPanel containerPanel = new JPanel();
         containerPanel.setLayout(new BorderLayout());
