@@ -3939,7 +3939,7 @@ public class Llnmon {
         int playableWhistleLevel = -999;
 
         // see if it really is a 'Send Packet' as defined in LocoNet PE
-        if (val7f == 0x7f) {
+        if ((val7f == 0x7f) && (l.getElement(1) == 0x0B)) {
             int len = ((reps & 0x70) >> 4);
             if (len < 2) {
                 return ""; // no valid NMRA packets of less than 2 bytes.
@@ -3990,6 +3990,7 @@ public class Llnmon {
                 }
             } else {
                 // immediate packet not addressed to a multi-function (mobile) decoder
+                log.debug ("got Here 1.");
             }
             if ((mobileDecoderAddress >= 0)
                     && (nmraInstructionType == 1)
@@ -3997,7 +3998,7 @@ public class Llnmon {
                 // the "Playable" whistle message
                 // Information reverse-engineered by B. Milhaupt and used with permission
                 return Bundle.getMessage("LN_MSG_PLAYABLE_WHISTLE_CONTROL",
-                        mobileDecoderAddress,
+                        Integer.toString(mobileDecoderAddress),
                         playableWhistleLevel,
                         (reps & 0x7));
             }
@@ -4039,29 +4040,23 @@ public class Llnmon {
                             Bundle.getMessage((((packetInt[2] & 0x04) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
                             Bundle.getMessage((((packetInt[2] & 0x08) != 0) ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
                 } else {
-                    // Unknown
-                                        /*
-                * We use this two places below, so we generate it once here.
-                * That seems wrong, but what we really need is to be able to
-                * decode any NMRA packet here, which is a lot more work!
-                */
-               return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
-                       ((reps & 0x70) >> 4),
-                       (reps & 0x07),
-                       reps,
-                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                               StringUtil.twoHexFromInt(dhi)),
-                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                               StringUtil.twoHexFromInt(im1)),
-                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                               StringUtil.twoHexFromInt(im2)),
-                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                               StringUtil.twoHexFromInt(im3)),
-                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                               StringUtil.twoHexFromInt(im4)),
-                       Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                               StringUtil.twoHexFromInt(im5)),
-                       NmraPacket.format(packet));
+                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
+                           ((reps & 0x70) >> 4),
+                           (reps & 0x07),
+                           reps,
+                           Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                   StringUtil.twoHexFromInt(dhi)),
+                           Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                   StringUtil.twoHexFromInt(im1)),
+                           Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                   StringUtil.twoHexFromInt(im2)),
+                           Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                   StringUtil.twoHexFromInt(im3)),
+                           Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                   StringUtil.twoHexFromInt(im4)),
+                           Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                   StringUtil.twoHexFromInt(im5)),
+                           NmraPacket.format(packet));
                 }
             } else { // F9-F28 w/a short address.
                 address = packetInt[0];
@@ -4094,69 +4089,67 @@ public class Llnmon {
                     // Functions 9-12
                     return Bundle.getMessage("LN_MSG_SEND_PACKET_IMM_SET_F9_TO_F12",
                             address,
-                            Bundle.getMessage(((packetInt[2] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                            Bundle.getMessage(((packetInt[2] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                            Bundle.getMessage(((packetInt[2] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
-                            Bundle.getMessage(((packetInt[2] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
+                            Bundle.getMessage(((packetInt[1] & 0x01) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[1] & 0x02) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[1] & 0x04) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")),
+                            Bundle.getMessage(((packetInt[1] & 0x08) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
                 } else {
                     // Unknown
-            return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
-                    ((reps & 0x70) >> 4),
-                    (reps & 0x07),
-                    reps,
-                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                            StringUtil.twoHexFromInt(dhi)),
-                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                            StringUtil.twoHexFromInt(im1)),
-                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                            StringUtil.twoHexFromInt(im2)),
-                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                            StringUtil.twoHexFromInt(im3)),
-                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                            StringUtil.twoHexFromInt(im4)),
-                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                            StringUtil.twoHexFromInt(im5)),
-                    NmraPacket.format(packet));
+                    return Bundle.getMessage("LN_MSG_OPC_IMM_PKT_GENERIC",
+                            ((reps & 0x70) >> 4),
+                            (reps & 0x07),
+                            reps,
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(dhi)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im1)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im2)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im3)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im4)),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(im5)),
+                            NmraPacket.format(packet));
                 }
             } // else { // F9-F28 w/a short address.
-        } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
-                && l.getElement(6) != 0x5E && l.getElement(10) == 0x70 && l.getElement(11) == 0x00 && l.getElement(15) == 0x10) {
-            // Uhlenbrock IB-COM / Intellibox I and II read or write CV value on programming track
-            String cv = Integer.toString(l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7));
-            int val = l.getElement(9) + 16 * (l.getElement(5) & 0x08);
-            switch (l.getElement(6)) {
-                case 0x6C:
-                    return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_REG_MODE_FROM_PT", cv);
-                case 0x6D:
-                    return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_REG_MODE_FROM_PT", cv);
-                case 0x6E:
-                    return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_PAGED_MODE_FROM_PT", cv);
-                case 0x6F:
-                    return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_PAGED_MODE_FROM_PT", cv);
-                case 0x71:
-                    return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_DIRECT_BYTE_MODE_FROM_PT",
-                            cv, val);
-                case 0x70: // observed on Intellibox II, even though it does not work on IB-COM
-                case 0x72:
-                    return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_DIRECT_BYTE_MODE_FROM_PT", cv);
+        } else if (l.getElement(1) == 0x1F) {
+            if (l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
+                    && l.getElement(6) != 0x5E && l.getElement(10) == 0x70 && l.getElement(11) == 0x00 && l.getElement(15) == 0x10) {
+                // Uhlenbrock IB-COM / Intellibox I and II read or write CV value on programming track
+                String cv = Integer.toString(l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7));
+                int val = l.getElement(9) + 16 * (l.getElement(5) & 0x08);
+                switch (l.getElement(6)) {
+                    case 0x6C:
+                        return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_REG_MODE_FROM_PT", cv);
+                    case 0x6D:
+                        return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_REG_MODE_FROM_PT", cv);
+                    case 0x6E:
+                        return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_PAGED_MODE_FROM_PT", cv);
+                    case 0x6F:
+                        return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_PAGED_MODE_FROM_PT", cv);
+                    case 0x71:
+                        return Bundle.getMessage("LN_MSG_UHLEN_WRITE_CV_DIRECT_BYTE_MODE_FROM_PT",
+                                cv, val);
+                    case 0x70: // observed on Intellibox II, even though it does not work on IB-COM
+                    case 0x72:
+                        return Bundle.getMessage("LN_MSG_UHLEN_READ_CV_DIRECT_BYTE_MODE_FROM_PT", cv);
+                    default:
+                        break;
+                }
+                return "";
+            } else if (l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
+                    && l.getElement(6) == 0x5E) {
+                // Uhlenbrock IB-COM / Intellibox I and II write CV value on main track
+                int addr = l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7);
+                String cv = Integer.toString(l.getElement(11) * 256 + ((l.getElement(5) & 0x08) << 4) + l.getElement(9));
+                int val = ((l.getElement(10) & 0x02) << 6) + l.getElement(12);
+                return Bundle.getMessage("LN_MSG_UHLEN_CV_OPS_MODE_WRITE",
+                        addr, cv, val);
             }
-            return Bundle.getMessage("LN_MSG_UHLEN_CV_OPERATION_UNKNOWN", cv, val);
-        } else if (l.getElement(1) == 0x1F && l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42
-                && l.getElement(6) == 0x5E) {
-            // Uhlenbrock IB-COM / Intellibox I and II write CV value on main track
-            int addr = l.getElement(8) * 256 + ((l.getElement(5) & 0x02) * 64) + l.getElement(7);
-            String cv = Integer.toString(l.getElement(11) * 256 + ((l.getElement(5) & 0x08) << 4) + l.getElement(9));
-            int val = ((l.getElement(10) & 0x02) << 6) + l.getElement(12);
-            return Bundle.getMessage("LN_MSG_UHLEN_CV_OPS_MODE_WRITE",
-                    addr, cv, val);
-        } else {
-            /* Hmmmm... */
-            forceHex = true;
-            return Bundle.getMessage("LN_MSG_UHLEN_SEND_PKT_IMM_UNDEFINED",
-                    Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                            StringUtil.twoHexFromInt(val7f)));
         }
-
+        return ""; // not an understood message.
     }
     
     private String interpretOpcPr3Mode(LocoNetMessage l) {
