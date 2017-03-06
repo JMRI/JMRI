@@ -88,6 +88,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemNameComparatorTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemTypeTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlFilenameFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.xml.PackageTest.class));
 
         // deliberately at end
         suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
