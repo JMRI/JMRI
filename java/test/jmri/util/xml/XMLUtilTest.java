@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class XMLUtilTest {
 
     @Test
-    public void createXMLReader() {
+    public void createXMLReader() throws org.xml.sax.SAXException {
         Assert.assertNotNull("exists",XMLUtil.createXMLReader());
     }
 
