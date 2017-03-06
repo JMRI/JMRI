@@ -150,7 +150,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //dashed line parameters
     //private static int minNumDashes = 3;
     //private static double maxDashLength = 10;
-    private JFrame floatingEditTools = null;
+    private JmriJFrame floatingEditToolBox = null;
+    private JScrollPane floatingEditContent = null;
     private JPanel floatEditHelpPanel = null;
     private JPanel editToolBarPanel = null;
     private JScrollPane editToolBarScroll = null;
@@ -222,7 +223,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-  //3rd row of radio buttons (and any associated text fields)
+    //3rd row of radio buttons (and any associated text fields)
     private JLabel nodesLabel = new JLabel();
     private JRadioButton endBumperButton = new JRadioButton(rb.getString("EndBumper"));
     private JRadioButton anchorButton = new JRadioButton(rb.getString("Anchor"));
@@ -1122,8 +1123,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //this doesn't work as expected (1st one called messes up 2nd?)
                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
                 Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                log.info(   "prefsMgr.prefsWindowLocation({}) is {}",   windowFrameRef, prefsWindowLocation);
-                log.info(   "prefsMgr.prefsWindowSize is({}) {}",       windowFrameRef, prefsWindowSize);
+                log.info("prefsMgr.prefsWindowLocation({}) is {}",   windowFrameRef, prefsWindowLocation);
+                log.info("prefsMgr.prefsWindowSize is({}) {}",       windowFrameRef, prefsWindowSize);
 
                 //Point prefsWindowLocation = null;
                 //Dimension prefsWindowSize = null;
@@ -1151,31 +1152,38 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });     //SwingUtilities.invokeLater
     }           //LayoutEditor (constructor)
 
-    private void removeFloatingEditTools() {
-        //Remove the panel listeners
-        if (thisPanel != null) {
-            for (WindowFocusListener listener : thisPanel.getWindowFocusListeners()) {
-                thisPanel.removeWindowFocusListener(listener);
-            }
-        }
-
-        if (floatingEditTools != null) {
-            //Remove the tool box listeners
-            for (WindowFocusListener listener : floatingEditTools.getWindowFocusListeners()) {
-                floatingEditTools.removeWindowFocusListener(listener);
+    private void createFloatingEditToolBox() {
+        if (floatingEditToolBox == null) {
+            if (floatingEditContent == null) {
+                // Create the window content on the first call
+                createFloatingEditContent();
             }
 
-            //Remove the tool box
-            floatingEditTools.dispose();
-            floatingEditTools = null;
+            if (isEditable() && floatingEditToolBox == null) {
+                //Create the window and add the toolbox content
+                floatingEditToolBox = new JmriJFrame("ToolBox: " + layoutName); // TODO - Bundle
+                floatingEditToolBox.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                floatingEditToolBox.setContentPane(floatingEditContent);
+                floatingEditToolBox.pack();
+                floatingEditToolBox.setAlwaysOnTop(true);
+                floatingEditToolBox.setVisible(true);
+            }
         }
-    }   //removeFloatingEditTools
+    }
 
-    private void setupFloatingEditTools() {
+    private void deleteFloatingEditToolBox() {
+        if (floatingEditToolBox != null) {
+            floatingEditToolBox.dispose();
+            floatingEditToolBox = null;
+        }
+    }
+
+    private void createFloatingEditContent() {
+        log.info("#### createFloatingEditContent");  // DIAG
         /*
-         * JFrame - floatingEditTools
-         *     JScrollPane - floatingEditScroll
-         *         JPanel - floatingEditContent
+         * JFrame - floatingEditToolBox
+         *     JScrollPane - floatingEditContent
+         *         JPanel - floatingEditPanel
          *             JPanel - floatEditTabsPanel
          *                 JTabbedPane - floatEditTabsPane
          *                     ...
@@ -1186,9 +1194,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
          *             JPanel - floatEditHelpPanel
          *                 ...
          */
-
-        //Remove existing components, if any
-        removeFloatingEditTools();
 
         FlowLayout floatContentLayout = new FlowLayout(FlowLayout.CENTER, 5, 2);    //5 pixel gap between items, 2 vertical gap
 
@@ -1203,8 +1208,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         blockPropertiesPanel.   add(blockSensorComboBox);
 
         //Build the window content
-        JPanel floatingEditContent = new JPanel();
-        floatingEditContent.setLayout(new BoxLayout(floatingEditContent, BoxLayout.Y_AXIS));
+        JPanel floatingEditPanel = new JPanel();
+        floatingEditPanel.setLayout(new BoxLayout(floatingEditPanel, BoxLayout.Y_AXIS));
 
         //Begin the tabs structure
         JPanel floatEditTabsPanel = new JPanel();
@@ -1315,7 +1320,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         floatEditTabsPane.addTab("Icons", null, floatEditIcon, null);   //TODO - Bundle
         floatEditTabsPanel.add(floatEditTabsPane);
-        floatingEditContent.add(floatEditTabsPanel);
+        floatingEditPanel.add(floatEditTabsPanel);
 
         //End the tabs structure
 
@@ -1323,27 +1328,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JPanel floatEditLocationPanel = new JPanel();
         floatEditLocationPanel. add(zoomPanel);
         floatEditLocationPanel. add(locationPanel);
-        floatingEditContent.add(floatEditLocationPanel);
+        floatingEditPanel.add(floatEditLocationPanel);
 
-        JPanel floatEditActionPanel = new JPanel();
-        floatEditActionPanel.add(new JLabel("floatEditActionPanel", JLabel.CENTER));
-
-//TODO?     floatingEditContent.add(floatEditActionPanel);
+//      JPanel floatEditActionPanel = new JPanel();
+//      floatEditActionPanel.add(new JLabel("floatEditActionPanel", JLabel.CENTER));
+//      floatingEditPanel.add(floatEditActionPanel);
 
         floatEditHelpPanel = new JPanel();
-        floatingEditContent.add(floatEditHelpPanel);
+        floatingEditPanel.add(floatEditHelpPanel);
 
         //Notice:  End tree structure indenting
         //Create a scroll pane to hold the window content.
-        JScrollPane floatingEditScroll = new JScrollPane(floatingEditContent);
-        floatingEditScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        floatingEditScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        //Create the window and add the scrollable content
-        floatingEditTools = new JFrame("Edit: " + layoutName);  //TODO - Bundle
-        floatingEditTools.setContentPane(floatingEditScroll);
-        floatingEditTools.pack();
-        floatingEditTools.setAlwaysOnTop(true);
+        floatingEditContent = new JScrollPane(floatingEditPanel);
+        floatingEditContent.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        floatingEditContent.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         SwingUtilities.invokeLater(() -> {
             //Deferred action -- Force the help panel width to the same as the tabs section
@@ -1375,45 +1373,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 floatEditTrack.add(blockPropertiesPanel);
             }
         });
-
-        floatingEditTools.addWindowFocusListener(new WindowAdapter() {
-            public void windowLostFocus(WindowEvent e) {
-                if (!checkName(e)) {
-                    floatingEditTools.setVisible(false);
-                }
-            }
-
-            public void windowGainedFocus(WindowEvent e) {}
-
-            private boolean checkName(WindowEvent e) {
-                String arg = "=" + layoutName;
-                String evt = e.toString();
-
-                return evt.contains(arg);
-            }
-        });
-
-        thisPanel.addWindowFocusListener(new WindowAdapter() {
-            public void windowLostFocus(WindowEvent e) {
-                if (!checkName(e)) {
-                    floatingEditTools.setVisible(false);
-                }
-            }
-
-            public void windowGainedFocus(WindowEvent e) {
-                if (!checkName(e) && isEditable()) {
-                    floatingEditTools.setVisible(true);
-                }
-            }
-
-            private boolean checkName(WindowEvent e) {
-                String arg = "=Edit: " + layoutName;
-                String evt = e.toString();
-
-                return evt.contains(arg);
-            }
-        });
-    }   //setupFloatingEditTools
+    }   //createFloatingEditContent
 
     private void setupToolBar() {
         //Initial setup for both horizontal and vertical
@@ -1428,11 +1388,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (helpBarPanel != null) {
             contentPane.remove(helpBarPanel);
         }
-        removeFloatingEditTools();
 
+        deleteFloatingEditToolBox();
         if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-            setupFloatingEditTools();
-
+            createFloatingEditToolBox();
             return;
         }
 
@@ -1985,7 +1944,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             toolBarFont = toolBarFont.deriveFont(newToolBarFontSize);
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-                recursiveSetFont(floatingEditTools, toolBarFont);
+                recursiveSetFont(floatingEditContent, toolBarFont);
             } else {
                 recursiveSetFont(editToolBarPanel, toolBarFont);
             }
@@ -2848,9 +2807,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             jmri.jmrit.display.PanelMenu.instance().renameEditorPanel(thisPanel);
             setDirty(true);
 
-            if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-    //re-build the tool box -- eliminate focus loop
-                setupFloatingEditTools();
+            if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
+                deleteFloatingEditToolBox();
+                createFloatingEditToolBox();
             }
         });
 
@@ -2948,53 +2907,53 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         JMenu trackColorMenu = new JMenu(rb.getString("DefaultTrackColor"));
         trackColorButtonGroup = new ButtonGroup();
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Black"),      Color.black);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("DarkGray"),   Color.darkGray);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Gray"),       Color.gray);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Black"),     Color.black);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("DarkGray"),  Color.darkGray);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Gray"),      Color.gray);
         addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("White"),      Color.white);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Red"),        Color.red);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Pink"),       Color.pink);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Green"),      Color.green);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Blue"),       Color.blue);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Magenta"),    Color.magenta);
-        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Cyan"),       Color.cyan);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("White"),     Color.white);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Red"),       Color.red);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Pink"),      Color.pink);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Orange"),    Color.orange);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Yellow"),    Color.yellow);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Green"),     Color.green);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Blue"),      Color.blue);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Magenta"),   Color.magenta);
+        addTrackColorMenuEntry(trackColorMenu, Bundle.getMessage("Cyan"),      Color.cyan);
         trkColourMenu.add(trackColorMenu);
 
         JMenu trackOccupiedColorMenu = new JMenu(rb.getString("DefaultOccupiedTrackColor"));
         trackOccupiedColorButtonGroup = new ButtonGroup();
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Black"),      Color.black);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("DarkGray"),   Color.darkGray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Gray"),       Color.gray);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Black"),     Color.black);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("DarkGray"),  Color.darkGray);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Gray"),      Color.gray);
         addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("LightGray"), Color.lightGray);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("White"),      Color.white);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Red"),        Color.red);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Pink"),       Color.pink);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Orange"), Color.orange);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Yellow"), Color.yellow);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Green"),      Color.green);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Blue"),       Color.blue);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Magenta"),    Color.magenta);
-        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Cyan"),       Color.cyan);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("White"),     Color.white);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Red"),       Color.red);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Pink"),      Color.pink);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Orange"),    Color.orange);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Yellow"),    Color.yellow);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Green"),     Color.green);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Blue"),      Color.blue);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Magenta"),   Color.magenta);
+        addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, Bundle.getMessage("Cyan"),      Color.cyan);
         trkColourMenu.add(trackOccupiedColorMenu);
 
         JMenu trackAlternativeColorMenu = new JMenu(rb.getString("DefaultAlternativeTrackColor"));
         trackAlternativeColorButtonGroup = new ButtonGroup();
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Black"),     Color.black);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Gray"),      Color.gray);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("LightGray"), Color.lightGray);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("White"),     Color.white);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Red"),       Color.red);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Pink"),      Color.pink);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Orange"),    Color.orange);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Yellow"),    Color.yellow);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Green"),     Color.green);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
-        addTrackAlternativeColorMenuEntry(  trackAlternativeColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Black"),     Color.black);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Gray"),      Color.gray);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("LightGray"), Color.lightGray);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("White"),     Color.white);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Red"),       Color.red);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Pink"),      Color.pink);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Orange"),    Color.orange);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Yellow"),    Color.yellow);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Green"),     Color.green);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
+        addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
         trkColourMenu.add(trackAlternativeColorMenu);
 
         //
@@ -3002,19 +2961,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
         textColorButtonGroup = new ButtonGroup();
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Black"),     Color.black);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Gray"),      Color.gray);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("LightGray"), Color.lightGray);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("White"),     Color.white);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Red"),       Color.red);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Pink"),      Color.pink);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Orange"),    Color.orange);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Yellow"),    Color.yellow);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Green"),     Color.green);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
-        addTextColorMenuEntry(  textColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Black"),     Color.black);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Gray"),      Color.gray);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("LightGray"), Color.lightGray);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("White"),     Color.white);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Red"),       Color.red);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Pink"),      Color.pink);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Orange"),    Color.orange);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Yellow"),    Color.yellow);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Green"),     Color.green);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
         optionMenu. add(textColorMenu);
 
         //
@@ -3035,35 +2994,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //select turnout circle color
         JMenu turnoutCircleColorMenu = new JMenu(rb.getString("TurnoutCircleColor"));
         turnoutCircleColorButtonGroup = new ButtonGroup();
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("UseDefaultTrackColor"),   null);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Black"),                  Color.black);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("DarkGray"),               Color.darkGray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Gray"),                   Color.gray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("LightGray"),              Color.lightGray);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("White"),                  Color.white);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Red"),                    Color.red);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Pink"),                   Color.pink);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Orange"),             Color.orange);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Yellow"),             Color.yellow);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Green"),                  Color.green);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Blue"),                   Color.blue);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Magenta"),                Color.magenta);
-        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Cyan"),                   Color.cyan);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("UseDefaultTrackColor"),  null);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Black"),                 Color.black);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("DarkGray"),              Color.darkGray);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Gray"),                  Color.gray);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("LightGray"),             Color.lightGray);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("White"),                 Color.white);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Red"),                   Color.red);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Pink"),                  Color.pink);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Orange"),                Color.orange);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Yellow"),                Color.yellow);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Green"),                 Color.green);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Blue"),                  Color.blue);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Magenta"),               Color.magenta);
+        addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, Bundle.getMessage("Cyan"),                  Color.cyan);
         turnoutOptionsMenu.add(turnoutCircleColorMenu);
 
         //select turnout circle size
         JMenu turnoutCircleSizeMenu = new JMenu(rb.getString("TurnoutCircleSize"));
         turnoutCircleSizeButtonGroup = new ButtonGroup();
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "1",    1);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "2",    2);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "3",    3);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "4",    4);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "5",    5);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "6",    6);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "7",    7);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "8",    8);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "9",    9);
-        addTurnoutCircleSizeMenuEntry(  turnoutCircleSizeMenu,  "10",   10);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "1",    1);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "2",    2);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "3",    3);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "4",    4);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "5",    5);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "6",    6);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "7",    7);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "8",    8);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "9",    9);
+        addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu,  "10",   10);
         turnoutOptionsMenu. add(turnoutCircleSizeMenu);
 
         //
@@ -3151,7 +3110,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void updateAllComboBoxesDropDownListDisplayOrderFromPrefs() {
         //1st call the recursive funtion starting from the edit toolbar container
         updateComboBoxDropDownListDisplayOrderFromPrefs(editToolBarContainer);
-        updateComboBoxDropDownListDisplayOrderFromPrefs(floatingEditTools);
+        updateComboBoxDropDownListDisplayOrderFromPrefs(floatingEditContent);
 
         //and now that that's done update the drop down menu display order menu
         updateDropDownMenuDisplayOrderMenu();
@@ -3244,13 +3203,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setupToolBar(); //re-layout all the toolbar items
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-                floatingEditTools.setVisible(isEditable());
+                createFloatingEditToolBox();
                 if (null != editToolBarContainer) {
                     editToolBarContainer.setVisible(false);
                 }
             } else {
-                if (null != floatingEditTools) {
-                    floatingEditTools.setVisible(false);
+                if (null != floatingEditToolBox) {
+                    deleteFloatingEditToolBox();
                 }
                 editToolBarContainer.setVisible(isEditable());
             }
@@ -10341,8 +10300,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                                     "user.dir") + java.io.File.separator + "resources" + java.io.File.separator +
                                                 "icons");
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
-            filt.   addExtension(   "gif");
-            filt.   addExtension(   "jpg");
+            filt.   addExtension("gif");
+            filt.   addExtension("jpg");
             inputFileChooser.setFileFilter(filt);
         }
         inputFileChooser.rescanCurrentDirectory();
@@ -10462,7 +10421,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         super.setAllEditable(editable);
 
         if (toolBarSide.equals(eToolBarSide.eFLOAT)) {
-            floatingEditTools.setVisible(editable);
+            if (editable) {
+                createFloatingEditToolBox();
+            } else {
+                deleteFloatingEditToolBox();
+            }
         } else {
             editToolBarContainer.setVisible(editable);
         }
