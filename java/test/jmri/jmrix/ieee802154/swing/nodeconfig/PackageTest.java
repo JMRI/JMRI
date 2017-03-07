@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     BundleTest.class,
     NodeConfigFrameTest.class,
-    NodeConfigActionTest.class
+    NodeConfigActionTest.class,
+    AddNodeFrameTest.class,
+    EditNodeFrameTest.class
 })
 
 /**

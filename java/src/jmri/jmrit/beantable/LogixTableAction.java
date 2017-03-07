@@ -61,6 +61,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.UserPreferencesManager;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.logix.OBlock;
@@ -532,7 +533,6 @@ public class LogixTableAction extends AbstractTableAction {
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
-    jmri.UserPreferencesManager prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     JButton create;
 
@@ -689,9 +689,9 @@ public class LogixTableAction extends AbstractTableAction {
         addLogixFrame.pack();
         addLogixFrame.setVisible(true);
         _autoSystemName.setSelected(false);
-        if (prefMgr.getSimplePreferenceState(systemNameAuto)) {
-            _autoSystemName.setSelected(true);
-        }
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+        });
     }
 
     /**
@@ -844,9 +844,9 @@ public class LogixTableAction extends AbstractTableAction {
                 addLogixFrame.pack();
                 addLogixFrame.setVisible(true);
                 _autoSystemName.setSelected(false);
-                if (prefMgr.getSimplePreferenceState(systemNameAuto)) {
-                    _autoSystemName.setSelected(true);
-                }
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+                });
             }
         };
         if (log.isDebugEnabled()) {
@@ -1118,7 +1118,9 @@ public class LogixTableAction extends AbstractTableAction {
         cancelAddPressed(null);
         // create the Edit Logix Window
         makeEditLogixWindow();
-        prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        });
     }
 
     void handleCreateException(String sysName) {

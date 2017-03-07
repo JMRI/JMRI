@@ -471,7 +471,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
                 } else if (value instanceof JComboBox<?>) {
-                    columnStrings[j] = (String) ((JComboBox<String>) value).getSelectedItem();
+                    columnStrings[j] = ((JComboBox<String>) value).getSelectedItem().toString();
                 } else {
                     // Boolean or String
                     columnStrings[j] = value.toString();
