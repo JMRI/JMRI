@@ -1,4 +1,4 @@
-package jmri.util.table;
+package jmri.util.xml;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -6,12 +6,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BasicCellEditorTest.class,
-    ButtonRendererTest.class,
-    ButtonEditorTest.class
+    XMLUtilTest.class
 })
 /**
- * Tests for the jmri.util.table package
+ * Tests for the jmri.util.xml package
  *
  * @author      Paul Bender Copyright (C) 2017
  */
