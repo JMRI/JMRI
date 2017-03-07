@@ -38,7 +38,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
@@ -148,11 +147,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
         //_dTree.setDropMode(DropMode.ON);
         _dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
-        _dTree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                updatePanel();
-            }
+        _dTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
+            updatePanel();
         });
         _dTree.setExpandsSelectedPaths(true);
         _treePane.setViewportView(_dTree);

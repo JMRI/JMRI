@@ -981,22 +981,15 @@ public class PositionablePoint extends LayoutTrack{
 
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
         done.addActionListener(
-                new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateLink();
-            }
-        }
-        );
+                (ActionEvent a) -> {
+            updateLink();
+        });
 
         // make this button the default button (return or enter activates)
         // Note: We have to invoke this later because we don't currently have a root pane
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JRootPane rootPane = SwingUtilities.getRootPane(done);
-                rootPane.setDefaultButton(done);
-            }
+        SwingUtilities.invokeLater(() -> {
+            JRootPane rootPane = SwingUtilities.getRootPane(done);
+            rootPane.setDefaultButton(done);
         });
 
         container.add(getLinkPanel(), BorderLayout.NORTH);
@@ -1026,11 +1019,8 @@ public class PositionablePoint extends LayoutTrack{
             }
         }
 
-        ActionListener selectPanelListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updatePointBox();
-            }
+        ActionListener selectPanelListener = (ActionEvent a) -> {
+            updatePointBox();
         };
 
         editorCombo.addActionListener(selectPanelListener);

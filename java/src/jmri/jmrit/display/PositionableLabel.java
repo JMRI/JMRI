@@ -569,11 +569,8 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditor.setIcon(0, "plainIcon", icon);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                editIcon();
-            }
+        ActionListener addIconAction = (ActionEvent a) -> {
+            editIcon();
         };
         _iconEditor.complete(addIconAction, true, false, true);
 
@@ -648,11 +645,8 @@ public class PositionableLabel extends JLabel implements Positionable {
             disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disable"));
             disableItem.setSelected(!_controlling);
             popup.add(disableItem);
-            disableItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setControlling(!disableItem.isSelected());
-                }
+            disableItem.addActionListener((java.awt.event.ActionEvent e) -> {
+                setControlling(!disableItem.isSelected());
             });
             return true;
         }
@@ -699,21 +693,21 @@ public class PositionableLabel extends JLabel implements Positionable {
                         setOpaque(_popupUtil.hasBackground());
                         _popupUtil.setBorder(true);
                     }
-                    if (_icon) {
+                    if (_namedIcon != null) {
                         String url = _namedIcon.getURL();
                         _namedIcon = new NamedIcon(url, url);
-                    } else {
-                        _namedIcon = null;
                     }
                     super.setIcon(_namedIcon);
                 } else {
-                    _namedIcon.rotate(deg, this);
+                    if (_namedIcon != null) {
+                        _namedIcon.rotate(deg, this);
+                    }
                     super.setIcon(_namedIcon);
                 }
             } else {
                 if (_text & _icon) {    // update text over icon
                     _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
-                } else if (_text) {     // update text only icon image                  
+                } else if (_text) {     // update text only icon image
                     _namedIcon = makeTextIcon(_unRotatedText);
                 }
                 _namedIcon.rotate(deg, this);
