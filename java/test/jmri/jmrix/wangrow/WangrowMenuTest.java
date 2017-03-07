@@ -22,7 +22,7 @@ public class WangrowMenuTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        WangrowMenu t = new WangrowMenu(new NceSystemConnectionMemo(););
+        WangrowMenu t = new WangrowMenu(new NceSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
