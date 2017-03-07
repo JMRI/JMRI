@@ -27,9 +27,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -1161,7 +1158,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if (isEditable() && floatingEditToolBox == null) {
                 //Create the window and add the toolbox content
-                floatingEditToolBox = new JmriJFrame("ToolBox: " + layoutName); // TODO - Bundle
+                floatingEditToolBox = new JmriJFrame(rb.getString("ToolBox") + ": " + layoutName);
                 floatingEditToolBox.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 floatingEditToolBox.setContentPane(floatingEditContent);
                 floatingEditToolBox.pack();
@@ -1179,7 +1176,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void createFloatingEditContent() {
-        log.info("#### createFloatingEditContent");  // DIAG
         /*
          * JFrame - floatingEditToolBox
          *     JScrollPane - floatingEditContent
@@ -1246,7 +1242,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.   add(turnoutGroup5);
 
         floatEditTurnout.   add(blockPropertiesPanel);
-        floatEditTabsPane.addTab("Turnouts", null, floatEditTurnout, null); //TODO - Bundle
+        floatEditTabsPane.addTab(rb.getString("TabTurnout"), null, floatEditTurnout, null);
 
         //Tab 1 - Track
         JPanel floatEditTrack = new JPanel();
@@ -1267,7 +1263,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         trackGroup3.add(trackSegmentPropertiesPanel);
         floatEditTrack.add(trackGroup3);
 
-        floatEditTabsPane.addTab("Track", null, floatEditTrack, null);  //TODO - Bundle
+        floatEditTabsPane.addTab(rb.getString("TabTrack"), null, floatEditTrack, null);
 
         //Tab 2 - Labels
         JPanel floatEditLabel = new JPanel();
@@ -1288,7 +1284,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         labelGroup3.add(blockContentsComboBox);
         floatEditLabel.add(labelGroup3);
 
-        floatEditTabsPane.addTab("Labels", null, floatEditLabel, null); //TODO - Bundle
+        floatEditTabsPane.addTab(rb.getString("TabLabel"), null, floatEditLabel, null);
 
         //Tab 3 - Icons
         JPanel floatEditIcon = new JPanel();
@@ -1318,7 +1314,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconGroup5.add(iconLabelButton);
         floatEditIcon.add(iconGroup5);
 
-        floatEditTabsPane.addTab("Icons", null, floatEditIcon, null);   //TODO - Bundle
+        floatEditTabsPane.addTab(rb.getString("TabIcon"), null, floatEditIcon, null);
         floatEditTabsPanel.add(floatEditTabsPane);
         floatingEditPanel.add(floatEditTabsPanel);
 
