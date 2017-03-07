@@ -40,8 +40,8 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
      * @param top       CVs above this use the indirect method
      * @param addrCV    CV to which the high part of address is to be written
      * @param cvFactor  CV to which the low part of address is to be written
-     * @param modulo    Modulus for determining high/low address parts
-     * @param indicator
+     * @param modulo    modulus for determining high/low address parts
+     * @param indicator value added to calculation to split high and low parts
      */
     public ResettingOffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo, String indicator) {
         super(prog);
