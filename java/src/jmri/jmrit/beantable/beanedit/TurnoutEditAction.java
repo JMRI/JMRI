@@ -113,13 +113,13 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback.addItem(new BeanEditItem(null, null, Bundle.getMessage("FeedbackToolTip")));
         feedback.addItem(new BeanEditItem(modeBox, Bundle.getMessage("FeedbackMode"), Bundle.getMessage("FeedbackModeToolTip")));
 
-        sensorFeedBack1Field = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Turnout) bean).getFirstSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        sensorFeedBack1Field.setFirstItemBlank(true);
-        feedback.addItem(new BeanEditItem(sensorFeedBack1Field, Bundle.getMessage("FeedbackSensor1"), Bundle.getMessage("FeedbackSensorToolTip")));
+        sensorFeedBack1ComboBox = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Turnout) bean).getFirstSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        sensorFeedBack1ComboBox.setFirstItemBlank(true);
+        feedback.addItem(new BeanEditItem(sensorFeedBack1ComboBox, Bundle.getMessage("FeedbackSensor1"), Bundle.getMessage("FeedbackSensorToolTip")));
 
-        sensorFeedBack2Field = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Turnout) bean).getSecondSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        sensorFeedBack2Field.setFirstItemBlank(true);
-        feedback.addItem(new BeanEditItem(sensorFeedBack2Field, Bundle.getMessage("FeedbackSensor2"), Bundle.getMessage("FeedbackSensorToolTip")));
+        sensorFeedBack2ComboBox = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Turnout) bean).getSecondSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        sensorFeedBack2ComboBox.setFirstItemBlank(true);
+        feedback.addItem(new BeanEditItem(sensorFeedBack2ComboBox, Bundle.getMessage("FeedbackSensor2"), Bundle.getMessage("FeedbackSensorToolTip")));
 
         String[] str = new String[]{"empty"};
         automationBox = new JComboBox<String>(str);

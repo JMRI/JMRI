@@ -1,10 +1,15 @@
 package jmri.util.swing;
 
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JComboBox;
+import javax.swing.JComboBox.KeySelectionManager;
 import jmri.NamedBean;
 import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
@@ -30,7 +35,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @param nBean the namedBean that should automatically be selected
      * @param displayOrder the way in which the namedbeans should be displayed
      */
-    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, JmriBeanComboBox.DisplayOptions displayOrder) {
+    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, DisplayOptions displayOrder) {
         _displayOrder = displayOrder;
         _manager = manager;
         setSelectedBean(nBean);
@@ -52,7 +57,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     String _lastSelected = "";
-    JmriBeanComboBox.DisplayOptions _displayOrder;
+    DisplayOptions _displayOrder;
     boolean _firstBlank = false;
 
     jmri.Manager _manager;
@@ -215,7 +220,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *
      * @return the display order of this combobox
      */
-    public int getDisplayOrder() {
+    public DisplayOptions getDisplayOrder() {
         return _displayOrder;
     }
 
@@ -224,7 +229,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *
      * @param inDisplayOrder - the desired display order for this combobox
      */
-    public void setDisplayOrder(int inDisplayOrder) {
+    public void setDisplayOrder(DisplayOptions inDisplayOrder) {
         if (_displayOrder != inDisplayOrder) {
             NamedBean selectedBean = getSelectedBean();
             _displayOrder = inDisplayOrder;
@@ -327,29 +332,57 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
          * Format the entries in the combo box using the
          * displayname
          */
-        DISPLAYNAME,
+        DISPLAYNAME(1),
         /**
          * Format the entries in the combo box using the username.
          * If the username value is blank for a bean then the system name is used
          */
-        USERNAME,
+        USERNAME(2),
 
         /**
          * Format the entries in the combo box using the systemname
          */
-        SYSTEMNAME,
+        SYSTEMNAME(3),
 
         /**
          * Format the entries in the combo box with the username
          * followed by the systemname
          */
-        USERNAMESYSTEMNAME,
+        USERNAMESYSTEMNAME(4),
 
         /**
          * Format the entries in the combo box with the systemname
          * followed by the userame
          */
-        SYSTEMNAMEUSERNAME
+        SYSTEMNAMEUSERNAME(5);
+
+        //
+        // following code maps enumsto int and int to enum
+        //
+        private int value;
+
+        private static final Map<Integer, DisplayOptions> enumMap;
+
+        private DisplayOptions(int value) {
+            this.value = value;
+        }
+
+        //Build an immutable map of String name to enum pairs.
+        static {
+            Map<Integer, DisplayOptions> map = new HashMap<Integer, DisplayOptions>();
+
+            for (DisplayOptions instance : DisplayOptions.values()) {
+                map.put(instance.getValue(), instance);
+            }
+            enumMap = Collections.unmodifiableMap(map);
+        }
+        
+        public static DisplayOptions valueOf(int displayOptionInt) {
+            return enumMap.get(displayOptionInt);
+        }
+        public int getValue() {
+            return value;
+        }
     }
 
     public void dispose() {
