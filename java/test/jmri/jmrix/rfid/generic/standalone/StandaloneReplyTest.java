@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StandaloneReplyTest {
 
-    private StandAloneTrafficController tc = null;
+    private StandaloneSystemTrafficController tc = null;
 
     @Test
     public void testCTor() {
