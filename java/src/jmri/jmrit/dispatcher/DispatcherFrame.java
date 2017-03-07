@@ -1784,10 +1784,50 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
      */
     protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
+        int j;
+        int numAll;
+        numAll = ar.getActiveTrain().getAllocatedSectionList().size();
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 ArrayList<Block> blas = as.getSection().getBlockList();
-                for (Block b : s.getBlockList()) {
+                // 
+                // When allocating the initial section for an Active Train, 
+                // we need not be concerned with any blocks in the initial section
+                // which are unoccupied and to the rear of any occupied blocks in
+                // the section as the train is not expected to enter those blocks.
+                // When sections include the OS section these blocks prevented 
+                // allocation.
+                //
+                // The procedure is to remove those blocks (for the moment) from
+                // the blocklist for the section during the initial allocation.
+                //
+
+                ArrayList<Block> bls = new ArrayList<Block>();
+                if(numAll == 0){
+                    if(ar.getSectionDirection()==Section.FORWARD){
+                        j = 0;
+                        for(int i = 0; i<s.getBlockList().size(); i++){
+                            if (j==0 && s.getBlockList().get(i).getState()==Block.OCCUPIED){
+                                j = 1;
+                            }
+                            if (j==1) bls.add(s.getBlockList().get(i));
+                        }    
+                    } else {
+                        j = 0;
+                        for(int i = s.getBlockList().size() - 1; i>=0 ;i--){
+                            if (j==0 && s.getBlockList().get(i).getState()==Block.OCCUPIED){
+                                j = 1;
+                            }
+                            if (j==1) bls.add(s.getBlockList().get(i));  
+                        }
+                    }
+                } else {
+                    bls = s.getBlockList();
+                }
+      
+             
+
+                for(Block b: bls){
                     if (blas.contains(b)) {
                         if (as.getSection().getOccupancy() == Block.OCCUPIED) {
                             //The next check looks to see if the block has already been passed or not and therefore ready for allocation.
