@@ -1,8 +1,6 @@
 package jmri.jmrit.catalog;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.WindowListener;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
@@ -17,103 +15,107 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * Description:
  *
- * @author  Bob Jacobsen
+ * @author pete cressman
  */
 public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
 
-    ControlPanelEditor _cpe;
-
     public void testShow() {
         if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
+            return;
         }
-        ImageIndexEditor indexEditor = ImageIndexEditor.instance(_cpe);
+        ImageIndexEditor indexEditor = ImageIndexEditor.instance(null);
         Assert.assertNotNull(JFrameOperator.waitJFrame(Bundle.getMessage("editIndexFrame"), true, true));
         Assert.assertFalse("Index not changed",ImageIndexEditor.isIndexChanged());
-        /* Next call opens JOptionPane.  Modal dialog blocks following code to find and press buttons.
-        indexEditor.addNode();
-        java.awt.Container pane = findContainer("selectAddNode");
+        
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            indexEditor.addNode();
+        });
+        flushAWT();
+        java.awt.Container pane = findContainer(Bundle.getMessage("info"));
         Assert.assertNotNull("Select node prompt not found", pane);
         pressButton(pane, "OK");
-        // This opens FileChooser  - also modal      
-        DirectorySearcher.instance().openDirectory();
-        pane = findContainer("openDirMenu");
-        Assert.assertNotNull("FileChooser not found", pane);
-        ((javax.swing.JFileChooser)pane).cancelSelection();
-        pressButton(pane, "Cancel");
-        */
-        
-        /* This doesn't work either
-        Thread t = new ModalFinder("selectAddNode", "OK");
-        t.start();
-        indexEditor.addNode();
-        t = new ModalFinder("openDirMenu", "Cancel");
-        t.start();
-        DirectorySearcher.instance().openDirectory();
-        */
+        junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor,this);
     }
-    
+/*
+    public void testOpenDirectory() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            DirectorySearcher.instance().openDirectory();
+        });
+        java.awt.Container pane = findContainer(Bundle.getMessage("openDirMenu"));
+        Assert.assertNotNull("FileChooser not found", pane);
+        pressButton(pane, "Cancel");
+    }
+/*    
+    public void testPreviewDialog()  throws FileNotFoundException, IOException {
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+        long time = System.currentTimeMillis();
+        System.out.println("Start testPreviewDialog: time = "+time+"ms");
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            DirectorySearcher.instance().searchFS();
+        });
+        ComponentFinder finder = new ComponentFinder(JFileChooser.class);
+        JUnitUtil.waitFor(() -> {
+            return (JFileChooser)finder.find()!=null;
+        }, "Found JFileChooser \"searchFSMenu\"");
+        JFileChooser chooser = (JFileChooser) finder.find();
+        Assert.assertNotNull(" JFileChooser not found", chooser);
+        File file = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons"));
+        Assert.assertTrue(file.getPath()+" File does not exist", file.exists());
+        flushAWT();
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            chooser.setCurrentDirectory(file);
+        });
+        flushAWT();
+        pressButton(chooser, "Open");
+        flushAWT();
+        System.out.println("Mid testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
+        
+        // search a few directories
+        int cnt = 0;
+        while (cnt<1) {     // was 5.  not enough memory on Mac test machine?
+            java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
+            Assert.assertNotNull("Preview directory not found", pane);
+            pressButton(pane, Bundle.getMessage("ButtonKeepLooking"));
+            cnt++;
+            flushAWT();
+        }
+        System.out.println("Mid testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
+
+        // cancel search of more directories
+        java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
+        Assert.assertNotNull("Preview Cancel not found", pane);
+        pressButton(pane, Bundle.getMessage("ButtonCancel"));
+        flushAWT();
+
+        // dismiss info dialog of count of number of icons found
+        pane = findContainer(Bundle.getMessage("info"));
+        Assert.assertNotNull("Preview dismiss not found", pane);
+        pressButton(pane, "OK");
+        System.out.println("End testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
+    }
+*/    
     java.awt.Container findContainer(String title) {
-        DialogFinder finder = new DialogFinder(Bundle.getMessage(title));
+        DialogFinder finder = new DialogFinder(title);
         JUnitUtil.waitFor(() -> {
             return (java.awt.Container)finder.find()!=null;
         }, "Found dialog + \"title\"");
-        return (java.awt.Container)finder.find();
+        java.awt.Container pane = (java.awt.Container)finder.find();
+        return pane;
         
     }
-    
-    javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
+    private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
         AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
         javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
-        Assert.assertNotNull(text+" Button not found", button);
+        Assert.assertNotNull(text + " Button not found", button);
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-        flushAWT();
         return button;
     }
-    
-    class ModalFinder extends Thread implements Runnable {
-        String frameTitle;
-        String buttonName;
-        
-        ModalFinder(String ft, String bn) {
-            frameTitle = ft;
-            buttonName = bn;
-        }
-        public void run() {
-            System.out.println("ModalFinder("+frameTitle+", "+buttonName+")");
-            int waitTime=0;
-            System.out.println("ModalFinder at DialogFinder");
-            DialogFinder finder = new DialogFinder(Bundle.getMessage(frameTitle));
-            java.awt.Component pane = finder.find();
-            System.out.println("ModalFinder start DialogFinder loop");
-            while (waitTime < 1000 && pane==null) {
-                try {
-                    pane = finder.find();
-                    sleep(200);
-                    waitTime += 200;
-                    System.out.println("ModalFinder in DialogFinder loop waitTime= "+waitTime);
-                } catch (InterruptedException e) {
-                    Assert.fail("InterruptedException");
-                }            
-            }
-            Assert.assertNotNull("Modal dialog \""+frameTitle+"\" not found", pane);
-            waitTime=0;
-            AbstractButtonFinder buttonFinder = new AbstractButtonFinder(buttonName);
-            javax.swing.AbstractButton button = (javax.swing.AbstractButton)buttonFinder.find((java.awt.Container)pane, 0);
-            flushAWT();
-            while (waitTime < 1000 && button==null) {
-                try {
-                    button = (javax.swing.AbstractButton) buttonFinder.find((java.awt.Container)pane, 0);
-                    sleep(200);
-                    waitTime += 200;
-                } catch (InterruptedException e) {
-                    Assert.fail("InterruptedException");
-                }            
-            }
-            Assert.assertNotNull(buttonName+" Button not found", button);
-            getHelper().enterClickAndLeave(new MouseEventData(null, button));
-        }
-    }
+
 
     // from here down is testing infrastructure
     public ImageIndexEditorTest(String s) {
@@ -134,33 +136,18 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initShutDownManager();
-
-        if (!GraphicsEnvironment.isHeadless()) {
-            _cpe = new ControlPanelEditor("ControlPanelEditorTestPanel");
-            Assert.assertNotNull(JFrameOperator.waitJFrame("ControlPanelEditorTestPanel", true, true));
-            Assert.assertNotNull(_cpe.getTargetPanel());
-        }
     }
 
     @Override
     protected void tearDown() {
-        if (_cpe != null) {
-            // now close panel window
-            java.awt.event.WindowListener[] listeners = _cpe.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                _cpe.getTargetFrame().removeWindowListener(listener);
-            }
-            junit.extensions.jfcunit.TestHelper.disposeWindow(_cpe.getTargetFrame(), this);
-
-            _cpe = null;
-        }
         apps.tests.Log4JFixture.tearDown();
     }
 
-    // static private Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(ImageIndexEditorTest.class.getName());
 }
 

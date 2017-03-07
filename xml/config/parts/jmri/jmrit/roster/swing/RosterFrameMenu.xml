@@ -230,7 +230,7 @@
         <name xml:lang="nl">Kopieer</name>
         <mnemonic>c</mnemonic>
     </node>
-    <node name="Paste">n
+    <node name="Paste">
         <name xml:lang="fr">Coller</name>
         <name xml:lang="it">Incolla</name>
         <name xml:lang="da">Sæt Ind</name>
@@ -241,6 +241,16 @@
         <mnemonic>p</mnemonic>
     </node>
     <node>separator</node><!-- separator -->
+      <node name="New Loco...">
+          <name xml:lang="it">Nuova Loco...</name>
+          <name xml:lang="da">Nyt Loko...</name>
+          <name xml:lang="de">Neue Lok...</name>
+          <name xml:lang="fr">Nouvelle Loco ...</name>
+          <name xml:lang="ca">Nova Locomotora...</name>
+          <name xml:lang="cs">Nová lokomotiva...</name>
+          <name xml:lang="nl">Nieuwe Loc...</name>
+          <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
+      </node>
     <node name="Duplicate Loco">
         <name xml:lang="fr">Dupliquer Loco</name>
         <name xml:lang="it">Duplica Loco</name>
@@ -262,13 +272,13 @@
         <current>deleteloco</current>
     </node>
     <node>separator</node><!-- separator -->
-    <node name="Preferences">
-        <name xml:lang="fr">Préférences</name>
-        <name xml:lang="it">Preferenze</name>
-        <name xml:lang="da">Indstillinger</name>
+    <node name="Preferences...">
+        <name xml:lang="fr">Préférences ...</name>
+        <name xml:lang="it">Preferenze...</name>
+        <name xml:lang="da">Indstillinger...</name>
         <name xml:lang="de">Voreinstellungen...</name>
-		<name xml:lang="ca">Preferències</name>
-        <name xml:lang="cs">Předvolby</name>
+		<name xml:lang="ca">Preferències...</name>
+        <name xml:lang="cs">Předvolby...</name>
         <name xml:lang="nl">Voorkeuren...</name>
         <mnemonic>s</mnemonic>
         <adapter>apps.gui3.TabbedPreferencesAction</adapter>

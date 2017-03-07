@@ -54,15 +54,16 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         // Need to put a Box Layout on the panel to ensure the run/stop button is centered
         // Without it, the button does not center properly
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.add(b = new JButton("Pause"));
+        buttonPanel.add(b = new JButton(Bundle.getMessage("ButtonPauseClock")));
         if (!clock.getRun()) {
-            b.setText("Run");
+            b.setText(Bundle.getMessage("ButtonRunClock"));
         }
         b.addActionListener(new ButtonListener());
         b.setOpaque(true);
         b.setVisible(true);
         getContentPane().add(buttonPanel);
-
+        // since Run/Stop button is not to evryones taste, user may turn it on in clock prefs
+        buttonPanel.setVisible(clock.getShowStopButton()); // pick up clock prefs choice
         // get ready to display
         pack();
         update();  // set proper time
@@ -311,9 +312,9 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         boolean now = clock.getRun();
         if (now) {
-            b.setText("Pause");
+            b.setText(Bundle.getMessage("ButtonPauseClock"));
         } else {
-            b.setText("Run");
+            b.setText(Bundle.getMessage("ButtonRunClock"));
         }
     }
 
@@ -326,9 +327,9 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             boolean next = !clock.getRun();
             clock.setRun(next);
             if (next) {
-                b.setText("Pause");
+                b.setText(Bundle.getMessage("ButtonPauseClock"));
             } else {
-                b.setText("Run ");
+                b.setText(Bundle.getMessage("ButtonRunClock"));
             }
         }
     }

@@ -145,6 +145,8 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 
             String userName = getUserName(lightList.get(i));
 
+            checkNameNormalization(sysName, userName, tm);
+
             if (log.isDebugEnabled()) {
                 log.debug("create light: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");

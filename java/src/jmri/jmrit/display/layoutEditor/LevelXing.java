@@ -4,7 +4,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -1138,9 +1137,9 @@ public class LevelXing extends LayoutTrack {
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideCrossing"));
 
     private JmriBeanComboBox block1NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox block2NameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JButton xingEditDone;
     private JButton xingEditCancel;
     private JButton xingEdit1Block;
@@ -1177,9 +1176,13 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
-            block1NameComboBox.setEditable(true);
-            block1NameComboBox.getEditor().setItem("");
-            block1NameComboBox.setSelectedIndex(-1);
+            if (true) {
+                layoutEditor.setupComboBox(block1NameComboBox, false, true);
+            } else {
+                block1NameComboBox.setEditable(true);
+                block1NameComboBox.getEditor().setItem("");
+                block1NameComboBox.setSelectedIndex(-1);
+            }
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
             // setup block 2 name
@@ -1188,9 +1191,13 @@ public class LevelXing extends LayoutTrack {
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
-            block2NameComboBox.setEditable(true);
-            block2NameComboBox.getEditor().setItem("");
-            block2NameComboBox.setSelectedIndex(-1);
+            if (true) {
+                layoutEditor.setupComboBox(block2NameComboBox, false, true);
+            } else {
+                block2NameComboBox.setEditable(true);
+                block2NameComboBox.getEditor().setItem("");
+                block2NameComboBox.setSelectedIndex(-1);
+            }
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
             // set up Edit 1 Block and Edit 2 Block buttons
@@ -1198,20 +1205,14 @@ public class LevelXing extends LayoutTrack {
             panel4.setLayout(new FlowLayout());
             // Edit 1 Block
             panel4.add(xingEdit1Block = new JButton(Bundle.getMessage("EditBlock", 1)));
-            xingEdit1Block.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEdit1BlockPressed(e);
-                }
+            xingEdit1Block.addActionListener((ActionEvent e) -> {
+                xingEdit1BlockPressed(e);
             });
             xingEdit1Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             // Edit 2 Block
             panel4.add(xingEdit2Block = new JButton(Bundle.getMessage("EditBlock", 2)));
-            xingEdit2Block.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEdit2BlockPressed(e);
-                }
+            xingEdit2Block.addActionListener((ActionEvent e) -> {
+                xingEdit2BlockPressed(e);
             });
             xingEdit2Block.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             contentPane.add(panel4);
@@ -1219,31 +1220,22 @@ public class LevelXing extends LayoutTrack {
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(xingEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            xingEditDone.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEditDonePressed(e);
-                }
+            xingEditDone.addActionListener((ActionEvent e) -> {
+                xingEditDonePressed(e);
             });
             xingEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
-                    rootPane.setDefaultButton(xingEditDone);
-                }
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(xingEditDone);
+                rootPane.setDefaultButton(xingEditDone);
             });
 
             // Cancel
             panel5.add(xingEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            xingEditCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    xingEditCancelPressed(e);
-                }
+            xingEditCancel.addActionListener((ActionEvent e) -> {
+                xingEditCancelPressed(e);
             });
             xingEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -1269,7 +1261,11 @@ public class LevelXing extends LayoutTrack {
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = block1NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block1NameComboBox.getSelectedIndex()) {
+            newName = block1NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1311,7 +1307,11 @@ public class LevelXing extends LayoutTrack {
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = block2NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block2NameComboBox.getSelectedIndex()) {
+            newName = block2NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
@@ -1353,7 +1353,11 @@ public class LevelXing extends LayoutTrack {
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
         String newName = block1NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block1NameComboBox.getSelectedIndex()) {
+            newName = block1NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1382,7 +1386,11 @@ public class LevelXing extends LayoutTrack {
             needsBlockUpdate = true;
         }
         newName = block2NameComboBox.getEditor().getItem().toString();
-        newName = (null != newName) ? newName.trim() : "";
+        if (-1 != block2NameComboBox.getSelectedIndex()) {
+            newName = block2NameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {

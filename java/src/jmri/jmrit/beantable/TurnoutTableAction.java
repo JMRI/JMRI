@@ -722,12 +722,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                                 return null;
                             }
                             JmriBeanComboBox c;
-                            if (column == SENSOR1COL) {
-                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getFirstSensor(), JmriBeanComboBox.DISPLAYNAME);
+                            if (column == SENSOR1COL) {                             
+                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getFirstSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                                 retval = new BeanComboBoxEditor(c);
                                 editorMapSensor1.put(getModel().getValueAt(row, SYSNAMECOL), retval);
                             } else { //Must be two
-                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getSecondSensor(), JmriBeanComboBox.DISPLAYNAME);
+                                c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), t.getSecondSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                                 retval = new BeanComboBoxEditor(c);
                                 editorMapSensor2.put(getModel().getValueAt(row, SYSNAMECOL), retval);
                             }
@@ -768,8 +768,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     JmriJFrame addFrame = null;
-    JTextField sysName = new JTextField(40);
-    JTextField userName = new JTextField(40);
+    JTextField sysNameTextField = new JTextField(40);
+    JTextField userNameTextField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
@@ -806,7 +806,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     canAddRange(e);
                 }
             };
-            /* We use the proxy manager in this instance so that we can deal with 
+            /* We use the proxy manager in this instance so that we can deal with
              duplicate usernames in multiple classes */
             if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
@@ -830,11 +830,11 @@ public class TurnoutTableAction extends AbstractTableAction {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
-            sysName.setName("sysName");
-            userName.setName("userName");
+            sysNameTextField.setName("sysNameTextField");
+            userNameTextField.setName("userNameTextField");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
-            //sysName.setToolTipText(Bundle.getMessage("HardwareAddressToolTip")); // already assigned by AddNew...
+            addFrame.add(new AddNewHardwareDevicePanel(sysNameTextField, userNameTextField, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
+            //sysNameTextField.setToolTipText(Bundle.getMessage("HardwareAddressToolTip")); // already assigned by AddNew...
             canAddRange(null);
         }
         addFrame.pack();
@@ -1323,8 +1323,8 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
 
         String sName = null;
-        String curAddress = sysName.getText();
-        //String[] turnoutList = turnManager.formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
+        String curAddress = sysNameTextField.getText().trim();
+        //String[] turnoutList = turnManager.formatRangeOfAddresses(sysNameTextField.getText().trim(), numberOfTurnouts, getTurnoutPrefixFromName());
         //if (turnoutList == null)
         //    return;
         int iType = 0;
@@ -1396,10 +1396,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(ex, sName);
-                    return; // without creating       
+                    return; // without creating
                 }
 
-                String user = userName.getText();
+                String user = userNameTextField.getText().trim();
                 if ((x != 0) && user != null && !user.equals("")) {
                     user = user + ":" + x;
                 }
@@ -1449,7 +1449,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
-    void handleCreateException(Exception ex, String sysName) {
+    void handleCreateException(Exception ex, String sysNameTextField) {
         if (ex.getMessage() != null) {
             javax.swing.JOptionPane.showMessageDialog(addFrame,
                     ex.getMessage(),
@@ -1459,7 +1459,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             javax.swing.JOptionPane.showMessageDialog(addFrame,
                     java.text.MessageFormat.format(
                             Bundle.getMessage("ErrorTurnoutAddFailed"),
-                            new Object[]{sysName}),
+                            new Object[]{sysNameTextField}),
                     Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         }

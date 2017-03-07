@@ -291,6 +291,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
         /**
          * @deprecated since 4.5.7
+         * @param row index in the list of Aspect to clear
          */
         public void clearAspectVector(int row) {
             // Clear the old aspect combobox and force it to be rebuilt

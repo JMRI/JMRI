@@ -203,5 +203,5 @@ public class HelpUtil {
     static HelpBroker globalHelpBroker;
 
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(HelpUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HelpUtil.class.getName());
 }

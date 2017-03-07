@@ -43,6 +43,20 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
+    @Override
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("MSx010203040506070" + getNumToTest1());
+        Sensor t2 = l.provideSensor("MSx010203040506070" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
+    }
+
     @Test
     public void testDotted() {
         // olcb addresses are hex values requirng 16 digits.

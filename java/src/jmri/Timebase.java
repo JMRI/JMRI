@@ -17,16 +17,6 @@ import javax.annotation.Nonnull;
  * its value when needed, or add a a listener for the changes in the "minute"
  * value using {@link #addMinuteChangeListener}
  * <P>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
  */
 public interface Timebase extends NamedBean {
@@ -131,6 +121,11 @@ public interface Timebase extends NamedBean {
     public void setStartStopped(boolean stopped);
 
     public boolean getStartStopped();
+
+    // methods for start up with start/stop button displayed
+    public void setShowStopButton(boolean displayed);
+
+    public boolean getShowStopButton();
 
     // methods to get set time at start up option, and start up time		
     public void setStartSetTime(boolean set, Date time);

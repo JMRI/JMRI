@@ -7,7 +7,14 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
      BundleTest.class,
      apps.gui3.dp3.PackageTest.class,
-     apps.gui3.mdi.PackageTest.class
+     apps.gui3.mdi.PackageTest.class,
+     TabbedPreferencesActionTest.class,
+     TabbedPreferencesFrameTest.class,
+     TabbedPreferencesProfileActionTest.class,
+     TabbedPreferencesTest.class,
+     apps.gui3.paned.PackageTest.class,
+     FirstTimeStartUpWizardTest.class,
+     FirstTimeStartUpWizardActionTest.class,
 })
 
 /**

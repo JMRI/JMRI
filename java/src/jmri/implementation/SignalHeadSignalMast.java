@@ -6,6 +6,7 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import org.slf4j.Logger;
@@ -90,8 +91,13 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         heads = new ArrayList<NamedBeanHandle<SignalHead>>();
         for (int i = start; i < parts.length; i++) {
             String name = parts[i];
+            // check head exists
+            if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(parts[i])==null) {
+                log.warn("Attempting to create Mast from non-existant signal head {}", parts[i]);
+            }
             NamedBeanHandle<SignalHead> s
-                    = new NamedBeanHandle<SignalHead>(parts[i],
+                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                .getNamedBeanHandle(parts[i],
                             InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
             heads.add(s);
         }

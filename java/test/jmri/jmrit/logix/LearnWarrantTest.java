@@ -67,6 +67,9 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         pressButton(frame, Bundle.getMessage("Calculate"));
         flushAWT();  
+        JUnitUtil.waitFor(() -> {
+            return (frame.getOrders()!=null);
+        }, "Found orders");
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
         

@@ -6,7 +6,7 @@ import jmri.jmrit.roster.RosterEntry;
 /**
  * Table data model for display of Roster attribute values.
  * <P>
- * Any desired ordering, etc, is handled outside this class.
+ * Any desired ordering, etc. is handled outside this class.
  * <P>
  * The initial implementation doesn't automatically update when roster entries
  * change, doesn't allow updating of the entries, and only shows some of the
@@ -38,7 +38,7 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * This implementation can't edit the values yet
+     * This implementation can't edit the values yet.
      */
     @Override
     public boolean isCellEditable(int row, int col) {

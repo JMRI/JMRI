@@ -6,7 +6,10 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    OperationsServletTest.class
+    OperationsServletTest.class,
+    HtmlConductorTest.class,
+    HtmlTrainCommonTest.class,
+    HtmlManifestTest.class
 })
 
 /**
