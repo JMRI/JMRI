@@ -109,6 +109,13 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        }
     }
 
+    /**
+     * @return the com.pi4j.io.gpio.PinPullResistance for this input pin.
+     */
+    public PinPullResistance getPullState(){
+       return pull;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(RaspberryPiSensor.class.getName());
 
 }

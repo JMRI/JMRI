@@ -25,6 +25,13 @@ public class RaspberryPiSensorTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    @Ignore("need to reset the provider")
+    public void testGetPullState() {
+        RaspberryPiSensor t = new RaspberryPiSensor("PiS1");
+        Assert.assertEquals("default pull state",com.pi4j.io.gpio.PinPullResistance.PULL_DOWN,t.getPullState());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
