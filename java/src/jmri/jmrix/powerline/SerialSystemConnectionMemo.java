@@ -70,6 +70,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     /**
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -90,6 +91,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
      * Provide manager by class
      */
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -142,10 +144,12 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         sensorManager = m;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.powerline.PowerlineActionListBundle");
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController = null;
         InstanceManager.deregister(this, SerialSystemConnectionMemo.class);

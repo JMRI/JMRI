@@ -250,7 +250,7 @@ public class Llnmon {
             return String.valueOf(LOCO_ADR(addressHigh, addressLow));
         }
     } // end of private static String convertToMixed(int addressLow, int addressHigh)
-    
+
 
     private String trackStatusByteToString(int trackStatusByte) {
         return Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STAT",
@@ -821,7 +821,7 @@ public class Llnmon {
                     return result;
                 }
                 break;
-                
+
             } // case LnConstants.OPC_PANEL_QUERY
 
             /*
@@ -951,13 +951,13 @@ public class Llnmon {
             case LnConstants.OPC_ALM_WRITE:
             case LnConstants.OPC_ALM_READ: {
                 if (l.getElement(1) == 0x10) {
-                    
-                    if ((l.getElement(2) == 0) && 
+
+                    if ((l.getElement(2) == 0) &&
                             (l.getElement(3) == 0)
                             && (l.getElement(6) == 0)) {
                             return Bundle.getMessage("LN_MSG_QUERY_ALIAS_INFO");
                     } else if ((l.getElement(2) == 0)
-                            && (l.getElement(3) == 0) 
+                            && (l.getElement(3) == 0)
                             && (l.getElement(6) == 0x0b)) {
                         return Bundle.getMessage("LN_MSG_ALIAS_INFO_REPORT", l.getElement(4)*2);
                     } else if ((l.getElement(2) == 0 )
@@ -979,7 +979,7 @@ public class Llnmon {
                         String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
                         int shortAddr2 = l.getElement(13);
                         int pair = l.getElement(4);
-                            
+
                         return Bundle.getMessage(message, pair,
                                 longAddr, shortAddr, longAddr2, shortAddr2);
                     } else if ((l.getElement(2) == 0)
@@ -996,7 +996,7 @@ public class Llnmon {
                             && (l.getElement(14) == 0)) {
                         return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
                         }
-                            
+
                     }
                     return Bundle.getMessage(
                             ((l.getElement(0) == LnConstants.OPC_ALM_WRITE)
@@ -1024,7 +1024,7 @@ public class Llnmon {
                                     StringUtil.twoHexFromInt(l.getElement(13))),
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(14))));
-                
+
             } // case LnConstants.OPC_ALM_READ
 
             /*
@@ -1086,7 +1086,7 @@ public class Llnmon {
                     return result;
                 }
                 break;
-                
+
             }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
 
             //$FALL-THROUGH$
@@ -1198,7 +1198,7 @@ public class Llnmon {
         } // end of switch (l.getElement(3))
         return "";
     }
-    
+
     private String interpretOpcPeerXfer20_3(LocoNetMessage l ) {
         // Characters appear to be 8 bit values, but transmitted over a 7 bit
         // encoding, so high order bits are stashed in element 4 and 9.
@@ -1332,7 +1332,7 @@ public class Llnmon {
         } // end of switch (l.getElement(3))
         return "";
     }
-    
+
     private String interpretOpcPeerXfer20_8(LocoNetMessage l) {
         /**
          * **********************************************************************************
@@ -1472,7 +1472,7 @@ public class Llnmon {
         }
         return "";
     }
-    
+
     private String interpretOpcPeerXfer20_0f(LocoNetMessage l) {
                 String device;
 
@@ -1590,7 +1590,7 @@ public class Llnmon {
 
         return "";
     }
-    
+
     private String interpretOpcPeerXfer20(LocoNetMessage l) {
         // Duplex Radio Management
         // DigiIPL messages
@@ -1662,7 +1662,7 @@ public class Llnmon {
                    return result;
                 }
                 break;
-                
+
             } //end of case 0x0f, which decodes 0xe5 0x14 0x0f
 
             default: {
@@ -1671,7 +1671,7 @@ public class Llnmon {
         } // switch (l.getElement(2))
         return "";
     }
-    
+
     private String interpretOpcPeerXfer20Sub10(LocoNetMessage l) {
         /**
          * **********************************************************************************
@@ -1808,9 +1808,9 @@ public class Llnmon {
         //
         // Information reverse-engineered by B. Milhaupt and used with permission
         String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-        
+
         String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
-        
+
         int hostSnInt = ((l.getElement(13) + (((l.getElement(9) & 0x8) == 8) ? 128 : 0)) * 256 * 256)
                 + ((l.getElement(12) + (((l.getElement(9) & 0x4) == 4) ? 128 : 0)) * 256)
                 + (l.getElement(11) + (((l.getElement(9) & 0x2) == 2) ? 128 : 0));
@@ -1920,7 +1920,7 @@ public class Llnmon {
                     break;
             }
         }
-        
+
         if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
                 && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
             // throttle semaphore symbol message
@@ -1955,7 +1955,7 @@ public class Llnmon {
                 c[4] = (char) d[4];
                 c[5] = (char) d[5];
                 c[6] = (char) d[6];
-                c[7] = (char) d[7]; 
+                c[7] = (char) d[7];
                 return Bundle.getMessage("LN_MSG_THROTTLE_TEXT_MESSAGE_ALL_THROTTLES",
                         c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]);
             } else {
@@ -1967,7 +1967,7 @@ public class Llnmon {
                     convertToMixed(dst_l, dst_h));
             }
         }
-        
+
         String result = interpretSV1Message(l);
         if (result.length() > 0) {
             return result;
@@ -1976,7 +1976,7 @@ public class Llnmon {
         if (result.length() > 0) {
             return result;
         }
-        
+
         // check for a specific type - SV Programming messages format 2
         result = interpretSV2Message(l);
         if (result.length() > 0) {
@@ -1984,9 +1984,9 @@ public class Llnmon {
         }
 
         return "";
-        
+
     }
-    
+
     private String interpretSV1Message(LocoNetMessage l) {
         int d[] = l.getPeerXfrData();
         if ((l.getElement(4) != 1) ||
@@ -2007,7 +2007,7 @@ public class Llnmon {
         }
         return "";
     }
-    
+
     private String interpretSV0Message(LocoNetMessage l) {
         int dst_h = l.getElement(4);
         int pxct1 = l.getElement(5);
@@ -2044,7 +2044,7 @@ public class Llnmon {
                                         : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
                 + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
     }
-    
+
     private String interpretSV2Message(LocoNetMessage l) {
         // (New Designs)
         String svReply = "";
@@ -2068,7 +2068,7 @@ public class Llnmon {
         }
         return svReply;
     }
-    
+
     private String interpretOpcPeerXfer10(LocoNetMessage l) {
         // throttle status
         int tcntrl = l.getElement(2);
@@ -2106,7 +2106,7 @@ public class Llnmon {
                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                         StringUtil.twoHexFromInt(l.getElement(8))));
     }
-    
+
     private String interpretOpcPeerXfer9(LocoNetMessage l) {
         /*
          * Transponding "find" query and report messages
@@ -2217,7 +2217,7 @@ public class Llnmon {
                         + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
 
                 Reporter reporter = reporterManager.provideReporter(reporterSystemName);
-                
+
                 String uname = reporter.getUserName();
                 if ((uname != null) && (!uname.isEmpty())) {
                     return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_USERNAME",
@@ -2239,7 +2239,7 @@ public class Llnmon {
         } // end of switch (l.getElement(2))
         return "";
     }
-    
+
     private String interpretOpcPeerXfer7(LocoNetMessage l) {
         // This might be Uhlenbrock IB-COM start/stop programming track
         if (l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42) {
@@ -2253,10 +2253,10 @@ public class Llnmon {
                 default:
                     break;
             }
-        } 
+        }
         return "";
     }
-    
+
     private String interpretOpcPeerXfer(LocoNetMessage l) {
         String result = "";
         // The first byte seems to determine the type of message.
@@ -2498,9 +2498,9 @@ public class Llnmon {
                     sect3Mode, sect3State, sect4Mode, sect4State);
         }
         return "";
-        
+
     }
-    
+
     private String interpretOpSws(LocoNetMessage l) {
         int pCMD = (l.getElement(3) & 0xF0);
         if (pCMD == 0x70) {
@@ -2630,11 +2630,11 @@ public class Llnmon {
                 String result = interpretPm4xPowerEvent(l);
                 if (result.length() > 0) {
                     return result;
-                } 
+                }
                 result = interpretOpSws(l);
                 if (result.length() > 0) {
                     return result;
-                } 
+                }
                 result = interpretDeviceType(l);
                 if (result.length() > 0) {
                     return result;
@@ -2654,7 +2654,7 @@ public class Llnmon {
         }
         return "";
     }
-    
+
     private String interpretOpcMultiSenseTranspPresence(LocoNetMessage l) {
         // Transponding Event
         // get system and user names
@@ -2775,7 +2775,7 @@ public class Llnmon {
 
         return "";
     }
-    
+
     private String interpretOpcInputRep(LocoNetMessage l) {
         int in1 = l.getElement(1);
         int in2 = l.getElement(2);
@@ -2821,7 +2821,7 @@ public class Llnmon {
                 bdl,
                 otherBoardsNames, otherBoardsInputs);
     }
-    
+
     private String interpretOpcSwRep(LocoNetMessage l) {
         int sn1 = l.getElement(1);
         int sn2 = l.getElement(2);
@@ -2830,7 +2830,7 @@ public class Llnmon {
         String turnoutUserName = "";
         turnoutSystemName = locoNetTurnoutPrefix
                 + SENSOR_ADR(sn1, sn2);
-        
+
         Turnout turnout = turnoutManager.provideTurnout(turnoutSystemName);
         String uname = turnout.getUserName();
         if ((uname != null) && (!uname.isEmpty())) {
@@ -2858,7 +2858,7 @@ public class Llnmon {
                         ? "LN_MSG_SENSOR_SW_OUTPUT_STATE_ON"
                         : "LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF")));
     }
-    
+
     private String interpretOpcSwAck(LocoNetMessage l) {
         int sw2 = l.getElement(2);
         if ((sw2 & 0x40) == 0x40) {
@@ -2904,7 +2904,7 @@ public class Llnmon {
         return Bundle.getMessage("LN_MSG_SW_STATE", turnoutSystemName,
                 turnoutUserName);
     }
-    
+
     private String interpretOpcRqSlData(LocoNetMessage l) {
         int slot = l.getElement(1) + 128*l.getElement(2);
 
@@ -2967,7 +2967,7 @@ public class Llnmon {
                 slot,
                 interpretDIRF(dirf));
     }
-    
+
     private String interpretOpcLocoSnd(LocoNetMessage l) {
         int slot = l.getElement(1);
         int snd = l.getElement(2);
@@ -2983,7 +2983,7 @@ public class Llnmon {
                         ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF"));
 
     }
-    
+
     protected String interpretDIRF(int dirf) {
         if ((dirf & 0x40) == 0x40) {
             return "";
@@ -3005,11 +3005,11 @@ public class Llnmon {
         if (dirFinfo.length() == 0) {
             return "";
         }
-        
+
         return Bundle.getMessage("LN_MSG_OPC_LOCO_DIRF",
                 slot, dirFinfo);
     }
-    
+
     private String interpretOpcLocoSpd(LocoNetMessage l) {
         int slot = l.getElement(1);
         int spd = l.getElement(2);
@@ -3021,7 +3021,7 @@ public class Llnmon {
         }
 
     }
-    
+
     private String interpretOpcPanelQuery(LocoNetMessage l) {
                 switch (l.getElement(1)) {
                     case 0x00: {
@@ -3134,36 +3134,36 @@ public class Llnmon {
                     a, c, b, addrList);
         }
     }
-    
+
     private String interpretFastClockSlot(LocoNetMessage l, String mode, int id1, int id2) {
         /**
-        * FAST Clock: 
-        * The system FAST clock and parameters are implemented in Slot#123 <7B>. 
-        * Use <EF> to write new clock information, Slot read of 0x7B,<BB><7B>.., will 
+        * FAST Clock:
+        * The system FAST clock and parameters are implemented in Slot#123 <7B>.
+        * Use <EF> to write new clock information, Slot read of 0x7B,<BB><7B>.., will
         * return current System clock information, and other throttles will update to this
-        * SYNC. Note that all attached display devices keep a current clock calculation 
+        * SYNC. Note that all attached display devices keep a current clock calculation
         * based on this SYNC read value, i.e. devices MUST not continuously poll the
-        * clock SLOT to generate time, but use this  merely to restore SYNC and follow 
-        * current RATE etc. This clock slot is typically "pinged" * or read SYNC'd 
-        * every 70 to 100 seconds, by a single user, so all attached devices can 
-        * synchronise any phase drifts. Upon seeing a SYNC read, all devices should 
-        * reset their local sub-minute phase counter and invalidate the SYNC update 
-        * ping generator. 
-        * 
+        * clock SLOT to generate time, but use this  merely to restore SYNC and follow
+        * current RATE etc. This clock slot is typically "pinged" * or read SYNC'd
+        * every 70 to 100 seconds, by a single user, so all attached devices can
+        * synchronise any phase drifts. Upon seeing a SYNC read, all devices should
+        * reset their local sub-minute phase counter and invalidate the SYNC update
+        * ping generator.
+        *
         * Clock Slot Format:
         *
         * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
         * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
-        * 
+        *
         * where:
-        * 
-        * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, 10=10:1 etc, max VALUE is 
+        *
+        * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, 10=10:1 etc, max VALUE is
         *       7F/128 to 1
         *
-        * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter, depending on the 
+        * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter, depending on the
         *       CLOCK generator
         *
-        * <FRAC_MINSH> Not for ext. usage. This counter is reset when valid <E6><7B> 
+        * <FRAC_MINSH> Not for ext. usage. This counter is reset when valid <E6><7B>
         *       SYNC message is seen
         *
         * <256-MINS_60> This is FAST clock MINUTES subtracted from 256. Modulo 0-59
@@ -3173,7 +3173,7 @@ public class Llnmon {
         * <DAYS> number of 24 Hr clock rolls, positive count
         *
         * <CLK_CNTRL> Clock Control Byte
-        *   D6- 1=This is valid Clock information, 
+        *   D6- 1=This is valid Clock information,
         *       0=ignore this <E6><7B>, SYNC reply
         *
         * <ID1>,<1D2> This is device ID last setting the clock.
@@ -3214,7 +3214,7 @@ public class Llnmon {
                idString(id1, id2),
                trackStatusByteToString(track_stat));
     }
-    
+
     private String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
                 /**
                  * ********************************************************************************************
@@ -3700,9 +3700,9 @@ public class Llnmon {
                     }
                 }
     }
-    
+
     private String interpretCmdStnCfgSlotRdWr(LocoNetMessage l, int command) {
-        
+
 
                 /**
                  * ************************************************
@@ -3800,9 +3800,9 @@ public class Llnmon {
                         opswGroup5, opswGroup6, opswGroup7, opswGroup8);
 
     }
-    
+
     private String interpretStandardSlotRdWr(LocoNetMessage l, int id1, int id2, int command, int slot) {
-                        
+
                 /**
                  * ************************************************
                  * normal slot read/write message - see info above *
@@ -3848,7 +3848,7 @@ public class Llnmon {
                         Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
                                 idString(id1, id2) ));
     }
-    
+
     private String interpretOpcPanelResponse(LocoNetMessage l) {
         switch (l.getElement(1)) {
             case 0x12: {
@@ -3872,9 +3872,9 @@ public class Llnmon {
             default: {
                 return "";
             }
-        }    
+        }
     }
-    
+
     private String interpretOpcLissyUpdate(LocoNetMessage l) {
         /*
          * OPC_LISSY_UPDATE   0xE4
@@ -3952,7 +3952,7 @@ public class Llnmon {
         }
         return "";
     }
-    
+
     private String interpretOpcImmPacket(LocoNetMessage l) {
         /*
          * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
@@ -4062,7 +4062,7 @@ public class Llnmon {
                         playableWhistleLevel,
                         (reps & 0x7));
             }
-            
+
             // F9-F28 w/a long address.
             if ((packetInt[0] & 0xC0) == 0xC0) {
                 address = ((packetInt[0] & 0x3F) << 8) + packetInt[1];
@@ -4211,7 +4211,7 @@ public class Llnmon {
         }
         return ""; // not an understood message.
     }
-    
+
     private String interpretOpcPr3Mode(LocoNetMessage l) {
         /*
          * Sets the operating mode of the PR3 device, if present.
@@ -4244,7 +4244,7 @@ public class Llnmon {
         return "";
 
     }
-    
+
     private String interpretIb2Special(LocoNetMessage l) {
                 // Intellibox function control message for mobile decoder F0-F28 (IB-I) and F13-F28 (IB-II)
                 if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
@@ -4322,7 +4322,7 @@ public class Llnmon {
                 // understood, let execution fall thru to the "default" case
                 return "";
     }
-    
+
     private String interpretIb2F9_to_F12(LocoNetMessage l) {
         // Intellibox-II function control message for mobile decoder F9 thru F12.
         int slot = l.getElement(1);

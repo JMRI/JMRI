@@ -212,16 +212,19 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.macro.NceMacroEditFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -234,6 +237,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return x.toString();
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
         this.tc = memo.getNceTrafficController();
@@ -768,6 +772,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             return; // thread is already running
         }
         NceMemoryThread = new Thread(new Runnable() {
+            @Override
             public void run() {
                 if (readRequested) {
                     macroNum = macroId;
@@ -1324,6 +1329,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return true;
     }
 
+    @Override
     public void message(NceMessage m) {
     }  // ignore replies
 
@@ -1411,6 +1417,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     int[] recChars = new int[16];
 
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Receive character");
@@ -1552,6 +1559,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private void addButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionPerformed(e);
             }
@@ -1560,6 +1568,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private void addButtonCmdAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionCmdPerformed(e);
             }
@@ -1568,6 +1577,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private void addButtonDelAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionDeletePerformed(e);
             }
@@ -1576,6 +1586,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private void addCheckBoxAction(JCheckBox cb) {
         cb.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkBoxActionPerformed(e);
             }

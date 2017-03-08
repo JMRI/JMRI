@@ -28,6 +28,7 @@ public class LI100XNetPacketizer extends XNetPacketizer {
     /**
      * enterNormalMode() returns null for LI100
      */
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }

@@ -114,6 +114,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
     // programming interface
 
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -151,6 +152,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -204,6 +206,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         }
     }
 
+    @Override
     synchronized public void message(DCCppReply m) {
 	if (progState == NOTPROGRAMMING) {
 	    return;
@@ -217,15 +220,23 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 	    // CALLBACKSUB = mt.group(2)
 	    _val = m.getReadValueInt();
 	    progState = NOTPROGRAMMING;
-	    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            if (_val == -1) {
+                log.debug("Reporting NoAck");
+                notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
+            } else {
+                log.debug("Reporting OK");
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            }
 	}
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     synchronized public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

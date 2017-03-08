@@ -24,29 +24,35 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
         tc = _memo.getTrafficController();
     }
 
+    @Override
     protected String title() {
         return "SRCP Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         tc.addSRCPListener(this);
     }
 
+    @Override
     public void dispose() {
         SRCPTrafficController.instance().removeSRCPListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(SRCPMessage l) {  // receive a message and log it
 
         nextLine("cmd: " + l.toString(), "");
     }
 
+    @Override
     public synchronized void reply(SRCPReply l) {  // receive a reply message and log it
         nextLine("reply: " + l.toString() + "\n", "");
     }
 
+    @Override
     public synchronized void reply(jmri.jmrix.srcp.parser.SimpleNode n) {  // receive a reply message and log it
         if (log.isDebugEnabled()) {
             log.debug("reply called with simpleNode " + n.jjtGetValue());

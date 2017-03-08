@@ -21,10 +21,12 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
     String prefix = "";
     Mx1TrafficController tc = null;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
         Turnout t = new Mx1Turnout(addr, tc, getSystemPrefix());

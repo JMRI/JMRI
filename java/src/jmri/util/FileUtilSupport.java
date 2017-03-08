@@ -492,8 +492,8 @@ public class FileUtilSupport extends Bean {
     /**
      * Set the JMRI program directory.
      *
-     * Convenience method that calls
-     * {@link #setProgramPath(java.io.File)} with the passed in path.
+     * Convenience method that calls {@link #setProgramPath(java.io.File)} with
+     * the passed in path.
      *
      * @param path the path to the JMRI installation
      */
@@ -973,28 +973,39 @@ public class FileUtilSupport extends Bean {
     /**
      * Get the JMRI distribution jar file.
      *
-     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     * @return the JAR file containing the JMRI library or null if not running
+     *         from a JAR file
      */
     public JarFile getJmriJarFile() {
         if (jarPath == null) {
             CodeSource sc = FileUtilSupport.class.getProtectionDomain().getCodeSource();
             if (sc != null) {
                 jarPath = sc.getLocation().toString();
-                // 9 = length of jar:file:
-                jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                if (jarPath.startsWith("jar:file:")) {
+                    // 9 = length of jar:file:
+                    jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                } else {
+                    log.info("Running from classes not in jar file.");
+                    jarPath = ""; // set to empty String to bypass search
+                    return null;
+                }
                 log.debug("jmri.jar path is {}", jarPath);
             }
             if (jarPath == null) {
                 log.error("Unable to locate jmri.jar");
+                jarPath = ""; // set to empty String to bypass search
                 return null;
             }
         }
-        try {
-            return new JarFile(jarPath);
-        } catch (IOException ex) {
-            log.error("Unable to open jmri.jar", ex);
-            return null;
+        if (!jarPath.isEmpty()) {
+            try {
+                return new JarFile(jarPath);
+            } catch (IOException ex) {
+                log.error("Unable to open jmri.jar", ex);
+                return null;
+            }
         }
+        return null;
     }
 
     /**

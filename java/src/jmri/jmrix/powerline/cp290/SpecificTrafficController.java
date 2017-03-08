@@ -48,6 +48,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      * <p>
      * Makes them into the local messages and then queues in order
      */
+    @Override
     synchronized public void sendX10Sequence(X10Sequence s, SerialListener l) {
         s.reset();
         X10Sequence.Command c;
@@ -131,6 +132,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * This system provides 16 dim steps
      */
+    @Override
     public int getNumberOfIntensitySteps() {
         return 16;
     }
@@ -138,10 +140,12 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * Get a message of a specific length for filling in.
      */
+    @Override
     public SerialMessage getSerialMessage(int length) {
         return new SpecificMessage(length);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
             log.debug("forward " + m);
@@ -149,6 +153,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         super.forwardToPort(m, reply);
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         SpecificReply reply = new SpecificReply(memo.getTrafficController());
         return reply;
@@ -159,6 +164,7 @@ public class SpecificTrafficController extends SerialTrafficController {
      *
      * @return true if the reply is complete
      */
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // count number of FF bytes
         // if 16 FF, byte 17 is 0x01, expect total of 22 bytes, direct msg

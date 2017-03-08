@@ -5,14 +5,12 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.Border;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
@@ -48,6 +46,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("WindowTitle"));
         Container contentPane = getContentPane();
@@ -118,6 +117,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
@@ -127,6 +127,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         discoverButton.setVisible(true);
         discoverButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         discoverButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 discoverButtonActionPerformed();
             }
@@ -138,6 +139,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         panel4.add(editButton);
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -148,6 +150,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         panel4.add(deleteButton);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 deleteButtonActionPerformed();
             }
@@ -158,6 +161,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         doneButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
         panel4.add(doneButton);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doneButtonActionPerformed();
             }
@@ -168,6 +172,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         updateButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
         panel4.add(updateButton);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateButtonActionPerformed();
             }
@@ -179,6 +184,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -234,6 +240,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /**
      * Method to handle edit button
      */
+    @Override
     public void editButtonActionPerformed() {
        // get the XBeeNode corresponding to this node address
        curNode = (XBeeNode) nodeField.getSelectedItem();
@@ -261,6 +268,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
 /**
      * Method to handle delete button
      */
+    @Override
     public void deleteButtonActionPerformed() {
         // get the XBeeNode corresponding to this node address
         curNode = (XBeeNode) nodeField.getSelectedItem();
@@ -294,6 +302,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /**
      * Method to handle done button
      */
+    @Override
     public void doneButtonActionPerformed() {
         if (editMode) {
             // Reset 
@@ -321,6 +330,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /**
      * Method to handle update button
      */
+    @Override
     public void updateButtonActionPerformed() {
         // get node information from window
 
@@ -359,6 +369,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /**
      * Method to handle cancel button
      */
+    @Override
     public void cancelButtonActionPerformed() {
         // Reset 
         editMode = false;
@@ -379,6 +390,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /**
      * Method to close the window when the close box is clicked
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
         super.windowClosing(e);
@@ -445,6 +457,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
      * 'false' if an error was detected. If an error is detected, a suitable
      * error message is placed in the Notes area
      */
+    @Override
     protected boolean checkConsistency() {
         return true;
     }
@@ -488,6 +501,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /*
      * Discovery error callback.
      */
+    @Override
     public void discoveryError(String error){
         log.error("Error durring node discovery process: {}",error);
     }
@@ -495,6 +509,7 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     /*
      * Discovery finished callback.
      */
+    @Override
     public void discoveryFinished(String error){
        if(error != null){
          log.error("Node discovery processed finished with error: {}", error);

@@ -39,21 +39,24 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.LAYOUTBLOCKS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'B';
     }
     private int blkNum = 1;
 
     /**
-     * Method to create a new LayoutBlock if the LayoutBlock does not exist
+     * Method to create a new LayoutBlock if the LayoutBlock does not exist.
      * Returns null if a LayoutBlock with the same systemName or userName
      * already exists, or if there is trouble creating a new LayoutBlock. Note
      * that since the userName is used to address LayoutBlocks, the user name
@@ -406,7 +409,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     + ", " + protectedBlock.getSystemName() + " " + cType);
             return null;
         }
-        if (cType == LayoutEditor.TRACK) {
+        if (cType == LayoutTrack.TRACK) {
             // block boundary is at an Anchor Point
             LayoutEditorTools tools = new LayoutEditorTools(panel);
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
@@ -418,7 +421,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return p.getWestBoundSignalHead();
             }
         }
-        if (cType == LayoutEditor.TURNOUT_A) {
+        if (cType == LayoutTrack.TURNOUT_A) {
             // block boundary is at the facing point of a turnout or A connection of a crossover turnout
             lt = (LayoutTurnout) connected;
             if (lt.getLinkType() == LayoutTurnout.NO_LINK) {
@@ -579,7 +582,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return null;
             }
         }
-        if (cType == LayoutEditor.TURNOUT_B) {
+        if (cType == LayoutTrack.TURNOUT_B) {
             // block boundary is at the continuing track of a turnout or B connection of a crossover turnout
             lt = (LayoutTurnout) connected;
             // check for double crossover or LH crossover
@@ -754,7 +757,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
         }
-        if (cType == LayoutEditor.TURNOUT_C) {
+        if (cType == LayoutTrack.TURNOUT_C) {
             // block boundary is at the diverging track of a turnout or C connection of a crossover turnout
             lt = (LayoutTurnout) connected;
             // check for double crossover or RH crossover
@@ -945,7 +948,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
         }
-        if (cType == LayoutEditor.TURNOUT_D) {
+        if (cType == LayoutTrack.TURNOUT_D) {
             // block boundary is at D connectin of a crossover turnout
             lt = (LayoutTurnout) connected;
             if (lt.getTurnoutType() == LayoutTurnout.RH_XOVER) {
@@ -1049,20 +1052,20 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
         }
-        if ((cType >= LayoutEditor.SLIP_A) && (cType <= LayoutEditor.SLIP_D)) {
+        if ((cType >= LayoutTrack.SLIP_A) && (cType <= LayoutTrack.SLIP_D)) {
             if (!facingIsBlock1) {
                 return null;
             }
 
             LayoutSlip ls = (LayoutSlip) connected;
             switch (cType) {
-                case LayoutEditor.SLIP_A:
+                case LayoutTrack.SLIP_A:
                     if (ls.getSlipState() == LayoutSlip.STATE_AD) {
                         return ls.getSignalHead(LayoutTurnout.POINTA2);
                     } else {
                         return ls.getSignalHead(LayoutTurnout.POINTA);
                     }
-                case LayoutEditor.SLIP_B:
+                case LayoutTrack.SLIP_B:
                     if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                         if (ls.getSlipState() == LayoutSlip.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.POINTB2);
@@ -1072,7 +1075,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     } else {
                         return ls.getSignalHead(LayoutTurnout.POINTB);
                     }
-                case LayoutEditor.SLIP_C:
+                case LayoutTrack.SLIP_C:
                     if (ls.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
                         if (ls.getSlipState() == LayoutSlip.STATE_BC) {
                             return ls.getSignalHead(LayoutTurnout.POINTC2);
@@ -1082,7 +1085,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     } else {
                         return ls.getSignalHead(LayoutTurnout.POINTC);
                     }
-                case LayoutEditor.SLIP_D:
+                case LayoutTrack.SLIP_D:
                     if (ls.getSlipState() == LayoutSlip.STATE_AD) {
                         return ls.getSignalHead(LayoutTurnout.POINTD2);
                     } else {
@@ -1093,35 +1096,35 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         // block boundary must be at a level crossing
-        if ((cType < LayoutEditor.LEVEL_XING_A) || (cType > LayoutEditor.LEVEL_XING_D)) {
+        if ((cType < LayoutTrack.LEVEL_XING_A) || (cType > LayoutTrack.LEVEL_XING_D)) {
             log.error(cType + " " + connected + " Block Boundary not identified correctly - Blocks " + facingBlock.getSystemName()
                     + ", " + protectedBlock.getSystemName());
             return null;
         }
         LevelXing xing = (LevelXing) connected;
         switch (cType) {
-            case LayoutEditor.LEVEL_XING_A:
+            case LayoutTrack.LEVEL_XING_A:
                 // block boundary is at the A connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.POINTA);
                 } else {
                     return xing.getSignalHead(LevelXing.POINTC);
                 }
-            case LayoutEditor.LEVEL_XING_B:
+            case LayoutTrack.LEVEL_XING_B:
                 // block boundary is at the B connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.POINTB);
                 } else {
                     return xing.getSignalHead(LevelXing.POINTD);
                 }
-            case LayoutEditor.LEVEL_XING_C:
+            case LayoutTrack.LEVEL_XING_C:
                 // block boundary is at the C connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.POINTC);
                 } else {
                     return xing.getSignalHead(LevelXing.POINTA);
                 }
-            case LayoutEditor.LEVEL_XING_D:
+            case LayoutTrack.LEVEL_XING_D:
                 // block boundary is at the D connection of a level crossing
                 if (facingIsBlock1) {
                     return xing.getSignalHead(LevelXing.POINTD);
@@ -1185,7 +1188,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             TrackSegment t = panel.trackList.get(i);
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
-                if (t.getType1() == LayoutEditor.POS_POINT) {
+                if (t.getType1() == LayoutTrack.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
                     if (p.getType() == PositionablePoint.END_BUMPER) {
                         if (p.getEastBoundSignalMast() != null) {
@@ -1196,7 +1199,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                         }
                     }
                 }
-                if (t.getType2() == LayoutEditor.POS_POINT) {
+                if (t.getType2() == LayoutTrack.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
                     if (p.getType() == PositionablePoint.END_BUMPER) {
                         if (p.getEastBoundSignalMast() != null) {
@@ -1233,7 +1236,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             TrackSegment t = panel.trackList.get(i);
             if (t.getLayoutBlock() == fLayoutBlock) {
                 PositionablePoint p = null;
-                if (t.getType1() == LayoutEditor.POS_POINT) {
+                if (t.getType1() == LayoutTrack.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
                     if (p.getType() == PositionablePoint.END_BUMPER) {
                         if (p.getEastBoundSensor() != null) {
@@ -1245,7 +1248,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     }
 
                 }
-                if (t.getType2() == LayoutEditor.POS_POINT) {
+                if (t.getType2() == LayoutTrack.POS_POINT) {
                     p = (PositionablePoint) t.getConnect2();
                     if (p.getType() == PositionablePoint.END_BUMPER) {
                         if (p.getEastBoundSensor() != null) {
@@ -1379,30 +1382,30 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             if (lc.getXover() != null) {
                 if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_AB) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlock()) {
-                        cType = LayoutEditor.TURNOUT_A;
+                        cType = LayoutTrack.TURNOUT_A;
                     } else {
-                        cType = LayoutEditor.TURNOUT_B;
+                        cType = LayoutTrack.TURNOUT_B;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_CD) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlockC()) {
-                        cType = LayoutEditor.TURNOUT_C;
+                        cType = LayoutTrack.TURNOUT_C;
                     } else {
-                        cType = LayoutEditor.TURNOUT_D;
+                        cType = LayoutTrack.TURNOUT_D;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_AC) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlock()) {
-                        cType = LayoutEditor.TURNOUT_A;
+                        cType = LayoutTrack.TURNOUT_A;
                     } else {
-                        cType = LayoutEditor.TURNOUT_C;
+                        cType = LayoutTrack.TURNOUT_C;
                     }
                     connected = lc.getXover();
                 } else if (lc.getXoverBoundaryType() == LayoutConnectivity.XOVER_BOUNDARY_BD) {
                     if (fLayoutBlock == lc.getXover().getLayoutBlockB()) {
-                        cType = LayoutEditor.TURNOUT_B;
+                        cType = LayoutTrack.TURNOUT_B;
                     } else {
-                        cType = LayoutEditor.TURNOUT_D;
+                        cType = LayoutTrack.TURNOUT_D;
                     }
                     connected = lc.getXover();
                 }
@@ -1413,7 +1416,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     + ", " + protectedBlock.getSystemName() + " " + cType);
             return null;
         }
-        if (cType == LayoutEditor.TRACK) {
+        if (cType == LayoutTrack.TRACK) {
             // block boundary is at an Anchor Point
             LayoutEditorTools tools = new LayoutEditorTools(panel);
             PositionablePoint p = panel.getFinder().findPositionablePointAtTrackSegments(tr, (TrackSegment) connected);
@@ -1434,7 +1437,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
 
-        if (cType == LayoutEditor.TURNOUT_A) {
+        if (cType == LayoutTrack.TURNOUT_A) {
             lt = (LayoutTurnout) connected;
             if ((lt.getLinkType() == LayoutTurnout.NO_LINK) || (lt.getLinkType() == LayoutTurnout.FIRST_3_WAY)) {
                 if ((T.equals(SignalMast.class) && lt.getSignalAMast() != null) || (T.equals(Sensor.class) && lt.getSensorA() != null)) {
@@ -1461,7 +1464,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             return null;
         }
 
-        if (cType == LayoutEditor.TURNOUT_B) {
+        if (cType == LayoutTrack.TURNOUT_B) {
             lt = (LayoutTurnout) connected;
             if ((T.equals(SignalMast.class) && lt.getSignalBMast() != null) || (T.equals(Sensor.class) && lt.getSensorB() != null)) {
                 if (tr == null) {
@@ -1485,7 +1488,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
             return null;
         }
-        if (cType == LayoutEditor.TURNOUT_C) {
+        if (cType == LayoutTrack.TURNOUT_C) {
             lt = (LayoutTurnout) connected;
             if ((T.equals(SignalMast.class) && lt.getSignalCMast() != null) || (T.equals(Sensor.class) && lt.getSensorC() != null)) {
                 if (tr == null) {
@@ -1510,7 +1513,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             return null;
         }
 
-        if (cType == LayoutEditor.TURNOUT_D) {
+        if (cType == LayoutTrack.TURNOUT_D) {
             lt = (LayoutTurnout) connected;
             if ((T.equals(SignalMast.class) && lt.getSignalDMast() != null) || (T.equals(Sensor.class) && lt.getSensorD() != null)) {
                 if (tr == null) {
@@ -1539,30 +1542,30 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             return null;
         }
 
-        if ((cType >= LayoutEditor.SLIP_A) && (cType <= LayoutEditor.SLIP_D)) {
+        if ((cType >= LayoutTrack.SLIP_A) && (cType <= LayoutTrack.SLIP_D)) {
             LayoutSlip ls = (LayoutSlip) connected;
-            if (cType == LayoutEditor.SLIP_A) {
+            if (cType == LayoutTrack.SLIP_A) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalAMast();
                 } else if (T.equals(Sensor.class)) {
                     return ls.getSensorA();
                 }
             }
-            if (cType == LayoutEditor.SLIP_B) {
+            if (cType == LayoutTrack.SLIP_B) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalBMast();
                 } else if (T.equals(Sensor.class)) {
                     return ls.getSensorB();
                 }
             }
-            if (cType == LayoutEditor.SLIP_C) {
+            if (cType == LayoutTrack.SLIP_C) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalCMast();
                 } else if (T.equals(Sensor.class)) {
                     return ls.getSensorC();
                 }
             }
-            if (cType == LayoutEditor.SLIP_D) {
+            if (cType == LayoutTrack.SLIP_D) {
                 if (T.equals(SignalMast.class)) {
                     return ls.getSignalDMast();
                 } else if (T.equals(Sensor.class)) {
@@ -1571,7 +1574,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
 
-        if ((cType < LayoutEditor.LEVEL_XING_A) || (cType > LayoutEditor.LEVEL_XING_D)) {
+        if ((cType < LayoutTrack.LEVEL_XING_A) || (cType > LayoutTrack.LEVEL_XING_D)) {
             log.error("Block Boundary not identified correctly - Blocks " + facingBlock.getSystemName()
                     + ", " + protectedBlock.getSystemName());
             return null;
@@ -1579,7 +1582,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         /*We don't allow signal masts on the block outward facing from the level
          xing, nor do we consider the signal mast, that is protecting the in block on the xing*/
         LevelXing xing = (LevelXing) connected;
-        if (cType == LayoutEditor.LEVEL_XING_A) {
+        if (cType == LayoutTrack.LEVEL_XING_A) {
             // block boundary is at the A connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalAMast();
@@ -1587,7 +1590,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return xing.getSensorA();
             }
         }
-        if (cType == LayoutEditor.LEVEL_XING_B) {
+        if (cType == LayoutTrack.LEVEL_XING_B) {
             // block boundary is at the B connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalBMast();
@@ -1595,7 +1598,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return xing.getSensorB();
             }
         }
-        if (cType == LayoutEditor.LEVEL_XING_C) {
+        if (cType == LayoutTrack.LEVEL_XING_C) {
             // block boundary is at the C connection of a level crossing
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalCMast();
@@ -1603,7 +1606,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return xing.getSensorC();
             }
         }
-        if (cType == LayoutEditor.LEVEL_XING_D) {
+        if (cType == LayoutTrack.LEVEL_XING_D) {
             if (T.equals(SignalMast.class)) {
                 return xing.getSignalDMast();
             } else if (T.equals(Sensor.class)) {
@@ -1633,7 +1636,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     /**
      * Method to return the block that a given bean object (Sensor, SignalMast
-     * or SignalHead) is protecting
+     * or SignalHead) is protecting.
      * <P>
      * @param nb    NamedBean
      * @param panel - panel that this bean is on
@@ -2053,7 +2056,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     private boolean warnConnectivity = true;
 
     /**
-     * Controls switching off incompatible block connectivity messages
+     * Controls switching off incompatible block connectivity messages.
      * <P>
      * Warnings are always on when program starts up. Once stopped by the user,
      * these messages may not be switched on again until program restarts.
@@ -2143,46 +2146,44 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 log.debug("Error setting stability indicator sensor");
             }
         }
-        Runnable r = new Runnable() {
-            public void run() {
-                try {
-                    firePropertyChange("topology", true, false);
-                    long oldvalue = lastRoutingChange;
-                    while (!stabilised) {
-                        Thread.sleep(2000L);    // two seconds
-                        if (oldvalue == lastRoutingChange) {
-                            log.debug("routing table has now been stable for 2 seconds");
-                            checking = false;
-                            stabilised = true;
+        Runnable r = () -> {
+            try {
+                firePropertyChange("topology", true, false);
+                long oldvalue = lastRoutingChange;
+                while (!stabilised) {
+                    Thread.sleep(2000L);    // two seconds
+                    if (oldvalue == lastRoutingChange) {
+                        log.debug("routing table has now been stable for 2 seconds");
+                        checking = false;
+                        stabilised = true;
+                        jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
+                            firePropertyChange("topology", false, true);
+                        });
+                        if (namedStabilisedIndicator != null) {
                             jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
-                                firePropertyChange("topology", false, true);
+                                log.debug("Setting StabilisedIndicator Sensor {} ACTIVE", namedStabilisedIndicator.getBean().getSystemName());
+                                try {
+                                    namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
+                                } catch (jmri.JmriException ex) {
+                                    log.debug("Error setting stability indicator sensor");
+                                }
                             });
-                            if (namedStabilisedIndicator != null) {
-                                jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
-                                    log.debug("Setting StabilisedIndicator Sensor {} ACTIVE", namedStabilisedIndicator.getBean().getSystemName());
-                                    try {
-                                        namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
-                                    } catch (jmri.JmriException ex) {
-                                        log.debug("Error setting stability indicator sensor");
-                                    }
-                                });
-                            } else {
-                                log.debug("Stable, no sensor to set");
-                            }
                         } else {
-                            long seconds = (long)((lastRoutingChange - firstRoutingChange) / 1e9);
-                            log.debug("routing table not stable after {} in {}",
-                                String.format("%d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60),
-                                Thread.currentThread().getName());
+                            log.debug("Stable, no sensor to set");
                         }
-                        oldvalue = lastRoutingChange;
+                    } else {
+                        long seconds = (long)((lastRoutingChange - firstRoutingChange) / 1e9);
+                        log.debug("routing table not stable after {} in {}",
+                            String.format("%d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60),
+                            Thread.currentThread().getName());
                     }
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                    checking = false;
+                    oldvalue = lastRoutingChange;
+                }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                checking = false;
 //                 } catch (jmri.JmriException ex) {
 //                     log.debug("Error setting stability indicator sensor");
-                }
             }
         };
         thr = new Thread(r, "Routing stabilising timer");
@@ -2223,7 +2224,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     /**
      * Return the sensor used to indicate if the routing protocol has stabilised
-     * or not
+     * or not.
      */
     public Sensor getStabilisedSensor() {
         if (namedStabilisedIndicator == null) {
@@ -2240,7 +2241,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     }
 
     /**
-     * Returns true if the layout block routing protocol has stabilised
+     * Returns true if the layout block routing protocol has stabilised.
      */
     public boolean routingStablised() {
         return stabilised;
@@ -2254,6 +2255,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         return lastRoutingChange;
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLayoutBlock");
     }

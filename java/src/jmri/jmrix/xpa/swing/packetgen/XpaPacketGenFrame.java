@@ -23,6 +23,7 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo = m;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -49,6 +50,7 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -67,9 +69,11 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
+    @Override
     public void message(XpaMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(XpaMessage r) {
     } // ignore replies
 }

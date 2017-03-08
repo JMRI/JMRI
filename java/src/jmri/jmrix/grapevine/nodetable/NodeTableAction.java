@@ -20,6 +20,7 @@ public class NodeTableAction extends AbstractAction {
         this("Configure Grapevine Nodes");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeTableFrame f = new NodeTableFrame();
         try {

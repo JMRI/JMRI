@@ -22,16 +22,19 @@ public class XBeeLightManager extends AbstractLightManager {
         this.prefix = prefix;
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // for now, set this to false. multiple additions currently works 
     // partially, but not for all possible cases.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public Light createNewLight(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
@@ -64,6 +67,7 @@ public class XBeeLightManager extends AbstractLightManager {
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
@@ -136,6 +140,7 @@ public class XBeeLightManager extends AbstractLightManager {
      * 'false' for now, this method always returns 'true'; it is needed for the
      * Abstract Light class
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }

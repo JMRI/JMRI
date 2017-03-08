@@ -2,7 +2,6 @@ package jmri.jmrix.lenz.swing.mon;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,9 +43,9 @@ public class XNetMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.deregister(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

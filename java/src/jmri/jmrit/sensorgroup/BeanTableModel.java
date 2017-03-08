@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BeanTableModel extends AbstractTableModel {
 
+    @Override
     public Class<?> getColumnClass(int c) {
         if (c == INCLUDE_COLUMN) {
             return Boolean.class;
@@ -22,14 +23,17 @@ public abstract class BeanTableModel extends AbstractTableModel {
 
     public abstract Manager getManager();
 
+    @Override
     public int getColumnCount() {
         return INCLUDE_COLUMN + 1;
     }
 
+    @Override
     public int getRowCount() {
         return getManager().getSystemNameList().size();
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         return (c == INCLUDE_COLUMN);
     }
@@ -38,6 +42,7 @@ public abstract class BeanTableModel extends AbstractTableModel {
     public static final int UNAME_COLUMN = 1;
     public static final int INCLUDE_COLUMN = 2;
 
+    @Override
     public String getColumnName(int c) {
         switch (c) {
             case SNAME_COLUMN:
@@ -54,6 +59,7 @@ public abstract class BeanTableModel extends AbstractTableModel {
     /**
      * User name column must be handled by subclass
      */
+    @Override
     public Object getValueAt(int r, int c) {
         switch (c) {
             case SNAME_COLUMN:  // slot number

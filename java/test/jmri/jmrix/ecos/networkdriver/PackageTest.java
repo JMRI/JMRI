@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.ecos.networkdriver.configurexml.PackageTest.class
+   jmri.jmrix.ecos.networkdriver.configurexml.PackageTest.class,
+   NetworkDriverAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.ecos.networkdriver package.

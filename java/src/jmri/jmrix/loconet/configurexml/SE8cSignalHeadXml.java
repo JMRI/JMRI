@@ -26,6 +26,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      * @param o Object to store, of type SE8cSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SE8cSignalHead p = (SE8cSignalHead) o;
 
@@ -82,6 +83,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called"); // NOI18N
     }

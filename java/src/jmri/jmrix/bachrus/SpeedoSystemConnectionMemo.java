@@ -54,11 +54,13 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         //None to configure
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No Actions at start up to return
         return null;
     }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, SpeedoSystemConnectionMemo.class);

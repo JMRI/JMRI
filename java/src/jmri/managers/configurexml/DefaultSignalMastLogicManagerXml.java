@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.managers.configurexml;
 
 import java.util.ArrayList;
@@ -32,6 +28,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
+    @Override
     public Element store(Object o) {
         Element signalMastLogic = new Element("signalmastlogics");
         setStoreElementClass(signalMastLogic);
@@ -164,6 +161,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         signalMastLogic.setAttribute("class", "jmri.managers.configurexml.DefaultSignalMastLogicManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -355,6 +353,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return loadOk;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getXMLOrder();
     }

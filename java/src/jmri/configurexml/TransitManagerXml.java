@@ -29,6 +29,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * @param o Object to store, of type TransitManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element transits = new Element("transits");
         setStoreElementClass(transits);
@@ -113,6 +114,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         transits.setAttribute("class", "jmri.configurexml.TransitManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -217,6 +219,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         }
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.TransitManager.class).getXMLOrder();
     }

@@ -115,6 +115,7 @@ public class LocoNetMessage implements Serializable {
     /**
      * Get a String representation of the entire message in hex
      */
+    @Override
     public String toString() {
         int val;
         StringBuffer sb = new StringBuffer();
@@ -244,6 +245,7 @@ public class LocoNetMessage implements Serializable {
      *
      * @return true if objects contain the same message contents
      */
+    @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;
@@ -263,6 +265,7 @@ public class LocoNetMessage implements Serializable {
         return true;
     }
 
+    @Override
     public int hashCode() {
         int r = _nDataBytes;
         if (_nDataBytes > 0) {

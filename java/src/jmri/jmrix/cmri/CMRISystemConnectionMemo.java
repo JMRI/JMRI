@@ -36,6 +36,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, CMRISystemConnectionMemo.class);
         if (cf != null) {
@@ -104,6 +105,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     private LightManager lightManager = null;
 
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -119,6 +121,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;

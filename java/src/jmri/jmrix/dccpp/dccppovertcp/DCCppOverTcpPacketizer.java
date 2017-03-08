@@ -11,7 +11,6 @@ import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
-import jmri.jmrix.dccpp.DCCppReplyParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,9 +51,15 @@ import org.slf4j.LoggerFactory;
 // 
 public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
-    static final String RECEIVE_PREFIX = "RECEIVE";
-    static final String SEND_PREFIX = "SEND";
+    static final String OLD_RECEIVE_PREFIX = "RECEIVE ";
+    static final String OLD_SEND_PREFIX = "SEND";
+    static final String RECEIVE_PREFIX = "<";
+    static final String SEND_PREFIX = ""; // Making this an empty string on purpose.
+    static final String OLD_SERVER_VERSION_STRING = "VERSION JMRI Server "; // CAREFUL: Changing this could break backward compatibility
+    static final String NEW_SERVER_VERSION_STRING = "VERSION DCC++ Server ";
 
+    boolean useOldPrefix = false;
+    
     protected BufferedReader istreamReader = null;
 
     /**
@@ -133,6 +138,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         // update statistics
         //transmittedMsgCount++;
@@ -201,6 +207,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
         @SuppressWarnings({"deprecation", "null"})
+        @Override
         public void run() {
 
             String rxLine;
@@ -219,6 +226,19 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     }
 
                     log.debug("Received: {}", rxLine);
+                    
+                    // Legacy support. If this message is the old JMRI version
+                    // handshake, flag us as in "old mode"
+                    if (rxLine.startsWith(OLD_SERVER_VERSION_STRING)) {
+                        useOldPrefix = true;
+                    }
+                    
+                    // Legacy support. If the old receive prefix is present
+                    // remove it.
+                    if (rxLine.startsWith(OLD_RECEIVE_PREFIX)) {
+                        final int trim = OLD_RECEIVE_PREFIX.length();
+                        rxLine = rxLine.substring(trim);
+                    }
 
                     if (!rxLine.startsWith(RECEIVE_PREFIX)) {
                         // Not a valid Tcp packet
@@ -227,15 +247,23 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     }
 
                     // Strip the prefix off.
-                    final int trim = RECEIVE_PREFIX.length();
-                    rxLine = rxLine.substring(trim);
+                    //final int trim = RECEIVE_PREFIX.length();
+                    //rxLine = rxLine.substring(trim);
 
                     int firstidx = rxLine.indexOf("<");
                     int lastidx = rxLine.lastIndexOf(">");
                     log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
+
+                    // BUG FIX: Incoming DCCppOverTCP messages are already formatted for DCC++ and don't
+                    // need to be parsed. Indeed, trying to parse them will screw them up.
+                    // So instead, we de-@Deprecated the string constructor so that we can
+                    // directly create a DCCppReply from the incoming string without translation/parsing.
+
                     //  Note: the substring call below also strips off the "< >"
-                    DCCppReply msg = DCCppReplyParser.parseReply(rxLine.substring(rxLine.indexOf("<") + 1,
+                    DCCppReply msg = DCCppReply.parseDCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
                             rxLine.lastIndexOf(">")));
+                    //DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<") + 1,
+                    //                                rxLine.lastIndexOf(">")));
 
                     if (!msg.isValidReplyFormat()) {
                         log.warn("Invalid Reply Format: {}", msg.toString());
@@ -252,6 +280,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     Runnable r = new Runnable() {
                         DCCppReply msgForLater = thisMsg;
 
+                        @Override
                         public void run() {
                             notifyReply(msgForLater, null);
                         }
@@ -263,7 +292,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     //  log.warn("run: unexpected DCCppMessageException: ", );
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    log.debug("EOFException, is DC++ serial I/O using timeouts?");
+                    log.debug("EOFException, is DCC++ serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
                     log.debug("IOException, should only happen with HexFile: {}", e);
@@ -284,6 +313,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently
@@ -303,7 +333,9 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                             //if (!networkController.okToSend()) log.warn(DCCpp port not ready to receive"); // TCP, not RS232, so message is a real warning
                             log.debug("start write to network stream");
                             StringBuffer packet = new StringBuffer(msg.length() + SEND_PREFIX.length() + 2);
-                            packet.append(SEND_PREFIX);
+                            if (useOldPrefix) {
+                                packet.append(OLD_SEND_PREFIX);
+                            }
                             packet.append("<" + msg.toString() + ">");
                             if (log.isDebugEnabled()) { // avoid building a String when not needed
                                 log.debug("Write to LbServer: {}", packet.toString());

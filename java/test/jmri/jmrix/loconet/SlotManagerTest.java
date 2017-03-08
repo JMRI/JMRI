@@ -92,6 +92,7 @@ public class SlotManagerTest extends TestCase {
         SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2 = new SlotListener() {
+            @Override
             public void notifyChangedSlot(LocoNetSlot l) {
                 testSlot = l;
             }
@@ -111,6 +112,7 @@ public class SlotManagerTest extends TestCase {
         SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2 = new SlotListener() {
+            @Override
             public void notifyChangedSlot(LocoNetSlot l) {
                 testSlot = l;
             }
@@ -323,6 +325,7 @@ public class SlotManagerTest extends TestCase {
     // The minimal setup for log4J
     LocoNetInterfaceScaffold lnis;
 
+    @Override
     protected void setUp() {
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface
@@ -330,6 +333,7 @@ public class SlotManagerTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

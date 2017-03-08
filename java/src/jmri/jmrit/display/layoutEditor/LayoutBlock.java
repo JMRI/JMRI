@@ -11,7 +11,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -138,6 +137,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * Note: initializeLayoutBlock() must be called to complete the process. They are split
      *       so  that loading of panel files will be independent of whether LayoutBlocks or
      *       Blocks are loaded first.
+     * @param sName System name of this LayoutBlock; will be converted to upper case
+     * @param uName User name of this LayoutBlock but also the user name of the associated Block
      */
     public LayoutBlock(String sName, String uName) {
         super(sName.toUpperCase(), uName);
@@ -174,12 +175,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         if (block != null) {
             //attach a listener for changes in the Block
-            block.addPropertyChangeListener(mBlockListener
-                    = new java.beans.PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
+            block.addPropertyChangeListener(mBlockListener =
+                (java.beans.PropertyChangeEvent e) -> {
                     handleBlockChange(e);
-                }
-            }, blockName, "Layout Block:" + blockName);
+                },
+            blockName, "Layout Block:" + blockName);
             if (occupancyNamedSensor != null) {
                 block.setNamedSensor(occupancyNamedSensor);
             }
@@ -199,7 +199,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
-    /* initializeLayoutBlockRouting */
+    // this should only be used for debugging…
+    public String toString() {
+        return "LayoutBlock " + getDisplayName();
+    }
 
     /**
      * Accessor methods
@@ -591,11 +594,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return UNKNOWN;
     }
 
+    @Override
     public int getState() {
         return getOccupancy();
     }
 
     //dummy for completion of NamedBean interface
+    @Override
     public void setState(int i) {
         log.error("this state does nothing " + getDisplayName());
     }
@@ -783,7 +788,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
 //djd debugging - lists results of automatic initialization of Paths and BeanSettings
         for (Path p : block.getPaths()) {
-            log.debug("From {} path to {}", blockName, p.toString());
+            log.debug("From {} to {}", blockName, p.toString());
         }
 //end debugging
     }   // updateBlockPaths
@@ -1081,6 +1086,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             layout.addItem(new BeanEditItem(extraColorBox, rb.getString("ExtraColor"), rb.getString("ExtraColorHint")));
 
             layout.setSaveItem(new AbstractAction() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     boolean needsRedraw = false;
                     int k = senseBox.getSelectedIndex();
@@ -1136,6 +1142,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
 
             layout.setResetItem(new AbstractAction() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     memoryNameField.setText(memoryName);
                     setColorCombo(trackColorBox, blockTrackColor);
@@ -1167,6 +1174,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
 
             routing.setResetItem(new AbstractAction() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     metricField.setText(Integer.toString(metric));
                     for (int i = 0; i < getNumberOfNeighbours(); i++) {
@@ -1184,6 +1192,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
 
             routing.setSaveItem(new AbstractAction() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     int m = Integer.parseInt(metricField.getText().trim());
                     if (m != metric) {
@@ -2018,10 +2027,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         final LayoutBlock neighLBlock = neighbour.getLayoutBlock();
-        Runnable r = new Runnable() {
-            public void run() {
-                neighLBlock.updateNeighbourPacketFlow(block, flow);
-            }
+        Runnable r = () -> {
+            neighLBlock.updateNeighbourPacketFlow(block, flow);
         };
 
         Block neighBlock = neighbour.getBlock();
@@ -3111,40 +3118,21 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return false;
     }
 
-    //We keep this vector list so that we only keep one instance of a registered listener
-    protected Vector<java.beans.PropertyChangeListener> listeners = new Vector<java.beans.PropertyChangeListener>();
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         if (l == this) {
             if (enableAddRouteLogging) {
-                log.info("adding ourselves as a listener for some strange reason!");
+                log.info("adding ourselves as a listener for some strange reason! Skipping");
             }
             return;
         }
 
-        if (!listeners.contains(l)) {
-            listeners.addElement(l);
-            pcs.addPropertyChangeListener(l);
-        }
+        super.addPropertyChangeListener(l);
     }
 
     @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.removeElement(l);
-            pcs.removePropertyChangeListener(l);
-        }
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
@@ -3212,23 +3200,30 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      */
     @CheckForNull
     Routes getValidRoute(Block nxtBlock, Block dstBlock) {
-        ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
+        if ((null != nxtBlock) && (null != dstBlock)) {
+            ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
 
-        if (rtr.size() == 0) {
-            log.info("From {}, no routes returned for getRouteByNeighbour({})", this.getDisplayName(),
-                    nxtBlock.getDisplayName());
+            if (rtr.size() == 0) {
+                log.info("From {}, no routes returned for getRouteByNeighbour({})",
+                        this.getDisplayName(),
+                        nxtBlock.getDisplayName());
 
-            return null;
-        }
-
-        for (Routes rt : rtr) {
-            log.trace("From " + this.getDisplayName() + ", found dest " + rt.getDestBlock().getDisplayName()
-                    + " " + ((rt.getDestBlock() == dstBlock) ? "matches" : "does not match")
-                    + " required dest " + dstBlock.getDisplayName());
-            if (rt.getDestBlock() == dstBlock) {
-                log.trace("   From " + this.getDisplayName() + " matched");
-                return rt;
+                return null;
             }
+
+            for (Routes rt : rtr) {
+                log.trace("From " + this.getDisplayName() + ", found dest " + rt.getDestBlock().getDisplayName()
+                        + " " + ((rt.getDestBlock() == dstBlock) ? "matches" : "does not match")
+                        + " required dest " + dstBlock.getDisplayName());
+                if (rt.getDestBlock() == dstBlock) {
+                    log.trace("   From " + this.getDisplayName() + " matched");
+                    return rt;
+                }
+            }
+        } else {
+            log.warn("getValidRoute({}, {}",
+                (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",
+                (null != dstBlock) ? dstBlock.getDisplayName() : "<null>");
         }
         return null;
     }
@@ -4281,6 +4276,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     + ", met:" + routeMetric + ", len: " + length + ")";
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("state")) {
                 stateChange();
@@ -4484,6 +4480,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         /*public Hashtable<Turnout, Integer> getTurnoutList(){
          return _turnouts;
          }*/
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState")) {
                 Turnout srcTurnout = (Turnout) e.getSource();
@@ -4625,6 +4622,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) {    //IN18N
             if (evt.getOldValue() instanceof Sensor) {
@@ -4654,6 +4652,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameLayoutBlock");
     }

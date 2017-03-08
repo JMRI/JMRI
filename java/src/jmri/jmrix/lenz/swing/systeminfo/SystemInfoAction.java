@@ -18,9 +18,10 @@ public class SystemInfoAction extends AbstractXPressNetAction {
     }
 
     public SystemInfoAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("Xpressnet System Information", memo);
+        this(Bundle.getMessage("SystemInfoFrameTitle"), memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create an SystemInfoFrame
         SystemInfoFrame f = new SystemInfoFrame(_memo);

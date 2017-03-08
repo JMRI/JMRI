@@ -84,6 +84,7 @@ abstract public class AbstractDCCppInitializationManager {
             // Initialize and start initilization timeout timer.
             javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
                     new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(
                                 java.awt.event.ActionEvent e) {
                                     /* If the timer times out, notify any 
@@ -100,6 +101,7 @@ abstract public class AbstractDCCppInitializationManager {
             return retVal;
         }
 
+        @Override
         public void run() {
         }
 
@@ -121,10 +123,11 @@ abstract public class AbstractDCCppInitializationManager {
         }
 
         // listen for the responses from the Base Station
+        @Override
         public void message(DCCppReply l) {
             // Check to see if this is a response with the Command Station 
             // Version Info
-	    if (l.getElement(0) == DCCppConstants.VERSION_REPLY) {
+	    if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {
                 // This is the Command Station Software Version Response
 		log.debug("Version Info Received: {}", l.toString());
 		systemMemo.getDCCppTrafficController()
@@ -135,10 +138,12 @@ abstract public class AbstractDCCppInitializationManager {
         }
 
         // listen for the messages to the LI100/LI101
+        @Override
         public void message(DCCppMessage l) {
         }
 
         // Handle a timeout notification
+        @Override
         public void notifyTimeout(DCCppMessage msg) {
             if (log.isDebugEnabled()) {
                 log.debug("Notified of timeout on message" + msg.toString());

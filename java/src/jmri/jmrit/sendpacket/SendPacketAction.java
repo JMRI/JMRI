@@ -25,6 +25,7 @@ public class SendPacketAction extends AbstractAction {
         this("Send DCC packet");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SendPacketFrame
         SendPacketFrame f = new SendPacketFrame();

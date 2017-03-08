@@ -3,3 +3,4 @@ RewriteEngine on
 # Provide redirects for removed pages
 
 RewriteRule "getcode.shtml" "/help/en/html/doc/Technical/getgitcode.shtml" [R=302,L]
+RewriteRule "JavaDoc.shtml" "/help/en/html/doc/Technical/Javadoc.shtml" [R=302,L]

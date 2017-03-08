@@ -13,8 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="td@teamdigital1.com" version="1.0" lastUpdated="20121002"/>
+  <version author="td@teamdigital1.com" version="1.11" lastUpdated="20170130"/>
   <!-- Version 1 initial release -->
+  <!-- Version 1.1 release, increase route max to to 15, add the t in Digitrax, improve tool tip for route send delay -->
+  <!-- Version 1.11 release, added single output options in Power On Outputs sheet -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SRC162" lowVersionID="1" comment="SRC162 is a stationary decoder with serial bus"/>
@@ -291,6 +293,183 @@
         </enumVal>
         <label/>
       </variable>
+      <!-- Begin Power on Output State Table definition for 16 outputs with MotoD -->
+      <variable item="OS1M" CV="12" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS2M" CV="12" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS3M" CV="12" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS4M" CV="12" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS5M" CV="12" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS6M" CV="12" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS7M" CV="12" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS8M" CV="12" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS9M" CV="13" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS10M" CV="13" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS11M" CV="13" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS12M" CV="13" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS13M" CV="13" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS14M" CV="13" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS15M" CV="13" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS16M" CV="13" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="0">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>      
       <!-- Input Lockout variable definition -->
       <variable CV="14" mask="VVVVVVVV" item="Lockout">
         <splitVal highCV="15" max="7" upperMask="XXXXVVVV"/>
@@ -355,7 +534,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="18" mask="VVVVXXXX" item="Rte Num P1" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="19" mask="VVVVVVVV" item="PA2" default="1">
@@ -416,7 +595,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="21" mask="VVVVXXXX" item="Rte Num P2" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="22" mask="VVVVVVVV" item="PA3" default="2">
@@ -477,7 +656,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="24" mask="VVVVXXXX" item="Rte Num P3" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="25" mask="VVVVVVVV" item="PA4" default="2">
@@ -538,7 +717,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="27" mask="VVVVXXXX" item="Rte Num P4" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="28" mask="VVVVVVVV" item="PA5" default="3">
@@ -599,7 +778,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="30" mask="VVVVXXXX" item="Rte Num P5" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="31" mask="VVVVVVVV" item="PA6" default="3">
@@ -660,7 +839,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="33" mask="VVVVXXXX" item="Rte Num P6" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="34" mask="VVVVVVVV" item="PA7" default="4">
@@ -721,7 +900,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="36" mask="VVVVXXXX" item="Rte Num P7" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="37" mask="VVVVVVVV" item="PA8" default="4">
@@ -782,7 +961,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="39" mask="VVVVXXXX" item="Rte Num P8" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <!-- Begin inputs 9-16 variable definition -->
@@ -844,7 +1023,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="42" mask="VVVVXXXX" item="Rte Num S1" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="43" mask="VVVVVVVV" item="SA2" default="5">
@@ -905,7 +1084,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="45" mask="VVVVXXXX" item="Rte Num S2" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="46" mask="VVVVVVVV" item="SA3" default="6">
@@ -966,7 +1145,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="48" mask="VVVVXXXX" item="Rte Num S3" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="49" mask="VVVVVVVV" item="SA4" default="6">
@@ -1027,7 +1206,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="51" mask="VVVVXXXX" item="Rte Num S4" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="52" mask="VVVVVVVV" item="SA5" default="7">
@@ -1088,7 +1267,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="54" mask="VVVVXXXX" item="Rte Num S5" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="55" mask="VVVVVVVV" item="SA6" default="7">
@@ -1149,7 +1328,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="57" mask="VVVVXXXX" item="Rte Num S6" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="58" mask="VVVVVVVV" item="SA7" default="8">
@@ -1210,7 +1389,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="60" mask="VVVVXXXX" item="Rte Num S7" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <variable CV="61" mask="VVVVVVVV" item="SA8" default="8">
@@ -1271,7 +1450,7 @@
         <label>Transition</label>
       </variable>
       <variable CV="63" mask="VVVVXXXX" item="Rte Num S8" default="0">
-        <decVal min="0" max="8"/>
+        <decVal min="0" max="15"/>
         <label>Route Number</label>
       </variable>
       <!-- Begin Output variable definition -->
@@ -5207,7 +5386,7 @@
             <text> </text>
           </label>
           <label>
-            <text>Note: In a Digirax system the bus is called LocoNet</text>
+            <text>Note: In a Digitrax system the bus is called LocoNet</text>
           </label>
           <label>
             <text> </text>
@@ -5366,7 +5545,7 @@
         </column>
       </row>
       <display item="PTr1" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P1" tooltip="number of the route"/>
+      <display item="Rte Num P1" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5408,7 +5587,7 @@
         </column>
       </row>
       <display item="PTr2" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P2" tooltip="number of the route"/>
+      <display item="Rte Num P2" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5450,7 +5629,7 @@
         </column>
       </row>
       <display item="PTr3" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P3" tooltip="number of the route"/>
+      <display item="Rte Num P3" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5492,7 +5671,7 @@
         </column>
       </row>
       <display item="PTr4" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P4" tooltip="number of the route"/>
+      <display item="Rte Num P4" tooltip="number of the route, max 15"/>
     </column>
     <column>
       <label>
@@ -5536,7 +5715,7 @@
         </column>
       </row>
       <display item="PTr5" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P5" tooltip="number of the route"/>
+      <display item="Rte Num P5" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5578,7 +5757,7 @@
         </column>
       </row>
       <display item="PTr6" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P6" tooltip="number of the route"/>
+      <display item="Rte Num P6" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5620,7 +5799,7 @@
         </column>
       </row>
       <display item="PTr7" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P7" tooltip="number of the route"/>
+      <display item="Rte Num P7" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5662,7 +5841,7 @@
         </column>
       </row>
       <display item="PTr8" tooltip="Configures the input simulas"/>
-      <display item="Rte Num P8" tooltip="number of the route"/>
+      <display item="Rte Num P8" tooltip="number of the route, max 15"/>
     </column>
     <name>Inputs 1-8</name>
   </pane>
@@ -5704,7 +5883,7 @@
         </column>
       </row>
       <display item="STr1" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S1" tooltip="number of the route"/>
+      <display item="Rte Num S1" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5746,7 +5925,7 @@
         </column>
       </row>
       <display item="STr2" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S2" tooltip="number of the route"/>
+      <display item="Rte Num S2" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5788,7 +5967,7 @@
         </column>
       </row>
       <display item="STr3" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S3" tooltip="number of the route"/>
+      <display item="Rte Num S3" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5830,7 +6009,7 @@
         </column>
       </row>
       <display item="STr4" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S4" tooltip="number of the route"/>
+      <display item="Rte Num S4" tooltip="number of the route, max 15"/>
     </column>
     <column>
       <label>
@@ -5874,7 +6053,7 @@
         </column>
       </row>
       <display item="STr5" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S5" tooltip="number of the route"/>
+      <display item="Rte Num S5" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5916,7 +6095,7 @@
         </column>
       </row>
       <display item="STr6" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S6" tooltip="number of the route"/>
+      <display item="Rte Num S6" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -5958,7 +6137,7 @@
         </column>
       </row>
       <display item="STr7" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S7" tooltip="number of the route"/>
+      <display item="Rte Num S7" tooltip="number of the route, max 15"/>
       <label>
         <text> </text>
       </label>
@@ -6000,7 +6179,7 @@
         </column>
       </row>
       <display item="STr8" tooltip="Configures the input simulas"/>
-      <display item="Rte Num S8" tooltip="number of the route"/>
+      <display item="Rte Num S8" tooltip="number of the route, max 15"/>
     </column>
     <name>Inputs 9-16</name>
   </pane>
@@ -6929,8 +7108,24 @@
       <label>
         <text> </text>
       </label>
+      <label>
+        <text> The following only applies if Option 2 is selected</text>
+      </label>
+      <label>
+        <text> Sets the output state to always be the same at power on</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <column>
+          <label>
+            <text> Use for group outputs</text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>    
           <label>
             <text>            Output#</text>
           </label>
@@ -6993,12 +7188,117 @@
           <display item="OS8" format="radiobuttons"/>
         </column>
       </row>
-      <label>
-        <text>              Sets the output state to always be the same at power on</text>
-      </label>
-      <label>
-        <text>              Only applies if Option 2 is selected</text>
-      </label>
+     <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> Use for single outputs</text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>   1</text>
+          </label>
+          <display item="OS1M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   2</text>
+          </label>
+          <display item="OS2M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   3</text>
+          </label>
+          <display item="OS3M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   4</text>
+          </label>
+          <display item="OS4M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   5</text>
+          </label>
+          <display item="OS5M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   6</text>
+          </label>
+          <display item="OS6M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   7</text>
+          </label>
+          <display item="OS7M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   8</text>
+          </label>
+          <display item="OS8M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   9</text>
+          </label>
+          <display item="OS9M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   10</text>
+          </label>
+          <display item="OS10M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   11</text>
+          </label>
+          <display item="OS11M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   12</text>
+          </label>
+          <display item="OS12M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   13</text>
+          </label>
+          <display item="OS13M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   14</text>
+          </label>
+          <display item="OS14M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   15</text>
+          </label>
+          <display item="OS15M" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   16</text>
+          </label>
+          <display item="OS16M" format="radiobuttons"/>
+        </column>
+      </row>      
     </column>
     <name>Power On Outputs</name>
   </pane>
@@ -7377,7 +7677,7 @@
       <label>
         <text>  </text>
       </label>
-      <display item="Route send delay" tooltip="The delay is CV value X.26 seconds"/>
+      <display item="Route send delay" tooltip="The delay is CV value  x 0.23 + 0.23 seconds (CV11 bits 0-6)"/>
       <label>
         <text> </text>
       </label>

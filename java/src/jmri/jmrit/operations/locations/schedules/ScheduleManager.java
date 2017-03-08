@@ -31,22 +31,20 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
         CarRoads.instance().addPropertyChangeListener(this);
     }
 
-    /**
-     * record the single instance *
-     */
-    private static ScheduleManager _instance = null;
     private int _id = 0;
 
     public static synchronized ScheduleManager instance() {
-        if (_instance == null) {
+        ScheduleManager instance = jmri.InstanceManager.getNullableDefault(ScheduleManager.class);
+        if (instance == null) {
             log.debug("ScheduleManager creating instance");
             // create and load
-            _instance = new ScheduleManager();
+            instance = new ScheduleManager();
+            jmri.InstanceManager.setDefault(ScheduleManager.class,instance);
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("ScheduleManager returns instance {}", _instance);
+            log.debug("ScheduleManager returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     public void dispose() {

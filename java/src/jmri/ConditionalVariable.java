@@ -61,7 +61,7 @@ public class ConditionalVariable {
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
-    private int _state = Conditional.UNKNOWN;        // tri-state
+    private int _state = NamedBean.UNKNOWN;        // tri-state
 
     public ConditionalVariable() {
     }
@@ -622,6 +622,10 @@ public class ConditionalVariable {
         return (result);
     }
 
+    /**
+     * Note: _num1 determines the comparison used. Can be 0, LESS_THAN, LESS_THAN_OR_EQUAL,
+     * EQUAL, GREATER_THAN_OR_EQUAL or GREATER_THAN.
+     */
     boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {
             return value2 == null;
@@ -751,7 +755,7 @@ public class ConditionalVariable {
      * @param t the state
      * @return the localized description
      */
-    public static String getStateString(int t) {
+    public static String describeState(int t) {
         switch (t) {
             case Conditional.TYPE_NONE:
                 return ""; // NOI18N
@@ -792,7 +796,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
                 return Bundle.getMessage("SignalHeadStateFlashingGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                return Bundle.getMessage("SignalHeadTypeHeld"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateHeld"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
                 return Bundle.getMessage("SignalHeadStateLunar"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
@@ -826,7 +830,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
         }
-        return "";
+        return "<none>";
     }
 
     /**

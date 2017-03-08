@@ -38,6 +38,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         this.manufacturerName = jmri.jmrix.ieee802154.SerialConnectionTypeList.IEEE802154;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
@@ -81,6 +82,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -189,6 +191,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     // base class methods for the SerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -197,6 +200,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -209,6 +213,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -240,6 +245,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Set the baud rate.
      */
+    @Override
     public void configureBaudRate(String rate) {
         log.debug("configureBaudRate: " + rate);
         selectedSpeed = rate;

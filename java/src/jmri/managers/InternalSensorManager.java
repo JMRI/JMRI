@@ -18,6 +18,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         log.debug("InternalSensorManager constructed");
     }
     
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
@@ -27,8 +28,10 @@ public class InternalSensorManager extends AbstractSensorManager {
      *
      * @return new null
      */
+    @Override
     protected Sensor createNewSensor(String systemName, String userName) {
         Sensor sen = new AbstractSensor(systemName, userName) {
+            @Override
             public void requestUpdateFromLayout() {
             }
         };
@@ -55,6 +58,7 @@ public class InternalSensorManager extends AbstractSensorManager {
 
     protected String prefix = "I";
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address past does not already exist then this can
         //be considered the next valid address.
@@ -90,6 +94,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         }
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }

@@ -25,6 +25,7 @@ public class LoaderFrame extends JmriJFrame {
     }
 
     // Clean up this window
+    @Override
     public void dispose() {
         pane.dispose();
         super.dispose();

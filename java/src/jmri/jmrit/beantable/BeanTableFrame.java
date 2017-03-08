@@ -82,6 +82,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -147,6 +148,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         ++bottomBoxIndex;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
             dataModel.stopPersistingTable(dataTable);

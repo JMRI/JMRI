@@ -1,11 +1,7 @@
 package jmri.jmrix.loconet;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import jmri.Reporter;
 
 /**
  * LnReporterManagerTest.java
@@ -17,7 +13,7 @@ import jmri.Reporter;
 public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "LR" + i;
     }
 
@@ -41,29 +37,5 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
     }
 
     @Override
-    protected int getNumToTest1() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest2() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest3() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest4() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest5() {
-        return 1;
-    }
-
-
+    protected int maxN() { return 1; }
 }

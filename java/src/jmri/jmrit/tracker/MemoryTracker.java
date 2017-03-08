@@ -25,6 +25,7 @@ public class MemoryTracker {
         namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(namePrefix + block.getSystemName(), m);
         // set listener in the block
         block.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleChange();
             }

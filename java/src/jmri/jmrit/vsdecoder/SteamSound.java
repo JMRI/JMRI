@@ -50,6 +50,7 @@ class SteamSound extends EngineSound {
             if (use_chuff) {
                 sound.setLooped(false);
                 t = newTimer(1000, true, new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         doChuff();
                     }
@@ -116,6 +117,7 @@ class SteamSound extends EngineSound {
         is_playing = false;
     }
 
+    @Override
     public void startEngine() {
         log.debug("Starting Engine");
         current_rpm_sound = getRPMSound(0);
@@ -123,6 +125,7 @@ class SteamSound extends EngineSound {
         engine_started = true;
     }
 
+    @Override
     public void stopEngine() {
         current_rpm_sound.sound.fadeOut();
         engine_started = false;
@@ -205,6 +208,7 @@ class SteamSound extends EngineSound {
         }
     }
 
+    @Override
     public Element getXml() {
         // OUT OF DATE
         return (super.getXml());

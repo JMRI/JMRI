@@ -2,8 +2,6 @@ package jmri.jmrix.lenz.swing;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @RunWith(Suite.class)
@@ -19,7 +17,8 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.lenz.swing.lv102.PackageTest.class,
    BundleTest.class,
    XNetMenuTest.class,
-   XNetComponentFactoryTest.class
+   XNetComponentFactoryTest.class,
+   AbstractXPressNetActionTest.class
 })
 /**
  * Tests for the jmri.jmrix.lenz.swing package

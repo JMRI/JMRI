@@ -24,10 +24,12 @@ public class AutomatTest extends TestCase {
         initDone = false;
         handleDone = false;
         AbstractAutomaton a = new AbstractAutomaton() {
+            @Override
             public void init() {
                 initDone = true;
             }
 
+            @Override
             public boolean handle() {
                 handleDone = true;
                 return false;
@@ -50,10 +52,12 @@ public class AutomatTest extends TestCase {
         initDone = false;
         handleDone = false;
         AbstractAutomaton a = new AbstractAutomaton() {
+            @Override
             public void init() {
                 initDone = true;
             }
 
+            @Override
             public boolean handle() {
                 handleDone = true;
                 return false;
@@ -104,10 +108,12 @@ public class AutomatTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

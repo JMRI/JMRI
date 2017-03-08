@@ -45,6 +45,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
         return new AbstractAction(Bundle.getMessage("SetXY")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -56,6 +57,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         };
     }
 
+    @Override
     public void initSetXY() {
         oldX = pl.getOriginalX();
         oldY = pl.getOriginalY();
@@ -69,6 +71,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10000, 1);
         ChangeListener listener = new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
@@ -96,6 +99,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         addSpinItems(true);
 
         okButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int x = ((Number) spinX.getValue()).intValue();
                 int y = ((Number) spinY.getValue()).intValue();
@@ -106,6 +110,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
             }
         });
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 pl.setLocation(oldX, oldY);
                 dispose();

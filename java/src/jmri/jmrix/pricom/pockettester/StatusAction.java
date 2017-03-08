@@ -24,6 +24,7 @@ public abstract class StatusAction extends AbstractAction {
         putValue(javax.swing.Action.NAME, rb.getString("ActionStatus"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         StatusFrame f = new StatusFrame();
         try {

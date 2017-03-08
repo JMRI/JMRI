@@ -35,6 +35,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT"},
              justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("forwardToPort message: [{}]", m);

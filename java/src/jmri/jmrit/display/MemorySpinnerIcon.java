@@ -57,10 +57,12 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         return super.finishClone(pos);
     }
 
+    @Override
     public javax.swing.JComponent getTextComponent() {
         return ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
     }
 
+    @Override
     public Dimension getSize() {
         if (log.isDebugEnabled()) {
             Dimension d = spinner.getSize();
@@ -116,6 +118,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     }
 
     // update icon as state of Memory changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("value")) {
             displayState();
@@ -129,10 +132,12 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         return namedMemory.getBean();
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         spinnerUpdated();
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (namedMemory == null) {
@@ -150,9 +155,11 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
      public boolean isSelectable() { return selectable;}
      boolean selectable = false;
      */
+    @Override
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -160,10 +167,12 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         return true;
     }
 
+    @Override
     protected void edit() {
         makeIconEditorFrame(this, "Memory", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
@@ -217,6 +226,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         spinner.setValue(num);
     }
 
+    @Override
     public void mouseExited(java.awt.event.MouseEvent e) {
         spinnerUpdated();
         super.mouseExited(e);
@@ -245,6 +255,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         return "" + spinner.getValue();
     }
 
+    @Override
     void cleanup() {
         if (namedMemory != null) {
             getMemory().removePropertyChangeListener(this);

@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    MarklinMonPaneTest.class
+    MarklinMonPaneTest.class,
+    MarklinMonTest.class
 })
 
 /**

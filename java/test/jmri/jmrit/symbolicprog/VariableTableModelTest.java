@@ -1,6 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
+import jmri.jmrit.XmlFile;
 import jmri.progdebugger.ProgDebugger;
 import org.junit.Assert;
 import junit.framework.Test;
@@ -11,9 +12,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 /**
- * VariableTableModelTest.java
- *
- * Description:
+ * Test VariableTableModel table methods.
  *
  * @author	Bob Jacobsen Copyright 2005
  */
@@ -43,7 +42,7 @@ public class VariableTableModelTest extends TestCase {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, null, null);
         Assert.assertTrue(t.getColumnCount() == 2);
-        Assert.assertTrue(t.getColumnName(1) == "Name");
+        Assert.assertTrue(t.getColumnName(1) == Bundle.getMessage("Name")); // allow for I18N
     }
 
     // Check loading two columns, three rows
@@ -258,6 +257,7 @@ public class VariableTableModelTest extends TestCase {
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null) {
+            @Override
             void reportBogus() {
             }
         };
@@ -297,6 +297,45 @@ public class VariableTableModelTest extends TestCase {
 
     }
 
+
+    // Check can read simple file
+    public void testVarTableLoadFileSimple() throws Exception {
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+
+        // create a JDOM tree from file
+        XmlFile file = new XmlFile(){};
+        Element root = file.rootFromName("xml/decoders/0NMRA.xml");
+
+        // add the contents
+        Element el0 = root.getChild("decoder").getChild("variables");
+        int i = 0;
+        for (Element v : el0.getChildren("variable")) {
+            t.setRow(i++, v);
+        }
+        // fault is failure to reach the end, e.g. throw message or exception
+
+    }
+
+    // Check can read complex file
+    public void testVarTableLoadFileComplex() throws Exception {
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
+
+        // create a JDOM tree from file
+        XmlFile file = new XmlFile(){};
+        Element root = file.rootFromName("xml/decoders//QSI_ver9.xml");
+
+        // add the contents
+        Element el0 = root.getChild("decoder").getChild("variables");
+        int i = 0;
+        for (Element v : el0.getChildren("variable")) {
+            t.setRow(i++, v);
+        }
+        // fault is failure to reach the end, e.g. throw message or exception
+
+    }
+
     // from here down is testing infrastructure
     public VariableTableModelTest(String s) {
         super(s);
@@ -315,10 +354,12 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

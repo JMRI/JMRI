@@ -69,7 +69,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         }
         addLine(fileOut, VT + getDate(true));
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        // get a list of trains sorted by arrival time
+        List<Train> trains = TrainManager.instance().getTrainsArrivingThisLocationList(location);
+        for (Train train : trains) {
             if (!train.isBuilt()) {
                 continue; // train wasn't built so skip
             }

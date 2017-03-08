@@ -635,17 +635,23 @@ abstract public class AbstractMRTrafficController {
             controller = p;
             // and start threads
             xmtThread = new Thread(xmtRunnable = new Runnable() {
+                @Override
                 public void run() {
                     try {
                         transmitLoop();
                     } catch (Throwable e) {
                         log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
+                        // ThreadDeath must be thrown per Java API Javadocs
+                        if (e instanceof ThreadDeath) {
+                            throw e;
+                        }
                     }
                 }
             });
             xmtThread.setName("Transmit");
             xmtThread.start();
             rcvThread = new Thread(new Runnable() {
+                @Override
                 public void run() {
                     receiveLoop();
                 }
@@ -989,6 +995,7 @@ abstract public class AbstractMRTrafficController {
     // Override the finalize method for this class
     // to request termination, which might have happened
     // before in any case
+    @Override
     protected final void finalize() throws Throwable {
         terminate();
         super.finalize();
@@ -1036,6 +1043,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
 
+        @Override
         public void run() {
             log.debug("Delayed rcv notify starts");
             mTC.notifyReply(mMsg, mDest);
@@ -1065,6 +1073,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
 
+        @Override
         public void run() {
             log.debug("Delayed xmt notify starts");
             mTC.notifyMessage(mMsg, mDest);
@@ -1084,6 +1093,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
 
+        @Override
         public void run() {
             mTC.terminate();
         }

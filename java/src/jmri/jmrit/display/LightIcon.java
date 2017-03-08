@@ -124,6 +124,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
+    @Override
     public int maxHeight() {
         return Math.max(
                 Math.max((off != null) ? off.getIconHeight() : 0,
@@ -132,6 +133,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         );
     }
 
+    @Override
     public int maxWidth() {
         return Math.max(
                 Math.max((off != null) ? off.getIconWidth() : 0,
@@ -156,6 +158,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
     // update icon as state of light changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property change: " + getNameString() + " " + e.getPropertyName() + " is now "
@@ -168,6 +171,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         }
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (light == null) {
@@ -183,6 +187,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     /**
      * ****** popup AbstractAction.actionPerformed method overrides ********
      */
+    @Override
     protected void rotateOrthogonal() {
         off.setRotation(on.getRotation() + 1, this);
         on.setRotation(off.getRotation() + 1, this);
@@ -193,6 +198,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         repaint();
     }
 
+    @Override
     public void setScale(double s) {
         off.scale(s, this);
         on.scale(s, this);
@@ -201,6 +207,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
+    @Override
     public void rotate(int deg) {
         off.rotate(deg, this);
         on.rotate(deg, this);
@@ -209,6 +216,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
+    @Override
     protected void edit() {
         makeIconEditorFrame(this, "Light", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.lightPickModelInstance());
@@ -219,6 +227,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         _iconEditor.makeIconPanel(false);
 
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateLight();
             }
@@ -283,6 +292,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      *
      */
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
+    @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             return;
@@ -304,6 +314,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         }
     }
 
+    @Override
     public void dispose() {
         if (light != null) {
             light.removePropertyChangeListener(this);

@@ -175,6 +175,7 @@ public class BlockOrder {
         return _block.getDisplayName() + _pathName + _entryName + _exitName;
     }
 
+    @Override
     public String toString() {
         return ("BlockOrder: Block \"" + _block.getDisplayName() + "\" has Path \"" + _pathName
                 + "\" with Portals \"" + _entryName + "\" and \"" + _exitName + "\"");

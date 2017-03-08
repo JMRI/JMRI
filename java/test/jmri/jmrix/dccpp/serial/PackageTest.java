@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.dccpp.serial.configurexml.PackageTest.class,
-   //SerialDCCppPacketizerTest.class
+   SerialDCCppPacketizerTest.class,
+   DCCppAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.serial package.

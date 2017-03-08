@@ -21,6 +21,7 @@ public class LZ100Action extends AbstractXPressNetAction {
         this("LZ100 Configuration Manager", memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create an LZ100Frame
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");

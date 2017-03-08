@@ -40,7 +40,10 @@ import org.junit.runners.Suite;
    SprogThrottleManagerTest.class,
    SprogCSThrottleManagerTest.class,
    SprogThrottleTest.class,
-   SprogCSThrottleTest.class
+   SprogCSThrottleTest.class,
+   SprogConstantsTest.class,
+   SprogReplyTest.class,
+   jmri.jmrix.sprog.update.PackageTest.class
 })
 public class PackageTest {
 }

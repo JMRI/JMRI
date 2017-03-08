@@ -41,6 +41,7 @@ public class MultiSensorIconDialog extends IconDialog {
         panel2.setLayout(new FlowLayout());
         JButton addSensor = new JButton(Bundle.getMessage("addIcon"));
         addSensor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (addNewIcon(getIconName())) {
                     ImageIndexEditor.indexChanged(true);
@@ -57,6 +58,7 @@ public class MultiSensorIconDialog extends IconDialog {
 
         JButton deleteSensor = new JButton(Bundle.getMessage("deleteIcon"));
         deleteSensor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (deleteIcon()) {
                     ImageIndexEditor.indexChanged(true);

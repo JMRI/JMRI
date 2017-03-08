@@ -123,6 +123,7 @@ public class SimulatorAdapter extends NcePortController implements
         super(new NceSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -142,6 +143,7 @@ public class SimulatorAdapter extends NcePortController implements
      * set up all of the other objects to simulate operation with an NCE command
      * station.
      */
+    @Override
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
@@ -172,6 +174,7 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     // base class methods for the NcePortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -179,6 +182,7 @@ public class SimulatorAdapter extends NcePortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -186,6 +190,7 @@ public class SimulatorAdapter extends NcePortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -193,15 +198,18 @@ public class SimulatorAdapter extends NcePortController implements
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe.  This is the heart
@@ -327,7 +335,7 @@ public class SimulatorAdapter extends NcePortController implements
             case NceBinaryCommand.WRITE8_CMD:		// Write 8 bytes
                 writeMemory(m, reply, 8, false);
                 break;
-            case NceBinaryCommand.WRITEn_CMD:		// Write n bytes
+            case NceBinaryCommand.WRITE_N_CMD:		// Write n bytes
                 writeMemory(m, reply, m.getElement(3), true);
                 break;
             case NceBinaryCommand.ACC_CMD:			// accessory command

@@ -34,6 +34,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -101,6 +102,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
      * set up all of the other objects to operate with an serial command station
      * connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         AcelaTrafficController control = new AcelaTrafficController();
@@ -129,6 +131,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
     }
 
     // base class methods for the AcelaPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -137,6 +140,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -149,6 +153,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -156,6 +161,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
 //	Really just want 9600 Baud for Acela
 //      return new String[]{"9,600 bps", "19,200 bps", "38,400 bps", "57,600 bps"};
@@ -165,6 +171,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
     /**
      * Return array of valid baud rates as integers.
      */
+    @Override
     public int[] validBaudNumber() {
 //	Really just want 9600 Baud for Acela
 //      return new int[]{9600, 19200, 38400, 57600};

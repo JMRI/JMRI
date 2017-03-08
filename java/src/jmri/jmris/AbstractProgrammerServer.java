@@ -97,6 +97,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
      *               combination of the various status coded defined in this
      *               interface.
      */
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("programmingOpReply called with value " + value + " and status " + status);

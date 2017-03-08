@@ -35,23 +35,28 @@ public class PanelProPane extends apps.AppsLaunchPane {
     /**
      * Returns the ID for the window's help, which is application specific
      */
+    @Override
     protected String windowHelpID() {
         return "package.apps.PanelPro.PanelPro";
     }
 
+    @Override
     protected String logo() {
         return "resources/PanelPro.gif";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("PanelProVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/PanelPro ";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -59,6 +64,7 @@ public class PanelProPane extends apps.AppsLaunchPane {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

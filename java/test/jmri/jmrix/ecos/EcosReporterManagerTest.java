@@ -1,11 +1,7 @@
 package jmri.jmrix.ecos;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import jmri.Reporter;
 
 /**
  * EcosReporterManagerTest.java
@@ -17,7 +13,7 @@ import jmri.Reporter;
 public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "UR" + i;
     }
 
