@@ -90,6 +90,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.debugthrottle.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NetMessageTest.class));
         return suite;
 
     }
