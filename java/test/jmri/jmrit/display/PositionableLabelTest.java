@@ -53,14 +53,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         // test button in upper left
         JButton doButton = new JButton("change label");
-        doButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (to.getText().equals("one"))
-                    to.setText("two");
-                else
-                    to.setText("one");
-            }
+        doButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            if (to.getText().equals("one"))
+                to.setText("two");
+            else
+                to.setText("one");
         });
         doButton.setBounds(0, 0, 120, 40);
         p.add(doButton);
