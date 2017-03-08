@@ -2490,7 +2490,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             ddldoChoiceMenuItem.addActionListener((ActionEvent event) -> {
                 JRadioButtonMenuItem ddldoMenuItem = (JRadioButtonMenuItem) event.getSource();
                 JPopupMenu parentMenu = (JPopupMenu) ddldoMenuItem.getParent();
-                int ddldoInt = parentMenu.getComponentZOrder(ddldoMenuItem);
+                int ddldoInt = parentMenu.getComponentZOrder(ddldoMenuItem) + 1;
                 JmriBeanComboBox.DisplayOptions ddldo = JmriBeanComboBox.DisplayOptions.valueOf(ddldoInt);
 
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
