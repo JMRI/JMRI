@@ -64,20 +64,20 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     @Override
-    public void register(ShutDownTask s) {
+    synchronized public void register(ShutDownTask s) {
         Objects.requireNonNull(s, "Shutdown task cannot be null.");
-        if (!tasks.contains(s)) {
-            tasks.add(s);
+        if (!this.tasks.contains(s)) {
+            this.tasks.add(s);
         } else {
             log.debug("already contains " + s);
         }
     }
 
     @Override
-    public void deregister(ShutDownTask s) {
+    synchronized public void deregister(ShutDownTask s) {
         Objects.requireNonNull(s, "Shutdown task cannot be null.");
-        if (tasks.contains(s)) {
-            tasks.remove(s);
+        if (this.tasks.contains(s)) {
+            this.tasks.remove(s);
         }
     }
 
@@ -127,6 +127,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();
+            log.debug("Shutting down with {} tasks", this.tasks.size());
             long timeout = 30; // all shut down tasks must complete within n seconds
             setShuttingDown(true);
             // trigger parallel tasks (see jmri.ShutDownTask#isParallel())
@@ -191,7 +192,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     private boolean runShutDownTasks(boolean isParallel) {
         // can't return out of a stream or forEach loop
-        for (ShutDownTask task : new ArrayList<>(tasks)) {
+        for (ShutDownTask task : new ArrayList<>(this.tasks)) {
             if (task.isParallel() == isParallel) {
                 log.debug("Calling task \"{}\"", task.getName());
                 Date timer = new Date();
@@ -238,6 +239,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     private static void setShuttingDown(boolean state) {
         shuttingDown = state;
+        log.debug("Setting shuttingDown to {}", state);
     }
 
 }
