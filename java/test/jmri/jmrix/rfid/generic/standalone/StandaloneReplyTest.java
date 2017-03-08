@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StandaloneReplyTest {
 
-    private StandaloneSystemTrafficController tc = null;
+    private StandaloneTrafficController tc = null;
 
     @Test
     public void testCTor() {
@@ -27,7 +27,9 @@ public class StandaloneReplyTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo());
+        StandaloneSystemConnectionMemo memo = new StandaloneSystemConnectionMemo();
+        memo.setProtocol(new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol());
+        tc = new StandaloneTrafficController(memo);
     }
 
     @After
