@@ -2969,7 +2969,6 @@ public class LlnmonTest extends TestCase {
         assertEquals(" Turnout Control test 25",
                 "Unable to parse LocoNet message.\ncontents: B0 00 40 0F\n", f.displayMessage(l));
 
-
         l = new LocoNetMessage(new int[] {0xB0, 0x78, 0x27, 0x0F});
         assertEquals("Interrogate 1",
                 "Interrogate LocoNet Turnouts/Sensors with bits a/c/b of 1/0/0; addresses...\n" +
@@ -5430,6 +5429,11 @@ public class LlnmonTest extends TestCase {
         l = new LocoNetMessage(new int[] {0xBC, 0x00, 0x40, 0x33});
         assertEquals("Switch test 32",
                 "Unable to parse LocoNet message.\ncontents: BC 00 40 33\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xBD, 0x00, 0x40, 0x00});
+        assertEquals("Switch test 33",
+                "Unable to parse LocoNet message.\ncontents: BD 00 40 00\n",
                 f.displayMessage(l));
 
 }
