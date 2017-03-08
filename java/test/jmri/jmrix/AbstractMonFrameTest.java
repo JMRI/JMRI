@@ -21,7 +21,7 @@ public class AbstractMonFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractMonFrame t = new AbstractMonFrame(){
            @Override
-           public String getTitle(){
+           public String title(){
               return "test";
            };
            @Override
