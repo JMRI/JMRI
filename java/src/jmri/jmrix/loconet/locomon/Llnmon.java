@@ -1160,332 +1160,320 @@ public class Llnmon {
         this.locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
     }
 
-    private String interpretOpcPeerXfer20(LocoNetMessage l) {
-        // Duplex Radio Management
-        // DigiIPL messages
-        // LocoIO, LocoServo, LocoBuffer, LocoBooster configuration messages
-
-        switch (l.getElement(2)) {
-            case 0x01: {
-                // Seems to be a query for just duplex devices.
-                switch (l.getElement(3)) {
-                    case 0x08: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_QUERY");
-                    }
-                    case 0x10: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_RESPONSE");
-                    }
-                    default: {
-                        break;
-                    }
-                } // end of switch (l.getElement(3))
-                break;
-            }
-            case 0x02: {
-                // Request Duplex Radio Channel
-                switch (l.getElement(3)) {
-                    case 0x00: {
-                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SET",
-                                Integer.toString(channel));
-                    }
-                    case 0x08: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_QUERY");
-                    }
-                    case 0x10: {
-                        int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_REPORT",
-                                Integer.toString(channel));
-                    }
-                    default: {
-                        break;
-                    }
-                } // end of switch (l.getElement(3))
-                break;
-            }
-
-            case 0x03: {
-                // Duplex Group Name
-                // Characters appear to be 8 bit values, but transmitted over a 7 bit
-                // encoding, so high order bits are stashed in element 4 and 9.
-                char[] groupNameArray = {(char) (l.getElement(5) | ((l.getElement(4) & 0x01) << 7)),
-                    (char) (l.getElement(6) | ((l.getElement(4) & 0x02) << 6)),
-                    (char) (l.getElement(7) | ((l.getElement(4) & 0x04) << 5)),
-                    (char) (l.getElement(8) | ((l.getElement(4) & 0x08) << 4)),
-                    (char) (l.getElement(10) | ((l.getElement(9) & 0x01) << 7)),
-                    (char) (l.getElement(11) | ((l.getElement(9) & 0x02) << 6)),
-                    (char) (l.getElement(12) | ((l.getElement(9) & 0x04) << 5)),
-                    (char) (l.getElement(13) | ((l.getElement(9) & 0x08) << 4))};
-                String groupName = new String(groupNameArray);
-
-                // The pass code is stuffed in here, each digit in 4 bits.  But again, it's a
-                // 7 bit encoding, so the MSB of the "upper" half is stuffed into byte 14.
-                int p1 = ((l.getElement(14) & 0x01) << 3) | ((l.getElement(15) & 0x70) >> 4);
-                int p2 = l.getElement(15) & 0x0F;
-                int p3 = ((l.getElement(14) & 0x02) << 2) | ((l.getElement(16) & 0x70) >> 4);
-                int p4 = l.getElement(16) & 0x0F;
-
-                // It's not clear you can set A-F from throttles or Digitrax's tools, but
-                // they do take and get returned if you send them on the wire...
-                String passcode = StringUtil.twoHexFromInt(p1) + StringUtil.twoHexFromInt(p2)
-                        + StringUtil.twoHexFromInt(p3) + StringUtil.twoHexFromInt(p4);
-
-                // The MSB is stuffed elsewhere again...
-                int channel = l.getElement(17) | ((l.getElement(14) & 0x04) << 5);
-
-                // The MSB is stuffed elsewhere one last time.
-                int id = l.getElement(18) | ((l.getElement(14) & 0x08) << 4);
-
-                switch (l.getElement(3)) {
-                    case 0x00: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_WRITE",
-                                groupName);
-                    }
-                    case 0x08: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_QUERY");
-                    }
-                    case 0x10: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_NAME_REPORT",
-                                groupName, passcode, channel, id);
-                    }
-                    default: {
-                        break;
-                    }
-                } // end of switch (l.getElement(3))
-                break;
-            }
-            case 0x04: {
-                // Duplex Group ID
-
-                // The MSB is stuffed elsewhere again...
-                int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
-
-                switch (l.getElement(3)) {
-                    case 0x00: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_SET",id);
-                    }
-                    case 0x08: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_QUERY");
-                    }
-                    case 0x10: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_ID_REPORT",id);
-                    }
-                    default: {
-                        break;
-                    }
-                } // end of switch (l.getElement(3))
-                break;
-            }
-            case 0x07: {
-                // Duplex Group Password
-                if (l.getElement(3) == 0x08) {
-                    return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
-                }
-
-                if ((l.getElement(5) < 0x30) | (l.getElement(5) > 0x3c)
-                        | (l.getElement(6) < 0x30) | (l.getElement(6) > 0x3c)
-                        | (l.getElement(7) < 0x30) | (l.getElement(7) > 0x3c)
-                        | (l.getElement(8) < 0x30) | (l.getElement(8) > 0x3c)
-                        ) {
-                    break;
-                }
-                char[] groupPasswordArray = {(char) l.getElement(5),
-                    (char) l.getElement(6),
-                    (char) l.getElement(7),
-                    (char) l.getElement(8)};
-                if ((groupPasswordArray[0] >0x39) & (groupPasswordArray[0] < 0x3d) ) {
-                    groupPasswordArray[0] += ('A' - '9' - 1);
-                }
-                if ((groupPasswordArray[1] >0x39) & (groupPasswordArray[1] < 0x3d) ) {
-                    groupPasswordArray[1] += ('A' - '9' - 1);
-                }
-                if ((groupPasswordArray[2] >0x39) & (groupPasswordArray[2] < 0x3d) ) {
-                    groupPasswordArray[2] += ('A' - '9' - 1);
-                }
-                if ((groupPasswordArray[3] >0x39) & (groupPasswordArray[3] < 0x3d) ) {
-                    groupPasswordArray[3] += ('A' - '9' - 1);
-                }
-                String groupPassword = new String(groupPasswordArray);
-
-                switch (l.getElement(3)) {
-                    case 0x00: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_SET", groupPassword);
-                    }
-                    case 0x10: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_REPORT", groupPassword);
-                    }
-                    default: {
-                        break;
-                    }
-                } // end of switch (l.getElement(3))
-                break;
+    private String interpretOpcPeerXfer20_1(LocoNetMessage l ) {
+        switch (l.getElement(3)) {
+            case 0x08: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_QUERY");
             }
             case 0x10: {
-                // Radio Channel Noise/Activity
-                switch (l.getElement(3)) {
-                    case 0x08: {
-                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_QUERY", l.getElement(5));
-                    }
-                    case 0x10: {
-                        // High order bit stashed in another element again.
-                        int level = (l.getElement(6) & 0x7F) + ((l.getElement(4) & 0x02) << 6);
-
-                        return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_REPORT", l.getElement(5),
-                                level);
-                    }
-                    default: {
-                        break;
-                    }
-                } // end of switch (l.getElement(3))
-
-            break;
+                return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_RESPONSE");
             }
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(3))
+        return "";
+    }
 
-            case LnConstants.RE_IPL_PING_OPERATION: {
+    private String interpretOpcPeerXfer20_2(LocoNetMessage l ) {
+        switch (l.getElement(3)) {
+            case 0x00: {
+                int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
 
-                /**
-                 * **********************************************************************************
-                 * IPL-capable device ping - OPC_RE_IPL (Device
-                 * Ping Operations) * The message bytes as
-                 * assigned as follows:
-                 *
-                 * <E5> <14> <08> <GR_OP_T> <DI_F2> <DI_Ss0>
-                 * <DI_Ss1> ...
-                 *
-                 * <DI_Ss2> <DI_Ss3> <DI_U1> <00> <00> <DI_U2>
-                 * <DI_U3> ...
-                 *
-                 * <00> <00><00> <00><00> <CHK> * where:
-                 *
-                 * <DI_F2> encodes additional bits for the Slave
-                 * device serial number. * bits 7-4 always 0000b
-                 * * bit 3 Bit 31 of Slave Device Serial Number
-                 * * bit 2 Bit 23 of Slave Device Serial Number
-                 * * bit 1 Bit 15 of Slave device Serial Number
-                 * * bit 0 Bit 7 of Slave device Serial Number
-                 *
-                 * <DI_Ss0> encodes 7 bits of the 32 bit Host
-                 * device serial number: * bit 7 always 0 * bits
-                 * 6-0 Bits 6:0 of Slave device serial number
-                 *
-                 * <DI_Ss1> encodes 7 bits of the 32 bit Host
-                 * device serial number: * bit 7 always 0 * bits
-                 * 6-0 Bits 14:8 of Slave device serial number
-                 *
-                 * <DI_Ss2> encodes 7 bits of the 32 bit Host
-                 * device serial number: * bit 7 always 0 * bits
-                 * 6-0 Bits 22:16 of Slave device serial number
-                 *
-                 * <DI_Ss3> encodes 7 bits of the 32 bit Host
-                 * device serial number: * bit 7 always 0 * bits
-                 * 6-0 Bits 30:24 of Slave device serial number
-                 *
-                 * <DI_U1> unknown data * when <GR_OP_T> = 0x08
-                 * * is always 0 * when <GR_OP_T> = 0x10 * is
-                 * not reverse-engineered and may be non-zero.
-                 *
-                 * <DI_U2> unknown data * when <GR_OP_T> = 0x08
-                 * * is always 0 * when <GR_OP_T> = 0x10 * is
-                 * not reverse-engineered and may be non-zero.
-                 *
-                 * <DI_U3> unknown data * when <GR_OP_T> = 0x08
-                 * * is always 0 * when <GR_OP_T> = 0x10 * is
-                 * not reverse-engineered and may be non-zero. *
-                 * * Information reverse-engineered by B.
-                 * Milhaupt and used with permission *
-                 * **********************************************************************************
-                 */
-                /* OPC_RE_IPL (IPL Ping Operation) */
-                // Operations related to DigiIPL Device "Ping" operations
-                //
-                // "Ping" request issued from DigiIPL ver 1.09 issues this message on LocoNet.
-                // The LocoNet request message encodes a serial number but NOT a device type.
-                //
-                // Depending on which devices are selected in DigiIPL when the "ping"
-                // is selected, (and probably the S/Ns of the devices attached to the LocoNet,
-                // the response is as follows:
-                //     DT402D  LocoNet message includes the serial number from the DT402D's
-                //             Slave (RF24) serial number.  If a UR92 is attached to LocoNet,
-                //             it will send the message via its RF link to the addressed
-                //             DT402D.  (UR92 apparantly assumes that the long 802.15.4
-                //             address of the DT402D is based on the serial number embedded
-                //             in the LocoNet message, with the MS 32 bits based on the UR92
-                //             long address MS 32 bits).  If more than one UR92 is attached
-                //             to LocoNet, all will pass the message to the RF interface.
-                //     UR92    LocoNet message includes the Slave serial number from the UR92.
-                //             These messages are not passed to the RF link by the addressed
-                //             UR92.  If more than one UR92 is attached to LocoNet, and the
-                //             addressed UR92 hears the RF version of the LocoNet message, it
-                //             will respond via the RF interface with an acknowledge packet,
-                //             and a UR92 (not sure which one) responds on LocoNet with a
-                //             Ping report <e5><14><08><10>.
-                //     PR3     LocoNet message includes an effective serial number of all
-                //             zeros.  There is no LocoNet message reply generated to a
-                //             request to a PR3 S/N, but there will be a reply on the PR3's
-                //             computer interface if the ping request was sent via the PR3's
-                //             computer interface (i.e. not from some other LocoNet agent).
-                //     UT4D    While it has been suggested that the UT4D supports firmware
-                //             updates, the UT4D does not respond to the Ping message.
-                //     LNRP    While it has been suggested that the LNRP supports firmware
-                //             updates, the LNRP does not respond to the Ping message.
-                //
-                // Ping Report values:
-                //     <unkn1> Seems always to be <0C>.  None of the bytes relate to
-                //             Duplex Channel Number.
-                //     <unkn2> Matches byte 15 of the MAC payload of the reply sent by the
-                //             targeted UR92.
-                //     <unkn3> Unclear what this byte means.
-                //
-                // Information reverse-engineered by B. Milhaupt and used with permission
-                switch (l.getElement(3)) {
-                    case 0x08:
-                        /* OPC_RE_IPL (IPL Ping Query) */
-                        // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
+                return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SET",
+                        Integer.toString(channel));
+            }
+            case 0x08: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_QUERY");
+            }
+            case 0x10: {
+                int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
 
-                        if ((((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0)
-                                || (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0))
-                                && (l.getElement(9) == 0) && (l.getElement(10) == 0)
-                                && (l.getElement(11) == 0) && (l.getElement(12) == 0)
-                                && (l.getElement(13) == 0) && (l.getElement(14) == 0)
-                                && (l.getElement(15) == 0) && (l.getElement(16) == 0)
-                                && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
+                return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_REPORT",
+                        Integer.toString(channel));
+            }
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(3))
+        return "";
+    }
+    
+    private String interpretOpcPeerXfer20_3(LocoNetMessage l ) {
+        // Characters appear to be 8 bit values, but transmitted over a 7 bit
+        // encoding, so high order bits are stashed in element 4 and 9.
+        char[] groupNameArray = {(char) (l.getElement(5) | ((l.getElement(4) & 0x01) << 7)),
+            (char) (l.getElement(6) | ((l.getElement(4) & 0x02) << 6)),
+            (char) (l.getElement(7) | ((l.getElement(4) & 0x04) << 5)),
+            (char) (l.getElement(8) | ((l.getElement(4) & 0x08) << 4)),
+            (char) (l.getElement(10) | ((l.getElement(9) & 0x01) << 7)),
+            (char) (l.getElement(11) | ((l.getElement(9) & 0x02) << 6)),
+            (char) (l.getElement(12) | ((l.getElement(9) & 0x04) << 5)),
+            (char) (l.getElement(13) | ((l.getElement(9) & 0x08) << 4))};
+        String groupName = new String(groupNameArray);
 
-                            int hostSnInt;
-                            hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
-                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
-                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                            return Bundle.getMessage("LN_MSG_DUPLEX_PING_REQUEST",
-                                    Integer.toHexString(hostSnInt).toUpperCase());
-                        }
-                        break;
-                    case 0x10:
-                        /* OPC_RE_IPL (IPL Ping Report) */
+        // The pass code is stuffed in here, each digit in 4 bits.  But again, it's a
+        // 7 bit encoding, so the MSB of the "upper" half is stuffed into byte 14.
+        int p1 = ((l.getElement(14) & 0x01) << 3) | ((l.getElement(15) & 0x70) >> 4);
+        int p2 = l.getElement(15) & 0x0F;
+        int p3 = ((l.getElement(14) & 0x02) << 2) | ((l.getElement(16) & 0x70) >> 4);
+        int p4 = l.getElement(16) & 0x0F;
 
-                        // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
-                        if (((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0) || (l.getElement(6) != 0)
-                                || (l.getElement(7) != 0) || (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
-                            int hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
-                                    + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
-                                    + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
-                                    + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
-                            return Bundle.getMessage("LN_MSG_DUPLEX_PING_REPORT",
-                                    StringUtil.twoHexFromInt(hostSnInt).toUpperCase(),
-                                    StringUtil.twoHexFromInt(l.getElement(12) + (((l.getElement(9)) & 0x4) == 0x4 ? 128 : 0)).toUpperCase(),
-                                    StringUtil.twoHexFromInt(l.getElement(13) + (((l.getElement(9)) & 0x8) == 0x8 ? 128 : 0)).toUpperCase()
-                                    );
-                        }
-                        break;
-                    default:
-                        break;
+        // It's not clear you can set A-F from throttles or Digitrax's tools, but
+        // they do take and get returned if you send them on the wire...
+        String passcode = StringUtil.twoHexFromInt(p1) + StringUtil.twoHexFromInt(p2)
+                + StringUtil.twoHexFromInt(p3) + StringUtil.twoHexFromInt(p4);
+
+        // The MSB is stuffed elsewhere again...
+        int channel = l.getElement(17) | ((l.getElement(14) & 0x04) << 5);
+
+        // The MSB is stuffed elsewhere one last time.
+        int id = l.getElement(18) | ((l.getElement(14) & 0x08) << 4);
+
+        switch (l.getElement(3)) {
+            case 0x00: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_NAME_WRITE",
+                        groupName);
+            }
+            case 0x08: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_NAME_QUERY");
+            }
+            case 0x10: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_NAME_REPORT",
+                        groupName, passcode, channel, id);
+            }
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(3))
+        return "";
+    }
+
+    private String interpretOpcPeerXfer20_4(LocoNetMessage l ) {
+        // The MSB is stuffed elsewhere again...
+        int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
+
+        switch (l.getElement(3)) {
+            case 0x00: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_ID_SET",id);
+            }
+            case 0x08: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_ID_QUERY");
+            }
+            case 0x10: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_ID_REPORT",id);
+            }
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(3))
+        return "";
+    }
+
+    private String interpretOpcPeerXfer20_7(LocoNetMessage l ) {
+        if (l.getElement(3) == 0x08) {
+            return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
+        }
+
+        if ((l.getElement(5) < 0x30) | (l.getElement(5) > 0x3c)
+                | (l.getElement(6) < 0x30) | (l.getElement(6) > 0x3c)
+                | (l.getElement(7) < 0x30) | (l.getElement(7) > 0x3c)
+                | (l.getElement(8) < 0x30) | (l.getElement(8) > 0x3c)
+                ) {
+            return "";
+        }
+        char[] groupPasswordArray = {(char) l.getElement(5),
+            (char) l.getElement(6),
+            (char) l.getElement(7),
+            (char) l.getElement(8)};
+        if ((groupPasswordArray[0] >0x39) & (groupPasswordArray[0] < 0x3d) ) {
+            groupPasswordArray[0] += ('A' - '9' - 1);
+        }
+        if ((groupPasswordArray[1] >0x39) & (groupPasswordArray[1] < 0x3d) ) {
+            groupPasswordArray[1] += ('A' - '9' - 1);
+        }
+        if ((groupPasswordArray[2] >0x39) & (groupPasswordArray[2] < 0x3d) ) {
+            groupPasswordArray[2] += ('A' - '9' - 1);
+        }
+        if ((groupPasswordArray[3] >0x39) & (groupPasswordArray[3] < 0x3d) ) {
+            groupPasswordArray[3] += ('A' - '9' - 1);
+        }
+        String groupPassword = new String(groupPasswordArray);
+
+        switch (l.getElement(3)) {
+            case 0x00: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_SET", groupPassword);
+            }
+            case 0x10: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_REPORT", groupPassword);
+            }
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(3))
+        return "";
+    }
+
+    private String interpretOpcPeerXfer20_10(LocoNetMessage l ) {
+        switch (l.getElement(3)) {
+            case 0x08: {
+                return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_QUERY", l.getElement(5));
+            }
+            case 0x10: {
+                // High order bit stashed in another element again.
+                int level = (l.getElement(6) & 0x7F) + ((l.getElement(4) & 0x02) << 6);
+
+                return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_REPORT", l.getElement(5),
+                        level);
+            }
+            default: {
+                break;
+            }
+        } // end of switch (l.getElement(3))
+        return "";
+    }
+    
+    private String interpretOpcPeerXfer20_8(LocoNetMessage l) {
+        /**
+         * **********************************************************************************
+         * IPL-capable device ping - OPC_RE_IPL (Device
+         * Ping Operations) * The message bytes as
+         * assigned as follows:
+         *
+         * <E5> <14> <08> <GR_OP_T> <DI_F2> <DI_Ss0>
+         * <DI_Ss1> ...
+         *
+         * <DI_Ss2> <DI_Ss3> <DI_U1> <00> <00> <DI_U2>
+         * <DI_U3> ...
+         *
+         * <00> <00><00> <00><00> <CHK> * where:
+         *
+         * <DI_F2> encodes additional bits for the Slave
+         * device serial number. * bits 7-4 always 0000b
+         * * bit 3 Bit 31 of Slave Device Serial Number
+         * * bit 2 Bit 23 of Slave Device Serial Number
+         * * bit 1 Bit 15 of Slave device Serial Number
+         * * bit 0 Bit 7 of Slave device Serial Number
+         *
+         * <DI_Ss0> encodes 7 bits of the 32 bit Host
+         * device serial number: * bit 7 always 0 * bits
+         * 6-0 Bits 6:0 of Slave device serial number
+         *
+         * <DI_Ss1> encodes 7 bits of the 32 bit Host
+         * device serial number: * bit 7 always 0 * bits
+         * 6-0 Bits 14:8 of Slave device serial number
+         *
+         * <DI_Ss2> encodes 7 bits of the 32 bit Host
+         * device serial number: * bit 7 always 0 * bits
+         * 6-0 Bits 22:16 of Slave device serial number
+         *
+         * <DI_Ss3> encodes 7 bits of the 32 bit Host
+         * device serial number: * bit 7 always 0 * bits
+         * 6-0 Bits 30:24 of Slave device serial number
+         *
+         * <DI_U1> unknown data * when <GR_OP_T> = 0x08
+         * * is always 0 * when <GR_OP_T> = 0x10 * is
+         * not reverse-engineered and may be non-zero.
+         *
+         * <DI_U2> unknown data * when <GR_OP_T> = 0x08
+         * * is always 0 * when <GR_OP_T> = 0x10 * is
+         * not reverse-engineered and may be non-zero.
+         *
+         * <DI_U3> unknown data * when <GR_OP_T> = 0x08
+         * * is always 0 * when <GR_OP_T> = 0x10 * is
+         * not reverse-engineered and may be non-zero. *
+         * * Information reverse-engineered by B.
+         * Milhaupt and used with permission *
+         * **********************************************************************************
+         */
+        /* OPC_RE_IPL (IPL Ping Operation) */
+        // Operations related to DigiIPL Device "Ping" operations
+        //
+        // "Ping" request issued from DigiIPL ver 1.09 issues this message on LocoNet.
+        // The LocoNet request message encodes a serial number but NOT a device type.
+        //
+        // Depending on which devices are selected in DigiIPL when the "ping"
+        // is selected, (and probably the S/Ns of the devices attached to the LocoNet,
+        // the response is as follows:
+        //     DT402D  LocoNet message includes the serial number from the DT402D's
+        //             Slave (RF24) serial number.  If a UR92 is attached to LocoNet,
+        //             it will send the message via its RF link to the addressed
+        //             DT402D.  (UR92 apparantly assumes that the long 802.15.4
+        //             address of the DT402D is based on the serial number embedded
+        //             in the LocoNet message, with the MS 32 bits based on the UR92
+        //             long address MS 32 bits).  If more than one UR92 is attached
+        //             to LocoNet, all will pass the message to the RF interface.
+        //     UR92    LocoNet message includes the Slave serial number from the UR92.
+        //             These messages are not passed to the RF link by the addressed
+        //             UR92.  If more than one UR92 is attached to LocoNet, and the
+        //             addressed UR92 hears the RF version of the LocoNet message, it
+        //             will respond via the RF interface with an acknowledge packet,
+        //             and a UR92 (not sure which one) responds on LocoNet with a
+        //             Ping report <e5><14><08><10>.
+        //     PR3     LocoNet message includes an effective serial number of all
+        //             zeros.  There is no LocoNet message reply generated to a
+        //             request to a PR3 S/N, but there will be a reply on the PR3's
+        //             computer interface if the ping request was sent via the PR3's
+        //             computer interface (i.e. not from some other LocoNet agent).
+        //     UT4D    While it has been suggested that the UT4D supports firmware
+        //             updates, the UT4D does not respond to the Ping message.
+        //     LNRP    While it has been suggested that the LNRP supports firmware
+        //             updates, the LNRP does not respond to the Ping message.
+        //
+        // Ping Report values:
+        //     <unkn1> Seems always to be <0C>.  None of the bytes relate to
+        //             Duplex Channel Number.
+        //     <unkn2> Matches byte 15 of the MAC payload of the reply sent by the
+        //             targeted UR92.
+        //     <unkn3> Unclear what this byte means.
+        //
+        // Information reverse-engineered by B. Milhaupt and used with permission
+        switch (l.getElement(3)) {
+            case 0x08:
+                /* OPC_RE_IPL (IPL Ping Query) */
+                // Ping Request: <e5><14><08><08><msBits><Sn0><Sn1><Sn2><Sn3><0><0><0><0><0><0><0><0><0><0><0><Chk>
+
+                if ((((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0)
+                        || (l.getElement(6) != 0) || (l.getElement(7) != 0) || (l.getElement(8) != 0))
+                        && (l.getElement(9) == 0) && (l.getElement(10) == 0)
+                        && (l.getElement(11) == 0) && (l.getElement(12) == 0)
+                        && (l.getElement(13) == 0) && (l.getElement(14) == 0)
+                        && (l.getElement(15) == 0) && (l.getElement(16) == 0)
+                        && (l.getElement(17) == 0) && (l.getElement(18) == 0)) {
+
+                    int hostSnInt;
+                    hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
+                            + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
+                            + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                            + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+                    return Bundle.getMessage("LN_MSG_DUPLEX_PING_REQUEST",
+                            Integer.toHexString(hostSnInt).toUpperCase());
                 }
                 break;
-            } //end of case 0x08, which decodes 0xe5 0x14 0x08
+            case 0x10:
+                /* OPC_RE_IPL (IPL Ping Report) */
 
-            case LnConstants.RE_IPL_IDENTITY_OPERATION: {
-                // Operations related to DigiIPL "Ping", "Identify" and "Discover"
+                // Ping Report:  <e5><14><08><10><msbits><Sn0><Sn1><Sn2><Sn3><unkn1><0><0><Unkn2><Unkn3><0><0><0><0><0><Chk>
+                if (((l.getElement(4) & 0xF) != 0) || (l.getElement(5) != 0) || (l.getElement(6) != 0)
+                        || (l.getElement(7) != 0) || (l.getElement(8) != 0)) {   // if any serial number bit is non-zero //
+                    int hostSnInt = (l.getElement(5) + (((l.getElement(4) & 0x1) == 1) ? 128 : 0))
+                            + ((l.getElement(6) + (((l.getElement(4) & 0x2) == 2) ? 128 : 0)) * 256)
+                            + ((l.getElement(7) + (((l.getElement(4) & 0x4) == 4) ? 128 : 0)) * 256 * 256)
+                            + ((l.getElement(8) + (((l.getElement(4) & 0x8) == 8) ? 128 : 0)) * 256 * 256 * 256);
+                    return Bundle.getMessage("LN_MSG_DUPLEX_PING_REPORT",
+                            Integer.toHexString(hostSnInt).toUpperCase(),
+                            StringUtil.twoHexFromInt(l.getElement(12) + (((l.getElement(9)) & 0x4) == 0x4 ? 128 : 0)).toUpperCase(),
+                            StringUtil.twoHexFromInt(l.getElement(13) + (((l.getElement(9)) & 0x8) == 0x8 ? 128 : 0)).toUpperCase()
+                            );
+                }
+                break;
+            default:
+                break;
+        }
+        return "";
+    }
+    
+    private String interpretOpcPeerXfer20_0f(LocoNetMessage l) {
                 String device;
 
                 switch (l.getElement(3)) {
@@ -1599,7 +1587,82 @@ public class Llnmon {
                     }
 
                 } // end of switch (l.getElement(3)), which decodes 0xe5 0x14 0x0f 0x??
+
+        return "";
+    }
+    
+    private String interpretOpcPeerXfer20(LocoNetMessage l) {
+        // Duplex Radio Management
+        // DigiIPL messages
+        // LocoIO, LocoServo, LocoBuffer, LocoBooster configuration messages
+
+        switch (l.getElement(2)) {
+            case 0x01: {
+                // Seems to be a query for just duplex devices.
+                String result = interpretOpcPeerXfer20_1(l);
+                if (result.length() > 0) {
+                    return result;
+                }
                 break;
+            }
+            case 0x02: {
+                // Request Duplex Radio Channel
+                String result = interpretOpcPeerXfer20_2(l);
+                if (result.length() > 0) {
+                   return result;
+                }
+                break;
+            }
+
+            case 0x03: {
+                // Duplex Group Name
+                String result = interpretOpcPeerXfer20_3(l);
+                if (result.length() > 0) {
+                   return result;
+                }
+                break;
+            }
+            case 0x04: {
+                // Duplex Group ID
+                String result = interpretOpcPeerXfer20_4(l);
+                if (result.length() > 0) {
+                   return result;
+                }
+                break;
+            }
+            case 0x07: {
+                // Duplex Group Password
+                String result = interpretOpcPeerXfer20_7(l);
+                if (result.length() > 0) {
+                   return result;
+                }
+                break;
+            }
+            case 0x10: {
+                // Radio Channel Noise/Activity
+                String result = interpretOpcPeerXfer20_10(l);
+                if (result.length() > 0) {
+                   return result;
+                }
+                break;
+            }
+
+            case LnConstants.RE_IPL_PING_OPERATION: {
+                String result = interpretOpcPeerXfer20_8(l);
+                if (result.length() > 0) {
+                   return result;
+                }
+                break;
+            } //end of case 0x08, which decodes 0xe5 0x14 0x08
+
+            case LnConstants.RE_IPL_IDENTITY_OPERATION: {
+                // Operations related to DigiIPL "Ping", "Identify" and "Discover"
+                String result = interpretOpcPeerXfer20_0f(l);
+                if (result.length() > 0) {
+                   return result;
+                }
+                break;
+                
             } //end of case 0x0f, which decodes 0xe5 0x14 0x0f
 
             default: {
@@ -1774,6 +1837,7 @@ public class Llnmon {
                 hostInfo,
                 slaveInfo);
     }
+
     private String interpretOpcPeerXfer16(LocoNetMessage l) {
         /*
          * SRC=7F is THROTTLE msg xfer
@@ -1856,7 +1920,7 @@ public class Llnmon {
                     break;
             }
         }
-
+        
         if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
                 && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
             // throttle semaphore symbol message
@@ -1903,126 +1967,82 @@ public class Llnmon {
                     convertToMixed(dst_l, dst_h));
             }
         }
-        if (src == 0x50) {
-            // Packets from the LocoBuffer
-            String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0)
-                    ? "/" + Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[4]))
-                    : ""));
-            if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
-                    && ((pxct2 & 0xF0) == 0x10)) {
-                // LocoBuffer to LocoIO
-                if (d[2] == 0) {
-                    if (d[0] == 2) {
-                    return Bundle.getMessage("LN_MSG_LOCOIO_SV_QUERY",
-                            (dst_l == 0)
-                                    ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
-                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
-                            d[1]);
-
-                    }
-                    return Bundle.getMessage("LN_MSG_LOCOIO_SV_WRITE",
-                            (dst_l == 0)
-                                    ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
-                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
-                            d[1],
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])));
-                } else {
-                    return Bundle.getMessage((d[0] == 2)
-                            ? "LN_MSG_LOCOIO_SV_READ_FIRMWARE_REV"
-                            : "LN_MSG_LOCOIO_SV_WRITE_FIRMWARE_REV",
-                            (dst_l == 0) ? Bundle.getMessage("LN_MSG_LOCOIO_HELPER_BROADCAST")
-                                    : Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                            StringUtil.twoHexFromInt(dst_l)) + dst_subaddrx,
-                            d[1],
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[3])),
-                            dotme(d[2]));
-                }
-            }
+        
+        String result = interpretSV1Message(l);
+        if (result.length() > 0) {
+            return result;
         }
-        if (dst_h == 0x01 && ((pxct1 & 0x70) == 0x00)
-                && ((pxct2 & 0x70) == 0x00)) {
-            // (Jabour/Deloof LocoIO), SV Programming messages format 1
-            String src_subaddrx = ((d[4] != 0) ? "/"
-                    + StringUtil.twoHexFromInt(d[4]) : ""); // should this be same as next line?
-            String dst_subaddrx = ((d[4] != 0) ? "/"
-                    + StringUtil.twoHexFromInt(d[4]) : "");
-
-            String dst_dev = ((dst_l == 0x50) ? "LocoBuffer " // dst_h == 1 known to be true // NOI18N
-                    : (((dst_h == 0x01) && (dst_l == 0x0))
-                            ? Bundle.getMessage("LN_MSG_SV1_HELPER_DST_ADDRESS_IS_BROADCAST")
-                            : "LocoIO@"     // NOI18N
-                    + Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(dst_l))
-                    + dst_subaddrx));
-            if (d[2] == 0) {
-                if (src == 0x50) {
-                    if (d[0] == 2) {
-                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_QUERY",
-                                dst_dev, d[1] );
-                    } else {
-                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_WRITE",
-                                dst_dev, d[1],
-                                d[7],
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
-                    }
-                } else {
-                    if (d[0] == 2) {
-                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_REPORT",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(src))
-                                        + src_subaddrx,
-                                dst_dev, d[1] );
-                    } else {
-                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_WRITE",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(src))
-                                        + src_subaddrx,
-                                dst_dev, d[1],
-                                d[7],
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])));
-                    }
-                }
-            } else {
-                if (src == 0x50) {
-                    if (d[0] == 2) {
-                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_QUERY_FIRMWARE_REV",
-                                dst_dev, d[1], dotme(d[2]) );
-                    } else {
-                        return Bundle.getMessage("LN_MSG_LOCOBUF_SV1_WRITE_FIRMWARE_REV",
-                                dst_dev, d[1],
-                                d[7],
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])),
-                                dotme(d[2]) );
-                    }
-                } else {
-                    if (d[0] == 2) {
-                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_REPORT_FIRMWARE_REV",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(src))
-                                        + src_subaddrx,
-                                dst_dev, d[1],
-                                dotme(d[2]) );
-                    } else {
-                        return Bundle.getMessage("LN_MSG_LOCOIO_SV1_WRITE_FIRMWARE_REV",
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(src))
-                                        + src_subaddrx,
-                                dst_dev, d[1],
-                                d[7],
-                                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",StringUtil.twoHexFromInt(d[7])),
-                                dotme(d[2]) );
-                    }
-                }
-            }
-        }
-        // check for a specific type - SV Programming messages format 2
-        String result = interpretSV2Message(l);
+        result = interpretSV0Message(l);
         if (result.length() > 0) {
             return result;
         }
         
+        // check for a specific type - SV Programming messages format 2
+        result = interpretSV2Message(l);
+        if (result.length() > 0) {
+            return result;
+        }
 
         return "";
         
+    }
+    
+    private String interpretSV1Message(LocoNetMessage l) {
+        int d[] = l.getPeerXfrData();
+        if ((l.getElement(4) != 1) ||
+                ((l.getElement(5) & 0x70) !=0) ||
+                ((l.getElement(10) & 0x70) != 0x10) ) {
+            // is not an SV1 message
+            return "";
+        }
+        if (l.getElement(2) == 0x50) {
+            // Packets from the LocoBuffer
+            String dst_subaddrx = (l.getElement(4) != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+            // LocoBuffer to LocoIO
+            return "LocoBuffer => LocoIO@"
+                    + ((l.getElement(3) == 0) ? "broadcast" : Integer.toHexString(l.getElement(3)) + dst_subaddrx)
+                    + " "
+                    + (d[0] == 2 ? "Query SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
+                    + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
+        }
+        return "";
+    }
+    
+    private String interpretSV0Message(LocoNetMessage l) {
+        int dst_h = l.getElement(4);
+        int pxct1 = l.getElement(5);
+        int pxct2 = l.getElement(10);
+        if ((dst_h != 0x01) || ((pxct1 & 0xF0) != 0x00)
+                || ((pxct2 & 0xF0) != 0x00)) {
+            return "";
+        }
+
+        // (Jabour/Deloof LocoIO), SV Programming messages format 1
+        int dst_l = l.getElement(3);
+        int d[] = l.getPeerXfrData();
+        int src = l.getElement(2);
+
+        String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
+        String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+
+        String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
+        String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
+                : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
+                        : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
+        String operation = (src == 0x50)
+                ? ((d[0] == 2) ? "Query" : "Write")
+                : ((d[0] == 2) ? "Report" : "Write");
+
+        return src_dev + "=> " + dst_dev + " "
+                + ((dst_h == 0x01) ? (operation + " SV" + d[1]) : "")
+                + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
+                        : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
+                                                : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
+                                        : (d[7] < 10) ? "" + d[7]
+                                                : d[7] + " (0x" + Integer.toHexString(d[7]) + ")")
+                                : (d[7] < 10) ? "" + d[7]
+                                        : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
+                + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
     }
     
     private String interpretSV2Message(LocoNetMessage l) {
@@ -2413,246 +2433,286 @@ public class Llnmon {
         } // switch (opcode | 0x80)
         return "";
     }
+    private String interpretPm4xPowerEvent(LocoNetMessage l) {
+        int pCMD = (l.getElement(3) & 0xF0);
 
+        if ((pCMD == 0x30) || (pCMD == 0x10)) {
+            // autoreverse
+            int cm1 = l.getElement(3);
+            int cm2 = l.getElement(4);
+            String sect1Mode, sect1State;
+            String sect2Mode, sect2State;
+            String sect3Mode, sect3State;
+            String sect4Mode, sect4State;
+
+            if ((cm1 & 1) != 0) {
+                sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                sect1State = ((cm2 & 1) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+            } else {
+                sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                sect1State = ((cm2 & 1) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+            }
+
+            if ((cm1 & 2) != 0) {
+                sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                sect2State = ((cm2 & 2) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+            } else {
+                sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                sect2State = ((cm2 & 2) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+            }
+
+            if ((cm1 & 4) != 0) {
+                sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                sect3State = ((cm2 & 4) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+            } else {
+                sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                sect3State = ((cm2 & 4) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+            }
+
+            if ((cm1 & 8) != 0) {
+                sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
+                sect4State = ((cm2 & 8) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
+            } else {
+                sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
+                sect4State = ((cm2 & 8) != 0)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
+            }
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X",
+                    (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
+                    sect1Mode, sect1State, sect2Mode, sect2State,
+                    sect3Mode, sect3State, sect4Mode, sect4State);
+        }
+        return "";
+        
+    }
+    
+    private String interpretOpSws(LocoNetMessage l) {
+        int pCMD = (l.getElement(3) & 0xF0);
+        if (pCMD == 0x70) {
+            // programming
+            int deviceType = l.getElement(3) & 0x7;
+            String device;
+            switch (deviceType) {
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
+                    break;
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
+                    break;
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
+                    break;
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
+                    break;
+                default:
+                    return "";
+            }
+
+            int val = (l.getElement(4) & 0x01);
+            int opsw = (l.getElement(4) & 0x7E) / 2 + 1;
+            int bdaddr = l.getElement(2) + 1;
+            if ((l.getElement(1) & 0x1) != 0) {
+                bdaddr += 128;
+            }
+
+            if ((deviceType == 0) && (bdaddr == 1) && (l.getElement(4) == 0)) {
+                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_ACCESS_QUERY_ALL");
+            }
+
+            if ((l.getElement(1) & 0x10) != 0) {
+                //write
+                String valType = (val == 1)
+                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
+                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN");
+                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_WRITE_ACCESS",
+                        device, bdaddr, opsw, val, valType );
+            } else {
+                // query
+                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_QUERY_ACCESS",
+                        device, bdaddr, opsw );
+            }
+        }
+        return "";
+    }
+    private String interpretDeviceType(LocoNetMessage l) {
+        int pCMD = (l.getElement(3) & 0xF0);
+        if (pCMD == 0x00) {
+            /**
+             * **************************************************
+             * Device type report * The message bytes as
+             * assigned as follows:
+             *
+             * <0xD0> <DQT_REQ> <DQT_BRD> <DQT_B3> <DQT_B4>
+             * <CHK> * * where:
+             *
+             * <DQT_REQ> contains the device query request, *
+             * encoded as: * bits 7-4 always 0110b * bits 3-1
+             * always 001b * bit 0 (BoardID-1)<7>
+             *
+             * <DQT_BRD> contains most the device board ID
+             * number, * encoded as: * bit 7 always 0b * bits
+             * 6-0 (BoardID-1)<6:0>
+             *
+             * <DQT_B3> contains the board type identification,
+             * * encoded as: * bits 7-4 always 0000b * bits 3-0
+             * contain the encoded device type, * encoded as: *
+             * 0000b PM4x device * 0001b BDL16x device * 0010b
+             * SE8C device * 0011b DS64 device * others Unknown
+             * device type
+             *
+             * <DQT_B4> contains device version number: * bit 7
+             * always 0b * bits 6-0 VersionNumber(6:0) * *
+             * Information reverse-engineered by B. Milhaupt and
+             * used  with permission *
+             * **************************************************
+             */
+            // This message is a report which is sent by a LocoNet device
+            // in response to a query of attached devices
+            // Note - this scheme is supported by only some Digitrax devices.
+            //
+            // A VersionNumber of 0 implies the hardware does not report
+            // a valid version number.
+            //
+            // Device type report reverse-engineered by B. Milhaupt and
+            // used with permission
+            int deviceType = l.getElement(3) & 0x7;
+            String device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_UNKNOWN");
+            switch (deviceType) {
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
+                    break;
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
+                    break;
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
+                    break;
+                case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
+                    device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
+                    break;
+            }
+
+            int bdaddr = l.getElement(2) + 1;
+            if ((l.getElement(1) & 0x1) != 0) {
+                bdaddr += 128;
+            }
+            String versionNumber = Integer.toString(l.getElement(4));
+            if (l.getElement(4) == 0) {
+                versionNumber = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_VER_UNKNOWN");
+            }
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_DEV_TYPE_RPT",
+                    device, bdaddr, versionNumber);
+        }
+        return "";
+    }
     private String interpretOpcMultiSense(LocoNetMessage l ) {
+        int pCMD = (l.getElement(3) & 0xF0);
         int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
         switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
                 // This is a PM42 power event.
-                int pCMD = (l.getElement(3) & 0xF0);
-
-                if ((pCMD == 0x30) || (pCMD == 0x10)) {
-                    // autoreverse
-                    int cm1 = l.getElement(3);
-                    int cm2 = l.getElement(4);
-                    String sect1Mode, sect1State;
-                    String sect2Mode, sect2State;
-                    String sect3Mode, sect3State;
-                    String sect4Mode, sect4State;
-
-                    if ((cm1 & 1) != 0) {
-                        sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                        sect1State = ((cm2 & 1) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                    } else {
-                        sect1Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                        sect1State = ((cm2 & 1) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                    }
-
-                    if ((cm1 & 2) != 0) {
-                        sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                        sect2State = ((cm2 & 2) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                    } else {
-                        sect2Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                        sect2State = ((cm2 & 2) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                    }
-
-                    if ((cm1 & 4) != 0) {
-                        sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                        sect3State = ((cm2 & 4) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                    } else {
-                        sect3Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                        sect3State = ((cm2 & 4) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                    }
-
-                    if ((cm1 & 8) != 0) {
-                        sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_AUTOREV");
-                        sect4State = ((cm2 & 8) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_REV")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NORM");
-                    } else {
-                        sect4Mode = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_PROTECT");
-                        sect4State = ((cm2 & 8) != 0)
-                                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_SHORT")
-                                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X_HELPER_MODE_NONSHORT");
-                    }
-                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_PM4X",
-                            (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
-                            sect1Mode, sect1State, sect2Mode, sect2State,
-                            sect3Mode, sect3State, sect4Mode, sect4State);
-                } else if (pCMD == 0x70) {
-                    // programming
-                    int deviceType = l.getElement(3) & 0x7;
-                    String device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_UNKNOWN");
-                    switch (deviceType) {
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
-                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
-                            break;
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
-                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
-                            break;
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
-                            device = device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
-                            break;
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
-                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
-                            break;
-                    }
-
-                    int bit = (l.getElement(4) & 0x0E) / 2;
-                    int val = (l.getElement(4) & 0x01);
-                    int wrd = (l.getElement(4) & 0x70) / 16;
-                    int opsw = (l.getElement(4) & 0x7E) / 2 + 1;
-                    int bdaddr = l.getElement(2) + 1;
-                    if ((l.getElement(1) & 0x1) != 0) {
-                        bdaddr += 128;
-                    }
-                    String accessType = ((l.getElement(1) & 0x10) != 0)
-                            ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_OPSW_WRITE")
-                            : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_OPSW_READ");
-                    String valType = (val == 1)
-                            ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
-                            : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN");
-                    if ((deviceType == 0) && (bdaddr == 0) && (bit == 0) && (val == 0) && (wrd == 0) && (opsw == 1)) {
-                        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_ACCESS_QUERY",
-                                device, bdaddr, accessType, opsw, val, valType
-                                );
-                    }
-                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_ACCESS",
-                            device, bdaddr, accessType, opsw, val, valType
-                            );
-                } else if (pCMD == 0x00) {
-                    /**
-                     * **************************************************
-                     * Device type report * The message bytes as
-                     * assigned as follows:
-                     *
-                     * <0xD0> <DQT_REQ> <DQT_BRD> <DQT_B3> <DQT_B4>
-                     * <CHK> * * where:
-                     *
-                     * <DQT_REQ> contains the device query request, *
-                     * encoded as: * bits 7-4 always 0110b * bits 3-1
-                     * always 001b * bit 0 (BoardID-1)<7>
-                     *
-                     * <DQT_BRD> contains most the device board ID
-                     * number, * encoded as: * bit 7 always 0b * bits
-                     * 6-0 (BoardID-1)<6:0>
-                     *
-                     * <DQT_B3> contains the board type identification,
-                     * * encoded as: * bits 7-4 always 0000b * bits 3-0
-                     * contain the encoded device type, * encoded as: *
-                     * 0000b PM4x device * 0001b BDL16x device * 0010b
-                     * SE8C device * 0011b DS64 device * others Unknown
-                     * device type
-                     *
-                     * <DQT_B4> contains device version number: * bit 7
-                     * always 0b * bits 6-0 VersionNumber(6:0) * *
-                     * Information reverse-engineered by B. Milhaupt and
-                     * used  with permission *
-                     * **************************************************
-                     */
-                    // This message is a report which is sent by a LocoNet device
-                    // in response to a query of attached devices
-                    // Note - this scheme is supported by only some Digitrax devices.
-                    //
-                    // A VersionNumber of 0 implies the hardware does not report
-                    // a valid version number.
-                    //
-                    // Device type report reverse-engineered by B. Milhaupt and
-                    // used with permission
-                    int deviceType = l.getElement(3) & 0x7;
-                    String device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_UNKNOWN");
-                    switch (deviceType) {
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_PM4X:
-                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_PM4X");
-                            break;
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_BDL16X:
-                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_BDL16X");
-                            break;
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_SE8:
-                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_SE8C");
-                            break;
-                        case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
-                            device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
-                            break;
-                    }
-
-                    int bdaddr = l.getElement(2) + 1;
-                    if ((l.getElement(1) & 0x1) != 0) {
-                        bdaddr += 128;
-                    }
-                    String versionNumber = Integer.toString(l.getElement(4));
-                    if (l.getElement(4) == 0) {
-                        versionNumber = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_VER_UNKNOWN");
-                    }
-                    return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_DEV_TYPE_RPT",
-                            device, bdaddr, versionNumber);
+                String result = interpretPm4xPowerEvent(l);
+                if (result.length() > 0) {
+                    return result;
+                } 
+                result = interpretOpSws(l);
+                if (result.length() > 0) {
+                    return result;
+                } 
+                result = interpretDeviceType(l);
+                if (result.length() > 0) {
+                    return result;
                 } else {
                     break;
                 }
 
             case LnConstants.OPC_MULTI_SENSE_PRESENT:
             case LnConstants.OPC_MULTI_SENSE_ABSENT:
-                // Transponding Event
-                // get system and user names
-                String reporterSystemName;
-                String reporterUserName;
-                String zone;
-                switch (l.getElement(2) & 0x0F) {
-                    case 0x00:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
-                        break;
-                    case 0x02:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEB");
-                        break;
-                    case 0x04:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEC");
-                        break;
-                    case 0x06:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONED");
-                        break;
-                    case 0x08:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEE");
-                        break;
-                    case 0x0A:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEF");
-                        break;
-                    case 0x0C:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEG");
-                        break;
-                    case 0x0E:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEH");
-                        break;
-                    default:
-                        zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONE_UNKNOWN",
-                                (l.getElement(2) & 0x0F));
-                        break;
+                result = interpretOpcMultiSenseTranspPresence(l);
+                if (result.length() > 0) {
+                    return result;
                 }
-
-                reporterSystemName = locoNetReporterPrefix
-                        + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
-
-                Reporter reporter = reporterManager.provideReporter(reporterSystemName);
-                reporterUserName = "";
-                String uname = reporter.getUserName();
-                if ((uname != null) && (!uname.isEmpty())) {
-                    reporterUserName = uname;
-                }
-                int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
-
-                String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
-                String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
-                        ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
-                        : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
-
-                return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT",
-                        locoAddr, transpActivity, reporterSystemName,
-                        reporterUserName, section, zone);
+                break;
             default:
                 break;
         }
         return "";
+    }
+    
+    private String interpretOpcMultiSenseTranspPresence(LocoNetMessage l) {
+        // Transponding Event
+        // get system and user names
+        String reporterSystemName;
+        String reporterUserName;
+        String zone;
+        switch (l.getElement(2) & 0x0F) {
+            case 0x00:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
+                break;
+            case 0x02:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEB");
+                break;
+            case 0x04:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEC");
+                break;
+            case 0x06:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONED");
+                break;
+            case 0x08:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEE");
+                break;
+            case 0x0A:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEF");
+                break;
+            case 0x0C:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEG");
+                break;
+            case 0x0E:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEH");
+                break;
+            default:
+                zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONE_UNKNOWN",
+                        (l.getElement(2) & 0x0F));
+                break;
+        }
+        int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
+
+        reporterSystemName = locoNetReporterPrefix
+                + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
+
+        Reporter reporter = reporterManager.provideReporter(reporterSystemName);
+        reporterUserName = "";
+        String uname = reporter.getUserName();
+        if ((uname != null) && (!uname.isEmpty())) {
+            reporterUserName = uname;
+        }
+        int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
+
+        String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
+        String transpActivity = (type == LnConstants.OPC_MULTI_SENSE_PRESENT)
+                ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
+                : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
+
+        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT",
+                locoAddr, transpActivity, reporterSystemName,
+                reporterUserName, section, zone);
+
     }
 
     private String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
