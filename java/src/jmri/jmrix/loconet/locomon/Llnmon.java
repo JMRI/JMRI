@@ -1275,10 +1275,10 @@ public class Llnmon {
             return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
         }
 
-        if ((l.getElement(5) < 0x30) | (l.getElement(5) > 0x3c)
-                | (l.getElement(6) < 0x30) | (l.getElement(6) > 0x3c)
-                | (l.getElement(7) < 0x30) | (l.getElement(7) > 0x3c)
-                | (l.getElement(8) < 0x30) | (l.getElement(8) > 0x3c)
+        if ((l.getElement(5) < 0x30) || (l.getElement(5) > 0x3c)
+                || (l.getElement(6) < 0x30) || (l.getElement(6) > 0x3c)
+                || (l.getElement(7) < 0x30) || (l.getElement(7) > 0x3c)
+                || (l.getElement(8) < 0x30) || (l.getElement(8) > 0x3c)
                 ) {
             return "";
         }
@@ -1286,16 +1286,16 @@ public class Llnmon {
             (char) l.getElement(6),
             (char) l.getElement(7),
             (char) l.getElement(8)};
-        if ((groupPasswordArray[0] >0x39) & (groupPasswordArray[0] < 0x3d) ) {
+        if ((groupPasswordArray[0] >0x39) && (groupPasswordArray[0] < 0x3d) ) {
             groupPasswordArray[0] += ('A' - '9' - 1);
         }
-        if ((groupPasswordArray[1] >0x39) & (groupPasswordArray[1] < 0x3d) ) {
+        if ((groupPasswordArray[1] >0x39) && (groupPasswordArray[1] < 0x3d) ) {
             groupPasswordArray[1] += ('A' - '9' - 1);
         }
-        if ((groupPasswordArray[2] >0x39) & (groupPasswordArray[2] < 0x3d) ) {
+        if ((groupPasswordArray[2] >0x39) && (groupPasswordArray[2] < 0x3d) ) {
             groupPasswordArray[2] += ('A' - '9' - 1);
         }
-        if ((groupPasswordArray[3] >0x39) & (groupPasswordArray[3] < 0x3d) ) {
+        if ((groupPasswordArray[3] >0x39) && (groupPasswordArray[3] < 0x3d) ) {
             groupPasswordArray[3] += ('A' - '9' - 1);
         }
         String groupPassword = new String(groupPasswordArray);
@@ -2034,7 +2034,7 @@ public class Llnmon {
                 : ((d[0] == 2) ? "Report" : "Write");
 
         return src_dev + "=> " + dst_dev + " "
-                + ((dst_h == 0x01) ? (operation + " SV" + d[1]) : "")
+                + operation + " SV" + d[1]
                 + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
                         : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
                                                 : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
@@ -4281,7 +4281,7 @@ public class Llnmon {
                             funcInfo[1], funcInfo[2], funcInfo[3],
                             funcInfo[4], funcInfo[5], funcInfo[6]);
                 } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                        & (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN)) {
+                        && (l.getElement(3) == LnConstants.RE_IB2_SPECIAL_F20_F28_TOKEN)) {
                     // Special-case for F12, F20 and F28, since the tokens from the previous case
                     // can only encode 7 bits of data in element(4).
                     return Bundle.getMessage("LN_MSG_INTELLIBOX_SPECIAL_FUNC_CTL",
@@ -4296,7 +4296,7 @@ public class Llnmon {
                                     ? "LN_MSG_FUNC_ON"
                                     : "LN_MSG_FUNC_OFF"));
                 } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
-                    & (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
+                    && (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
                     // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
                     String funcInfo[] = new String[7];
                     funcInfo[0] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
