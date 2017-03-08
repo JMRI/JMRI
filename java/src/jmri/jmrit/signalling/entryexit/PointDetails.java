@@ -92,6 +92,7 @@ public class PointDetails {
     //Sensor getSensor() { return sensor; }
     protected PropertyChangeListener nxButtonListener = new PropertyChangeListener() {
         //First off if we were inactive, and now active
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             nxButtonStateChange(e);
         }
@@ -329,6 +330,7 @@ public class PointDetails {
             ButtonTimeOut() {
             }
 
+            @Override
             public void run() {
                 try {
                     //Stage one default timer for the button if no other button has been pressed

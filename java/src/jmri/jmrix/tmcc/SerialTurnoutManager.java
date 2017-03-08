@@ -19,10 +19,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "T";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);
@@ -86,6 +88,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return range;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName;
 
@@ -114,6 +117,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     int bitNum = 0;
     int nAddress = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";

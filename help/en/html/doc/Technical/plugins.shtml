@@ -98,7 +98,7 @@
         <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
         <dd>The JMRI JSON services used in the JMRI web services can be extended
           using service implementations of this class. See the
-          <a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory JavaDocs</a> for details.
+          <a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory Javadocs</a> for details.
         </dd>
         <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
         <dd>Add a new preferences manager to JMRI. Preferences managers store,

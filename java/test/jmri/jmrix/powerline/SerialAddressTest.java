@@ -140,6 +140,7 @@ public class SerialAddressTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();        
@@ -151,6 +152,7 @@ public class SerialAddressTest extends TestCase {
         memo.setSerialAddress(new SerialAddress(memo));
     }
 
+    @Override
     protected void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();        
         apps.tests.Log4JFixture.tearDown();

@@ -25,6 +25,7 @@ public class FileHistoryAction extends AbstractAction {
         this("File History");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFrame frame = new JmriJFrame() {
         };  // JmriJFrame to ensure fits on screen

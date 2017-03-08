@@ -48,6 +48,7 @@ public class ComboRadioButtons extends JPanel {
             b1[i] = b;
             b.setActionCommand(name);
             b.addActionListener(l1[i] = new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     thisActionPerformed(e);
                 }
@@ -60,12 +61,14 @@ public class ComboRadioButtons extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // listen for changes to original
         _box.addActionListener(l2 = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 originalActionPerformed(e);
             }
         });
         // listen for changes to original state
         _var.addPropertyChangeListener(p1 = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 originalPropertyChanged(e);
             }
@@ -120,6 +123,7 @@ public class ComboRadioButtons extends JPanel {
     /**
      * Setting tooltip both on this panel, and all buttons inside
      */
+    @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         // include all buttons

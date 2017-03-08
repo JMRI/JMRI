@@ -19,6 +19,7 @@ public class RosterEntryPaneTest extends TestCase {
     RosterEntry rOld = null;
     RosterEntry rNew = null;
 
+    @Override
     public void setUp() {
         // create Element
         eOld = new org.jdom2.Element("locomotive")
@@ -39,6 +40,7 @@ public class RosterEntryPaneTest extends TestCase {
                 );
 
         rOld = new RosterEntry(eOld) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -55,6 +57,7 @@ public class RosterEntryPaneTest extends TestCase {
                 ); // end create element
 
         rNew = new RosterEntry(eNew) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -65,6 +68,7 @@ public class RosterEntryPaneTest extends TestCase {
 
         // copy to a new entry
         RosterEntry n = new RosterEntry() {
+            @Override
             protected void warnShortLong(String s) {
             }
         };

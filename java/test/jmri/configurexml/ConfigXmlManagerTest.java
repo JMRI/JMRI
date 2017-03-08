@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import jmri.util.FileUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for ConfigXmlManager.
@@ -38,30 +38,31 @@ public class ConfigXmlManagerTest extends TestCase {
         configxmlmanager.registerConfig(o1);
         Assert.assertTrue("stored in clist", configxmlmanager.clist.size() == 1);
         configxmlmanager.deregister(o1);
-        Assert.assertTrue("removed from clist", configxmlmanager.clist.size() == 0);
+        Assert.assertTrue("removed from clist", configxmlmanager.clist.isEmpty());
     }
 
     public void testLogErrorOnStore() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager();
         innerFlag = false;
-        configxmlmanager.setErrorHandler(new ErrorHandler(){
+        ConfigXmlManager.setErrorHandler(new ErrorHandler() {
+            @Override
             public void handle(ErrorMemo e) {
                 innerFlag = true;
             }
         });
-        
+
         Object o1 = new jmri.ConfigXmlHandle();
         configxmlmanager.registerUser(o1);
-     
+
         // this will fail before reaching file
         try {
-            configxmlmanager.storeAll(new File("none"));
+            configxmlmanager.storeAll(new File(FileUtil.getUserFilesPath(), "none"));
         } catch (Exception e) {
             // check that the handler was invoked
             Assert.assertTrue(innerFlag);
         }
     }
-    
+
     public void testFind() throws ClassNotFoundException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
             @SuppressWarnings("unused")
@@ -101,13 +102,15 @@ public class ConfigXmlManagerTest extends TestCase {
         Assert.assertEquals("migrated", "jmri.managers.configurexml.DccSignalHeadXml",
                 ConfigXmlManager.currentClassName("jmri.configurexml.DccSignalHeadXml"));
     }
-    
+
     public void testFindFile() throws FileNotFoundException, IOException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager() {
+            @Override
             void locateClassFailed(Throwable ex, String adapterName, Object o) {
                 innerFlag = true;
             }
 
+            @Override
             void locateFileFailed(String f) {
                 // suppress warning during testing
             }
@@ -165,11 +168,13 @@ public class ConfigXmlManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

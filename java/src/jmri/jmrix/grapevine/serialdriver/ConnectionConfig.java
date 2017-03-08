@@ -29,6 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     JButton b = new JButton("Configure nodes");
 
+    @Override
     public void loadDetails(JPanel details) {
 
         b.addActionListener(new NodeConfigAction());
@@ -39,6 +40,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     }
 
+    @Override
     public String name() {
         return "Grapevine (ProTrak) Layout Bus";
     }
@@ -48,6 +50,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineActionListBundle");
     }
 
+    @Override
     protected void setInstance() {
         adapter = SerialDriverAdapter.instance();
     }

@@ -19,6 +19,7 @@ public class MrcInterfaceScaffold extends MrcTrafficController {
     }
 
     // override some MrcTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }

@@ -38,6 +38,7 @@ public class PrintNceConsistRosterAction extends AbstractAction {
      */
     boolean isPreview;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this

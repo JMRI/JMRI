@@ -31,6 +31,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
      * Set up all of the other objects to operate with a LocoBuffer connected to
      * this port.
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -58,6 +59,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates as integers.
      */
+    @Override
     public int[] validBaudNumber() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }

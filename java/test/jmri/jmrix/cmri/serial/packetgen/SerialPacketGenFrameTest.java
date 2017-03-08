@@ -3,7 +3,6 @@ package jmri.jmrix.cmri.serial.packetgen;
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

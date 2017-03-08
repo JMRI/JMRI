@@ -31,6 +31,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         super(new SpecificSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
@@ -91,6 +92,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -173,6 +175,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     /**
      * set up all of the other objects to operate connected to this port
      */
+    @Override
     public void configure() {
         SerialTrafficController tc = null;
         // create a CM11 port controller
@@ -194,6 +197,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     }
 
     // base class methods for the SerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -202,6 +206,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -214,6 +219,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

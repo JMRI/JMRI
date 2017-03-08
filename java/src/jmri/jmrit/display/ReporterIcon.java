@@ -30,12 +30,15 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
             super(parent, textComp);
         }
 
+        @Override
         public void setTextJustificationMenu(JPopupMenu popup) {
         }
 
+        @Override
         public void setFixedTextMenu(JPopupMenu popup) {
         }
 
+        @Override
         public void setTextMarginMenu(JPopupMenu popup) {
             JMenu colorMenu = new JMenu(Bundle.getMessage("FontBackgroundColor"));
             makeColorMenu(colorMenu, BACKGROUND_COLOR);
@@ -91,6 +94,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     }
 
     // update icon as state changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property change: "
@@ -100,6 +104,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         displayState();
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (reporter == null) {
@@ -129,10 +134,12 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         return;
     }
 
+    @Override
     protected void edit() {
         makeIconEditorFrame(this, "Reporter", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.reporterPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 editReporter();
             }
@@ -151,6 +158,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         invalidate();
     }
 
+    @Override
     public void dispose() {
         reporter.removePropertyChangeListener(this);
         reporter = null;
@@ -158,10 +166,12 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         super.dispose();
     }
 
+    @Override
     public int maxHeight() {
         return ((javax.swing.JLabel) this).getMaximumSize().height;  // defer to superclass
     }
 
+    @Override
     public int maxWidth() {
         return ((javax.swing.JLabel) this).getMaximumSize().width;  // defer to superclass
     }

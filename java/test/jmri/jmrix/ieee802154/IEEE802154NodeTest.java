@@ -73,18 +73,23 @@ public class IEEE802154NodeTest{
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         m = new IEEE802154Node() {
+            @Override
             public AbstractMRMessage createInitPacket() {
                 return null;
             }
+            @Override
             public AbstractMRMessage createOutPacket() {
                 return null;
             }
+            @Override
             public boolean getSensorsActive(){
                    return false;
             }
+            @Override
             public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l){
                    return false;
             }
+            @Override
             public void resetTimeout(AbstractMRMessage m){
             }
         };

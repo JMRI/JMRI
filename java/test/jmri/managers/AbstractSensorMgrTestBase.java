@@ -8,7 +8,6 @@ package jmri.managers;
 import java.beans.PropertyChangeListener;
 import jmri.Sensor;
 import jmri.SensorManager;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +35,7 @@ public abstract class AbstractSensorMgrTestBase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -95,6 +95,19 @@ public abstract class AbstractSensorMgrTestBase {
         // try to get nonexistant lights
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
+    }
+
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("" + getNumToTest1());
+        Sensor t2 = l.provideSensor("" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
     }
 
     @Test

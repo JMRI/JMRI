@@ -19,6 +19,7 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
     }
 
     // override some EcosTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -60,15 +61,18 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 

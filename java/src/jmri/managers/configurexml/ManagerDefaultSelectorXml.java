@@ -29,6 +29,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
      * @param o Object to store, of type ManagerDefaultSelector
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("managerdefaults");
         e.setAttribute("class", getClass().getName());
@@ -79,6 +80,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       PanelEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
     }
 

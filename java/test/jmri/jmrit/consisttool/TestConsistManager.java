@@ -17,6 +17,7 @@ public class TestConsistManager extends jmri.implementation.AbstractConsistManag
     /**
      * Add a new Consist with the given address to the consistTable/consistList
      */
+    @Override
     protected Consist addConsist(DccLocoAddress address){
          // no operation for now.
          return null;

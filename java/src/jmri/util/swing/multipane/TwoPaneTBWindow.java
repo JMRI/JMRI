@@ -188,8 +188,10 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Only close frame, etc, dispose() disposes of all cached panes
+     * Only close frame, etc.
+     * super.dispose() disposes of all cached panes.
      */
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -199,14 +201,17 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
      */
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
+    @Override
     protected void firePropertyChange(String p, Object old, Object n) {
         if (pcs == null) {
             return;

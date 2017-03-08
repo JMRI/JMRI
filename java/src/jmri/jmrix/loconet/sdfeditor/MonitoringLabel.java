@@ -19,6 +19,7 @@ public class MonitoringLabel extends javax.swing.JTextArea implements java.beans
     /**
      * Listening method, diplays results
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         setText(evt.getNewValue().toString());
     }

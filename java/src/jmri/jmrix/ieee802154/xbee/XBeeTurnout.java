@@ -4,7 +4,6 @@ import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.io.IOLine;
-import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOValue;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
@@ -120,6 +119,7 @@ public class XBeeTurnout extends AbstractTurnout {
      *
      * @param s new state value
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         try  {
             if((s == Turnout.THROWN) ^ getInverted() ) {
@@ -151,10 +151,12 @@ public class XBeeTurnout extends AbstractTurnout {
     /**
      * XBee turnouts do support inversion
      */
+    @Override
     public boolean canInvert() {
         return true;
     }
     
+    @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 

@@ -23,14 +23,17 @@ public class PaneServiceProgFrame extends PaneProgFrame
     /**
      * Provide the programming mode selection pane for inclusion
      */
+    @Override
     protected JPanel getModePane() {
         // ensure initialization, even if invoked in ctor
         if (modePane == null) {
             modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox() {
+                @Override
                 protected java.util.List<GlobalProgrammerManager> getMgrList() {
                     return new java.util.ArrayList<GlobalProgrammerManager>();
                 }
 
+                @Override
                 public Programmer getProgrammer() {
                     return mProgrammer;
                 }

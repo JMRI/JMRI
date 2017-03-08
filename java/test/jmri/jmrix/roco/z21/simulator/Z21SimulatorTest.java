@@ -1,17 +1,11 @@
 package jmri.jmrix.roco.z21.simulator;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.net.DatagramSocket;
-import java.net.DatagramPacket;
-
-import jmri.jmrix.roco.z21.Z21Reply;
 
 /**
  * Z21SimulatorTest.java

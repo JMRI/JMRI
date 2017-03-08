@@ -290,6 +290,7 @@ public class PositionableShape extends PositionableJComponent
         return _degrees;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: \"{}\"= {} for {}", 
@@ -475,6 +476,7 @@ public class PositionableShape extends PositionableJComponent
         return new Point(x, y);
     }
 
+    @Override
     public void doMousePressed(MouseEvent event) {
         _hitIndex = -1;
         if (!_editor.isEditable()) {

@@ -58,6 +58,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
 
         locoBox = new GlobalRosterEntryComboBox();
         locoBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Locomotive selected changed");
@@ -69,9 +70,10 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
 
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
-        pane1a.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("DecoderInstalled")));
+        pane1a.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("LabelDecoderInstalled")));
         JButton iddecoder = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("IdentifyDecoder"));
         iddecoder.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("identify decoder pressed");
@@ -89,6 +91,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         // Open programmer button
         JButton go1 = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("IdentifyDecoder"));
         go1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Open programmer pressed");
@@ -114,17 +117,20 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
         IdentifyDecoder id = new IdentifyDecoder(p) {
             private NewLocoSelPane who = me;
 
+            @Override
             protected void done(int mfg, int model, int productID) {
                 // if Done, updated the selected decoder
                 who.selectDecoder(mfg, model, productID);
             }
 
+            @Override
             protected void message(String m) {
                 if (_statusLabel != null) {
                     _statusLabel.setText(m);
                 }
             }
 
+            @Override
             public void error() {
             }
         };

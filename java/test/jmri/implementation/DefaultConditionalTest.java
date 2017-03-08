@@ -16,12 +16,13 @@ public class DefaultConditionalTest extends NamedBeanTest {
     /**
      * Operate parent NamedBeanTest tests.
      */
+    @Override
     protected NamedBean createInstance() {
         return new DefaultConditional("IXIC 0");
     }
 
     public void testCtor() {
-        new DefaultConditional("IXIC 1");
+        Assert.assertNotNull("exists",new DefaultConditional("IXIC 1"));
     }
 
     public void testBasicBeanOperations() {

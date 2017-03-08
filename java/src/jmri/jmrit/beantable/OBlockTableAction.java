@@ -31,6 +31,7 @@ public class OBlockTableAction extends AbstractAction {
         super(actionName);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         TableFrames f = new TableFrames();
         f.initComponents();

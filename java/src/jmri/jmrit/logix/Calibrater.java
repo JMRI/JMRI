@@ -180,6 +180,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
         panel.add(Box.createGlue());
         JButton button = new JButton(Bundle.getMessage("ButtonOK"));
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 dofactor();
             }
@@ -188,6 +189,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
         panel.add(Box.createHorizontalStrut(20));
         button = new JButton(Bundle.getMessage("ButtonCancel"));
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }

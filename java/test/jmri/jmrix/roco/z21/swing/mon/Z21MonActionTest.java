@@ -3,7 +3,6 @@ package jmri.jmrix.roco.z21.swing.mon;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;

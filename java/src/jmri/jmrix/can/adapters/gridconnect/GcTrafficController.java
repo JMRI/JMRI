@@ -30,6 +30,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Forward a CanMessage to all registered CanInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((CanListener) client).message((CanMessage) m);
     }
@@ -37,6 +38,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Forward a CanReply to all registered CanInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((CanListener) client).reply((CanReply) r);
     }
@@ -63,6 +65,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendCanMessage(CanMessage m, CanListener reply) {
         log.debug("GcTrafficController sendCanMessage() " + m.toString());
         sendMessage(m, reply);
@@ -74,6 +77,7 @@ public class GcTrafficController extends TrafficController {
      * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
+    @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
         return;
     }
@@ -85,11 +89,13 @@ public class GcTrafficController extends TrafficController {
      * @param m The message to be sent
      * @return Number of bytes
      */
+    @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
         return m.getNumDataElements();
     }
 
     // New message for hardware protocol
+    @Override
     protected AbstractMRMessage newMessage() {
         log.debug("New GridConnectMessage created");
         GridConnectMessage msg = new GridConnectMessage();
@@ -99,6 +105,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Make a CanReply from a GridConnect reply
      */
+    @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
         log.debug("Decoding from hardware");
         GridConnectReply gc = (GridConnectReply) m;
@@ -109,6 +116,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Encode a CanMessage for the hardware
      */
+    @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
         GridConnectMessage ret = new GridConnectMessage(m);
@@ -117,6 +125,7 @@ public class GcTrafficController extends TrafficController {
     }
 
     // New reply from hardware
+    @Override
     protected AbstractMRReply newReply() {
         log.debug("New GridConnectReply created");
         GridConnectReply reply = new GridConnectReply();
@@ -127,6 +136,7 @@ public class GcTrafficController extends TrafficController {
      * Normal CAN-RS replies will end with ";"
      * Bootloader will end with ETX with no preceding DLE
      */
+    @Override
     protected boolean endOfMessage(AbstractMRReply r) {
         if (endNormalReply(r)) {
             return true;
@@ -161,6 +171,7 @@ public class GcTrafficController extends TrafficController {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream)
             throws java.io.IOException {
         int i;

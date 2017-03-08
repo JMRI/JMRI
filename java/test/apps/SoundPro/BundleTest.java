@@ -2,8 +2,6 @@ package apps.SoundPro;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
 
 /**
  * Tests for the Bundle class

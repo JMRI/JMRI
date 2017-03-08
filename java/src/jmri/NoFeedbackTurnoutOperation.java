@@ -35,14 +35,17 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
     /**
      * return clone with different name
      */
+    @Override
     public TurnoutOperation makeCopy(String n) {
         return new NoFeedbackTurnoutOperation(n, interval, maxTries);
     }
 
+    @Override
     public int getDefaultInterval() {
         return defaultInterval;
     }
 
+    @Override
     public int getDefaultMaxTries() {
         return defaultMaxTries;
     }
@@ -60,6 +63,7 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
      *
      * @return	the operator
      */
+    @Override
     public TurnoutOperator getOperator(AbstractTurnout t) {
         return new NoFeedbackTurnoutOperator(t, interval, maxTries);
     }

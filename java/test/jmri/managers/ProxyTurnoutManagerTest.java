@@ -26,6 +26,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -50,6 +51,13 @@ public class ProxyTurnoutManagerTest extends TestCase {
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    public void testNormalizeName() {
+        // create
+        String name = l.provideTurnout("" + getNumToTest1()).getSystemName();
+        // check
+        Assert.assertEquals(name, l.normalizeSystemName(name));
     }
 
     public void testProvideFailure() {
@@ -144,6 +152,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS1"));
 
         InternalTurnoutManager m = new InternalTurnoutManager() {
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }
@@ -184,10 +193,12 @@ public class ProxyTurnoutManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
         l = new InternalTurnoutManager() {
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }

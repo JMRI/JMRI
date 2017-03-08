@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameDestination");
     }
@@ -84,12 +85,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         mUserName = (src.getPoint().getDisplayName() + " to " + this.point.getDisplayName());
 
         propertyBlockListener = new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 blockStateUpdated(e);
             }
         };
     }
 
+    @Override
     public String getDisplayName() {
         return mUserName;
     }
@@ -296,14 +299,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if (manager.isRouteStacked(this, false)) {
             manager.cancelStackedRoute(this, false);
         }
-        /*We put the setting of the route into a seperate thread and put a glass pane infront of the layout editor,
-         the swing thread for flash the icons to carry on as without interuption */
+        /* We put the setting of the route into a seperate thread and put a glass pane in front of the layout editor.
+         The swing thread for flashing the icons will carry on without interuption. */
         final ArrayList<Color> realColorStd = new ArrayList<Color>();
         final ArrayList<Color> realColorXtra = new ArrayList<Color>();
         final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>();
         if (manager.useDifferentColorWhenSetting()) {
-            for (int i = 1; i < routeDetails.size(); i++) {
-                LayoutBlock lbk = routeDetails.get(i);
+            for (LayoutBlock lbk : routeDetails) {
                 routeBlocks.add(lbk);
                 realColorXtra.add(lbk.getBlockExtraColor());
                 realColorStd.add(lbk.getBlockTrackColor());
@@ -330,6 +332,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
         final ActiveTrain at = tmpat;
         Runnable setRouteRun = new Runnable() {
+            @Override
             public void run() {
                 src.getPoint().getPanel().getGlassPane().setVisible(true);
 
@@ -338,8 +341,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
                     ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
 
-                    //This for loop was after the if statement
-                    //Last block in the route is the one that we are protecting at the last sensor/signalmast
+                    // This for loop was after the if statement
+                    // Last block in the route is the one that we are protecting at the last sensor/signalmast
                     for (int i = 0; i < routeDetails.size(); i++) {
                         //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
                         if (at == null && isSignalLogicDynamic()) {
@@ -391,6 +394,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         for (Map.Entry< Turnout, Integer> entry : turnoutSettings.entrySet()) {
                             entry.getKey().setCommandedState(entry.getValue());
                             Runnable r = new Runnable() {
+                                @Override
                                 public void run() {
                                     try {
                                         Thread.sleep(250 + manager.turnoutSetDelay);
@@ -450,6 +454,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 }
                             }
                             smSource.addPropertyChangeListener(new PropertyChangeListener() {
+                                @Override
                                 public void propertyChange(PropertyChangeEvent e) {
                                     SignalMast source = (SignalMast) e.getSource();
                                     source.removePropertyChangeListener(this);
@@ -474,6 +479,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     if (manager.useDifferentColorWhenSetting()) {
                         //final ArrayList<Color> realColorXtra = realColorXtra;
                         javax.swing.Timer resetColorBack = new javax.swing.Timer(manager.getSettingTimer(), new java.awt.event.ActionListener() {
+                            @Override
                             public void actionPerformed(java.awt.event.ActionEvent e) {
                                 for (int i = 0; i < routeBlocks.size(); i++) {
                                     LayoutBlock lbk = routeBlocks.get(i);
@@ -595,6 +601,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             cancelClearFrame.pack();
 
             jButton_Clear.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -602,6 +609,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Cancel.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -609,6 +617,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Stack.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -616,6 +625,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 }
             });
             jButton_Exit.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelClearFrame.setVisible(false);
                     threadAutoClearFrame.interrupt();
@@ -644,6 +654,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             MessageTimeOut() {
             }
 
+            @Override
             public void run() {
                 try {
                     //Set a timmer before this window is automatically closed to 30 seconds
@@ -1109,6 +1120,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
+    @Override
     public void dispose() {
         enabled = false;
         setActiveEntryExit(false);
@@ -1122,6 +1134,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         disposed = true;
     }
 
+    @Override
     public int getState() {
         if (activeEntryExit) {
             return 0x02;
@@ -1133,6 +1146,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return activeEntryExit;
     }
 
+    @Override
     public void setState(int state) {
     }
 

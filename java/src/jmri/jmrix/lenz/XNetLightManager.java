@@ -27,6 +27,7 @@ public class XNetLightManager extends AbstractLightManager {
     /**
      * Returns the system letter for XPressNet
      */
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -36,6 +37,7 @@ public class XNetLightManager extends AbstractLightManager {
      * system name is not in a valid format Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
+    @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
@@ -83,6 +85,7 @@ public class XNetLightManager extends AbstractLightManager {
      * Public method to validate system name format returns 'true' if system
      * name has a valid format, else returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0);
     }
@@ -93,6 +96,7 @@ public class XNetLightManager extends AbstractLightManager {
      * 'false' for now, this method always returns 'true'; it is needed for the
      * Abstract Light class
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }
@@ -103,6 +107,7 @@ public class XNetLightManager extends AbstractLightManager {
      * range box in the add Light window
      *
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }

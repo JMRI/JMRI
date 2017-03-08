@@ -57,6 +57,7 @@ public abstract class SdfMacro implements SdfConstants {
      *
      * @return newline-terminated string; never null
      */
+    @Override
     abstract public String toString();
 
     /**
@@ -222,6 +223,6 @@ public abstract class SdfMacro implements SdfConstants {
         return val;
     }
 
-    private static Logger log = LoggerFactory.getLogger(SdfMacro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfMacro.class.getName());
 
 }

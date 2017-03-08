@@ -37,6 +37,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super.loadDetails(details);
     }
 
+    @Override
     public String name() {
         return "XBee Network";
     }

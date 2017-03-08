@@ -457,6 +457,7 @@ public class NceConsistRosterEntry {
         return getId();
     }
 
+    @Override
     public String toString() {
         String out = "[ConsistRosterEntry: "
                 + _id + " "

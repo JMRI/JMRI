@@ -2,7 +2,6 @@ package jmri.jmrix.acela.acelamon;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;

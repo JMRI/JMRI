@@ -113,6 +113,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
 
+    @Override
     synchronized public void message(XNetReply l) {
         if (progState == XNetProgrammer.NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
@@ -147,29 +148,35 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         }
     }
 
+    @Override
     public boolean getLongAddress() {
         return true;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public synchronized void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     synchronized protected void timeout() {
         progState = XNetProgrammer.NOTPROGRAMMING;
         stopTimer();

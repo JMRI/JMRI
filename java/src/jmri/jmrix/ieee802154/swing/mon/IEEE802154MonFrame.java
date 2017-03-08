@@ -27,25 +27,30 @@ public class IEEE802154MonFrame extends jmri.jmrix.AbstractMonFrame implements I
         _memo = memo;
     }
 
+    @Override
     protected String title() {
         return Bundle.getMessage("MonFrameTitle");
     }
 
     // ieee802.15.4 Listener methods
+    @Override
     public void message(IEEE802154Message m) {
         nextLine(m.toMonitorString() + "\n", m.toString() + "\n");
     }
 
+    @Override
     public void reply(IEEE802154Reply m) {
         nextLine(m.toMonitorString() + "\n", m.toString() + "\n");
     }
 
+    @Override
     public void dispose() {
         _memo.getTrafficController().removeIEEE802154Listener(this);
         // unwind swing
         super.dispose();
     }
 
+    @Override
     protected void init() {
         // connect to the TrafficController
         _memo.getTrafficController().addIEEE802154Listener(this);

@@ -135,6 +135,7 @@ public class SerialNode extends AbstractNode {
      * Public method to return state of Sensors. Note: returns 'true' if at
      * least one sensor is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         return hasActiveSensors;
     }
@@ -143,6 +144,7 @@ public class SerialNode extends AbstractNode {
      * Public to reset state of needSend flag. Can only reset if there are no
      * bytes that need to be sent
      */
+    @Override
     public void resetMustSend() {
         for (int i = 0; i < outputBytes[nodeType]; i++) {
             if (outputByteChanged[i]) {
@@ -180,6 +182,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Check for valid node address
      */
+    @Override
     protected boolean checkNodeAddress(int address) {
         return (address >= 0) && (address < 256);
     }
@@ -189,6 +192,7 @@ public class SerialNode extends AbstractNode {
      * node. There are currently no Oak Tree boards that need an init message,
      * so this returns null.
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         return null;
     }
@@ -196,6 +200,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         if (log.isDebugEnabled()) {
             log.debug("createOutPacket for nodeType "
@@ -310,6 +315,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         // normal to timeout in response to init, output
@@ -333,6 +339,7 @@ public class SerialNode extends AbstractNode {
         }
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");

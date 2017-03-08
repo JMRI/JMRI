@@ -94,6 +94,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     // directly
     // WARNING: use this only with opcodes that have a variable number 
     // of arguments following included. Otherwise, just use setElement
+    @Override
     public void setOpCode(int i) {
         if (i > 0xF || i < 0) {
             log.error("Opcode invalid: " + i);
@@ -101,6 +102,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         setElement(0, ((i * 16) & 0xF0) | ((getNumDataElements() - 2) & 0xF));
     }
 
+    @Override
     public int getOpCode() {
         return (getElement(0) / 16) & 0xF;
     }
@@ -108,6 +110,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     /**
      * Get a String representation of the op code in hex
      */
+    @Override
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode());
     }
@@ -1597,7 +1600,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     if ((getElement(4) & 0x80) != 0) {
                         text += " and direction Forward";
                     } else {
-                        text += "and direction Reverse";
+                        text += " and direction Reverse";
                     }
                     text += " In 27 speed step mode.";
                     break;
@@ -1616,7 +1619,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     if ((getElement(4) & 0x80) != 0) {
                         text += " and direction Forward";
                     } else {
-                        text += "and direction Reverse";
+                        text += " and direction Reverse";
                     }
                     text += " In 28 speed step mode.";
                     break;
@@ -2008,6 +2011,16 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)),
                            getElement(4));
                     break;
+                case (XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD):
+                    text = Bundle.getMessage("XNetMessageSearchCSStackForwardNextMULoco",
+                           getElement(2),
+                           LenzCommandStation.calcLocoAddress(getElement(3), getElement(4)));
+                    break;
+                case (XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD):
+                    text = Bundle.getMessage("XNetMessageSearchCSStackBackwardNextMULoco",
+                           getElement(2),
+                           LenzCommandStation.calcLocoAddress(getElement(3), getElement(4)));
+                    break;
                 default:
                     text = toString();
             }
@@ -2018,7 +2031,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             // Disolve or Establish a Double Header
         } else if (getElement(0) == XNetConstants.LOCO_DOUBLEHEAD
                 && getElement(1) == XNetConstants.LOCO_DOUBLEHEAD_BYTE2) {
-            text = "Double Header Request: ";
             int loco1 = LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
             int loco2 = LenzCommandStation.calcLocoAddress(getElement(4), getElement(5));
             if (loco2 == 0) {
@@ -2030,58 +2042,59 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         } else if (getElement(0) == XNetConstants.LOCO_STATUS_REQ) {
             switch (getElement(1)) {
                 case XNetConstants.LOCO_INFO_REQ_FUNC:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " function momentary/continuous status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoFunctionMomStatus",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " F13-F28 on/off status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoFunctionHighStatus",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " F13-F28 momentary/continuous status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoFunctionHighMomStatus",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_INFO_REQ_V3:
-                    text = "Request for Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " speed/direction/function on/off status.";
+                    text = Bundle.getMessage("XNetMessageRequestLocoInfo",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_STACK_SEARCH_FWD:
-                    text = "Search Command Station Stack Forward - Start Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                    text = Bundle.getMessage("XNetMessageSearchCSStackForward",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_STACK_SEARCH_BKWD:
-                    text = "Search Command Station Stack Backward - Start Address: "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+                    text = Bundle.getMessage("XNetMessageSearchCSStackBackward",
+                           LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 case XNetConstants.LOCO_STACK_DELETE:
-                    text = "Delete Address "
-                            + LenzCommandStation.calcLocoAddress(getElement(2), getElement(3))
-                            + " from Command Station Stack.";
+                    text = Bundle.getMessage("XNetMessageDeleteAddressOnStack",
+                            LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                     break;
                 default:
                     text = toString();
             }
+        } else if(getElement(0) == XNetConstants.CS_MULTI_UNIT_REQ) {
+            if (getElement(1) == XNetConstants.CS_MULTI_UNIT_REQ_FWD){
+                text = Bundle.getMessage("XNetMessageSearchCSStackForwardConsistAddress",
+                           getElement(2));
+            } else if(getElement(1) == XNetConstants.CS_MULTI_UNIT_REQ_BKWD){
+                text = Bundle.getMessage("XNetMessageSearchCSStackBackwardConsistAddress",
+                           getElement(2));
+            } else {
+                    text = toString();
+            }
             // Accessory Info Request message
         } else if (getElement(0) == XNetConstants.ACC_INFO_REQ) {
-            text = "Accessory Decoder/Feedback Encoder Status Request: "
-                    + "Base Address " + getElement(1) + ",";
-            text
-                    = text + (((getElement(2) & 0x01) == 0x01) ? "Upper" : "Lower")
-                    + " Nibble.";
+            String nibblekey=(((getElement(2) & 0x01) == 0x01) ? "FeedbackEncoderUpperNibble" : "FeedbackEncoderLowerNibble");
+            text = Bundle.getMessage("XNetMessageFeedbackRequest",
+                       getElement(1),
+                       Bundle.getMessage(nibblekey));
         } else if (getElement(0) == XNetConstants.ACC_OPER_REQ) {
-            text = "Accessory Decoder Operations Request: ";
+            String messageKey =(((getElement(2) & 0x08) == 0x08) ? "XNetMessageAccessoryDecoderOnRequest" : "XNetMessageAccessoryDecoderOffRequest");
             int baseaddress = getElement(1);
             int subaddress = ((getElement(2) & 0x06) >> 1);
             int address = (baseaddress * 4) + subaddress + 1;
-            text = text + "Turnout Address " + address + "("
-                    + "Base Address " + getElement(1) + ","
-                    + "Sub Address " + ((getElement(2) & 0x06) >> 1) + ") ";
-            text = text + "Turn Output " + (getElement(2) & 0x01)
-                    + " " + (((getElement(2) & 0x08) == 0x08) ? "On." : "Off.");
+            int output = (getElement(2) & 0x01);
+            text = Bundle.getMessage(messageKey,address, baseaddress,subaddress,output);
         } else {
             text = toString();
         }

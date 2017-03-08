@@ -27,10 +27,12 @@ abstract public class SerialLightManager extends AbstractLightManager {
     /**
      * Returns the system letter
      */
+    @Override
     public String getSystemPrefix() {
         return tc.getAdapterMemo().getSystemPrefix();
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
@@ -40,6 +42,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * system name is not in a valid format Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
+    @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
@@ -64,6 +67,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * Public method to validate system name format returns 'true' if system
      * name has a valid format, else returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L'));
     }
@@ -73,6 +77,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * system name has a valid meaning in current configuration, else returns
      * 'false'
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (tc.getAdapterMemo().getSerialAddress().validSystemNameConfig(systemName, 'L'));
     }
@@ -83,6 +88,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * Returns a normalized system name if system name has a valid format, else
      * returns "".
      */
+    @Override
     public String normalizeSystemName(String systemName) {
         return (tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName));
     }
@@ -90,6 +96,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
     /**
      * Returns 'true' to indicate this system can support variable lights
      */
+    @Override
     public boolean supportsVariableLights(String systemName) {
         return true;
     }

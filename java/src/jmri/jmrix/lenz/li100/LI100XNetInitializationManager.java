@@ -18,6 +18,7 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

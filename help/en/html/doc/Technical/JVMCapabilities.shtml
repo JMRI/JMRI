@@ -720,17 +720,17 @@ enters some other type).<br>
     String result = box.getItemAt(progBox.getSelectedIndex());
 </pre>
 
-      <h3>JavaDoc and doclint</h3>Java 1.8 by default runs the
+      <h3>Javadoc and doclint</h3>Java 1.8 by default runs the
       <a href=
       "https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#CHDFDACB">
-      doclint</a> doclet when making JavaDoc. By default, it is
+      doclint</a> doclet when making Javadoc. By default, it is
       <a href=
       "http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html">
       very aggressive</a> on possible errors. The default Ant-based
       builds turn off some of the checking terms with
       <pre style="font-family: monospace;">
 -Xdoclint:all,-missing,-accessibility,-html,-syntax
-</pre>to drop tests for missing JavaDoc tags and certain benign
+</pre>to drop tests for missing Javadoc tags and certain benign
 HTML errors. (For now) <a name="extension" id="extension"></a>
 
       <h2>JVM and JDK Extensions</h2>It's possible to extend the

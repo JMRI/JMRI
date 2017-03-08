@@ -32,6 +32,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
      * @param o Object to store, of type IndicatorTrackIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         IndicatorTrackIcon p = (IndicatorTrackIcon) o;
@@ -111,6 +112,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;

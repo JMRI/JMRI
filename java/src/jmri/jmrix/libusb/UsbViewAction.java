@@ -18,6 +18,7 @@ public class UsbViewAction extends javax.swing.AbstractAction {
         this(java.util.ResourceBundle.getBundle("jmri.jmrix.libusb.UsbViewActionBundle").getString("USB_Device_Viewer"));
     }
 
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // create and display
         try {

@@ -31,14 +31,17 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
         ActionListener okListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             }
         };
         ActionListener cancelListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) { cancelPressed(e); }
         };
         ActionListener rangeListener = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 canAddRange(e);
             }
@@ -69,10 +72,8 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         sysName.setName("sysName");
         userName.setName("userName");
         prefixBox.setName("prefixBox");
-        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, Bundle.getMessage("ButtonAddSensor"), okListener, cancelListener, rangeListener));
+        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonAddSensor", okListener, cancelListener, rangeListener));
         canAddRange(null);
-
-        //super.AddnewHardwareDevicePanel(sysName, userName, prefixBox, , Bundle.getMessage("ButtonAddSensor")
     }
 
     private void canAddRange(ActionEvent e) {
@@ -148,14 +149,9 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     jmri.UserPreferencesManager p;
 
     void cancelPressed(ActionEvent e) {
-        //p.setVisible(false);
-        //p.dispose();
-        //p = null;
     }
 
     void okPressed(ActionEvent e) {
-        /*String user = userName.getText();
-         if (user.equals("")) user=null;*/
 
         int numberOfSensors = 1;
 

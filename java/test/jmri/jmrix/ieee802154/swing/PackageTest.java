@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
     BundleTest.class,
     jmri.jmrix.ieee802154.swing.mon.PackageTest.class,
     jmri.jmrix.ieee802154.swing.nodeconfig.PackageTest.class,
-    jmri.jmrix.ieee802154.swing.packetgen.PackageTest.class
+    jmri.jmrix.ieee802154.swing.packetgen.PackageTest.class,
+    IEEE802154MenuTest.class,
+    IEEE802154ComponentFactoryTest.class
 })
 
 /**

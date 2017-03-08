@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractProgrammer implements Programmer {
 
+    @Override
     public String decodeErrorCode(int code) {
         if (code == ProgListener.OK) {
             return Bundle.getMessage("StatusOK");
@@ -81,10 +82,12 @@ public abstract class AbstractProgrammer implements Programmer {
      *
      * @param listener The PropertyChangeListener to be added
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
@@ -93,10 +96,12 @@ public abstract class AbstractProgrammer implements Programmer {
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
+    @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         writeCV(Integer.parseInt(CV), val, p);
     }
 
+    @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         readCV(Integer.parseInt(CV), p);
     }
@@ -110,6 +115,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Basic implementation. Override this to turn reading on and off globally.
      */
+    @Override
     public boolean getCanRead() {
         return true;
     }
@@ -117,6 +123,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Checks using the current default programming mode
      */
+    @Override
     public boolean getCanRead(String addr) {
         if (!getCanRead()) {
             return false; // check basic implementation first
@@ -165,6 +172,7 @@ public abstract class AbstractProgrammer implements Programmer {
         return null;
     }
 
+    @Override
     public final ProgrammingMode getMode() {
         if (mode == null) {
             mode = getBestMode();
@@ -178,6 +186,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Basic implementation. Override this to turn writing on and off globally.
      */
+    @Override
     public boolean getCanWrite() {
         return true;
     }
@@ -185,6 +194,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Checks using the current default programming mode.
      */
+    @Override
     public boolean getCanWrite(String addr) {
         return getCanWrite();
     }
@@ -221,6 +231,7 @@ public abstract class AbstractProgrammer implements Programmer {
         }
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }

@@ -84,6 +84,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
     }
 
     // listen for turnouts, creating them as needed
+    @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -99,10 +100,12 @@ public class XNetFeedbackMessageCache implements XNetListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

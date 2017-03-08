@@ -48,7 +48,7 @@ public class VSDecoderCreationAction extends AbstractAction {
 
     public VSDecoderCreationAction() {
         //this(ThrottleBundle.bundle().getString("MenuItemNewThrottle"));
-        this("Virtual Sound Decoder", false);
+        this("Virtual Sound Decoder", true);
     }
 
     /**
@@ -56,6 +56,7 @@ public class VSDecoderCreationAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         String fp = null, fn = null;
         JFrame tf = null;

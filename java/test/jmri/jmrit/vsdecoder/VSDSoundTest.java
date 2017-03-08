@@ -22,13 +22,13 @@ public class VSDSoundTest extends TestCase {
 
     // Note: VSDSound is abstract.  Using SoundBite as test vehicle.
     public void testCreateSimple() {
-        VSDSound uut = new SoundBite("unitUnderTest");
+        VSDSound uut = new SoundBite("unitUnderTest"); // BOUND_MODE
         Assert.assertEquals("sound name", "unitUnderTest", uut.getName());
         Assert.assertFalse("is playing", uut.isPlaying());
     }
 
     public void testSetGet() {
-        VSDSound uut = new SoundBite("unitUnderTest");
+        VSDSound uut = new SoundBite("unitUnderTest"); // BOUND_MODE
         uut.setName("new name");
         Assert.assertEquals("set name", "new name", uut.getName());
     }
@@ -41,7 +41,7 @@ public class VSDSoundTest extends TestCase {
     }
 
     public void testSetXML() {
-        VSDSound uut = new SoundBite("unitUnderTest");
+        VSDSound uut = new SoundBite("unitUnderTest"); // BOUND_MODE
         Element e = buildTestXML();
         uut.setXml(e);
         // VSDSound.setXml() does nothing.

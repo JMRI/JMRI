@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog       the programmer associated with this facade
      * @param top        CVs above this use the indirect method
      * @param addrCVhigh CV to which the high part of address is to be written
      * @param addrCVlow  CV to which the low part of address is to be written
@@ -124,6 +125,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
@@ -185,18 +187,22 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     }
 
     // Access to full address space provided by this.
+    @Override
     public boolean getCanRead() {
         return true;
     }
 
+    @Override
     public boolean getCanRead(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }
 
+    @Override
     public boolean getCanWrite() {
         return true;
     }
 
+    @Override
     public boolean getCanWrite(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }

@@ -2,12 +2,12 @@ package jmri.web.servlet.directory;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    DirectoryHandlerTest.class,
+    DirectoryResourceTest.class
 })
 
 /**

@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -99,6 +98,7 @@ public class EcosLocoToRoster implements EcosListener {
         suppressFurtherAdditions = false;
         inProcess = true;
         Runnable run = new Runnable() {
+            @Override
             public void run() {
                 while (locoList.size() != 0) {
                     final EcosLocoAddress tmploco = locoList.get(0);
@@ -115,6 +115,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 ecosObject = o;
                             }
 
+                            @Override
                             public void run() {
                                 final JDialog dialog = new JDialog();
                                 dialog.setTitle("Add Roster Entry From JMRI?");
@@ -146,6 +147,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 container.add(button);
 
                                 noButton.addActionListener(new ActionListener() {
+                                    @Override
                                     public void actionPerformed(ActionEvent e) {
                                         ecosObject.doNotAddToRoster();
                                         waitingForComplete = true;
@@ -158,6 +160,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 });
 
                                 yesButton.addActionListener(new ActionListener() {
+                                    @Override
                                     public void actionPerformed(ActionEvent e) {
                                         if (remember.isSelected()) {
                                             p.setAddLocoToJMRI(EcosPreferences.YES);
@@ -195,6 +198,7 @@ public class EcosLocoToRoster implements EcosListener {
                         waitingForComplete = true;
                     }
                     Runnable r = new Runnable() {
+                        @Override
                         public void run() {
                             try {
                                 while (!waitingForComplete) {
@@ -259,6 +263,7 @@ public class EcosLocoToRoster implements EcosListener {
                 WindowMaker() {
                 }
 
+                @Override
                 public void run() {
                     comboPanel();
                 }
@@ -269,6 +274,7 @@ public class EcosLocoToRoster implements EcosListener {
         }
     }
 
+    @Override
     public void reply(EcosReply m) {
         int startval;
         int endval;
@@ -436,6 +442,7 @@ public class EcosLocoToRoster implements EcosListener {
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
 
     }
@@ -505,6 +512,7 @@ public class EcosLocoToRoster implements EcosListener {
         });
 
         ActionListener okayButtonAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 okayButton();
             }
@@ -712,6 +720,7 @@ public class EcosLocoToRoster implements EcosListener {
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         // tree listener
         dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null
                         && // can't be just a mfg, has to be at least a family

@@ -1,9 +1,7 @@
 package jmri.jmrix.dcc4pc;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Dcc4PcReporterManagerTest.java
@@ -17,7 +15,7 @@ import org.junit.Test;
 public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "DPR" + i;
     }
 

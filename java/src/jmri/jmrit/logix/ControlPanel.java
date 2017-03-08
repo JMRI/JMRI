@@ -78,6 +78,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
         // add mouse-wheel support
         speedSlider.addMouseWheelListener(new MouseWheelListener() {
+            @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 if (e.getWheelRotation() > 0) {
                     decelerate1();
@@ -119,6 +120,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         _throttle.addPropertyChangeListener(this);
     }
 
+    @Override
     public void dispose() {
         if (_throttle != null) {
             _throttle.removePropertyChangeListener(this);
@@ -128,6 +130,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     // update the state of this panel if any of the properties change
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("propertyChange: " + e.getPropertyName() + ", newValue= "
@@ -161,6 +164,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * @param isEnabled True if the buttons/slider should be enabled, false
      *                  otherwise.
      */
+    @Override
     public void setEnabled(boolean isEnabled) {
         SpeedStep128Button.setEnabled(isEnabled);
         SpeedStep28Button.setEnabled(isEnabled);
@@ -319,6 +323,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setPaintLabels(true);
         // remove old actions
         speedSlider.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 if (!internalAdjust) {
                     boolean doIt = false;
@@ -355,6 +360,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         // remove old actions
         if (speedSpinner != null) {
             speedSpinner.addChangeListener(new ChangeListener() {
+                @Override
                 public void stateChanged(ChangeEvent e) {
                     if (!internalAdjust) {
                         float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (MAX_SPEED * 1.0f);
@@ -387,6 +393,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         spinnerPanel.add(SpeedStep14Button, constraints);
 
         SpeedStep14Button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setSpeedSteps(DccThrottle.SpeedStepMode14);
                 _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode14);
@@ -394,6 +401,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         });
 
         SpeedStep27Button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setSpeedSteps(DccThrottle.SpeedStepMode27);
                 _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode27);
@@ -401,6 +409,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         });
 
         SpeedStep28Button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setSpeedSteps(DccThrottle.SpeedStepMode28);
                 _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
@@ -408,6 +417,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         });
 
         SpeedStep128Button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setSpeedSteps(DccThrottle.SpeedStepMode128);
                 _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);

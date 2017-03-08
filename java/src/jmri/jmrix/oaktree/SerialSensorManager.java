@@ -36,6 +36,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Return the Oak Tree system letter
      */
+    @Override
     public String getSystemPrefix() {
         return "O";
     }
@@ -44,6 +45,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Create a new sensor if all checks are passed System name is normalized to
      * ensure uniqueness.
      */
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
@@ -94,6 +96,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Dummy routine
      */
+    @Override
     public void message(SerialMessage r) {
         log.warn("unexpected message");
     }
@@ -101,6 +104,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Process a reply to a poll of Sensors of one node
      */
+    @Override
     public void reply(SerialReply r) {
         // determine which node
         SerialNode node = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(r.getAddr());

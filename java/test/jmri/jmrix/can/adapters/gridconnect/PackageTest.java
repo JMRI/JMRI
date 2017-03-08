@@ -35,14 +35,17 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.adapters.gridconnect.can2usbino.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(GcPortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(GcTrafficControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GcSerialDriverAdapterTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

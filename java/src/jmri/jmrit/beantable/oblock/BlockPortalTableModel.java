@@ -37,10 +37,12 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         _oBlockModel = oBlockModel;
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
+    @Override
     public int getRowCount() {
         int count = 0;
         List<NamedBean> list = _oBlockModel.getBeanList();
@@ -50,6 +52,7 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         return count;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case BLOCK_NAME_COLUMN:
@@ -60,6 +63,7 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         return "";
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         List<NamedBean> list = _oBlockModel.getBeanList();
         if (list.size() > 0) {
@@ -99,13 +103,16 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         return null;
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         return false;
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         return String.class;
     }
@@ -114,6 +121,7 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         return new JTextField(15).getPreferredSize().width;
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
         if (property.equals("length") || property.equals("UserName")) {

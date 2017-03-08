@@ -14,10 +14,12 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     public DccTurnoutManager() {
     }
 
+    @Override
     public String getSystemPrefix() {
         return "B";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.valueOf(systemName.substring(2)).intValue();

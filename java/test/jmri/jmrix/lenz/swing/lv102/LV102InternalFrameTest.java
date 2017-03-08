@@ -1,8 +1,6 @@
 package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

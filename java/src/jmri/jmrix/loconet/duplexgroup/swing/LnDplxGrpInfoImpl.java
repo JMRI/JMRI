@@ -96,6 +96,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         waitingForIplReply = false;
 
         swingTmrIplQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
@@ -112,6 +113,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             }
         });
         swingTmrDuplexInfoQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.DPLX_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrDuplexInfoQuery.stop();
                 waitingForIplReply = false;
@@ -693,6 +695,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * match, a message is displayed on the status line in the GUI, else nothing
      * is displayed in the GUI status line.
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         if (handleMessageIplResult(m)) {
