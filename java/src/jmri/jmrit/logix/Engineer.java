@@ -245,14 +245,15 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Delayed ramp has started.  Do non-speed commands only until
-     * index is reached.
+     * Delayed ramp has started.
+     * Currently informational only  
+     * Do non-speed commands only until idx is reached?  maybe not.
      * @param idx index
      */
     protected void advanceToCommandIndex(int idx) {
-        // todo Merging of ramp commands with scripted command
 //        _idxNoSpeedCommand = idx;
-        if (log.isDebugEnabled()) log.debug("_idxNoSpeedCommand= {} _normalSpeed= {}", _idxNoSpeedCommand, _normalSpeed);
+        if (log.isDebugEnabled()) log.debug("_idxCurrentCommand= {} _normalSpeed= {} _speedType= {} speed= {}",
+                _idxCurrentCommand, _normalSpeed, _speedType, _throttle.getSpeedSetting());
     }
 
     private void setSpeedStepMode(int step) {
@@ -925,7 +926,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug(msg);
     }
 
-    // todo replace generic factors with factors specific to locomotive
+    // todo replace generic factors with factors specific to locomotive for next 3 methods.
+    // Unless great care has been taken to match speeds of locos and their speed curves,
+    // _speedMap.getDefaultThrottleFactor() is a very unreliable parameter to
+    // calculate times or distances.  A speedProfile per loco is needed.
     protected float getDistanceTraveled(float speedSetting, String speedtype, long time) {
         float speed = modifySpeed(speedSetting, speedtype);
         float distance;
@@ -952,7 +956,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             time = distance / (distanceFactor * speed);
         }
         if (log.isDebugEnabled()) log.debug("getTimeForDistance = {}ms from speedSetting= {} in distance {} by {}",
-                time, distance, 
+                time, speed, distance, 
                 (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
         return (long) time;
     }
@@ -996,7 +1000,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isTraceEnabled()) log.trace("rampLengthForSpeedChange()= {} in {}ms for speed= {}, {} to {}, speed= {} using {}",
                 rampLength, time*steps, fromSpeed, curSpeedType, toSpeedType, toSpeed,
                 (_speedProfile != null ? "SpeedProfile" : "Factor=" + _speedMap.getDefaultThrottleFactor()));
-        return rampLength;
+        return rampLength+10;   // add 1cm for safety (all scales)
     }
 
     // return millimeters per millisecond (= meters/sec)
@@ -1054,24 +1058,28 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         @Override
         public void run() {
-            // time 'now' is at having done _idxCurrentCommand-1 and is waiting to do _idxCurrentCommand  
-            ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand-1);
+            // the time 'right now' is at having done _idxCurrentCommand-1 and is waiting 
+            // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
             float endSpeed = modifySpeed(_normalSpeed, endSpeedType);
+            float speed = _throttle.getSpeedSetting();
+            float incr = _speedMap.getStepIncrement();
+            int delay = _speedMap.getStepDelay();
             float rampSpeed = modifySpeed(_normalSpeed, _speedType);
             if (log.isDebugEnabled()) log.debug("Current calculated throttleSpeed= {}, actual throttleSpeed= {}",
-                    rampSpeed, _throttle.getSpeedSetting());
+                    rampSpeed, speed);
             boolean increase = (endSpeed > rampSpeed);
+            ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand-1);
             long scriptTime = ts.getTime() - (System.currentTimeMillis() - et);
             long ramptime = 0;
             
             boolean done = false;
             while (!done) {
                 while (ramptime < scriptTime) {
-                    ramptime += _speedMap.getStepDelay();
+                    ramptime += delay;
                     if (increase) {
-                        rampSpeed += _speedMap.getStepIncrement();
+                        rampSpeed += incr;
                     } else {
-                        rampSpeed -= _speedMap.getStepIncrement();                    
+                        rampSpeed -= incr;                    
                     }
                 }
                 if (increase) {
@@ -1090,15 +1098,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
             }
             
-            
             _lock.lock();
             _speedOverride = true;
             try {
-//                float endSpeed = modifySpeed(_normalSpeed, endSpeedType);
-                float speed = _throttle.getSpeedSetting();
-                float incr = _speedMap.getStepIncrement();
-                int delay = _speedMap.getStepDelay();
-
                 if (log.isDebugEnabled()) log.debug("ThrottleRamp for \"{}\". step increment= {} step interval= {}. Ramp {} to {} on warrant {}",
                         endSpeedType, incr, delay, speed, endSpeed, _warrant.getDisplayName());
 
