@@ -2023,11 +2023,11 @@ public class Llnmon {
         int src = l.getElement(2);
 
         String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
-        String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+        String dst_subaddrx =  ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
 
         String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
-        String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
-                : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
+        String dst_dev = ((dst_l == 0x50) ? "LocoBuffer "
+                : ( (dst_l == 0x0) ? "broadcast"
                         : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
         String operation = (src == 0x50)
                 ? ((d[0] == 2) ? "Query" : "Write")
