@@ -64,6 +64,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceConnectionTypeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceMessageCheckTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceUSBTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceAIUCheckerTest.class));
 
         return suite;
     }
