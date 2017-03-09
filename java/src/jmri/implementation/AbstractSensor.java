@@ -318,7 +318,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * <p>
      * In this default implementation, the input value is ignored.
      *
-     * @param PullResistance value to use.
+     * @param r PullResistance value to use.
      */
     public void setPullResistance(PullResistance r){
     }

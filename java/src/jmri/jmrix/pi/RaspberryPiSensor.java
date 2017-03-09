@@ -121,7 +121,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
      * <p>
      * In this default implementation, the input value is ignored.
      *
-     * @param PullResistance value to use.
+     * @param r PullResistance value to use.
      */
     @Override
     public void setPullResistance(PullResistance r){

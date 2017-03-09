@@ -205,7 +205,7 @@ public interface Sensor extends NamedBean {
     /**
      * Set the pull resistance
      *
-     * @param PullResistance value to use.
+     * @param r PullResistance value to use.
      */
     public void setPullResistance(PullResistance r);
 
