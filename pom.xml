@@ -39,42 +39,8 @@
             <id>travis-headless</id>
             <properties>
                 <findbugs.skip>true</findbugs.skip>
+                <java.awt.headless>true</java.awt.headless>
             </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
-                        <executions>
-                            <execution>
-                                <id>test</id>
-                                <phase>test</phase>
-                                <configuration>
-                                    <target>
-                                        <property name="jvm.args">${ant.jvm.args}</property>
-                                        <ant antfile="${basedir}/build.xml">
-                                            <target name="travis-ci"/>
-                                        </ant>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- use surefire (maven default test harness) only for line endings -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.19.1</version>
-                        <configuration>
-                            <test>jmri.util.FileLineEndingsTest</test>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>travis-coverage</id>
@@ -469,7 +435,7 @@
                             <!-- The value X makes Javadoc ignoring the tag -->
                             <placement>X</placement>
                         </tag>
-                    </tags>                    
+                    </tags>
                     <groups>
                         <group>
                             <title>Core</title>
@@ -853,7 +819,7 @@
             <artifactId>system-rules</artifactId>
             <version>1.16.0</version>
             <scope>test</scope>
-        </dependency>    
+        </dependency>
     </dependencies>
 
     <repositories>
