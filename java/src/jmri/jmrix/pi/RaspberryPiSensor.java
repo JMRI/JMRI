@@ -116,6 +116,35 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        return pull;
     }
 
+    /**
+     * Set the pull resistance
+     * <p>
+     * In this default implementation, the input value is ignored.
+     *
+     * @param PullResistance value to use.
+     */
+    @Override
+    public void setPullResistance(PullResistance r){
+    }
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.  In this default
+     * impelmetnation, PullResistance.PULL_OFF is always returned.
+     */
+    @Override
+    public PullResistance setPullResistance(){
+       if(pull == PinPullResistance.PULL_DOWN) {
+          return PullResistance.PULL_DOWN;
+       } else if(pull == PinPullResistance.PULL_UP) {
+          return PullResistance.PULL_UP;
+       } else {
+          return PullResistance.PULL_OFF;
+       }
+    }
+
+
     private final static Logger log = LoggerFactory.getLogger(RaspberryPiSensor.class.getName());
 
 }

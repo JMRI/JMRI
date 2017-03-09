@@ -150,4 +150,13 @@ public interface SensorManager extends Manager {
     public void setDefaultSensorDebounceGoingActive(long timer);
 
     public void setDefaultSensorDebounceGoingInActive(long timer);
+
+    /**
+     * Do the sensor objects provided by this manager support configuring 
+     * an internal pullup or pull down resistor?
+     * 
+     * @return true if pull up/pull down configuration is supported.
+     */
+    public boolean isPullResistanceConfigurable();
+
 }
