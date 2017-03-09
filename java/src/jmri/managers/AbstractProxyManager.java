@@ -3,14 +3,13 @@ package jmri.managers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * Implementation of a Manager that can serves as a proxy for multiple
@@ -104,9 +103,10 @@ abstract public class AbstractProxyManager implements Manager {
 
     /**
      * Locate via user name, then system name if needed. Subclasses use this to
-     * provide e.g. getSensor, getTurnout, etc via casts.
+     * provide more specific getters such as getSensor or getTurnout via casts.
      *
-     * @return Null if nothing by that name exists
+     * @param name the user or system name for the requested NamedBean
+     * @return the requested NamedBean or null if nothing matches name
      */
     @Override
     public NamedBean getNamedBean(String name) {
@@ -143,11 +143,11 @@ abstract public class AbstractProxyManager implements Manager {
      * Locate via user name, then system name if needed. If that fails, create a
      * new NamedBean: If the name is a valid system name, it will be used for
      * the new NamedBean. Otherwise, the makeSystemName method will attempt to
-     * turn it into a valid system name. Subclasses use this to provide e.g.
-     * getSensor, getTurnout, etc via casts.
+     * turn it into a valid system name. Subclasses use this to create provider methods such as 
+     * getSensor or getTurnout via casts.
      *
      * @param name the user name or system name of the bean
-     * @return Never null under normal circumstances
+     * @return an existing or new NamedBean
      */
     protected NamedBean provideNamedBean(String name) throws IllegalArgumentException {
         // make sure internal present
