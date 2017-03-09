@@ -18,7 +18,7 @@ public class NceTurnoutMonitorTest {
 
     @Test
     public void testCTor() {
-        NceTurnoutMonitor t = new NceTurnoutMonitor();
+        NceTurnoutMonitor t = new NceTurnoutMonitor(tcis);
         Assert.assertNotNull("exists",t);
     }
 
