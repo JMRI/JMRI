@@ -11,14 +11,14 @@
     <name xml:lang="it">DecoderPro</name>
     <name xml:lang="de">DecoderPro</name>
 	<name xml:lang="ca">DecoderPro</name>
-    <name xml:lang="cs">DecoderPro</name>
+    <name xml:lang="cs">DekodérPro</name>
     <name xml:lang="nl">DecoderPro</name>
   <node>
     <name>Read All</name>
     <name xml:lang="it">Leggi Tutto</name>
     <name xml:lang="de">Lese alles</name>
 	<name xml:lang="ca">Llegeix tot</name>
-    <name xml:lang="cs">Přečíst vše</name>
+    <name xml:lang="cs">Načíst vše</name>
     <name xml:lang="nl">Lees alles</name>
   </node>
   <node>
@@ -34,7 +34,7 @@
     <name xml:lang="it">Leggi Modifiche</name>
     <name xml:lang="de">Lese Änderungen</name>
 	<name xml:lang="ca">Llegeix els canvis</name>
-    <name xml:lang="cs">Přečíst všechny změny</name>
+    <name xml:lang="cs">Načíst všechny změny</name>
     <name xml:lang="nl">Lees Wijzigingen</name>
   </node>
   <node>
@@ -42,7 +42,7 @@
     <name xml:lang="it">Scrivi Modifiche</name>
     <name xml:lang="de">Schreibe Änderungen</name>
 	<name xml:lang="ca">Escriu els canvis</name>
-    <name xml:lang="cs">zapsat všechny změny</name>
+    <name xml:lang="cs">Zapsat všechny změny</name>
     <name xml:lang="nl">Schrijf Wijzigingen</name>
   </node>
  </node>
