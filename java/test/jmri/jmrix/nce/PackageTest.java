@@ -65,6 +65,18 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceMessageCheckTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceUSBTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceAIUCheckerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceClockControlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceConnectionStatusTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceConsistManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceLightTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceOpsModeProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceSensorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NceTurnoutMonitorTest.class));
+
 
         return suite;
     }
