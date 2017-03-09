@@ -86,8 +86,8 @@ import org.slf4j.LoggerFactory;
  * {@link #writeOpsModeCV}
  * </UL>
  * <P>
- * Although this is named an "Abstract" class, it's actually concrete so that
- * Jython code can easily use some of the methods.
+ * Although this is named an "Abstract" class, it's actually concrete so scripts
+ * can easily use some of the methods.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
@@ -123,8 +123,11 @@ public class AbstractAutomaton implements Runnable {
     }
 
     private boolean running = false;
-    public boolean isRunning() { return running; }
-    
+
+    public boolean isRunning() {
+        return running;
+    }
+
     /**
      * Part of the implementation; not for general use.
      * <p>
@@ -189,17 +192,23 @@ public class AbstractAutomaton implements Runnable {
     private int count;
 
     /**
-     * Returns the number of times the handle routine has executed.
+     * Get the number of times the handle routine has executed.
      *
-     * Used by e.g. {@link jmri.jmrit.automat.monitor} to monitor progress
+     * Used by classes such as {@link jmri.jmrit.automat.monitor} to monitor
+     * progress.
+     *
+     * @return the number of times {@link #handle()} has been called on this
+     *         AbstractAutomation
      */
     public int getCount() {
         return count;
     }
 
     /**
-     * Gives access to the thread name. Used internally for e.g.
-     * {@link jmri.jmrit.automat.monitor}
+     * Get the thread name. Used by classes monitoring this AbstractAutomation,
+     * such as {@link jmri.jmrit.automat.monitor}.
+     *
+     * @return the name of this thread
      */
     public String getName() {
         return name;
@@ -208,9 +217,10 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Update the name of this object.
      *
-     * name is not a bound parameter, so changes are not notified to listeners
+     * name is not a bound parameter, so changes are not notified to listeners.
      *
-     * @see #getName
+     * @param name the new name
+     * @see #getName()
      */
     public void setName(String name) {
         this.name = name;
@@ -266,14 +276,16 @@ public class AbstractAutomaton implements Runnable {
     }
 
     private boolean waiting = false;
-    
+
     /**
      * Indicates that object is waiting on a waitSomething call
      * <p>
-     * Specifically, the wait has progressed far enough that 
-     * any change to the waited-on-condition will be detected
+     * Specifically, the wait has progressed far enough that any change to the
+     * waited-on-condition will be detected
      */
-    public boolean isWaiting() { return waiting; }
+    public boolean isWaiting() {
+        return waiting;
+    }
 
     /**
      * Part of the intenal implementation, not intended for users.
@@ -507,15 +519,15 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automaton's thread, who
      * confirms the change.
      *
-     * @param warrant  The name of the warrant to watch
-     * @param state    State to check (static value from jmri.logix.warrant)
+     * @param warrant The name of the warrant to watch
+     * @param state   State to check (static value from jmri.logix.warrant)
      */
     public synchronized void waitWarrantRunState(Warrant warrant, int state) {
         if (!inThread) {
             log.warn("waitWarrantRunState invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantRunState "+warrant.getDisplayName()+", "+state+" starts");
+            log.debug("waitWarrantRunState " + warrant.getDisplayName() + ", " + state + " starts");
         }
 
         // do a quick check first, just in case
@@ -529,8 +541,8 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
-                   log.debug("notify waitWarrantRunState of property change");
-                   self.notifyAll(); // should be only one thread waiting, but just in case
+                    log.debug("notify waitWarrantRunState of property change");
+                    self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
         });
@@ -554,14 +566,15 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param warrant  The name of the warrant to watch
      * @param block    block to check
-     * @param occupied Determines whether to wait for the block to become occupied or unoccupied
+     * @param occupied Determines whether to wait for the block to become
+     *                 occupied or unoccupied
      */
     public synchronized void waitWarrantBlock(Warrant warrant, String block, boolean occupied) {
         if (!inThread) {
             log.warn("waitWarrantBlock invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlock "+warrant.getDisplayName()+", "+block+" "+occupied+" starts");
+            log.debug("waitWarrantBlock " + warrant.getDisplayName() + ", " + block + " " + occupied + " starts");
         }
 
         // do a quick check first, just in case
@@ -575,8 +588,8 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 synchronized (self) {
-                   log.debug("notify waitWarrantBlock of property change");
-                   self.notifyAll(); // should be only one thread waiting, but just in case
+                    log.debug("notify waitWarrantBlock of property change");
+                    self.notifyAll(); // should be only one thread waiting, but just in case
                 }
             }
         });
@@ -601,16 +614,17 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automation's thread, who
      * confirms the change.
      *
-     * @param warrant  The name of the warrant to watch
+     * @param warrant The name of the warrant to watch
      *
-     * Return value: The name of the block that was entered or null if the warrant is no longer running.
+     * Return value: The name of the block that was entered or null if the
+     * warrant is no longer running.
      */
     public synchronized String waitWarrantBlockChange(Warrant warrant) {
         if (!inThread) {
             log.warn("waitWarrantBlockChange invoked from invalid context");
         }
         if (log.isDebugEnabled()) {
-            log.debug("waitWarrantBlockChange "+warrant.getDisplayName());
+            log.debug("waitWarrantBlockChange " + warrant.getDisplayName());
         }
 
         // do a quick check first, just in case
@@ -628,7 +642,7 @@ public class AbstractAutomaton implements Runnable {
                 synchronized (self) {
                     if (e.getPropertyName().equals("blockChange")) {
                         blockChanged = true;
-                        blockName = ((OBlock)e.getNewValue()).getDisplayName();
+                        blockName = ((OBlock) e.getNewValue()).getDisplayName();
                     }
                     log.debug("notify waitWarrantBlockChange of property change");
                     self.notifyAll(); // should be only one thread waiting, but just in case
@@ -724,11 +738,12 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Wait, up to a specified time, for one of a list of NamedBeans (sensors, signal heads and/or
-     * turnouts) to change.
+     * Wait, up to a specified time, for one of a list of NamedBeans (sensors,
+     * signal heads and/or turnouts) to change.
      *
-     * @param mInputs Array of NamedBeans to watch
-     * @param maxDelay maximum amount of time (milliseconds) to wait before continuing anyway. -1 means forever
+     * @param mInputs  Array of NamedBeans to watch
+     * @param maxDelay maximum amount of time (milliseconds) to wait before
+     *                 continuing anyway. -1 means forever
      */
     //
     // This works by registering a listener, which is likely to run in another
@@ -777,15 +792,15 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Wait forever for one of a list of NamedBeans (sensors, signal heads and/or
-     * turnouts) to change, or for a specific time to pass.
+     * Wait forever for one of a list of NamedBeans (sensors, signal heads
+     * and/or turnouts) to change, or for a specific time to pass.
      *
      * @param mInputs Array of NamedBeans to watch
      */
     public void waitChange(NamedBean[] mInputs) {
         waitChange(mInputs, -1);
     }
-    
+
     /**
      * Wait for one of an array of sensors to change.
      * <P>
@@ -974,7 +989,7 @@ public class AbstractAutomaton implements Runnable {
             log.error("No programmer available as JMRI is currently configured");
             return false;
         }
-        
+
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
@@ -1012,7 +1027,7 @@ public class AbstractAutomaton implements Runnable {
             log.error("No programmer available as JMRI is currently configured");
             return -1;
         }
-        
+
         // do the read, response will wake the thread
         cvReturnValue = -1;
         try {
@@ -1052,7 +1067,7 @@ public class AbstractAutomaton implements Runnable {
             log.error("No programmer available as JMRI is currently configured");
             return false;
         }
-        
+
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {

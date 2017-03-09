@@ -1,11 +1,15 @@
 package jmri.jmrit;
 
-import jmri.util.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileValidateAction
  */
-public class XmlFileCheckAction extends jmri.util.swing.JmriAbstractAction {
+public class XmlFileCheckAction extends JmriAbstractAction {
 
     public XmlFileCheckAction(String s, Component who) {
         super(s);
@@ -24,7 +28,7 @@ public class XmlFileCheckAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     public XmlFileCheckAction(String s, WindowInterface wi) {
-        this(s, wi!=null ? wi.getFrame() : null);
+        this(s, wi != null ? wi.getFrame() : null);
     }
 
     JFileChooser fci;
@@ -42,24 +46,19 @@ public class XmlFileCheckAction extends jmri.util.swing.JmriAbstractAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
-            if (log.isDebugEnabled()) {
-                log.debug("located file " + file + " for XML processing");
-            }
+            log.debug("located file {} for XML processing", file);
             // handle the file (later should be outside this thread?)
             boolean original = XmlFile.verify;
             try {
                 XmlFile.verify = false;
                 readFile(file);
-            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(_who, "OK");
+            } catch (IOException | JDOMException ex) {
                 JOptionPane.showMessageDialog(_who, "Error: " + ex);
-                return;
             } finally {
                 XmlFile.verify = original;
             }
-            JOptionPane.showMessageDialog(_who, "OK");
-            if (log.isDebugEnabled()) {
-                log.debug("parsing complete");
-            }
+            log.debug("parsing complete");
 
         } else {
             log.info("XmlFileCheckAction cancelled in open dialog");
@@ -67,9 +66,13 @@ public class XmlFileCheckAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     /**
-     * Ask SAX to read and verify a file
+     * Read and verify a file is XML.
+     *
+     * @param file the file to read
+     * @throws org.jdom2.JDOMException if file is not XML
+     * @throws java.io.IOException     if unable to read file
      */
-    void readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
+    void readFile(File file) throws JDOMException, IOException {
         XmlFile xf = new XmlFile() {
         };   // odd syntax is due to XmlFile being abstract
 
@@ -82,6 +85,7 @@ public class XmlFileCheckAction extends jmri.util.swing.JmriAbstractAction {
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class.getName());
 }
