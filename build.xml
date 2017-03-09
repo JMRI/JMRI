@@ -466,6 +466,7 @@
     <target name="jjdoc"
             description="create JJDoc BNF documentation"
             depends="init, javacc">
+        <quiet>
         <mkdir dir="${doctarget}/jmri/jmris/srcp/"/>
         <jjdoc target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
                javacchome="${libdir}"
@@ -478,6 +479,7 @@
         <jjdoc target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmris/simpleserver/JmriServerParser.html"/>
+        </quiet>
     </target>
 
 
@@ -499,6 +501,12 @@
             outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
             javacchome="${libdir}"/>
         </quiet>
+        <!-- Turn all Javadoc comments in generated code into plain comments -->
+        <replaceregexp match="\/\*\*" replace="\/\*" flags="g">
+            <fileset dir="${genjavasrcdir}">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
     </target>
 
 
@@ -1550,7 +1558,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="3630"/><!-- change from default 100 warnings -->
+            <arg value="3200"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
