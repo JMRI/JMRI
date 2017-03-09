@@ -43,8 +43,6 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
 
         jmri.InstanceManager.store(new jmri.jmrit.signalling.EntryExitPairs(), jmri.jmrit.signalling.EntryExitPairs.class);
 
-        _logixTable.prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-
         ThreadingUtil.runOnGUI(() -> {
             _logixTable.actionPerformed(null);
         });
