@@ -237,7 +237,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
             }
             if (now != null) {
                 // was there previously a bean with the new name?
-                if (_tuser.get(now) != null) {
+                if (_tuser.get(now) != null && _tuser.get(now) != t) {
                     // If so, clear. Note that this is not a "move" operation
                     _tuser.get(now).setUserName(null);
                 }
