@@ -8,7 +8,8 @@ import org.jdom2.Namespace;
 /**
  * Select XML content based on current Locale.
  *
- * Tries: e.g. jp_JP, then jp, then nothing.
+ * Tries locale and country separated by an underscore, language, and then uses
+ * the default Locale.
  *
  * _tlh is treated as a special case, for the ant locale target
  *

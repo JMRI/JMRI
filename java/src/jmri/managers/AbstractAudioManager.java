@@ -1,13 +1,11 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
-
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -154,7 +152,7 @@ public abstract class AbstractAudioManager extends AbstractManager
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @param systemName Audio object system name (e.g. IAS1, IAB4)
+     * @param systemName Audio object system name (for example IAS1, IAB4)
      * @param userName   Audio object user name
      * @return never null
      * @throws AudioException if error occurs during creation

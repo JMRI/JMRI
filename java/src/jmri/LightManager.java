@@ -54,7 +54,7 @@ public interface LightManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Light doesn't already exist and the
      *                                  manager cannot create the Light due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
     @CheckReturnValue

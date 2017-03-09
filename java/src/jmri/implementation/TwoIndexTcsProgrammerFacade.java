@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog the programmer this facade is attached to
      */
     public TwoIndexTcsProgrammerFacade(Programmer prog) {
         super(prog);
@@ -135,7 +136,6 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
@@ -184,9 +184,8 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         t.setRepeats(false);
         t.start();
     }
-    /**
-     * After a Swing delay, this processes the reply
-     */
+    
+    // After a Swing delay, this processes the reply
     protected void processProgrammingOpReply(int value, int status) {
         switch (state) {
             case DOSIFORREAD:
