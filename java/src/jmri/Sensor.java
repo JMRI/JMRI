@@ -164,7 +164,7 @@ public interface Sensor extends NamedBean {
     public enum PullResistance {
         PULL_UP("up","PullResistanceUp"), // NOI18N
         PULL_DOWN("down","PullResistanceDown"), // NOI18N
-        PULL_OFF("off","PullresistanceOff"); // NOI18N
+        PULL_OFF("off","PullResistanceOff"); // NOI18N
 
         PullResistance(String shName, String peopleKey) {
            this.shortName = shName;
