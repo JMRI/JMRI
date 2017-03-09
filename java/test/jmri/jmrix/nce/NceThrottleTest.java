@@ -15,10 +15,11 @@ import org.slf4j.LoggerFactory;
 public class NceThrottleTest {
 
     private NceTrafficControlScaffold tcis = null;
+    private NceSystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        NceThrottle t = new NceThrottle();
+        NceThrottle t = new NceThrottle(memo,new jmri.DccLocoAddress(1024,true));
         Assert.assertNotNull("exists",t);
     }
 
@@ -28,6 +29,8 @@ public class NceThrottleTest {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         tcis = new NceTrafficControlScaffold();
+        memo = new NceSystemConnectionMemo();
+        memo.setNceTrafficController(tcis);
     }
 
     @After
