@@ -35,10 +35,13 @@ import org.slf4j.LoggerFactory;
 public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog    the programmer to which this facade is attached
      * @param indexPI CV to which the first value is to be written for NN.NN and
      *                NN.NN.NN forms
      * @param indexSI CV to which the second value is to be written for NN.NN.NN
      *                forms
+     * @param cvFirst true if first value in parsed CV is to be written; false
+     *                if second value is to be written
      */
     public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI, boolean cvFirst) {
         super(prog);
@@ -63,33 +66,41 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         if (cv.contains(".")) {
             if (cvFirst) {
                 String[] splits = cv.split("\\.");
-                if (splits.length == 2) {
-                    valuePI = Integer.parseInt(splits[1]);
-                    _cv = splits[0];
-                } else if (splits.length == 3) {
-                    valuePI = Integer.parseInt(splits[1]);
-                    valueSI = Integer.parseInt(splits[2]);
-                    _cv = splits[0];
-                } else {
-                    log.error("Too many parts in CV name " + cv);
-                    valuePI = Integer.parseInt(splits[1]);
-                    valueSI = Integer.parseInt(splits[2]);
-                    _cv = splits[0];
+                switch (splits.length) {
+                    case 2:
+                        valuePI = Integer.parseInt(splits[1]);
+                        _cv = splits[0];
+                        break;
+                    case 3:
+                        valuePI = Integer.parseInt(splits[1]);
+                        valueSI = Integer.parseInt(splits[2]);
+                        _cv = splits[0];
+                        break;
+                    default:
+                        log.error("Too many parts in CV name " + cv);
+                        valuePI = Integer.parseInt(splits[1]);
+                        valueSI = Integer.parseInt(splits[2]);
+                        _cv = splits[0];
+                        break;
                 }
             } else {
                 String[] splits = cv.split("\\.");
-                if (splits.length == 2) {
-                    valuePI = Integer.parseInt(splits[0]);
-                    _cv = splits[1];
-                } else if (splits.length == 3) {
-                    valuePI = Integer.parseInt(splits[0]);
-                    valueSI = Integer.parseInt(splits[1]);
-                    _cv = splits[2];
-                } else {
-                    log.error("Too many parts in CV name " + cv);
-                    valuePI = Integer.parseInt(splits[0]);
-                    valueSI = Integer.parseInt(splits[1]);
-                    _cv = splits[2];
+                switch (splits.length) {
+                    case 2:
+                        valuePI = Integer.parseInt(splits[0]);
+                        _cv = splits[1];
+                        break;
+                    case 3:
+                        valuePI = Integer.parseInt(splits[0]);
+                        valueSI = Integer.parseInt(splits[1]);
+                        _cv = splits[2];
+                        break;
+                    default:
+                        log.error("Too many parts in CV name " + cv);
+                        valuePI = Integer.parseInt(splits[0]);
+                        valueSI = Integer.parseInt(splits[1]);
+                        _cv = splits[2];
+                        break;
                 }
             }
         } else {
@@ -144,7 +155,6 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 

@@ -1,16 +1,18 @@
 package jmri.util;
 
 /**
- * Print a Java system variable from the command line
+ * Print a Java system variable from the command line.
  * <p>
  * Intended to be invoked like:<br>
  * <pre><code>
  * java jmri.util.GetJavaProperty java.home
  * </code></pre><br>
- * to print the value of a Java system property in the current JVM, e.g. for
- * including in a script
+ * to print the value of a Java system property in the current JVM, for example,
+ * within a script.
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
+ * @deprecated since 4.7.2; within scripts run within a JMRI context, use
+ * {@link java.lang.System#getProperty(java.lang.String)} directly
  */
 public class GetJavaProperty {
 

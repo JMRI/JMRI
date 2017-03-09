@@ -30,7 +30,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         sendButton.setVisible(true);
         sendButton.setToolTipText("Send packet");
 
-        packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
+        packetTextField.setToolTipText("Enter packet as hex pairs, for example, 82 7D");
         packetTextField.setMaximumRowCount(5); // set the maximum number of items in the history.
         packetTextField.setEditable(true);
         setTitle("Send Packet");

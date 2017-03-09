@@ -151,7 +151,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * If NamedBeam.normalizeUserName changes, this may want to be updated.
      * <p>
      * Right now, this just logs. Someday, perhaps it should notify
-     * upward of found issues by e.g. throwing or returning a error object.
+     * upward of found issues by throwing an exception.
      *
      * Package-level access to allow testing
      *
