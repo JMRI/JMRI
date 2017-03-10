@@ -6,8 +6,8 @@ import java.awt.Frame;
  * Interface for an object that can arrange for a {@link JmriPanel} to be
  * displayed.
  * <p>
- * Typically used by some component that wants to display a pane (e.g. in an
- * independent JmriJFrame or as part of a paned interface) to do some more
+ * Typically used by some component that wants to display a pane (for example,
+ * in an independent JmriJFrame or as part of a paned interface) to do some more
  * stuff. Rather than have the component build it's own window, etc it invokes
  * one of these, so that the position and display of that component can
  * controlled.
@@ -30,7 +30,8 @@ public interface WindowInterface {
     public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action);
 
     /**
-     * Show, in whatever way is appropriate, a specific JmriPanel, in a hinted location
+     * Show, in whatever way is appropriate, a specific JmriPanel, in a hinted
+     * location
      *
      * @param child  new JmriPanel to show
      * @param action JmriAbstractAction making the request
@@ -39,15 +40,11 @@ public interface WindowInterface {
     public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action, Hint hint);
 
     /**
-     * Should 2nd and subsequent requests for a panel (e.g. in an Action) create
-     * a new instance, or provide the 1st one for reuse?
-     *
-     * This would be true e.g. if separate windows were being provided, or false
-     * if there was only one window which is being populated with one pane after
-     * another.
+     * Should 2nd and subsequent requests for a panel create a new instance, or
+     * provide the 1st one for reuse?
      *
      * @return true if multiple instances should be provided, false if only one
-     *         should be provided.
+     *         should be provided
      */
     public boolean multipleInstances();
 
