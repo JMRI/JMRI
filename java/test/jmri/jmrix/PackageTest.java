@@ -95,6 +95,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractNodeTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractThrottleManagerTest.class));
         return suite;
 
     }
