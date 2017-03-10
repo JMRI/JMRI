@@ -25,6 +25,10 @@ public class AbstractThrottleManagerTest {
            @Override
            public void requestThrottleSetup(jmri.LocoAddress a, boolean control){
            }
+           @Override
+           public boolean addressTypeUnique(){
+              return true;
+           }
         };
         Assert.assertNotNull("exists",t);
     }
