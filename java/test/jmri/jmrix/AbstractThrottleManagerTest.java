@@ -27,6 +27,14 @@ public class AbstractThrottleManagerTest {
            }
            @Override
            public boolean addressTypeUnique(){
+              return false;
+           }
+           @Override
+           public boolean canBeShortAddress(int address){
+              return true;
+           }
+           @Override
+           public boolean canBeLongAddress(int address){
               return true;
            }
         };
