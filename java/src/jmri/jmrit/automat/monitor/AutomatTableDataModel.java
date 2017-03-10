@@ -181,7 +181,9 @@ public class AutomatTableDataModel extends AbstractTableModel {
      * Service method to setup a column so that it will hold a button for it's
      * values
      *
-     * @param sample Typical button, used for size
+     * @param table the table in which to configure the column
+     * @param column the position of the configured column
+     * @param sample typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
         TableColumnModel tcm = table.getColumnModel();
