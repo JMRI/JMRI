@@ -1,17 +1,14 @@
 package jmri.jmrit.logix.configurexml;
 
-import java.awt.GraphicsEnvironment;
 import java.util.Iterator;
 import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.BlockOrder;
-import jmri.jmrit.logix.NXFrame;
 import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.WarrantManager;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -45,9 +42,6 @@ public class WarrantManagerXml //extends XmlFile
     public Element store(Object o) {
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
-        if (!GraphicsEnvironment.isHeadless()) {
-            storeNXParams(warrants);
-        }
         WarrantManager manager = (WarrantManager) o;
         Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -174,37 +168,15 @@ public class WarrantManagerXml //extends XmlFile
         return elem;
     }
     
-    static void storeNXParams (Element element) {
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() < 1) {
-            return;
-        }
-        Element elem = new Element("nxparams");
-        NXFrame nxFrame = NXFrame.getInstance();
-        Element e = new Element("maxspeed");
-        e.addContent(Float.toString(nxFrame.getMaxSpeed()));
-        elem.addContent(e);
-        e = new Element("haltstart");
-        e.addContent(nxFrame.getStartHalt()?"yes":"no");
-        elem.addContent(e);
-        element.addContent(elem);
-        return;
-    }
-
     @Override
     public boolean load(Element shared, Element perNode) {
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         
-        // don't continue on to build NXFrame if no content
         if (shared.getChildren().isEmpty()) {
             return true;
         }
         
-        if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame nxFrame = NXFrame.getInstance();
-            loadNXParams(nxFrame, shared.getChild("nxparams"));
-//            nxFrame.init();   don't make visible
-        }
         List<Element> warrantList = shared.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
         for (int i=0; i<warrantList.size(); i++) {
@@ -385,29 +357,6 @@ public class WarrantManagerXml //extends XmlFile
             block =attr.getValue();
 
         return new ThrottleSetting(time, command, value, block);
-    }
-    
-    static void loadNXParams(NXFrame nxFrame, Element elem) {
-        if (elem==null) {
-            return;
-        }
-        nxFrame.setVisible(false);
-        Element e = elem.getChild("maxspeed");
-        if (e!=null) {
-            try {
-                nxFrame.setMaxSpeed(Float.valueOf(e.getValue()));
-            } catch (NumberFormatException nfe) {
-                log.error("NXWarrant MaxSpeed; "+nfe);          
-            }           
-        }
-        e = elem.getChild("haltstart");
-        if (e!=null) {
-            if (e.getValue().equals("yes")) {
-                nxFrame.setStartHalt(true);
-            } else {
-                nxFrame.setStartHalt(false);
-            }
-        }
     }
     
     @Override
