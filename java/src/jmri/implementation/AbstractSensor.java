@@ -320,6 +320,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      *
      * @param r PullResistance value to use.
      */
+    @Override
     public void setPullResistance(PullResistance r){
     }
 
@@ -329,7 +330,8 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * @return the currently set PullResistance value.  In this default 
      * impelmetnation, PullResistance.PULL_OFF is always returned.
      */
-    public PullResistance setPullResistance(){
+    @Override
+    public PullResistance getPullResistance(){
        return PullResistance.PULL_OFF;
     }
 

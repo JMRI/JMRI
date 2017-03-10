@@ -214,6 +214,6 @@ public interface Sensor extends NamedBean {
      *
      * @return the currently set PullResistance value.
      */
-    public PullResistance setPullResistance();
+    public PullResistance getPullResistance();
 
 }
