@@ -1,17 +1,18 @@
 package jmri;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
  * Utility class for managing access to a NamedBean.
  * <p>
- * This associates a particular name (either the user name or system name, typically)
- * with a specific NamedBean.  Later, when the user wants to do a rename operation,
- * this is used to decide whether this particular reference should be renamed. Note, however,
- * that these should only be created and access via the {@link NamedBeanHandleManager} instance.
- * 
+ * This associates a particular name (either the user name or system name,
+ * typically) with a specific NamedBean. Later, when the user wants to do a
+ * rename operation, this is used to decide whether this particular reference
+ * should be renamed. Note, however, that these should only be created and
+ * access via the {@link NamedBeanHandleManager} instance.
+ *
+ * @param <T> the class of the NamedBean
  * @see NamedBeanHandleManager
  * @see NamedBean
  *
@@ -22,8 +23,10 @@ public class NamedBeanHandle<T extends NamedBean> implements java.io.Serializabl
     /**
      * Create a handle to a particular bean accessed by a specific name.
      * <p>
-     * Usually, defer to 
-     * {@link NamedBeanHandleManager} to create these
+     * Usually, defer to {@link NamedBeanHandleManager} to create these
+     *
+     * @param name the name for the handle
+     * @param bean the bean to handle
      */
     public NamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
         this.name = name;
@@ -54,9 +57,9 @@ public class NamedBeanHandle<T extends NamedBean> implements java.io.Serializabl
     @Override
     @CheckReturnValue
     public String toString() {
-        return "NamedBeanHandle named \""+name+"\" for system name \""+bean.getSystemName()+"\"";
+        return "NamedBeanHandle named \"" + name + "\" for system name \"" + bean.getSystemName() + "\"";
     }
-    
+
     @Override
     @CheckReturnValue
     public boolean equals(Object obj) {
