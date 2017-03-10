@@ -23,7 +23,7 @@ public class AbstractThrottleManagerTest {
            }
         }){
            @Override
-           public void requestThrottleSetup(LocoAddress a, boolean control){
+           public void requestThrottleSetup(jmri.LocoAddress a, boolean control){
            }
         };
         Assert.assertNotNull("exists",t);
