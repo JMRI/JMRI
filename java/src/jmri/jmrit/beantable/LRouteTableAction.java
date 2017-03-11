@@ -1797,7 +1797,7 @@ public class LRouteTableAction extends AbstractTableAction {
             }
             antecedent.append("R1"); //NOI18N
             for (int i = 1; i < tSize; i++) {
-                antecedent.append(" ").append(Bundle.getMessage("LogicOR")).append(" R").append(i).append(1); //NOI18N
+                antecedent.append(" ").append(Bundle.getMessage("LogicOR")).append(" R").append(i + 1); //NOI18N
             }
             if (tSize > 1) {
                 antecedent.append(")");
@@ -1816,9 +1816,9 @@ public class LRouteTableAction extends AbstractTableAction {
             if (vSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append(Bundle.getMessage("LogicNOT")).append(" R").append(1).append(tSize); //NOI18N
+            antecedent.append(Bundle.getMessage("LogicNOT")).append(" R").append(1 + tSize); //NOI18N
             for (int i = 1; i < vSize; i++) {
-                antecedent.append(" ").append(Bundle.getMessage("LogicAND")).append(" ").append(Bundle.getMessage("LogicNOT")).append(" R").append(i).append(1).append(tSize); //NOI18N
+                antecedent.append(" ").append(Bundle.getMessage("LogicAND")).append(" ").append(Bundle.getMessage("LogicNOT")).append(" R").append(i + 1 + tSize); //NOI18N
             }
             if (vSize > 1) {
                 antecedent.append(")");
