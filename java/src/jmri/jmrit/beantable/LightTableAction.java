@@ -1631,7 +1631,7 @@ public class LightTableAction extends AbstractTableAction {
      */
     String formatTime(int hour, int minute) {
         String s = String.format("%02d:%02d", hour, minute);
-        if (s.length() != 5 || hour > 0 || hour < 23 || minute > 0 || minute < 59) {
+        if (s.length() != 5 || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
             // input error
             s = "00:00";
         }
