@@ -13,13 +13,18 @@ import javax.annotation.CheckReturnValue;
 @CheckReturnValue
 public final class MathUtil {
 
+    //return a double between a & b for t:0 ==> a and t:1 ==> b
+    public static double lerp(double a, double b, double t) {
+        return ((1.0 - t) * a) + (t * b);
+    }
+
     //return a Double between a & b for t:0 ==> a and t:1 ==> b
     public static Double lerp(Double a, Double b, Double t) {
         return ((1.0 - t) * a) + (t * b);
     }
 
     //return a Point2D between a & b for t:0 ==> a and t:1 ==> b
-    public static Point2D lerp(Point2D p1, Point2D p2, Double interpolant) {
+    public static Point2D lerp(Point2D p1, Point2D p2, double interpolant) {
         return new Point2D.Double(
             lerp(p1.getX(), p2.getX(), interpolant),
             lerp(p1.getY(), p2.getY(), interpolant));
@@ -45,23 +50,23 @@ public final class MathUtil {
     // Note: THIS IS NOT A PIN OR TRUNCATE; VALUES WRAP AROUND BETWEEN MIN & MAX
     // (And yes, this works correctly with negative numbers)
     //
-    public static Double wrap(Double inValue, Double inMin, Double inMax) {
-        Double valueRange = inMax - inMin;
+    public static double wrap(double inValue, double inMin, double inMax) {
+        double valueRange = inMax - inMin;
         return inMin + ((((inValue - inMin) % valueRange) + valueRange) % valueRange);
     }
 
     // wrap an double between +/-180
-    public static Double wrapPM180(Double inValue) {
+    public static double wrapPM180(double inValue) {
         return wrap(inValue, -180.0, +180.0);
     }
 
     // wrap an double between +/-360
-    public static Double wrapPM360(Double inValue) {
+    public static double wrapPM360(double inValue) {
         return wrap(inValue, -360.0, +360.0);
     }
 
     // wrap an double between 0-360
-    public static Double wrap360(Double inValue) {
+    public static double wrap360(double inValue) {
         return wrap(inValue, 0.0, +360.0);
     }
 
@@ -76,7 +81,7 @@ public final class MathUtil {
     }
 
     // pin a value between min & max
-    public static Double pin(Double inValue, Double inMin, Double inMax) {
+    public static double pin(double inValue, double inMin, double inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
     }
 }

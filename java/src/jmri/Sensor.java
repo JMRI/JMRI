@@ -25,7 +25,7 @@ public interface Sensor extends NamedBean {
     // states are parameters; both closed and thrown is possible!
     public static final int ACTIVE = 0x02;
     public static final int INACTIVE = 0x04;
-    
+
     /**
      * Known state on layout is a bound parameter
      *
@@ -51,8 +51,8 @@ public interface Sensor extends NamedBean {
 
     /**
      * Control whether the actual sensor input is considered to be inverted,
-     * e.g. the normal electrical signal that results in an ACTIVE state now
-     * results in an INACTIVE state.
+     * such that the normal electrical signal that normally results in an ACTIVE
+     * state now results in an INACTIVE state.
      * <p>
      * Changing this changes the state from ACTIVE to INACTIVE and vice-versa,
      * with notifications; UNKNOWN and INCONSISTENT are left unchanged.
@@ -69,7 +69,7 @@ public interface Sensor extends NamedBean {
      */
     public boolean getInverted();
 
-     /**
+    /**
      * Determine if sensor can be inverted. When a turnout is inverted the
      * {@link #ACTIVE} and {@link #INACTIVE} states are inverted on the layout.
      *
