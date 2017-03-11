@@ -469,6 +469,8 @@ public class LRouteTableAction extends AbstractTableAction {
 
     /**
      * Edit button in Logix Route table pressed.
+     *
+     * @param sName system name of Logix to edit
      */
     void editPressed(String sName) {
         // Logix was found, initialize for edit
@@ -491,6 +493,8 @@ public class LRouteTableAction extends AbstractTableAction {
     /**
      * Interprets the conditionals from the Logix that was selected for editing
      * and attempts to reconstruct the window entries.
+     *
+     * @param e the action event
      */
     void setupEdit(ActionEvent e) {
         makeEditWindow();
@@ -541,7 +545,11 @@ public class LRouteTableAction extends AbstractTableAction {
     }   // setupEdit
 
     /**
-     * Return the type letter from the possible LRoute conditional.
+     * Get the type letter from the possible LRoute conditional.
+     *
+     * @param logixSysName logix system name
+     * @param cSysName conditional system name
+     * @return the type letter
      */
     char getRouteConditionalType(String logixSysName, String cSysName) {
         if (cSysName.startsWith(logixSysName)) {
@@ -556,7 +564,10 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Extract the Control (input) and Action (output) elements and their states
+     * Extract the Control (input) and Action (output) elements and their
+     * states.
+     *
+     * @param cSysName the conditional system name
      */
     void getControlsAndActions(String cSysName) {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
@@ -701,7 +712,9 @@ public class LRouteTableAction extends AbstractTableAction {
     }   // getControlsAndActions
 
     /**
-     * Extract the Alignment Sensors and their types
+     * Extract the Alignment Sensors and their types.
+     *
+     * @param cSysName the conditional system name
      */
     void getAlignmentSensors(String cSysName) {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
@@ -795,7 +808,9 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Extract the Lock expression. For now, same as action control expression
+     * Extract the Lock expression. For now, same as action control expression.
+     *
+     * @param cSysName the conditional system name
      */
     void getLockConditions(String cSysName) {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
@@ -841,7 +856,9 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Cancel button
+     * Responds to the Cancel button.
+     *
+     * @param e the action event
      */
     void cancelPressed(ActionEvent e) {
         Logix logix = checkNamesOK();
@@ -1362,7 +1379,9 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Add Route button
+     * Responds to the Add Route button.
+     *
+     * @param e the action event
      */
     void createPressed(ActionEvent e) {
         if (!checkNewNamesOK()) {
@@ -1372,7 +1391,9 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Delete button
+     * Responds to the Delete button.
+     *
+     * @param e the action event
      */
     void deletePressed(ActionEvent e) {
         Logix l = checkNamesOK();
@@ -1385,7 +1406,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Update button - update to Route Table
+     * Update the Route Table.
      */
     void updatePressed() {
         Logix logix = checkNamesOK();
@@ -1775,8 +1796,18 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
+     * Create a new route conditional.
+     *
+     * @param numConds number of existing route conditionals
+     * @param actionList actions to take in conditional
+     * @param triggerList triggers for conditional to take actions
+     * @param vetoList controls that veto taking actions
+     * @param logix Logix to add the conditional to
+     * @param sName system name for conditional
+     * @param uName user name for conditional
+     * @param type type of conditional
+     * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
-     * @return The number of conditionals after the creation.
      */
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList, ArrayList<ConditionalVariable> vetoList,
@@ -1863,8 +1894,16 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     /**
+     * Create a new alignment conditional.
+     *
+     * @param numConds number of existing route conditionals
+     * @param actionList actions to take in conditional
+     * @param triggerList triggers for conditional to take actions
+     * @param logix Logix to add the conditional to
+     * @param sName system name for conditional
+     * @param uName user name for conditional
+     * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
-     * @return The number of conditionals after the creation.
      */
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList,
