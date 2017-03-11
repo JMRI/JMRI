@@ -1784,9 +1784,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
      */
     protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
-        int j;
-        int numAll;
-        numAll = ar.getActiveTrain().getAllocatedSectionList().size();
+    
+    
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 ArrayList<Block> blas = as.getSection().getBlockList();
@@ -1803,7 +1802,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 //
 
                 ArrayList<Block> bls = new ArrayList<Block>();
-                if(numAll == 0){
+                if(ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0){
+                    int j;
                     if(ar.getSectionDirection()==Section.FORWARD){
                         j = 0;
                         for(int i = 0; i<s.getBlockList().size(); i++){
