@@ -123,6 +123,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
      */
     private void setPullState(PinPullResistance pr){
         pull = pr;
+        pin.setPullResistance(pull);
     }
 
     /**
