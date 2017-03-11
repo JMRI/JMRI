@@ -4356,7 +4356,7 @@
           </label>
         </column>
         <column>
-          <display item="PA1" tooltip="Determines the input addess"/>
+          <display item="PA1" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P1" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4393,7 +4393,7 @@
           </label>
         </column>
         <column>
-          <display item="PA2" tooltip="Determines the input addess"/>
+          <display item="PA2" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P2" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4435,7 +4435,7 @@
           </label>
         </column>
         <column>
-          <display item="PA3" tooltip="Determines the input addess"/>
+          <display item="PA3" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P3" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4477,7 +4477,7 @@
           </label>
         </column>
         <column>
-          <display item="PA4" tooltip="Determines the input addess"/>
+          <display item="PA4" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P4" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4521,7 +4521,7 @@
           </label>
         </column>
         <column>
-          <display item="PA5" tooltip="Determines the input addess"/>
+          <display item="PA5" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P5" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4563,7 +4563,7 @@
           </label>
         </column>
         <column>
-          <display item="PA6" tooltip="Determines the input addess"/>
+          <display item="PA6" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P6" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4605,7 +4605,7 @@
           </label>
         </column>
         <column>
-          <display item="PA7" tooltip="Determines the input addess"/>
+          <display item="PA7" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P7" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4647,7 +4647,7 @@
           </label>
         </column>
         <column>
-          <display item="PA8" tooltip="Determines the input addess"/>
+          <display item="PA8" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P8" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4694,7 +4694,7 @@
           </label>
         </column>
         <column>
-          <display item="SA1" tooltip="Determines the input addess"/>
+          <display item="SA1" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P1" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4731,7 +4731,7 @@
           </label>
         </column>
         <column>
-          <display item="SA2" tooltip="Determines the input addess"/>
+          <display item="SA2" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P2" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4773,7 +4773,7 @@
           </label>
         </column>
         <column>
-          <display item="SA3" tooltip="Determines the input addess"/>
+          <display item="SA3" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P3" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4815,7 +4815,7 @@
           </label>
         </column>
         <column>
-          <display item="SA4" tooltip="Determines the input addess"/>
+          <display item="SA4" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P4" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4859,7 +4859,7 @@
           </label>
         </column>
         <column>
-          <display item="SA5" tooltip="Determines the input addess"/>
+          <display item="SA5" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P5" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4901,7 +4901,7 @@
           </label>
         </column>
         <column>
-          <display item="SA6" tooltip="Determines the input addess"/>
+          <display item="SA6" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P6" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4943,7 +4943,7 @@
           </label>
         </column>
         <column>
-          <display item="SA7" tooltip="Determines the input addess"/>
+          <display item="SA7" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P7" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -4985,7 +4985,7 @@
           </label>
         </column>
         <column>
-          <display item="SA8" tooltip="Determines the input addess"/>
+          <display item="SA8" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="STog P8" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -6156,7 +6156,7 @@
       </row>
       <row>
         <column>
-          <display item="MType1" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType1" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -6245,7 +6245,7 @@
       </row>
       <row>
         <column>
-          <display item="MType2" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType2" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -6334,7 +6334,7 @@
       </row>
       <row>
         <column>
-          <display item="MType3" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType3" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -6423,7 +6423,7 @@
       </row>
       <row>
         <column>
-          <display item="MType4" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType4" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -6521,7 +6521,7 @@
       </row>
       <row>
         <column>
-          <display item="MType5" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType5" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -6610,7 +6610,7 @@
       </row>
       <row>
         <column>
-          <display item="MType6" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType6" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -6699,7 +6699,7 @@
       </row>
       <row>
         <column>
-          <display item="MType7" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType7" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -6788,7 +6788,7 @@
       </row>
       <row>
         <column>
-          <display item="MType8" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType8" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
