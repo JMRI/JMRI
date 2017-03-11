@@ -5,8 +5,8 @@ package jmri;
  * <P>
  * Programmers come in multiple types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously "Service Mode" or on a programming track
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main"
  * </UL>
  * Different equipment may also require different programmers:
  * <ul>

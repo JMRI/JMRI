@@ -2,7 +2,6 @@ package jmri.util;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -288,20 +287,17 @@ public class StringUtil {
      *
      * @param s	        collection of strings
      * @param delimiter the delimiter
-     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
+     * @return the results of
+     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
+     * @deprecated since 4.7.2; use
+     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
+     * instead
      */
     @CheckReturnValue
     @Nonnull
+    @Deprecated
     public static String join(@Nonnull Collection<String> s, @Nonnull String delimiter) {
-        StringBuilder buffer = new StringBuilder();
-        Iterator<String> iter = s.iterator();
-        while (iter.hasNext()) {
-            buffer.append(iter.next());
-            if (iter.hasNext()) {
-                buffer.append(delimiter);
-            }
-        }
-        return buffer.toString();
+        return String.join(delimiter, s);
     }
 
     /**
@@ -309,7 +305,8 @@ public class StringUtil {
      *
      * @param s	        collection of strings
      * @param delimiter the delimiter
-     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
+     * @return the results of
+     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
      * @deprecated since 4.5.6; use
      * {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
      * instead
@@ -318,14 +315,7 @@ public class StringUtil {
     @Deprecated
     @Nonnull
     public static String join(@Nonnull String[] s, @Nonnull String delimiter) {
-        StringBuilder buffer = new StringBuilder();
-        for (int i = 0; i < s.length; i++) {
-            buffer.append(s[i]);
-            if (i < s.length - 1) {
-                buffer.append(delimiter);
-            }
-        }
-        return buffer.toString();
+        return String.join(delimiter, s);
     }
 
     /**

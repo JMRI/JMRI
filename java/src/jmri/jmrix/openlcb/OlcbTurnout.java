@@ -1,13 +1,11 @@
 package jmri.jmrix.openlcb;
 
+import jmri.Turnout;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.Turnout;
-import jmri.jmrix.can.CanMessage;
 
 /**
  * Turnout for OpenLCB connections.
@@ -118,7 +116,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
-        CanMessage m;
         if (s == Turnout.THROWN) {
             turnoutListener.setFromOwner(true);
             if (_activeFeedbackType == MONITORING) {
@@ -136,6 +133,15 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     protected void turnoutPushbuttonLockout(boolean locked) {
         // TODO: maybe we could get another pair of events in the address and use that event pair
         // to perform a lockout change on the turnout decoder itself.
+    }
+
+    /*
+     * since the events that drive a turnout can be whichever state a user
+     * wants, the order of the event pair determines what is the 'closed' state
+     */
+    @Override
+    public boolean canInvert() {
+        return false;
     }
 
     @Override

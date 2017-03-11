@@ -49,7 +49,7 @@ public interface SignalMastManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if SignalMast doesn't already exist and
      *                                  the manager cannot create the SignalMast
-     *                                  due to e.g. an illegal name or name that
+     *                                  due to an illegal name or name that
      *                                  can't be parsed.
      */
     @Nonnull public SignalMast provideSignalMast(@Nonnull String name);

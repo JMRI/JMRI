@@ -27,9 +27,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -1155,7 +1152,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void createFloatingEditToolBox() {
         if (floatingEditToolBox == null) {
             if (floatingEditContent == null) {
-                // Create the window content on the first call
+                // Create the window content if necessary, normally on first load or switching from toolbox to toolbar to toolbox
                 createFloatingEditContent();
             }
 
@@ -1179,7 +1176,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private void createFloatingEditContent() {
-        log.info("#### createFloatingEditContent");  // DIAG
         /*
          * JFrame - floatingEditToolBox
          *     JScrollPane - floatingEditContent
@@ -2494,7 +2490,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             ddldoChoiceMenuItem.addActionListener((ActionEvent event) -> {
                 JRadioButtonMenuItem ddldoMenuItem = (JRadioButtonMenuItem) event.getSource();
                 JPopupMenu parentMenu = (JPopupMenu) ddldoMenuItem.getParent();
-                int ddldoInt = parentMenu.getComponentZOrder(ddldoMenuItem);
+                int ddldoInt = parentMenu.getComponentZOrder(ddldoMenuItem) + 1;
                 JmriBeanComboBox.DisplayOptions ddldo = JmriBeanComboBox.DisplayOptions.valueOf(ddldoInt);
 
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
@@ -2808,6 +2804,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setDirty(true);
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
+            	// Rebuild the toolbox after a name change.
                 deleteFloatingEditToolBox();
                 createFloatingEditToolBox();
             }
@@ -3211,6 +3208,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (null != floatingEditToolBox) {
                     deleteFloatingEditToolBox();
                 }
+				floatingEditContent = null;  // The switch to toolbar will move the toolbox content to the new toolbar
                 editToolBarContainer.setVisible(isEditable());
             }
             toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));

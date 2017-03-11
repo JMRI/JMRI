@@ -89,6 +89,15 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(OtherConnectionTypeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.debugthrottle.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NetMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractNodeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmrixConfigPaneTest.class));
         return suite;
 
     }
