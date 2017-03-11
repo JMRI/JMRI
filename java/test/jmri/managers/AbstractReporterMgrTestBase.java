@@ -24,12 +24,16 @@ import org.junit.Ignore;
  */
 public abstract class AbstractReporterMgrTestBase {
 
+    /**
+     * Max number of Reporters supported.  Override to return 1 if 
+     * only 1 can be created, for example
+     */
+    protected int maxN() { return 100; }
+    
     // implementing classes must provide these abstract members:
-    //
-    @Before
-    abstract public void setUp();    	// load l with actual object; create scaffolds as needed
+    abstract public void setUp();    	// load l with actual object; create scaffolds as needed, tag @Before
 
-    abstract public String getSystemName(int i);
+    abstract public String getSystemName(String i);
 
     protected ReporterManager l = null;	// holds objects under test
 
@@ -56,17 +60,17 @@ public abstract class AbstractReporterMgrTestBase {
     }
 
     @Test
-    @Ignore("Bad test.  Where is the USER NAME Fred set?")
     public void testReporterProvideReporter() {
         // Create
-        Reporter t = l.provideReporter("" + getNumToTest1());
+        Reporter t = l.provideReporter("" + getNameToTest1());
+        t.setUserName("Fred");
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("user name correct ", t == l.getByUserName("Fred"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
 
         // Check that "providing" an already-created reporter returns the same object.
-        Reporter t2 = l.provideReporter("" + getNumToTest2());
+        Reporter t2 = l.provideReporter(t.getSystemName());
         Assert.assertTrue("provided same object ", t == t2);
     }
 
@@ -77,22 +81,29 @@ public abstract class AbstractReporterMgrTestBase {
     }
 
     @Test
-    @Ignore("Bad test.  Depends on testReporterProvideReporter.  Must be independent or depend on BeforeClass and Before methods only.")
     public void testReporterGetBySystemName() {
-        // Try a successful one -- the one that was added in testReporterProvideReporter()
-        Reporter t = l.getBySystemName(getSystemName(getNumToTest1()));
+        // Create
+        Reporter t = l.provideReporter("" + getNameToTest1());
+        t.setUserName("Fred");
+
+        // Try a successful one
+        t = l.getBySystemName(getSystemName(getNameToTest1()));
         Assert.assertTrue("get retrieved existing object ", t != null);
 
         // Try a nonexistant one. Should return null
-        t = l.getBySystemName(getSystemName(getNumToTest2()));
+        if (maxN()<2) return;
+        t = l.getBySystemName(getSystemName(getNameToTest2()));
         Assert.assertTrue("get nonexistant object ", t == null);
     }
 
     @Test
-    @Ignore("Bad test.  Depends on testReporterProvideReporter.  Must be independent or depend on BeforeClass and Before methods only.")
     public void testReporterGetByUserName() {
-        // Try a successful one -- the one that was added in testReporterProvideReporter()
-        Reporter t = l.getByUserName("Fred");
+        // Create
+        Reporter t = l.provideReporter("" + getNameToTest1());
+        t.setUserName("Fred");
+
+        // Try a successful one
+        t = l.getByUserName("Fred");
         Assert.assertTrue("get retrieved existing object ", t != null);
 
         // Try a nonexistant one. Should return null
@@ -101,10 +112,13 @@ public abstract class AbstractReporterMgrTestBase {
     }
 
     @Test
-    @Ignore("Bad test.  Depends on testReporterProvideReporter.  Must be independent or depend on BeforeClass and Before methods only.")
     public void testReporterGetByDisplayName() {
-        // Try a successful one -- the one that was added in testReporterProvideReporter()
-        Reporter t = l.getByDisplayName(getSystemName(getNumToTest1()));
+        // Create
+        Reporter t = l.provideReporter("" + getNameToTest1());
+        t.setUserName("Fred");
+
+        // Try a successful one
+        t = l.getByDisplayName(getSystemName(getNameToTest1()));
         Assert.assertTrue("get retrieved existing object ", t != null);
 
         Reporter t2 = l.getByDisplayName("Fred");
@@ -114,21 +128,21 @@ public abstract class AbstractReporterMgrTestBase {
     @Test
     public void testDefaultSystemName() {
         // create
-        Reporter t = l.provideReporter("" + getNumToTest3());
+        Reporter t = l.provideReporter("" + getNameToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest3())));
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
     }
 
     @Test
     public void testSingleObject() {
         // test that you always get the same representation
-        Reporter t1 = l.newReporter(getSystemName(getNumToTest4()), "mine");
+        Reporter t1 = l.newReporter(getSystemName(getNameToTest1()), "mine");
         Assert.assertTrue("t1 real object returned ", t1 != null);
         Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest4())));
+        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNameToTest1())));
 
-        Reporter t2 = l.newReporter(getSystemName(getNumToTest4()), "mine");
+        Reporter t2 = l.newReporter(getSystemName(getNameToTest1()), "mine");
         Assert.assertTrue("t2 real object returned ", t2 != null);
         // check
         Assert.assertTrue("same new ", t1 == t2);
@@ -143,7 +157,7 @@ public abstract class AbstractReporterMgrTestBase {
 
     @Test
     public void testUpperLower() {
-        Reporter t = l.provideReporter("" + getNumToTest2());
+        Reporter t = l.provideReporter("" + getNameToTest1());
         String name = t.getSystemName();
         Assert.assertNull(l.getReporter(name.toLowerCase()));
     }
@@ -151,7 +165,7 @@ public abstract class AbstractReporterMgrTestBase {
     @Test
     public void testRename() {
         // get reporter
-        Reporter t1 = l.newReporter(getSystemName(getNumToTest5()), "before");
+        Reporter t1 = l.newReporter(getSystemName(getNameToTest1()), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
         Reporter t2 = l.getByUserName("after");
@@ -163,23 +177,11 @@ public abstract class AbstractReporterMgrTestBase {
      * Number of light to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
-    protected int getNumToTest1() {
-        return 9;
+    protected String getNameToTest1() {
+        return "1";
     }
 
-    protected int getNumToTest2() {
-        return 7;
-    }
-
-    protected int getNumToTest3() {
-        return 6;
-    }
-
-    protected int getNumToTest4() {
-        return 5;
-    }
-
-    protected int getNumToTest5() {
-        return 4;
+    protected String getNameToTest2() {
+        return "2";
     }
 }

@@ -116,6 +116,15 @@ public class RosterEntryTest extends TestCase {
 
     }
 
+    public void testModifyDate() {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        r.setDateUpdated("unparseable date");
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\"."); 
+    }
+
     public void testStoreFunctionLockable() {
         RosterEntry r = new RosterEntry("file here");
 

@@ -102,11 +102,12 @@ public class ConsistFile extends XmlFile {
             Element e;
             do {
                 e = childIterator.next();
-                Attribute number, isLong, direction, position;
+                Attribute number, isLong, direction, position,rosterId;
                 number = e.getAttribute("dccLocoAddress");
                 isLong = e.getAttribute("longAddress");
                 direction = e.getAttribute("locoDir");
                 position = e.getAttribute("locoName");
+                rosterId = e.getAttribute("locoRosterId");
                 log.debug("adding Loco {}", number);
                 // Use restore so we DO NOT cause send any commands
                 // to the command station as we recreate the consist.
@@ -156,6 +157,9 @@ public class ConsistFile extends XmlFile {
                         newConsist.setPosition(address, pos);
                     }
                 }
+                if( rosterId != null ){
+                  newConsist.setRosterId(address,rosterId.getValue());
+                }
             } while (true);
         } catch (NoSuchElementException nse) {
             log.debug("end of loco list");
@@ -192,6 +196,10 @@ public class ConsistFile extends XmlFile {
             } else {
                 eng.setAttribute("locoName", "mid");
                 eng.setAttribute("locoMidNumber", "" + position);
+            }
+            String rosterId = consist.getRosterId(locoaddress);
+            if(rosterId!=null){
+                eng.setAttribute("locoRosterId",rosterId);
             }
             e.addContent(eng);
         }

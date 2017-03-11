@@ -731,21 +731,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void helpMenu(JMenuBar menuBar, WindowInterface wi) {
-        try {
+        // create menu and standard items
+        JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
 
-            // create menu and standard items
-            JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-            // use as main help menu 
-            menuBar.add(helpMenu);
-
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help.", e3);
-        }
-
+        // use as main help menu 
+        menuBar.add(helpMenu);
     }
 
     /**
@@ -966,7 +959,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     static AWTEventListener debugListener = null;
 
     // TODO: Remove the "static" nature of much of the initialization someday.
-    //       It exits to allow splash() to be called first-thing in main(), see e.g.
+    //       It exits to allow splash() to be called first-thing in main(), see
     //       apps.DecoderPro.DecoderPro.main(...) 
     //       Or maybe, just not worry about this here, in the older base class,
     //       and address it in the newer apps.gui3.Apps3 as that's the base class of the future.
@@ -980,9 +973,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     /**
      * Invoke the standard Log4J logging initialization.
      * <p>
-     * No longer used here. ({@link #splash} calls the initialization directly.
-     * Left as a deprecated method because other code, e.g. CATS is still using
-     * in in JMRI 3.7 and perhaps 3.8
+     * No longer used in JMRI. ({@link #splash} calls the initialization
+     * directly. Left as a deprecated method because other code, such as CATS,
+     * is still using in in JMRI 3.7 and perhaps 3.8
      *
      * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
      * directly.

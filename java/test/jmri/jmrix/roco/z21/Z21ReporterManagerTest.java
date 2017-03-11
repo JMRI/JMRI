@@ -1,10 +1,12 @@
 package jmri.jmrix.roco.z21;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for Z21ReporterManager class.
+ * The class being tested only has one reporter, hence some tests pulled down.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
@@ -12,7 +14,7 @@ import org.junit.Before;
 public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "ZR" + i;
     }
 
@@ -36,29 +38,11 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
    }
 
     @Override
-    protected int getNumToTest1() {
-        return 1;
-    }
-
+    protected int maxN() { return 1; }
+    
     @Override
-    protected int getNumToTest2() {
-        return 1;
+    protected String getNameToTest1() {
+        return "1";
     }
-
-    @Override
-    protected int getNumToTest3() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest4() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest5() {
-        return 1;
-    }
-
 
 }

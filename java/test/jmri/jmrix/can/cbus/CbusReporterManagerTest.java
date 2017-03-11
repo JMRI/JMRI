@@ -16,7 +16,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "MR" + i;
     }
 

@@ -30,8 +30,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.JWindow;
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * Provide graphic output to a screen/printer.
+ * <p>
  * This is from Chapter 12 of the O'Reilly Java book by David Flanagan with the
  * alligator on the front.
  *
@@ -197,26 +201,29 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Creates a print preview toolbar added by Dennis Miller
+     * Create a print preview toolbar.
+     *
+     * @author Dennis Miller
      */
     protected void toolBarInit() {
-        previousButton = new JButton("Previous Page");
+        previousButton = new JButton(Bundle.getMessage("ButtonPreviousPage"));
         previewToolBar.add(previousButton);
         previousButton.addActionListener((ActionEvent actionEvent) -> {
             pagenum--;
             displayPage();
         });
-        nextButton = new JButton("Next Page");
+        nextButton = new JButton(Bundle.getMessage("ButtonNextPage"));
         previewToolBar.add(nextButton);
         nextButton.addActionListener((ActionEvent actionEvent) -> {
             pagenum++;
             displayPage();
         });
-        previewToolBar.add(new JLabel("    Page "));
+        previewToolBar.add(new JLabel("  " + Bundle.getMessage("HeaderPageNum")));
         previewToolBar.add(pageCount);
-        previewToolBar.add(new JLabel(" of "));
+        previewToolBar.add(new JLabel(" / ")); // values don't stick to use {0} etc. variable fields
         previewToolBar.add(totalPages);
-        closeButton = new JButton(" Close ");
+
+        closeButton = new JButton(Bundle.getMessage("ButtonClose"));
         previewToolBar.add(closeButton);
         closeButton.addActionListener((ActionEvent actionEvent) -> {
             if (page != null) {
@@ -227,8 +234,11 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Method to display a page image in the preview pane Not in original class
-     * but added later by Dennis Miller
+     * Display a page image in the preview pane.
+     * <p>
+     * Not part of the original HardcopyWriter class.
+     *
+     * @author Dennis Miller
      */
     protected void displayPage() {
         // limit the pages to the actual range
@@ -255,13 +265,20 @@ public class HardcopyWriter extends Writer {
         previewPanel.add(previewLabel);
         // set the page count info
         pageCount.setText("" + pagenum);
-        totalPages.setText("" + pageImages.size() + "     ");
+        totalPages.setText(pageImages.size() + "     ");
         // repaint the frame but don't use pack() as we don't want resizing
         previewFrame.invalidate();
         previewFrame.revalidate();
         previewFrame.setVisible(true);
     }
 
+    /**
+     * Send text to Writer output.
+     *
+     * @param buffer block of text characters
+     * @param index position to start printing
+     * @param len length (number of characters) of output
+     */
     @Override
     public void write(char[] buffer, int index, int len) {
         synchronized (this.lock) {
@@ -332,8 +349,10 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Write the String with the desired color. Returns the text color back to
-     * the default after the string is written.
+     * Write a given String with the desired color.
+     * <p>
+     * Reset the text color back to the default after
+     * the string is written.
      *
      * @param c the color desired for this String
      * @param s the String
@@ -355,7 +374,10 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * method modified by Dennis Miller to add preview capability
+     * Handle close event of pane.
+     * Modified to clean up the added preview capability.
+     *
+     * @author David Flanagan, modified by Dennis Miller
      */
     @Override
     public void close() {
@@ -377,7 +399,9 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * Dispose added so that a preview can be canceled
+     * Free up resources .
+     * <p>
+     * Added so that a preview can be canceled.
      */
     public void dispose() {
         synchronized (this.lock) {
@@ -741,4 +765,5 @@ public class HardcopyWriter extends Writer {
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(HardcopyWriter.class.getName());
 }

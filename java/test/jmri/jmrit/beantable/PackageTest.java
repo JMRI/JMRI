@@ -42,6 +42,27 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.beantable.beanedit.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.beantable.usermessagepreferences.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(MemoryTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(AudioTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BeanTableFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(BeanTablePaneTest.class));
+        suite.addTest(new JUnit4TestAdapter(EnablingCheckboxRendererTest.class));
+        suite.addTest(new JUnit4TestAdapter(IdTagTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LightTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LightTableTabActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ListedTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ListedTableFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(MaintenanceTest.class));
+        suite.addTest(new JUnit4TestAdapter(RailComTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ReporterTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(SectionTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(SensorTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(SensorTableTabActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(SignalGroupSubTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(SignalMastLogicTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(SignalMastTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(TransitTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(TurnoutTableTabActionTest.class));
         return suite;
     }
 
