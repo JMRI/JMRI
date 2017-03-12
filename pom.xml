@@ -351,7 +351,7 @@
                     <argLine>@{argLine}</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
-                    <!-- uncomment to force each test into new context
+                    <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
                     -->
