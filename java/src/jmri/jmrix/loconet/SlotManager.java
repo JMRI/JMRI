@@ -603,7 +603,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (i == 124) {
             // here its an operation on the programmer slot
             if (log.isDebugEnabled()) {
-                log.debug("Message " + m.getOpCodeHex() // NOI18N
+                log.debug("Prog Message " + m.getOpCodeHex() // NOI18N
                         + " for slot 124 in state " + progState); // NOI18N
             }
             switch (progState) {
@@ -615,6 +615,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 case 2:   // commandExecuting
                     // waiting for slot read, is it present?
                     if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
+                        log.debug("  was OPC_SL_RD_DATA");
                         // yes, this is the end
                         // move to not programming state
                         stopTimer();
@@ -974,6 +975,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param status The error code, if any
      */
     protected void notifyProgListenerEnd(int value, int status) {
+        log.debug("  notifyProgListenerEnd with {}, {} and _usingProgrammer = {}", value, status, _usingProgrammer);
         // (re)start power timer
         restartEndOfProgrammingTimer();
         // and send the reply
