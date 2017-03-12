@@ -63,7 +63,7 @@ public class ProgDebugger implements AddressedProgrammer {
 
     /**
      * Get the CV value directly, without going through the usual indirect
-     * protocol. Used for e.g. testing.
+     * protocol. Used, for example, while testing.
      * <p>
      * Does not change the "lastRead" and "lastReadCv" results.
      *

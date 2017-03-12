@@ -623,8 +623,18 @@ public class ConditionalVariable {
     }
 
     /**
-     * Note: _num1 determines the comparison used. Can be 0, LESS_THAN, LESS_THAN_OR_EQUAL,
-     * EQUAL, GREATER_THAN_OR_EQUAL or GREATER_THAN.
+     * Compare two values using the comparator set using the comparison
+     * instructions in {@link #setNum1(int)}.
+     *
+     * <strong>Note:</strong> {@link #getNum1()} must be one of {@link #LESS_THAN},
+     * {@link #LESS_THAN_OR_EQUAL}, {@link #EQUAL},
+     * {@link #GREATER_THAN_OR_EQUAL}, or {@link #GREATER_THAN}.
+     *
+     * @param value1          left side of the comparison
+     * @param value2          right side of the comparison
+     * @param caseInsensitive true if comparison should be case insensitive;
+     *                        false otherwise
+     * @return true if values compare per getNum1(); false otherwise
      */
     boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {

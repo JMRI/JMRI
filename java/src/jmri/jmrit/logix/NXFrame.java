@@ -59,7 +59,7 @@ public class NXFrame extends WarrantRoute {
     JRadioButton _forward = new JRadioButton();
     JRadioButton _reverse = new JRadioButton();
     JCheckBox _stageEStop = new JCheckBox();
-    JCheckBox _noRampBox = new JCheckBox();
+    JCheckBox _shareRouteBox = new JCheckBox();
     JCheckBox _haltStartBox = new JCheckBox();
     JCheckBox _calibrateBox = new JCheckBox();
 //    JCheckBox _addTracker = new JCheckBox();
@@ -241,7 +241,8 @@ public class NXFrame extends WarrantRoute {
 
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
-        JPanel trainPanel = makeTrainIdPanel(makeTextBoxPanel(false, _noRampBox, "NoRamping", "ToolTipNoRamping"));
+        JPanel trainPanel = makeTrainIdPanel(makeTextBoxPanel(
+                false, _shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
         p2.add(trainPanel);
 
         JPanel autoRunPanel = new JPanel();
@@ -360,7 +361,7 @@ public class NXFrame extends WarrantRoute {
         int mode;
         if (msg == null && !_runManual.isSelected()) {
             mode = Warrant.MODE_RUN;
-            warrant.setNoRamp(_noRampBox.isSelected());
+            warrant.setShareRoute(_shareRouteBox.isSelected());
             msg = getBoxData();
             if (msg == null) {
                 msg = makeCommands(warrant);

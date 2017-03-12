@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Each IdTag has a two names. The "user" name is entirely free form, and can be
  * used for any purpose. The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * (for example LocoNet or NCE) and address within that system.
  * <P>
  * Much of the book-keeping is implemented in the AbstractIdTagManager class,
  * which can form the basis for a system-specific implementation.
@@ -53,7 +53,7 @@ public interface IdTagManager extends Manager {
      * @return A tag ID
      * @throws IllegalArgumentException if IdTag doesn't already exist and the
      *                                  manager cannot create the IdTag due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
     @Nonnull

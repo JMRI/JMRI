@@ -5,8 +5,8 @@ package jmri;
  * <P>
  * Programmers come in two types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously "Service Mode" or on a programming track
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main"
  * </UL>
  * You get a {@link Programmer} object from a ProgrammerManager, which in turn
  * can be located from the {@link InstanceManager}.
