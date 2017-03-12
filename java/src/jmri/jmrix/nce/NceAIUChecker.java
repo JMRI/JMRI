@@ -42,7 +42,7 @@ public class NceAIUChecker implements NceListener {
 
         // read one byte from NCE memory to determine if AIU broadcasts are enabled
         byte[] bl = NceBinaryCommand.accMemoryRead1(MEM_AIU);
-        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, REPLY_LEN);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
         EXPECT_REPLY = true;
         return m;
 

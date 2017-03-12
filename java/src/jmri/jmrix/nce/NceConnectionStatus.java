@@ -245,7 +245,7 @@ public class NceConnectionStatus implements NceListener {
         }
 
         byte[] bl = NceBinaryCommand.getNceEpromRev();
-        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, REPLY_LEN);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
         return m;
 
     }

@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceMessageUtil;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
@@ -203,7 +202,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             bl[j] = b[i];
         }
 
-        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, REPLY_1);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
         return m;
     }
 

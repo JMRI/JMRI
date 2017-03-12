@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceMessageUtil;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
@@ -335,7 +334,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         replyLen = REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.usbSetCabId(value);
-        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, REPLY_1);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
         tc.sendNceMessage(m, this);
     }
 

@@ -43,7 +43,7 @@ public class NcePowerManager implements PowerManager, NceListener {
             waiting = true;
             onReply = PowerManager.ON;
             // send "Enable main track"
-            NceMessage l = NceMessageUtil.getEnableMain(tc);
+            NceMessage l = NceMessage.getEnableMain(tc);
             tc.sendNceMessage(l, this);
         } else if (v == OFF) {
             // configure to wait for reply
@@ -51,7 +51,7 @@ public class NcePowerManager implements PowerManager, NceListener {
             onReply = PowerManager.OFF;
             firePropertyChange("Power", null, null);
             // send "Kill main track"
-            NceMessage l = NceMessageUtil.getKillMain(tc);
+            NceMessage l = NceMessage.getKillMain(tc);
             tc.sendNceMessage(l, this);
         }
         firePropertyChange("Power", null, null);

@@ -76,7 +76,7 @@ public class NceLight extends AbstractLight {
                         + " " + Integer.toHexString(0xFF & bl[4]));
             }
 
-            NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
 
             tc.sendNceMessage(m, null);
 
@@ -91,7 +91,7 @@ public class NceLight extends AbstractLight {
                         + " " + Integer.toHexString(0xFF & bl[2]));
             }
 
-            NceMessage m = NceMessageUtil.sendPacketMessage(tc, bl);
+            NceMessage m = NceMessage.sendPacketMessage(tc, bl);
 
             tc.sendNceMessage(m, null);
         }

@@ -265,7 +265,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     }
 
     private void sendNceMessage(byte[] b, int replyLength) {
-        NceMessage m = NceMessageUtil.createBinaryMessage(tc, b, replyLength);
+        NceMessage m = NceMessage.createBinaryMessage(tc, b, replyLength);
         _busy++;
         _replyLen = replyLength; // Expect n byte response
         tc.sendNceMessage(m, this);
@@ -361,7 +361,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
 
         private void sendNceMessage(byte[] b, int replyLength) {
-            NceMessage m = NceMessageUtil.createBinaryMessage(tc, b, replyLength);
+            NceMessage m = NceMessage.createBinaryMessage(tc, b, replyLength);
             _busy++;
             _replyLen = replyLength; // Expect n byte response
             tc.sendNceMessage(m, this);
