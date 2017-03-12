@@ -1,6 +1,5 @@
 package jmri.jmrix.nce;
 
-import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,12 +67,11 @@ import org.slf4j.LoggerFactory;
    
  */
 /**
- * NCE Binary Commands
- *
- * Also see NceMessage.java for additional commands
+ * Constants used in NCE Binary command messages.
  *
  * @author Daniel Boudreau (C) 2007, 2010
  * @author ken cameron (C) 2013
+ * @see jmri.jmrix.nce.NceMessageUtil
  */
 public class NceBinaryCommand {
 
@@ -160,53 +158,31 @@ public class NceBinaryCommand {
     public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10; // Delete loco from consist
     public static final byte LOCO_CMD_KILL_CONSIST = 0x11;        // Kill consist
 
+    /**
+     *
+     * @param number the value of number
+     * @param closed the value of closed
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accDecoder}
+     */
+    @Deprecated
     public static byte[] accDecoder(int number, boolean closed) {
 
-        if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
-            log.error("invalid NCE accessory address " + number);
-            return null;
-        }
-
-        /* Moved to NceMessageCheck
-         // USB connected to PowerCab or SB3 can only access addresses up to 250
-         if (number > 250
-         && ((NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) || 
-         (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3))) {
-         log.error("invalid NCE accessory address for USB " + number);
-         return null;
-         }
-         */
-        byte op_1;
-        if (closed) {
-            op_1 = 0x03;
-        } else {
-            op_1 = 0x04;
-        }
-
-        int addr_h = number / 256;
-        int addr_l = number & 0xFF;
-
-        byte[] retVal = new byte[5];
-        retVal[0] = (byte) (ACC_CMD); // NCE accessory command
-        retVal[1] = (byte) (addr_h);  // high address
-        retVal[2] = (byte) (addr_l);  // low address
-        retVal[3] = op_1;             // command
-        retVal[4] = (byte) 0;         // zero out last byte for acc
-
-        return retVal;
+        return NceMessageUtil.accDecoder(number, closed);
     }
 
+    /**
+     *
+     * @param address the value of address
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accMemoryRead}
+     */
+    @Deprecated
     public static byte[] accMemoryRead(int address) {
 
-        int addr_h = address / 256;
-        int addr_l = address & 0xFF;
-
-        byte[] retVal = new byte[3];
-        retVal[0] = (byte) (READ16_CMD); // read 16 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
-
-        return retVal;
+        return NceMessageUtil.accMemoryRead(address);
 
     }
 
@@ -215,200 +191,227 @@ public class NceBinaryCommand {
      *
      * @param address address to read from
      * @return binary command to read one byte
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accMemoryRead1}
      */
+    @Deprecated
     public static byte[] accMemoryRead1(int address) {
 
-        int addr_h = address / 256;
-        int addr_l = address & 0xFF;
-
-        byte[] retVal = new byte[3];
-        retVal[0] = (byte) (READ1_CMD); // read 1 byte command
-        retVal[1] = (byte) (addr_h);    // high address
-        retVal[2] = (byte) (addr_l);    // low address
-
-        return retVal;
+        return NceMessageUtil.accMemoryRead1(address);
 
     }
 
+    /**
+     *
+     * @param address the value of address
+     * @param num     the value of num
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accMemoryWriteN}
+     */
+    @Deprecated
     public static byte[] accMemoryWriteN(int address, int num) {
 
-        int addr_h = address / 256;
-        int addr_l = address & 0xFF;
-
-        byte[] retVal = new byte[4 + 16];
-        retVal[0] = (byte) (WRITE_N_CMD); // write n bytes command
-        retVal[1] = (byte) (addr_h);      // high address
-        retVal[2] = (byte) (addr_l);      // low address
-        retVal[3] = (byte) num;           // number of bytes to write
-
-        return retVal;
+        return NceMessageUtil.accMemoryWriteN(address, num);
 
     }
 
+    /**
+     *
+     * @param address the value of address
+     * @deprecated since 4.7.3; moved to
+     * @return command as a byte sequence
+     *         {@link jmri.jmrix.nce.NceMessageUtil#accMemoryWrite8}
+     */
+    @Deprecated
     public static byte[] accMemoryWrite8(int address) {
 
-        int addr_h = address / 256;
-        int addr_l = address & 0xFF;
-
-        byte[] retVal = new byte[3 + 8];
-        retVal[0] = (byte) (WRITE8_CMD); // write 8 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
-
-        return retVal;
+        return NceMessageUtil.accMemoryWrite8(address);
 
     }
 
+    /**
+     *
+     * @param address the value of address
+     * @deprecated since 4.7.3; moved to
+     * @return command as a byte sequence
+     *         {@link jmri.jmrix.nce.NceMessageUtil#accMemoryWrite4}
+     */
+    @Deprecated
     public static byte[] accMemoryWrite4(int address) {
 
-        int addr_h = address / 256;
-        int addr_l = address & 0xFF;
-
-        byte[] retVal = new byte[3 + 4];
-        retVal[0] = (byte) (WRITE4_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
-
-        return retVal;
+        return NceMessageUtil.accMemoryWrite4(address);
     }
 
+    /**
+     *
+     * @param address the value of address
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accMemoryWrite2}
+     */
+    @Deprecated
     public static byte[] accMemoryWrite2(int address) {
 
-        int addr_h = address / 256;
-        int addr_l = address & 0xFF;
-
-        byte[] retVal = new byte[3 + 2];
-        retVal[0] = (byte) (WRITE2_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
-
-        return retVal;
+        return NceMessageUtil.accMemoryWrite2(address);
     }
 
+    /**
+     *
+     * @param address the value of address
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accMemoryWrite1}
+     */
+    @Deprecated
     public static byte[] accMemoryWrite1(int address) {
 
-        int addr_h = address / 256;
-        int addr_l = address & 0xFF;
-
-        byte[] retVal = new byte[3 + 1];
-        retVal[0] = (byte) (WRITE1_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
-
-        return retVal;
+        return NceMessageUtil.accMemoryWrite1(address);
     }
 
+    /**
+     *
+     * @param cabId the value of cabId
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accAiu2Read}
+     */
+    @Deprecated
     public static byte[] accAiu2Read(int cabId) {
 
-        byte[] retVal = new byte[1 + 1];
-        retVal[0] = (byte) (READ_AUI2_CMD); // write 4 bytes command
-        retVal[1] = (byte) (cabId);         // cab address
-
-        return retVal;
+        return NceMessageUtil.accAiu2Read(cabId);
     }
 
+    /**
+     *
+     * @param cab the value of cab
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#usbSetCabId}
+     */
+    @Deprecated
     public static byte[] usbSetCabId(int cab) {
 
-        byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_SET_CAB_CMD); // read N bytes command
-        retVal[1] = (byte) (cab);             // cab number
-
-        return retVal;
+        return NceMessageUtil.usbSetCabId(cab);
     }
 
+    /**
+     *
+     * @param data the value of data
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#usbMemoryWrite1}
+     */
+    @Deprecated
     public static byte[] usbMemoryWrite1(byte data) {
 
-        byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_MEM_WRITE_CMD); // write 2 bytes command
-        retVal[1] = (data);                     // data
-
-        return retVal;
+        return NceMessageUtil.usbMemoryWrite1(data);
     }
 
+    /**
+     *
+     * @param num the value of num
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#usbMemoryRead}
+     */
+    @Deprecated
     public static byte[] usbMemoryRead(int num) {
 
-        byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_MEM_READ_CMD); // read N bytes command
-        retVal[1] = (byte) (num);              // byte count
-
-        return retVal;
+        return NceMessageUtil.usbMemoryRead(num);
     }
 
+    /**
+     *
+     * @param cab the value of cab
+     * @param loc the value of loc
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#usbMemoryPointer}
+     */
+    @Deprecated
     public static byte[] usbMemoryPointer(int cab, int loc) {
 
-        byte[] retVal = new byte[3];
-        retVal[0] = (byte) (USB_MEM_POINTER_CMD); // read N bytes command
-        retVal[1] = (byte) (cab);                 // cab number
-        retVal[2] = (byte) (loc);                 // memory offset
-
-        return retVal;
+        return NceMessageUtil.usbMemoryPointer(cab, loc);
     }
 
+    /**
+     *
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accStopClock}
+     */
+    @Deprecated
     public static byte[] accStopClock() {
 
-        byte[] retVal = new byte[1];
-        retVal[0] = (byte) (STOP_CLOCK_CMD); // stop clock command
-
-        return retVal;
+        return NceMessageUtil.accStopClock();
     }
 
+    /**
+     *
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accStartClock}
+     */
+    @Deprecated
     public static byte[] accStartClock() {
 
-        byte[] retVal = new byte[1];
-        retVal[0] = (byte) (START_CLOCK_CMD); // start clock command
-
-        return retVal;
+        return NceMessageUtil.accStartClock();
     }
 
+    /**
+     *
+     * @param hours   the value of hours
+     * @param minutes the value of minutes
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accSetClock}
+     */
+    @Deprecated
     public static byte[] accSetClock(int hours, int minutes) {
 
-        byte[] retVal = new byte[3];
-        retVal[0] = (byte) (SET_CLOCK_CMD); // set clock command
-        retVal[1] = (byte) (hours);         // hours
-        retVal[2] = (byte) (minutes);       // minutes
-
-        return retVal;
+        return NceMessageUtil.accSetClock(hours, minutes);
     }
 
+    /**
+     *
+     * @param flag the value of flag
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accSetClock1224}
+     */
+    @Deprecated
     public static byte[] accSetClock1224(boolean flag) {
 
-        int bit = 0;
-        if (flag) {
-            bit = 1;
-        }
-        byte[] retVal = new byte[2];
-        retVal[0] = (byte) (CLOCK_1224_CMD); // set clock 12/24 command
-        retVal[1] = (byte) (bit);            // 12 - 0, 24 - 1
-
-        return retVal;
+        return NceMessageUtil.accSetClock1224(flag);
     }
 
+    /**
+     *
+     * @param ratio the value of ratio
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#accSetClockRatio}
+     */
+    @Deprecated
     public static byte[] accSetClockRatio(int ratio) {
 
-        byte[] retVal = new byte[2];
-        retVal[0] = (byte) (CLOCK_RATIO_CMD); // set clock command
-        retVal[1] = (byte) (ratio);           // fast clock ratio
-
-        return retVal;
+        return NceMessageUtil.accSetClockRatio(ratio);
     }
 
+    /**
+     *
+     * @param locoAddr   the value of locoAddr
+     * @param locoSubCmd the value of locoSubCmd
+     * @param locoData   the value of locoData
+     * @return command as a byte sequence
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#nceLocoCmd}
+     */
+    @Deprecated
     public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
-        if (locoSubCmd < 1 || locoSubCmd > 0x17) {
-            log.error("invalid NCE loco command " + locoSubCmd);
-            return null;
-        }
 
-        int locoAddr_h = locoAddr / 256;
-        int locoAddr_l = locoAddr & 0xFF;
-
-        byte[] retVal = new byte[5];
-        retVal[0] = (byte) (LOCO_CMD);   // NCE Loco command
-        retVal[1] = (byte) (locoAddr_h); // loco high address
-        retVal[2] = (byte) (locoAddr_l); // loco low address
-        retVal[3] = locoSubCmd;          // sub command
-        retVal[4] = locoData;            // sub data
-
-        return retVal;
+        return NceMessageUtil.nceLocoCmd(locoAddr, locoSubCmd, locoData);
     }
 
     /**
@@ -416,11 +419,12 @@ public class NceBinaryCommand {
      * {@literal VV.MM.mm}
      *
      * @return the revision message
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#getNceEpromRev}
      */
+    @Deprecated
     public static byte[] getNceEpromRev() {
-        byte[] retVal = new byte[1];
-        retVal[0] = (byte) (SW_REV_CMD);
-        return retVal;
+        return NceMessageUtil.getNceEpromRev();
     }
 
     /**
@@ -431,23 +435,13 @@ public class NceBinaryCommand {
      * @param cvAddr   CV to set
      * @param cvData   value to set CV to
      * @return ops mode message
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#usbOpsModeLoco}
      */
+    @Deprecated
     public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
 
-        byte[] retVal = new byte[6];
-        int locoAddr_h = locoAddr / 256;
-        int locoAddr_l = locoAddr & 0xFF;
-        int cvAddr_h = cvAddr / 256;
-        int cvAddr_l = cvAddr & 0xFF;
-
-        retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
-        retVal[1] = (byte) (locoAddr_h);        // loco high address
-        retVal[2] = (byte) (locoAddr_l);        // loco low address
-        retVal[3] = (byte) (cvAddr_h);          // CV high address
-        retVal[4] = (byte) (cvAddr_l);          // CV low address
-        retVal[5] = (byte) (cvData);            // CV data
-
-        return retVal;
+        return NceMessageUtil.usbOpsModeLoco(tc, locoAddr, cvAddr, cvData);
     }
 
     /**
@@ -457,24 +451,14 @@ public class NceBinaryCommand {
      * @param cvAddr   CV to set
      * @param cvData   value to set CV to
      * @return ops mode message
+     * @deprecated since 4.7.3; moved to
+     * {@link jmri.jmrix.nce.NceMessageUtil#usbOpsModeAccy}
      */
+    @Deprecated
     public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
 
-        byte[] retVal = new byte[6];
-        int accyAddr_h = accyAddr / 256;
-        int accyAddr_l = accyAddr & 0xFF;
-        int cvAddr_h = cvAddr / 256;
-        int cvAddr_l = cvAddr & 0xFF;
-
-        retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
-        retVal[1] = (byte) (accyAddr_h);        // accy high address
-        retVal[2] = (byte) (accyAddr_l);        // accy low address
-        retVal[3] = (byte) (cvAddr_h);          // CV high address
-        retVal[4] = (byte) (cvAddr_l);          // CV low address
-        retVal[5] = (byte) (cvData);            // CV data
-
-        return retVal;
+        return NceMessageUtil.usbOpsModeAccy(accyAddr, cvAddr, cvData);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class);
 }
