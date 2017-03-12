@@ -207,9 +207,9 @@ public class SwitchboardEditor extends Editor {
             }
         });
         prev.setToolTipText("Vorige");
-        navBarPanel.add(new JLabel (" toon van: "));
+        navBarPanel.add(new JLabel ("toon van:"));
         navBarPanel.add(minSpinner);
-        navBarPanel.add(new JLabel (" tot: "));
+        navBarPanel.add(new JLabel ("tot:"));
         navBarPanel.add(maxSpinner);
         navBarPanel.add(next);
         next.addMouseListener(new MouseAdapter() {

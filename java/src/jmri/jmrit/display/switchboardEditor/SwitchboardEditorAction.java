@@ -32,7 +32,7 @@ public class SwitchboardEditorAction extends AbstractAction {
         frame.setLocation(20, 20);
 
         frame.setTitle();
-        //frame.initView();
+        frame.initView();
 
         frame.pack();
         frame.setVisible(true);
