@@ -39,7 +39,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(NceTrafficControllerTest.class));
         suite.addTest(jmri.jmrix.nce.NceSystemConnectionMemoTest.suite());
         suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
-        suite.addTest(jmri.jmrix.nce.NceMessageUtilTest.suite());
         suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(NcePowerManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
