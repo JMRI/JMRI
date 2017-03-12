@@ -71,6 +71,7 @@ package jmri.jmrix.nce;
  * @see jmri.jmrix.nce.NceMessageUtil
  */
 public class NceBinaryCommand {
+
     public static final int NOOP_CMD = 0x80;            // NCE No Op Command, NCE-USB yes
     public static final int ASSIGN_CAB_CMD = 0x81;      // NCE Assign loco to cab command, NCE-USB no
     public static final int READ_CLOCK_CMD = 0x82;      // NCE read clock command, NCE-USB no

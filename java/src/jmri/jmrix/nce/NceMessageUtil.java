@@ -463,7 +463,20 @@ public class NceMessageUtil {
         m.setBinary(true);
         m.setReplyLen(1);
         m.setTimeout(SHORT_TIMEOUT);
-        byte[] mess = usbOpsModeAccy(accyAddr, cvAddr, cvData);
+        // raw copy of usbOpsModeAccy(accyAddr, cvAddr, cvData)
+        byte[] retVal = new byte[6];
+        int accyAddr_h = accyAddr / 256;
+        int accyAddr_l = accyAddr & 255;
+        int cvAddr_h = cvAddr / 256;
+        int cvAddr_l = cvAddr & 255;
+        retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
+        retVal[1] = (byte) (accyAddr_h); // accy high address
+        retVal[2] = (byte) (accyAddr_l); // accy low address
+        retVal[3] = (byte) (cvAddr_h); // CV high address
+        retVal[4] = (byte) (cvAddr_l); // CV low address
+        retVal[5] = (byte) (cvData); // CV data
+        // end copy
+        byte[] mess = retVal;
         m.setOpCode(mess[0]);
         m.setElement(1, mess[1]);
         m.setElement(2, mess[2]);
