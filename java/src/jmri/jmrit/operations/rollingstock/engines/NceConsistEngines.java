@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceMessageUtil;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import org.slf4j.Logger;
@@ -255,7 +256,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         waiting++;
 
         byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, REPLY_16);
         return m;
     }
 

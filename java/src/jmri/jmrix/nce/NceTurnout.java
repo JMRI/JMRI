@@ -116,7 +116,7 @@ public class NceTurnout extends AbstractTurnout {
         }
 
         byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
-        NceMessage m = NceMessage.sendPacketMessage(tc, bl);
+        NceMessage m = NceMessageUtil.sendPacketMessage(tc, bl);
         tc.sendNceMessage(m, null);
     }
 
@@ -239,7 +239,7 @@ public class NceTurnout extends AbstractTurnout {
                         + " " + Integer.toHexString(0xFF & bl[4]));
             }
 
-            NceMessage m = NceMessage.createBinaryMessage(tc, bl);
+            NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl);
 
             tc.sendNceMessage(m, null);
 
@@ -254,7 +254,7 @@ public class NceTurnout extends AbstractTurnout {
                         + " " + Integer.toHexString(0xFF & bl[2]));
             }
 
-            NceMessage m = NceMessage.sendPacketMessage(tc, bl);
+            NceMessage m = NceMessageUtil.sendPacketMessage(tc, bl);
 
             tc.sendNceMessage(m, null);
         }

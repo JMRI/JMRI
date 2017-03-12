@@ -21,6 +21,7 @@ import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceMessageUtil;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
@@ -1878,7 +1879,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     }
 
     private void sendNceMessage(byte[] b, int replyLength) {
-        NceMessage m = NceMessage.createBinaryMessage(tc, b, replyLength);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, b, replyLength);
         waiting++;
         replyLen = replyLength; // Expect n byte response
         tc.sendNceMessage(m, this);

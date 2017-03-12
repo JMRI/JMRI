@@ -165,7 +165,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                 // Read NCE CS memory
                 int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
                 byte[] bl = NceBinaryCommand.accMemoryRead(nceAccAddress);
-                NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
+                NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, REPLY_LEN);
                 return m;
             }
         }

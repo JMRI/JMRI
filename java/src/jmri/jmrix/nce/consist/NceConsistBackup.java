@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceMessageUtil;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
@@ -218,7 +219,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         replyLen = NceMessage.REPLY_16; 			// Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
         return m;
     }
 

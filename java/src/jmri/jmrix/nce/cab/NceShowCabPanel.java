@@ -28,6 +28,7 @@ import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
 import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
 import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceMessageUtil;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
@@ -1585,7 +1586,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryWrite1(nceCabAddr);
         bl[3] = (byte) value;
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
 
@@ -1595,7 +1596,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         replyLen = NceMessage.REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead1(nceCabAddr);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
 
@@ -1605,7 +1606,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         replyLen = NceMessage.REPLY_16;			// Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceCabAddr);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
         tc.sendNceMessage(m, this);
     }
 
@@ -1625,7 +1626,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         replyLen = NceMessage.REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.usbMemoryPointer(cab, offset);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
 
@@ -1647,7 +1648,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
         waiting++;
         byte[] bl = NceBinaryCommand.usbMemoryRead((byte) num);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, replyLen);
         tc.sendNceMessage(m, this);
     }
 
@@ -1656,7 +1657,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         replyLen = NceMessage.REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.usbMemoryWrite1((byte) value);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
 
@@ -1665,7 +1666,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         replyLen = NceMessage.REPLY_2;	// Expect 2 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accAiu2Read(cabId);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, replyLen);
         tc.sendNceMessage(m, this);
     }
 

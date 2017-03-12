@@ -53,7 +53,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
                 locoAddr += 0xC000;
             }
             byte[] bl = NceBinaryCommand.usbOpsModeLoco(tc, locoAddr, CV, val);
-            msg = NceMessage.createBinaryMessage(tc, bl);
+            msg = NceMessageUtil.createBinaryMessage(tc, bl);
 
         } else {
             // create the message and fill it,
@@ -62,7 +62,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
             if (contents == null) {
                 throw new ProgrammerException();
             }
-            msg = NceMessage.sendPacketMessage(tc, contents, 5);	// retry 5 times
+            msg = NceMessageUtil.sendPacketMessage(tc, contents, 5);	// retry 5 times
         }
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);

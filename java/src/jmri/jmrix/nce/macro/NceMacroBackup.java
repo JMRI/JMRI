@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceMessageUtil;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
@@ -241,7 +242,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
         replyLen = REPLY_16; 			// Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceMacroAddr);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
+        NceMessage m = NceMessageUtil.createBinaryMessage(tc, bl, REPLY_16);
         return m;
     }
 

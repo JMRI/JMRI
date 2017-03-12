@@ -175,20 +175,20 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         if (val < 0) {
             // read
             if (mode == DefaultProgrammerManager.PAGEMODE) {
-                return NceMessage.getReadPagedCV(tc, cvnum);
+                return NceMessageUtil.getReadPagedCV(tc, cvnum);
             } else if (mode == DefaultProgrammerManager.DIRECTMODE) {
-                return NceMessage.getReadDirectCV(tc, cvnum);
+                return NceMessageUtil.getReadDirectCV(tc, cvnum);
             } else {
-                return NceMessage.getReadRegister(tc, registerFromCV(cvnum));
+                return NceMessageUtil.getReadRegister(tc, registerFromCV(cvnum));
             }
         } else {
             // write
             if (mode == DefaultProgrammerManager.PAGEMODE) {
-                return NceMessage.getWritePagedCV(tc, cvnum, val);
+                return NceMessageUtil.getWritePagedCV(tc, cvnum, val);
             } else if (mode == DefaultProgrammerManager.DIRECTMODE) {
-                return NceMessage.getWriteDirectCV(tc, cvnum, val);
+                return NceMessageUtil.getWriteDirectCV(tc, cvnum, val);
             } else {
-                return NceMessage.getWriteRegister(tc, registerFromCV(cvnum), val);
+                return NceMessageUtil.getWriteRegister(tc, registerFromCV(cvnum), val);
             }
         }
     }
