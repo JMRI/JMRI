@@ -8,7 +8,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     NceConsistEditPanelTest.class,
     NceConsistRosterTest.class,
-    NceConsistRosterEntryTest.class
+    NceConsistRosterEntryTest.class,
+    NceConsistBackupTest.class,
+    NceConsistRestoreTest.class
 })
 /**
  * Tests for the jmri.jmrix.nce.consist package

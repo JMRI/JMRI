@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     NceMacroEditPanelTest.class,
-    NceMacroGenPanelTest.class
+    NceMacroGenPanelTest.class,
+    NceMacroBackupTest.class,
+    NceMacroRestoreTest.class
 })
 
 /**

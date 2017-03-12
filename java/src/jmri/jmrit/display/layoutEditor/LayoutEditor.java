@@ -1152,7 +1152,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void createFloatingEditToolBox() {
         if (floatingEditToolBox == null) {
             if (floatingEditContent == null) {
-                // Create the window content on the first call
+                // Create the window content if necessary, normally on first load or switching from toolbox to toolbar to toolbox
                 createFloatingEditContent();
             }
 
@@ -2804,6 +2804,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setDirty(true);
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
+            	// Rebuild the toolbox after a name change.
                 deleteFloatingEditToolBox();
                 createFloatingEditToolBox();
             }
@@ -3207,6 +3208,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (null != floatingEditToolBox) {
                     deleteFloatingEditToolBox();
                 }
+				floatingEditContent = null;  // The switch to toolbar will move the toolbox content to the new toolbar
                 editToolBarContainer.setVisible(isEditable());
             }
             toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));
