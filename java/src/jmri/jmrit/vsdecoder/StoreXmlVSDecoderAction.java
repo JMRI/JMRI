@@ -68,7 +68,7 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
 
         try {
             Element root = new Element("VSDecoderConfig");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "vsdecoder-config.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "vsdecoder-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle-layout-config.xsl"?>
