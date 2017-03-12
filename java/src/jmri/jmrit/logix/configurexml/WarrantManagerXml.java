@@ -6,6 +6,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
@@ -108,6 +109,7 @@ public class WarrantManagerXml //extends XmlFile
             elem.setAttribute("dccType", ""+(addr.isLongAddress() ? "L" : "S"));
         }
         elem.setAttribute("runBlind", warrant.getRunBlind()?"true":"false");
+        elem.setAttribute("shareRoute", warrant.getShareRoute()?"true":"false");
         elem.setAttribute("noRamp", warrant.getNoRamp()?"true":"false");
 
         str = warrant.getTrainName();
@@ -289,6 +291,9 @@ public class WarrantManagerXml //extends XmlFile
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
+        }
+        if (elem.getAttribute("shareRoute") != null) {
+            warrant.setShareRoute(elem.getAttribute("shareRoute").getValue().equals("true"));
         }
         if (elem.getAttribute("noRamp") != null) {
             warrant.setNoRamp(elem.getAttribute("noRamp").getValue().equals("true"));

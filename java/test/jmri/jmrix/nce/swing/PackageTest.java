@@ -6,6 +6,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   NceComponentFactoryTest.class,
+   NceMenuTest.class,
 })
 /**
  * Tests for the jmri.jmrix.nce.swing package
