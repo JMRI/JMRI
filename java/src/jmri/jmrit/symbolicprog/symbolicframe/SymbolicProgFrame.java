@@ -458,7 +458,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
             // This is taken in large part from "Java and XML" page 368
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.dtdLocation + "locomotive-config.dtd");
+            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.getDefaultDtdLocation() + "locomotive-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>

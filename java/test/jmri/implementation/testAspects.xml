@@ -8,10 +8,16 @@
 
     <name>JUnit Test Signals</name>
     <reference>Dummy definition for JUnit testing</reference>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2009</year>
+      <year>2010</year>
+      <holder>JMRI</holder>
+    </copyright>
 
     <aspects>
 
     </aspects>
+    
     <appearancefiles>
     </appearancefiles>
 
