@@ -32,8 +32,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             return null;  // if flagged as inactive, don't store
         }
         Element element = new Element("slipturnouticon");
-        //element.setAttribute("turnoutEast", p.getNamedTurnout(SlipTurnoutIcon.WEST).getName());
-        //element.setAttribute("turnoutWest", p.getNamedTurnout(SlipTurnoutIcon.EAST).getName());
+
         element.addContent(new Element("turnoutEast").addContent(p.getNamedTurnout(SlipTurnoutIcon.EAST).getName()));
         element.addContent(new Element("turnoutWest").addContent(p.getNamedTurnout(SlipTurnoutIcon.WEST).getName()));
 
