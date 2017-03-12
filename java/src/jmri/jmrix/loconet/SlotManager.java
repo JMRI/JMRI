@@ -1012,55 +1012,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!mServiceMode) {
             delay = 100;  // value in ops mode
         }
-        NotifyDelay r = new NotifyDelay(delay, p, value, status);
-        r.start();
-    }
-
-    static class NotifyDelay extends Thread {
-
-        int delay;
-        ProgListener p;
-        int value;
-        int status;
-
-        NotifyDelay(int delay, ProgListener p, int value, int status) {
-            this.delay = delay;
-            this.p = p;
-            this.value = value;
-            this.status = status;
-        }
-
-        @Override
-        public void run() {
-            synchronized (this) {
-                try {
-                    wait(delay);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+        
+        // delay and run on GUI thread
+        javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                p.programmingOpReply(value, status);
             }
-            // to avoid problems, we defer this to Swing thread
-            NotifyExec r = new NotifyExec(p, value, status);
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-    }
-
-    static class NotifyExec implements Runnable {
-
-        ProgListener p;
-        int value;
-        int status;
-
-        NotifyExec(ProgListener p, int value, int status) {
-            this.p = p;
-            this.value = value;
-            this.status = status;
-        }
-
-        @Override
-        public void run() {
-            p.programmingOpReply(value, status);
-        }
+        });
+        timer.setInitialDelay(delay);
+        timer.setRepeats(false);
+        timer.start();
     }
 
     /**
