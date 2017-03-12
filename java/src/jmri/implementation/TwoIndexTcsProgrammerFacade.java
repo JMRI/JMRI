@@ -209,7 +209,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
                     state = ProgState.FINISHREAD;
                     prog.readCV(valMSB, this);
                 } catch (jmri.ProgrammerException e) {
-                    log.error("Exception doing write strobe for read", e);
+                    log.error("Exception doing read first", e);
                 }
                 break;
             case FINISHREAD:
