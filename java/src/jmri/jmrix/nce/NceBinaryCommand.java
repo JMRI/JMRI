@@ -1,8 +1,5 @@
 package jmri.jmrix.nce;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /*
  
  From NCE System notes for version March 1, 2007
@@ -74,7 +71,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.nce.NceMessageUtil
  */
 public class NceBinaryCommand {
-
     public static final int NOOP_CMD = 0x80;            // NCE No Op Command, NCE-USB yes
     public static final int ASSIGN_CAB_CMD = 0x81;      // NCE Assign loco to cab command, NCE-USB no
     public static final int READ_CLOCK_CMD = 0x82;      // NCE read clock command, NCE-USB no
@@ -168,7 +164,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accDecoder(int number, boolean closed) {
-
         return NceMessageUtil.accDecoder(number, closed);
     }
 
@@ -181,7 +176,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accMemoryRead(int address) {
-
         return NceMessageUtil.accMemoryRead(address);
 
     }
@@ -196,7 +190,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accMemoryRead1(int address) {
-
         return NceMessageUtil.accMemoryRead1(address);
 
     }
@@ -211,7 +204,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accMemoryWriteN(int address, int num) {
-
         return NceMessageUtil.accMemoryWriteN(address, num);
 
     }
@@ -225,7 +217,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accMemoryWrite8(int address) {
-
         return NceMessageUtil.accMemoryWrite8(address);
 
     }
@@ -239,7 +230,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accMemoryWrite4(int address) {
-
         return NceMessageUtil.accMemoryWrite4(address);
     }
 
@@ -252,7 +242,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accMemoryWrite2(int address) {
-
         return NceMessageUtil.accMemoryWrite2(address);
     }
 
@@ -265,7 +254,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accMemoryWrite1(int address) {
-
         return NceMessageUtil.accMemoryWrite1(address);
     }
 
@@ -278,7 +266,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accAiu2Read(int cabId) {
-
         return NceMessageUtil.accAiu2Read(cabId);
     }
 
@@ -291,7 +278,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] usbSetCabId(int cab) {
-
         return NceMessageUtil.usbSetCabId(cab);
     }
 
@@ -304,7 +290,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] usbMemoryWrite1(byte data) {
-
         return NceMessageUtil.usbMemoryWrite1(data);
     }
 
@@ -317,7 +302,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] usbMemoryRead(int num) {
-
         return NceMessageUtil.usbMemoryRead(num);
     }
 
@@ -331,7 +315,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] usbMemoryPointer(int cab, int loc) {
-
         return NceMessageUtil.usbMemoryPointer(cab, loc);
     }
 
@@ -343,7 +326,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accStopClock() {
-
         return NceMessageUtil.accStopClock();
     }
 
@@ -355,7 +337,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accStartClock() {
-
         return NceMessageUtil.accStartClock();
     }
 
@@ -369,7 +350,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accSetClock(int hours, int minutes) {
-
         return NceMessageUtil.accSetClock(hours, minutes);
     }
 
@@ -382,7 +362,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accSetClock1224(boolean flag) {
-
         return NceMessageUtil.accSetClock1224(flag);
     }
 
@@ -395,7 +374,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] accSetClockRatio(int ratio) {
-
         return NceMessageUtil.accSetClockRatio(ratio);
     }
 
@@ -410,7 +388,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
-
         return NceMessageUtil.nceLocoCmd(locoAddr, locoSubCmd, locoData);
     }
 
@@ -440,7 +417,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
-
         return NceMessageUtil.usbOpsModeLoco(tc, locoAddr, cvAddr, cvData);
     }
 
@@ -456,9 +432,6 @@ public class NceBinaryCommand {
      */
     @Deprecated
     public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
-
         return NceMessageUtil.usbOpsModeAccy(accyAddr, cvAddr, cvData);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(NceBinaryCommand.class);
 }
