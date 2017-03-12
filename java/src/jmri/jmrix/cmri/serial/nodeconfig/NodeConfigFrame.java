@@ -84,14 +84,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public NodeConfigFrame(CMRISystemConnectionMemo memo) {
         super();
-
-        if (memo == null) {
-            log.error("called with null memo", new Exception("Traceback"));
-        } else {
-            if (memo.getTrafficController() == null) {
-                log.error("called with memo holding null TrafficController", new Exception("Traceback"));
-            }
-        }
         _memo = memo;
 
         // Clear information arrays
