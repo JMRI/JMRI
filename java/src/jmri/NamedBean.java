@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * Each object has two types of names:<p>
  * The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system. It must 
+ * (for example LocoNet or NCE) and address within that system. It must 
  * be present and unique across the JMRI instance.
  * <p>
  * The "user" name is optional. It's free form text except for two restrictions:

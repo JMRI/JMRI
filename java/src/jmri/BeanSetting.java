@@ -1,9 +1,10 @@
 package jmri;
 
 /**
- * Represent a Named Bean (e.g.&nbsp;Turnout) and specific setting for it. These
- * can be used e.g. to represent part of a particular path through a layout, or
- * a condition that has to be true as part of something.
+ * Represent a NamedBean (such as a Turnout) and specific desired setting for
+ * it. These can be used to represent the setting a NamedBean has as part of a
+ * particular path through a layout, or a condition that has to be true as part
+ * of something.
  * <p>
  * Objects of this class are immutable, in that once created the selected bean
  * and required setting cannot be changed. However, the value of the

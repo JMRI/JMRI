@@ -9,10 +9,10 @@ import javax.annotation.Nonnull;
  * <P>
  * Programmers come in two types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track. Request
+ * <LI>Global, previously "Service Mode" or on a programming track. Request
  * these from an instance of {@link GlobalProgrammerManager}.
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main". Request
- * these from an instance of this interface.
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main".
+ * Request these from an instance of this interface.
  * </UL>
  * You get a {@link Programmer} object from a ProgrammerManager, which in turn
  * can be located from the {@link InstanceManager}.
@@ -100,8 +100,8 @@ public interface AddressedProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface controls, so it should
+     * return a user-provided name for this particular one.
      *
      * @return the name for the programmer
      */
@@ -110,8 +110,8 @@ public interface AddressedProgrammerManager {
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
-     * user-provided name for this particular one.
+     * ProgrammerManagers directly in user interface controls, so it should
+     * return a user-provided name for this particular one.
      *
      * @return the name for the programmer
      */

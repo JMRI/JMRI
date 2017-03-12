@@ -34,7 +34,7 @@ public interface SensorManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Sensor doesn't already exist and the
      *                                  manager cannot create the Sensor due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
     @Nonnull

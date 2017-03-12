@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog     the programmer to attach this facade to
      * @param top      CVs above this use the indirect method
      * @param addrCV   CV to which the high part of address is to be written
      * @param cvFactor CV to which the low part of address is to be written
@@ -113,7 +114,6 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
