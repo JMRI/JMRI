@@ -68,7 +68,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     private NamedBeanHandle<Turnout> namedTurnout = null;
 
     /**
-     * Attached a named turnout to this display item
+     * Attach a named turnout to this display item.
      *
      * @param pName Used as a system/user name to lookup the turnout object
      */
@@ -134,7 +134,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     /**
-     * Get icon by its localized bean state name
+     * Get icon by its localized bean state name.
      */
     @Override
     public NamedIcon getIcon(String state) {

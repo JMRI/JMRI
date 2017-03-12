@@ -3217,10 +3217,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * set up target panel, frame etc.
      */
     abstract protected void init(String name);
+
     /*
      * Closing of Target frame window.
      */
-
     abstract protected void targetWindowClosingEvent(java.awt.event.WindowEvent e);
 
     /**

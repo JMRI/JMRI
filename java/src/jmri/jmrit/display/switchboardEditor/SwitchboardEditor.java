@@ -24,6 +24,7 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -35,9 +36,12 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -49,7 +53,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
-import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -70,10 +74,9 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.ToolTip;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+//import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
-import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 import jmri.util.SystemType;
 import org.slf4j.Logger;
@@ -98,13 +101,14 @@ import org.slf4j.LoggerFactory;
  * Note that higher numbers appear behind lower numbers.
  * <P>
  * The "contents" List keeps track of all the objects added to the target frame
- * for later manipulation. Extends the behavior it shares with PanelPro DnD
- * implemented at JDK 1.2 for backward compatibility
+ * for later manipulation.
+ * No DnD for application as panels will automatically populated.
  * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
+ * @author Pete Cressman Copyright (c) 2009, 2010, 2011
+ * @author Egbert Broerse Copyright (c) 2017
  *
  */
-public class SwitchboardEditor extends ControlPanelEditor {
+public class SwitchboardEditor extends Editor {
 
     protected JMenuBar _menuBar;
     private JMenu _editorMenu;
@@ -116,18 +120,25 @@ public class SwitchboardEditor extends ControlPanelEditor {
     private JMenu _markerMenu;
     private JMenu _drawMenu;
     private ArrayList<Positionable> _secondSelectionGroup;
-    private ShapeDrawer _shapeDrawer;
+    //private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
+    ImageIcon iconPrev = new ImageIcon("/resources/misc/gui3/LafLeftArrow_m.gif");
+    private JButton prev = new JButton("<"); //JLabel(iconPrev);
+    ImageIcon iconNext = new ImageIcon("/resources/misc/gui3/LafRightArrow_m.gif");
+    private JButton next = new JButton(">"); //JLabel(iconNext);
 
     // Switchboard items
     private JPanel navBarPanel = null;
-    private JSpinner rangeMin;
-    private JSpinner rangeMax;
+    private int rangeMin = 0;
+    private int rangeMax = 32;
+    private int _range = rangeMax - rangeMin;
+    JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
+    JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
 //    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
-    private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
+    //private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
     private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHidden"));
@@ -141,33 +152,25 @@ public class SwitchboardEditor extends ControlPanelEditor {
     }
 
     public SwitchboardEditor(String name) {
-        super(name);
+        super(name, false, true);
         init(name);
     }
 
     @Override
     protected void init(String name) {
-        setVisible(false);
+        //setVisible(false);
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-        // top row to set range
-        navBarPanel = new JPanel();
-        navBarPanel.setLayout(new BoxLayout(navBarPanel, BoxLayout.X_AXIS));
-        navBarPanel.add(rangeMin);
-        navBarPanel.add(rangeMax);
-        contentPane.add(navBarPanel);
 
         // make menus
         setGlobalSetsLocalFlag(false);
         setUseGlobalFlag(false);
         _menuBar = new JMenuBar();
-        _shapeDrawer = new ShapeDrawer(this);
-        makeDrawMenu();
-        makeIconMenu();
-        makeZoomMenu();
+        //makeDrawMenu();
+        //makeIconMenu();
+        //makeZoomMenu();
         makeOptionMenu();
-        makeEditMenu();
+        //makeEditMenu();
         makeFileMenu();
 
         setJMenuBar(_menuBar);
@@ -175,7 +178,7 @@ public class SwitchboardEditor extends ControlPanelEditor {
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
-        makeDataFlavors();
+        //makeDataFlavors();
 
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
@@ -187,8 +190,44 @@ public class SwitchboardEditor extends ControlPanelEditor {
         if (cm != null) {
             cm.registerUser(this);
         }
+
+        // navigation top row and to set range
+        navBarPanel = new JPanel();
+        //navBarPanel.setLayout(new BoxLayout(navBarPanel, BoxLayout.X_AXIS));
+
+        navBarPanel.add(prev);
+        prev.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int oldMin = (Integer) minSpinner.getValue();
+                int oldMax = (Integer) maxSpinner.getValue();
+                _range = oldMax - oldMin;
+                minSpinner.setValue(Math.max(rangeMin, oldMin - _range));
+                maxSpinner.setValue(Math.max(oldMax - _range -1, Math.max(rangeMin, oldMax - _range)));
+            }
+        });
+        prev.setToolTipText("Vorige");
+        navBarPanel.add(new JLabel (" toon van: "));
+        navBarPanel.add(minSpinner);
+        navBarPanel.add(new JLabel (" tot: "));
+        navBarPanel.add(maxSpinner);
+        navBarPanel.add(next);
+        next.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int oldMin = (Integer) minSpinner.getValue();
+                int oldMax = (Integer) maxSpinner.getValue();
+                _range = oldMax - oldMin;
+                minSpinner.setValue(oldMax + 1);
+                maxSpinner.setValue(oldMax + _range + 1);
+            }
+        });
+        next.setToolTipText("Volgende");
+        this.add(navBarPanel);
+
         pack();
         setVisible(true);
+
         class makeCatalog extends SwingWorker<CatalogPanel, Object> {
 
             @Override
@@ -200,55 +239,55 @@ public class SwitchboardEditor extends ControlPanelEditor {
         log.debug("Init SwingWorker launched");
     }
 
-    @Override
+    //@Override
     protected void makeIconMenu() {
-        _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
-        _menuBar.add(_iconMenu, 0);
-        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPalette"));
-        mi.addActionListener(new ActionListener() {
-            Editor editor;
-
-            ActionListener init(Editor ed) {
-                editor = ed;
-                return this;
-            }
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (_itemPalette == null) {
-                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPalette"), editor);
-                }
-                _itemPalette.setVisible(true);
-            }
-        }.init(this));
-        if (SystemType.isMacOSX()) {
-            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
-        } else {
-            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
-        }
-        _iconMenu.add(mi);
-        _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTableList")));
-        mi = (JMenuItem) _iconMenu.getMenuComponent(2);
-        if (SystemType.isMacOSX()) {
-            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.META_MASK));
-        } else {
-            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
-        }
+//        _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
+//        _menuBar.add(_iconMenu, 0);
+//        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPalette"));
+//        mi.addActionListener(new ActionListener() {
+//            Editor editor;
+//
+//            ActionListener init(Editor ed) {
+//                editor = ed;
+//                return this;
+//            }
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if (_itemPalette == null) {
+//                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPalette"), editor);
+//                }
+//                _itemPalette.setVisible(true);
+//            }
+//        }.init(this));
+//        if (SystemType.isMacOSX()) {
+//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
+//        } else {
+//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+//        }
+//        _iconMenu.add(mi);
+//        _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTableList")));
+//        mi = (JMenuItem) _iconMenu.getMenuComponent(2);
+//        if (SystemType.isMacOSX()) {
+//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.META_MASK));
+//        } else {
+//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+//        }
     }
 
-    protected void makeDrawMenu() {
-        if (_drawMenu == null) {
-            _drawMenu = _shapeDrawer.makeMenu();
-            _drawMenu.add(disableShapeSelect);
-            disableShapeSelect.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    _disableShapeSelection = disableShapeSelect.isSelected();
-                }
-            });
-        }
-        _menuBar.add(_drawMenu, 0);
-    }
+//    protected void makeDrawMenu() {
+//        if (_drawMenu == null) {
+//            _drawMenu = _shapeDrawer.makeMenu();
+//            _drawMenu.add(disableShapeSelect);
+//            disableShapeSelect.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent event) {
+//                    _disableShapeSelection = disableShapeSelect.isSelected();
+//                }
+//            });
+//        }
+//        _menuBar.add(_drawMenu, 0);
+//    }
 
     public boolean getShapeSelect() {
         return !_disableShapeSelection;
@@ -259,11 +298,11 @@ public class SwitchboardEditor extends ControlPanelEditor {
         disableShapeSelect.setSelected(_disableShapeSelection);
     }
 
-    public ShapeDrawer getShapeDrawer() {
-        return _shapeDrawer;
-    }
+    //public ShapeDrawer getShapeDrawer() {
+//        return _shapeDrawer;
+//    }
 
-    @Override
+    //@Override
     protected void makeOptionMenu() {
         _optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         _menuBar.add(_optionMenu, 0);
@@ -277,14 +316,14 @@ public class SwitchboardEditor extends ControlPanelEditor {
         });
         useGlobalFlagBox.setSelected(useGlobalFlag());
         // positionable item
-        _optionMenu.add(positionableBox);
-        positionableBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setAllPositionable(positionableBox.isSelected());
-            }
-        });
-        positionableBox.setSelected(allPositionable());
+//        _optionMenu.add(positionableBox);
+//        positionableBox.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent event) {
+//                setAllPositionable(positionableBox.isSelected());
+//            }
+//        });
+//        positionableBox.setSelected(allPositionable());
         // controlable item
         _optionMenu.add(controllingBox);
         controllingBox.addActionListener(new ActionListener() {
@@ -529,31 +568,21 @@ public class SwitchboardEditor extends ControlPanelEditor {
             if (_markerMenu != null) {
                 _menuBar.remove(_markerMenu);
             }
-            if (_drawMenu == null) {
-                makeDrawMenu();
-            } else {
-                _menuBar.add(_drawMenu, 0);
-            }
+//            if (_drawMenu == null) {
+//                makeDrawMenu();
+//            } else {
+//                _menuBar.add(_drawMenu, 0);
+//            }
 
             if (_iconMenu == null) {
                 makeIconMenu();
             } else {
                 _menuBar.add(_iconMenu, 0);
             }
-            if (_zoomMenu == null) {
-                makeZoomMenu();
-            } else {
-                _menuBar.add(_zoomMenu, 0);
-            }
             if (_optionMenu == null) {
                 makeOptionMenu();
             } else {
                 _menuBar.add(_optionMenu, 0);
-            }
-            if (_editMenu == null) {
-                makeEditMenu();
-            } else {
-                _menuBar.add(_editMenu, 0);
             }
             if (_fileMenu == null) {
                 makeFileMenu();
@@ -564,23 +593,11 @@ public class SwitchboardEditor extends ControlPanelEditor {
             if (_fileMenu != null) {
                 _menuBar.remove(_fileMenu);
             }
-            if (_editMenu != null) {
-                _menuBar.remove(_editMenu);
-            }
             if (_optionMenu != null) {
                 _menuBar.remove(_optionMenu);
             }
-            if (_zoomMenu != null) {
-                _menuBar.remove(_zoomMenu);
-            }
             if (_iconMenu != null) {
                 _menuBar.remove(_iconMenu);
-            }
-            if (_drawMenu != null) {
-                _menuBar.remove(_drawMenu);
-            }
-            if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getSystemNameList().size() > 1) {
-                makeWarrantMenu(edit);
             }
             if (_editorMenu == null) {
                 _editorMenu = new JMenu(Bundle.getMessage("MenuEdit"));
@@ -600,7 +617,7 @@ public class SwitchboardEditor extends ControlPanelEditor {
 
     @Override
     public void setUseGlobalFlag(boolean set) {
-        positionableBox.setEnabled(set);
+        //positionableBox.setEnabled(set);
         controllingBox.setEnabled(set);
         super.setUseGlobalFlag(set);
     }
@@ -705,7 +722,7 @@ public class SwitchboardEditor extends ControlPanelEditor {
      */
     @Override
     public void initView() {
-        positionableBox.setSelected(allPositionable());
+        //positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
         showTooltipBox.setSelected(showTooltip());
@@ -726,6 +743,14 @@ public class SwitchboardEditor extends ControlPanelEditor {
         }
         log.debug("InitView done");
     }
+
+    /**
+     * set up item(s) to be copied by paste
+     *
+     */
+    @Override
+    protected void copyItem(Positionable p) {
+    };
 
     /**
      * ********* KeyListener of Editor ********
@@ -758,12 +783,12 @@ public class SwitchboardEditor extends ControlPanelEditor {
             case KeyEvent.VK_D:
             case KeyEvent.VK_DELETE:
             case KeyEvent.VK_MINUS:
-                _shapeDrawer.delete();
+                //_shapeDrawer.delete();
                 break;
             case KeyEvent.VK_A:
             case KeyEvent.VK_INSERT:
             case KeyEvent.VK_PLUS:
-                _shapeDrawer.add(e.isShiftDown());
+                //_shapeDrawer.add(e.isShiftDown());
                 break;
             default:
                 return;
@@ -780,7 +805,26 @@ public class SwitchboardEditor extends ControlPanelEditor {
         repaint();
     }
 
+    /*
+ * ********************* Mouse Methods ***********************
+ */
+
     private long _clickTime;
+
+    @Override
+    public void mousePressed(MouseEvent event) {};
+
+    @Override
+    public void mouseReleased(MouseEvent event) {};
+
+    @Override
+    public void mouseClicked(MouseEvent event) {};
+
+    @Override
+    public void mouseDragged(MouseEvent event) {};
+
+    @Override
+    public void mouseMoved(MouseEvent event) {};
 
     @Override
     public void mouseEntered(MouseEvent event) {
@@ -812,7 +856,7 @@ public class SwitchboardEditor extends ControlPanelEditor {
     @Override
     protected void paintTargetPanel(Graphics g) {
         // needed to create PositionablePolygon
-        _shapeDrawer.paint(g);
+        //_shapeDrawer.paint(g);
         if (_secondSelectionGroup != null) {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(new Color(150, 150, 255));
@@ -860,7 +904,7 @@ public class SwitchboardEditor extends ControlPanelEditor {
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
                 popup.addSeparator();
-                setCopyMenu(p, popup);
+                //setCopyMenu(p, popup);
             }
 
             // items with defaults or using overrides
@@ -917,9 +961,6 @@ public class SwitchboardEditor extends ControlPanelEditor {
                 setRemoveMenu(p, popup);
             }
         } else {
-            if (p instanceof LocoIcon) {
-                setCopyMenu(p, popup);
-            }
             p.showPopUp(popup);
             if (util != null) {
                 util.setAdditionalViewPopUpMenu(popup);

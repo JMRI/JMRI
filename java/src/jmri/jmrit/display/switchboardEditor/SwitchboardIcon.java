@@ -1,5 +1,6 @@
-package jmri.jmrit.display.switchboardEditor;
+package jmri.jmrit.display;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,6 +21,9 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.IconAdder;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJPanel;
 import jmri.jmrit.display.PositionablePopupUtil;
@@ -29,7 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An icon to display and input a Bean name in a TextField.
  * <P>
- * Handles the case of either a String or an Integer in the Memory, preserving
+ * Handles the case of either a String or an Integer in the Bean, preserving
  * what it finds. Adapted from {@link jmri.jmrit.MemoryComboIcon}
  * <P>
  * @author Egbert Broerse copyright (C) 2017
@@ -38,8 +42,12 @@ import org.slf4j.LoggerFactory;
 public class SwitchboardIcon extends PositionableJPanel
         implements java.beans.PropertyChangeListener, ActionListener {
 
-    String _type;
-    JLabel typeLabel;
+    protected String _type;
+    protected JLabel typeLabel;
+    protected boolean _icon = false;
+    protected boolean _text = false;
+    protected boolean _control = false;
+    //protected NamedIcon _namedIcon;
 
     // the associated Bean object
     private NamedBeanHandle namedBean;
@@ -57,7 +65,8 @@ public class SwitchboardIcon extends PositionableJPanel
         add(typeLabel);
         addMouseListener(this);
 
-        setPopupUtility(new PositionablePopupUtil(this, _type));
+        _control = true;
+        setPopupUtility(null);
     }
 
     @Override
@@ -77,7 +86,7 @@ public class SwitchboardIcon extends PositionableJPanel
     }
 
     /**
-     * Attache a named bean to this display item.
+     * Attach a named bean to this display item.
      *
      * @param pName Used as a system/user name to lookup the bean object
      */
@@ -95,7 +104,7 @@ public class SwitchboardIcon extends PositionableJPanel
     }
 
     /**
-     * Attache a named bean to this display item.
+     * Attach a named bean to this display item.
      *
      * @param m The bean object
      */
@@ -111,8 +120,9 @@ public class SwitchboardIcon extends PositionableJPanel
         }
     }
 
-    public NamedBeanHandle getNamedBean() {
-        return namedBean.getNamedBeanHandle();
+    @Override
+    public NamedBean getNamedBean() {
+        return namedBean.getBean();
     }
 
     public NamedBean getBean() {
@@ -131,7 +141,7 @@ public class SwitchboardIcon extends PositionableJPanel
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        updateBean();
+        //updateBean();
     }
 
     // update icon as state of Bean changes
@@ -159,7 +169,7 @@ public class SwitchboardIcon extends PositionableJPanel
         if (namedBean == null) {
             return;
         }
-        getBean().setValue(typeLabel.getValue());
+        //getBean().setName(typeLabel.getText()); // set waht property?
     }
 
     @Override
@@ -175,70 +185,21 @@ public class SwitchboardIcon extends PositionableJPanel
     }
 
     /**
-     * Poppup menu iconEditor's ActionListener
+     * Popup menu iconEditor's ActionListener
      */
     DefaultListModel<String> _listModel;
 
-    @Override
     protected void edit() {
-        _iconEditor = new IconAdder("Turnout") {
+        _iconEditor = new IconAdder(_type) {
             JList<String> list;
             JButton bDel = new JButton(Bundle.getMessage("deleteSelection"));
             JButton bAdd = new JButton(Bundle.getMessage("addItem"));
             JTextField textfield = new JTextField(30);
-
-            @Override
-            protected void addAdditionalButtons(JPanel p) {
-                _listModel = new DefaultListModel<String>();
-                bDel.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent a) {
-                        int idx = list.getSelectedIndex();
-                        if (idx >= 0) {
-                            _listModel.removeElementAt(idx);
-                        }
-                    }
-                });
-                bAdd.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent a) {
-                        String text = textfield.getText();
-                        if (text == null || text.length() == 0 || _listModel.indexOf(text) >= 0) {
-                            return;
-                        }
-                        int idx = list.getSelectedIndex();
-                        if (idx < 0) {
-                            idx = _listModel.getSize();
-                        }
-                        _listModel.add(idx, text);
-                    }
-                });
-                for (int i = 0; i < _model.getSize(); i++) {
-                    _listModel.add(i, _model.getElementAt(i));
-                }
-                list = new JList<String>(_listModel);
-                JScrollPane scrollPane = new JScrollPane(list);
-                JPanel p1 = new JPanel();
-                p1.add(new JLabel(Bundle.getMessage("comboList")));
-                p.add(p1);
-                p.add(scrollPane);
-                p1 = new JPanel();
-                p1.add(new JLabel(Bundle.getMessage("newItem"), SwingConstants.RIGHT));
-                textfield.setMaximumSize(textfield.getPreferredSize());
-                p1.add(textfield);
-                p.add(p1);
-                JPanel p2 = new JPanel();
-                //p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-                //p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
-                p2.add(bDel);
-                p2.add(bAdd);
-                p.add(p2);
-                p.setVisible(true);
-            }
+            // does nothing yet
         };
 
         makeIconEditorFrame(this, _type, true, _iconEditor);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.turnoutPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
@@ -277,10 +238,6 @@ public class SwitchboardIcon extends PositionableJPanel
     void editBean() {
         jmri.NamedBean bean = _iconEditor.getTableSelection();
         setBean(bean.getDisplayName());
-        _model.removeAllElements();
-        for (int i = 0; i < _listModel.size(); i++) {
-            _model.addElement(_listModel.getElementAt(i));
-        }
         setSize(getPreferredSize().width + 1, getPreferredSize().height);
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
@@ -296,7 +253,7 @@ public class SwitchboardIcon extends PositionableJPanel
         if (namedBean == null) {  // leave alone if not connected yet
             return;
         }
-        _model.setSelectedItem(getBean().getDisplayName());
+        //_model.setSelectedItem(getBean().getDisplayName());
     }
 
     @Override
