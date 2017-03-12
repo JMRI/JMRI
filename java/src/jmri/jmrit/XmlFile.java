@@ -176,8 +176,6 @@ public abstract class XmlFile {
     /**
      * Get the root element from an XML document in a stream.
      *
-     * @param verifySchema true if the XML document should be validated against its schema
-     * @param verifyDTD true if the XML document should be validated against its DTD
      * @param stream input containing the XML document
      * @return the root element of the XML document
      * @throws org.jdom2.JDOMException if the XML document is invalid
