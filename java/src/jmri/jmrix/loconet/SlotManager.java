@@ -85,13 +85,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public void sendPacket(byte[] packet, int repeats) {
         if (repeats > 7) {
-            log.error("Too many repeats!");
+            log.error("Too many repeats!"); // NOI18N
         }
         if (packet.length <= 1) {
-            log.error("Invalid DCC packet length: " + packet.length);
+            log.error("Invalid DCC packet length: " + packet.length); // NOI18N
         }
         if (packet.length > 6) {
-            log.error("Only 6-byte packets accepted: " + packet.length);
+            log.error("Only 6-byte packets accepted: " + packet.length); // NOI18N
         }
 
         LocoNetMessage m = new LocoNetMessage(11);
@@ -248,7 +248,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (log.isDebugEnabled()) {
             log.debug("notify " + v.size() // NOI18N
                     + " SlotListeners about slot " // NOI18N
-                    + s.getSlot());
+                    + s.getSlot()); 
         }
         // forward to all listeners
         int cnt = v.size();
@@ -497,7 +497,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // If this is a LACK to a Slot op, and progState is command pending,
         // assume its for us...
         if (log.isDebugEnabled()) {
-            log.debug("LACK in state " + progState + " message: " + m.toString());
+            log.debug("LACK in state " + progState + " message: " + m.toString()); // NOI18N
         }
         if (checkLackByte1(m.getElement(1)) && progState == 1) {
             // in programming state
@@ -506,7 +506,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // 'not implemented' (op on main)
                 // but BDL16 and other devices can eventually reply, so
                 // move to commandExecuting state
-                log.debug("LACK accepted, next state 2");
+                log.debug("LACK accepted, next state 2"); // NOI18N
                 if ((_progRead || _progConfirm) && mServiceMode) {
                     startLongTimer();
                 } else {
@@ -523,7 +523,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 if ((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
                     // just treat it as a normal OpsMode Read response
                     // move to commandExecuting state
-                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2");
+                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2"); // NOI18N
                     startShortTimer();
                     progState = 2;
                 } else {
@@ -546,7 +546,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     timer.start();
                 }
             } else { // not sure how to cope, so complain
-                log.warn("unexpected LACK reply code " + m.getElement(2));
+                log.warn("unexpected LACK reply code " + m.getElement(2)); // NOI18N
                 // move to not programming state
                 progState = 0;
                 // notify user ProgListener
@@ -583,16 +583,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // note that slot has already been told, so
             // slot i has the address of this request
             int addr = _slots[i].locoAddr();
-            log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr);
+            log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
             if (l != null) {
                 // only notify once per request
                 mLocoAddrHash.remove(Integer.valueOf(addr));
                 // and send the notification
-                log.debug("notify listener");
+                log.debug("notify listener"); // NOI18N
                 l.notifyChangedSlot(_slots[i]);
             } else {
-                log.debug("no request for addr {}", addr);
+                log.debug("no request for addr {}", addr); // NOI18N
             }
         }
     }
@@ -615,7 +615,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 case 2:   // commandExecuting
                     // waiting for slot read, is it present?
                     if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
-                        log.debug("  was OPC_SL_RD_DATA");
+                        log.debug("  was OPC_SL_RD_DATA"); // NOI18N
                         // yes, this is the end
                         // move to not programming state
                         stopTimer();
@@ -654,7 +654,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     }
                     break;
                 default:  // error!
-                    log.error("unexpected programming state " + progState);
+                    log.error("unexpected programming state " + progState); // NOI18N
                     break;
             }
         }
@@ -733,23 +733,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     synchronized protected void timeout() {
-        if (log.isDebugEnabled()) {
-            log.debug("timeout fires in state " + progState);
-        }
+        log.debug("timeout fires in state {}", progState); // NOI18N
+        
         if (progState != 0) {
             // we're programming, time to stop
-            if (log.isDebugEnabled()) {
-                log.debug("timeout while programming");
-            }
+            log.debug("timeout while programming"); // NOI18N
+            
             // perhaps no communications present? Fail back to end of programming
             progState = 0;
             // and send the notification; error code depends on state
-            if (progState == 2 && !mServiceMode) // ops mode command executing,
-            // so did talk to command station at first
-            {
+            if (progState == 2 && !mServiceMode) { // ops mode command executing,
+                // so did talk to command station at first
                 notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.NoAck);
-            } else // all others
-            {
+            } else {
+                // all others
                 notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.FailedTimeout);
                 // might be leaving power off, but that's currently up to user to fix
             }
@@ -795,9 +792,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     public void doWrite(int CV, int val, jmri.ProgListener p, int pcmd) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeCV: " + CV);
-        }
+        log.debug("writeCV: {}", CV); // NOI18N
+
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
@@ -844,9 +840,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public void doConfirm(int CV, int val, ProgListener p,
             int pcmd) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("confirmCV: " + CV);
-        }
+
+        log.debug("confirmCV: {}", CV); // NOI18N
+
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
@@ -902,9 +898,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("readCV: " + CV);
-        }
+
+        log.debug("readCV: {}", CV); // NOI18N
+
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
@@ -924,9 +920,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer); // NOI18N
-            }
+                
+            log.info("programmer already in use by {}", _usingProgrammer); // NOI18N
+
             throw new jmri.ProgrammerException("programmer in use"); // NOI18N
         } else {
             _usingProgrammer = p;
@@ -975,7 +971,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param status The error code, if any
      */
     protected void notifyProgListenerEnd(int value, int status) {
-        log.debug("  notifyProgListenerEnd with {}, {} and _usingProgrammer = {}", value, status, _usingProgrammer);
+        log.debug("  notifyProgListenerEnd with {}, {} and _usingProgrammer = {}", value, status, _usingProgrammer); // NOI18N
         // (re)start power timer
         restartEndOfProgrammingTimer();
         // and send the reply
@@ -1063,14 +1059,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (progState == 0) {
              if ( mServiceMode ) {
                 // finished service-track programming, time to power on
-                log.debug("end service-mode programming: turn power on");
+                log.debug("end service-mode programming: turn power on"); // NOI18N
                 try {
                     jmri.InstanceManager.getDefault(jmri.PowerManager.class).setPower(jmri.PowerManager.ON);
                 } catch (jmri.JmriException e) {
-                    log.error("exception during power on at end of programming: " + e);
+                    log.error("exception during power on at end of programming: {}", e); // NOI18N
                 }
             } else {
-                log.debug("end ops-mode programming: no power change");
+                log.debug("end ops-mode programming: no power change"); // NOI18N
             }
         }
     }
