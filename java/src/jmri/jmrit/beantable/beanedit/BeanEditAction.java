@@ -77,8 +77,10 @@ abstract class BeanEditAction extends AbstractAction {
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
 
     /**
-     * Create a generic panel that holds the basic bean information System
-     * Name, User Name and Comment.
+     * Create a generic panel that holds the basic bean information System Name,
+     * User Name, and Comment.
+     *
+     * @return a new panel
      */
     BeanItemPanel basicDetails() {
         BeanItemPanel basic = new BeanItemPanel();
@@ -272,7 +274,8 @@ abstract class BeanEditAction extends AbstractAction {
      * Set out the panel based upon the items passed in via the ArrayList.
      *
      * @param panel JPanel to add stuff to
-     * @param items a {@link BeanEditItem} list of key-value pairs for the items to add
+     * @param items a {@link BeanEditItem} list of key-value pairs for the items
+     *              to add
      */
     protected void addToPanel(JPanel panel, List<BeanEditItem> items) {
         GridBagLayout gbLayout = new GridBagLayout();
@@ -359,8 +362,8 @@ abstract class BeanEditAction extends AbstractAction {
     jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     abstract protected String getBeanType();
-    /*abstract protected NamedBean getBySystemName(String name);*/
 
+    /*abstract protected NamedBean getBySystemName(String name);*/
     abstract protected NamedBean getByUserName(String name);
 
     /**
@@ -439,8 +442,8 @@ abstract class BeanEditAction extends AbstractAction {
     /**
      * TableModel for edit of Bean properties.
      *
-     * At this stage we purely use this to allow the user to delete properties, not to add them.
-     * Changing properties is possible but only for strings.
+     * At this stage we purely use this to allow the user to delete properties,
+     * not to add them. Changing properties is possible but only for strings.
      * Based upon the code from the RosterMediaPane
      */
     private static class BeanPropertiesTableModel extends AbstractTableModel {
@@ -482,7 +485,8 @@ abstract class BeanEditAction extends AbstractAction {
             }			// add and update keys
             for (int i = 0; i < attributes.size(); i++) {
                 KeyValueModel kv = attributes.get(i);
-                if ((kv.key != null) && // only update if key value defined, will do the remove too
+                if ((kv.key != null)
+                        && // only update if key value defined, will do the remove too
                         ((nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
                     nb.setProperty(kv.key, kv.value);
                 }
