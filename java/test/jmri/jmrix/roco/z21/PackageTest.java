@@ -32,7 +32,8 @@ import org.junit.runners.Suite;
     Z21XNetStreamPortControllerTest.class,
     Z21XNetPacketizerTest.class,
     Z21ConstantsTest.class,
-    Z21XNetConnectionConfigTest.class
+    Z21XNetConnectionConfigTest.class,
+    Z21XNetMessageTest.class
 })
 public class PackageTest {
 

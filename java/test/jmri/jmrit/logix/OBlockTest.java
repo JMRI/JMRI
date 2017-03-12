@@ -179,6 +179,13 @@ public class OBlockTest extends TestCase {
         b.removePath(path1);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
     }
+
+    public void testAddUserName() {
+        OBlock b = blkMgr.provideOBlock("OB99");
+        b.setUserName("99user");
+        b = blkMgr.getBySystemName("OB99");
+        Assert.assertEquals("UserName not kept", "99user", b.getUserName());
+    }
     
     // from here down is testing infrastructure
     public OBlockTest(String s) {

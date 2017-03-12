@@ -52,9 +52,9 @@
 
       <p>Note that there are several different versions of the
       SPROG hardware, and even more versions of the SPROG
-      software.</p><a name="limitations" id="limitations"></a>
+      software.</p>
 
-      <h2>Limitations</h2>
+      <h2><a name="limitations" id="limitations">Limitations</a></h2>
 
       <p>In some earlier versions the <a href="#tools">Firmware
       Update tool</a> is not completely functional and the firmware
@@ -75,13 +75,20 @@
       <h3>Wiring</h3>
 
       <p>Original SPROGs were connected via a 9-pin serial cable.
-      Current SPROGs are available as USB only. Connect your SPROG
-      using the appropriate cable and power it up.</p>
+      Current SPROGs are available as USB only.<br>
+      Connect your SPROG using the appropriate cable and power it up.</p>
 
       <h3>Settings</h3>
 
       <ol>
-        <li>USB-connected SPROGs on Windows may need to have a
+        <li>USB-connected SPROGs on Windows 10 will work using the standard
+        USB drivers installed in the OS. When you plug in the SPROG,
+        it will show up under Hardware like this:<br>
+        <img src="images/SprogWin10Devices.png" width="244" height="112"><br>
+        If you previously installed some special USB driver, uninstall it on Windows 10 
+        before proceeding.</li>
+        
+        <li>On Windows 7 and earlier users may need to have a
         driver installed. For more information on that, see the
         <a href=
         "http://www.sprog-dcc.co.uk/downloads/SprogIIUserGuide.pdf">
@@ -94,22 +101,32 @@
         <li>Make sure you have the latest version of JMRI. Start
         one of the JMRI applications.</li>
 
-        <li>Go to the Connections tab of the JMRI Preferences
-        panel. This opens automatically the first time a program is
+        <li>Go to the <b>Connections</b> tab of the JMRI Preferences
+        pane. This opens automatically the first time a program is
         run, or you can select it from the "Edit" menu.</li>
 
         <li>Select "SPROG DCC" from the list as the System
-        Manufacturer</li>
+        Manufacturer.</li>
 
         <li>SPROG can either be a stand-alone Decoder Programmer
         interface, or it can be set to act as a mini-Command
-        Station for running trains. You have to select which mode
-        to use in the preferences, and then JMRI configures the
-        necessary options in the SPROG.
+        Station for running trains.<br>
+        You have to select which mode to use in Preferences,
+        and then JMRI configures the necessary options in the SPROG.
 
           <ul>
-            <li>For DCC programmer operation, select "SPROG" as the
-            System Connection.</li>
+            <li>For DCC programmer operation, select "SPROG"
+            as the System Connection, as illustrated:<br>
+            <a href="images/SprogPreferences.jpg">
+            <img src="images/SprogPreferences.jpg" width="322" height="203">
+            </a><br>
+            In this mode, the Status Bar along the bottom of the DecoderPro
+            Roster pane will show the inactive function in red, like this:<br>
+            <a href="images/SprogDPStatusbar.png">
+            <img src="images/SprogDPStatusbar.png" width="332" height="24"></a>
+            <br>If both of hte left hand field display in red type, you may have
+            selected the wrong SPROG System Connection.
+            </li>
 
             <li>For Command Station operation, select "SPROG
             Command Station".</li>
@@ -131,7 +148,7 @@
       <p>SPROG uses a "Mode Word" to set a number of optional
       operating modes</p>
 
-      <p>In all recent SPROGs, the default value is the Mode Word
+      <p>In all recent SPROGs, the default value for the Mode Word
       is correct for both programmer and command station modes. For
       older SPROGs you may wish check or modify the Mode Word as
       follows:</p>
@@ -184,7 +201,7 @@
 
       <h4>Firmware Update</h4>
 
-      <p>SPROG includes an "Firmware Update" tool that allows the
+      <p>SPROG includes a "Firmware Update" tool that allows the
       firmware (the internal software that operates the SPROG) to
       be updated by the user. The tool is only functional in
       <a href=
@@ -193,10 +210,10 @@
       "../../../package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml">
       newer version 4 SPROG</a>.<br>
       <strong>Warning: see <a href="#limitations">Limitations</a>
-      above.</strong></p><a name="documentation" id=
-      "documentation"></a>
+      above.</strong></p>
 
-      <h2>Documentation</h2>
+      <h2><a name="documentation" id=
+      "documentation">Documentation</a></h2>
 
       <h3>Third Party info</h3>
 
@@ -209,7 +226,9 @@
 
       <p>There's a <a href=
       "https://uk.groups.yahoo.com/neo/groups/sprog-dcc/info">SPROG
-      Yahoo group</a>.</p><!--#include virtual="/Footer" -->
+      Yahoo group</a>.</p>
+      <p>A Dutch-language SPROG Beginner's Manual is available as a PDF from <a href="http://www.domburgtrainsupport.nl/producten.html">Domburg Train Support</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

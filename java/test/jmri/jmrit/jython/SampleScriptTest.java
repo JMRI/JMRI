@@ -58,6 +58,7 @@ public class SampleScriptTest extends TestCase {
             super.setUp();
         
             jmri.util.JUnitUtil.resetInstanceManager();
+            jmri.util.JUnitUtil.initConfigureManager();
             jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
             jmri.util.JUnitUtil.initDebugPowerManager();
             jmri.util.JUnitUtil.initInternalSensorManager();

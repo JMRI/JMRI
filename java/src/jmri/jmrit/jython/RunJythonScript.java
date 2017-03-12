@@ -47,9 +47,10 @@ public class RunJythonScript extends JmriAbstractAction {
 
     /**
      * Constructor that, when action is invoked, directly invokes the provided
-     * File
+     * File.
      *
      * @param name Action name
+     * @param file the script file to invoke
      */
     public RunJythonScript(String name, File file) {
         super(name);
