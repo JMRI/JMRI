@@ -4,6 +4,7 @@ import jmri.Turnout;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.jmri.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         return "NT" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("NT21", "my name");
