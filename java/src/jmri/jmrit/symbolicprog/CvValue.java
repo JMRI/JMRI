@@ -131,9 +131,8 @@ public class CvValue extends AbstractValue implements ProgListener {
      * form a GUI, not for internal uses, as it sets the state to EDITED
      */
     public void setValue(int value) {
-        if (log.isDebugEnabled()) {
-            log.debug("CV " + number() + " value changed from " + _value + " to " + value);
-        }
+        log.debug("CV {} value changed from {} to {}", number(), _value, value);
+
         setState(EDITED);
         if (_value != value) {
             _value = value;
@@ -162,7 +161,7 @@ public class CvValue extends AbstractValue implements ProgListener {
      * Set state value and send notification. Also sets GUI color as needed.
      */
     public void setState(int state) {
-        if (log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {  // stateToString overhead
             log.debug("cv " + number() + " set state from " + stateToString(_state) + " to " + stateToString(state));
         }
         int oldstate = _state;
@@ -234,9 +233,8 @@ public class CvValue extends AbstractValue implements ProgListener {
      * is the only thing changing
      */
     private void setBusy(boolean busy) {
-        if (log.isDebugEnabled()) {
-            log.debug("setBusy from " + _busy + " to " + busy + " state " + _state);
-        }
+        log.debug("setBusy from {} to {} state {}", _busy, busy, _state);
+
         boolean oldBusy = _busy;
         _busy = busy;
         notifyBusyChange(oldBusy, busy);
@@ -246,9 +244,8 @@ public class CvValue extends AbstractValue implements ProgListener {
      * Notify of changes to the busy state
      */
     private void notifyBusyChange(boolean oldBusy, boolean newBusy) {
-        if (log.isDebugEnabled()) {
-            log.debug("notifyBusy from " + oldBusy + " to " + newBusy + " current state " + _state);
-        }
+        log.debug("notifyBusyChange from {} to {} current state {}", oldBusy, newBusy, _state);
+
         if (oldBusy != newBusy) {
             prop.firePropertyChange("Busy",
                     oldBusy ? Boolean.TRUE : Boolean.FALSE,
@@ -364,9 +361,8 @@ public class CvValue extends AbstractValue implements ProgListener {
     private boolean _confirm = false;
 
     public void read(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("read call with Cv number " + _num + " and programmer " + mProgrammer);
-        }
+        log.debug("read call with Cv number {} and programmer {}", _num, mProgrammer);
+
         setToRead(false);
         // get a programmer reference and write
         _status = status;
@@ -482,9 +478,8 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     public void confirm(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("confirm call with Cv number " + _num);
-        }
+        log.debug("confirm call with Cv number {}", _num);
+
         // get a programmer reference and write
         _status = status;
 
@@ -520,9 +515,8 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     public void write(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("write call with Cv number " + _num);
-        }
+        log.debug("write call with Cv number {}", _num);
+
         setToWrite(false);
         // get a programmer reference and write
         _status = status;
@@ -705,9 +699,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 _tableEntry.setText(Integer.toString(value));
                 notifyValueChange(value);
                 setState(READ);
-                if (log.isDebugEnabled()) {
-                    log.debug("CV setting not busy on end read");
-                }
+                log.debug("CV setting not busy on end read");
                 _busy = false;
                 notifyBusyChange(oldBusy, _busy);
             } else if (_confirm) {
@@ -734,7 +726,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                 new Object[]{mProgrammer.decodeErrorCode(retval)}));
             }
 
-            // delay to ensure that the message appears!
+            // delay setting not Busy to ensure that the message appears to the user
             javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -745,25 +737,20 @@ public class CvValue extends AbstractValue implements ProgListener {
             timer.setRepeats(false);
             timer.start();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("CV progOpReply end of handling CV " + _num);
-        }
+            
+        log.debug("CV progOpReply end of handling CV {}", _num);
     }
 
     void errorTimeout() {
         setState(UNKNOWN);
-        if (log.isDebugEnabled()) {
-            log.debug("CV setting not busy on error reply");
-        }
+        log.debug("CV setting not busy on error reply");
         _busy = false;
         notifyBusyChange(true, _busy);
     }
 
     // clean up connections when done
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
     }
 
     // initialize logging
