@@ -45,9 +45,9 @@ public class WarrantManagerXml //extends XmlFile
     public Element store(Object o) {
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
-        if (!GraphicsEnvironment.isHeadless()) {
-            storeNXParams(warrants);
-        }
+        
+        storeNXParams(warrants);
+        
         WarrantManager manager = (WarrantManager) o;
         Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -200,11 +200,9 @@ public class WarrantManagerXml //extends XmlFile
             return true;
         }
         
-        if (!GraphicsEnvironment.isHeadless()) {
-            NXFrame nxFrame = NXFrame.getInstance();
-            loadNXParams(nxFrame, shared.getChild("nxparams"));
-//            nxFrame.init();   don't make visible
-        }
+        NXFrame nxFrame = NXFrame.getInstance();
+        loadNXParams(nxFrame, shared.getChild("nxparams"));
+
         List<Element> warrantList = shared.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
         for (int i=0; i<warrantList.size(); i++) {

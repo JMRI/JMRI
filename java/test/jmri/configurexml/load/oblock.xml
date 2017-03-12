@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>2</test>
+    <modifier>.2ish</modifier>
+  </jmriversion>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
+    <oblock systemName="OB1" userName="OneBlock" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>OneBlock</userName>
+    </oblock>
+  </oblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <nxparams>
+      <maxspeed>0.75</maxspeed>
+      <haltstart>no</haltstart>
+    </nxparams>
+  </warrants>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <!--Written by JMRI version 4.7.2ish-201703070210-jake-Rf6d71d1 on Mon Mar 06 18:14:01 PST 2017 $Id$-->
+</layout-config>
