@@ -51,7 +51,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
            gpio=_gpio;
         address=Integer.parseInt(id.substring(id.lastIndexOf("S")+1));
         try {
-           pin = gpio.provisionDigitalInputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName(),PinPullResistance.PULL_DOWN);
+           pin = gpio.provisionDigitalInputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName(),PinPullResistance.PULL_UP);
         } catch(java.lang.RuntimeException re) {
             log.error("Provisioning sensor {} failed with: {}", id, re.getMessage());
             throw new IllegalArgumentException(re.getMessage());
