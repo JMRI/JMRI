@@ -41,10 +41,10 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         if (getManager() instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager();
             List<jmri.Manager> managerList = proxy.getManagerList();
-            tabbedTableArray.add(new TabbedTableItem("All", true, getManager(), getNewTableAction("All")));
+            tabbedTableArray.add(new TabbedTableItem(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
             for (int x = 0; x < managerList.size(); x++) {
                 String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, managerList.get(x), getNewTableAction(manuName));
+                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, managerList.get(x), getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
         } else {

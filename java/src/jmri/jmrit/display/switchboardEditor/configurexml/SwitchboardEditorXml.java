@@ -146,13 +146,12 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             value = false;
         }
         panel.setAllPositionable(value);
-
-        /*
-         value = false;
-         if ((a = element.getAttribute("showcoordinates"))!=null && a.getValue().equals("yes"))
-         value = true;
-         panel.setShowCoordinates(value);
-         */
+/*
+        value = false;
+        if ((a = shared.getAttribute("showcoordinates"))!=null && a.getValue().equals("yes"))
+            value = true;
+        panel.setShowCoordinates(value);
+*/
         value = true;
         if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;

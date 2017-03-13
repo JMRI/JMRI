@@ -17,14 +17,14 @@ public class SwitchboardEditorAction extends AbstractAction {
 
     public SwitchboardEditorAction() {
         this("New Switchboard");
-    } // TODO I18N
+    } // NO I18N
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String name = "Switchboard"; // TODO I18N
+        String name = Bundle.getMessage("SwitchboardDefaultName", "");
         for (int i = 2; i < 100; i++) {
             if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
-                name = "Switchboard " + i; // TODO I18N
+                name = Bundle.getMessage("SwitchboardDefaultName", i);
             }
         }
         SwitchboardEditor frame = new SwitchboardEditor(name);

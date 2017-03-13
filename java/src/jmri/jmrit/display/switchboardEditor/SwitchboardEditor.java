@@ -193,7 +193,7 @@ public class SwitchboardEditor extends Editor {
 
         // navigation top row and to set range
         navBarPanel = new JPanel();
-        //navBarPanel.setLayout(new BoxLayout(navBarPanel, BoxLayout.X_AXIS));
+        navBarPanel.setLayout(new BoxLayout(navBarPanel, BoxLayout.X_AXIS));
 
         navBarPanel.add(prev);
         prev.addMouseListener(new MouseAdapter() {
@@ -429,17 +429,17 @@ public class SwitchboardEditor extends Editor {
             }
         }.init(this));
 
-        editItem = new JMenuItem(Bundle.getMessage("PEView"));
-        _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                changeView("jmri.jmrit.display.panelEditor.PanelEditor");
-                if (_itemPalette != null) {
-                    _itemPalette.dispose();
-                }
-            }
-        });
+//        editItem = new JMenuItem(Bundle.getMessage("PEView"));
+//        _fileMenu.add(editItem);
+//        editItem.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent event) {
+//                changeView("jmri.jmrit.display.panelEditor.PanelEditor");
+//                if (_itemPalette != null) {
+//                    _itemPalette.dispose();
+//                }
+//            }
+//        });
 
         _fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
@@ -702,7 +702,7 @@ public class SwitchboardEditor extends Editor {
     public void setTitle() {
         String name = getName();
         if (name == null || name.length() == 0) {
-            name = "Switchboard";
+            name = Bundle.getMessage("SwitchboardDefaultName","");
         }
         if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
