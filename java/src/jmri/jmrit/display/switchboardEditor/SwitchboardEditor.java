@@ -565,15 +565,6 @@ public class SwitchboardEditor extends Editor {
             if (_editorMenu != null) {
                 _menuBar.remove(_editorMenu);
             }
-            if (_markerMenu != null) {
-                _menuBar.remove(_markerMenu);
-            }
-//            if (_drawMenu == null) {
-//                makeDrawMenu();
-//            } else {
-//                _menuBar.add(_drawMenu, 0);
-//            }
-
             if (_iconMenu == null) {
                 makeIconMenu();
             } else {

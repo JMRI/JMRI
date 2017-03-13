@@ -10405,7 +10405,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //deletePanel
 
     /**
-     * Control whether target panel items are editable. Does this by invoke the
+     * Control whether target panel items are editable. Does this by invoking the
      * {@link Editor#setAllEditable} function of the parent class. This also
      * controls the relevant pop-up menu items (which are the primary way that
      * items are edited).
@@ -10447,7 +10447,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         awaitingIconChange = false;
         editModeItem.setSelected(editable);
         repaint();
-    }   //setAllEditable
+    }
 
     /**
      * Control whether panel items are positionable. Markers are always
