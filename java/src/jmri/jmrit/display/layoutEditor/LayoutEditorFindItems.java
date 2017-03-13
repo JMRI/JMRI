@@ -557,7 +557,7 @@ public class LayoutEditorFindItems {
             } else if (name.endsWith("-EB")) {
                 result = findPositionablePointByName(name);
             } else {
-                log.warning("findObjectByName({}): unknown type name prefix", name);
+                log.warn("findObjectByName({}): unknown type name prefix", name);
             }
             if (result == null) {
                 log.debug("findObjectByName({}) returned null", name);
