@@ -492,7 +492,7 @@ public class LayoutEditorFindItems {
     // a "type-less" system by replacing this routine with a type-less one:
     // (BTW: AFAICT this routine is only called by the setObjects routine in TrackSegment.java)
     //
-    
+
     /*
      * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
      */
@@ -554,8 +554,10 @@ public class LayoutEditorFindItems {
                 result = findLayoutTurntableByName(name);
             } else if (name.startsWith("T")) {
                 result = findTrackSegmentByName(name);
+            } else if (name.endsWith("-EB")) {
+                result = findPositionablePointByName(name);
             } else {
-                log.error("findObjectByName({}): unknown type name prefix", name);
+                log.warning("findObjectByName({}): unknown type name prefix", name);
             }
             if (result == null) {
                 log.debug("findObjectByName({}) returned null", name);
