@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
@@ -26,7 +27,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
-        super();
+        // there has to be a connection memo via a serial adapter
+        super(new SerialDriverAdapter());
+        // and it has to have a TC
+        ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).setTrafficController(new SerialTrafficController());
     }
 
     JButton b = new JButton("Configure C/MRI nodes");

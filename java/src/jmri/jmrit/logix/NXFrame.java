@@ -50,7 +50,7 @@ public class NXFrame extends WarrantRoute {
     private float _intervalTime = 0.0f;     // milliseconds
     private float _throttleIncr = 0.0f;
     private float _throttleFactor = 0.0f;
-    protected static float SCALE_FACTOR = 65; // With _scale, gives a rough first correction for track speed
+    private static float SCALE_FACTOR = 65; // With _scale, gives a rough first correction for track speed
 
     JTextField _maxSpeedBox = new JTextField(6);
     JTextField _rampInterval = new JTextField(6);
@@ -67,7 +67,7 @@ public class NXFrame extends WarrantRoute {
     JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
 //  static boolean _addTracker = false;
     private boolean _haltStart = false;
-    private float _maxSpeed = 0.5f;
+    private float _maxSpeed = 0.6f;
     private float _minSpeed = 0.05f;
     
     protected JPanel    _controlPanel;
@@ -445,14 +445,6 @@ public class NXFrame extends WarrantRoute {
         dispose();
     }
 
-    public void setMaxSpeed(float s) {
-        _maxThrottle = s;
-    }
-
-    public float getMaxSpeed() {
-        return _maxThrottle;
-    }
-
     // for the convenience of testing
     protected void setTimeInterval(float s) {
         _intervalTime = s;
@@ -471,14 +463,6 @@ public class NXFrame extends WarrantRoute {
      */
     protected void setThrottleFactor(float factor) {
         this._throttleFactor = factor;
-    }
-
-    public void setStartHalt(boolean s) {
-        _haltStart = s;
-    }
-
-    public boolean getStartHalt() {
-        return _haltStart;
     }
 
     // for the convenience of testing

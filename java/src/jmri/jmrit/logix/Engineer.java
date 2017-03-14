@@ -49,6 +49,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private boolean _atClear = false;
     SignalSpeedMap _speedMap;
     RosterSpeedProfile _speedProfile;
+    private static float SCALE_FACTOR = 65; // With _scale, gives a rough first correction for track speed
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -937,7 +938,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             distance = _speedProfile.getSpeed(speed, isForward) * time / 1000;
         } else {
-            float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
+            float distanceFactor = _speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
             distance = speed * time * distanceFactor;
         }
         if (log.isDebugEnabled()) log.debug("getDistanceTraveled = {} in time={}ms from speedSetting= {}, type {} by {}",
@@ -952,7 +953,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             time = distance * 1000 / _speedProfile.getSpeed(speed, isForward);
         } else {
-            float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
+            float distanceFactor = _speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
             time = distance / (distanceFactor * speed);
         }
         if (log.isDebugEnabled()) log.debug("getTimeForDistance = {}ms from speedSetting= {} in distance {} by {}",
@@ -983,7 +984,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (_speedProfile != null) {
                 dist = _speedProfile.getSpeed((speed - delta / 2), isForward) * time / 1000;
             } else {
-                float distanceFactor = _speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
+                float distanceFactor = _speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
                 dist = (speed - delta / 2) * time * distanceFactor;
             }
             if (dist <= 0.0f) {
@@ -1008,7 +1009,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             return _speedProfile.getSpeed(throttleSetting, _throttle.getIsForward()) / 1000;
         }
-        return throttleSetting *_speedMap.getDefaultThrottleFactor() * NXFrame.SCALE_FACTOR / _speedMap.getLayoutScale();
+        return throttleSetting *_speedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _speedMap.getLayoutScale();
     }
 
     private float getThrottleSetting(float trackSpeed) {
@@ -1016,7 +1017,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             setting = _speedProfile.getThrottleSetting(trackSpeed, _throttle.getIsForward());
         } else {
-            setting = trackSpeed * _speedMap.getLayoutScale() / (NXFrame.SCALE_FACTOR *_speedMap.getDefaultThrottleFactor());            
+            setting = trackSpeed * _speedMap.getLayoutScale() / (SCALE_FACTOR *_speedMap.getDefaultThrottleFactor());            
         }
         return setting;
     }

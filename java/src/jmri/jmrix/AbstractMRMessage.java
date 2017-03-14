@@ -40,6 +40,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         this();
         if (m == null) {
             log.error("copy ctor of null message");
+            throw new IllegalArgumentException("copy ctor of null message");
         }
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
