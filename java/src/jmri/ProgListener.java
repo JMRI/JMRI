@@ -91,7 +91,7 @@ public interface ProgListener extends java.util.EventListener {
 
     /**
      * Constant denoting that there was an error with the programming sequence
-     * (e.g. early exit)
+     * (such as early exit)
      */
     public final int SequenceError = 0x200;
 

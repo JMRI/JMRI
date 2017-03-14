@@ -64,7 +64,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
         try {
             Element root = new Element("throttle-layout-config");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "throttle-layout-config.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-layout-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle-layout-config.xsl"?>

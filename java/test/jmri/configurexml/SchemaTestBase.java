@@ -25,7 +25,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class SchemaTestBase {
 
-    private boolean verifySchema;
+    private XmlFile.Validate validate;
     private final File file;
     private final boolean pass;
 
@@ -37,7 +37,7 @@ public class SchemaTestBase {
     @Test
     public void validate() {
         Assume.assumeFalse("Ignoring schema validation.", Boolean.getBoolean("jmri.skipschematests"));
-        XmlFile.setVerify(true);
+        XmlFile.setDefaultValidate(XmlFile.Validate.CheckDtdThenSchema);
         XmlFile xf = new XmlFileImpl();
         try {
             xf.rootFromFile(file);
@@ -114,12 +114,12 @@ public class SchemaTestBase {
     public void setUp() throws Exception {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
-        this.verifySchema = XmlFile.getVerify();
+        this.validate = XmlFile.getDefaultValidate();
     }
 
     @After
     public void tearDown() throws Exception {
-        XmlFile.setVerify(this.verifySchema);
+        XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.resetInstanceManager();
         Log4JFixture.tearDown();
     }

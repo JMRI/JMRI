@@ -39,7 +39,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
 
     }
 
-    RfidSystemConnectionMemo adapterMemo;
+    protected RfidSystemConnectionMemo adapterMemo;
 
     public void setAdapterMemo(RfidSystemConnectionMemo memo) {
         adapterMemo = memo;

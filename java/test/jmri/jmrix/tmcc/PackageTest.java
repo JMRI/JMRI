@@ -42,6 +42,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialThrottleTest.class));
         return suite;
     }
 

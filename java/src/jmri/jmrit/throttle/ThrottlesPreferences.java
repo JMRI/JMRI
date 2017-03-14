@@ -186,7 +186,7 @@ public class ThrottlesPreferences {
 
         try {
             Element root = new Element("throttles-preferences");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "throttles-preferences.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttles-preferences.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
 /*TODO    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
