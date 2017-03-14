@@ -895,7 +895,7 @@
         </variable>
         <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-          <label>Opposite Headlight Dim</label>>
+          <label>Opposite Headlight Dim</label>
           <label xml:lang="cs">Ztlumení opačných světel</label>
         </variable>
         <variable CV="61" mask="XVXXXXXX" item="Motor Option 1">
