@@ -854,7 +854,7 @@
 		<variable CV="56" default="3" item="Dither frequency" tooltip="Range 1 (high) to 10 (low)">
 		<decVal/>
 		<label>Dither Frequency</label>
-		<label xml:lang="it">Frequenza oscillazione</label> 1 (vysoká) až 10 (nízká)
+		<label xml:lang="it">Frequenza oscillazione</label>
 		<label xml:lang="cs">Frekvence kmitání</label>
 		<tooltip xml:lang="it">Valori da 1 (alto) a 10 (basso)</tooltip>
 		<tooltip xml:lang="cs">Rozsah: 1 (vysoká) až 10 (nízká)</tooltip>
