@@ -111,7 +111,7 @@
         <choice xml:lang="it">Guasto</choice>
         <choice xml:lang="de">Fehler</choice>
         <choice xml:lang="cs">Závada</choice>
-         <choice xml:lang="ca">Error</choice>
+        <choice xml:lang="ca">Error</choice>
       </enumChoice>
     </enumVal>
     <label>Motor short-circuit</label>
