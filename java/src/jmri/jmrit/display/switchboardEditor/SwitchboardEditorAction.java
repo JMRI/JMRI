@@ -24,7 +24,7 @@ public class SwitchboardEditorAction extends AbstractAction {
         String name = Bundle.getMessage("SwitchboardDefaultName", "");
         for (int i = 2; i < 100; i++) {
             if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
-                name = Bundle.getMessage("SwitchboardDefaultName", i);
+                name = Bundle.getMessage("SwitchboardDefaultName", " " + i);
             }
         }
         SwitchboardEditor frame = new SwitchboardEditor(name);

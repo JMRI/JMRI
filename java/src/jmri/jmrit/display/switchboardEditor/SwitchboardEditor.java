@@ -1,9 +1,11 @@
 package jmri.jmrit.display.switchboardEditor;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -34,6 +36,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -51,10 +55,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
@@ -74,10 +81,10 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.ToolTip;
-//import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.util.HelpUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,10 +130,10 @@ public class SwitchboardEditor extends Editor {
     //private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
-    ImageIcon iconPrev = new ImageIcon("/resources/misc/gui3/LafLeftArrow_m.gif");
-    private JButton prev = new JButton("<"); //JLabel(iconPrev);
-    ImageIcon iconNext = new ImageIcon("/resources/misc/gui3/LafRightArrow_m.gif");
-    private JButton next = new JButton(">"); //JLabel(iconNext);
+    ImageIcon iconPrev = new ImageIcon("resources/icons/misc/gui3/LafLeftArrow_m.gif");
+    private JLabel prev = new JLabel(iconPrev); // JButton("<");
+    ImageIcon iconNext = new ImageIcon("resources/icons/misc/gui3/LafRightArrow_m.gif");
+    private JLabel next = new JLabel(iconNext); // JButton(">");
 
     // Switchboard items
     private JPanel navBarPanel = null;
@@ -135,10 +142,21 @@ public class SwitchboardEditor extends Editor {
     private int _range = rangeMax - rangeMin;
     JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
     JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
+    // toolbar (from LE)
+    private JPanel floatEditHelpPanel = null;
+    private JPanel editToolBarPanel = null;
+    private JScrollPane editToolBarScroll = null;
+    private JPanel editToolBarContainer = null;
+
+    private JPanel helpBarPanel = null;
+    private JPanel helpBar = new JPanel();
+    private boolean showHelpBar = true;
+    private int height = 100;
+    private int width = 100;
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
 //    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
-    //private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
+    private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
     private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHidden"));
@@ -147,6 +165,13 @@ public class SwitchboardEditor extends Editor {
     private JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
+
+    //Default flow layout definitions for JPanels
+    private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
+    private FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
+    private FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
+
+    private JPanel turnoutNamePanel = new JPanel(leftRowLayout);
 
     public SwitchboardEditor() {
     }
@@ -159,7 +184,7 @@ public class SwitchboardEditor extends Editor {
     @Override
     protected void init(String name) {
         //setVisible(false);
-        java.awt.Container contentPane = this.getContentPane();
+        Container contentPane = this.getContentPane(); // Editor
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // make menus
@@ -176,7 +201,7 @@ public class SwitchboardEditor extends Editor {
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
 
-        super.setTargetPanel(null, null);
+        super.setTargetPanel(null, makeFrame(name));
         super.setTargetPanelSize(300, 300);
         //makeDataFlavors();
 
@@ -202,8 +227,9 @@ public class SwitchboardEditor extends Editor {
                 int oldMin = (Integer) minSpinner.getValue();
                 int oldMax = (Integer) maxSpinner.getValue();
                 _range = oldMax - oldMin;
-                minSpinner.setValue(Math.max(rangeMin, oldMin - _range));
-                maxSpinner.setValue(Math.max(oldMax - _range -1, Math.max(rangeMin, oldMax - _range)));
+                minSpinner.setValue(Math.max(rangeMin, oldMin - _range - 1));
+                maxSpinner.setValue(Math.max(oldMax - _range - 1, Math.max(rangeMax, oldMax - _range - 1)));
+                log.debug("oldMin =" + oldMin + ", oldMax =" + oldMax);
             }
         });
         prev.setToolTipText("Vorige");
@@ -212,6 +238,7 @@ public class SwitchboardEditor extends Editor {
         navBarPanel.add(new JLabel ("tot:"));
         navBarPanel.add(maxSpinner);
         navBarPanel.add(next);
+
         next.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -223,7 +250,40 @@ public class SwitchboardEditor extends Editor {
             }
         });
         next.setToolTipText("Volgende");
-        this.add(navBarPanel);
+        navBarPanel.add(Box.createHorizontalGlue());
+        contentPane.add(Box.createVerticalGlue());
+
+        super.setBackgroundColor(Color.RED); // test
+        // put on which Frame?
+        contentPane.add(navBarPanel); // on 2nd Editor Panel
+        //super.getTargetFrame().add(navBarPanel); // on (top of) Switchboard Frame/Panel
+
+        JPanel p1 = new JPanel();
+        JButton addButton = new JButton("Add Label");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                addTextEditor();
+            }
+        });
+        p1.add(addButton);
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
+        contentPane.add(p1);
+        contentPane.add(new JLabel("Demo"));
+
+        setupToolBar(); //re-layout all the toolbar items
+
+        // add LE style help bar
+        if (showHelpBar) {
+            //not sure why… but this is the only way I could
+            //get everything to layout correctly
+            //when the helpbar is visible…
+            boolean editMode = true; //editModeItem.isSelected();
+            setAllEditable(!editMode);
+            setAllEditable(editMode);
+        } else {
+            helpBarPanel.setVisible(isEditable() && showHelpBar);
+        }
 
         pack();
         setVisible(true);
@@ -237,6 +297,74 @@ public class SwitchboardEditor extends Editor {
         }
         (new makeCatalog()).execute();
         log.debug("Init SwingWorker launched");
+    }
+
+    private void setupToolBar() {
+        //Initial setup for both horizontal and vertical
+        Container contentPane = getContentPane();
+
+        //remove these (if present) so we can add them back (without duplicates)
+        if (editToolBarContainer != null) {
+            editToolBarContainer.setVisible(false);
+            contentPane.remove(editToolBarContainer);
+        }
+
+        if (helpBarPanel != null) {
+            contentPane.remove(helpBarPanel);
+        }
+
+        editToolBarPanel = new JPanel();
+        editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
+
+        JPanel outerBorderPanel = editToolBarPanel;
+        JPanel innerBorderPanel = editToolBarPanel;
+
+        Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
+
+        innerBorderPanel = new JPanel();
+        innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
+        TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnout"));
+        innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
+        innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+        innerBorderPanel.setBorder(innerTitleBorder);
+
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+
+        //row 2
+        JPanel hTop2Panel = new JPanel();
+        hTop2Panel.setLayout(new BoxLayout(hTop2Panel, BoxLayout.LINE_AXIS));
+        //Row 2 : Left Components
+        JPanel hTop2Center = new JPanel(centerRowLayout);
+        hTop2Center.add(turnoutNamePanel);
+        hTop2Panel.add(hTop2Center);
+
+        innerBorderPanel.add(hTop2Panel);
+        outerBorderPanel.add(innerBorderPanel);
+//        editToolBarPanel.add(outerBorderPanel);
+
+        editToolBarScroll = new JScrollPane(editToolBarPanel);
+        //width = screenDim.width;
+        height = editToolBarScroll.getPreferredSize().height;
+        editToolBarContainer = new JPanel();
+        editToolBarContainer.setLayout(new BoxLayout(editToolBarContainer, BoxLayout.PAGE_AXIS));
+        editToolBarContainer.add(editToolBarScroll);
+        editToolBarContainer.setMinimumSize(new Dimension(width, height));
+        editToolBarContainer.setPreferredSize(new Dimension(width, height));
+
+        helpBarPanel = new JPanel();
+        helpBarPanel.add(helpBar);
+        for (Component c : helpBar.getComponents()) {
+            if (c instanceof JTextArea) {
+                JTextArea j = (JTextArea) c;
+                j.setSize(new Dimension(width, j.getSize().height));
+                j.setLineWrap(false);
+                j.setWrapStyleWord(false);
+            }
+        }
+        contentPane.setLayout(new BoxLayout(contentPane, false ? BoxLayout.LINE_AXIS : BoxLayout.PAGE_AXIS));
+        contentPane.add(editToolBarContainer);
+        contentPane.add(helpBarPanel);
+        helpBarPanel.setVisible(isEditable() && showHelpBar);
     }
 
     //@Override
@@ -316,14 +444,14 @@ public class SwitchboardEditor extends Editor {
         });
         useGlobalFlagBox.setSelected(useGlobalFlag());
         // positionable item
-//        _optionMenu.add(positionableBox);
-//        positionableBox.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                setAllPositionable(positionableBox.isSelected());
-//            }
-//        });
-//        positionableBox.setSelected(allPositionable());
+        _optionMenu.add(positionableBox);
+        positionableBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                setAllPositionable(positionableBox.isSelected());
+            }
+        });
+        positionableBox.setSelected(allPositionable());
         // controlable item
         _optionMenu.add(controllingBox);
         controllingBox.addActionListener(new ActionListener() {
@@ -838,6 +966,44 @@ public class SwitchboardEditor extends Editor {
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
         targetWindowClosing(true);
+    }
+
+    /**
+     * Create sequence of panels, etc. for layout: JFrame contains its
+     * ContentPane which contains a JPanel with BoxLayout (p1) which contains a
+     * JScollPane (js) which contains the targetPane
+     *
+     */
+    public JmriJFrame makeFrame(String name) {
+        JmriJFrame targetFrame = new JmriJFrame(name);
+        targetFrame.setVisible(true);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+        menuBar.add(editMenu);
+        editMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+            }
+        });
+        editMenu.addSeparator();
+        editMenu.add(new AbstractAction(Bundle.getMessage("DeletePanel")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (deletePanel()) {
+                    dispose(true);
+                }
+            }
+        });
+        targetFrame.setJMenuBar(menuBar);
+        // add switchboard menu
+        JMenu sbMenu = new JMenu(Bundle.getMessage("SwitchboardMenu"));
+        sbMenu.add(makeSelectTypeMenu());
+        menuBar.add(sbMenu);
+
+        targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
+        return targetFrame;
     }
 
     protected void setSecondSelectionGroup(ArrayList<Positionable> list) {
