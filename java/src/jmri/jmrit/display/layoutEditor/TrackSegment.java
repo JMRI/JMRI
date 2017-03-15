@@ -303,10 +303,14 @@ public class TrackSegment extends LayoutTrack {
 
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
-        // connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        // connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+        }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+        }
     }
 
     /**
