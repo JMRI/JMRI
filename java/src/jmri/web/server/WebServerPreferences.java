@@ -114,7 +114,7 @@ public class WebServerPreferences extends Bean {
     private int port = 12080;
     private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
-    private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
     public WebServerPreferences(String fileName) {
         boolean migrate = false;

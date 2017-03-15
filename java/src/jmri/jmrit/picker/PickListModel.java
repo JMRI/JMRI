@@ -292,7 +292,14 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public JTable makePickTable() {
         this.init();
         _sorter = new TableRowSorter<>(this);
-        _table = new JTable(this);
+        _table = new JTable(this) {
+            /**
+             * Overridden to prevent empty cells from being selected
+             */
+            public void changeSelection(int row, int col, boolean toggle, boolean extend) {
+                if (this.getValueAt(row, col) != null)
+                    super.changeSelection(row, col, toggle, extend);
+        }};
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
 
@@ -793,7 +800,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
         @Override
         public NamedBean addBean(String sysName, String userName) {
-            return manager.createNewWarrant(sysName, userName);
+            return manager.createNewWarrant(sysName, userName, false, 0);
         }
 
         @Override

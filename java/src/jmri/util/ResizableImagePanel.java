@@ -436,5 +436,5 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         setImagePath(dest.getPath());
     }
 
-    static private Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
 }

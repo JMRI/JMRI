@@ -376,7 +376,7 @@ interagissent , le <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">
       <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configuration de PM4x</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configuration de SE8C</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configuration de LocoIO</a> (d&#233;sapprouv&#233;, utilise le <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>)</li>
-      <li><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configuration de la centralee </a></li>
+      <li><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configuration de la Centrale </a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">Configuration de LocoNet ID</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configuration de Duplex Group</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">Envoi de Message R&#233;gulateur</a></li>

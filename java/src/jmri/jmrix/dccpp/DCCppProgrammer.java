@@ -220,7 +220,13 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 	    // CALLBACKSUB = mt.group(2)
 	    _val = m.getReadValueInt();
 	    progState = NOTPROGRAMMING;
-	    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            if (_val == -1) {
+                log.debug("Reporting NoAck");
+                notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
+            } else {
+                log.debug("Reporting OK");
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            }
 	}
     }
 

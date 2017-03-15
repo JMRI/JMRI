@@ -189,11 +189,8 @@ public class MultiSensorIconFrame extends JmriJFrame {
             edf.pack();
 
             JButton b = new JButton(Bundle.getMessage("SetIconButton"));
-            b.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    edf.setVisible(true);
-                }
+            b.addActionListener((ActionEvent a) -> {
+                edf.setVisible(true);
             });
             this.add(b);
 

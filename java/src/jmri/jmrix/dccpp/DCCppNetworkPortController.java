@@ -20,6 +20,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     protected DCCppNetworkPortController() {
         super(new DCCppSystemConnectionMemo());
         setManufacturer(DCCppConnectionTypeList.DCCPP);
+        allowConnectionRecovery = true;
     }
     
     protected DCCppNetworkPortController(DCCppSystemConnectionMemo connectionMemo) {
@@ -115,6 +116,15 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     @Override
     public void setOutputBufferEmpty(boolean s) {
     } // Maintained for compatibility with DCCpptPortController. Simply ignore calls !!!
+
+    /**
+     * Customizable method to deal with resetting a system connection after a
+     * successful recovery of a connection.
+     */
+    @Override
+    protected void resetupConnection() {
+        this.getSystemConnectionMemo().getDCCppTrafficController().connectPort(this);
+    }
 
 }
 

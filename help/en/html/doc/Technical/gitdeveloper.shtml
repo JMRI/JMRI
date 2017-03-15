@@ -192,12 +192,33 @@ and paste that line to execute it. <a name="pull" id="pull"></a>
         lines in the comment about what it does, how you added it,
         etc is also very helpful.</li>
 
-        <li>Click "Create pull request". That submits all the info
-        and notifies the JMRI maintainers. One of them will check
-        it over and either contact you for more info
+        <li>Click "Create pull request". That submits all the info,
+        starts the 
+        <a href="ContinuousIntegration.shtml">Continuous Integration (CI) tests</a>
+        and notifies the JMRI maintainers. </li>
+        
+        <li>One of the maintainers will check
+        over your code and the test results, and then either contact you for more info
         (occasionally), or merge it into the master branch in the
         the main repository (more often). You can sign up for a
         notification when that happens.</li>
+        
+        <li>Sometimes, a maintainer will put a label on your PR
+        to indicate its status. Some of the more interesting ones are:
+          <ul>
+            <li>"WIP" - this is a "blue flag" indicating Work In Progress - 
+                something is needed before this can be merged in.
+            <li>"After Next Test Release" and "After Next Production Release" - placed
+                when a PR should be merged later for some reason
+            <li>"Add To Next Release" - needs to be merged before the next release is built
+            <li>"dev/test/publish infrastucture" - there's a lot of automation around building
+                and publishing JMRI.  This change is to that infrastructure, not the 
+                released JMRI code itself.
+            <li>"Cleanup" - a change that improves the code, but doesn't really affect JMRI users directly
+            <li>"! Support" - A support request. The "!" is to move it to the top of alphabetic lists.
+          </ul>
+        
+        
       </ul><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -167,7 +167,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
         try {
             Element root = new Element("throttle-config");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "throttle-config.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-config.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
 /*			java.util.Map<String,String> m = new java.util.HashMap<String,String>();

@@ -1,4 +1,4 @@
-package jmri.jmrix.dccpp;
+package jmri.jmrix.direct;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DCCppReplyParserTest {
+public class ThrottleTest {
 
     @Test
     public void testCTor() {
-        DCCppReplyParser t = new DCCppReplyParser();
+        Throttle t = new Throttle(5);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +33,6 @@ public class DCCppReplyParserTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppReplyParserTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleTest.class.getName());
 
 }
