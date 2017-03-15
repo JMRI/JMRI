@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Action that, when invoked, creates a JmriPanel from its class name
  * and installs it in a given window.
  *<p>
- * Windows are referenced through the {@see WindowInterface}, which can
+ * Windows are referenced through the {@link WindowInterface}, which can
  * provide access to a new or existing single-pane window, or a more complex multi-pane
  * window as seen in the DecoderPro interface.
  *
@@ -57,8 +57,8 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
      *                  checked at compile time or when the constructor runs, but must be true
      *                  for the action to be invoked successfully.
      */
-    public JmriNamedPaneAction(String s, String p) {
-        this(s, new jmri.util.swing.sdi.JmriJFrameInterface(), p);
+    public JmriNamedPaneAction(String s, String paneClass) {
+        this(s, new jmri.util.swing.sdi.JmriJFrameInterface(), paneClass);
     }
 
     protected String paneClass;
