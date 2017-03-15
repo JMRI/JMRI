@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
  */
-public class PositionablePoint {
+public class PositionablePoint extends LayoutTrack{
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
@@ -981,22 +981,15 @@ public class PositionablePoint {
 
         JButton done = new JButton(Bundle.getMessage("ButtonDone"));
         done.addActionListener(
-                new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateLink();
-            }
-        }
-        );
+                (ActionEvent a) -> {
+            updateLink();
+        });
 
         // make this button the default button (return or enter activates)
         // Note: We have to invoke this later because we don't currently have a root pane
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JRootPane rootPane = SwingUtilities.getRootPane(done);
-                rootPane.setDefaultButton(done);
-            }
+        SwingUtilities.invokeLater(() -> {
+            JRootPane rootPane = SwingUtilities.getRootPane(done);
+            rootPane.setDefaultButton(done);
         });
 
         container.add(getLinkPanel(), BorderLayout.NORTH);
@@ -1026,11 +1019,8 @@ public class PositionablePoint {
             }
         }
 
-        ActionListener selectPanelListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updatePointBox();
-            }
+        ActionListener selectPanelListener = (ActionEvent a) -> {
+            updatePointBox();
         };
 
         editorCombo.addActionListener(selectPanelListener);

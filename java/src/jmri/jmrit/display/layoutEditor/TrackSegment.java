@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
@@ -304,10 +303,14 @@ public class TrackSegment extends LayoutTrack {
 
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
-        // connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        // connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+        }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+        }
     }
 
     /**
@@ -530,7 +533,7 @@ public class TrackSegment extends LayoutTrack {
     private int mainlineTrackIndex;
     private int sideTrackIndex;
     private JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JTextField arcField = new JTextField(5);
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
     private JButton segmentEditBlock;
@@ -554,6 +557,7 @@ public class TrackSegment extends LayoutTrack {
             editTrackSegmentFrame.setLocation(50, 30);
             Container contentPane = editTrackSegmentFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
             // add dashed choice
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
@@ -566,6 +570,7 @@ public class TrackSegment extends LayoutTrack {
             panel31.add(new JLabel(rb.getString("Style") + " : "));
             panel31.add(dashedBox);
             contentPane.add(panel31);
+
             // add mainline choice
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
@@ -577,24 +582,32 @@ public class TrackSegment extends LayoutTrack {
             mainlineBox.setToolTipText(rb.getString("MainlineToolTip"));
             panel32.add(mainlineBox);
             contentPane.add(panel32);
+
             // add hidden choice
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
             panel33.add(hiddenBox);
             contentPane.add(panel33);
+
             // setup block name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
-            blockNameComboBox.setEditable(true);
-            blockNameComboBox.getEditor().setItem("");
-            blockNameComboBox.setSelectedIndex(-1);
+            if (true) {
+                layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            } else {
+                blockNameComboBox.setEditable(true);
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
+            }
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
+
             contentPane.add(panel2);
-            if ((getArc()) && (getCircle())) {
+
+            if (getArc() && getCircle()) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -604,44 +617,34 @@ public class TrackSegment extends LayoutTrack {
                 contentPane.add(panel20);
                 arcField.setText("" + getAngle());
             }
+
             // set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
+
             // Edit Block
             panel5.add(segmentEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
-            segmentEditBlock.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    segmentEditBlockPressed(e);
-                }
+            segmentEditBlock.addActionListener((ActionEvent e) -> {
+                segmentEditBlockPressed(e);
             });
             segmentEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
             panel5.add(segmentEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            segmentEditDone.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    segmentEditDonePressed(e);
-                }
+            segmentEditDone.addActionListener((ActionEvent e) -> {
+                segmentEditDonePressed(e);
             });
             segmentEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JRootPane rootPane = SwingUtilities.getRootPane(segmentEditDone);
-                    rootPane.setDefaultButton(segmentEditDone);
-                }
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(segmentEditDone);
+                rootPane.setDefaultButton(segmentEditDone);
             });
 
             // Cancel
             panel5.add(segmentEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            segmentEditCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    segmentEditCancelPressed(e);
-                }
+            segmentEditCancel.addActionListener((ActionEvent e) -> {
+                segmentEditCancelPressed(e);
             });
             segmentEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -673,8 +676,12 @@ public class TrackSegment extends LayoutTrack {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockNameComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = blockNameComboBox.getEditor().getItem().toString();
+        if (-1 != blockNameComboBox.getSelectedIndex()) {
+            newName = blockNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
@@ -737,8 +744,12 @@ public class TrackSegment extends LayoutTrack {
             needsRedraw = true;
         }
         // check if Block changed
-        String newName = (String) blockNameComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = blockNameComboBox.getEditor().getItem().toString();
+        if (-1 != blockNameComboBox.getSelectedIndex()) {
+            newName = blockNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
@@ -994,15 +1005,16 @@ public class TrackSegment extends LayoutTrack {
         double pt1x;
         double pt1y;
 
-        pt2x = getTmpPt2().getX();
-        pt2y = getTmpPt2().getY();
-        pt1x = getTmpPt1().getX();
-        pt1y = getTmpPt1().getY();
         if (getFlip()) {
             pt1x = getTmpPt2().getX();
             pt1y = getTmpPt2().getY();
             pt2x = getTmpPt1().getX();
             pt2y = getTmpPt1().getY();
+        } else {
+            pt1x = getTmpPt1().getX();
+            pt1y = getTmpPt1().getY();
+            pt2x = getTmpPt2().getX();
+            pt2y = getTmpPt2().getY();
         }
         //Point 1 to new point length
         double a;
@@ -1027,11 +1039,13 @@ public class TrackSegment extends LayoutTrack {
      * Calculates the initally parameters for drawing a circular track segment.
      */
     protected void calculateTrackSegmentAngle(/*Point2D pt1, Point2D pt2*/) {
-        Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
-        Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
+        Point2D pt1, pt2;
         if (getFlip()) {
             pt1 = layoutEditor.getCoords(getConnect2(), getType2());
             pt2 = layoutEditor.getCoords(getConnect1(), getType1());
+        } else {
+            pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+            pt2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
         if ((getTmpPt1() != pt1) || (getTmpPt2() != pt2) || trackNeedsRedraw()) {
             setTmpPt1(pt1);
@@ -1059,7 +1073,7 @@ public class TrackSegment extends LayoutTrack {
             // Make sure chord is not null
             // In such a case (pt1 == pt2), there is no arc to draw
             if (chord > 0.0D) {
-                double radius = (chord / 2) / (java.lang.Math.sin(halfAngleRAD));
+                double radius = (chord / 2) / java.lang.Math.sin(halfAngleRAD);
                 // Circle
                 double startRad = java.lang.Math.atan2(a, o) - halfAngleRAD;
                 setStartadj(java.lang.Math.toDegrees(startRad));
@@ -1071,8 +1085,8 @@ public class TrackSegment extends LayoutTrack {
                     // Circle - Compute rectangle required by Arc2D.Double
                     setCW(radius * 2.0D);
                     setCH(radius * 2.0D);
-                    setCX(getCentreX() - (radius));
-                    setCY(getCentreY() - (radius));
+                    setCX(getCentreX() - radius);
+                    setCY(getCentreY() - radius);
 
                     // Compute the vlues for locating the circle
                     setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngleRAD));

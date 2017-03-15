@@ -53,6 +53,13 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    public void testNormalizeName() {
+        // create
+        String name = l.provideLight("" + getNumToTest1()).getSystemName();
+        // check
+        Assert.assertEquals(name, l.normalizeSystemName(name));
+    }
+
     public void testProvideFailure() {
         boolean correct = false;
         try {

@@ -34,6 +34,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.BlockManagerTest.suite());
         suite.addTest(jmri.DccLocoAddressTest.suite());
         suite.addTest(jmri.InstanceManagerTest.suite());
+        suite.addTest(jmri.NamedBeanTest.suite());
         suite.addTest(jmri.LightTest.suite());
         suite.addTest(new JUnit4TestAdapter(NmraPacketTest.class));
         suite.addTest(jmri.ConditionalVariableTest.suite());
@@ -58,7 +59,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.progdebugger.PackageTest.suite());
         suite.addTest(jmri.configurexml.PackageTest.suite());
         suite.addTest(jmri.implementation.PackageTest.suite());
-        suite.addTest(jmri.managers.PackageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.managers.PackageTest.class));
         suite.addTest(jmri.jmrix.PackageTest.suite());
         suite.addTest(jmri.jmrit.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.swing.PackageTest.class));
@@ -75,6 +76,16 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProgReadExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ProgWriteExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TimebaseRateExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.spi.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriPluginTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MetadataTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NoFeedbackTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RawTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ScaleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SectionManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorTurnoutOperationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TransitManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TurnoutOperationManagerTest.class));
         return suite;
     }
 

@@ -67,7 +67,7 @@ public abstract class AppsBase {
         try {
             Application.setApplicationName(applicationName);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
-            log.error("Unable to set application name: " +ex.getCause());
+            log.error("Unable to set application name: " + ex.getCause());
         }
 
         log.info(Log4JUtil.startupInfo(applicationName));
@@ -181,7 +181,7 @@ public abstract class AppsBase {
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
@@ -365,8 +365,8 @@ public abstract class AppsBase {
     }
 
     /**
-     * Final actions before releasing control of app to user, invoked explicitly
-     * after object has been constructed, e.g. in main().
+     * Final actions before releasing control of the application to the user,
+     * invoked explicitly after object has been constructed in main().
      */
     protected void start() {
         log.debug("main initialization done");

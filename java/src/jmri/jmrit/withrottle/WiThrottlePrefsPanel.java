@@ -242,7 +242,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         return panel;
     }
 
-    //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
     @Override
     public String getPreferencesItem() {
         return "WITHROTTLE"; // NOI18N

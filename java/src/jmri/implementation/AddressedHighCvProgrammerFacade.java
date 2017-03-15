@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog       the programmer associated with this facade
      * @param top        CVs above this use the indirect method
      * @param addrCVhigh CV to which the high part of address is to be written
      * @param addrCVlow  CV to which the low part of address is to be written
@@ -106,9 +107,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
-            }
+            log.info("programmer already in use by {}", _usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
@@ -117,8 +116,23 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     }
 
     enum ProgState {
+        /** A pass-through operation, waiting reply, when done the entire operation is done */
+        PROGRAMMING, 
+        
+        /** Wrote 1st index on a read operation, waiting for reply */
+        WRITELOWREAD, 
 
-        PROGRAMMING, WRITELOWREAD, WRITELOWWRITE, FINISHREAD, FINISHWRITE, NOTPROGRAMMING
+        /** Wrote 1st index on a write operation, waiting for reply */
+        WRITELOWWRITE, 
+
+        /** Wrote 2nd index on a read operation, waiting for reply */
+        FINISHREAD, 
+
+        /** Wrote 2nd index on a write operation, waiting for reply */
+        FINISHWRITE, 
+        
+        /** nothing happening, no reply expected */
+        NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
 

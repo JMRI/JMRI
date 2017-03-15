@@ -61,7 +61,7 @@ public class ConditionalVariable {
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
-    private int _state = Conditional.UNKNOWN;        // tri-state
+    private int _state = NamedBean.UNKNOWN;        // tri-state
 
     public ConditionalVariable() {
     }
@@ -622,6 +622,20 @@ public class ConditionalVariable {
         return (result);
     }
 
+    /**
+     * Compare two values using the comparator set using the comparison
+     * instructions in {@link #setNum1(int)}.
+     *
+     * <strong>Note:</strong> {@link #getNum1()} must be one of {@link #LESS_THAN},
+     * {@link #LESS_THAN_OR_EQUAL}, {@link #EQUAL},
+     * {@link #GREATER_THAN_OR_EQUAL}, or {@link #GREATER_THAN}.
+     *
+     * @param value1          left side of the comparison
+     * @param value2          right side of the comparison
+     * @param caseInsensitive true if comparison should be case insensitive;
+     *                        false otherwise
+     * @return true if values compare per getNum1(); false otherwise
+     */
     boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {
             return value2 == null;
@@ -751,7 +765,7 @@ public class ConditionalVariable {
      * @param t the state
      * @return the localized description
      */
-    public static String getStateString(int t) {
+    public static String describeState(int t) {
         switch (t) {
             case Conditional.TYPE_NONE:
                 return ""; // NOI18N
@@ -826,7 +840,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
         }
-        return "";
+        return "<none>";
     }
 
     /**

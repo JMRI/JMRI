@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -13,20 +14,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DefaultSignalGroup.java
- *
  * A Conditional type to provide Signal Groups (n Signal Heads w/Conditionals for a main Mast).
- * <P>
+ *
  * @see jmri.SignalGroup SignalGroup
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse 2017
  */
 public class DefaultSignalGroup extends AbstractNamedBean implements jmri.SignalGroup {
 
+    /**
+     * Constructor for SignalGroup instance.
+     *
+     * @param systemName suggested system name
+     * @param userName provided user name
+     */
     public DefaultSignalGroup(String systemName, String userName) {
         super(systemName, userName);
     }
 
+    /**
+     * Constructor for SignalGroup instance.
+     *
+     * @param systemName suggested system name
+     */
     public DefaultSignalGroup(String systemName) {
         super(systemName, null);
     }
@@ -72,7 +82,8 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         if (_signalMast != null) {
             getSignalMast().removePropertyChangeListener(mSignalMastListener);
         }
-        _signalMast = new NamedBeanHandle<SignalMast>(mastName, signalMast);
+        _signalMast = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(mastName, signalMast);
         getSignalMast().addPropertyChangeListener(mSignalMastListener = new java.beans.PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -142,9 +153,6 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         _signalMastAspects = new ArrayList<String>();
     }
 
-    /**
-     * Add a new Signal Head to the group by Bean
-     */
     @Override
     public void addSignalHead(NamedBeanHandle<SignalHead> headBean) {
         SignalHeadItem shi = new SignalHeadItem(headBean);
@@ -152,7 +160,9 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
 
     /**
-     * Add a new Signal Head to the group by name
+     * Add a new Signal Head to the group by name.
+     *
+     * @param pName system or username of existing signal head to add to group
      */
     public void addSignalHead(String pName) {
         SignalHead mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(pName);
@@ -162,13 +172,15 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         if (mHead == null) {
             log.warn("did not find a SignalHead named " + pName);
         } else {
-            addSignalHead(new NamedBeanHandle<SignalHead>(pName, mHead));
+            addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(pName, mHead));
         }
     }
 
     @Override
     public void addSignalHead(SignalHead signalHead) {
-        addSignalHead(new NamedBeanHandle<SignalHead>(signalHead.getDisplayName(), signalHead));
+        addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class) 
+                        .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
     }
 
     protected PropertyChangeListener mSignalMastListener = null;

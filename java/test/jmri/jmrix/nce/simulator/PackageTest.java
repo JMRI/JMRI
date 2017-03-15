@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.nce.simulator.configurexml.PackageTest.class
+   jmri.jmrix.nce.simulator.configurexml.PackageTest.class,
+   SimulatorAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.nce.simulator package.

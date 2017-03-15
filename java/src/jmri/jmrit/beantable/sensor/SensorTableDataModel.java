@@ -190,7 +190,13 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == INVERTCOL || col == EDITCOL) {
+        String name = sysNameList.get(row);
+        Sensor sen = senManager.getBySystemName(name);
+        if (sen == null) return false;
+        if (col == INVERTCOL) {
+            return sen.canInvert();
+        }
+        if (col == EDITCOL) {
             return true;
         }
         if (col == USEGLOBALDELAY) {
@@ -198,16 +204,10 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
         //Need to do something here to make it disable 
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
-            String name = sysNameList.get(row);
-            Sensor sen = senManager.getBySystemName(name);
-            if (sen == null) {
+            if (sen.useDefaultTimerSettings()) {
                 return false;
             } else {
-                if (sen.useDefaultTimerSettings()) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return true;
             }
         } else {
             return super.isCellEditable(row, col);

@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    JmriServerTokenizerTest.class,
-   JmriServerParserTest.class
+   JmriServerParserTest.class,
+   SimpleVisitorTest.class
 })
 
 /**
@@ -16,3 +17,4 @@ import org.junit.runners.Suite;
  */
 public class JmriServerParserTests{
 }
+

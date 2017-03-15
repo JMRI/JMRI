@@ -327,7 +327,7 @@ runs a specific test or test suite.<br>
      </p>
 
      <p>
-     If the PackageTest has been converted to JUnit4 format, then "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the begining of the PackageTest class.</p>
+     If the PackageTest has been converted to JUnit4 format, then "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the beginning of the PackageTest class.</p>
 
       <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
       Tests for a New Package</a></h3>
@@ -372,7 +372,7 @@ runs a specific test or test suite.<br>
      </p>
 
      <p>
-     If the enclosing PackageTest has been converted to JUnit4 format, then "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the begining of the enclosing PackageTest class.</p>
+     If the enclosing PackageTest has been converted to JUnit4 format, then "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the beginning of the enclosing PackageTest class.</p>
 
 
 
@@ -732,6 +732,19 @@ environment.
       <a href="https://jemmy.java.net/tutorial.html">jemmy</a> tool.  See e.g. the Speedometer tests
       <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a> 
       for an example.
+
+      <h4>Locating GUI Items using Jemmy</h4>
+
+      <p>Jemmy must be able to find the objects on the screen.  Jemmy Operators are generally used to both locate and manipulate items on the screen.</p>  
+
+      <p>Here are a few tips for locating items with Jemmy:</p>
+
+      <ul>
+      <li>Some of the Jemmy Operator Constructors allow leaving off an identifier.  If there is only one object of a given type on the screen at any time, it is acceptable to use this version of the constructor, but the test may be fragile.</li>
+      <li>It is easiest to find objects if they have a unique identifier.  In the case where no unique identifier exists, Jemmy provides a version of most searches that allows you to specify an ordinal index.  Using these may result in tests that break when GUI elements are added or removed from the frame.</li>
+      <li>If an item contains its own text (Buttons, for example), it is recommended you use the text to search for a component.</li>
+      <li>If an item does not contain its own description, but the GUI contains a JLabel describing that component, be certain the JLabel's LabelFor property is set.  A Jemmy JLabelOperator can then be used to find the label, and retrieve the object.</li>
+      </ul>
       
       <h3><a id="jfcunit" name=jfcunit">Using JFCUnit</a></h3>
       

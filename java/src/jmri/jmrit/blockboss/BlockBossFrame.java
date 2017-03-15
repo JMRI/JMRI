@@ -896,6 +896,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     SignalHead sh = null;
 
+    /**
+     * Programmatically open the frame to edit a specific signal by head.
+     *
+     * @param sh signal head of which the name should be entered in the Edit pane
+     */
     public void setSignal(SignalHead sh) {
         this.sh = sh;
         outSignalField.setText(sh.getDisplayName());
@@ -904,7 +909,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Programmatically open the frame to edit a specific signal
+     * Programmatically open the frame to edit a specific signal by name.
+     *
+     * @param name system or user name of the signal head to be entered in the Edit pane
      */
     public void setSignal(String name) {
         sh = null;

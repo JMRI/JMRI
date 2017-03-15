@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.secsi.serialdriver.configurexml.PackageTest.class
-
+   jmri.jmrix.secsi.serialdriver.configurexml.PackageTest.class,
+   SerialDriverAdapterTest.class
 })
 /**
  * Tests for the jmri.jmrix.secsi.serialdriver package.

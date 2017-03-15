@@ -430,7 +430,7 @@ public final class SystemConsole extends JTextArea {
         System.setErr(this.getErrorStream());
     }
 
-    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via e.g. a script
+    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
     public void truncateTextArea() {
         int numLinesToRemove = console.getLineCount() -1 - MAX_CONSOLE_LINES; // There's a blank at the end
         if(numLinesToRemove > 0) {

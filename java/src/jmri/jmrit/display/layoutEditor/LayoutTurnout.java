@@ -1,11 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.util.MathUtil.*;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -1787,17 +1788,14 @@ public class LayoutTurnout extends LayoutTrack {
     private void activateTurnout() {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
-                    = new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (secondNamedTurnout != null) {
-                        if (e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
-                                && e.getOldValue().equals(namedTurnout.getBean().getState())) {
-                            namedTurnout.getBean().setCommandedState((int) e.getNewValue());
-                        }
+                = (java.beans.PropertyChangeEvent e) -> {
+                if (secondNamedTurnout != null) {
+                    if (e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
+                            && e.getOldValue().equals(namedTurnout.getBean().getState())) {
+                        namedTurnout.getBean().setCommandedState((int) e.getNewValue());
                     }
-                    layoutEditor.redrawPanel();
                 }
+                layoutEditor.redrawPanel();
             }, namedTurnout.getName(), "Layout Editor Turnout");
         }
         if (secondNamedTurnout != null) {
@@ -2027,35 +2025,32 @@ public class LayoutTurnout extends LayoutTrack {
                     && (connectC == null) && (connectD == null)) {
                 JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
                 popup.add(rotateItem);
-                rotateItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        boolean entering = true;
-                        boolean error = false;
-                        String newAngle = "";
-                        while (entering) {
-                            // prompt for rotation angle
-                            error = false;
-                            newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                    rb.getString("EnterRotation") + " :");
-                            if (newAngle.length() < 1) {
-                                return;  // cancelled
-                            }
-                            double rot = 0.0;
-                            try {
-                                rot = Double.parseDouble(newAngle);
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
-                                        + " " + e, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                                error = true;
-                                newAngle = "";
-                            }
-                            if (!error) {
-                                entering = false;
-                                if (rot != 0.0) {
-                                    rotateCoords(rot);
-                                    layoutEditor.redrawPanel();
-                                }
+                rotateItem.addActionListener((ActionEvent event) -> {
+                    boolean entering = true;
+                    boolean error = false;
+                    String newAngle = "";
+                    while (entering) {
+                        // prompt for rotation angle
+                        error = false;
+                        newAngle = JOptionPane.showInputDialog(layoutEditor,
+                                rb.getString("EnterRotation") + " :");
+                        if (newAngle.length() < 1) {
+                            return;  // cancelled
+                        }
+                        double rot = 0.0;
+                        try {
+                            rot = Double.parseDouble(newAngle);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
+                                    + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            error = true;
+                            newAngle = "";
+                        }
+                        if (!error) {
+                            entering = false;
+                            if (rot != 0.0) {
+                                rotateCoords(rot);
+                                layoutEditor.redrawPanel();
                             }
                         }
                     }
@@ -2066,22 +2061,16 @@ public class LayoutTurnout extends LayoutTrack {
             }
             disableItem.setSelected(disabled);
             popup.add(disableItem);
-            disableItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    disabled = disableItem.isSelected();
-                }
+            disableItem.addActionListener((java.awt.event.ActionEvent e2) -> {
+                disabled = disableItem.isSelected();
             });
             if (disableWhenOccupiedItem == null) {
                 disableWhenOccupiedItem = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
             }
             disableWhenOccupiedItem.setSelected(disableWhenOccupied);
             popup.add(disableWhenOccupiedItem);
-            disableWhenOccupiedItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    disableWhenOccupied = disableWhenOccupiedItem.isSelected();
-                }
+            disableWhenOccupiedItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                disableWhenOccupied = disableWhenOccupiedItem.isSelected();
             });
             if (blockName.equals("")) {
                 popup.add(rb.getString("NoBlock"));
@@ -2399,13 +2388,13 @@ public class LayoutTurnout extends LayoutTrack {
     private JmriBeanComboBox secondTurnoutComboBox;
     private JLabel secondTurnoutLabel;
     protected JmriBeanComboBox blockNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox blockBNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox blockCNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JmriBeanComboBox blockDNameComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     private JComboBox<String> stateBox = new JComboBox<String>();
     private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTurnout"));
     private int turnoutClosedIndex;
@@ -2443,24 +2432,23 @@ public class LayoutTurnout extends LayoutTrack {
             panel1.add(turnoutNameLabel);
 
             // add combobox to select turnout
-            firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DISPLAYNAME);
-            firstTurnoutComboBox.setEditable(true);
+            firstTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+            layoutEditor.setupComboBox(firstTurnoutComboBox, true, true);
             panel1.add(firstTurnoutComboBox);
             contentPane.add(panel1);
 
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
-            secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DISPLAYNAME);
-            additionalTurnout.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (additionalTurnout.isSelected()) {
-                        secondTurnoutLabel.setEnabled(true);
-                        secondTurnoutComboBox.setEnabled(true);
-                    } else {
-                        secondTurnoutLabel.setEnabled(false);
-                        secondTurnoutComboBox.setEnabled(false);
-                    }
+
+            secondTurnoutComboBox = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+            layoutEditor.setupComboBox(secondTurnoutComboBox, true, false);
+            additionalTurnout.addActionListener((ActionEvent e) -> {
+                if (additionalTurnout.isSelected()) {
+                    secondTurnoutLabel.setEnabled(true);
+                    secondTurnoutComboBox.setEnabled(true);
+                } else {
+                    secondTurnoutLabel.setEnabled(false);
+                    secondTurnoutComboBox.setEnabled(false);
                 }
             });
             if ((type != DOUBLE_XOVER) && (type != RH_XOVER) && (type != LH_XOVER)) {
@@ -2505,16 +2493,17 @@ public class LayoutTurnout extends LayoutTrack {
             panel2.setBorder(border);
             panel2.setLayout(new FlowLayout());
             panel2.add(blockNameComboBox);
-            blockNameComboBox.setEditable(true);
-            blockNameComboBox.getEditor().setItem("");
-            blockNameComboBox.setSelectedIndex(-1);
+            if (true) {
+                layoutEditor.setupComboBox(blockNameComboBox, false, true);
+            } else {
+                blockNameComboBox.setEditable(true);
+                blockNameComboBox.getEditor().setItem("");
+                blockNameComboBox.setSelectedIndex(-1);
+            }
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
-            turnoutEditBlock.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnoutEditBlockPressed(e);
-                }
+            turnoutEditBlock.addActionListener((ActionEvent e) -> {
+                turnoutEditBlockPressed(e);
             });
             contentPane.add(panel2);
             if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
@@ -2523,18 +2512,19 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
                 panel21.setBorder(borderblk2);
-                blockBNameComboBox.setEditable(true);
-                blockBNameComboBox.getEditor().setItem("");
-                blockBNameComboBox.setSelectedIndex(-1);
+                if (true) {
+                    layoutEditor.setupComboBox(blockBNameComboBox, false, true);
+                } else {
+                    blockBNameComboBox.setEditable(true);
+                    blockBNameComboBox.getEditor().setItem("");
+                    blockBNameComboBox.setSelectedIndex(-1);
+                }
                 blockBNameComboBox.setToolTipText(rb.getString("EditBlockBNameHint"));
                 panel21.add(blockBNameComboBox);
 
                 panel21.add(turnoutEditBlockB = new JButton(rb.getString("CreateEdit")));
-                turnoutEditBlockB.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        turnoutEditBlockBPressed(e);
-                    }
+                turnoutEditBlockB.addActionListener((ActionEvent e) -> {
+                    turnoutEditBlockBPressed(e);
                 });
                 turnoutEditBlockB.setToolTipText(Bundle.getMessage("EditBlockHint", "2"));
                 contentPane.add(panel21);
@@ -2544,17 +2534,18 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
                 panel22.setBorder(borderblk3);
-                blockCNameComboBox.setEditable(true);
-                blockCNameComboBox.getEditor().setItem("");
-                blockCNameComboBox.setSelectedIndex(-1);
+                if (true) {
+                    layoutEditor.setupComboBox(blockCNameComboBox, false, true);
+                } else {
+                    blockCNameComboBox.setEditable(true);
+                    blockCNameComboBox.getEditor().setItem("");
+                    blockCNameComboBox.setSelectedIndex(-1);
+                }
                 blockCNameComboBox.setToolTipText(rb.getString("EditBlockCNameHint"));
                 panel22.add(blockCNameComboBox);
                 panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
-                turnoutEditBlockC.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        turnoutEditBlockCPressed(e);
-                    }
+                turnoutEditBlockC.addActionListener((ActionEvent e) -> {
+                    turnoutEditBlockCPressed(e);
                 });
                 turnoutEditBlockC.setToolTipText(Bundle.getMessage("EditBlockHint", "3"));
                 contentPane.add(panel22);
@@ -2564,17 +2555,18 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
                 panel23.setBorder(borderblk4);
-                blockDNameComboBox.setEditable(true);
-                blockDNameComboBox.getEditor().setItem("");
-                blockDNameComboBox.setSelectedIndex(-1);
+                if (true) {
+                    layoutEditor.setupComboBox(blockDNameComboBox, false, true);
+                } else {
+                    blockDNameComboBox.setEditable(true);
+                    blockDNameComboBox.getEditor().setItem("");
+                    blockDNameComboBox.setSelectedIndex(-1);
+                }
                 blockDNameComboBox.setToolTipText(rb.getString("EditBlockDNameHint"));
                 panel23.add(blockDNameComboBox);
                 panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));
-                turnoutEditBlockD.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        turnoutEditBlockDPressed(e);
-                    }
+                turnoutEditBlockD.addActionListener((ActionEvent e) -> {
+                    turnoutEditBlockDPressed(e);
                 });
                 turnoutEditBlockD.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));
                 contentPane.add(panel23);
@@ -2590,28 +2582,19 @@ public class LayoutTurnout extends LayoutTrack {
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JRootPane rootPane = SwingUtilities.getRootPane(turnoutEditDone);
-                    rootPane.setDefaultButton(turnoutEditDone);
-                }
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(turnoutEditDone);
+                rootPane.setDefaultButton(turnoutEditDone);
             });
 
-            turnoutEditDone.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnoutEditDonePressed(e);
-                }
+            turnoutEditDone.addActionListener((ActionEvent e) -> {
+                turnoutEditDonePressed(e);
             });
             turnoutEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(turnoutEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            turnoutEditCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turnoutEditCancelPressed(e);
-                }
+            turnoutEditCancel.addActionListener((ActionEvent e) -> {
+                turnoutEditCancelPressed(e);
             });
             turnoutEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -2656,8 +2639,12 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockNameComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = blockNameComboBox.getEditor().getItem().toString();
+        if (-1 != blockNameComboBox.getSelectedIndex()) {
+            newName = blockNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((block != null) && (block != blockB) && (block != blockC)
@@ -2693,8 +2680,12 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockBNameComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = blockBNameComboBox.getEditor().getItem().toString();
+        if (-1 != blockBNameComboBox.getSelectedIndex()) {
+            newName = blockBNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockBName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockB != null) && (block != blockB) && (blockB != blockC)
@@ -2730,8 +2721,12 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockCNameComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = blockCNameComboBox.getEditor().getItem().toString();
+        if (-1 != blockCNameComboBox.getSelectedIndex()) {
+            newName = blockCNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockCName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockC != null) && (block != blockC) && (blockB != blockC)
@@ -2767,8 +2762,12 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = (String) blockDNameComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = blockDNameComboBox.getEditor().getItem().toString();
+        if (-1 != blockDNameComboBox.getSelectedIndex()) {
+            newName = blockDNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockDName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockD != null) && (block != blockD) && (blockB != blockD)
@@ -2804,8 +2803,12 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        String newName = (String) firstTurnoutComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        String newName = firstTurnoutComboBox.getEditor().getItem().toString();
+        if (-1 != firstTurnoutComboBox.getSelectedIndex()) {
+            newName = firstTurnoutComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!turnoutName.equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
@@ -2819,8 +2822,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if (additionalTurnout.isSelected()) {
-            newName = (String) secondTurnoutComboBox.getEditor().getItem();
-            newName = (null != newName) ? newName.trim() : "";
+            newName = secondTurnoutComboBox.getSelectedItem().toString();
             if (!secondTurnoutName.equals(newName)) {
                 if ((type == DOUBLE_XOVER)
                         || (type == RH_XOVER)
@@ -2851,8 +2853,12 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         // check if Block changed
-        newName = (String) blockNameComboBox.getEditor().getItem();
-        newName = (null != newName) ? newName.trim() : "";
+        newName = blockNameComboBox.getEditor().getItem().toString();
+        if (-1 != blockNameComboBox.getSelectedIndex()) {
+            newName = blockNameComboBox.getSelectedDisplayName();
+        } else {
+            newName = (null != newName) ? newName.trim() : "";
+        }
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((block != null) && (block != blockB) && (block != blockC)
@@ -2875,8 +2881,12 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             // check if Block 2 changed
-            newName = (String) blockBNameComboBox.getEditor().getItem();
-            newName = (null != newName) ? newName.trim() : "";
+            newName = blockBNameComboBox.getEditor().getItem().toString();
+            if (-1 != blockBNameComboBox.getSelectedIndex()) {
+                newName = blockBNameComboBox.getSelectedDisplayName();
+            } else {
+                newName = (null != newName) ? newName.trim() : "";
+            }
             if (!blockBName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockB != null) && (block != blockB) && (blockB != blockC)
@@ -2899,8 +2909,12 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 3 changed
-            newName = (String) blockCNameComboBox.getEditor().getItem();
-            newName = (null != newName) ? newName.trim() : "";
+            newName = blockCNameComboBox.getEditor().getItem().toString();
+            if (-1 != blockCNameComboBox.getSelectedIndex()) {
+                newName = blockCNameComboBox.getSelectedDisplayName();
+            } else {
+                newName = (null != newName) ? newName.trim() : "";
+            }
             if (!blockCName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockC != null) && (block != blockC) && (blockB != blockC)
@@ -2924,8 +2938,12 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 4 changed
-            newName = (String) blockDNameComboBox.getEditor().getItem();
-            newName = (null != newName) ? newName.trim() : "";
+            newName = blockDNameComboBox.getEditor().getItem().toString();
+            if (-1 != blockDNameComboBox.getSelectedIndex()) {
+                newName = blockDNameComboBox.getSelectedDisplayName();
+            } else {
+                newName = (null != newName) ? newName.trim() : "";
+            }
             if (!blockDName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockD != null) && (block != blockD) && (blockB != blockD)

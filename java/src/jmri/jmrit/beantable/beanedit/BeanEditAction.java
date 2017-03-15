@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the basic information and structure for for a editing the details of
- * a bean object
+ * a bean object.
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
@@ -57,7 +57,7 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     /**
-     * Call to create all the different tabs that will be added to the frame
+     * Call to create all the different tabs that will be added to the frame.
      */
     protected void initPanels() {
         basicDetails();
@@ -77,8 +77,8 @@ abstract class BeanEditAction extends AbstractAction {
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
 
     /**
-     * Creates a generic panel that holds the basic bean information System
-     * Name, User Name and Comment
+     * Create a generic panel that holds the basic bean information System
+     * Name, User Name and Comment.
      */
     BeanItemPanel basicDetails() {
         BeanItemPanel basic = new BeanItemPanel();
@@ -209,7 +209,7 @@ abstract class BeanEditAction extends AbstractAction {
             return;
         }
         if (f == null) {
-            f = new JmriJFrame("Edit " + getBeanType() + " " + bean.getDisplayName(), false, false);
+            f = new JmriJFrame(Bundle.getMessage("EditBean", getBeanType(), bean.getDisplayName()), false, false);
             f.addHelpMenu(helpTarget(), true);
             java.awt.Container containerPanel = f.getContentPane();
             initPanelsFirst();
@@ -269,7 +269,10 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     /**
-     * Sets out the panel based upon the items passed in via the ArrayList
+     * Set out the panel based upon the items passed in via the ArrayList.
+     *
+     * @param panel JPanel to add stuff to
+     * @param items a {@link BeanEditItem} list of key-value pairs for the items to add
      */
     protected void addToPanel(JPanel panel, List<BeanEditItem> items) {
         GridBagLayout gbLayout = new GridBagLayout();
@@ -361,7 +364,9 @@ abstract class BeanEditAction extends AbstractAction {
     abstract protected NamedBean getByUserName(String name);
 
     /**
-     * Generic method to change the user name of a Bean
+     * Generic method to change the user name of a Bean.
+     *
+     * @param _newName string to use as the new user name
      */
     public void renameBean(String _newName) {
         NamedBean nBean = bean;
@@ -431,8 +436,13 @@ abstract class BeanEditAction extends AbstractAction {
         bean.setUserName(null);
     }
 
-    //At this stage we purely use this to allow the user to delete properties, but not add them, changing is possible but only for strings
-    //Based upon the code from the RosterMediaPane
+    /**
+     * TableModel for edit of Bean properties.
+     *
+     * At this stage we purely use this to allow the user to delete properties, not to add them.
+     * Changing properties is possible but only for strings.
+     * Based upon the code from the RosterMediaPane
+     */
     private static class BeanPropertiesTableModel extends AbstractTableModel {
 
         Vector<KeyValueModel> attributes;
@@ -472,7 +482,7 @@ abstract class BeanEditAction extends AbstractAction {
             }			// add and update keys
             for (int i = 0; i < attributes.size(); i++) {
                 KeyValueModel kv = attributes.get(i);
-                if ((kv.key != null) && // only update if key value defined, will do the remove to
+                if ((kv.key != null) && // only update if key value defined, will do the remove too
                         ((nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
                     nb.setProperty(kv.key, kv.value);
                 }
@@ -481,7 +491,7 @@ abstract class BeanEditAction extends AbstractAction {
 
             Iterator<String> ite = nb.getPropertyKeys().iterator();
             while (ite.hasNext()) {
-                if (!keyExist(ite.next())) // not very efficient algorithm!
+                if (!keyExist(ite.next())) // not a very efficient algorithm!
                 {
                     ite.remove();
                 }

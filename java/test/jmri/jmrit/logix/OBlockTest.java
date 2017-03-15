@@ -20,7 +20,7 @@ public class OBlockTest extends TestCase {
     /* OBlock.DARK replaced with Block.UNDETECTED - 12/10/2016 pwc
     @SuppressWarnings("all") // otherwise, you get "Comparing identical" warning (until something breaks!)
     public void testEqualCoding() {
-        // the following match is required by the JavaDoc
+        // the following match is required by the Javadoc
         Assert.assertTrue("Block.UNKNOWN == OBlock.DARK", Block.UNKNOWN == OBlock.DARK);
     }*/
 
@@ -49,7 +49,7 @@ public class OBlockTest extends TestCase {
         Assert.assertTrue("Block.UNKNOWN != OBlock.UNOCCUPIED", Block.UNKNOWN != OBlock.UNOCCUPIED);
     }
     
-    public void testSetSensor() {
+    public void testSetSensor()  throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB100", "a");
         Assert.assertFalse("setSensor", b.setSensor("foo"));
         Assert.assertNull("getSensor", b.getSensor());
@@ -69,31 +69,25 @@ public class OBlockTest extends TestCase {
         Assert.assertEquals("none state dark", OBlock.UNDETECTED, b.getState());
         
         b.setState(b.getState() | OBlock.ALLOCATED|OBlock.RUNNING);
-        try {
-            s1.setState(Sensor.ACTIVE);
-        } catch (Exception je) { }        
+        s1.setState(Sensor.ACTIVE);
         Assert.assertTrue("setSensor sensor1", b.setSensor("sensor1"));
         Assert.assertEquals("state allocated&running", OBlock.OCCUPIED|OBlock.ALLOCATED|OBlock.RUNNING, b.getState());
     }
 
-    public void testSetErrorSensor() {
+    public void testSetErrorSensor() throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB101", "b");
         Assert.assertFalse("setErrorSensor foo", b.setErrorSensor("foo"));
         Assert.assertNull("getErrorSensor foo", b.getErrorSensor());
         
         SensorManager sensorMgr = InstanceManager.getDefault(SensorManager.class);
         Sensor se = sensorMgr.newSensor("ISE1", "error1");
-        try {
-            se.setState(Sensor.ACTIVE);
-        } catch (Exception je) { }        
+        se.setState(Sensor.ACTIVE);
         Assert.assertTrue("setErrorSensor only", b.setErrorSensor("error1"));
         Assert.assertEquals("getErrorSensor only", se, b.getErrorSensor());
         Assert.assertEquals("state error only", OBlock.TRACK_ERROR | OBlock.UNDETECTED, b.getState());
         
         Sensor s1 = sensorMgr.newSensor("IS1", "sensor1");
-        try {
-            s1.setState(Sensor.ACTIVE);
-        } catch (Exception je) { }        
+        s1.setState(Sensor.ACTIVE);
         Assert.assertTrue("setSensor", b.setSensor("IS1"));
         Assert.assertEquals("getErrorSensor se", se, b.getErrorSensor());
         Assert.assertEquals("state error", OBlock.TRACK_ERROR | OBlock.OCCUPIED, b.getState());
@@ -117,7 +111,7 @@ public class OBlockTest extends TestCase {
         Assert.assertEquals("state not allocated, dark", OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE, b.getState());
     }
     
-    public void testSensorChanges() {
+    public void testSensorChanges() throws Exception {
         OBlock b = blkMgr.createNewOBlock("OB103", null);
         Warrant w0 = new Warrant("IW0", "war0");
         b.setOutOfService(true);
@@ -130,20 +124,14 @@ public class OBlockTest extends TestCase {
         b.setOutOfService(false);
         Assert.assertNull("Allocate w0", b.allocate(w0));
         Assert.assertEquals("state allocated & unknown", OBlock.ALLOCATED|OBlock.UNKNOWN, b.getState());
-        try {
-            s0.setState(Sensor.ACTIVE);
-        } catch (Exception je) { }        
+        s0.setState(Sensor.ACTIVE);
         Assert.assertEquals("state allocated & unknown", OBlock.ALLOCATED|OBlock.OCCUPIED, b.getState());
         Assert.assertNull("DeAllocate w0", b.deAllocate(w0));
         b.setOutOfService(true);
-        try {
-            s0.setState(Sensor.INACTIVE);
-        } catch (Exception je) { }        
+        s0.setState(Sensor.INACTIVE);
         Assert.assertEquals("state allocated & unknown", OBlock.OUT_OF_SERVICE|OBlock.UNOCCUPIED, b.getState());
         b.setError(false);
-        try {
-            s0.setState(Sensor.INCONSISTENT);
-        } catch (Exception je) { }        
+        s0.setState(Sensor.INCONSISTENT);
         Assert.assertEquals("state  OutOfService & inconsistent", OBlock.OUT_OF_SERVICE|OBlock.INCONSISTENT, b.getState());
         Assert.assertTrue("setSensor none", b.setSensor(null));
         Assert.assertEquals("state  OutOfService & dark", OBlock.OUT_OF_SERVICE|OBlock.UNDETECTED, b.getState());
@@ -190,6 +178,13 @@ public class OBlockTest extends TestCase {
         
         b.removePath(path1);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
+    }
+
+    public void testAddUserName() {
+        OBlock b = blkMgr.provideOBlock("OB99");
+        b.setUserName("99user");
+        b = blkMgr.getBySystemName("OB99");
+        Assert.assertEquals("UserName not kept", "99user", b.getUserName());
     }
     
     // from here down is testing infrastructure

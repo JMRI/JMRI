@@ -35,7 +35,10 @@ import org.junit.runners.Suite;
     SignalMastIconXmlTest.class,
     SlipTurnoutIconXmlTest.class,
     TrackSegmentXmlTest.class,
-    TurnoutIconXmlTest.class
+    TurnoutIconXmlTest.class,
+    IndicatorTurnoutIconXmlTest.class,
+    LinkingLabelXmlTest.class,
+    LocoIconXmlTest.class
 })
 public class PackageTest {
 }

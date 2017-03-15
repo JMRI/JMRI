@@ -112,6 +112,19 @@ public class DccConsistTest{
         Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));   
     }
 
+    @Test public void checkGetSetLocoRosterIDAdvanced(){
+        DccConsist c = new DccConsist(5);
+        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // revese direction.
+        c.setRosterId(A,"foo");
+        Assert.assertEquals("Roster ID A","foo",c.getRosterId(A));
+        Assert.assertNull("Roster ID B",c.getRosterId(B));
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

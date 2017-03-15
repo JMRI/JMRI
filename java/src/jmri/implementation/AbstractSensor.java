@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import javax.annotation.CheckReturnValue;
 import jmri.Reporter;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -96,6 +97,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     protected Thread thr;
     protected Runnable r;
+
     /* 
      * Before going active or inactive or checking that we can go active, we will wait 500ms
      * for things to settle down to help prevent a race condition
@@ -114,14 +116,16 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                     Thread.sleep(sensorDebounceTimer);
                     restartcount = 0;
                     _knownState = _rawState;
-                    
+
                     javax.swing.SwingUtilities.invokeAndWait(
-                        ()->{firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));}
+                            () -> {
+                                firePropertyChange("KnownState", lastKnownState, _knownState);
+                            }
                     );
                 } catch (InterruptedException ex) {
                     restartcount++;
                 } catch (java.lang.reflect.InvocationTargetException ex) {
-                    log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause() );
+                    log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause());
                 }
             }
         };
@@ -131,6 +135,19 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     int restartcount = 0;
+
+    @Override
+    @CheckReturnValue
+    public String describeState(int state) {
+        switch (state) {
+            case ACTIVE:
+                return Bundle.getMessage("SensorStateActive");
+            case INACTIVE:
+                return Bundle.getMessage("SensorStateInactive");
+            default:
+                return super.describeState(state);
+        }
+    }
 
     // setKnownState() for implementations that can't
     // actually do it on the layout. Not intended for use by implementations
@@ -149,7 +166,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
                     log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
                 }
-                firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
+                firePropertyChange("RawState", oldRawState, s);
                 sensorDebounce();
                 return;
             } else {
@@ -164,12 +181,14 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
+            firePropertyChange("KnownState", oldState, _knownState);
         }
     }
 
     /**
      * Set our internal state information, and notify bean listeners.
+     *
+     * @param s the new state
      */
     public void setOwnState(int s) {
         if (_rawState != s) {
@@ -185,7 +204,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
                     log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
                 }
-                firePropertyChange("RawState", Integer.valueOf(oldRawState), Integer.valueOf(s));
+                firePropertyChange("RawState", oldRawState, s);
                 sensorDebounce();
                 return;
             } else {
@@ -200,7 +219,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
+            firePropertyChange("KnownState", oldState, _knownState);
         }
     }
 
@@ -241,7 +260,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         boolean oldInverted = _inverted;
         _inverted = inverted;
         if (oldInverted != _inverted) {
-            firePropertyChange("inverted", Boolean.valueOf(oldInverted), Boolean.valueOf(_inverted));
+            firePropertyChange("inverted", oldInverted, _inverted);
             int state = _knownState;
             if (state == ACTIVE) {
                 setOwnState(INACTIVE);
@@ -263,6 +282,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         return _inverted;
     }
 
+    /**
+     * By default, all implementations based on this can invert
+     */
+    public boolean canInvert() { return true; }
+
     protected boolean _inverted = false;
 
     // internal data members
@@ -277,7 +301,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * the reporter against the sensor should be done when the sensor is
      * created. This information is not saved.
      * <p>
-     * returns null if there is no direct reporter.
+     * @param er the reporter to set
      */
     @Override
     public void setReporter(Reporter er) {

@@ -56,7 +56,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     private int blkNum = 1;
 
     /**
-     * Method to create a new LayoutBlock if the LayoutBlock does not exist
+     * Method to create a new LayoutBlock if the LayoutBlock does not exist.
      * Returns null if a LayoutBlock with the same systemName or userName
      * already exists, or if there is trouble creating a new LayoutBlock. Note
      * that since the userName is used to address LayoutBlocks, the user name
@@ -1636,7 +1636,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     /**
      * Method to return the block that a given bean object (Sensor, SignalMast
-     * or SignalHead) is protecting
+     * or SignalHead) is protecting.
      * <P>
      * @param nb    NamedBean
      * @param panel - panel that this bean is on
@@ -2056,7 +2056,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     private boolean warnConnectivity = true;
 
     /**
-     * Controls switching off incompatible block connectivity messages
+     * Controls switching off incompatible block connectivity messages.
      * <P>
      * Warnings are always on when program starts up. Once stopped by the user,
      * these messages may not be switched on again until program restarts.
@@ -2146,47 +2146,44 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 log.debug("Error setting stability indicator sensor");
             }
         }
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    firePropertyChange("topology", true, false);
-                    long oldvalue = lastRoutingChange;
-                    while (!stabilised) {
-                        Thread.sleep(2000L);    // two seconds
-                        if (oldvalue == lastRoutingChange) {
-                            log.debug("routing table has now been stable for 2 seconds");
-                            checking = false;
-                            stabilised = true;
+        Runnable r = () -> {
+            try {
+                firePropertyChange("topology", true, false);
+                long oldvalue = lastRoutingChange;
+                while (!stabilised) {
+                    Thread.sleep(2000L);    // two seconds
+                    if (oldvalue == lastRoutingChange) {
+                        log.debug("routing table has now been stable for 2 seconds");
+                        checking = false;
+                        stabilised = true;
+                        jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
+                            firePropertyChange("topology", false, true);
+                        });
+                        if (namedStabilisedIndicator != null) {
                             jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
-                                firePropertyChange("topology", false, true);
+                                log.debug("Setting StabilisedIndicator Sensor {} ACTIVE", namedStabilisedIndicator.getBean().getSystemName());
+                                try {
+                                    namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
+                                } catch (jmri.JmriException ex) {
+                                    log.debug("Error setting stability indicator sensor");
+                                }
                             });
-                            if (namedStabilisedIndicator != null) {
-                                jmri.util.ThreadingUtil.runOnLayoutEventually( ()->{
-                                    log.debug("Setting StabilisedIndicator Sensor {} ACTIVE", namedStabilisedIndicator.getBean().getSystemName());
-                                    try {
-                                        namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
-                                    } catch (jmri.JmriException ex) {
-                                        log.debug("Error setting stability indicator sensor");
-                                    }
-                                });
-                            } else {
-                                log.debug("Stable, no sensor to set");
-                            }
                         } else {
-                            long seconds = (long)((lastRoutingChange - firstRoutingChange) / 1e9);
-                            log.debug("routing table not stable after {} in {}",
-                                String.format("%d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60),
-                                Thread.currentThread().getName());
+                            log.debug("Stable, no sensor to set");
                         }
-                        oldvalue = lastRoutingChange;
+                    } else {
+                        long seconds = (long)((lastRoutingChange - firstRoutingChange) / 1e9);
+                        log.debug("routing table not stable after {} in {}",
+                            String.format("%d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60),
+                            Thread.currentThread().getName());
                     }
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                    checking = false;
+                    oldvalue = lastRoutingChange;
+                }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                checking = false;
 //                 } catch (jmri.JmriException ex) {
 //                     log.debug("Error setting stability indicator sensor");
-                }
             }
         };
         thr = new Thread(r, "Routing stabilising timer");
@@ -2227,7 +2224,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 
     /**
      * Return the sensor used to indicate if the routing protocol has stabilised
-     * or not
+     * or not.
      */
     public Sensor getStabilisedSensor() {
         if (namedStabilisedIndicator == null) {
@@ -2244,7 +2241,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     }
 
     /**
-     * Returns true if the layout block routing protocol has stabilised
+     * Returns true if the layout block routing protocol has stabilised.
      */
     public boolean routingStablised() {
         return stabilised;

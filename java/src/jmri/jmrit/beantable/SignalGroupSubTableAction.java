@@ -76,6 +76,7 @@ public class SignalGroupSubTableAction {
 
     /**
      * Set choice for conditional evaluation.
+     * <p>
      * Set to AND when you want all conditionals to be met for the Signal Head to turn On when an included Aspect is shown on the main Mast.
      * Set to OR when you at least one of the conditionals to be met for the Signal Head to turn On when an included Aspect is shown.
      * @see operFromBox operFromBox()
@@ -571,7 +572,11 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Configure colum widths for the Turnout and Sensor Conditional tables
+     * Configure colum widths for the Turnout and Sensor Conditional tables.
+     *
+     * @param table JTable to put button in
+     * @param column index of column in table
+     * @param sample sample button to use as spacer
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
         // install a button renderer & editor
@@ -586,7 +591,7 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane
+     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane.
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<SignalGroupTurnout>();
@@ -604,8 +609,10 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set the Turnout information for adding or editing
+     * Set the Turnout information for adding or editing.
+     *
      * @param g The Signal Group being configured
+     * @return total number of turnouts included in group
      */
     int setTurnoutInformation(SignalGroup g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -616,8 +623,10 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set the Sensor information for adding or editing
+     * Set the Sensor information for adding or editing.
+     *
      * @param g The Signal Group being configured
+     * @return total number of sensors included in group
      */
     int setSensorInformation(SignalGroup g) {
         for (int i = 0; i < _includedSensorList.size(); i++) {
@@ -628,7 +637,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Respond to the Cancel button - clean up
+     * Respond to the Cancel button - clean up.
+     *
+     * @param e the event heard
      */
     void cancelSubPressed(ActionEvent e) {
         log.debug("Edit Signal Group Head canceled in SGSTA line 569");
@@ -638,7 +649,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Respond to the Update button on the Edit Head sub pane - update to SignalGroup
+     * Respond to the Update button on the Edit Head sub pane - update to SignalGroup.
+     *
+     * @param e the event heard
      * @param newSignalGroup True if this is a newly created Signal Group for which additional actions are required
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup) {
@@ -977,7 +990,9 @@ public class SignalGroupSubTableAction {
 
         /**
          * Store a uniform value for the On state of the Control Sensor Conditional.
+         * <p>
          * Pairs should correspond with values in getSetToState()
+         *
          * @param state Choice from the comboBox, localizable i.e. Active
          */
         @Override

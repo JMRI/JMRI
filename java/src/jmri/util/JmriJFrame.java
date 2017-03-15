@@ -159,8 +159,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     /**
-     * Remove this window from e.g. the Windows Menu by removing it from the
-     * list of active JmriJFrames
+     * Remove this window from the Windows Menu by removing it from the list of
+     * active JmriJFrames.
      */
     public void makePrivateWindow() {
         synchronized (list) {
@@ -245,27 +245,28 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     /**
-     * Remove any decoration, e.g. title bar or close window, from the JFrame.
+     * Remove any decoration, such as the title bar or close window control,
+     * from the JFrame.
      * <p>
-     * JmriJFrames are often built internally and presented to the user
-     * before any scripting action can interact with them.  At that point
-     * it's too late to directly invoke setUndecorated(true) because the JFrame
-     * is already displayable.  This method uses dispose() to drop the windowing
-     * resources, sets undecorated, and then redisplays the window.
+     * JmriJFrames are often built internally and presented to the user before
+     * any scripting action can interact with them. At that point it's too late
+     * to directly invoke setUndecorated(true) because the JFrame is already
+     * displayable. This method uses dispose() to drop the windowing resources,
+     * sets undecorated, and then redisplays the window.
      */
     public void undecorate() {
         boolean visible = isVisible();
-        
+
         setVisible(false);
         super.dispose();
 
         setUndecorated(true);
         getRootPane().setWindowDecorationStyle(javax.swing.JRootPane.NONE);
-        
+
         pack();
         setVisible(visible);
     }
-    
+
     /**
      * Tries to get window to fix entirely on screen. First choice is to move
      * the origin up and left as needed, then to make the window smaller
@@ -363,7 +364,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      *
      * @param ref    JHelp reference for the desired window-specific help page
      * @param direct true if the help menu goes directly to the help system,
-     *               e.g. there are no items in the help menu
+     *               such as when there are no items in the help menu
      */
     public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
@@ -1008,5 +1009,5 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return this;
     }
 
-    static private Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
 }

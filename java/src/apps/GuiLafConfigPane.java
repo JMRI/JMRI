@@ -35,7 +35,7 @@ import jmri.util.swing.SwingSettings;
  * <P>
  * Provides GUI configuration for SWING LAF by displaying radio buttons for each
  * LAF implementation available. This information is then persisted separately
- * (e.g. by {@link apps.configurexml.GuiLafConfigPaneXml})
+ * by {@link apps.configurexml.GuiLafConfigPaneXml}
  * <P>
  * Locale default language and country is also considered a GUI (and perhaps
  * LAF) configuration item.
@@ -78,8 +78,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doClickSelection(p = new JPanel());
         add(p);
-        doVerticalToolBar(p = new JPanel());
-        add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
     }
@@ -90,16 +88,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
-        });
-        panel.add(mouseEvent);
-    }
-
-    void doVerticalToolBar(JPanel panel) {
-        panel.setLayout(new FlowLayout());
-        mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonVerticalToolBar"));
-        mouseEvent.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isVerticalToolBar());
-        mouseEvent.addItemListener((ItemEvent e) -> {
-            InstanceManager.getDefault(GuiLafPreferencesManager.class).setVerticalToolBar(mouseEvent.isSelected());
         });
         panel.add(mouseEvent);
     }
@@ -231,6 +219,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         return LAFGroup.getSelection().getActionCommand();
 
     }
+
     @Override
     public String getPreferencesItem() {
         return "DISPLAY"; // NOI18N

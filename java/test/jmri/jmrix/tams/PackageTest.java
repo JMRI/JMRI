@@ -35,7 +35,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsSystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsPortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TamsTrafficControllerTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsConstantsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TamsReplyTest.class));
         return suite;
     }
 
