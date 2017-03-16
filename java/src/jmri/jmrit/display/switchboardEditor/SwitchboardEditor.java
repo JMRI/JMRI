@@ -7,22 +7,23 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
+//import java.awt.datatransfer.Clipboard;
+//import java.awt.datatransfer.ClipboardOwner;
+//import java.awt.datatransfer.DataFlavor;
+//import java.awt.datatransfer.Transferable;
+//import java.awt.datatransfer.UnsupportedFlavorException;
+//import java.awt.dnd.DnDConstants;
+//import java.awt.dnd.DropTarget;
+//import java.awt.dnd.DropTargetDragEvent;
+//import java.awt.dnd.DropTargetDropEvent;
+//import java.awt.dnd.DropTargetEvent;
+//import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -42,10 +43,13 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -138,7 +142,7 @@ public class SwitchboardEditor extends Editor {
     // Switchboard items
     private JPanel navBarPanel = null;
     private int rangeMin = 0;
-    private int rangeMax = 32;
+    private int rangeMax = 31;
     private int _range = rangeMax - rangeMin;
     JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
     JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
@@ -173,6 +177,20 @@ public class SwitchboardEditor extends Editor {
 
     private JPanel turnoutNamePanel = new JPanel(leftRowLayout);
 
+    // JLayeredpane demo
+    private JLayeredPane switchboardLayeredPane;
+    private JCheckBox onTop;
+    private JComboBox layerList;
+    private String[] layerStrings = { "Yellow (0)", "Magenta (1)",
+            "Cyan (2)",   "Red (3)",
+            "Green (4)" };
+    private Color[] layerColors = { Color.yellow, Color.magenta,
+            Color.cyan,   Color.red,
+            Color.green };
+    //Action commands
+    private static String ON_TOP_COMMAND = "ontop";
+    private static String LAYER_COMMAND = "layer";
+
     public SwitchboardEditor() {
     }
 
@@ -201,9 +219,43 @@ public class SwitchboardEditor extends Editor {
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
 
-        super.setTargetPanel(null, makeFrame(name));
+        //super.setTargetPanel(null, makeFrame(name)); // original CPE version
+        switchboardLayeredPane = new JLayeredPane();
+        switchboardLayeredPane.setPreferredSize(new Dimension(300, 310));
+        switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(
+                "Move the Mouse to Move Duke"));
+        switchboardLayeredPane.addMouseMotionListener(this);
+        //This is the origin of the first label added.
+        Point origin = new Point(10, 20);
+        //This is the offset for computing the origin for the next label.
+        int offset = 35;
+        //Add several overlapping, colored labels to the layered pane
+        //using absolute positioning/sizing.
+//        for (int i = 0; i < layerStrings.length; i++) {
+//            JLabel label = createColoredLabel(layerStrings[i],
+//                    layerColors[i], origin);
+//            switchboardLayeredPane.add(label, new Integer(i));
+//            origin.x += offset;
+//            origin.y += offset;
+//        }
+        //Add several labels to the layered pane.
+        switchboardLayeredPane.setLayout(new GridLayout(8,4)); // vertical, horizontal
+        for (int i = rangeMax; i >= 0; i--) { //layerStrings.length; i++) {
+            JLabel label = new JLabel("Turnout " + i); // createColoredLabel(layerStrings[i], layerColors[i]);
+            switchboardLayeredPane.add(label, new Integer(i));
+        }
+        //Add control pane and layered pane to this JPanel.
+        add(Box.createRigidArea(new Dimension(0, 10)));
+        add(createControlPanel());
+        add(Box.createRigidArea(new Dimension(0, 10)));
+        //add(switchboardLayeredPane);
+
+        super.setTargetPanel(switchboardLayeredPane, makeFrame(name)); // provide a JLayeredPane to use
+
         super.setTargetPanelSize(300, 300);
-        //makeDataFlavors();
+
+        // create top bar, from Oracle demo
+        //setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
@@ -251,9 +303,9 @@ public class SwitchboardEditor extends Editor {
         });
         next.setToolTipText("Volgende");
         navBarPanel.add(Box.createHorizontalGlue());
-        contentPane.add(Box.createVerticalGlue());
+        //contentPane.add(Box.createVerticalGlue());
 
-        super.setBackgroundColor(Color.RED); // test
+        //super.setBackgroundColor(Color.RED); // test
         // put on which Frame?
         contentPane.add(navBarPanel); // on 2nd Editor Panel
         //super.getTargetFrame().add(navBarPanel); // on (top of) Switchboard Frame/Panel
@@ -297,6 +349,56 @@ public class SwitchboardEditor extends Editor {
         }
         (new makeCatalog()).execute();
         log.debug("Init SwingWorker launched");
+    }
+
+    //Create and set up a colored label.
+    // From layeredpane demo
+/*    private JLabel createColoredLabel(String text,
+                                      Color color,
+                                      Point origin) {
+        JLabel label = new JLabel(text);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setOpaque(true);
+        label.setBackground(color);
+        label.setForeground(Color.black);
+        label.setBorder(BorderFactory.createLineBorder(Color.black));
+        label.setBounds(origin.x, origin.y, 140, 140);
+        return label;
+    }*/
+    //Create and set up a colored label. In Grid
+    private JLabel createColoredLabel(String text,
+                                      Color color) {
+        JLabel label = new JLabel(text);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setOpaque(true);
+        label.setBackground(color);
+        label.setForeground(Color.black);
+        label.setBorder(BorderFactory.createLineBorder(Color.black));
+        label.setPreferredSize(new Dimension(140, 140));
+        return label;
+    }
+
+    //Create the control pane for the top of the frame.
+    // From layeredpane demo
+    private JPanel createControlPanel() {
+        onTop = new JCheckBox("Top Position in Layer");
+        onTop.setSelected(true);
+        onTop.setActionCommand(ON_TOP_COMMAND);
+        onTop.addActionListener(this);
+
+        layerList = new JComboBox(layerStrings);
+        layerList.setSelectedIndex(2);    //cyan layer
+        layerList.setActionCommand(LAYER_COMMAND);
+        layerList.addActionListener(this);
+
+        JPanel controls = new JPanel();
+        controls.add(layerList);
+        controls.add(onTop);
+        controls.setBorder(BorderFactory.createTitledBorder(
+                "Choose Duke's Layer and Position"));
+        return controls;
     }
 
     private void setupToolBar() {
