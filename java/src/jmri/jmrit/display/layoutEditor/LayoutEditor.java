@@ -1158,7 +1158,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if (isEditable() && floatingEditToolBox == null) {
                 //Create the window and add the toolbox content
-                floatingEditToolBox = new JmriJFrame(rb.getString("ToolBox") + ": " + layoutName);
+                floatingEditToolBox = new JmriJFrame(Bundle.getMessage("ToolBox", layoutName));
                 floatingEditToolBox.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 floatingEditToolBox.setContentPane(floatingEditContent);
                 floatingEditToolBox.pack();
@@ -1242,7 +1242,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.   add(turnoutGroup5);
 
         floatEditTurnout.   add(blockPropertiesPanel);
-        floatEditTabsPane.addTab(rb.getString("TabTurnout"), null, floatEditTurnout, null);
+        floatEditTabsPane.addTab(Bundle.getMessage("TabTurnout"), null, floatEditTurnout, null);
 
         //Tab 1 - Track
         JPanel floatEditTrack = new JPanel();
@@ -1263,7 +1263,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         trackGroup3.add(trackSegmentPropertiesPanel);
         floatEditTrack.add(trackGroup3);
 
-        floatEditTabsPane.addTab(rb.getString("TabTrack"), null, floatEditTrack, null);
+        floatEditTabsPane.addTab(Bundle.getMessage("TabTrack"), null, floatEditTrack, null);
 
         //Tab 2 - Labels
         JPanel floatEditLabel = new JPanel();
@@ -1284,7 +1284,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         labelGroup3.add(blockContentsComboBox);
         floatEditLabel.add(labelGroup3);
 
-        floatEditTabsPane.addTab(rb.getString("TabLabel"), null, floatEditLabel, null);
+        floatEditTabsPane.addTab(Bundle.getMessage("TabLabel"), null, floatEditLabel, null);
 
         //Tab 3 - Icons
         JPanel floatEditIcon = new JPanel();
@@ -1314,7 +1314,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconGroup5.add(iconLabelButton);
         floatEditIcon.add(iconGroup5);
 
-        floatEditTabsPane.addTab(rb.getString("TabIcon"), null, floatEditIcon, null);
+        floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
         floatEditTabsPanel.add(floatEditTabsPane);
         floatingEditPanel.add(floatEditTabsPanel);
 
