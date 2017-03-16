@@ -68,6 +68,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.Turnout;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -135,14 +136,16 @@ public class SwitchboardEditor extends Editor {
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
     ImageIcon iconPrev = new ImageIcon("resources/icons/misc/gui3/LafLeftArrow_m.gif");
-    private JLabel prev = new JLabel(iconPrev); // JButton("<");
+    private JLabel prev = new JLabel(iconPrev);
     ImageIcon iconNext = new ImageIcon("resources/icons/misc/gui3/LafRightArrow_m.gif");
-    private JLabel next = new JLabel(iconNext); // JButton(">");
+    private JLabel next = new JLabel(iconNext);
+    ImageIcon appslideOff = new ImageIcon("resources/icons/misc/switchboard/appslide-off");
+    ImageIcon appslideOn = new ImageIcon("resources/icons/misc/switchboard/appslide-on");
 
     // Switchboard items
     private JPanel navBarPanel = null;
-    private int rangeMin = 0;
-    private int rangeMax = 31;
+    private int rangeMin = 1;
+    private int rangeMax = 32;
     private int _range = rangeMax - rangeMin;
     JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
     JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
@@ -181,9 +184,10 @@ public class SwitchboardEditor extends Editor {
     private JLayeredPane switchboardLayeredPane;
     private JCheckBox onTop;
     private JComboBox layerList;
-    private String[] layerStrings = { "Yellow (0)", "Magenta (1)",
-            "Cyan (2)",   "Red (3)",
-            "Green (4)" };
+    private String[] beanTypeStrings = { Bundle.getMessage("BeanNameTurnout"),
+            Bundle.getMessage("BeanNameSensor"),
+            Bundle.getMessage("BeanNameLight")
+    };
     private Color[] layerColors = { Color.yellow, Color.magenta,
             Color.cyan,   Color.red,
             Color.green };
@@ -223,7 +227,7 @@ public class SwitchboardEditor extends Editor {
         switchboardLayeredPane = new JLayeredPane();
         switchboardLayeredPane.setPreferredSize(new Dimension(300, 310));
         switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(
-                "Move the Mouse to Move Duke"));
+                "Click to toggle Turnout state (grey buttons not connected)"));
         switchboardLayeredPane.addMouseMotionListener(this);
         //This is the origin of the first label added.
         Point origin = new Point(10, 20);
@@ -231,8 +235,8 @@ public class SwitchboardEditor extends Editor {
         int offset = 35;
         //Add several overlapping, colored labels to the layered pane
         //using absolute positioning/sizing.
-//        for (int i = 0; i < layerStrings.length; i++) {
-//            JLabel label = createColoredLabel(layerStrings[i],
+//        for (int i = 0; i < beanTypeStrings.length; i++) {
+//            JLabel label = createColoredLabel(beanTypeStrings[i],
 //                    layerColors[i], origin);
 //            switchboardLayeredPane.add(label, new Integer(i));
 //            origin.x += offset;
@@ -240,14 +244,11 @@ public class SwitchboardEditor extends Editor {
 //        }
         //Add several labels to the layered pane.
         switchboardLayeredPane.setLayout(new GridLayout(8,4)); // vertical, horizontal
-        for (int i = rangeMax; i >= 0; i--) { //layerStrings.length; i++) {
-            JLabel label = new JLabel("Turnout " + i); // createColoredLabel(layerStrings[i], layerColors[i]);
-            switchboardLayeredPane.add(label, new Integer(i));
-        }
+        addTurnoutButtonRange(rangeMin, rangeMax);
         //Add control pane and layered pane to this JPanel.
-        add(Box.createRigidArea(new Dimension(0, 10)));
+        //add(Box.createRigidArea(new Dimension(0, 10)));
         add(createControlPanel());
-        add(Box.createRigidArea(new Dimension(0, 10)));
+        //add(Box.createRigidArea(new Dimension(0, 10)));
         //add(switchboardLayeredPane);
 
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name)); // provide a JLayeredPane to use
@@ -284,10 +285,10 @@ public class SwitchboardEditor extends Editor {
                 log.debug("oldMin =" + oldMin + ", oldMax =" + oldMax);
             }
         });
-        prev.setToolTipText("Vorige");
-        navBarPanel.add(new JLabel ("toon van:"));
+        prev.setToolTipText("Previous");
+        navBarPanel.add(new JLabel ("Show from:"));
         navBarPanel.add(minSpinner);
-        navBarPanel.add(new JLabel ("tot:"));
+        navBarPanel.add(new JLabel ("to:"));
         navBarPanel.add(maxSpinner);
         navBarPanel.add(next);
 
@@ -301,27 +302,27 @@ public class SwitchboardEditor extends Editor {
                 maxSpinner.setValue(oldMax + _range + 1);
             }
         });
-        next.setToolTipText("Volgende");
+        next.setToolTipText("Next");
         navBarPanel.add(Box.createHorizontalGlue());
         //contentPane.add(Box.createVerticalGlue());
 
-        //super.setBackgroundColor(Color.RED); // test
+        //getTargetPane(name).switchboardLayeredPane.setBackgroundColor(Color.RED); // test
         // put on which Frame?
         contentPane.add(navBarPanel); // on 2nd Editor Panel
         //super.getTargetFrame().add(navBarPanel); // on (top of) Switchboard Frame/Panel
 
         JPanel p1 = new JPanel();
-        JButton addButton = new JButton("Add Label");
+        JButton addButton = new JButton("Update Switchboard");
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                addTextEditor();
+                log.debug("Update clicked");
+                //super.getTargetFrame().addTurnoutButtonRange(rangeMin, rangeMax); // problem to redraw
             }
         });
         p1.add(addButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.add(p1);
-        contentPane.add(new JLabel("Demo"));
 
         setupToolBar(); //re-layout all the toolbar items
 
@@ -351,7 +352,36 @@ public class SwitchboardEditor extends Editor {
         log.debug("Init SwingWorker launched");
     }
 
-    //Create and set up a colored label.
+    private void addTurnoutButtonRange(int rangeMin, int rangeMax) {
+        for (int i = rangeMax; i >= rangeMin; i--) {
+            JButton beanButton = new JButton("LT " + i); // createColoredLabel(beanTypeStrings[i], layerColors[i]);
+            beanButton.setIcon(appslideOff);
+            beanButton.setPressedIcon(appslideOn);
+            final int _address = i;
+            final Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout("LT" + _address);
+            beanButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (turnout != null && turnout.getCommandedState() != Turnout.CLOSED) {
+                        // no need to set a state already set
+                        turnout.setCommandedState(Turnout.CLOSED);
+                        beanButton.setText("LT " + _address + ": C");
+                    } else if (turnout != null && turnout.getCommandedState() != Turnout.THROWN) {
+                        turnout.setCommandedState(Turnout.THROWN);
+                        beanButton.setText("LT " + _address + ": T");
+                    }
+                    log.debug("Button {} clicked", "LT" + _address);
+                }
+            });
+            if (turnout == null) {
+                beanButton.setEnabled(false);
+            }
+            //beanButton.addEventChangeListener(turnout);
+            switchboardLayeredPane.add(beanButton);
+        }
+    }
+
+    // Create and set up a colored label.
     // From layeredpane demo
 /*    private JLabel createColoredLabel(String text,
                                       Color color,
@@ -388,7 +418,7 @@ public class SwitchboardEditor extends Editor {
         onTop.setActionCommand(ON_TOP_COMMAND);
         onTop.addActionListener(this);
 
-        layerList = new JComboBox(layerStrings);
+        layerList = new JComboBox(beanTypeStrings);
         layerList.setSelectedIndex(2);    //cyan layer
         layerList.setActionCommand(LAYER_COMMAND);
         layerList.addActionListener(this);
@@ -397,7 +427,7 @@ public class SwitchboardEditor extends Editor {
         controls.add(layerList);
         controls.add(onTop);
         controls.setBorder(BorderFactory.createTitledBorder(
-                "Choose Duke's Layer and Position"));
+                "Select the address range to display "));
         return controls;
     }
 
@@ -429,6 +459,7 @@ public class SwitchboardEditor extends Editor {
         innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
         innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
         innerBorderPanel.setBorder(innerTitleBorder);
+        innerBorderPanel.add(new JLabel ("Closed/Thrown"));
 
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 
