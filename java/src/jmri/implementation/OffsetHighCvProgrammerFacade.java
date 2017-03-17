@@ -133,7 +133,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
 
         if (status != OK ) {
             // pass abort up
-            log.error("Reset and pass abort up");
+            log.debug("Reset and pass abort up");
             jmri.ProgListener temp = _usingProgrammer;
             _usingProgrammer = null; // done
             state = ProgState.NOTPROGRAMMING;
