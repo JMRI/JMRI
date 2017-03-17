@@ -16,7 +16,7 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
-        <jetty.version>9.2.17.v20160517</jetty.version>
+        <jetty.version>9.2.21.v20170120</jetty.version>
         <powermock.version>1.6.6</powermock.version>
         <slf4j.version>1.7.21</slf4j.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -26,7 +26,7 @@
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
         <ant.version>1.9.7</ant.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine></argLine>
+        <argLine>-Xmx1536m</argLine>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -355,9 +355,8 @@
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
                     -->
-                    <!-- uncomment to really ensure tests are independent
+                    <!-- uncomment to really ensure tests are independent -->
                     <runOrder>random</runOrder>
-                    -->
                 </configuration>
             </plugin>
             <plugin>
@@ -608,12 +607,14 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>${jetty.version}</version>
             <type>jar</type>
         </dependency>
+        -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
@@ -660,6 +661,7 @@
             <artifactId>jbidibc-rxtx-2.2</artifactId>
             <version>1.6.0</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -681,21 +683,25 @@
             <artifactId>jaxen</artifactId>
             <version>1.1.6</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
             <version>3.5.1</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-debug-all</artifactId>
             <version>5.0.2</version>
         </dependency>
+        -->
         <dependency>
             <groupId>com.serialio</groupId>
             <artifactId>serialio</artifactId>
             <version>1.0</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.jogamp.jogl</groupId>
             <artifactId>jogl-all-main</artifactId>
@@ -706,6 +712,7 @@
             <artifactId>gluegen-rt-main</artifactId>
             <version>${jogamp.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.jogamp.joal</groupId>
             <artifactId>joal-main</artifactId>
@@ -777,11 +784,13 @@
             <artifactId>findbugs-annotations</artifactId>
             <version>3.0.1</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
             <version>2.11.0</version>
         </dependency>
+        -->
         <dependency>
             <groupId>com.digi</groupId>
             <artifactId>xbjlib</artifactId>
@@ -805,23 +814,27 @@
             <version>2.0.42-beta</version>
             <scope>test</scope>
         </dependency>
+        <!--
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>2.2.2</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.netbeans</groupId>
             <artifactId>jemmy</artifactId>
             <version>2.2.7.5</version>
             <scope>test</scope>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.github.stefanbirkner</groupId>
             <artifactId>system-rules</artifactId>
             <version>1.16.0</version>
             <scope>test</scope>
         </dependency>
+        -->
     </dependencies>
 
     <repositories>
