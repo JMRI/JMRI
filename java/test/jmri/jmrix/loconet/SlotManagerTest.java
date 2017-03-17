@@ -683,6 +683,9 @@ public class SlotManagerTest extends TestCase {
         jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         
+        jmri.util.JUnitAppender.suppressErrorMessage("Reset and pass abort up ");
+        jmri.util.JUnitAppender.suppressErrorMessage("Reset and pass abort up ");
+        
         log.debug(".... end testReadThroughFacadeFail ...");
     }
 
