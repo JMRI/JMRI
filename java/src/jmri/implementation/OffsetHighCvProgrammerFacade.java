@@ -131,8 +131,20 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
+        if (status != OK ) {
+            // pass abort up
+            log.error("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+        
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {

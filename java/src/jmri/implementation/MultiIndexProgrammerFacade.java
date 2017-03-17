@@ -170,8 +170,20 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     public void programmingOpReply(int value, int status) {
         log.debug("notifyProgListenerEnd value {} status {} ", value, status);
 
+        if (status != OK ) {
+            // pass abort up
+            log.error("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+        
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {
