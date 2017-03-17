@@ -1036,9 +1036,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * is only needed in service mode.
      */
     protected void restartEndOfProgrammingTimer() {
+        final int delay = 10000;
         if (mProgEndSequence) {
             if (mPowerTimer == null) {
-                mPowerTimer = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+                mPowerTimer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         doEndOfProgramming();
@@ -1046,7 +1047,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 });
             }
             mPowerTimer.stop();
-            mPowerTimer.setInitialDelay(2000);
+            mPowerTimer.setInitialDelay(delay);
             mPowerTimer.setRepeats(false);
             mPowerTimer.start();
         }
