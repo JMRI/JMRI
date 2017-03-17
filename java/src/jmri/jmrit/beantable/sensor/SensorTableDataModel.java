@@ -1,6 +1,8 @@
 package jmri.jmrit.beantable.sensor;
 
 import java.util.ResourceBundle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -243,6 +245,12 @@ public class SensorTableDataModel extends BeanTableDataModel {
         } else if (col == PULLUPCOL) {
             JComboBox<Sensor.PullResistance> c = new JComboBox<Sensor.PullResistance>(Sensor.PullResistance.values());
             c.setSelectedItem(s.getPullResistance());
+            c.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   comboBoxAction(e);
+                }
+            });
             return c;
         } else {
             return super.getValueAt(row, col);
@@ -349,6 +357,15 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");
+    }
+
+    public void comboBoxAction(ActionEvent e) {
+       if (log.isDebugEnabled()) {
+          log.debug("Combobox change");
+       }
+       if (table != null && table.getCellEditor() != null) {
+          table.getCellEditor().stopCellEditing();
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());
