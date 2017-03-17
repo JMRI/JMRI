@@ -326,6 +326,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     public void configureTable(JTable table) {
         this.table = table;
         showDebounce(false);
+        showPullUp(false);
         this.table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         this.table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         super.configureTable(table);
@@ -346,6 +347,12 @@ public class SensorTableDataModel extends BeanTableDataModel {
         column = columnModel.getColumnByModelIndex(ACTIVEDELAY);
         columnModel.setColumnVisible(column, show);
         column = columnModel.getColumnByModelIndex(INACTIVEDELAY);
+        columnModel.setColumnVisible(column, show);
+    }
+
+    public void showPullUp(boolean show) {
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+        TableColumn column = columnModel.getColumnByModelIndex(PULLUPCOL);
         columnModel.setColumnVisible(column, show);
     }
 
