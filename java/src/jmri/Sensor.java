@@ -199,6 +199,11 @@ public interface Sensor extends NamedBean {
             }
             throw new java.lang.IllegalArgumentException("argument value " + pName + " not valid");
         }
+ 
+       @Override
+       public String toString(){
+          return( peopleName );
+       }
 
     }
 
