@@ -50,7 +50,7 @@ public class NXFrame extends WarrantRoute {
     private float _intervalTime = 0.0f;     // milliseconds
     private float _throttleIncr = 0.0f;
     private float _throttleFactor = 0.0f;
-    protected static float SCALE_FACTOR = 65; // With _scale, gives a rough first correction for track speed
+    private static float SCALE_FACTOR = 65; // With _scale, gives a rough first correction for track speed
 
     JTextField _maxSpeedBox = new JTextField(6);
     JTextField _rampInterval = new JTextField(6);
@@ -59,7 +59,7 @@ public class NXFrame extends WarrantRoute {
     JRadioButton _forward = new JRadioButton();
     JRadioButton _reverse = new JRadioButton();
     JCheckBox _stageEStop = new JCheckBox();
-    JCheckBox _noRampBox = new JCheckBox();
+    JCheckBox _shareRouteBox = new JCheckBox();
     JCheckBox _haltStartBox = new JCheckBox();
     JCheckBox _calibrateBox = new JCheckBox();
 //    JCheckBox _addTracker = new JCheckBox();
@@ -67,7 +67,7 @@ public class NXFrame extends WarrantRoute {
     JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
 //  static boolean _addTracker = false;
     private boolean _haltStart = false;
-    private float _maxSpeed = 0.5f;
+    private float _maxSpeed = 0.6f;
     private float _minSpeed = 0.05f;
     
     protected JPanel    _controlPanel;
@@ -241,7 +241,8 @@ public class NXFrame extends WarrantRoute {
 
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
-        JPanel trainPanel = makeTrainIdPanel(makeTextBoxPanel(false, _noRampBox, "NoRamping", "ToolTipNoRamping"));
+        JPanel trainPanel = makeTrainIdPanel(makeTextBoxPanel(
+                false, _shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
         p2.add(trainPanel);
 
         JPanel autoRunPanel = new JPanel();
@@ -360,7 +361,7 @@ public class NXFrame extends WarrantRoute {
         int mode;
         if (msg == null && !_runManual.isSelected()) {
             mode = Warrant.MODE_RUN;
-            warrant.setNoRamp(_noRampBox.isSelected());
+            warrant.setShareRoute(_shareRouteBox.isSelected());
             msg = getBoxData();
             if (msg == null) {
                 msg = makeCommands(warrant);
@@ -444,14 +445,6 @@ public class NXFrame extends WarrantRoute {
         dispose();
     }
 
-    public void setMaxSpeed(float s) {
-        _maxThrottle = s;
-    }
-
-    public float getMaxSpeed() {
-        return _maxThrottle;
-    }
-
     // for the convenience of testing
     protected void setTimeInterval(float s) {
         _intervalTime = s;
@@ -470,14 +463,6 @@ public class NXFrame extends WarrantRoute {
      */
     protected void setThrottleFactor(float factor) {
         this._throttleFactor = factor;
-    }
-
-    public void setStartHalt(boolean s) {
-        _haltStart = s;
-    }
-
-    public boolean getStartHalt() {
-        return _haltStart;
     }
 
     // for the convenience of testing
