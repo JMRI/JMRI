@@ -220,14 +220,12 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             }
             s.setInverted(inverted);
 
-            if(tm.isPullResistanceConfigurable()){
-               // check to see if this sensor has a pull resistance parameter stored.
-               if(sensorList.get(i).getChild("pullResistance")!=null){
-                  String pull = sensorList.get(i).getChild("pullResistance")
-                                          .getText();
-                  s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
-               }
-            }
+            if(sensorList.get(i).getChild("pullResistance")!=null){
+               String pull = sensorList.get(i).getChild("pullResistance")
+                                       .getText();
+               log.debug("setting pull to {} for sensor {}",pull,s);
+               s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
+           }
         }
         return result;
     }
