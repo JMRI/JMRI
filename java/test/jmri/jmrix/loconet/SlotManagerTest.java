@@ -323,6 +323,44 @@ public class SlotManagerTest extends TestCase {
         log.debug(".... end testWriteCVDirectStringDCS240 ...");
     }
 
+    public void testWriteCVDirectStringDCS240Interrupted() throws jmri.ProgrammerException {
+        log.debug(".... start testWriteCVDirectStringDCS240 ...");
+        String CV1 = "31";
+        int val2 = 16;
+        slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        slotmanager.writeCV(CV1, val2, lstn);
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        Assert.assertEquals("write message",
+                "EF 0E 7C 6B 00 00 00 00 00 1E 10 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence)
+        log.debug("send LACK back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, 150);
+        Assert.assertEquals("post-LACK status", -999, status);
+        
+        // CS check received back (DCS240 sequence)
+        log.debug("send CS check back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xBB, 0x7F, 0x00, 0x3B}));
+        jmri.util.JUnitUtil.releaseThread(this, 150);
+        Assert.assertEquals("post-CS-check status", -999, status);
+        
+        // read received back (DCS240 sequence)
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1E, 0x10, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, 150);
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", -1, value);
+
+        log.debug(".... end testWriteCVDirectStringDCS240 ...");
+    }
+
     public void testWriteCVOpsLongAddr() throws jmri.ProgrammerException {
         int CV1 = 12;
         int val2 = 34;
