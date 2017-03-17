@@ -38,7 +38,8 @@
 	<classpathentry kind="lib" path="lib/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/UmlGraph-5.7.jar"/>
 	<classpathentry kind="lib" path="lib/vecmath-1.5.2.jar"/>
-	<classpathentry kind="lib" path="lib/WinRegistry-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/jna-4.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna-platform-4.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/xAPlib.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.0.6.jar"/>

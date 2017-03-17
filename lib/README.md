@@ -226,9 +226,13 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
     - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
 - used in ant warnings target
 
-##### WinRegistry4-4.jar
-- Version 4.4
-- https://sourceforge.net/projects/java-registry/
+##### jna-4.4.0.jar
+- Java Native Access library
+- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna%7C4.4.0%7Cjar
+
+##### jna-platform-4.4.0.jar
+- Java Native Access platform-specific utilities library
+- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
 
 ##### xAPlib.jar
 - xAP automation protocol support
