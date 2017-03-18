@@ -5,11 +5,23 @@ import java.util.ResourceBundle;
 /**
  * Defines a simple place to get the JMRI version string.
  * <p>
- * JMRI's version string comes in two forms, depending on whether it was built
+ * JMRI version strings are of the form x.y.z:
+ * <ul>
+ * <li>x, called the "major" number, is a small integer that increases with time
+ * <li>y, called the "minor" number, is a small integer that increases with time
+ * <li>z, called the "test" or "build" number, is a small integer increasing with time, 
+ *        perhaps followed by a couple of modifier characters. As a special case, 
+ *        this is omitted for Production Releases.
+ * </ul>
+ * Hence you expect to see JMRI versions called things like "4.7.2", "4.6" and "4.7.2PJC".
+ * (That last is a specific modification to JMRI 4.7.2)
+ * <p>
+ * The version string shown by a JMRI program or used to label a download
+ * comes in two forms, depending on whether it was built
  * by an "official" process or not, which in turn is determined by the
  * "release.official" property:
  * <dl>
- * <dt>Official<dd>
+ * <dt>Official, also known as Canonical<dd>
  * <ul>
  * <li>If the revision number e.g. 123abc (git hash) is available in
  * release.revision_id, then "4.1.1-R123abc". Note the "R".
@@ -22,7 +34,7 @@ import java.util.ResourceBundle;
  * <ul>
  * <li>If the revision number e.g. 123abc (git hash) is available in
  * release.revision_id, then "4.1.1ish-(user)-(date)-R123abc". Note the "R".
- * <li>Else "4.1.1-(user)-(date)", where the date comes from the
+ * <li>Else "4.1.1ish-(user)-(date)", where the date comes from the
  * release.build_date property.
  * </ul>
  * </dl>
@@ -64,9 +76,10 @@ public class Version {
     /**
      * Test number changes with individual releases, generally fastest for test
      * releases. In production releases, if non-zero, indicates a bug fix only
-     * release.
+     * release. Usually a single digit, occasionally a two-digit number, but letter modifiers are allowed.
+     * "0" is treated as a special case for Production releases and suppressed when listing the version string
      */
-    static final public int test = Integer.parseInt(VERSION_BUNDLE.getString("release.build")); // NOI18N;
+    static final public String test = VERSION_BUNDLE.getString("release.build"); // NOI18N;
 
     /**
      * The user who built this versionBundle, as determined by the build
@@ -98,7 +111,7 @@ public class Version {
      */
     public static String getModifier() {
         StringBuilder modifier = new StringBuilder("");
-        if (test != 0) {
+        if (! test.equals("0")) {
             modifier.append(".").append(test);
         }
         if (!official) {
@@ -141,8 +154,9 @@ public class Version {
     /**
      * Tests that a string contains a canonical version string.
      * <p>
-     * A canonical version string is a string in the form x.y.z and is different
-     * than the version string displayed using {@link #name() }. The canonical
+     * A canonical version string is a string in the form x.y.z where each part is an
+     * integer. It is different
+     * from the version string displayed using {@link #name() }. The canonical
      * version string for a JMRI instance is available using {@link #getCanonicalVersion()
      * }.
      *
@@ -154,10 +168,14 @@ public class Version {
         if (parts.length != 3) {
             return false;
         }
-        for (String part : parts) {
-            if (Integer.parseInt(part) < 0) {
-                return false;
-            }
+        if (Integer.parseInt(parts[0]) < 0) {
+            return false;
+        }
+        if (Integer.parseInt(parts[1]) < 0) {
+            return false;
+        }
+        if (parts[2].contains("ish") || parts[2].contains("-")) {
+            return false;
         }
         return true;
     }

@@ -34,7 +34,12 @@ public class VersionTest extends TestCase {
     public void testIsCanonicalVersion() {
 
         assertTrue(Version.isCanonicalVersion("1.2.3"));
+        assertTrue(Version.isCanonicalVersion("1.2.3P"));
+        assertTrue(Version.isCanonicalVersion("1.2.0"));
+
         assertFalse(Version.isCanonicalVersion("1.2"));
+        assertFalse(Version.isCanonicalVersion("1.2.3ish"));
+        assertFalse(Version.isCanonicalVersion("1.2.3-R123"));
 
     }
 
@@ -46,6 +51,10 @@ public class VersionTest extends TestCase {
         assertTrue(Version.compareCanonicalVersions("1.2.3", "1.2.3") == 0);
         assertTrue(Version.compareCanonicalVersions("1.2.1", "1.2.3") < 0);
         assertTrue(Version.compareCanonicalVersions("1.2.4", "1.2.3") > 0);
+
+        assertTrue(Version.compareCanonicalVersions("1.2.3P", "1.2.3P") == 0);
+        assertTrue(Version.compareCanonicalVersions("1.2.4",  "1.2.3P") > 0);
+        assertTrue(Version.compareCanonicalVersions("1.2.3P", "1.2.3") > 0);
 
         assertTrue(Version.compareCanonicalVersions("213.1.1", "213.1.1") == 0);
         assertTrue(Version.compareCanonicalVersions("213.1.1", "213.1.10") < 0);
