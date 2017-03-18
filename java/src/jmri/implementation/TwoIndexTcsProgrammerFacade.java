@@ -167,7 +167,9 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         }
 
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
         
         // Complete processing later so that WOWDecoder will go through a complete power on reset and not brown out between CV read/writes
@@ -187,6 +189,16 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     
     // After a Swing delay, this processes the reply
     protected void processProgrammingOpReply(int value, int status) {
+        if (status != OK ) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+
         switch (state) {
             case DOSIFORREAD:
                 try {

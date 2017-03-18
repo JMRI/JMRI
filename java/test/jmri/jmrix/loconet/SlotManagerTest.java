@@ -203,14 +203,19 @@ public class SlotManagerTest extends TestCase {
  
         // LACK received back (DCS240 sequence)
         log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;
+
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
-        jmri.util.JUnitUtil.releaseThread(this, 150);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
         Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started long timer", startedLongTimer);
+        Assert.assertFalse("didn't start short timer", startedShortTimer);
         
         // read received back (DCS240 sequence)
         log.debug("send E7 reply back");
         slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B}));
-        jmri.util.JUnitUtil.releaseThread(this, 150);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
         log.debug("checking..");
         Assert.assertEquals("reply status", 0, status);
         Assert.assertEquals("reply value", 35, value);
@@ -307,15 +312,69 @@ public class SlotManagerTest extends TestCase {
  
         // LACK received back (DCS240 sequence)
         log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
-        jmri.util.JUnitUtil.releaseThread(this, 150);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
         Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
         
         // read received back (DCS240 sequence)
         log.debug("send E7 reply back");
         slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1E, 0x10, 0x7F, 0x7F, 0x4A}));
         Assert.assertEquals("no immediate reply", -999, status);
-        jmri.util.JUnitUtil.releaseThread(this, 150);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", -1, value);
+
+        log.debug(".... end testWriteCVDirectStringDCS240 ...");
+    }
+
+    public void testLackLogic() {
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25});
+        Assert.assertTrue("checkLackTaskAccepted(m.getElement(2))", slotmanager.checkLackTaskAccepted(m.getElement(2)));
+        Assert.assertFalse("checkLackProgrammerBusy(m.getElement(2))", slotmanager.checkLackProgrammerBusy(m.getElement(2)));
+        Assert.assertFalse("checkLackAcceptedBlind(m.getElement(2))", slotmanager.checkLackAcceptedBlind(m.getElement(2)));
+    }
+    
+    public void testWriteCVDirectStringDCS240Interrupted() throws jmri.ProgrammerException {
+        log.debug(".... start testWriteCVDirectStringDCS240 ...");
+        String CV1 = "31";
+        int val2 = 16;
+        slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        slotmanager.writeCV(CV1, val2, lstn);
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        Assert.assertEquals("write message",
+                "EF 0E 7C 6B 00 00 00 00 00 1E 10 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence)
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;
+
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
+        
+        // CS check received back (DCS240 sequence)
+        log.debug("send CS check back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xBB, 0x7F, 0x00, 0x3B}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-CS-check status", -999, status);
+        
+        // read received back (DCS240 sequence)
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1E, 0x10, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
         log.debug("checking..");
         Assert.assertEquals("reply status", 0, status);
         Assert.assertEquals("reply value", -1, value);
@@ -345,6 +404,289 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    public void testWriteThroughFacade() throws jmri.ProgrammerException {
+        log.debug(".... start testWriteThroughFacade ...");
+        slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        
+        // install Facades from ESU_LokSoundV4_0.xml
+
+        // <name>High Access via Double Index</name>
+        String top = "256";
+        String addrCVhigh = "96";
+        String addrCVlow = "97";
+        String valueCV = "99";
+        String modulo = "100";
+        jmri.implementation.AddressedHighCvProgrammerFacade pf1
+                = new jmri.implementation.AddressedHighCvProgrammerFacade(slotmanager, top, addrCVhigh, addrCVlow, valueCV, modulo);
+
+        // <name>Indexed CV access</name>
+        String PI = "31";
+        String SI = "16";
+        boolean cvFirst = false;
+        jmri.implementation.MultiIndexProgrammerFacade pf2
+                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst);
+
+        String CV1 = "16.2.257";
+        int val2 = 55;
+          
+        // Start overall sequence
+        pf2.writeCV(CV1, val2, lstn);
+        
+        // Check for PI write
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        Assert.assertEquals("write PI message",
+                "EF 0E 7C 6B 00 00 00 00 00 1E 10 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence) to PI write
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;        
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        
+        // completion received back (DCS240 sequence) to PI write
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1E, 0x10, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("initial status", -999, status);
+        
+        // check that SI write happened
+        Assert.assertEquals("two messages sent", 2, lnis.outbound.size());
+        Assert.assertEquals("write SI message",
+                "EF 0E 7C 6B 00 00 00 00 00 0F 02 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("initial status", -999, status);
+
+        // LACK received back (DCS240 sequence) to SI write
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;        
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
+        Assert.assertEquals("still two messages sent", 2, lnis.outbound.size());
+
+        // completion received back (DCS240 sequence) to SI write
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x0F, 0x02, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("initial status", -999, status);
+        
+        // check that final CV write happened
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+        Assert.assertEquals("write final CV message",
+                "EF 0E 7C 6B 00 00 00 00 10 00 37 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("initial status", -999, status);
+
+        // LACK received back (DCS240 sequence) to final CV write
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;        
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+
+        // completion received back (DCS240 sequence)
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x10, 0x00, 0x37, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", -1, value);
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+
+        log.debug(".... end testWriteThroughFacade ...");
+    }
+
+    public void testReadThroughFacade() throws jmri.ProgrammerException {
+        log.debug(".... start testReadThroughFacade ...");
+        slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        
+        // install Facades from ESU_LokSoundV4_0.xml
+
+        // <name>High Access via Double Index</name>
+        String top = "256";
+        String addrCVhigh = "96";
+        String addrCVlow = "97";
+        String valueCV = "99";
+        String modulo = "100";
+        jmri.implementation.AddressedHighCvProgrammerFacade pf1
+                = new jmri.implementation.AddressedHighCvProgrammerFacade(slotmanager, top, addrCVhigh, addrCVlow, valueCV, modulo);
+
+        // <name>Indexed CV access</name>
+        String PI = "31";
+        String SI = "16";
+        boolean cvFirst = false;
+        jmri.implementation.MultiIndexProgrammerFacade pf2
+                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst);
+
+        String CV1 = "16.2.257";
+        int val2 = 55;
+          
+        // Start overall sequence
+        pf2.readCV(CV1, lstn);
+        
+        // Check for PI write
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        Assert.assertEquals("write PI message",
+                "EF 0E 7C 6B 00 00 00 00 00 1E 10 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence) to PI write
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;        
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        
+        // completion received back (DCS240 sequence) to PI write
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1E, 0x10, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("initial status", -999, status);
+        
+        // check that SI write happened
+        Assert.assertEquals("two messages sent", 2, lnis.outbound.size());
+        Assert.assertEquals("write SI message",
+                "EF 0E 7C 6B 00 00 00 00 00 0F 02 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("initial status", -999, status);
+
+        // LACK received back (DCS240 sequence) to SI write
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;        
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
+        Assert.assertEquals("still two messages sent", 2, lnis.outbound.size());
+
+        // completion received back (DCS240 sequence) to SI write
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x0F, 0x02, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("initial status", -999, status);
+        
+        // check that final CV write happened
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+        Assert.assertEquals("write final CV message",
+                "EF 0E 7C 2B 00 00 00 00 12 00 7F 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("initial status", -999, status);
+
+        // LACK received back (DCS240 sequence) to final CV write
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;        
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status", -999, status);
+        Assert.assertTrue("started long timer", startedLongTimer);
+        Assert.assertFalse("didn't start short timer", startedShortTimer);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+
+        // completion received back (DCS240 sequence)
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x10, 0x00, 0x37, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", 55, value);
+        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+
+        log.debug(".... end testReadThroughFacade ...");
+    }
+
+    public void testReadThroughFacadeFail() throws jmri.ProgrammerException {
+        log.debug(".... start testReadThroughFacadeFail ...");
+        slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        
+        // install Facades from ESU_LokSoundV4_0.xml
+
+        // <name>High Access via Double Index</name>
+        String top = "256";
+        String addrCVhigh = "96";
+        String addrCVlow = "97";
+        String valueCV = "99";
+        String modulo = "100";
+        jmri.implementation.AddressedHighCvProgrammerFacade pf1
+                = new jmri.implementation.AddressedHighCvProgrammerFacade(slotmanager, top, addrCVhigh, addrCVlow, valueCV, modulo);
+
+        // <name>Indexed CV access</name>
+        String PI = "31";
+        String SI = "16";
+        boolean cvFirst = false;
+        jmri.implementation.MultiIndexProgrammerFacade pf2
+                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst);
+
+        String CV1 = "16.2.257";
+        int val2 = 55;
+          
+        // Start overall sequence
+        pf2.readCV(CV1, lstn);
+        
+        // Check for PI write
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        Assert.assertEquals("write PI message",
+                "EF 0E 7C 6B 00 00 00 00 00 1E 10 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence) to PI write: rejected
+        log.debug("send LACK back");
+        startedShortTimer = false;
+        startedLongTimer = false;        
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x0, 0x24}));
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);
+        Assert.assertEquals("post-LACK status is fail", 4, status);
+        Assert.assertFalse("didn't start short timer", startedShortTimer);
+        Assert.assertFalse("didn't start long timer", startedLongTimer);
+        jmri.util.JUnitUtil.releaseThread(this, releaseTestDelay);  // wait for slow reply
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        
+        log.debug(".... end testReadThroughFacadeFail ...");
+    }
+
+
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SlotManagerTest.class.getName()};
@@ -362,8 +704,12 @@ public class SlotManagerTest extends TestCase {
     SlotManager slotmanager;
     int status;
     int value;
+    boolean startedShortTimer = false;
+    boolean startedLongTimer = false;
+    boolean stoppedTimer = false;
     
     ProgListener lstn;
+    int releaseTestDelay = 150; // probably needs to be at least 150, see SlotManager.postProgDelay
     
     @Override
     protected void setUp() {
@@ -371,9 +717,29 @@ public class SlotManagerTest extends TestCase {
         
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
-        slotmanager = new SlotManager(lnis);
+        
+        slotmanager = new SlotManager(lnis) {
+            @Override
+            protected void startLongTimer() {
+                super.startLongTimer();
+                startedLongTimer = true;
+            }   
+            @Override
+            protected void startShortTimer() {
+                super.startShortTimer();
+                startedShortTimer = true;
+            }
+            @Override
+            protected void stopTimer() {
+                super.stopTimer();
+                stoppedTimer = true;
+            }
+        };
+        
         status = -999;
         value = -999;
+        startedShortTimer = false;
+        startedLongTimer = false;
         
         lstn = new ProgListener(){
             @Override
