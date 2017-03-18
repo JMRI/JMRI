@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TurnoutIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
-    protected HashMap<Integer, NamedIcon> _iconStateMap;          // state int to icon
+    protected HashMap<Integer, NamedIcon> _iconStateMap;     // state int to icon
     protected HashMap<String, Integer> _name2stateMap;       // name to state
     protected HashMap<Integer, String> _state2nameMap;       // state to name
 

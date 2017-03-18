@@ -802,10 +802,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Control whether target panel items are controlling layout items. Does
-     * this by invoke the {@link Positionable#setControlling} function of each
-     * item on the target panel. This also controls the relevant pop-up menu
-     * items.
+     * Control whether target panel items are controlling layout items.
+     * <p>
+     * Does this by invoking the {@link Positionable#setControlling} function
+     * of each item on the target panel. This also controls the relevant
+     * pop-up menu items.
      *
      * @param state true for controlling.
      */

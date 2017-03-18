@@ -169,7 +169,7 @@ public class SwitchboardIcon extends PositionableJPanel
         if (namedBean == null) {
             return;
         }
-        //getBean().setName(typeLabel.getText()); // set waht property?
+        //getBean().setName(typeLabel.getText()); // set which property?
     }
 
     @Override

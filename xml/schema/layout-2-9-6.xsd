@@ -327,7 +327,7 @@ signals - obsolete, EMPTY, never used
         <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="switchboardeditor"  type="SwitchboardEditorType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="switchboardeditor" type="SwitchboardEditorType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" >
             <xs:key name="layoutEditorElementIdent">
               <xs:annotation><xs:documentation>Insist that each element ident attribute value in LayoutEditor is unique</xs:documentation></xs:annotation>

@@ -53,6 +53,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
+        panel.setAttribute("hideUnconnected", "" + (p.hideUnconnected() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
         panel.setAttribute("scrollable", p.getScrollable());
@@ -76,7 +77,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
                         panel.addContent(e);
                     }
                 } catch (Exception e) {
-                    log.error("Error storing panel element: " + e);
+                    log.error("Error storing switchboard panel element: " + e);
                     e.printStackTrace();
                 }
             }

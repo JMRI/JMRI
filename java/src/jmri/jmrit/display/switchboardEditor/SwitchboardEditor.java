@@ -13,17 +13,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-//import java.awt.datatransfer.Clipboard;
-//import java.awt.datatransfer.ClipboardOwner;
-//import java.awt.datatransfer.DataFlavor;
-//import java.awt.datatransfer.Transferable;
-//import java.awt.datatransfer.UnsupportedFlavorException;
-//import java.awt.dnd.DnDConstants;
-//import java.awt.dnd.DropTarget;
-//import java.awt.dnd.DropTargetDragEvent;
-//import java.awt.dnd.DropTargetDropEvent;
-//import java.awt.dnd.DropTargetEvent;
-//import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -36,6 +25,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -68,6 +58,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -155,9 +147,11 @@ public class SwitchboardEditor extends Editor {
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
 
-    private JPanel helpBarPanel = null;
-    private JPanel helpBar = new JPanel();
+    //private JPanel helpBarPanel = null;
+    //private JPanel helpBar = new JPanel();
+    // option menu items not in Editor
     private boolean showHelpBar = true;
+    private boolean _hideUnconnected = false;
     private int height = 100;
     private int width = 100;
 
@@ -165,6 +159,7 @@ public class SwitchboardEditor extends Editor {
 //    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
     private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
+    private JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
     private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
     private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHidden"));
     private JCheckBoxMenuItem disableShapeSelect = new JCheckBoxMenuItem(Bundle.getMessage("disableShapeSelect"));
@@ -181,8 +176,8 @@ public class SwitchboardEditor extends Editor {
     private JPanel turnoutNamePanel = new JPanel(leftRowLayout);
 
     // JLayeredpane demo
-    private JLayeredPane switchboardLayeredPane;
-    private JCheckBox onTop;
+    private TargetPane switchboardLayeredPane; // JLayeredPane
+    private JCheckBox hideUnconnected;
     private JComboBox layerList;
     private String[] beanTypeStrings = { Bundle.getMessage("BeanNameTurnout"),
             Bundle.getMessage("BeanNameSensor"),
@@ -191,9 +186,16 @@ public class SwitchboardEditor extends Editor {
     private Color[] layerColors = { Color.yellow, Color.magenta,
             Color.cyan,   Color.red,
             Color.green };
+    private JComboBox switchTypeList;
+    private String[] switchTypeStrings = { Bundle.getMessage("Button"),
+            Bundle.getMessage("Icon"),
+            Bundle.getMessage("Drawing")
+    };
+    private String[] iconTypes = { "Button", "Icon", "Drawing" };
     //Action commands
-    private static String ON_TOP_COMMAND = "ontop";
+    private static String HIDE_COMMAND = "hideUnconnected";
     private static String LAYER_COMMAND = "layer";
+    private static String SWITCHTYPE_COMMAND = "switchtype";
 
     public SwitchboardEditor() {
     }
@@ -224,10 +226,10 @@ public class SwitchboardEditor extends Editor {
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
 
         //super.setTargetPanel(null, makeFrame(name)); // original CPE version
-        switchboardLayeredPane = new JLayeredPane();
+        switchboardLayeredPane = new TargetPane(); //extends JLayeredPane();
         switchboardLayeredPane.setPreferredSize(new Dimension(300, 310));
         switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(
-                "Click to toggle Turnout state (grey buttons not connected)"));
+                Bundle.getMessage("SwitchboardTitle", "TO")));
         switchboardLayeredPane.addMouseMotionListener(this);
         //This is the origin of the first label added.
         Point origin = new Point(10, 20);
@@ -242,14 +244,38 @@ public class SwitchboardEditor extends Editor {
 //            origin.x += offset;
 //            origin.y += offset;
 //        }
-        //Add several labels to the layered pane.
-        switchboardLayeredPane.setLayout(new GridLayout(8,4)); // vertical, horizontal
-        addTurnoutButtonRange(rangeMin, rangeMax);
+
         //Add control pane and layered pane to this JPanel.
-        //add(Box.createRigidArea(new Dimension(0, 10)));
-        add(createControlPanel());
-        //add(Box.createRigidArea(new Dimension(0, 10)));
-        //add(switchboardLayeredPane);
+        JPanel beanTypePane = new JPanel();
+        JLabel beanTypeTitle = new JLabel("Bean type:");
+        beanTypePane.add(beanTypeTitle);
+        layerList = new JComboBox(beanTypeStrings);
+        layerList.setSelectedIndex(0);    //Turnout
+        layerList.setActionCommand(LAYER_COMMAND);
+        layerList.addActionListener(this);
+        beanTypePane.add(layerList);
+        add(beanTypePane);
+
+        //Add the buttons to the layered pane.
+        switchboardLayeredPane.setLayout(new GridLayout(8,4)); // vertical, horizontal
+        addSwitchRange(rangeMin, rangeMax, layerList.getSelectedItem().toString(), "Buttons");
+
+
+        JPanel switchTypePane = new JPanel();
+        JLabel switchTypeTitle = new JLabel("Switch shape:");
+        switchTypePane.add(switchTypeTitle);
+        switchTypeList = new JComboBox(switchTypeStrings);
+        switchTypeList.setSelectedIndex(0);    //button
+        switchTypeList.setActionCommand(SWITCHTYPE_COMMAND);
+        switchTypeList.addActionListener(this);
+        switchTypePane.add(switchTypeList);
+        add(switchTypePane);
+
+        JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
+        hideUnconnected.setSelected(false);
+        hideUnconnected.setActionCommand(HIDE_COMMAND);
+        hideUnconnected.addActionListener(this);
+        add(hideUnconnected);
 
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name)); // provide a JLayeredPane to use
 
@@ -268,6 +294,434 @@ public class SwitchboardEditor extends Editor {
         if (cm != null) {
             cm.registerUser(this);
         }
+
+        add(createControlPanel());
+
+        JPanel p1 = new JPanel();
+        JButton addButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                log.debug("Update clicked");
+                switchboardLayeredPane.clear();
+                addSwitchRange(rangeMin, rangeMax, layerList.getSelectedItem().toString(), "Buttons");
+            }
+        });
+        p1.add(addButton);
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
+        contentPane.add(p1);
+
+        setupToolBar(); //re-layout all the toolbar items
+
+        // add LE style help bar
+//        if (showHelpBar) {
+//            //not sure why… but this is the only way I could
+//            //get everything to layout correctly
+//            //when the helpbar is visible…
+//            boolean editMode = true; //editModeItem.isSelected();
+//            setAllEditable(!editMode);
+//            setAllEditable(editMode);
+//        } else {
+//            helpBarPanel.setVisible(isEditable() && showHelpBar);
+//        }
+
+        pack();
+        setVisible(true);
+
+        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
+
+            @Override
+            public CatalogPanel doInBackground() {
+                return CatalogPanel.makeDefaultCatalog();
+            }
+        }
+        (new makeCatalog()).execute();
+        log.debug("Init SwingWorker launched");
+    }
+
+    private void addSwitchRange(int rangeMin, int rangeMax, String beanType, String switchType) {
+        log.debug("hideUnconnected = {}", hideUnconnected());
+        String name = "";
+        BeanSwitch _switch;
+        NamedBean nb = null;
+        for (int i = rangeMin; i <= rangeMax; i++) {
+            switch (beanType) {
+                case "Turnout":
+                    name = "LT" + i;
+                    nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
+                    break;
+                case "Sensor":
+                    name = "LS" + i;
+                    nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
+                    break;
+                case "Light":
+                    name = "LL" + i;
+                    nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
+                    break;
+            }
+            _switch = new BeanSwitch(i, nb, name, "Buttons");
+//            JButton beanButton = new JButton("LT " + i); // createColoredLabel(beanTypeStrings[i], layerColors[i]);
+//            beanButton.setIcon(appslideOff);
+//            beanButton.setPressedIcon(appslideOn);
+//            final int _address = i;
+//            final Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout("LT" + _address);
+//            beanButton.addMouseListener(new MouseAdapter() {
+//                @Override
+//                public void mouseClicked(MouseEvent e) {
+//                    if (turnout != null && turnout.getCommandedState() != Turnout.CLOSED) {
+//                        // no need to set a state already set
+//                        turnout.setCommandedState(Turnout.CLOSED);
+//                        beanButton.setText("LT " + _address + ": C");
+//                    } else if (turnout != null && turnout.getCommandedState() != Turnout.THROWN) {
+//                        turnout.setCommandedState(Turnout.THROWN);
+//                        beanButton.setText("LT " + _address + ": T");
+//                    }
+//                    log.debug("Button {} clicked", "LT" + _address);
+//                }
+//            });
+            log.debug("Yes, button {}", i + "");
+            _switch.setText(name);
+            if (nb == null) {
+                if(!hideUnconnected()) {
+                    _switch.setEnabled(false);
+                    switchboardLayeredPane.add(_switch); // or setVisible(false)
+                }
+            } else {
+                switchboardLayeredPane.add(_switch);
+            }
+            //beanButton.addEventChangeListener(turnout);
+        }
+    }
+
+    /**
+     * Class for a switchboard object.
+     * For now just a JButton to control existing turnouts.
+     */
+    public class BeanSwitch extends JButton implements java.beans.PropertyChangeListener, ActionListener {
+
+        protected final JButton beanButton;
+        protected HashMap<Integer, NamedIcon> _iconStateMap;          // state int to icon
+        protected HashMap<String, Integer> _name2stateMap;       // name to state
+        protected HashMap<Integer, String> _state2nameMap;       // state to name
+
+        private boolean connected = false;
+        protected String _type;
+        protected String _label;
+        protected JLabel typeLabel;
+        protected boolean _text;
+        protected boolean _icon = false;
+        protected boolean _control = false;
+        //protected NamedIcon _namedIcon;
+
+        // the associated Bean object
+        private NamedBean _bname;
+        private NamedBeanHandle<?> namedBean = null; // could be Turnout, Sensor or Light
+        protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+
+        /**
+         * Ctor
+         * @param index DCC address
+         * @param bean layout object type to connect to
+         * @param name descriptive name to display in switch tooltip
+         * @param type Button, Icon (static) or Drawing (vector graphics)
+         */
+        public BeanSwitch(@Nonnull int index, NamedBean bean, String name, String type) {
+            _label = name;
+            beanButton = new JButton(name);
+            beanButton.setText(_label);
+            beanButton.setBackground(Color.RED);
+            if (type != null) {
+                _type = type;
+            } else {
+                _type = "Turnout";
+            }
+            _bname = bean;
+            try {
+                Turnout tn = InstanceManager.turnoutManagerInstance().getTurnout(name);
+                if (tn != null){
+                    namedBean = nbhm.getNamedBeanHandle(name, tn);
+                }
+            } catch (IllegalArgumentException e) {
+                log.error("invalid turnout name= \"" + name + "\" in Switchboard Button");
+            }
+
+            //beanButton.setIcon(appslideOff);
+            //beanButton.setPressedIcon(appslideOn);
+            beanButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (bean != null && getTurnout().getCommandedState() != Turnout.CLOSED) {
+                        // no need to set a state already set
+                        getTurnout().setCommandedState(Turnout.CLOSED);
+                        beanButton.setText(name + ": C");
+                    } else if (bean != null && getTurnout().getCommandedState() != Turnout.THROWN) {
+                        getTurnout().setCommandedState(Turnout.THROWN);
+                        beanButton.setText(name + ": T");
+                    }
+                    log.debug("Button {} clicked", name);
+                }
+            });
+            if (bean == null) {
+                if(!hideUnconnected()) {
+                    beanButton.setEnabled(false);
+                }
+            } else {
+                _control = true;
+                getTurnout().addPropertyChangeListener(this, name, "Panel Editor Turnout Icon");
+            }
+            // from finishClone
+            setTristate(getTristate());
+            setMomentary(getMomentary());
+            setDirectControl(getDirectControl());
+            return;
+        }
+
+        public NamedBean getNamedBean() {
+            return _bname;
+        }
+
+        public Turnout getTurnout() {
+            if (namedBean == null) {
+                return null;
+            }
+            return (Turnout) namedBean.getBean();
+        }
+
+        public String getType() {
+            return _type;
+        }
+
+        /**
+         * Display
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //updateBean();
+        }
+
+//        // update icon as state of Bean changes
+//        @Override
+//        public void propertyChange(java.beans.PropertyChangeEvent e) {
+//            if (e.getPropertyName().equals("_name")) {
+//                displayState();
+//            }
+//        }
+
+        public String getNameString() {
+            String name;
+            if (namedBean == null) {
+                name = Bundle.getMessage("NotConnected");
+            } else if (getTurnout().getUserName() != null) {
+                name = getTurnout().getUserName() + " (" + getTurnout().getSystemName() + ")";
+            } else {
+                name = getTurnout().getSystemName();
+            }
+            return name;
+        }
+
+        /**
+         * Drive the current state of the display from the state of the turnout.
+         */
+        public void displayState(int state) {
+            if (getNamedBean() == null) {
+                log.debug("Display state " + state + ", disconnected");
+            } else {
+                log.debug("TO {} state: {}", _label, state + ""); //getNameString() +" displayState "+_state2nameMap.get(state));
+                if (isText()) {
+                    beanButton.setText(state + ""); //_state2nameMap.get(state));
+                    //super.setText(_state2nameMap.get(state));
+                }
+                if (isIcon()) { // TODO
+                    NamedIcon icon = getIcon(state);
+                    if (icon != null) {
+                        super.setIcon(icon);
+                    }
+                }
+            }
+            //updateSize();
+        }
+
+        /**
+         * Get icon by its localized bean state name.
+         */
+        public NamedIcon getIcon(String state) {
+            return _iconStateMap.get(_name2stateMap.get(state));
+        }
+
+        public NamedIcon getIcon(int state) {
+            return _iconStateMap.get(Integer.valueOf(state));
+        }
+
+        public final boolean isIcon() {
+            return _icon;
+        }
+
+        public final boolean isText() {
+            return _text;
+        }
+
+        /**
+         * Get current state of attached turnout
+         *
+         * @return A state variable from a Turnout, e.g. Turnout.CLOSED
+         */
+        int turnoutState() {
+            if (namedBean != null) {
+                return getTurnout().getKnownState();
+            } else {
+                return Turnout.UNKNOWN;
+            }
+        }
+
+        // update switch as state of turnout changes
+        @Override
+        public void propertyChange(java.beans.PropertyChangeEvent e) {
+            if (log.isDebugEnabled()) {
+                log.debug("property change: " + getNameString() + " " + e.getPropertyName() + " is now: "
+                        + e.getNewValue());
+            }
+
+            // when there's feedback, transition through inconsistent icon for better
+            // animation
+            if (getTristate()
+                    && (getTurnout().getFeedbackMode() != Turnout.DIRECT)
+                    && (e.getPropertyName().equals("CommandedState"))) {
+                if (getTurnout().getCommandedState() != getTurnout().getKnownState()) {
+                    int now = Turnout.INCONSISTENT;
+                    displayState(now);
+                }
+                // this takes care of the quick double click
+                if (getTurnout().getCommandedState() == getTurnout().getKnownState()) {
+                    int now = ((Integer) e.getNewValue()).intValue();
+                    displayState(now);
+                }
+            }
+            if (e.getPropertyName().equals("KnownState")) {
+                int now = ((Integer) e.getNewValue()).intValue();
+                displayState(now);
+            }
+        }
+
+        public String getStateName(int state) {
+            return _state2nameMap.get(Integer.valueOf(state));
+        }
+
+        public void mouseExited(MouseEvent e) {
+            //typeLabel.setFocusable(false);
+            //typeLabel.transferFocus();
+            //super.mouseExited(e);
+        }
+
+        void cleanup() {
+            if (namedBean != null) {
+                getTurnout().removePropertyChangeListener(this);
+            }
+            if (typeLabel != null) {
+//            _comboBox.removeMouseMotionListener(this);
+                //typeLabel.removeMouseListener(this);
+                typeLabel = null;
+            }
+            namedBean = null;
+        }
+
+        public void setTristate(boolean set) {
+            tristate = set;
+        }
+
+        public boolean getTristate() {
+            return tristate;
+        }
+        private boolean tristate = false;
+
+        boolean momentary = false;
+
+        public boolean getMomentary() {
+            return momentary;
+        }
+
+        public void setMomentary(boolean m) {
+            momentary = m;
+        }
+
+        boolean directControl = false;
+
+        public boolean getDirectControl() {
+            return directControl;
+        }
+
+        public void setDirectControl(boolean m) {
+            directControl = m;
+        }
+
+        JCheckBoxMenuItem momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
+        JCheckBoxMenuItem directControlItem = new JCheckBoxMenuItem(Bundle.getMessage("DirectControl"));
+
+        /**
+         * Pop-up displays unique attributes of turnouts
+         */
+        public boolean showPopUp(JPopupMenu popup) {
+            if (isEditable()) {
+                // add tristate option if turnout has feedback
+                if (namedBean != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
+                    addTristateEntry(popup);
+                }
+
+                popup.add(momentaryItem);
+                momentaryItem.setSelected(getMomentary());
+                momentaryItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        setMomentary(momentaryItem.isSelected());
+                    }
+                });
+
+                popup.add(directControlItem);
+                directControlItem.setSelected(getDirectControl());
+                directControlItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        setDirectControl(directControlItem.isSelected());
+                    }
+                });
+            } else if (getDirectControl()) {
+                getTurnout().setCommandedState(jmri.Turnout.THROWN);
+            }
+            return true;
+        }
+
+        javax.swing.JCheckBoxMenuItem tristateItem = null;
+
+        void addTristateEntry(JPopupMenu popup) {
+            tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
+            tristateItem.setSelected(getTristate());
+            popup.add(tristateItem);
+            tristateItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setTristate(tristateItem.isSelected());
+                }
+            });
+        }
+
+    }
+/*    //Create and set up a colored label. In Grid
+    private JLabel createColoredLabel(String text,
+                                      Color color) {
+        JLabel label = new JLabel(text);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setOpaque(true);
+        label.setBackground(color);
+        label.setForeground(Color.black);
+        label.setBorder(BorderFactory.createLineBorder(Color.black));
+        label.setPreferredSize(new Dimension(140, 140));
+        return label;
+    }*/
+
+    // Create the control pane for the top of the frame.
+    // From layeredpane demo
+    private JPanel createControlPanel() {
+        JPanel controls = new JPanel();
 
         // navigation top row and to set range
         navBarPanel = new JPanel();
@@ -304,130 +758,13 @@ public class SwitchboardEditor extends Editor {
         });
         next.setToolTipText("Next");
         navBarPanel.add(Box.createHorizontalGlue());
-        //contentPane.add(Box.createVerticalGlue());
 
         //getTargetPane(name).switchboardLayeredPane.setBackgroundColor(Color.RED); // test
         // put on which Frame?
-        contentPane.add(navBarPanel); // on 2nd Editor Panel
+        controls.add(navBarPanel); // on 2nd Editor Panel
         //super.getTargetFrame().add(navBarPanel); // on (top of) Switchboard Frame/Panel
 
-        JPanel p1 = new JPanel();
-        JButton addButton = new JButton("Update Switchboard");
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                log.debug("Update clicked");
-                //super.getTargetFrame().addTurnoutButtonRange(rangeMin, rangeMax); // problem to redraw
-            }
-        });
-        p1.add(addButton);
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
-        contentPane.add(p1);
-
-        setupToolBar(); //re-layout all the toolbar items
-
-        // add LE style help bar
-        if (showHelpBar) {
-            //not sure why… but this is the only way I could
-            //get everything to layout correctly
-            //when the helpbar is visible…
-            boolean editMode = true; //editModeItem.isSelected();
-            setAllEditable(!editMode);
-            setAllEditable(editMode);
-        } else {
-            helpBarPanel.setVisible(isEditable() && showHelpBar);
-        }
-
-        pack();
-        setVisible(true);
-
-        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
-
-            @Override
-            public CatalogPanel doInBackground() {
-                return CatalogPanel.makeDefaultCatalog();
-            }
-        }
-        (new makeCatalog()).execute();
-        log.debug("Init SwingWorker launched");
-    }
-
-    private void addTurnoutButtonRange(int rangeMin, int rangeMax) {
-        for (int i = rangeMax; i >= rangeMin; i--) {
-            JButton beanButton = new JButton("LT " + i); // createColoredLabel(beanTypeStrings[i], layerColors[i]);
-            beanButton.setIcon(appslideOff);
-            beanButton.setPressedIcon(appslideOn);
-            final int _address = i;
-            final Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout("LT" + _address);
-            beanButton.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (turnout != null && turnout.getCommandedState() != Turnout.CLOSED) {
-                        // no need to set a state already set
-                        turnout.setCommandedState(Turnout.CLOSED);
-                        beanButton.setText("LT " + _address + ": C");
-                    } else if (turnout != null && turnout.getCommandedState() != Turnout.THROWN) {
-                        turnout.setCommandedState(Turnout.THROWN);
-                        beanButton.setText("LT " + _address + ": T");
-                    }
-                    log.debug("Button {} clicked", "LT" + _address);
-                }
-            });
-            if (turnout == null) {
-                beanButton.setEnabled(false);
-            }
-            //beanButton.addEventChangeListener(turnout);
-            switchboardLayeredPane.add(beanButton);
-        }
-    }
-
-    // Create and set up a colored label.
-    // From layeredpane demo
-/*    private JLabel createColoredLabel(String text,
-                                      Color color,
-                                      Point origin) {
-        JLabel label = new JLabel(text);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setOpaque(true);
-        label.setBackground(color);
-        label.setForeground(Color.black);
-        label.setBorder(BorderFactory.createLineBorder(Color.black));
-        label.setBounds(origin.x, origin.y, 140, 140);
-        return label;
-    }*/
-    //Create and set up a colored label. In Grid
-    private JLabel createColoredLabel(String text,
-                                      Color color) {
-        JLabel label = new JLabel(text);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setOpaque(true);
-        label.setBackground(color);
-        label.setForeground(Color.black);
-        label.setBorder(BorderFactory.createLineBorder(Color.black));
-        label.setPreferredSize(new Dimension(140, 140));
-        return label;
-    }
-
-    //Create the control pane for the top of the frame.
-    // From layeredpane demo
-    private JPanel createControlPanel() {
-        onTop = new JCheckBox("Top Position in Layer");
-        onTop.setSelected(true);
-        onTop.setActionCommand(ON_TOP_COMMAND);
-        onTop.addActionListener(this);
-
-        layerList = new JComboBox(beanTypeStrings);
-        layerList.setSelectedIndex(2);    //cyan layer
-        layerList.setActionCommand(LAYER_COMMAND);
-        layerList.addActionListener(this);
-
-        JPanel controls = new JPanel();
-        controls.add(layerList);
-        controls.add(onTop);
-        controls.setBorder(BorderFactory.createTitledBorder(
-                "Select the address range to display "));
+        controls.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRangeTitle")));
         return controls;
     }
 
@@ -441,63 +778,64 @@ public class SwitchboardEditor extends Editor {
             contentPane.remove(editToolBarContainer);
         }
 
-        if (helpBarPanel != null) {
-            contentPane.remove(helpBarPanel);
-        }
+//        if (helpBarPanel != null) {
+//            contentPane.remove(helpBarPanel);
+//        }
 
         editToolBarPanel = new JPanel();
         editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
 
-        JPanel outerBorderPanel = editToolBarPanel;
-        JPanel innerBorderPanel = editToolBarPanel;
+        //JPanel outerBorderPanel = editToolBarPanel;
+        //JPanel innerBorderPanel = editToolBarPanel;
 
-        Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
+        //Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
 
-        innerBorderPanel = new JPanel();
+        JPanel innerBorderPanel = new JPanel();
         innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
-        TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnout"));
-        innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
-        innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
-        innerBorderPanel.setBorder(innerTitleBorder);
-        innerBorderPanel.add(new JLabel ("Closed/Thrown"));
+        TitledBorder TitleBorder = BorderFactory.createTitledBorder("Help ");
+        innerBorderPanel.setBorder(TitleBorder);
+        innerBorderPanel.add(new JTextArea (Bundle.getMessage("Help1")));
+        if (!hideUnconnected()) {
+            innerBorderPanel.add(new JTextArea (Bundle.getMessage("Help2")));
+        }
+        contentPane.add(innerBorderPanel);
+        //Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 
-        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+//        //row 2
+//        JPanel hTop2Panel = new JPanel();
+//        hTop2Panel.setLayout(new BoxLayout(hTop2Panel, BoxLayout.LINE_AXIS));
+//        //Row 2 : Left Components
+//        JPanel hTop2Center = new JPanel(centerRowLayout);
+//        hTop2Center.add(turnoutNamePanel);
+//        hTop2Panel.add(hTop2Center);
 
-        //row 2
-        JPanel hTop2Panel = new JPanel();
-        hTop2Panel.setLayout(new BoxLayout(hTop2Panel, BoxLayout.LINE_AXIS));
-        //Row 2 : Left Components
-        JPanel hTop2Center = new JPanel(centerRowLayout);
-        hTop2Center.add(turnoutNamePanel);
-        hTop2Panel.add(hTop2Center);
-
-        innerBorderPanel.add(hTop2Panel);
-        outerBorderPanel.add(innerBorderPanel);
+        //innerBorderPanel.add(hTop2Panel);
+        //outerBorderPanel.add(innerBorderPanel);
 //        editToolBarPanel.add(outerBorderPanel);
 
         editToolBarScroll = new JScrollPane(editToolBarPanel);
         //width = screenDim.width;
-        height = editToolBarScroll.getPreferredSize().height;
+        height = 60; //editToolBarScroll.getPreferredSize().height;
         editToolBarContainer = new JPanel();
         editToolBarContainer.setLayout(new BoxLayout(editToolBarContainer, BoxLayout.PAGE_AXIS));
         editToolBarContainer.add(editToolBarScroll);
         editToolBarContainer.setMinimumSize(new Dimension(width, height));
         editToolBarContainer.setPreferredSize(new Dimension(width, height));
 
-        helpBarPanel = new JPanel();
-        helpBarPanel.add(helpBar);
-        for (Component c : helpBar.getComponents()) {
-            if (c instanceof JTextArea) {
-                JTextArea j = (JTextArea) c;
-                j.setSize(new Dimension(width, j.getSize().height));
-                j.setLineWrap(false);
-                j.setWrapStyleWord(false);
-            }
-        }
-        contentPane.setLayout(new BoxLayout(contentPane, false ? BoxLayout.LINE_AXIS : BoxLayout.PAGE_AXIS));
-        contentPane.add(editToolBarContainer);
-        contentPane.add(helpBarPanel);
-        helpBarPanel.setVisible(isEditable() && showHelpBar);
+//        helpBarPanel = new JPanel();
+//        helpBarPanel.add(helpBar);
+//        for (Component c : helpBar.getComponents()) {
+//            if (c instanceof JTextArea) {
+//                JTextArea j = (JTextArea) c;
+//                //j.setSize(new Dimension(width, j.getSize().height));
+//                j.setLineWrap(true);
+//                j.setWrapStyleWord(true);
+//            }
+//        }
+//        contentPane.setLayout(new BoxLayout(contentPane, false ? BoxLayout.LINE_AXIS : BoxLayout.PAGE_AXIS));
+//        contentPane.add(editToolBarContainer);
+//        contentPane.add(helpBarPanel);
+        //helpBarPanel.setVisible(isEditable() && showHelpBar);
     }
 
     //@Override
@@ -550,14 +888,14 @@ public class SwitchboardEditor extends Editor {
 //        _menuBar.add(_drawMenu, 0);
 //    }
 
-    public boolean getShapeSelect() {
-        return !_disableShapeSelection;
-    }
-
-    public void setShapeSelect(boolean set) {
-        _disableShapeSelection = !set;
-        disableShapeSelect.setSelected(_disableShapeSelection);
-    }
+//    public boolean getShapeSelect() {
+//        return !_disableShapeSelection;
+//    }
+//
+//    public void setShapeSelect(boolean set) {
+//        _disableShapeSelection = !set;
+//        disableShapeSelect.setSelected(_disableShapeSelection);
+//    }
 
     //public ShapeDrawer getShapeDrawer() {
 //        return _shapeDrawer;
@@ -585,7 +923,7 @@ public class SwitchboardEditor extends Editor {
             }
         });
         positionableBox.setSelected(allPositionable());
-        // controlable item
+        // controllable item
         _optionMenu.add(controllingBox);
         controllingBox.addActionListener(new ActionListener() {
             @Override
@@ -594,6 +932,15 @@ public class SwitchboardEditor extends Editor {
             }
         });
         controllingBox.setSelected(allControlling());
+        // hideUnconnected item
+        _optionMenu.add(hideUnconnectedBox);
+        hideUnconnectedBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                setHideUnconnected(hideUnconnectedBox.isSelected());
+            }
+        });
+        hideUnconnectedBox.setSelected(hideUnconnected());
         // hidden item
         _optionMenu.add(hiddenBox);
         hiddenBox.addActionListener(new ActionListener() {
@@ -689,18 +1036,6 @@ public class SwitchboardEditor extends Editor {
                 return this;
             }
         }.init(this));
-
-//        editItem = new JMenuItem(Bundle.getMessage("PEView"));
-//        _fileMenu.add(editItem);
-//        editItem.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                changeView("jmri.jmrit.display.panelEditor.PanelEditor");
-//                if (_itemPalette != null) {
-//                    _itemPalette.dispose();
-//                }
-//            }
-//        });
 
         _fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
@@ -961,6 +1296,20 @@ public class SwitchboardEditor extends Editor {
         } else {
             super.setTitle(name);
         }
+    }
+
+    /**
+     * Control whether target panel items without a connection to the layout
+     * are displayed.
+     *
+     * @param state true to hide all in range
+     */
+    public void setHideUnconnected(boolean state) {
+        _hideUnconnected = state;
+    }
+
+    public boolean hideUnconnected() {
+        return _hideUnconnected;
     }
 
     // all content loaded from file.
