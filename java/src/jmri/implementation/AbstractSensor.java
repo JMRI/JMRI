@@ -313,4 +313,27 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         return reporter;
     }
 
+    /**
+     * Set the pull resistance
+     * <p>
+     * In this default implementation, the input value is ignored.
+     *
+     * @param r PullResistance value to use.
+     */
+    @Override
+    public void setPullResistance(PullResistance r){
+    }
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.  In this default 
+     * impelmetnation, PullResistance.PULL_OFF is always returned.
+     */
+    @Override
+    public PullResistance getPullResistance(){
+       return PullResistance.PULL_OFF;
+    }
+
+
 }
