@@ -15,7 +15,6 @@ import java.util.UUID;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -326,17 +325,14 @@ public class FileUtilTest {
         Assert.assertNull(FileUtil.findExternalFilename(FileUtil.PROGRAM + this.preferencesTestFile.getName()));
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-        new File(FileUtil.getProfilePath()).mkdir();
-    }
-
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
-        this.preferencesTestFile = new File(FileUtil.getProfilePath() + UUID.randomUUID().toString());
+        File profile = new File(FileUtil.getProfilePath());
+        profile.mkdir();
+        this.preferencesTestFile = new File(profile, UUID.randomUUID().toString());
         this.preferencesTestFile.createNewFile();
     }
 
