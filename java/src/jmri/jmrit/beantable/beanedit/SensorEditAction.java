@@ -19,6 +19,7 @@ public class SensorEditAction extends BeanEditAction {
     } //IN18N
 
     SensorDebounceEditAction debounce;
+    SensorPullUpEditAction pullup;
 
     @Override
     protected void initPanels() {
@@ -26,6 +27,9 @@ public class SensorEditAction extends BeanEditAction {
         debounce = new SensorDebounceEditAction();
         debounce.setBean(bean);
         bei.add(debounce.sensorDebounce(null));
+        pullup = new SensorPullUpEditAction();
+        pullup.setBean(bean);
+        bei.add(pullup.sensorPullUp(null));
     }
 
     @Override
