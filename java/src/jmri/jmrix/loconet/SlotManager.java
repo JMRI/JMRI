@@ -44,10 +44,17 @@ import org.slf4j.LoggerFactory;
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
+    /**
+     * Time to wait after programming operation complete on LocoNet
+     * before reporting completion and hence starting next operation
+     */
+    int postProgDelay = 100;
+
     public SlotManager(LnTrafficController tc) {
         this.tc = tc;
-        // need a longer LONG_TIMEOUT for Fleischman command stations
-        LONG_TIMEOUT = 180000;
+        // change timeout values from AbstractProgrammer superclass
+        LONG_TIMEOUT = 180000;  // Fleischman command stations take forever
+        SHORT_TIMEOUT = 8000;   // DCS240 reads
 
         loadSlots();
 
@@ -55,7 +62,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         tc.addLocoNetListener(~0, this);
 
         // We will scan the slot table every 10 s for in-use slots that are stale
-        staleSlotCheckTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+        final int slotScanDelay = 10000; // 10 seconds; must be less than 90, see checkStaleSlots()
+        staleSlotCheckTimer = new javax.swing.Timer(slotScanDelay, new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkStaleSlots();
@@ -64,7 +72,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         );
 
         staleSlotCheckTimer.setRepeats(true);
-        staleSlotCheckTimer.setInitialDelay(30000);
+        staleSlotCheckTimer.setInitialDelay(3*slotScanDelay);  // wait a bit more at startup
         staleSlotCheckTimer.start();
     }
 
@@ -187,18 +195,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         tc.sendLocoNetMessage(m);
     }
 
+    javax.swing.Timer staleSlotCheckTimer = null;
+
     /**
-     * method to scan the slot array looking for slots that are in-use but have
+     * Scan the slot array looking for slots that are in-use but have
      * not had any updates in over 90s and issue a read slot request to update
      * their state as the command station may have purged or stopped updating
      * the slot without telling us via a LocoNet message.
-     *
+     * <p>
      * This is intended to be called from the staleSlotCheckTimer
      */
-    javax.swing.Timer staleSlotCheckTimer = null;
-
     private void checkStaleSlots() {
-        long staleTimeout = System.currentTimeMillis() - 90000;
+        long staleTimeout = System.currentTimeMillis() - 90000;  // 90 seconds ago
         LocoNetSlot slot;
 
         // We will just check the normal loco slots 1 to 120
@@ -533,15 +541,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     stopTimer();
                     // have to send this in a little while to 
                     // allow command station time to execute
-                    int delay = 100; // milliseconds
-                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                    javax.swing.Timer timer = new javax.swing.Timer(postProgDelay, new java.awt.event.ActionListener() {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
                         }
                     });
                     timer.stop();
-                    timer.setInitialDelay(delay);
+                    timer.setInitialDelay(postProgDelay);
                     timer.setRepeats(false);
                     timer.start();
                 }
