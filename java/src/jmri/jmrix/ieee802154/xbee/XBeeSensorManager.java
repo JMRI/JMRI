@@ -227,6 +227,20 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     }
 
+    /**
+     * Do the sensor objects provided by this manager support configuring
+     * an internal pullup or pull down resistor?
+     * <p>
+     * For Raspberry Pi systems, it is possible to set the pullup or
+     * pulldown resistor, so return true.
+     *
+     * @return true if pull up/pull down configuration is supported.
+     */
+    @Override
+    public boolean isPullResistanceConfigurable(){
+       return true;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());
 
 }

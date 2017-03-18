@@ -154,6 +154,35 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         return;
     }
 
+
+    private PullResistance pull = PullResistance.PULL_UP; // hardware default.
+
+    /**
+     * Set the pull resistance
+     * <p>
+     * In this default implementation, the input value is ignored.
+     *
+     * @param r PullResistance value to use.
+     */
+    @Override
+    public void setPullResistance(PullResistance r){
+       pull = r;
+       node.setPRParameter(pin,pull);
+
+    }
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.
+     */
+    @Override
+    public PullResistance getPullResistance(){
+       return pull;
+    }
+
+
+
     @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);

@@ -384,5 +384,17 @@ public class XBeeNode extends IEEE802154Node {
               "," + getIdentifier() + ")";
     }
 
+
+    /**
+     * Package protected method to set the PR (Pull Resistance) parameter of the     * node.
+     *
+     * @param pin the pin number to change.
+     * @param pr a jmri.Sensor.PullResistance value used to configure the pin.
+     */
+    void setPRParameter(int pin, jmri.Sensor.PullResistance pr){
+       // flip the bits in the PR data byte, and then send to the node.
+              
+    }
+
     private final static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());
 }
