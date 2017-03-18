@@ -119,13 +119,18 @@ public abstract class AbstractSensorMgrTestBase {
 
     @Test
     public void testRename() {
-        // get light
+        // get sensor
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
         Sensor t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
+    }
+
+    @Test
+    public void testPullResistanceConfigurable(){
+       Assert.assertFalse("Pull Resistance Configurable",l.isPullResistanceConfigurable());
     }
 
     /**
