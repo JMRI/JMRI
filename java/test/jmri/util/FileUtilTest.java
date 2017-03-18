@@ -24,7 +24,11 @@ import org.junit.Test;
  * / to the end of a portable directory name, and tests could fail if they
  * expect a file or non-existent filename and a directory exists at that path.
  *
- * @author	Bob Jacobsen Copyright 2003, 2009
+ * These tests should return the same results as
+ * {@link jmri.util.FileUtilSupportTest}.
+ *
+ * @author Bob Jacobsen Copyright 2003, 2009
+ * @author Randall Wood Copyright 2016, 2017
  */
 public class FileUtilTest {
 

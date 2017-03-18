@@ -1231,6 +1231,16 @@ public class FileUtilSupport extends Bean {
         this.copy(file, new File(dir, name + "." + i + extension));
     }
 
+    /**
+     * Get the default instance of a FileUtilSupport object.
+     *
+     * Unlike most implementations of getDefault(), this does not return an
+     * object held by {@link jmri.InstanceManager} due to the need for this
+     * default instance to be available prior to the creation of an
+     * InstanceManager.
+     *
+     * @return the default FileUtilSupport instance, creating it if necessary
+     */
     public static FileUtilSupport getDefault() {
         if (FileUtilSupport.defaultInstance == null) {
             FileUtilSupport.defaultInstance = new FileUtilSupport();
