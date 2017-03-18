@@ -39,6 +39,20 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
         return new RaspberryPiSensor(systemName, userName);
     }
 
+    /**
+     * Do the sensor objects provided by this manager support configuring
+     * an internal pullup or pull down resistor?
+     * <p>
+     * For Raspberry Pi systems, it is possible to set the pullup or 
+     * pulldown resistor, so return true.
+     *
+     * @return true if pull up/pull down configuration is supported.
+     */
+    @Override
+    public boolean isPullResistanceConfigurable(){
+       return true;
+    }
+
 }
 
 
