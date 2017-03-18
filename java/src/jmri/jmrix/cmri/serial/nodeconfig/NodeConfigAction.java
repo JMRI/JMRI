@@ -15,13 +15,13 @@ public class NodeConfigAction extends AbstractAction {
 
     CMRISystemConnectionMemo _memo = null;
 
-    public NodeConfigAction(String s,CMRISystemConnectionMemo memo) {
+    public NodeConfigAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public NodeConfigAction(CMRISystemConnectionMemo memo) {
-        this("Configure C/MRI Nodes",memo);
+        this("Configure C/MRI Nodes", memo);
     }
 
     @Override

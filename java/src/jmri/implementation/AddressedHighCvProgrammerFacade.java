@@ -107,9 +107,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
-            }
+            log.info("programmer already in use by {}", _usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
@@ -118,8 +116,23 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     }
 
     enum ProgState {
+        /** A pass-through operation, waiting reply, when done the entire operation is done */
+        PROGRAMMING, 
+        
+        /** Wrote 1st index on a read operation, waiting for reply */
+        WRITELOWREAD, 
 
-        PROGRAMMING, WRITELOWREAD, WRITELOWWRITE, FINISHREAD, FINISHWRITE, NOTPROGRAMMING
+        /** Wrote 1st index on a write operation, waiting for reply */
+        WRITELOWWRITE, 
+
+        /** Wrote 2nd index on a read operation, waiting for reply */
+        FINISHREAD, 
+
+        /** Wrote 2nd index on a write operation, waiting for reply */
+        FINISHWRITE, 
+        
+        /** nothing happening, no reply expected */
+        NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
 
@@ -131,8 +144,20 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
+        if (status != OK ) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+        
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {

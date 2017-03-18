@@ -178,6 +178,20 @@ public class ProxySensorManager extends AbstractProxyManager
         return Bundle.getMessage("BeanNameSensor");
     }
 
+    /**
+     * Do the sensor objects provided by this manager support configuring
+     * an internal pullup or pull down resistor?
+     * <p>
+     * Return false to satisfy the SensorManager interface.
+     *
+     * @return true if pull up/pull down configuration is supported.
+     */
+    @Override
+    public boolean isPullResistanceConfigurable(){
+       return false;
+    }
+
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
 }

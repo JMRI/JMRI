@@ -155,4 +155,70 @@ public interface Sensor extends NamedBean {
      */
     @CheckForNull
     public Reporter getReporter();
+
+    /*
+     * Some sensor types allow us to configure a pull up and/or pull down 
+     * resistor at runtime.  The PullResistance enum provides valid values
+     * for the pull resistance.  The short name is used in xml files.
+     */
+    public enum PullResistance {
+        PULL_UP("up","PullResistanceUp"), // NOI18N
+        PULL_DOWN("down","PullResistanceDown"), // NOI18N
+        PULL_OFF("off","PullResistanceOff"); // NOI18N
+
+        PullResistance(String shName, String peopleKey) {
+           this.shortName = shName;
+           this.peopleName = Bundle.getMessage(peopleKey);
+        }
+
+        String shortName;
+        String peopleName;
+
+        public String getShortName() {
+           return shortName;
+        }
+
+        public String getPeopleName() {
+           return peopleName;
+        }
+
+        static public PullResistance getByShortName(String shName) {
+            for (PullResistance p : PullResistance.values()) {
+                if (p.shortName.equals(shName)) {
+                    return p;
+                }
+            }
+            throw new java.lang.IllegalArgumentException("argument value " + shName + " not valid");
+        }
+
+        static public PullResistance getByPeopleName(String pName) {
+            for (PullResistance p : PullResistance.values()) {
+                if (p.peopleName.equals(pName)) {
+                    return p;
+                }
+            }
+            throw new java.lang.IllegalArgumentException("argument value " + pName + " not valid");
+        }
+ 
+       @Override
+       public String toString(){
+          return( peopleName );
+       }
+
+    }
+
+    /**
+     * Set the pull resistance
+     *
+     * @param r PullResistance value to use.
+     */
+    public void setPullResistance(PullResistance r);
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.
+     */
+    public PullResistance getPullResistance();
+
 }

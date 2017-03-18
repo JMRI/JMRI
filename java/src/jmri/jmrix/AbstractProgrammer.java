@@ -13,6 +13,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common implementations for the Programmer interface.
+ * <p>
+ * Contains two time-out handlers:
+ * <ul>
+ * <li> SHORT_TIMEOUT, the "short timer", is on operations other than reads
+ * <li> LONG_TIMEOUT, the "long timer", is for the "read from decoder" step, which can take a long time.
+ *</ul>
+ * The duration of these can be adjusted by changing the values of those constants in subclasses.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2012, 2013
  */
@@ -203,6 +210,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to start timer to protect the mode-change.
      */
     protected void startShortTimer() {
+        log.debug("startShortTimer");
         restartTimer(SHORT_TIMEOUT);
     }
 
@@ -210,6 +218,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to restart timer with a long delay
      */
     protected void startLongTimer() {
+        log.debug("startLongTimer");
         restartTimer(LONG_TIMEOUT);
     }
 
@@ -217,6 +226,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to stop timer, as all is well
      */
     protected synchronized void stopTimer() {
+        log.debug("stop timer");
         if (timer != null) {
             timer.stop();
         }
@@ -226,9 +236,8 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to handle timer starts {@literal &} restarts
      */
     protected synchronized void restartTimer(int delay) {
-        if (log.isDebugEnabled()) {
-            log.debug("restart timer with delay " + delay);
-        }
+        log.debug("(re)start timer with delay {}", delay);
+
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
                 @Override
