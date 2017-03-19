@@ -37,6 +37,7 @@
       <xs:attribute name="editable" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="positionable" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="controlling" type="yesNoType" default="yes"></xs:attribute>
+      <xs:attribute name="hideunconnected" type="yesNoType" default="no"></xs:attribute>
       <xs:attribute name="hide" type="yesNoType" default="no"></xs:attribute>
       <xs:attribute name="showcoordinates" type="yesNoType" default="no"></xs:attribute>
       <xs:attribute name="showtooltips" type="yesNoType" default="yes"></xs:attribute>

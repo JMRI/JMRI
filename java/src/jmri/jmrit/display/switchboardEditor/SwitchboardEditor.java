@@ -197,9 +197,19 @@ public class SwitchboardEditor extends Editor {
     private static String LAYER_COMMAND = "layer";
     private static String SWITCHTYPE_COMMAND = "switchtype";
 
+    private List<String> switchlist = new ArrayList<String>();
+
+    /**
+     * Ctor
+     */
     public SwitchboardEditor() {
     }
 
+    /**
+     * Ctor by a given name
+     *
+     * @param name title to assign to the new SwitchBoard
+     */
     public SwitchboardEditor(String name) {
         super(name, false, true);
         init(name);
@@ -232,9 +242,9 @@ public class SwitchboardEditor extends Editor {
                 Bundle.getMessage("SwitchboardTitle", "TO")));
         switchboardLayeredPane.addMouseMotionListener(this);
         //This is the origin of the first label added.
-        Point origin = new Point(10, 20);
+        //Point origin = new Point(10, 20);
         //This is the offset for computing the origin for the next label.
-        int offset = 35;
+        //int offset = 35;
         //Add several overlapping, colored labels to the layered pane
         //using absolute positioning/sizing.
 //        for (int i = 0; i < beanTypeStrings.length; i++) {
@@ -297,46 +307,39 @@ public class SwitchboardEditor extends Editor {
 
         add(createControlPanel());
 
-        JPanel p1 = new JPanel();
+        JPanel updatePanel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 log.debug("Update clicked");
-                switchboardLayeredPane.clear();
+                for (int i = switchlist.size() - 1; i > 0 ; i--) {
+                    switchboardLayeredPane.remove(i);
+                }
+                switchlist.clear(); // reset list
                 addSwitchRange(rangeMin, rangeMax, layerList.getSelectedItem().toString(), "Buttons");
+                pack();
             }
         });
-        p1.add(addButton);
+        updatePanel.add(addButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
-        contentPane.add(p1);
+        contentPane.add(updatePanel);
 
         setupToolBar(); //re-layout all the toolbar items
-
-        // add LE style help bar
-//        if (showHelpBar) {
-//            //not sure why… but this is the only way I could
-//            //get everything to layout correctly
-//            //when the helpbar is visible…
-//            boolean editMode = true; //editModeItem.isSelected();
-//            setAllEditable(!editMode);
-//            setAllEditable(editMode);
-//        } else {
-//            helpBarPanel.setVisible(isEditable() && showHelpBar);
-//        }
 
         pack();
         setVisible(true);
 
-        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
-
-            @Override
-            public CatalogPanel doInBackground() {
-                return CatalogPanel.makeDefaultCatalog();
-            }
-        }
-        (new makeCatalog()).execute();
-        log.debug("Init SwingWorker launched");
+        // TODO use an icon
+//        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
+//
+//            @Override
+//            public CatalogPanel doInBackground() {
+//                return CatalogPanel.makeDefaultCatalog();
+//            }
+//        }
+//        (new makeCatalog()).execute();
+//        log.debug("Init SwingWorker launched");
     }
 
     private void addSwitchRange(int rangeMin, int rangeMax, String beanType, String switchType) {
@@ -379,8 +382,9 @@ public class SwitchboardEditor extends Editor {
 //                    log.debug("Button {} clicked", "LT" + _address);
 //                }
 //            });
-            log.debug("Yes, button {}", i + "");
-            _switch.setText(name);
+            log.debug("Added switch {}", i + "");
+            //_switch.setText(name);
+            switchlist.add(name); // to count total number of switche on JLayeredPane
             if (nb == null) {
                 if(!hideUnconnected()) {
                     _switch.setEnabled(false);
@@ -389,7 +393,7 @@ public class SwitchboardEditor extends Editor {
             } else {
                 switchboardLayeredPane.add(_switch);
             }
-            //beanButton.addEventChangeListener(turnout);
+            //_switch.addEventChangeListener(turnout);
         }
     }
 
@@ -399,14 +403,14 @@ public class SwitchboardEditor extends Editor {
      */
     public class BeanSwitch extends JButton implements java.beans.PropertyChangeListener, ActionListener {
 
-        protected final JButton beanButton;
         protected HashMap<Integer, NamedIcon> _iconStateMap;          // state int to icon
         protected HashMap<String, Integer> _name2stateMap;       // name to state
         protected HashMap<Integer, String> _state2nameMap;       // state to name
 
-        private boolean connected = false;
-        protected String _type;
-        protected String _label;
+        private JButton beanButton;
+        private final boolean connected = false;
+        private final String _type;
+        private final String _label;
         protected JLabel typeLabel;
         protected boolean _text;
         protected boolean _icon = false;
@@ -453,7 +457,7 @@ public class SwitchboardEditor extends Editor {
                     if (bean != null && getTurnout().getCommandedState() != Turnout.CLOSED) {
                         // no need to set a state already set
                         getTurnout().setCommandedState(Turnout.CLOSED);
-                        beanButton.setText(name + ": C");
+                        beanButton.setText("C"); //(name + ": C");
                     } else if (bean != null && getTurnout().getCommandedState() != Turnout.THROWN) {
                         getTurnout().setCommandedState(Turnout.THROWN);
                         beanButton.setText(name + ": T");
@@ -461,6 +465,7 @@ public class SwitchboardEditor extends Editor {
                     log.debug("Button {} clicked", name);
                 }
             });
+            //setPopupUtility(new PositionablePopupUtil(this, this));
             if (bean == null) {
                 if(!hideUnconnected()) {
                     beanButton.setEnabled(false);
@@ -469,10 +474,17 @@ public class SwitchboardEditor extends Editor {
                 _control = true;
                 getTurnout().addPropertyChangeListener(this, name, "Panel Editor Turnout Icon");
             }
+            this.setToolTipText(name);
             // from finishClone
             setTristate(getTristate());
             setMomentary(getMomentary());
             setDirectControl(getDirectControl());
+            log.debug("There goes button {}", index + "");
+            //JPanel switchPane = new JPanel();
+            //switchPane.add(beanButton);
+            //beanButton.setPreferredSize(new Dimension(30, 20));
+            _text =  true;
+            this.add(beanButton);
             return;
         }
 
@@ -528,7 +540,8 @@ public class SwitchboardEditor extends Editor {
             } else {
                 log.debug("TO {} state: {}", _label, state + ""); //getNameString() +" displayState "+_state2nameMap.get(state));
                 if (isText()) {
-                    beanButton.setText(state + ""); //_state2nameMap.get(state));
+                    //beanButton.setText("C"); //(name + ": C");
+                    beanButton.setText(_label + ":" + state); //_state2nameMap.get(state));
                     //super.setText(_state2nameMap.get(state));
                 }
                 if (isIcon()) { // TODO
@@ -599,6 +612,7 @@ public class SwitchboardEditor extends Editor {
             if (e.getPropertyName().equals("KnownState")) {
                 int now = ((Integer) e.getNewValue()).intValue();
                 displayState(now);
+                log.debug("Turnout changed");
             }
         }
 
@@ -703,6 +717,33 @@ public class SwitchboardEditor extends Editor {
             });
         }
 
+        public void doMouseClicked(java.awt.event.MouseEvent e) {
+            //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
+            //    return;
+            //}
+            //if (e.isMetaDown() || e.isAltDown() || !buttonLive() || getMomentary()) {
+            //    return;
+            //}
+            //if (getDirectControl() && !isEditable()) {
+            //    getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+            //} else {
+                alternateOnClick();
+            //}
+        }
+
+        void alternateOnClick() {
+            if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
+            {
+                getTurnout().setCommandedState(jmri.Turnout.THROWN);
+            } else if (getTurnout().getKnownState() == jmri.Turnout.THROWN) {
+                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+            } else if (getTurnout().getCommandedState() == jmri.Turnout.CLOSED) {
+                getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
+            } else {
+                getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just force closed.
+            }
+        }
+
     }
 /*    //Create and set up a colored label. In Grid
     private JLabel createColoredLabel(String text,
@@ -740,7 +781,7 @@ public class SwitchboardEditor extends Editor {
             }
         });
         prev.setToolTipText("Previous");
-        navBarPanel.add(new JLabel ("Show from:"));
+        navBarPanel.add(new JLabel ("From:"));
         navBarPanel.add(minSpinner);
         navBarPanel.add(new JLabel ("to:"));
         navBarPanel.add(maxSpinner);
