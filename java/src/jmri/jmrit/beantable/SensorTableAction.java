@@ -377,7 +377,13 @@ public class SensorTableAction extends AbstractTableAction {
         a.showDebounce(showDebounceBox.isSelected());
     }
 
+    void showPullUpChanged() {
+        jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel) m;
+        a.showPullUp(showPullUpBox.isSelected());
+    }
+
     JCheckBox showDebounceBox = new JCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
+    JCheckBox showPullUpBox = new JCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
 
     @Override
     public void addToFrame(BeanTableFrame f) {
@@ -389,6 +395,15 @@ public class SensorTableAction extends AbstractTableAction {
                 showDebounceChanged();
             }
         });
+        f.addToBottomBox(showPullUpBox, this.getClass().getName());
+        showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
+        showPullUpBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPullUpChanged();
+            }
+        });
+        showPullUpBox.setVisible(true);
     }
 
     @Override
@@ -404,6 +419,14 @@ public class SensorTableAction extends AbstractTableAction {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showDebounceChanged();
+            }
+        });
+        f.addToBottomBox(showPullUpBox, systemPrefix); 
+        showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
+        showPullUpBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showPullUpChanged();
             }
         });
     }

@@ -260,6 +260,11 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         finishRecord();
     }
 
+    @Override
+    public String toString() {
+        return getLocoAddress().toString();
+    }
+
     //Might need to look at other packets from handsets to see if they also have control of our loco and adjust from that.
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     @Override

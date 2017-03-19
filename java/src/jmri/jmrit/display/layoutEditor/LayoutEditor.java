@@ -1158,7 +1158,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if (isEditable() && floatingEditToolBox == null) {
                 //Create the window and add the toolbox content
-                floatingEditToolBox = new JmriJFrame("ToolBox: " + layoutName); // TODO - Bundle
+                floatingEditToolBox = new JmriJFrame(Bundle.getMessage("ToolBox", layoutName));
                 floatingEditToolBox.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 floatingEditToolBox.setContentPane(floatingEditContent);
                 floatingEditToolBox.pack();
@@ -1242,7 +1242,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.   add(turnoutGroup5);
 
         floatEditTurnout.   add(blockPropertiesPanel);
-        floatEditTabsPane.addTab("Turnouts", null, floatEditTurnout, null); //TODO - Bundle
+        floatEditTabsPane.addTab(Bundle.getMessage("TabTurnout"), null, floatEditTurnout, null);
 
         //Tab 1 - Track
         JPanel floatEditTrack = new JPanel();
@@ -1263,7 +1263,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         trackGroup3.add(trackSegmentPropertiesPanel);
         floatEditTrack.add(trackGroup3);
 
-        floatEditTabsPane.addTab("Track", null, floatEditTrack, null);  //TODO - Bundle
+        floatEditTabsPane.addTab(Bundle.getMessage("TabTrack"), null, floatEditTrack, null);
 
         //Tab 2 - Labels
         JPanel floatEditLabel = new JPanel();
@@ -1284,7 +1284,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         labelGroup3.add(blockContentsComboBox);
         floatEditLabel.add(labelGroup3);
 
-        floatEditTabsPane.addTab("Labels", null, floatEditLabel, null); //TODO - Bundle
+        floatEditTabsPane.addTab(Bundle.getMessage("TabLabel"), null, floatEditLabel, null);
 
         //Tab 3 - Icons
         JPanel floatEditIcon = new JPanel();
@@ -1314,7 +1314,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         iconGroup5.add(iconLabelButton);
         floatEditIcon.add(iconGroup5);
 
-        floatEditTabsPane.addTab("Icons", null, floatEditIcon, null);   //TODO - Bundle
+        floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
         floatEditTabsPanel.add(floatEditTabsPane);
         floatingEditPanel.add(floatEditTabsPanel);
 
@@ -2510,15 +2510,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     if (focusedComponent instanceof JmriBeanComboBox) {
                         JmriBeanComboBox focusedJBCB = (JmriBeanComboBox) focusedComponent;
 
-    //now try to get a preference specific to this combobox
+                        //now try to get a preference specific to this combobox
                         String ttt = focusedJBCB.getToolTipText();
 
                         if (null != ttt) {
-    //change the name of the preference based on the tool tip text
+                            //change the name of the preference based on the tool tip text
                             ddldoPrefName = ddldoPrefName + "." + ttt;
                         }
 
-    //now set the combo box display order
+                        //now set the combo box display order
                         focusedJBCB.setDisplayOrder(ddldo);
                     }
 
@@ -3133,28 +3133,33 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
 
                     if (null != ddldoProp) {
-    //this will be the value if this combo box doesn't have a saved preference.
+                         //this will be the value if this combo box doesn't have a saved preference.
                         ddldoPref = ddldoProp.toString();
                     } else {
-    //save a default preference
+                        //save a default preference
                         prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
                     }
+
                     //now try to get a preference specific to this combobox
+
                     JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
-                    String ttt = jbcb.getToolTipText();
+                    if (inComponent instanceof JTextField) {
+                        jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(jbcb);
+                    }
 
-                    if (null != ttt) {
-    //change the name of the preference based on the tool tip text
-                        ddldoPrefName = ddldoPrefName + "." + ttt;
-
-                        //try to get the preference
-                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-
-                        if (null != ddldoProp) {                //if we found it…
-                            ddldoPref = ddldoProp.toString();   //get it's (string value
-                        } else {                                //…otherwise…
-                                                                //save it in the users preferences
-                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                    if (jbcb instanceof JmriBeanComboBox) {
+                        String ttt = jbcb.getToolTipText();
+                        if (null != ttt) {
+                            //change the name of the preference based on the tool tip text
+                            ddldoPrefName = ddldoPrefName + "." + ttt;
+                            //try to get the preference
+                            ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
+                            if (null != ddldoProp) {                //if we found it…
+                                ddldoPref = ddldoProp.toString();   //get it's (string value
+                            } else {    //…otherwise…
+                                        //save it in the users preferences
+                                prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
+                            }
                         }
                     }
 

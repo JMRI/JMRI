@@ -121,7 +121,7 @@
           <text>Braking Configuration</text>
           <text xml:lang="de">Bremseinstellungen</text>
           <text xml:lang="cs">Konfigurace brždění</text>
-          <text xml:lang="ca">Configuració de la Frenada</text>
+          <text xml:lang="cs">Configuració de la Frenada</text>
         </label>
         <display item="Constant Braking"/>
         <display item="ABC"/>
@@ -179,7 +179,7 @@
           <text xml:lang="it">Nota: frenata costante funziona solo se è abilitata l'inerzia e non in velocità da manovra</text>
           <text xml:lang="de">Hinweis: Konstanter Bremsweg funktioniert nur wenn "Anfahr- / Bremsverzögerung" eingeschaltet und der Rangiergang ausgeschaltet ist.</text>
           <text xml:lang="cs">Tip: Konstantní brzdná dráha funguje pouze tehdy, když je zpřístupněno zrychlení/zpomalení, a není zapnut posun</text>
-		  <text xml:lang="ca">Nota: La frenada constant només funciona amb inèrcia connectada i sense marxa de maniobres</text>
+          <text xml:lang="ca">Nota: La frenada constant només funciona amb inèrcia connectada i sense marxa de maniobres</text>
         </label>
         <label>
           <text> </text>
