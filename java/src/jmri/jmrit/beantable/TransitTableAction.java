@@ -68,7 +68,9 @@ public class TransitTableAction extends AbstractTableAction {
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
-     * resulting frame. Perhaps this should be changed? @param actionName
+     * resulting frame. Perhaps this should be changed?
+     *
+     * @param actionName action title
      */
     public TransitTableAction(String actionName) {
         super(actionName);
@@ -1993,7 +1995,7 @@ public class TransitTableAction extends AbstractTableAction {
         SignalHead sh = null;
         sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(sName);
         if (sm == null) {
-            sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sName);            
+            sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(sName);
         }
         if (sm == null && sh == null) {
             // There is no signal corresponding to this name
@@ -2271,11 +2273,11 @@ public class TransitTableAction extends AbstractTableAction {
         tsa.dispose();
         actionTableModel.fireTableDataChanged();
     }
+
     /*
      * Notes: For the following, r = row in the Special Actions table.
      *        A TransitSectionAction must be available for this row.
      */
-
     private String getWhenText(int r) {
         TransitSectionAction tsa = action[activeRow].get(r);
         switch (tsa.getWhenCode()) {
@@ -2334,11 +2336,11 @@ public class TransitTableAction extends AbstractTableAction {
         }
         return "WHEN";
     }
+
     /*
      * Notes: For the following, r = row in the Special Actions table.
      *        A TransitSectionAction must be available for this row.
      */
-
     private String getWhatText(int r) {
         TransitSectionAction tsa = action[activeRow].get(r);
         switch (tsa.getWhatCode()) {

@@ -100,6 +100,11 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
         Assert.assertTrue(null == t1.getUserName());
     }
 
+    @Override
+    @Test
+    public void testPullResistanceConfigurable(){
+       Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+    }
 
     @Override
     @Before
