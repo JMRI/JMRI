@@ -57,6 +57,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
         panel.setAttribute("scrollable", p.getScrollable());
+        panel.setAttribute("rangemin", "" + p.getPanelMenuRangeMin());
+        panel.setAttribute("rangemax", "" + p.getPanelMenuRangeMax());
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
             panel.setAttribute("greenBackground", "" + p.getBackgroundColor().getGreen());
@@ -106,6 +108,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int y = 0;
         int height = 400;
         int width = 300;
+        int rangemin = 1;
+        int rangemax = 32;
         try {
             x = shared.getAttribute("x").getIntValue();
             y = shared.getAttribute("y").getIntValue();
@@ -133,10 +137,11 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         panel.setTitle();
 
-        // Load editor option flags. This has to be done before the content 
-        // items are loaded, to preserve the individual item settings
+        // Load editor option flags. This has to be done before the content
+        // items are loaded, to preserve the individual item settings.
         Attribute a;
         boolean value = true;
+
         if ((a = shared.getAttribute("editable")) != null && a.getValue().equals("no")) {
             value = false;
         }
@@ -188,6 +193,16 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             state = a.getValue();
         }
         panel.setScroll(state);
+
+        try {
+            rangemin = shared.getAttribute("rangemin").getIntValue();
+            rangemax = shared.getAttribute("rangemax").getIntValue();
+        } catch (org.jdom2.DataConversionException e) {
+            log.error("failed to convert Switchboard's attribute");
+            result = false;
+        }
+        panel.setPanelMenuRangeMin(rangemin);
+        panel.setPanelMenuRangeMax(rangemax);
 
         // set color if needed
         try {
