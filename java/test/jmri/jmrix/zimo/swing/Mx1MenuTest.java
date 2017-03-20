@@ -45,16 +45,6 @@ public class Mx1MenuTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1ComponentFactoryTest.class.getName());
-
-    }
-
-    @After
-    public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
-    }
-
     private final static Logger log = LoggerFactory.getLogger(Mx1MenuTest.class.getName());
 
 }
