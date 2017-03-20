@@ -38,7 +38,7 @@ public class Mx1ProgrammerManagerTest {
            }
         };
         memo = new Mx1SystemConnectionMemo(tc);
-        programmer = new Programmer(tc);
+        programmer = new Mx1Programmer(tc);
     }
 
     @After

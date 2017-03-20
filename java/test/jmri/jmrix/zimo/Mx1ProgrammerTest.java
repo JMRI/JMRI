@@ -35,7 +35,7 @@ public class Mx1ProgrammerTest {
            public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
            }
         };
-        programmer = new Programmer(tc);
+        programmer = new Mx1Programmer(tc);
     }
 
     @After

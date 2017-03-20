@@ -18,7 +18,7 @@ public class Mx1TurnoutManagerTest {
 
     @Test
     public void testCTor() {
-        Mx1TurnoutManager t = new Mx1TurnoutManager();
+        Mx1TurnoutManager t = new Mx1TurnoutManager(tc);
         Assert.assertNotNull("exists",t);
     }
 

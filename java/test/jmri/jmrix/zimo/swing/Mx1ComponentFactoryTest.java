@@ -7,8 +7,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.Mx1SystemConnectionMemo;
-import jmri.jmrix.Mx1TrafficController;
+import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
+import jmri.jmrix.zimo.Mx1TrafficController;
 
 /**
  *
