@@ -29,6 +29,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.zimo.swing.packetgen.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.zimo.swing.monitor.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1ComponentFactoryTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(Mx1MenuTest.class));
 
         return suite;
     }
