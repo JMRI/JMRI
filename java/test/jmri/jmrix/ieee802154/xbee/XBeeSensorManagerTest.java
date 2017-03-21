@@ -79,6 +79,12 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertTrue(null == t1.getUserName());
     }
 
+    @Override
+    @Test
+    public void testPullResistanceConfigurable(){
+       Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+    }
+
 
 
     // The minimal setup for log4J
