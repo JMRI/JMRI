@@ -1,4 +1,4 @@
-package jmri.jmrix.loconet.locostats;
+package jmri.jmrix.loconet.locostats.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;

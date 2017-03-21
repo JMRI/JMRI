@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.locostats;
 
+import jmri.jmrix.loconet.locostats.swing.LocoStatsPanel;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
