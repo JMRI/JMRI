@@ -44,6 +44,16 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         if (p.getShowCvNums()) {
             programmer.setAttribute("showCvNumbers", "yes");
         }
+        if (jmri.jmrix.AbstractProgrammerFacade.isCanCacheDefault()) {
+            programmer.setAttribute("canCacheDefault", "yes");
+        } else {
+            programmer.setAttribute("canCacheDefault", "no");
+        }
+        if (jmri.jmrix.AbstractProgrammerFacade.isDoConfirmRead()) {
+            programmer.setAttribute("doConfirmRead", "yes");
+        } else {
+            programmer.setAttribute("doConfirmRead", "no");
+        }
         programmer.setAttribute("class", this.getClass().getName());
         return programmer;
     }
@@ -65,6 +75,12 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         }
         if (null != (a = shared.getAttribute("showCvNumbers"))) {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(a.getValue().equals("yes"));
+        }
+        if (null != (a = shared.getAttribute("canCacheDefault"))) {
+            jmri.jmrix.AbstractProgrammerFacade.setCanCacheDefault(a.getValue().equals("yes"));
+        }
+        if (null != (a = shared.getAttribute("doConfirmRead"))) {
+            jmri.jmrix.AbstractProgrammerFacade.setDoConfirmRead(a.getValue().equals("yes"));
         }
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
