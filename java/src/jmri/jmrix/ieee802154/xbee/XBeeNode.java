@@ -385,15 +385,162 @@ public class XBeeNode extends IEEE802154Node {
     }
 
 
+    private byte PRValue[] = null;
+
     /**
      * Package protected method to set the PR (Pull Resistance) parameter of the     * node.
      *
      * @param pin the pin number to change.
      * @param pr a jmri.Sensor.PullResistance value used to configure the pin.
      */
-    void setPRParameter(int pin, jmri.Sensor.PullResistance pr){
+    synchronized void setPRParameter(int pin, jmri.Sensor.PullResistance pr) throws TimeoutException,XBeeException {
        // flip the bits in the PR data byte, and then send to the node.
-              
+       if(pin>7 || pin < 0){
+          throw new IllegalArgumentException("Invalid pin specified");
+       }
+       // always try to get the PR value when writing.
+       PRValue = device.getParameter("PR");
+       switch(pin){
+       case 0:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] | 0x01);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & 0xFE);
+           }
+           break;
+       case 1:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] | 0x02);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & 0xFD);
+           }
+           break;
+       case 2:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] | 0x04);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & 0xFB);
+           }
+           break;
+       case 3:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] | 0x08);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & 0xF7);
+           }
+           break;
+       case 4:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] | 0x10);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & 0xEF);
+           }
+           break;
+       case 5:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] | 0x20);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & 0xDF);
+           }
+           break;
+       case 6:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] | 0x40);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & 0xBF);
+           }
+           break;
+       case 7:
+           if(pr==jmri.Sensor.PullResistance.PULL_UP) {
+             PRValue[0]=(byte) (PRValue[0] |  (byte) 0x80);
+           } else {
+             PRValue[0]=(byte) (PRValue[0] & (byte) 0x7F);
+           }
+       }
+       device.setParameter("PR",PRValue);
+       device.applyChanges();  // force the XBee to start using the new value.
+                               // we may also want to use writeChanges to set
+                               // the value on the device perminantly.
+    }
+
+   /**
+    * Package protected method to check to see if the PR parameter indicates 
+    * the specified pin has the pull-up resistor enabled.
+    *
+    * @param pin the pin number
+    * @return a jmri.Sensor.PullResistance value indicating the current state of    * the pullup resistor. 
+    */
+    synchronized jmri.Sensor.PullResistance getPRValueForPin(int pin) throws TimeoutException,XBeeException {
+       if(pin>7 || pin < 0){
+          throw new IllegalArgumentException("Invalid pin specified");
+       }
+       // when reading, used the cached PRValue, if it is available
+       if(PRValue == null){ 
+          PRValue = device.getParameter("PR");
+       }
+       byte prbyte = PRValue[0]; 
+       jmri.Sensor.PullResistance retval = jmri.Sensor.PullResistance.PULL_OFF;
+       switch(pin){
+       case 0:
+           if((prbyte & 0x01)==0x01){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 1:
+           if((prbyte & 0x02)==0x02){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 2:
+           if((prbyte & 0x04)==0x04){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 3:
+           if((prbyte & 0x08)==0x08){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 4:
+           if((prbyte & 0x10)==0x10){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 5:
+           if((prbyte & 0x20)==0x20){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 6:
+           if((prbyte & 0x40)==0x40){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       case 7:
+           if((prbyte & 0x80)==0x80){
+              retval = jmri.Sensor.PullResistance.PULL_UP;
+           } else {
+              retval = jmri.Sensor.PullResistance.PULL_OFF;
+           }
+           break;
+       default: 
+          retval = jmri.Sensor.PullResistance.PULL_OFF;
+       }
+       return retval;
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeNode.class.getName());

@@ -155,8 +155,6 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     }
 
 
-    private PullResistance pull = PullResistance.PULL_UP; // hardware default.
-
     /**
      * Set the pull resistance
      * <p>
@@ -166,9 +164,13 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
      */
     @Override
     public void setPullResistance(PullResistance r){
-       pull = r;
-       node.setPRParameter(pin,pull);
-
+       try { 
+          node.setPRParameter(pin,r);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
     }
 
     /**
@@ -178,7 +180,14 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
      */
     @Override
     public PullResistance getPullResistance(){
-       return pull;
+       try {
+          return node.getPRValueForPin(pin);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
+       return PullResistance.PULL_UP; // return the default if we get this far.
     }
 
 
