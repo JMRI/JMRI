@@ -41,8 +41,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         this.addrCVlow = Integer.parseInt(addrCVlow);
         this.valueCV = Integer.parseInt(valueCV);
         this.modulo = Integer.parseInt(modulo);
-        progCanRead = prog.getCanRead();
-        progCanWrite = prog.getCanWrite();
+        _prog = prog;
         log.debug("Created with " + prog + ", " + this.top + ", " + this.addrCVhigh + ", " + this.addrCVlow + ", " + this.valueCV + ", " + this.modulo);
     }
 
@@ -51,8 +50,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     int addrCVlow;
     int valueCV;
     int modulo;
-    boolean progCanRead;
-    boolean progCanWrite;
+    Programmer _prog;
 
     // members for handling the programmer interface
     int _val;	// remember the value being read/written for confirmative reply
@@ -226,22 +224,22 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     // Access to full address space provided by this.
     @Override
     public boolean getCanRead() {
-        return progCanRead;
+        return _prog.getCanRead();
     }
 
     @Override
     public boolean getCanRead(String addr) {
-        return progCanRead && (Integer.parseInt(addr) <= 1024);
+        return _prog.getCanRead() && (Integer.parseInt(addr) <= 1024);
     }
 
     @Override
     public boolean getCanWrite() {
-        return progCanWrite;
+        return _prog.getCanWrite();
     }
 
     @Override
     public boolean getCanWrite(String addr) {
-        return progCanWrite && (Integer.parseInt(addr) <= 1024);
+        return _prog.getCanWrite() && (Integer.parseInt(addr) <= 1024);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());
