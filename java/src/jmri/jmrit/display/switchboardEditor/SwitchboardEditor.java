@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import jmri.util.ConnectionNameFromSystemName;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -61,6 +62,8 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean;
 import jmri.Light;
+import jmri.LightManager;
+import jmri.Manager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.CatalogPanel;
@@ -170,6 +173,7 @@ public class SwitchboardEditor extends Editor {
             Bundle.getMessage("BeanNameSensor"),
             Bundle.getMessage("BeanNameLight")
     };
+    private char beanTypeChar;
     private Color[] layerColors = { Color.yellow, Color.magenta,
             Color.cyan, Color.red, Color.green };
     private JComboBox switchTypeList;
@@ -178,9 +182,12 @@ public class SwitchboardEditor extends Editor {
             Bundle.getMessage("Icon"),
             Bundle.getMessage("Drawing")
     };
+    private List<String> beanManuPrefixes = new ArrayList<String>();
+    private JComboBox beanManuNames;
     //Action commands
     private static String HIDE_COMMAND = "hideUnconnected";
     private static String LAYER_COMMAND = "layer";
+    private static String MANU_COMMAND = "manufacturer";
     private static String SWITCHTYPE_COMMAND = "switchtype";
 
     private List<String> switchlist = new ArrayList<String>();
@@ -227,34 +234,54 @@ public class SwitchboardEditor extends Editor {
         switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(
                 Bundle.getMessage("SwitchboardTitle", "TO")));
         switchboardLayeredPane.addMouseMotionListener(this);
-        //This is the origin of the first label added.
-        //Point origin = new Point(10, 20);
-        //This is the offset for computing the origin for the next label.
-        //int offset = 35;
-        //Add several overlapping, colored labels to the layered pane
-        //using absolute positioning/sizing.
-//        for (int i = 0; i < beanTypeStrings.length; i++) {
-//            JLabel label = createColoredLabel(beanTypeStrings[i],
-//                    layerColors[i], origin);
-//            switchboardLayeredPane.add(label, new Integer(i));
-//            origin.x += offset;
-//            origin.y += offset;
-//        }
 
         //Add control pane and layered pane to this JPanel.
-        JPanel beanTypePane = new JPanel();
+        JPanel beanSetupPane = new JPanel();
+        beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel("Bean type:");
-        beanTypePane.add(beanTypeTitle);
+        beanSetupPane.add(beanTypeTitle);
         layerList = new JComboBox(beanTypeStrings);
         layerList.setSelectedIndex(0);    //Turnout
         layerList.setActionCommand(LAYER_COMMAND);
         layerList.addActionListener(this);
-        beanTypePane.add(layerList);
-        add(beanTypePane);
+        beanSetupPane.add(layerList);
+        add(beanSetupPane);
+
+        //Add connection selection comboBox.
+        beanTypeChar = layerList.getSelectedItem().toString().charAt(0);
+        JLabel beanManuTitle = new JLabel("Connection:");
+        beanSetupPane.add(beanManuTitle);
+        beanManuNames = new JComboBox();
+        if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // from abstractTableTabAction
+            jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager(beanTypeChar);
+            List<jmri.Manager> managerList = proxy.getManagerList();
+            //beanManuList.addItem(Bundle.getMessage("All")); // NOI18N
+            for (int x = 0; x < managerList.size(); x++) {
+                String manuPrefix = managerList.get(x).getSystemPrefix();
+                log.debug("Prefix = [{}]", manuPrefix);
+                String manuName = ConnectionNameFromSystemName.getConnectionName(manuPrefix);
+                log.debug("Connection name = [{}]", manuName);
+                beanManuNames.addItem(manuName); // add to comboBox
+                beanManuPrefixes.add(manuPrefix); // add to list
+            }
+        } else {
+            String manuPrefix = getManager(beanTypeChar).getSystemPrefix();
+            String manuName = ConnectionNameFromSystemName.getConnectionName(manuPrefix);
+            beanManuNames.addItem(manuName);
+            beanManuPrefixes.add(manuPrefix); // add to list (as only item)
+        }
+        beanManuNames.setSelectedIndex(0);
+        beanManuNames.setActionCommand(MANU_COMMAND);
+        beanManuNames.addActionListener(this);
+        beanSetupPane.add(beanManuNames);
+        add(beanSetupPane);
 
         //Add the buttons to the layered pane.
         switchboardLayeredPane.setLayout(new GridLayout(8,4)); // vertical, horizontal
-        addSwitchRange(rangeMin, rangeMax, layerList.getSelectedItem().toString(), 0);
+        addSwitchRange(rangeMin, rangeMax,
+                layerList.getSelectedItem().toString(),
+                beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
+                0);
 
         JPanel switchTypePane = new JPanel();
         JLabel switchTypeTitle = new JLabel("Switch shape:");
@@ -299,7 +326,10 @@ public class SwitchboardEditor extends Editor {
                     switchboardLayeredPane.remove(i);
                 }
                 switchlist.clear(); // reset list
-                addSwitchRange(rangeMin, rangeMax, layerList.getSelectedItem().toString(), switchTypeList.getSelectedIndex());
+                addSwitchRange(rangeMin, rangeMax,
+                        layerList.getSelectedItem().toString(),
+                        beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
+                        switchTypeList.getSelectedIndex());
                 pack();
             }
         });
@@ -324,23 +354,25 @@ public class SwitchboardEditor extends Editor {
 //        log.debug("Init SwingWorker launched");
     }
 
-    private void addSwitchRange(int rangeMin, int rangeMax, String beanType, int switchType) {
+    private void addSwitchRange(int rangeMin, int rangeMax, String beanType, String manuPrefix, int switchType) {
         log.debug("hideUnconnected = {}", hideUnconnected());
         String name = "";
         BeanSwitch _switch;
         NamedBean nb = null;
+        String _manu = manuPrefix; // cannot use All
         for (int i = rangeMin; i <= rangeMax; i++) {
             switch (beanType) {
                 case "Turnout":
-                    name = "LT" + i;
+                    //_manu = turnoutManager.getSystemPrefix();
+                    name = _manu + "T" + i;
                     nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
                     break;
                 case "Sensor":
-                    name = "LS" + i;
+                    name = _manu + "S" + i;
                     nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
                     break;
                 case "Light":
-                    name = "LL" + i;
+                    name = _manu + "L" + i;
                     nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
                     break;
             }
@@ -384,12 +416,14 @@ public class SwitchboardEditor extends Editor {
         private NamedBeanHandle<?> namedBean = null; // could be Turnout, Sensor or Light
         protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
         private JLabel PicLabel;
+        private char beanTypeChar;
+        private char beanManuChar;
 
         /**
          * Ctor
          * @param index DCC address
          * @param bean layout object type to connect to
-         * @param name descriptive name to display in switch tooltip
+         * @param name descriptive name corresponding with system name to display in switch tooltip, i.e. LT1
          * @param type Button, Icon (static) or Drawing (vector graphics)
          */
         public BeanSwitch(@Nonnull int index, NamedBean bean, String name, int type) {
@@ -402,6 +436,9 @@ public class SwitchboardEditor extends Editor {
             } else {
                 _type = 0;
             }
+            beanManuChar = _label.charAt(0); // connection/manufacturer i.e. M for MERG
+            beanTypeChar = _label.charAt(1); // bean type, i.e. L
+            log.debug("beanconnect = {}, beantype = {}", beanManuChar, beanTypeChar);
             switch (_type) {
                 case 2:
                     log.debug("create Image");
@@ -448,9 +485,7 @@ public class SwitchboardEditor extends Editor {
                 }
             } else {
                 _control = true;
-                char beanTypeLetter = _label.charAt(1);
-                log.debug("beantype = {}", beanTypeLetter);
-                switch (beanTypeLetter) {
+                switch (beanTypeChar) {
                     case 'T':
                         getTurnout().addPropertyChangeListener(this, _label, "Switchboard Editor Turnout Switch");
                         break;
@@ -467,7 +502,7 @@ public class SwitchboardEditor extends Editor {
             setTristate(getTristate());
             setMomentary(getMomentary());
             setDirectControl(getDirectControl());
-            log.debug("There goes button {}", index + "");
+            log.debug("Created button {}", index + "");
             return;
         }
 
@@ -509,19 +544,6 @@ public class SwitchboardEditor extends Editor {
         }
 
         public String getNameString() {
-//            String name;
-//            // TODO add switch for light, sensor, turnout
-//            if (namedBean == null) {
-//                name = Bundle.getMessage("NotConnected");
-//            } else if (getTurnout().getUserName() != null) {
-//                name = getTurnout().getUserName() + " (" + getTurnout().getSystemName() + ")";
-//            } else if (getSensor().getUserName() != null) {
-//                name = getSensor().getUserName() + " (" + getSensor().getSystemName() + ")";
-//            } else if (getLight().getUserName() != null) {
-//                name = getLight().getUserName() + " (" + getLight().getSystemName() + ")";
-//            } else {
-//                name = "not found"; //getTurnout().getSystemName();
-//            }
             return _label;
         }
 
@@ -1448,6 +1470,16 @@ public class SwitchboardEditor extends Editor {
     protected void copyItem(Positionable p) {
     };
 
+    protected Manager getManager(char typeChar) {
+        switch (typeChar) {
+            case 'T':
+                return InstanceManager.turnoutManagerInstance();
+            case 'S':
+                return InstanceManager.sensorManagerInstance();
+            default: // Light
+                return InstanceManager.lightManagerInstance();
+        }
+    }
     /**
      * ********* KeyListener of Editor ********
      */
