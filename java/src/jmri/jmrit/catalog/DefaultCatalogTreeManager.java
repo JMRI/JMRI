@@ -133,6 +133,10 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
      *   TX... - index for script files stored in XML config file
      *   NX... - index for files stored in XML config file
      * </PRE>
+     *
+     * @param systemName system name for catalog tree
+     * @param userName   user name for catalog tree
+     * @return the new catalog tree or null if unable to create
      */
     protected CatalogTree createNewCatalogTree(String systemName, String userName) {
         if (systemName == null || systemName.length() == 0) {
@@ -154,7 +158,7 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
                     log.error("Bad systemName: " + systemName + " (userName= " + userName + ")");
             }
         } else if (systemName.charAt(1) == CatalogTree.FILESYS) {
-            CatalogTreeFS catTree = null;
+            CatalogTreeFS catTree;
             switch (systemName.charAt(0)) {
                 case CatalogTree.IMAGE:
                     catTree = new CatalogTreeFS(systemName, userName);
@@ -192,5 +196,3 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class.getName());
 }
-
-
