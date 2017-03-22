@@ -27,11 +27,11 @@ import org.slf4j.LoggerFactory;
  * CV, then does write/read/confirm to 123
  * </ul>
  * </ul>
- *<p>
- * Is skipDupIndexWrite is true, sequential operations with the same PI and SI values
- * (and only immediately sequential operations with both PI and SI unchanged) will
- * skip writing of the PI and SI CVs.  This might not work for some decoders, hence is
- * configurable.
+ * <p>
+ * Is skipDupIndexWrite is true, sequential operations with the same PI and SI
+ * values (and only immediately sequential operations with both PI and SI
+ * unchanged) will skip writing of the PI and SI CVs. This might not work for
+ * some decoders, hence is configurable.
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
@@ -40,15 +40,16 @@ import org.slf4j.LoggerFactory;
 public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param prog    the programmer to which this facade is attached
-     * @param indexPI CV to which the first value is to be written for NN.NN and
-     *                NN.NN.NN forms
-     * @param indexSI CV to which the second value is to be written for NN.NN.NN
-     *                forms
-     * @param cvFirst true if first value in parsed CV is to be written; false
-     *                if second value is to be written
-     * @param skipDupIndexWrite true if heuristics can be used to skip PI and SI writes;
-     *                 false requires them to be written each time.
+     * @param prog              the programmer to which this facade is attached
+     * @param indexPI           CV to which the first value is to be written for
+     *                          NN.NN and NN.NN.NN forms
+     * @param indexSI           CV to which the second value is to be written
+     *                          for NN.NN.NN forms
+     * @param cvFirst           true if first value in parsed CV is to be
+     *                          written; false if second value is to be written
+     * @param skipDupIndexWrite true if heuristics can be used to skip PI and SI
+     *                          writes; false requires them to be written each
+     *                          time.
      */
     public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI, boolean cvFirst, boolean skipDupIndexWrite) {
         super(prog);
@@ -58,19 +59,19 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         this.skipDupIndexWrite = skipDupIndexWrite;
     }
 
-    String  indexPI;
-    String  indexSI;
+    String indexPI;
+    String indexSI;
     boolean cvFirst;
     boolean skipDupIndexWrite;
 
-    long    maxDelay = 1000;  // max mSec since last successful end-of-operation for skipDupIndexWrite; longer delay writes anyway
+    long maxDelay = 1000;  // max mSec since last successful end-of-operation for skipDupIndexWrite; longer delay writes anyway
 
     // members for handling the programmer interface
     int _val;	// remember the value being read/written for confirmative reply
     String _cv;	// remember the cv number being read/written
     int valuePI;  //  value to write to PI in current operation or -1
     int valueSI;  //  value to write to SI in current operation or -1
-    
+
     // remember last operation for skipDupIndexWrite
     int lastValuePI = -1;  // value written in last operation
     int lastValueSI = -1;  // value written in last operation
@@ -125,15 +126,17 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     }
 
     /**
-     * Check to see if the last-written PI and SI values can still be counted on
+     * Check if the last-written PI and SI values can still be counted on.
+     *
+     * @return true if last-written values are reliable; false otherwise
      */
     boolean useCachePiSi() {
         return skipDupIndexWrite
-            && (lastValuePI == valuePI) 
-            && (lastValueSI == valueSI)
-            && ((System.currentTimeMillis() - lastOpTime) < maxDelay);
+                && (lastValuePI == valuePI)
+                && (lastValueSI == valueSI)
+                && ((System.currentTimeMillis() - lastOpTime) < maxDelay);
     }
-    
+
     // programming interface
     @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -204,9 +207,9 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     }
 
     enum ProgState {
-        PROGRAMMING, 
-        FINISHREAD, 
-        FINISHWRITE, 
+        PROGRAMMING,
+        FINISHREAD,
+        FINISHWRITE,
         NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
@@ -217,7 +220,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     public void programmingOpReply(int value, int status) {
         log.debug("notifyProgListenerEnd value {} status {} ", value, status);
 
-        if (status != OK ) {
+        if (status != OK) {
             // clear memory of last PI, SI written
             lastValuePI = -1;
             lastValueSI = -1;
@@ -231,7 +234,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             temp.programmingOpReply(value, status);
             return;
         }
-        
+
         if (_usingProgrammer == null) {
             log.error("No listener to notify, reset and ignore");
             state = ProgState.NOTPROGRAMMING;
