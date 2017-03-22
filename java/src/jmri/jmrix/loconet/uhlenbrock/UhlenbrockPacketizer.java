@@ -48,7 +48,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     public static final int NOTIFIEDSTATE = 15;    // xmt notified, will next wake
     public static final int WAITMSGREPLYSTATE = 25;  // xmt has sent, await reply to message
 
-    static int defaultWaitTimer = 2000;
+    static int defaultWaitTimer = 10000;
 
     /**
      * Forward a preformatted LocoNetMessage to the actual interface.

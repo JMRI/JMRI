@@ -129,7 +129,12 @@ public /*abstract*/ class AbstractSensorTest extends TestCase {
         Assert.assertEquals("post-set state", Sensor.ACTIVE, t.getState());
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.INACTIVE;}, "Sensor.INACTIVE set");
     }
-    
+
+    public void testGetPullResistance(){
+       // default is off, override this test if this is supported.
+       Assert.assertEquals("Pull Direction",jmri.Sensor.PullResistance.PULL_OFF,t.getPullResistance());
+    }
+
     // from here down is testing infrastructure
 
     public AbstractSensorTest(String s) {

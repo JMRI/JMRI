@@ -28,7 +28,31 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>The Automat (Thread) Table</h1>This is the
+      <h1>The Automat (Thread) Table</h1>
+      
+      The Thread Table lets you see the threads used by
+      scripts that are implementing the "AbstractAutomat" class.
+      <p>
+      Each time the class execute's it's "handle" routine,
+      the count will be incremented.  You can stop the thread
+      with the button.
+      
+      <p>
+      Note that the name column won't be particularly 
+      useful unless your script sets a distinct name:
+<pre><code>
+# create one of these
+a = AutomatExample()
+
+# set the name
+a.setName("Automat example script")
+</code></pre>
+      <p>
+      See the 
+      <a href="../../../../../html/tools/automation/viaJava.shtml">scripting pages</a>
+      for more information on writing scripts.
+      
+      <p>This is the
       help/jmri/jmrit/automat/monitor/AutomatTable help page 
       <!--#include virtual="/Footer" -->
     </div>
