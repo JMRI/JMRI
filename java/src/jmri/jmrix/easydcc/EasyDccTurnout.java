@@ -16,12 +16,14 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for EasyDcc layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ */
 public class EasyDccTurnout extends AbstractTurnout {
 
     /**
-     * EasyDcc turnouts use the NMRA number (0-511) as their numerical
-     * identification.
+     * Create a turnout. EasyDcc turnouts use the NMRA number (0-511) as their
+     * numerical identification.
+     *
+     * @param number the NMRA turnout number from 0 to 511
      */
     public EasyDccTurnout(int number) {
         super("ET" + number);
@@ -48,7 +50,6 @@ public class EasyDccTurnout extends AbstractTurnout {
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
             } else {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
@@ -120,4 +121,3 @@ public class EasyDccTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnout.class.getName());
 
 }
-
