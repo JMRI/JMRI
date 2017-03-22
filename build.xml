@@ -322,7 +322,7 @@
             <format property="TODAY" pattern="yyyyMMdd" timezone="GMT"/>
             <format property="NOW"   pattern="HHmm"     timezone="GMT"/>
         </tstamp>
-        <property name="release.build_date" value="${TODAY}${NOW}"/>
+        <property name="release.build_date" value="${TODAY}T${NOW}Z"/>
         <!-- Create the build directory structure used by compile -->
         <quiet>
         <mkdir dir="${target}"/>
@@ -337,6 +337,7 @@
             <filter token="release.major"          value="${release.major}"/>
             <filter token="release.minor"          value="${release.minor}"/>
             <filter token="release.build"          value="${release.build}"/>
+            <filter token="release.modifier"       value="${release.modifier}"/>
             <filter token="release.revision_id"    value="${release.revision_id}"/>
             <filter token="release.build_user"     value="${release.build_user}"/>
             <filter token="release.official"       value="${release.official}"/>
@@ -1559,7 +1560,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="3200"/><!-- change from default 100 warnings -->
+            <arg value="3100"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1944,7 +1945,7 @@
               failonerror="true">
             <!-- ORDER MATTERS HERE -->
             <arg value="${release.version-string}"/>
-            <arg path="${dist.release}/JMRI.${release.version-string}-unsigned.dmg"/>
+            <arg path="${dist.release}/JMRI.${release.version-string}+unsigned.dmg"/>
             <arg path="${dist.macosx}"/>
         </exec>
     </target>
@@ -1959,7 +1960,7 @@
               failonerror="true">
             <arg value="-t 1200"/>
             <arg value="-O signing-wget.log"/>
-            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-string}-unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI.${release.version-string}.dmg"/>
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI-${release.version-string}+unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI.${release.version-string}.dmg"/>
         </exec>
         <chmod perm="go-w" dir="${dist.release}"/>
     </target>

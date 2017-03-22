@@ -1,22 +1,23 @@
-package jmri.web.servlet.directory;
+package jmri.jmrix.zimo;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017	
  */
-public class DirectoryResourceTest {
+public class Mx1PacketizerTest {
 
     @Test
     public void testCTor() {
-        DirectoryResource t = new DirectoryResource(java.util.Locale.US, org.eclipse.jetty.util.resource.EmptyResource.INSTANCE);
-        Assert.assertNotNull("exists", t);
+        Mx1Packetizer t = new Mx1Packetizer(new Mx1CommandStation(),false);
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -32,6 +33,6 @@ public class DirectoryResourceTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DirectoryResourceTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1PacketizerTest.class.getName());
 
 }
