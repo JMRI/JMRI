@@ -112,8 +112,9 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
 
     /**
-     * method added for DP3 where the existing roster entry is selected from a
-     * table
+     * Set the roster entry this action acts upon.
+     *
+     * @param mFromEntry the roster entry to act upon
      */
     public void setExistingEntry(RosterEntry mFromEntry) {
         this.mFromEntry = mFromEntry;
@@ -205,7 +206,6 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
 
     // initialize logging
-    private final static Logger log
-            = LoggerFactory.getLogger(AbstractRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractRosterItemAction.class);
 
 }
