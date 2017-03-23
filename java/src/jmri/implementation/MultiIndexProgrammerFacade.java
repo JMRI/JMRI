@@ -12,26 +12,28 @@ import org.slf4j.LoggerFactory;
  * Used through the String write/read/confirm interface. Accepts address
  * formats:
  * <ul>
- * <li>If cvFirst is true:<ul>
- * <li> 123 Do write/read/confirm to 123
- * <li> 123.11 Writes 11 to the first index CV, then does write/read/confirm to
- * 123
- * <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index
- * CV, then does write/read/confirm to 123
+ * <li>If cvFirst is true:
+ * <ul>
+ *   <li> 123 Do write/read/confirm to 123
+ *   <li> 123.11 Writes 11 to the first index CV, then does write/read/confirm to 123
+ *   <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *                    then does write/read/confirm to 123
  * </ul>
- * <li>If cvFirst is false:<ul>
- * <li> 123 Do write/read/confirm to 123
- * <li> 11.123 Writes 11 to the first index CV, then does write/read/confirm to
- * 123
- * <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index
- * CV, then does write/read/confirm to 123
+ * <li>If cvFirst is false:
+ * <ul>
+ *   <li> 123 Do write/read/confirm to 123
+ *   <li> 11.123 Writes 11 to the first index CV, then does write/read/confirm to 123
+ *   <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *              then does write/read/confirm to 123
  * </ul>
  * </ul>
+ *
  *<p>
  * Is skipDupIndexWrite is true, sequential operations with the same PI and SI values
  * (and only immediately sequential operations with both PI and SI unchanged) will
  * skip writing of the PI and SI CVs.  This might not work for some decoders, hence is
- * configurable.
+ * configurable. See the logic in {@link jmri.implementation.ProgrammerFacadeSelector}
+ * for how the decoder file contents and default (preferences) interact.
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
