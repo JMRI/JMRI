@@ -326,8 +326,8 @@
                 <version>2.19.1</version>
                 <configuration>
                     <excludes>
-                        <!-- TEMPORARY to see if Nce tests are more reliable if other tests are not run -->
-                        <exclude>jmri.jmrit.**</exclude>
+                        <!-- TEMPORARY since NCE tests sometimes fail to load classes -->
+                        <exclude>jmri.jmrix.nce.**</exclude>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
@@ -707,12 +707,12 @@
             <artifactId>jogl-all-main</artifactId>
             <version>${jogamp.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.jogamp.gluegen</groupId>
             <artifactId>gluegen-rt-main</artifactId>
             <version>${jogamp.version}</version>
         </dependency>
-        -->
         <dependency>
             <groupId>org.jogamp.joal</groupId>
             <artifactId>joal-main</artifactId>
