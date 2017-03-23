@@ -168,20 +168,20 @@ public class SwitchboardEditor extends Editor {
     // From Oracle JLayeredPane demo
     private TargetPane switchboardLayeredPane; // JLayeredPane
     private JCheckBox hideUnconnected;
-    private JComboBox layerList;
     private String[] beanTypeStrings = { Bundle.getMessage("BeanNameTurnout"),
             Bundle.getMessage("BeanNameSensor"),
             Bundle.getMessage("BeanNameLight")
     };
+    private JComboBox beanTypeList = new JComboBox(beanTypeStrings);
     private char beanTypeChar;
     private Color[] layerColors = { Color.yellow, Color.magenta,
             Color.cyan, Color.red, Color.green };
-    private JComboBox switchTypeList;
     private String[] switchTypeStrings = {
             Bundle.getMessage("Button"),
             Bundle.getMessage("Icon"),
             Bundle.getMessage("Drawing")
     };
+    private JComboBox switchTypeList;
     private List<String> beanManuPrefixes = new ArrayList<String>();
     private JComboBox beanManuNames;
     //Action commands
@@ -208,6 +208,11 @@ public class SwitchboardEditor extends Editor {
         init(name);
     }
 
+    /**
+     * Initialize the SwitchBoard.
+     *
+     * @param name name of the switchboard frame
+     */
     @Override
     protected void init(String name) {
         //setVisible(false);
@@ -240,15 +245,14 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel("Bean type:");
         beanSetupPane.add(beanTypeTitle);
-        layerList = new JComboBox(beanTypeStrings);
-        layerList.setSelectedIndex(0);    //Turnout
-        layerList.setActionCommand(LAYER_COMMAND);
-        layerList.addActionListener(this);
-        beanSetupPane.add(layerList);
+        beanTypeList.setSelectedIndex(0);    // select Turnout in comboBox
+        beanTypeList.setActionCommand(LAYER_COMMAND);
+        beanTypeList.addActionListener(this);
+        beanSetupPane.add(beanTypeList);
         add(beanSetupPane);
 
         //Add connection selection comboBox.
-        beanTypeChar = layerList.getSelectedItem().toString().charAt(0);
+        beanTypeChar = beanTypeList.getSelectedItem().toString().charAt(0);
         JLabel beanManuTitle = new JLabel("Connection:");
         beanSetupPane.add(beanManuTitle);
         beanManuNames = new JComboBox();
@@ -279,7 +283,7 @@ public class SwitchboardEditor extends Editor {
         //Add the buttons to the layered pane.
         switchboardLayeredPane.setLayout(new GridLayout(8,4)); // vertical, horizontal
         addSwitchRange(rangeMin, rangeMax,
-                layerList.getSelectedItem().toString(),
+                beanTypeList.getSelectedItem().toString(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 0);
 
@@ -327,7 +331,7 @@ public class SwitchboardEditor extends Editor {
                 }
                 switchlist.clear(); // reset list
                 addSwitchRange(rangeMin, rangeMax,
-                        layerList.getSelectedItem().toString(),
+                        beanTypeList.getSelectedItem().toString(),
                         beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                         switchTypeList.getSelectedIndex());
                 pack();
@@ -1428,6 +1432,83 @@ public class SwitchboardEditor extends Editor {
     public int getPanelMenuRangeMax() {
         return (int) maxSpinner.getValue();
     }
+
+    /**
+     * Store bean type.
+     *
+     * @return bean type prefix
+     */
+    public String getSwitchType() {
+        String typePrefix;
+        String switchType = beanTypeList.getSelectedItem();
+        String light = Bundle.getMessage("BeanNameLight");
+        String sensor = Bundle.getMessage("BeanNameSensor");
+        switch (switchType) {
+            case light:
+                typePrefix = "L";
+                break;
+            case sensor:
+                    typePrefix = "S";
+                break;
+            default: // Turnout
+                typePrefix = "T";
+        }
+        return typePrefix;
+    }
+
+    /**
+     * Load bean type.
+     *
+     * @param  bean type prefix
+     */
+    public void setSwitchType(String typePrefix) {
+        String type;
+        switch (typePrefix) {
+            case "L":
+                type = Bundle.getMessage("BeanNameLight");
+                break;
+            case "S":
+                type = Bundle.getMessage("BeanNameSensor");
+                break;
+            default: // Turnout
+                type = Bundle.getMessage("BeanNameTurnout");
+        }
+        try {
+            beanTypeList.setSelectedItem(type);
+        } catch (IllegalArgumentException e) {
+            log.error("invalid bean type [" + typePrefix + "] in Switchboard");
+        }
+    }
+
+    /**
+     * Store connection type.
+     *
+     * @return bean connection prefix
+     */
+    public String getSwitchManu() {
+        return (String) beanManuPrefixes.get(beanManuNames.getSelectedIndex());
+    }
+
+    /**
+     * Load connection type.
+     *
+     * @param  bean connection prefix
+     */
+    public void setSwitchManu(String manuPrefix) {
+        int choice = 0;
+        for (int i = 0; i < beanManuPrefixes.length; i++) {
+            if (beanManuPrefixes.get(i).equals(manuPrefix)) {
+                choice = i;
+                break;
+            }
+        }
+        try {
+        beanManuNames.setSelectedIndex(beanManuPrefixes.getIndex(choice));
+        } catch (IllegalArgumentException e) {
+            log.error("invalid connection [" + typePrefix + "] in Switchboard");
+        }
+    }
+
 
     // all content loaded from file.
     public void loadComplete() {

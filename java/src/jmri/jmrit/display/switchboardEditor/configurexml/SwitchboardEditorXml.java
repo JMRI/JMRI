@@ -53,12 +53,14 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
-        panel.setAttribute("hideunconnected", "" + (p.hideUnconnected() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
         panel.setAttribute("scrollable", p.getScrollable());
+        panel.setAttribute("hideunconnected", "" + (p.hideUnconnected() ? "yes" : "no"));
         panel.setAttribute("rangemin", "" + p.getPanelMenuRangeMin());
         panel.setAttribute("rangemax", "" + p.getPanelMenuRangeMax());
+        panel.setAttribute("type", p.getSwitchType());
+        panel.setAttribute("connection", p.getSwitchManu());
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
             panel.setAttribute("greenBackground", "" + p.getBackgroundColor().getGreen());
@@ -110,6 +112,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int width = 300;
         int rangemin = 1;
         int rangemax = 32;
+        String type = "T";
+        String connection = "I";
+
         try {
             x = shared.getAttribute("x").getIntValue();
             y = shared.getAttribute("y").getIntValue();
@@ -171,12 +176,6 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAllControlling(value);
 
         value = false;
-        if ((a = shared.getAttribute("hideunconnected")) != null && a.getValue().equals("yes")) {
-            value = true;
-        }
-        panel.setAllControlling(value);
-
-        value = false;
         if ((a = shared.getAttribute("hide")) != null && a.getValue().equals("yes")) {
             value = true;
         }
@@ -194,6 +193,12 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
         panel.setScroll(state);
 
+        value = false;
+        if ((a = shared.getAttribute("hideunconnected")) != null && a.getValue().equals("yes")) {
+            value = true;
+        }
+        panel.setHideUnconnected(value);
+
         try {
             rangemin = shared.getAttribute("rangemin").getIntValue();
             rangemax = shared.getAttribute("rangemax").getIntValue();
@@ -203,6 +208,12 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
         panel.setPanelMenuRangeMin(rangemin);
         panel.setPanelMenuRangeMax(rangemax);
+
+        type = shared.getAttribute("type").getValue();
+        panel.setSwitchType(type);
+
+        connection = shared.getAttribute("connection").getValue();
+        panel.setSwitchManu(connection);
 
         // set color if needed
         try {
