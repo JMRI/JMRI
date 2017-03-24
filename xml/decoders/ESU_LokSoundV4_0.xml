@@ -144,6 +144,7 @@
                 <parameter name="PI">31</parameter>
                 <parameter name="SI">32</parameter>
                 <parameter name="cvFirst">false</parameter>
+                <parameter name="skipDupIndexWrite">false</parameter>
             </capability>
         </programming>
         <variables>

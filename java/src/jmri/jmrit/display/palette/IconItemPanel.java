@@ -129,7 +129,9 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     /**
-     * Note caller must create _iconPanel before calling
+     * Add icons to panel.
+     * 
+     * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         _iconPanel = new JPanel();
@@ -382,6 +384,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return _dataFlavor.equals(flavor);
         }
+
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
@@ -400,13 +403,13 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                     l = new LinkingLabel(NamedIcon.getIconByName(url), _editor, link);
                 }
                 l.setLevel(level);
-                return l;                
+                return l;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" for \"");
                 sb.append(url);
                 sb.append("\"");
-                return  sb.toString();
+                return sb.toString();
             }
             return null;
         }
