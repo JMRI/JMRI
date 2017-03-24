@@ -168,7 +168,7 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar = new JToolBar("Throttles toolbar");
 
         jbNew = new JButton();
-        //   	nouveau.setText(Bundle.getMessage("ThrottleToolBarNew"));
+        //    nouveau.setText(Bundle.getMessage("ThrottleToolBarNew"));
         jbNew.setIcon(new NamedIcon("resources/icons/throttles/add.png", "resources/icons/throttles/add.png"));
         jbNew.setToolTipText(Bundle.getMessage("ThrottleToolBarNewToolTip"));
         jbNew.setVerticalTextPosition(JButton.BOTTOM);
@@ -182,7 +182,7 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar.add(jbNew);
 
         jbClose = new JButton();
-//    	close.setText(Bundle.getMessage("ThrottleToolBarClose"));
+//     close.setText(Bundle.getMessage("ThrottleToolBarClose"));
         jbClose.setIcon(new NamedIcon("resources/icons/throttles/remove.png", "resources/icons/throttles/remove.png"));
         jbClose.setToolTipText(Bundle.getMessage("ThrottleToolBarCloseToolTip"));
         jbClose.setVerticalTextPosition(JButton.BOTTOM);
@@ -224,7 +224,7 @@ public class ThrottleWindow extends JmriJFrame {
         throttleToolBar.add(jbPrevious);
 
         jbNext = new JButton();
-        //   	next.setText(Bundle.getMessage("ThrottleToolBarNext"));
+        //    next.setText(Bundle.getMessage("ThrottleToolBarNext"));
         jbNext.setIcon(new NamedIcon("resources/icons/throttles/next.png", "resources/icons/throttles/next.png"));
         jbNext.setToolTipText(Bundle.getMessage("ThrottleToolBarNextToolTip"));
         jbNext.setVerticalTextPosition(JButton.BOTTOM);

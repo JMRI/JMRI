@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * be the only object that is sending messages for this turnout; more than one
  * Turnout object pointing to a single device is not allowed.
  *
- * Description:	extend jmri.AbstractTurnout for DCC-only layouts
+ * Description: extend jmri.AbstractTurnout for DCC-only layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 public class DccTurnout extends AbstractTurnout {
 

@@ -616,7 +616,7 @@ public class IndexedVariableValue extends VariableValue
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable.
      *
-     * @author	Bob Jacobsen   Copyright (C) 2001
+     * @author Bob Jacobsen   Copyright (C) 2001
      */
     public class VarTextField extends JTextField {
 

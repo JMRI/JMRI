@@ -6,13 +6,13 @@ import org.slf4j.LoggerFactory;
 /**
  * SpeedoReply.java
  *
- * Description:	Carries the reply to an SprogMessage
+ * Description: Carries the reply to an SprogMessage
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SpeedoReply {
-	// This should be an extension af AbstractMRReply and needs re-factoring
+ // This should be an extension af AbstractMRReply and needs re-factoring
 
     // create a new one
     public SpeedoReply() {

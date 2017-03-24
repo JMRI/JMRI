@@ -112,7 +112,7 @@ import org.slf4j.LoggerFactory;
  * in millimeter units. A length of 0.0 indicates no entry of length by the
  * user.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
  * @author Dave Duchamp Copywright (C) 2009
  */
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {

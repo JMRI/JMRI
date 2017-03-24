@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * This class doesn't currently listen to the Turnout's to see if they've been
  * changed via some other mechanism.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
 

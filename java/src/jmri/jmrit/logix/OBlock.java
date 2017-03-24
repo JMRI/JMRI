@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman (C) 2009
+ * @author Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
@@ -130,7 +130,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String _pathName;      // when not null, this is the allocated path
-    protected long _entryTime;		// time when block became occupied
+    protected long _entryTime;  // time when block became occupied
     private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // path keys a list of Blocks whose paths conflict with the path.  These Blocks key 
@@ -583,7 +583,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      */
     public String deAllocate(Warrant warrant) {
         //if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
-        //				"\" from warrant \""+warrant.getDisplayName()+"\"");
+        //    "\" from warrant \""+warrant.getDisplayName()+"\"");
         if (_warrant != null) {
             if (!_warrant.equals(warrant)) {
                 // check if _warrant is registered
@@ -848,7 +848,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             _warrant = warrant;
             setState(getState() | ALLOCATED);
             if (!_ownsTOs) {
-                msg = checkSharedTO();		// does a callback to the warrant to set up a wait            	
+                msg = checkSharedTO();  // does a callback to the warrant to set up a wait             
             }
             if (msg == null) {
                 int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;

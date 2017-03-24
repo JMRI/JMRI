@@ -36,11 +36,11 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1; 	// waiting reply to command to go into programming mode
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int MODESENT = 1;  // waiting reply to command to go into programming mode
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override

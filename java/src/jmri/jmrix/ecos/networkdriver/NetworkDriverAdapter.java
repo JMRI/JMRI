@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * This connects an ECOS command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  */
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter {
 

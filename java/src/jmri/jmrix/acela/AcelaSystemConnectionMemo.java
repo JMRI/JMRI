@@ -10,7 +10,7 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

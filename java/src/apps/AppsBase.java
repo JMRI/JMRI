@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * </dl>
  * <P>
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public abstract class AppsBase {
 

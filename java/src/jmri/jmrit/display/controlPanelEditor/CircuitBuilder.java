@@ -62,7 +62,7 @@ public class CircuitBuilder {
     static int STRUT_SIZE = 10;
 
     private JMenu _circuitMenu;
-    private JMenu _todoMenu;			// error checking items
+    private JMenu _todoMenu;   // error checking items
 
     // map track icon to OBlock to which it belongs
     private HashMap<Positionable, OBlock> _iconMap = new HashMap<Positionable, OBlock>();
@@ -958,7 +958,7 @@ public class CircuitBuilder {
                 if (!checkPortalIcon(portal, pi)) {
                     _badPortalIcon.put(name, portal);
                 }
-            } else {	// no icon for this Portal
+            } else { // no icon for this Portal
                 _badPortalIcon.put(name, portal);
             }
         }
@@ -1595,7 +1595,7 @@ public class CircuitBuilder {
         if (_editPortalFrame != null || _editDirectionFrame != null) {
             if (selection instanceof PortalIcon) {
                 _editor.highlight(selection);
-                return false;		// OK to drag portal icon
+                return false;  // OK to drag portal icon
             }
             return true;
         }

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * SlotManager object.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
 

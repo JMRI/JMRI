@@ -16,7 +16,7 @@ package jmri;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Paul Bender Copyright (C) 2012
+ * @author Paul Bender Copyright (C) 2012
  */
 public interface ConsistListListener extends java.util.EventListener {
 

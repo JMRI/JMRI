@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * information to a LocoMonFrame (monitor) and connecting to a LocoGenFrame (for
  * sending a few commands).
  *
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  * @author i18n Egbert Broerse 2017
  */
 public class HexFileFrame extends JmriJFrame {

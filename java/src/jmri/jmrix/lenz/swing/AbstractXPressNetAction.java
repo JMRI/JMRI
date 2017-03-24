@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * Abstract action to create and register a swing object for XPressNet systems.
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2016 
+ * @author Paul Bender Copyright (C) 2016 
  */
 abstract public class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction {
 

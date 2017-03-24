@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
  * switch settings on the new Digitrax PR2
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2005, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006
   */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -36,8 +36,8 @@ public class PR2Adapter extends LocoBufferAdapter {
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in Mac DIN8; on main connector, this is DTR
 
         // configure flow control from option
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;

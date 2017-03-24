@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
  * to control JMRI turnout operations centrally, so that retransmissions can
  * controlled.
  * <P>
- * Description:	Implement turnout manager for loconet
+ * Description: Implement turnout manager for loconet
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 

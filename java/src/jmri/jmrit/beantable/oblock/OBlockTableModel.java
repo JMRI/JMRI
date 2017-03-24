@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * Duplicates the JTable model for BlockTableAction and adds a column for the
  * occupancy sensor. Configured for use within an internal frame.
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
@@ -40,7 +40,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     static public final int COMMENTCOL = 2;
     static public final int STATECOL = 3;
     static public final int SENSORCOL = 4;
-    static public final int EDIT_COL = 5;			// Path button
+    static public final int EDIT_COL = 5;   // Path button
     static public final int DELETE_COL = 6;
     static public final int LENGTHCOL = 7;
     static public final int UNITSCOL = 8;

@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
- * @author	Bob Jacobsen Copyright (C) 2001, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2014
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
