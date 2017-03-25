@@ -101,7 +101,8 @@
                 loads from xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
             </dd>
             
-        <dt>Load configuration</dt>
+            <a id="load" name="load"></a>
+            <dt>Load configuration</dt>
             <dd><a href="http://jmri.org/JavaDoc/doc/apps/AppsBase.html#setAndLoadPreferenceFile--"><code>apps.AppsBase.jmri.ConfigureManager()</code></a>
                 loads the configuration file, and in the process loads & activates many of the
                 user level objects in the system.  In particular, this is the start of 
@@ -133,7 +134,23 @@
     
         <p>For more information, see the <code><a href="http://jmri.org/JavaDoc/doc/apps/Apps.html">apps.Apps</a></code> Javadoc.
 
-        
+    <a id="minApp" name="minApp"></a>
+    <h2>Minimal Application Structure</h2>
+
+        (This may be out of date)
+      <p>The apps.SampleMinimalProgram class provides a minimal
+      example of starting a program that uses JMRI. It's got a
+      hard-coded layout configuration. See the internal comments
+      for more info.</p>
+
+      <p>Better is to use the JMRI configuration system to read a
+      configuration file and do the initialization. There's
+      commented out code in apps.SampleMinimalProgram that shows
+      how to do that.</p>
+
+      <p>The JMRI applications themselves use a more powerful
+      "profile" mechanism that's inherited from the apps.Apps and
+      apps.AppsBase classes. 
 
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
