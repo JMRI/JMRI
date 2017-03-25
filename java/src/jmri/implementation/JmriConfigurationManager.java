@@ -17,8 +17,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
-import jmri.profile.Profile;
 import jmri.jmrit.XmlFile;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
@@ -37,9 +37,6 @@ public class JmriConfigurationManager implements ConfigureManager {
     private final HashMap<PreferencesManager, InitializationException> initializationExceptions = new HashMap<>();
     private final List<PreferencesManager> initialized = new ArrayList<>();
 
-    public void setValidate(XmlFile.Validate v) { legacy.setValidate(v);}
-    public XmlFile.Validate getValidate() { return legacy.getValidate(); }
-    
     @SuppressWarnings("unchecked") // For types in InstanceManager.store()
     public JmriConfigurationManager() {
         ServiceLoader<PreferencesManager> sl = ServiceLoader.load(PreferencesManager.class);
@@ -276,4 +273,15 @@ public class JmriConfigurationManager implements ConfigureManager {
     public HashMap<PreferencesManager, InitializationException> getInitializationExceptions() {
         return new HashMap<>(initializationExceptions);
     }
+
+    @Override
+    public void setValidate(XmlFile.Validate v) {
+        legacy.setValidate(v);
+    }
+
+    @Override
+    public XmlFile.Validate getValidate() {
+        return legacy.getValidate();
+    }
+
 }
