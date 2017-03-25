@@ -7,7 +7,7 @@ import jmri.Turnout;
  * <P>
  * System names are "BTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

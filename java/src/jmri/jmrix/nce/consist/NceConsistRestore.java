@@ -33,12 +33,12 @@ import org.slf4j.LoggerFactory;
  */
 public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_CONSIST_MEM = 0xF500;	// start of NCE CS Consist memory 
-    private static final int CONSIST_LNTH = 16;		// 16 bytes per consist line
-    private static final int REPLY_1 = 1;			// reply length of 1 byte expected
-    private int replyLen = 0;						// expected byte length
-    private int waiting = 0;						// to catch responses not intended for this module
-    private boolean fileValid = false;				// used to flag status messages
+    private static final int CS_CONSIST_MEM = 0xF500; // start of NCE CS Consist memory 
+    private static final int CONSIST_LNTH = 16;  // 16 bytes per consist line
+    private static final int REPLY_1 = 1;   // reply length of 1 byte expected
+    private int replyLen = 0;      // expected byte length
+    private int waiting = 0;      // to catch responses not intended for this module
+    private boolean fileValid = false;    // used to flag status messages
 
     javax.swing.JLabel textConsist = new javax.swing.JLabel();
     javax.swing.JLabel consistNumber = new javax.swing.JLabel();
@@ -87,10 +87,10 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
         // Now read the file and check the consist address
         waiting = 0;
-        fileValid = false;					// in case we break out early
-        int consistNum = 0;					// for user status messages
-        int curConsist = CS_CONSIST_MEM;	// load the start address of the NCE consist memory
-        byte[] consistData = new byte[CONSIST_LNTH]; 	// NCE Consist data
+        fileValid = false;     // in case we break out early
+        int consistNum = 0;     // for user status messages
+        int curConsist = CS_CONSIST_MEM; // load the start address of the NCE consist memory
+        byte[] consistData = new byte[CONSIST_LNTH];  // NCE Consist data
         String line = " ";
 
         while (true) {
@@ -102,7 +102,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
             consistNumber.setText(Integer.toString(consistNum++));
 
-            if (line == null) {				// while loop does not break out quick enough
+            if (line == null) {    // while loop does not break out quick enough
                 log.error("NCE consist file terminator :0000 not found");
                 break;
             }
@@ -141,7 +141,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
             // now read the entire line from the file and create NCE message
             for (int i = 0; i < 8; i++) {
-                int j = i << 1;				// i = word index, j = byte index
+                int j = i << 1;    // i = word index, j = byte index
 
                 byte b[] = StringUtil.bytesFromHexString(consistLine[i + 1]);
 

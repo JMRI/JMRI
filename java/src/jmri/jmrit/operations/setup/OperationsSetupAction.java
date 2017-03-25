@@ -18,7 +18,7 @@ public class OperationsSetupAction extends AbstractAction {
     }
 
     public OperationsSetupAction() {
-        this(Bundle.getMessage("MenuSetup"));	// NOI18N
+        this(Bundle.getMessage("MenuSetup")); // NOI18N
     }
 
     static OperationsSetupFrame operationsSetupFrame = null;
@@ -32,7 +32,7 @@ public class OperationsSetupAction extends AbstractAction {
             operationsSetupFrame.initComponents();
         }
         operationsSetupFrame.setExtendedState(Frame.NORMAL);
-        operationsSetupFrame.setVisible(true);	// this also brings the frame into focus
+        operationsSetupFrame.setVisible(true); // this also brings the frame into focus
     }
 }
 

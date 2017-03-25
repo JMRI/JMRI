@@ -29,7 +29,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Dave Duchamp Copyright (C) 2009, 2010
+ * @author Dave Duchamp Copyright (C) 2009, 2010
  */
 public class TransitSectionAction {
 
@@ -41,7 +41,7 @@ public class TransitSectionAction {
      */
     public static final int NUM_WHENS = 8; // Must correspond to the number of entries below
     public static final int ENTRY = 1;   // On entry to Section
-    public static final int EXIT = 2;	  // On exit from Section
+    public static final int EXIT = 2;   // On exit from Section
     public static final int BLOCKENTRY = 3; // On entry to specified Block in the Section
     public static final int BLOCKEXIT = 4; // On exit from specified Block in the Section
     public static final int TRAINSTOP = 5;  // When train stops
@@ -114,7 +114,7 @@ public class TransitSectionAction {
     // instance variables
     private int mWhen = 0;
     private int mWhat = 0;
-    private int mDataWhen = -1;	// negative number signified no data 
+    private int mDataWhen = -1; // negative number signified no data 
     private int mDataWhat1 = -1;    // negative number signified no data 
     private int mDataWhat2 = -1;    // negative number signified no data 
     private String mStringWhen = "";

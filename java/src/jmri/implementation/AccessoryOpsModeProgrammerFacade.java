@@ -104,7 +104,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     // members for handling the programmer interface
     int _val;           // remember the value being read/written for confirmative reply
     String _cv;         // remember the cv number being read/written
-    String _addrType;	// remember the address type: "decoder" or "accessory"
+    String _addrType; // remember the address type: "decoder" or "accessory"
 
     // programming interface
     @Override

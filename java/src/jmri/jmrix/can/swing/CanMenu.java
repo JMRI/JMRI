@@ -7,7 +7,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Create a menu containing the Jmri CAN- and CBUS-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003, 2008, 2009
+ * @author Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
  */
 public class CanMenu extends JMenu {

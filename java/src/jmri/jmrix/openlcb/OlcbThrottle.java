@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle for OpenLCB.
  *
- * @author	Bob Jacobsen Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2012
  */
 public class OlcbThrottle extends AbstractThrottle {
 

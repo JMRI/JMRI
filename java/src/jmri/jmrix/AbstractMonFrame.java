@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base class for Frames displaying communications monitor information
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2014
  */
 public abstract class AbstractMonFrame extends JmriJFrame {
 

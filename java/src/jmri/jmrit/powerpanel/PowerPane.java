@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for power control
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
 public class PowerPane extends jmri.util.swing.JmriPanel
         implements java.beans.PropertyChangeListener {
@@ -127,7 +127,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     private boolean mgrOK() {
         if (listening == null) {
             listening = selectMenu.getManager();
-	        log.debug("Manager = {}", listening);
+         log.debug("Manager = {}", listening);
             if (listening == null) {
                 log.warn("No power manager instance found, panel not active");
                 return false;

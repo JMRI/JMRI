@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on AcelaTurnoutManager.java
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaLightManager extends AbstractLightManager {
@@ -51,7 +51,7 @@ public class AcelaLightManager extends AbstractLightManager {
             return (null);
         }
 
-// Bob C: Fix this up		
+// Bob C: Fix this up  
 /*
          conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum,_memo);
          if ( conflict != "" ) {

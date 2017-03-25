@@ -19,7 +19,7 @@ public class ItemDialog extends JmriJFrame {
     protected String _type;
 //    protected String    _family;
 
-    private static ItemDialog _instance = null;		// only let one dialog at a time
+    private static ItemDialog _instance = null;  // only let one dialog at a time
 
     /**
      */
@@ -51,7 +51,7 @@ public class ItemDialog extends JmriJFrame {
     public void dispose() {
         closeDialogs();
         super.dispose();
-        _instance = null;	// remove reference to allow gc
+        _instance = null; // remove reference to allow gc
 
     }
 }

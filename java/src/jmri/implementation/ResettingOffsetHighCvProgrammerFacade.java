@@ -59,8 +59,8 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     int indicator;
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override

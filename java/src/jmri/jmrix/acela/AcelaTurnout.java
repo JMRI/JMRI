@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaTurnout extends AbstractTurnout {
@@ -102,7 +102,7 @@ public class AcelaTurnout extends AbstractTurnout {
      log.warn("illegal state requested for Turnout: "+getSystemName());
      }
      }
-	
+ 
      if (newState!=mState) {
      int oldState = mState;
      mState = newState;
@@ -143,7 +143,7 @@ public class AcelaTurnout extends AbstractTurnout {
          log.debug("Send command to "
          + (pushButtonLockout ? "Lock" : "Unlock")
          + " Pushbutton NT" + _number);
-		
+  
          byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
          AcelaMessage m = AcelaMessage.sendPacketMessage(bl);
          AcelaTrafficController.instance().sendAcelaMessage(m, null);

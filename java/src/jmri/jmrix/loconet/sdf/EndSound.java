@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.sdf;
  *
  * This carries no additional information.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class EndSound extends SdfMacro {
 

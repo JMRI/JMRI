@@ -148,7 +148,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     private boolean _loadFailed = false;
 
-    boolean showCloseInfoMessage = true;	//display info message when closing panel
+    boolean showCloseInfoMessage = true; //display info message when closing panel
 
     protected ArrayList<Positionable> _contents = new ArrayList<Positionable>();
     protected JLayeredPane _targetPanel;

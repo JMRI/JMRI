@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnoutManager.java
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @author	Dave Duchamp Copyright (C) 2004, 2010
+ * @author Dave Duchamp Copyright (C) 2004, 2010
   */
 public class SerialLightManager extends AbstractLightManager {
 

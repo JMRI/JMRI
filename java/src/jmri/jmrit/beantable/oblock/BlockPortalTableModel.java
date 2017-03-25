@@ -22,7 +22,7 @@ import jmri.jmrit.logix.OBlock;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 class BlockPortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -68,7 +68,7 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         List<NamedBean> list = _oBlockModel.getBeanList();
         if (list.size() > 0) {
             int count = 0;
-            int idx = 0;		//accumulated row count
+            int idx = 0;  //accumulated row count
             OBlock block = null;
             NamedBean[] array = new NamedBean[list.size()];
             array = list.toArray(array);

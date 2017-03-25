@@ -51,8 +51,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Speedo Console for Bachrus running stand reader interface
  *
- * @author	Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
+ * @author Andrew Crosland Copyright (C) 2010
+ * @author Dennis Miller Copyright (C) 2015
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ThrottleListener,

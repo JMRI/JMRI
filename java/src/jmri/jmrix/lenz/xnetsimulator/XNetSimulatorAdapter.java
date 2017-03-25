@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * NOTE: Some material in this file was modified from other portions of the
  * support infrastructure.
  *
- * @author	Paul Bender, Copyright (C) 2009-2010
+ * @author Paul Bender, Copyright (C) 2009-2010
  */
 public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable {
 

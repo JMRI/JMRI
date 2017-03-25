@@ -11,11 +11,11 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into IEEE802154
+ * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into IEEE802154
  * by
- * @author	Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013
  */
 public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 

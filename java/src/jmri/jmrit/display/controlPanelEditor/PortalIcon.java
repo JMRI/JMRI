@@ -30,8 +30,8 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
 
     private NamedBeanHandle<Portal> _portalHdl;
     private String _status;
-    private boolean _regular = true;	// true when TO_ARROW shows entry into ToBlock
-    private boolean _hide = false;	// true when arrow should NOT show entry into ToBlock
+    private boolean _regular = true; // true when TO_ARROW shows entry into ToBlock
+    private boolean _hide = false; // true when arrow should NOT show entry into ToBlock
 
     public PortalIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -192,7 +192,7 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         Object source = e.getSource();
 //        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" PropertyChange= "+e.getPropertyName()+
-//        		" oldValue= "+e.getOldValue().toString()+" newValue= "+e.getNewValue().toString());
+//          " oldValue= "+e.getOldValue().toString()+" newValue= "+e.getNewValue().toString());
         if (source instanceof Portal) {
             if ("Direction".equals(e.getPropertyName())) {
                 if (_hide) {

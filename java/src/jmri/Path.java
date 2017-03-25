@@ -37,7 +37,7 @@ import java.util.Objects;
  * returned. An Entry is only needed when there are paths of greatly different
  * lengths in the block.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Path {
 

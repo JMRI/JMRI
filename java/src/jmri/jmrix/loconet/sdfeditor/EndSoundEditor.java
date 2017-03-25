@@ -5,7 +5,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 /**
  * Editor panel for the END_SOUND.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 class EndSoundEditor extends SdfMacroEditor {
 

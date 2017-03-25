@@ -107,7 +107,7 @@ public class TrainSchedule {
             for (String id : trainIds) {
                 _trainIds.add(id);
             }
-//				log.debug("Train schedule " + getName() + " trainIds: " + ids);
+//    log.debug("Train schedule " + getName() + " trainIds: " + ids);
         }
     }
 
