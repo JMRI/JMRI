@@ -47,6 +47,7 @@
       <xs:attribute name="rangemax" type="xs:int" default="32"></xs:attribute>
       <xs:attribute name="type" type="xs:string"></xs:attribute>
       <xs:attribute name="connection" type="xs:string"></xs:attribute>
+      <xs:attribute name="shape" type="xs:string"></xs:attribute>
       <xs:attribute name="redBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="greenBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBackground" type="xs:int"></xs:attribute>

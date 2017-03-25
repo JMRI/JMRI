@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.List;
+//import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -61,6 +62,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("rangemax", "" + p.getPanelMenuRangeMax());
         panel.setAttribute("type", p.getSwitchType());
         panel.setAttribute("connection", p.getSwitchManu());
+        panel.setAttribute("shape", p.getSwitchShape());
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
             panel.setAttribute("greenBackground", "" + p.getBackgroundColor().getGreen());
@@ -114,6 +116,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int rangemax = 32;
         String type = "T";
         String connection = "I";
+        String shape = "button";
+        String name;
 
         try {
             x = shared.getAttribute("x").getIntValue();
@@ -125,7 +129,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             result = false;
         }
         // find the name
-        String name = "Switchboard";
+        name = "Switchboard"; // this should be replaced by the name as stored NOI18N
         if (shared.getAttribute("name") != null) {
             name = shared.getAttribute("name").getValue();
         }
@@ -214,6 +218,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         connection = shared.getAttribute("connection").getValue();
         panel.setSwitchManu(connection);
+
+        shape = shared.getAttribute("shape").getValue();
+        panel.setSwitchShape(shape);
 
         // set color if needed
         try {

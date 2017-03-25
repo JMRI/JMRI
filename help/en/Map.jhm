@@ -242,6 +242,8 @@
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_track" url="package/jmri/jmrit/display/LayoutEditor.shtml#track"/>
 
+<mapID target="package.jmri.jmrit.display.SwitchboardEditor" url="package/jmri/jmrit/display/SwitchboardEditor.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_DepartingStagingRoute" url="package/jmri/jmrit/operations/Operations.shtml#DepartingStagingRoute"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_List" url="manual/DecoderPro/Main_Throttle_List.shtml"/>
