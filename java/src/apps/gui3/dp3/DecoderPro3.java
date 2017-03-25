@@ -103,7 +103,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     static public void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
-        setConfigFilename("DecoderProConfig3.xml", args);
+        apps.gui3.Apps3.setConfigFilename("DecoderProConfig3.xml", args);
     }
 
     /**
