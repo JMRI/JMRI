@@ -111,6 +111,7 @@
     <aspectMapping>
       <advancedAspect>Block Signal Green</advancedAspect>
       <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
@@ -127,11 +128,13 @@
     <aspectMapping>
       <advancedAspect>Approach Signal Yellow</advancedAspect>
       <ourAspect>Approach Medium - Flashing Yellow</ourAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Approach Medium - Flashing Yellow</advancedAspect>
       <ourAspect>Block Signal Green</ourAspect>
+      <ourAspect>Approach Signal Yellow</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
