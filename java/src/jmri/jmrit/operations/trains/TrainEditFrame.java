@@ -84,7 +84,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     JLabel textEngine = new JLabel(Bundle.getMessage("Engines"));
 
     // major buttons
-    JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));	// edit route
+    JButton editButton = new JButton(Bundle.getMessage("ButtonEdit")); // edit route
     JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
     JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
     JButton resetButton = new JButton(Bundle.getMessage("ResetTrain"));
@@ -754,7 +754,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void loadCarTypes() {
-        int numberOfCheckboxes = getNumberOfCheckboxesPerLine();	// number per line
+        int numberOfCheckboxes = getNumberOfCheckboxesPerLine(); // number per line
         int x = 0;
         int y = 1; // vertical position in panel
         for (String type : CarTypes.instance().getNames()) {
@@ -792,7 +792,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void loadEngineTypes() {
-        int numberOfCheckboxes = getNumberOfCheckboxesPerLine();	// number per line
+        int numberOfCheckboxes = getNumberOfCheckboxesPerLine(); // number per line
         int x = 0;
         int y = 1;
         for (String type : EngineTypes.instance().getNames()) {

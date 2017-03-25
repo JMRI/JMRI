@@ -13,17 +13,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Track an occupied block to its adjacent blocks.
  *
- * @author	Pete Cressman Copyright (C) 2013
+ * @author Pete Cressman Copyright (C) 2013
  */
 public class Tracker {
 
-//	OBlock _currentBlock;
-//	OBlock _prevBlock;
+// OBlock _currentBlock;
+// OBlock _prevBlock;
     private String _trainName;
-    private ArrayList<OBlock> _headRange;	// blocks reachable from head block
-    private ArrayList<OBlock> _tailRange;	// blocks reachable from tail block
-    private ArrayList<OBlock> _lostRange;	// reachable block occupied by someone else
-    private LinkedList<OBlock> _occupies;	// blocks occupied by train
+    private ArrayList<OBlock> _headRange; // blocks reachable from head block
+    private ArrayList<OBlock> _tailRange; // blocks reachable from tail block
+    private ArrayList<OBlock> _lostRange; // reachable block occupied by someone else
+    private LinkedList<OBlock> _occupies; // blocks occupied by train
     private Portal _headPortal;
     private Portal _tailPortal;
     private long _time;
@@ -85,7 +85,7 @@ public class Tracker {
                 OBlock b = iter.next();
                 if (b.getDisplayName().equals(selection)) {
                     showBlockValue(b);
-                    _occupies.addLast(b);	// make additional block the tail
+                    _occupies.addLast(b); // make additional block the tail
                     _headPortal = getPortalBetween(getHeadBlock(), getTailBlock());
                     _tailPortal = _headPortal;
                     break;

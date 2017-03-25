@@ -67,8 +67,8 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     long maxDelay = 1000;  // max mSec since last successful end-of-operation for skipDupIndexWrite; longer delay writes anyway
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    String _cv;	// remember the cv number being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    String _cv; // remember the cv number being read/written
     int valuePI;  //  value to write to PI in current operation or -1
     int valueSI;  //  value to write to SI in current operation or -1
 

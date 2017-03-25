@@ -19,7 +19,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Slots 102 through 127 are normally not used for loco control, so are shown
  * separately.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 

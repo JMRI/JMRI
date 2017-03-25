@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * expect that local classes will define the message and done members.
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2015
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */

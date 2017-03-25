@@ -8,7 +8,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 /**
  * Frame displaying (and logging) CMRI serial command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 

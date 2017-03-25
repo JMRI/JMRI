@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
  * @see jmri.Programmer
  * @see jmri.ProgrammerManager
  * @see jmri.managers.DefaultProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 @net.jcip.annotations.Immutable
 public final class ProgrammingMode {

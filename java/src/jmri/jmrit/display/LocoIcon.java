@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoIcon extends PositionableLabel {
 
-    public static final String WHITE = Bundle.getMessage("White");		//loco background colors
+    public static final String WHITE = Bundle.getMessage("White");  //loco background colors
     public static final String GREEN = Bundle.getMessage("Green");
     public static final String GRAY = Bundle.getMessage("Gray");
     public static final String RED = Bundle.getMessage("Red");
@@ -47,7 +47,7 @@ public class LocoIcon extends PositionableLabel {
         setDisplayLevel(Editor.MARKERS);
         setShowTooltip(false);
         //setEditable(false);
-        _text = true;	//Markers are an icon with text
+        _text = true; //Markers are an icon with text
         setPopupUtility(new PositionablePopupUtil(this, this) {       // need this class for Font Edit
             @Override
             public void setFixedTextMenu(JPopupMenu popup) {
@@ -320,7 +320,7 @@ public class LocoIcon extends PositionableLabel {
                     block.setMarkerBackground(_locoColor);
                     PositionablePopupUtil util = getPopupUtility();
                     block.setMarkerFont(util.getFont());
-                    String name = getText();	// rotated icons have null text
+                    String name = getText(); // rotated icons have null text
                     if (name == null || name.length() == 0) {
                         name = getUnRotatedText();
                     }

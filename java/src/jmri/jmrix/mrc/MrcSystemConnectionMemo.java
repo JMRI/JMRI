@@ -12,7 +12,7 @@ import jmri.ProgrammerManager;
  * activate their particular system.
  *
  * @author Ken Cameron Copyright (C) 2014
- * @author	Kevin Dickerson Copyright (C) 2014
+ * @author Kevin Dickerson Copyright (C) 2014
  * 
  */
 public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {

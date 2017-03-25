@@ -4222,9 +4222,9 @@ public class Llnmon {
         if ((l.getElement(1) == 0x10) && ((l.getElement(2) & 0x7c) == 0)
                 && (l.getElement(3) == 0) && (l.getElement(4) == 0)) {
             // set PR3 mode of operation, where LS 2 bits of byte 2 are encoded as:
-            //	0x00	Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
-            //  0x01	Set the PR3 to decoder programming track mode
-            //  0x03	Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
+            // 0x00 Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
+            //  0x01 Set the PR3 to decoder programming track mode
+            //  0x03 Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
 
             switch (l.getElement(2) & 0x3) {
                 case 0x00: {

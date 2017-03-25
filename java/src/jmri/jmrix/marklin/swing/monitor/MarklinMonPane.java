@@ -9,7 +9,7 @@ import jmri.jmrix.marklin.swing.MarklinPanelInterface;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements MarklinListener, MarklinPanelInterface {
 

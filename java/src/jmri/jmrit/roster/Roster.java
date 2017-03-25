@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
  * eventually we can make those explicit references to other Roster objects
  * as/when needed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  * @author Dennis Miller Copyright 2004
  * @see jmri.jmrit.roster.RosterEntry
  */

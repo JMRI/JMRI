@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2004-2010
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2004-2010
  * @author      Mark Underwood Copyright (C) 2015
  *
  * Based on XNetTrafficController by Bob Jacobsen and Paul Bender
@@ -61,7 +61,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         mListenerMasks = new Hashtable<DCCppListener, Integer>();
         HighPriorityQueue = new java.util.concurrent.LinkedBlockingQueue<DCCppMessage>();
         HighPriorityListeners = new java.util.concurrent.LinkedBlockingQueue<DCCppListener>();
-	log.debug("DCCppTrafficController created.");
+ log.debug("DCCppTrafficController created.");
     }
 
     // Abstract methods for the DCCppInterface
@@ -105,57 +105,57 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
-	try {
-	    // NOTE: For now, just forward ALL messages without filtering
-	    ((DCCppListener) client).message((DCCppReply) m);
-	    // NOTE: For now, all listeners should register for DCCppInterface.ALL
-	    /*
-	    int mask = (mListenerMasks.get(client)).intValue();
-	    if (mask == DCCppInterface.ALL) {
-		((DCCppListener) client).message((DCCppReply) m);
-	    } else if ((mask & DCCppInterface.COMMINFO)
-		       == DCCppInterface.COMMINFO
-		       && (((DCCppReply) m).getElement(0)
-			   == DCCppConstants.LI_MESSAGE_RESPONSE_HEADER)) {
-		((DCCppListener) client).message((DCCppReply) m);
-	    } else if ((mask & DCCppInterface.CS_INFO)
-		       == DCCppInterface.CS_INFO
-		       && (((DCCppReply) m).getElement(0)
-			   == DCCppConstants.CS_INFO
-			   || ((DCCppReply) m).getElement(0)
-			   == DCCppConstants.CS_SERVICE_MODE_RESPONSE
-			   || ((DCCppReply) m).getElement(0)
-			   == DCCppConstants.CS_REQUEST_RESPONSE
-			   || ((DCCppReply) m).getElement(0)
-			   == DCCppConstants.BC_EMERGENCY_STOP)) {
-		((DCCppListener) client).message((DCCppReply) m);
-	    } else if ((mask & DCCppInterface.FEEDBACK)
-		       == DCCppInterface.FEEDBACK
-		       && (((DCCppReply) m).isFeedbackMessage()
-			   || ((DCCppReply) m).isFeedbackBroadcastMessage())) {
-		((DCCppListener) client).message((DCCppReply) m);
-	    } else if ((mask & DCCppInterface.THROTTLE)
-		       == DCCppInterface.THROTTLE
-		       && ((DCCppReply) m).isThrottleMessage()) {
-		((DCCppListener) client).message((DCCppReply) m);
-	    } else if ((mask & DCCppInterface.CONSIST)
-		       == DCCppInterface.CONSIST
-		       && ((DCCppReply) m).isConsistMessage()) {
-		((DCCppListener) client).message((DCCppReply) m);
-	    } else if ((mask & DCCppInterface.INTERFACE)
-		       == DCCppInterface.INTERFACE
-		       && (((DCCppReply) m).getElement(0)
-			   == DCCppConstants.LI_VERSION_RESPONSE
-			   || ((DCCppReply) m).getElement(0)
-			   == DCCppConstants.LI101_REQUEST)) {
-		((DCCppListener) client).message((DCCppReply) m);
-	    }
-		*/
-	} catch (NullPointerException e) {
-	    // catch null pointer exceptions, caused by a client
-	    // that sent a message without being a registered listener
-	    ((DCCppListener) client).message((DCCppReply) m);
-	}
+ try {
+     // NOTE: For now, just forward ALL messages without filtering
+     ((DCCppListener) client).message((DCCppReply) m);
+     // NOTE: For now, all listeners should register for DCCppInterface.ALL
+     /*
+     int mask = (mListenerMasks.get(client)).intValue();
+     if (mask == DCCppInterface.ALL) {
+  ((DCCppListener) client).message((DCCppReply) m);
+     } else if ((mask & DCCppInterface.COMMINFO)
+         == DCCppInterface.COMMINFO
+         && (((DCCppReply) m).getElement(0)
+      == DCCppConstants.LI_MESSAGE_RESPONSE_HEADER)) {
+  ((DCCppListener) client).message((DCCppReply) m);
+     } else if ((mask & DCCppInterface.CS_INFO)
+         == DCCppInterface.CS_INFO
+         && (((DCCppReply) m).getElement(0)
+      == DCCppConstants.CS_INFO
+      || ((DCCppReply) m).getElement(0)
+      == DCCppConstants.CS_SERVICE_MODE_RESPONSE
+      || ((DCCppReply) m).getElement(0)
+      == DCCppConstants.CS_REQUEST_RESPONSE
+      || ((DCCppReply) m).getElement(0)
+      == DCCppConstants.BC_EMERGENCY_STOP)) {
+  ((DCCppListener) client).message((DCCppReply) m);
+     } else if ((mask & DCCppInterface.FEEDBACK)
+         == DCCppInterface.FEEDBACK
+         && (((DCCppReply) m).isFeedbackMessage()
+      || ((DCCppReply) m).isFeedbackBroadcastMessage())) {
+  ((DCCppListener) client).message((DCCppReply) m);
+     } else if ((mask & DCCppInterface.THROTTLE)
+         == DCCppInterface.THROTTLE
+         && ((DCCppReply) m).isThrottleMessage()) {
+  ((DCCppListener) client).message((DCCppReply) m);
+     } else if ((mask & DCCppInterface.CONSIST)
+         == DCCppInterface.CONSIST
+         && ((DCCppReply) m).isConsistMessage()) {
+  ((DCCppListener) client).message((DCCppReply) m);
+     } else if ((mask & DCCppInterface.INTERFACE)
+         == DCCppInterface.INTERFACE
+         && (((DCCppReply) m).getElement(0)
+      == DCCppConstants.LI_VERSION_RESPONSE
+      || ((DCCppReply) m).getElement(0)
+      == DCCppConstants.LI101_REQUEST)) {
+  ((DCCppListener) client).message((DCCppReply) m);
+     }
+  */
+ } catch (NullPointerException e) {
+     // catch null pointer exceptions, caused by a client
+     // that sent a message without being a registered listener
+     ((DCCppListener) client).message((DCCppReply) m);
+ }
     }
 
     // We use the pollMessage routines for high priority messages.
@@ -232,7 +232,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     protected AbstractMRMessage enterNormalMode() {
         //return DCCppMessage.getExitProgModeMsg();
-	return null;
+ return null;
     }
 
     /**
@@ -250,10 +250,10 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     // endOfMessage() not really used in DCC++ .. it's handled in the Packetizer.
     protected boolean endOfMessage(AbstractMRReply msg) {
-	if (msg.getElement(msg.getNumDataElements()-1) == '>')
-	    return true;
-	else
-	    return false;
+ if (msg.getElement(msg.getNumDataElements()-1) == '>')
+     return true;
+ else
+     return false;
     }
 
     @Override
@@ -273,40 +273,40 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 //     * @throws java.io.IOException when presented by the input source.
 //     */
 //        protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
-//	// Spin waiting for start-of-frame '<' character (and toss it)
-//	String s = new String();
-//	byte char1;
-//	boolean found_start = false;
+// // Spin waiting for start-of-frame '<' character (and toss it)
+// String s = new String();
+// byte char1;
+// boolean found_start = false;
 //        
 //        log.debug("Calling DCCppTrafficController.loadChars()");
 //
-//	while (!found_start) {
-//	    char1 = readByteProtected(istream);
-//	    log.debug("Char1: {}", char1);
-//	    if ((char1 & 0xFF) == '<') {
-//		found_start = true;
-//		log.debug("Found starting < ");
-//		break; // A bit redundant with setting the loop condition true (false)
-//	    } else {
-//		//char1 = readByteProtected(istream);
-//	    }
-//	}
-//	
-//	// Now, suck in the rest of the message...
+// while (!found_start) {
+//     char1 = readByteProtected(istream);
+//     log.debug("Char1: {}", char1);
+//     if ((char1 & 0xFF) == '<') {
+//  found_start = true;
+//  log.debug("Found starting < ");
+//  break; // A bit redundant with setting the loop condition true (false)
+//     } else {
+//  //char1 = readByteProtected(istream);
+//     }
+// }
+// 
+// // Now, suck in the rest of the message...
 //        for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
 //            char1 = readByteProtected(istream);
-//	    if (char1 == '>') {
-//		log.debug("msg found > ");
-//		// Don't store the >
-//		break;
-//	    } else {
-//		log.debug("msg read byte {}", char1);
-//		char c = (char) (char1 & 0x00FF);
-//		s += Character.toString(c);
-//	    }
-//	}
-//	// TODO: Still need to strip leading and trailing whitespace.
-//	log.debug("Complete message = {}", s);
+//     if (char1 == '>') {
+//  log.debug("msg found > ");
+//  // Don't store the >
+//  break;
+//     } else {
+//  log.debug("msg read byte {}", char1);
+//  char c = (char) (char1 & 0x00FF);
+//  s += Character.toString(c);
+//     }
+// }
+// // TODO: Still need to strip leading and trailing whitespace.
+// log.debug("Complete message = {}", s);
 //        ((DCCppReply)msg).parseReply(s);
 //    }
 

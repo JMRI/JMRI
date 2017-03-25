@@ -16,7 +16,7 @@ import javax.swing.JToggleButton;
  * {@link jmri.jmrix.lenz.swing.lv102.LV102InternalFrame} a configuration
  * utility for the LV102 power station
  *
- * @author	Paul Bender Copyright (C) 2003,2005
+ * @author Paul Bender Copyright (C) 2003,2005
   */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 

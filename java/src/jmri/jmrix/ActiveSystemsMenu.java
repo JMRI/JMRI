@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see SystemsMenu
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class ActiveSystemsMenu extends JMenu {
 

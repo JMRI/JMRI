@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  * at the remote node, all of the routing of messages to multiple consumers can
  * be done without traffic over the connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2004-2010
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2004-2010
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {

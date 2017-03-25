@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Stephen Williams Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Stephen Williams Copyright (C) 2008
  */
 public class LocoNetSlot {
 
@@ -435,16 +435,16 @@ public class LocoNetSlot {
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
-    private int stat;	// <STAT> is the status of the slot
-    private int addr;	// full address of the loco, made from
+    private int stat; // <STAT> is the status of the slot
+    private int addr; // full address of the loco, made from
     //    <ADDR> is the low 7 (0-6) bits of the Loco address
     //    <ADD2> is the high 7 bits (7-13) of the 14-bit loco address
-    private int spd;	// <SPD> is the current speed (0-127)
-    private int dirf;	// <DIRF> is the current Direction and the setting for functions F0-F4
-    private int trk = 7;	// <TRK> is the global track status
-    private int ss2;	// <SS2> is the an additional slot status
-    private int snd; 	// <SND> is the settings for functions F5-F8
-    private int id;		// throttle id, made from
+    private int spd; // <SPD> is the current speed (0-127)
+    private int dirf; // <DIRF> is the current Direction and the setting for functions F0-F4
+    private int trk = 7; // <TRK> is the global track status
+    private int ss2; // <SS2> is the an additional slot status
+    private int snd;  // <SND> is the settings for functions F5-F8
+    private int id;  // throttle id, made from
     //     <ID1> and <ID2> normally identify the throttle controlling the loco
 
     private int _pcmd;  // hold pcmd and pstat for programmer

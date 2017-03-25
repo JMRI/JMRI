@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003-2010
+ * @author Bob Jacobsen Copyright 2003-2010
  */
 public class SignalPro extends Apps {
 

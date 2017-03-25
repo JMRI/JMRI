@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for classes representing a LocoNet communications port
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @author	Mark Underwoodn Copyright (C) 2015
+ * @author Kevin Dickerson Copyright (C) 2011
+ * @author Mark Underwoodn Copyright (C) 2015
  *
  * Based o LnNetworkPortController by Kevin Dickerson
  */
@@ -34,8 +34,8 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     protected boolean mTurnoutExtraSpace = false;
 
     protected int[] commandStationTypes = {
-	DCCppConstants.DCCPP_UNO_1_0,
-	DCCppConstants.DCCPP_ARDUINO_1_1
+ DCCppConstants.DCCPP_UNO_1_0,
+ DCCppConstants.DCCPP_ARDUINO_1_1
     };
 
     protected String[] commandStationNames;
@@ -53,14 +53,14 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
      * Set config info from a name, which needs to be one of the valid ones.
      */
     public void setCommandStationType(String name) {
-	for (int i = 0; i < commandStationNames.length; i++) {
-	    if (commandStationNames[i].matches(name)) {
-		commandStationType = i;
+ for (int i = 0; i < commandStationNames.length; i++) {
+     if (commandStationNames[i].matches(name)) {
+  commandStationType = i;
                 return;
-	    }
-	}
-	log.error("CommandStation Type not found: {}", name);
-	commandStationType = 0;
+     }
+ }
+ log.error("CommandStation Type not found: {}", name);
+ commandStationType = 0;
     }
 
     /**

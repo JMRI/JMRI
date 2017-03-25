@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * CommandStation interface, which is where the real guts of it is. In
  * particular, note that transmission is not a threaded operation.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class TrafficController implements jmri.CommandStation {
 

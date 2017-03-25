@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 /**
  * Swing action to create and register a PowerPanelFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
 public class PowerPanelAction extends jmri.util.swing.JmriNamedPaneAction {
 

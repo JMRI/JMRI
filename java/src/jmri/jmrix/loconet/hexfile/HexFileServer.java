@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * ConnectionConfigXml.load() calls HexFileServer instead of HexFileFrame if
  * jmri is running in headless mode.
  *
- * @author	Steve Todd Copyright 2012
+ * @author Steve Todd Copyright 2012
  */
 public class HexFileServer {
 

@@ -18,7 +18,7 @@ public class LocationsTableAction extends AbstractAction {
     }
 
     public LocationsTableAction() {
-        this(Bundle.getMessage("MenuLocations"));	// NOI18N
+        this(Bundle.getMessage("MenuLocations")); // NOI18N
     }
 
     private static LocationsTableFrame locationTableFrame = null;
@@ -31,7 +31,7 @@ public class LocationsTableAction extends AbstractAction {
             locationTableFrame = new LocationsTableFrame();
         }
         locationTableFrame.setExtendedState(Frame.NORMAL);
-        locationTableFrame.setVisible(true);	// this also brings the frame into focus
+        locationTableFrame.setVisible(true); // this also brings the frame into focus
     }
 }
 

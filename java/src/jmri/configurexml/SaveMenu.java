@@ -7,7 +7,7 @@ import javax.swing.JMenu;
  * Create a "Save" menu item containing actions for storing various data
  * (subsets).
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class SaveMenu extends JMenu {
 

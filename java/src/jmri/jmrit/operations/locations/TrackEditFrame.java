@@ -331,7 +331,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         addRadioButtonAction(excludeTrainPickup);
         addRadioButtonAction(excludeRoutePickup);
 
-        //		addComboBoxAction(comboBoxTypes);
+        //  addComboBoxAction(comboBoxTypes);
         addCheckBoxAction(autoDropCheckBox);
         addCheckBoxAction(autoPickupCheckBox);
 
@@ -371,7 +371,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // load
         updateCheckboxes();
-        //		updateTypeComboBoxes();
+        //  updateTypeComboBoxes();
         updateTrainDir();
         updateCarOrder();
         updateDropOptions();
@@ -1044,7 +1044,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     // car and loco types
     private void updateCheckboxes() {
-        //		log.debug("Update all checkboxes");
+        //  log.debug("Update all checkboxes");
         checkBoxes.clear();
         panelCheckBoxes.removeAll();
         x = 0;

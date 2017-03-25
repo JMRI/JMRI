@@ -11,7 +11,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to create and register a SimpleProgAction object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SimpleProgAction extends JmriAbstractAction {
 
