@@ -815,9 +815,9 @@
             <version>2.11.0</version>
         </dependency>
         <dependency>
-            <groupId>com.digi</groupId>
-            <artifactId>xbjlib</artifactId>
-            <version>1.1.1</version>
+            <groupId>com.digi.xbee</groupId>
+            <artifactId>xbee-java-library</artifactId>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
