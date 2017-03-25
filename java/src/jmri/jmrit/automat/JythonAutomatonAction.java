@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 /**
  * Swing action to create and register a JythonAutomaton object
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
 public class JythonAutomatonAction extends AbstractAction {
 

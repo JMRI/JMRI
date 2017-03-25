@@ -273,7 +273,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         // Unused. Carried over from SetTrainIconPosition or whatever it was
         // called...
-	/*
+ /*
          * private void spinnersEnable(boolean enable){
          * physicalLocation.setEnabled(enable); }
          */

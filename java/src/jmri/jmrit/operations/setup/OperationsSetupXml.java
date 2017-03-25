@@ -59,7 +59,7 @@ public class OperationsSetupXml extends OperationsXml {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
         doc.addContent(0, p);
 
-        // add top-level elements	        
+        // add top-level elements         
         root.addContent(Setup.store());
         // add manifest header text strings
         root.addContent(TrainManifestHeaderText.store());

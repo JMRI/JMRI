@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame controlling a single turnout
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 

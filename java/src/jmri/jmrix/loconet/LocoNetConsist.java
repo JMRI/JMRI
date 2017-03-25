@@ -312,7 +312,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + directionNormal + ".");
         }
         throttleManager.requestThrottle(LocoAddress, this);
-        // skip right to stage 2, we do not need to status edit.	
+        // skip right to stage 2, we do not need to status edit. 
         consistRequestState = LINKSTAGETWOSTATE;
     }
 

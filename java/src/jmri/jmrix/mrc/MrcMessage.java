@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact MRC Inc
  * for separate permission.
  * <p>
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
  * @author Kevin Dickerson Copyright (C) 2014
- * @author	kcameron Copyright (C) 2014
+ * @author kcameron Copyright (C) 2014
   */
 public class MrcMessage {
 

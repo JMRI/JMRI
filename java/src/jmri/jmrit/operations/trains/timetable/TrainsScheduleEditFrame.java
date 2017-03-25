@@ -93,7 +93,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         String s = addTextBox.getText();
         s = s.trim();
         if (s.equals("")) {
-            return;	// done
+            return; // done
         }
         if (ae.getSource() == addButton) {
             trainScheduleManager.newSchedule(s);

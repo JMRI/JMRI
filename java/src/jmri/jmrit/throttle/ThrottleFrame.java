@@ -170,16 +170,16 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttle-config.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-/*			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*   java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttle.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
             Element throttleElement = getXml();
             // don't save the loco address or consist address
-//			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-//			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-            if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry	
+//   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+//   throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+            if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry 
             {
                 throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
             }
@@ -246,7 +246,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 log.debug("Loading throttle exception: " + ex.getMessage());
             }
         }
-//    	checkPosition();
+//     checkPosition();
         if (switchAfter) {
             switchMode();
         }
@@ -285,8 +285,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
-        int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10; 		// = 192
-        int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20;	// = 240 (but there seems to be another 10 needed for some LAFs)
+        int width = 3 * (FunctionButton.BUT_WDTH) + 2 * 3 * 5 + 10;   // = 192
+        int height = 6 * (FunctionButton.BUT_HGHT) + 2 * 6 * 5 + 20; // = 240 (but there seems to be another 10 needed for some LAFs)
 
         if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
                 && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
@@ -333,7 +333,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         add(addressPanel, PANEL_LAYER_FRAME);
 
         if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) {
-            /*        	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
+            /*         if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
              setTransparent(functionPanel);
              setTransparent(addressPanel);
              setTransparent(controlPanel);
@@ -831,7 +831,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     @Override
     public void componentResized(ComponentEvent e) {
-//		checkPosition ();
+//  checkPosition ();
     }
 
     @Override

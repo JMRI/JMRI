@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * For more info on the signals, see
  * <a href="http://www.merg.info">http://www.merg.info</a>.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class MergSD2SignalHead extends DefaultSignalHead {
 

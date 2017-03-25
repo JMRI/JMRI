@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * Insteon: Pthh.hh.hh where: t is the type code, 'S' for sensors, and 'L' for
  * lights aa is two hexadecimal digits examples: PLA2.43.CB
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2004
+ * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
- * @author	Ken Cameron, Copyright (C) 2008, 2009, 2010
+ * @author Ken Cameron, Copyright (C) 2008, 2009, 2010
  */
 public class SerialAddress {
 

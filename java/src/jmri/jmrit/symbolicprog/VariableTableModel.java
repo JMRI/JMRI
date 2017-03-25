@@ -218,7 +218,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     public void setRow(int row, Element e) {
         // get the values for the VariableValue ctor
-        String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
+        String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) {
             log.debug("Starting to setRow \"" + name + "\"");
         }
@@ -413,7 +413,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public int setIndxRow(int row, Element e, String productID, String modelID, String familyID) {
 
         // get the values for the VariableValue ctor
-        String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
+        String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) {
             log.debug("Starting to setIndexedRow \"" + name + "\" row " + row);
         }

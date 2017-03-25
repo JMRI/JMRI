@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SensorTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2009
+ * @author Bob Jacobsen Copyright (C) 2003, 2009
  */
 public class SensorTableAction extends AbstractTableAction {
 

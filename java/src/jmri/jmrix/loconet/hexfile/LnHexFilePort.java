@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * contain as many bytes as needed, each represented by two Hex characters and
  * separated by a space. Variable whitespace is not (yet) supported
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
@@ -198,7 +198,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return true;
     }
     // define operation
-    private int delay = 100;  				// units are milliseconds; default is quiet a busy LocoNet
+    private int delay = 100;      // units are milliseconds; default is quiet a busy LocoNet
 
     @Override
     public java.util.Vector<String> getPortNames() {

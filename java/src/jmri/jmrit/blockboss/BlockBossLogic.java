@@ -114,7 +114,7 @@ import org.slf4j.LoggerFactory;
  * proceed at track speed when it reaches that next signal (along the track with
  * the green signal).
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  *
  * Revisions to add facing point sensors, approach lighting, and check box to
  * limit speed. Dick Bronosn (RJB) 2006

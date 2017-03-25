@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
 
     public static final int NUM_FUNCTION_BUTTONS = 29;
-    public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
+    public static final int NUM_FUNC_BUTTONS_INIT = 16; //only show 16 function buttons at start
     private DccThrottle mThrottle;
 
     private JPanel mainPanel;
@@ -302,7 +302,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             if (functionButton[i].isDirty() && !text.equals(rosterEntry.getFunctionLabel(functionNumber))) {
                 functionButton[i].setDirty(false);
                 if (text.equals("")) {
-                    text = null;		// reset button text to default
+                    text = null;  // reset button text to default
                 }
                 rosterEntry.setFunctionLabel(functionNumber, text);
             }
@@ -453,7 +453,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         functionButton[22].setKeyCode(KeyEvent.VK_F22);
         functionButton[23].setKeyCode(KeyEvent.VK_F23);
         functionButton[24].setKeyCode(KeyEvent.VK_F24);
-        functionButton[25].setKeyCode(0xF00C);			// keycodes 25 - 28 don't exist in KeyEvent
+        functionButton[25].setKeyCode(0xF00C);   // keycodes 25 - 28 don't exist in KeyEvent
         functionButton[26].setKeyCode(0xF00D);
         functionButton[27].setKeyCode(0xF00E);
         functionButton[28].setKeyCode(0xF00F);
@@ -476,7 +476,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             if ((rosterEntry != null) && (log.isDebugEnabled())) {
                 log.debug("RosterEntry found: " + rosterEntry.getId());
             }
-            int maxi = 0;	// the number of function buttons defined for this entry
+            int maxi = 0; // the number of function buttons defined for this entry
             for (int i = 0; i < FunctionPanel.NUM_FUNCTION_BUTTONS; i++) {
                 try {
                     functionButton[i].setIdentity(i); // full reset of function

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * The reporter will decode the rail com packets and add the information to the
  * rail com tag.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocationReporter {
 

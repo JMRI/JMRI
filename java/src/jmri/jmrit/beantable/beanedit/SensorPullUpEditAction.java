@@ -15,8 +15,8 @@ import jmri.Sensor;
  * This is designed so that it can be re-used in other panels.  This is based
  * on the SensorDebounceEditAction class.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @author	Kevin Dickerson Copyright (C) 2017 
+ * @author Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2017 
  */
 public class SensorPullUpEditAction extends BeanEditAction {
 

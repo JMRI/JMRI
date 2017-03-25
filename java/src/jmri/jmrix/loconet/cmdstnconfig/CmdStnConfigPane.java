@@ -41,8 +41,8 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Alex Shepherd Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Alex Shepherd Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 

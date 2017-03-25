@@ -151,7 +151,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
     // Unused. Carried over from SetTrainIconPosition or whatever it was
     // called...
-	/*
+ /*
      * private void spinnersEnable(boolean enable){ physicalLocation.setEnabled(enable); }
      */
     private void saveSpinnerValues(Location l) {

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * is somewhat different here. The LocoNet version waited for the sent (LocoNet)
  * packet to be echo'd, while this starts the timeout immediately.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 

@@ -245,7 +245,7 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     private GeneralPath scale(float ratioX, float ratioY) {
-//    	log.info("scale("+ratioX+" , "+ratioY+")");
+//     log.info("scale("+ratioX+" , "+ratioY+")");
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
         PathIterator iter = getPathIterator(null);
         float[] coord = new float[6];
@@ -268,7 +268,7 @@ public class PositionablePolygon extends PositionableShape {
                     path.closePath();
                     break;
             }
-//    		log.debug("type= "+type+"  x= "+coord[0]+", y= "+ coord[1]);
+//      log.debug("type= "+type+"  x= "+coord[0]+", y= "+ coord[1]);
             iter.next();
         }
         return path;

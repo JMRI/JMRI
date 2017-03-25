@@ -6,7 +6,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public interface SignalMastLogicManager extends Manager {
 

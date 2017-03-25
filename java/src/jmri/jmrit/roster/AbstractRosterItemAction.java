@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Note that {@link DeleteRosterItemAction} is sufficiently different that it
  * doesn't use this base class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2008
  * @see jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstractAction {
