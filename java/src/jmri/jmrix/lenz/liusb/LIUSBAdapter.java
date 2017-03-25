@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
- * @author	Paul Bender Copyright (C) 2005-2010
+ * @author Paul Bender Copyright (C) 2005-2010
  */
 public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -269,8 +269,8 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
                 SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)

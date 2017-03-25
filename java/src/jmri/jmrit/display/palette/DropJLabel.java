@@ -119,7 +119,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         }
 //        _catalog.setBackground(label);
         _iconMap.put(label.getName(), newIcon);
-        if (!_update) {		// only prompt for save from palette
+        if (!_update) {  // only prompt for save from palette
             ImageIndexEditor.indexChanged(true);
         }
         e.dropComplete(true);

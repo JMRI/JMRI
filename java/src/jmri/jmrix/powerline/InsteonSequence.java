@@ -9,9 +9,9 @@ package jmri.jmrix.powerline;
  * A sequence should consist of addressing (1 or more), and then one or more
  * commands. It can address multiple devices.
  *
- * @author	Bob Coleman Copyright (C) 2010
- * @author	Bob Jacobsen Copyright (C) 2008
- * @author	Ken Cameron Copyright (C) 2010
+ * @author Bob Coleman Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2008
+ * @author Ken Cameron Copyright (C) 2010
  */
 public class InsteonSequence {
 

@@ -13,7 +13,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of serial messages
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */

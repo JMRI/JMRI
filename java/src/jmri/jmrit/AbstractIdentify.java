@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * function) to simplify use of {@link jmri.Programmer} callbacks.
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2015
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */

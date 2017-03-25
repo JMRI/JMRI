@@ -3,7 +3,7 @@ package jmri.implementation;
 /**
  * A simple class that repeaters the state of one SignalMast to another
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

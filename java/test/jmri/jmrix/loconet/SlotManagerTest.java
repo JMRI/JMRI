@@ -424,7 +424,7 @@ public class SlotManagerTest extends TestCase {
         String SI = "16";
         boolean cvFirst = false;
         jmri.implementation.MultiIndexProgrammerFacade pf2
-                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst);
+                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst, false);
 
         String CV1 = "16.2.257";
         int val2 = 55;
@@ -539,7 +539,7 @@ public class SlotManagerTest extends TestCase {
         String SI = "16";
         boolean cvFirst = false;
         jmri.implementation.MultiIndexProgrammerFacade pf2
-                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst);
+                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst, false);
 
         String CV1 = "16.2.257";
         int val2 = 55;
@@ -654,7 +654,7 @@ public class SlotManagerTest extends TestCase {
         String SI = "16";
         boolean cvFirst = false;
         jmri.implementation.MultiIndexProgrammerFacade pf2
-                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst);
+                = new jmri.implementation.MultiIndexProgrammerFacade(pf1, PI, SI, cvFirst, false);
 
         String CV1 = "16.2.257";
         int val2 = 55;

@@ -16,7 +16,7 @@ import jmri.jmrix.nce.NceTrafficController;
 /**
  * Pane for user input of Nce macros
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007 Cloned into a Panel by
  * @author kcameron
  *
@@ -168,11 +168,11 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             // We need to send this version of macro command to cause turnout
             // state to change in NCE CS
             NceMessage m = new NceMessage(5);
-            m.setElement(0, NceBinaryCommand.ACC_CMD); 		// Macro cmd
-            m.setElement(1, 0x00); 		// addr_h
-            m.setElement(2, 0x01); 		// addr_l
-            m.setElement(3, 0x01); 		// Macro cmd
-            m.setElement(4, macroNum); 	// Macro #
+            m.setElement(0, NceBinaryCommand.ACC_CMD);   // Macro cmd
+            m.setElement(1, 0x00);   // addr_h
+            m.setElement(2, 0x01);   // addr_l
+            m.setElement(3, 0x01);   // Macro cmd
+            m.setElement(4, macroNum);  // Macro #
             m.setBinary(true);
             m.setReplyLen(REPLY_LEN);
             return m;
@@ -181,8 +181,8 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
 
             // NCE responds with okay (!) if macro exist, (0) if not
             NceMessage m = new NceMessage(2);
-            m.setElement(0, NceBinaryCommand.MACRO_CMD); 		// Macro cmd
-            m.setElement(1, macroNum); 	// Macro #
+            m.setElement(0, NceBinaryCommand.MACRO_CMD);   // Macro cmd
+            m.setElement(1, macroNum);  // Macro #
             m.setBinary(true);
             m.setReplyLen(REPLY_LEN);
             return m;

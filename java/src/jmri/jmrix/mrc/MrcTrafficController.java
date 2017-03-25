@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * This handles the state transistions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public abstract class MrcTrafficController implements MrcInterface {
 

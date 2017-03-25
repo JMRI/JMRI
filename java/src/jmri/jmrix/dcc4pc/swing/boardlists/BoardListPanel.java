@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Signal Mast Add / Edit Panel
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  * 
  */
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {

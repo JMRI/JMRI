@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an EasyDccMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
  */
 public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 

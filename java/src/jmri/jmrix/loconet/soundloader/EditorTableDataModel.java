@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of Digitrax SPJ files
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dennis Miller Copyright (C) 2006
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {

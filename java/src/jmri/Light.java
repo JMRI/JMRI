@@ -57,9 +57,9 @@ import jmri.implementation.LightControl;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Dave Duchamp Copyright (C) 2004, 2010
- * @author	Ken Cameron Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2010
+ * @author Ken Cameron Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public interface Light extends NamedBean {
 

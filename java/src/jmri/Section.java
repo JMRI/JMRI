@@ -96,7 +96,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Dave Duchamp Copyright (C) 2008,2010
+ * @author Dave Duchamp Copyright (C) 2008,2010
  */
 public class Section extends AbstractNamedBean
         implements java.io.Serializable {
@@ -1557,7 +1557,7 @@ public class Section extends AbstractNamedBean
 
     /*
      * Returns 'true' if successfully checked direction sensor by follow connectivity from specified
-     *		track node.  Returns 'false' if an error occurred.
+     *  track node.  Returns 'false' if an error occurred.
      */
     private boolean setDirectionSensorByConnectivity(TrackNode tNode, TrackNode altNode, SignalHead sh,
             Block cBlock, ConnectivityUtil cUtil) {
@@ -1871,7 +1871,7 @@ public class Section extends AbstractNamedBean
                                         || ((t.getContinuingSense() == Turnout.THROWN)
                                         && (((TrackSegment) t.getConnectC()).getLayoutBlock().getBlock() == cBlock))) {
                                     // continuing track segment is in this block, normal continuing sense - or -
-                                    //		diverging track segment is in this block, reverse continuing sense.
+                                    //  diverging track segment is in this block, reverse continuing sense.
                                     if (a2Head == null) {
                                         // single head at throat
                                         if (!checkDirectionSensor(aHead, direction,
@@ -1894,7 +1894,7 @@ public class Section extends AbstractNamedBean
                                         || ((t.getContinuingSense() == Turnout.THROWN)
                                         && (((TrackSegment) t.getConnectB()).getLayoutBlock().getBlock() == cBlock))) {
                                     // diverging track segment is in this block, normal continuing sense - or -
-                                    //		continuing track segment is in this block, reverse continuing sense.
+                                    //  continuing track segment is in this block, reverse continuing sense.
                                     if (a2Head == null) {
                                         // single head at throat
                                         if (!checkDirectionSensor(aHead, direction,

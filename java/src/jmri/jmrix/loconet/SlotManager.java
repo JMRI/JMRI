@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -528,7 +528,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 stopTimer();
                 notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
             } else if (checkLackAcceptedBlind(m.getElement(2))) { // task accepted blind
-                if ((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
+                if ((_progRead || _progConfirm) && !mServiceMode) { // incorrect Reserved OpSw setting can cause this response to OpsMode Read
                     // just treat it as a normal OpsMode Read response
                     // move to commandExecuting state
                     log.debug("LACK accepted (ignoring incorrect OpSw), next state 2"); // NOI18N

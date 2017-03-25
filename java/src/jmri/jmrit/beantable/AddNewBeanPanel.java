@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {

@@ -9,7 +9,7 @@ import jmri.Sensor;
 /**
  * Provides an edit panel for a sensor object
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SensorEditAction extends BeanEditAction {
 

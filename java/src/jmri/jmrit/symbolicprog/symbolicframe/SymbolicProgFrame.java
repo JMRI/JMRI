@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Frame providing a table-organized command station programmer from decoder
  * definition files
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame {
 

@@ -3,10 +3,10 @@ package jmri.jmrix.dccpp;
 /**
  * DCCppConstants.java
  *
- * Description:	Constants to represent values seen in DCC++ traffic
+ * Description: Constants to represent values seen in DCC++ traffic
  *
- * @author	Paul Bender Copyright (C) 2003-2009
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2003-2009
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
@@ -38,8 +38,8 @@ public final class DCCppConstants {
     public final static int DCCPP_UNO_1_0 = 1;
     public final static int DCCPP_ARDUINO_1_1 = 2;
     public final static String CommandStationNames[] = {
-	"DCCPP Arduino Uno v1.0",
-	"DCCPP Arduino V1.1",
+ "DCCPP Arduino Uno v1.0",
+ "DCCPP Arduino V1.1",
     };
 
     // DCC++ Command OpCodes
@@ -70,7 +70,7 @@ public final class DCCppConstants {
     public final static char GET_FREE_MEMORY        = 'F';
     public final static char LIST_REGISTER_CONTENTS = 'L';
     public final static char ENTER_DIAG_MODE_CMD    = 'D'; // Enter Diagnostics mode -- NEW V1.2?
-	
+ 
     // Message Replies
     public final static char THROTTLE_REPLY   = 'T'; // <T reg speed dir>
     public final static char TURNOUT_REPLY    = 'H'; // <H id throw> or <X>

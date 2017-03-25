@@ -16,7 +16,7 @@ import jmri.swing.RowSorterUtil;
 /**
  * Provide a table of block route entries as a JmriJPanel
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 

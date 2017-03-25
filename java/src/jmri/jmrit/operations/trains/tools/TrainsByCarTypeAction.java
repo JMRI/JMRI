@@ -29,7 +29,7 @@ public class TrainsByCarTypeAction extends AbstractAction {
             f.initComponents("");
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 

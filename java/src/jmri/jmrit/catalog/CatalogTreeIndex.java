@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Source of the tree content is an XML file.
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  *
  */
 public class CatalogTreeIndex extends AbstractCatalogTree {

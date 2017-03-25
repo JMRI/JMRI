@@ -200,7 +200,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
 
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel();	// kludge fix for horizontal scrollbar
+        pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
         panel.add(pad);
 

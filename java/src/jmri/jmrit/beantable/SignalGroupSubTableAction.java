@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based in part on RouteTableAction.java and SignalGroupTableAction.java by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2010
  * @author Egbert Broerse 2017
 
  */
