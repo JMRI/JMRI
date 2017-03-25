@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * This is a configuration utility for the LZ100. It allows the user to set the
  * statup mode (automatic or manual) and to reset the command station.
  *
- * @author	Paul Bender Copyright (C) 2005-2010
+ * @author Paul Bender Copyright (C) 2005-2010
   */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 

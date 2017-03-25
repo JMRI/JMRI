@@ -36,7 +36,7 @@ import jmri.ProgrammingMode;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  * @since 4.1.1
  */
 public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManager implements jmri.AddressedProgrammerManager {

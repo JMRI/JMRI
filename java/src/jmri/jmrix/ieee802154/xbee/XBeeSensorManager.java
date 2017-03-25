@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * System names are "ZSnnn", where nnn is the sensor number without padding. or
  * "ZSstring:pin", where string is a node address and pin is the io pin used.
  *
- * @author	Paul Bender Copyright (C) 2003-2016
+ * @author Paul Bender Copyright (C) 2003-2016
  */
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 

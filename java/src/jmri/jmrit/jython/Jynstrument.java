@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class Jynstrument extends JPanel {
 
-    private Object mContext;		// Object being extended
-    private String jythonFile;		// Name of the Jython file being run
-    private String jynstrumentFolder;	// Folder where the script seats (to retrieve resources)
+    private Object mContext;  // Object being extended
+    private String jythonFile;  // Name of the Jython file being run
+    private String jynstrumentFolder; // Folder where the script seats (to retrieve resources)
     private String className; // name of the JYnstrument class
     private JPopupMenu myPopUpMenu; // a popup menu
 

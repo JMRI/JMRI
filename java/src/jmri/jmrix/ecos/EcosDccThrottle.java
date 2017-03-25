@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001, modified 2009 by Kevin Dickerson
+ * @author Bob Jacobsen Copyright (C) 2001, modified 2009 by Kevin Dickerson
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 

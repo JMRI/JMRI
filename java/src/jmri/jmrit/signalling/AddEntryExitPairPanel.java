@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JPanel to create a new EntryExitPair.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 

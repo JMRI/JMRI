@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman Copyright 2011
+ * @author Pete Cressman Copyright 2011
  *
  */
 public abstract class DragJComponent extends JPanel implements DragGestureListener, DragSourceListener, Transferable {

@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Dcc4PcReply.java
  *
- * Description:	Carries the reply to a Dcc4PcMessage
+ * Description: Carries the reply to a Dcc4PcMessage
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
 public class Dcc4PcReply extends AbstractMRReply {

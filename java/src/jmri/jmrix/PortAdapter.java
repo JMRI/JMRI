@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
  * <P>
  * This has no e.g. serial-specific information.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
  * @see jmri.jmrix.SerialConfigException
  * @since 2.3.1
  */

@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * address; more than one Turnout object pointing to a single device is not
  * allowed.
  *
- * Description:	extend jmri.AbstractTurnout for powerline serial layouts
+ * Description: extend jmri.AbstractTurnout for powerline serial layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */
@@ -45,9 +45,9 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //                    Object oldValue,
+        //      Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states

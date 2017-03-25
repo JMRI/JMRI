@@ -133,8 +133,8 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
-        int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5; 		// = 192
-        int height = 6 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 10;	// = 240 (another 10 needed?)
+        int width = 3 * (FunctionButton.getButtonWidth()) + 2 * 3 * 5;   // = 192
+        int height = 6 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 10; // = 240 (another 10 needed?)
         _functionPanel.setSize(width, height);
         _functionPanel.setVisible(true);
         _functionPanel.setEnabled(false);
@@ -201,9 +201,9 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
          public void actionPerformed(ActionEvent e) {
          _functionPanel.resetFuncButtons();
          }
-         });	*/
+         }); */
 
-//		editMenu.add(resetFuncButtonsItem);
+//  editMenu.add(resetFuncButtonsItem);
         this.setJMenuBar(new JMenuBar());
         this.getJMenuBar().add(speedControl);
 

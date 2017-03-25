@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * focusListener to do that.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class ValueEditor extends JComboBox<Object> implements TableCellEditor, FocusListener {
 

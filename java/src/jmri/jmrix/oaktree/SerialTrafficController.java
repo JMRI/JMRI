@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {

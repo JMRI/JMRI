@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -237,7 +237,7 @@ class Diesel3Sound extends EngineSound {
                 sb.addLoopBuffers(l);
                 j++;
             }
-	    //log.debug("Notch: " + nn + " File: " + fn);
+     //log.debug("Notch: " + nn + " File: " + fn);
 
             // Gain is broken, for the moment.  Buffers don't have gain. Sources do.
             //_sound.setGain(setXMLGain(el));

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend the PaneProgFrame to handle ops mode operations
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
 public class PaneOpsProgFrame extends PaneProgFrame
         implements java.beans.PropertyChangeListener {

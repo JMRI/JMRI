@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Check the names in an XML decoder file against the names.xml definitions
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Control of the systemName is internal so the more casual approach of
  * SignalHeadManager is used rather than the ProxyManager style.
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  *
  */
 public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager

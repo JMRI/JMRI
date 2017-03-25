@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * of the Turnout interface.
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
  * 
  */

@@ -192,7 +192,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
                     }
                 });
         showAdvancedItems();
-        init = false;		// need to reload action listeners
+        init = false;  // need to reload action listeners
         checkInitDone();
     }
 

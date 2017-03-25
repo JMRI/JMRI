@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a DispatcherFrame
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class DispatcherAction extends AbstractAction {
 

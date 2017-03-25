@@ -41,7 +41,7 @@ import jmri.util.swing.XTableColumnModel;
 /**
  * Provide a table of roster entries as a JmriJPanel.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  * @author Randall Wood Copyright (C) 2013
  */
 public class RosterTable extends JmriPanel implements RosterEntrySelector, RosterGroupSelector {

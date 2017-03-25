@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Encodes a message for direct DCC
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 

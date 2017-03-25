@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a SensorTable
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2009
+ * @author Bob Jacobsen Copyright (C) 2003, 2009
  */
 public class SensorTableDataModel extends BeanTableDataModel {
 

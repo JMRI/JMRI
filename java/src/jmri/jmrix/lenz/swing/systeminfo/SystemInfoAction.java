@@ -9,7 +9,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
  * The {@link SystemInfoFrame} is an information screen giving the hardware and
  * software versions of the Interface hardware and the command station
  *
- * @author	Paul Bender Copyright (C) 2003
+ * @author Paul Bender Copyright (C) 2003
  */
 public class SystemInfoAction extends AbstractXPressNetAction {
 

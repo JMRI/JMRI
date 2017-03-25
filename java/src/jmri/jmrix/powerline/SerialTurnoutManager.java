@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */

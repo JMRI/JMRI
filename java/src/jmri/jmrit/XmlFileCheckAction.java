@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Make sure an XML file is readable, without doing a DTD or Schema validation.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2005, 2007
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileValidateAction
  */
