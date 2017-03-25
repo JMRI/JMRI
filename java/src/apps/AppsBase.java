@@ -58,6 +58,10 @@ public abstract class AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     * <ul>
+     * <li> Initialize logging
+     * <li> Set application name
+     * </ul>
      *
      * @param applicationName The application name as presented to the user
      */
@@ -242,6 +246,21 @@ public abstract class AppsBase {
 
     }
 
+    /**
+     * Invoked to load the preferences information, and in the process
+     * configure the system.
+     * The high-level steps are:
+     *<ul>
+     *  <li>Locate the preferences file based through
+     *      {@link FileUtil#getFile(String)}
+     *  <li>See if the preferences file exists, and handle it if it doesn't
+     *  <li>Obtain a {@link jmri.ConfigureManager} from the {@link jmri.InstanceManager}
+     *  <li>Ask that ConfigureManager to load the file, in the process loading information into existing and new managers.
+     *  <li>Do any deferred loads that are needed
+     *  <li>If needed, migrate older formats
+     *</ul>
+     * (There's additional handling for shared configurations)
+     */
     protected void setAndLoadPreferenceFile() {
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         final File file;

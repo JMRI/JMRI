@@ -57,6 +57,10 @@ public abstract class Apps3 extends AppsBase {
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     * <ul>
+     * <li> Operations from {@link AppsBase#preInit(String)}
+     * <li> Initialize the console support
+     * </ul>
      *
      * @param applicationName application name
      */
