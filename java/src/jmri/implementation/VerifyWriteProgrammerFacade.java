@@ -11,11 +11,29 @@ import org.slf4j.LoggerFactory;
  * <p>
  * If the underlying programmer can read, each write operation is followed by a readback.
  * If the value doesn't match, an error is signaled.
+ * <p>
+ * State Diagram for read and write operations: <img src="doc-files/VerifyWriteProgrammerFacade-State-Diagram.png" alt="UML State diagram"><p>
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2017
  */
+ 
+ /*
+ * @startuml jmri/implementation/doc-files/VerifyWriteProgrammerFacade-State-Diagram.png
+ * [*] --> NOTPROGRAMMING : Error reply received
+ * [*] --> NOTPROGRAMMING 
+ * NOTPROGRAMMING --> READING: readCV() (read CV)
+ * READING --> NOTPROGRAMMING: OK reply received (return status and value)
+ * NOTPROGRAMMING --> FINISHWRITE: writeCV() (write CV)
+ * FINISHWRITE --> FINISHREAD: OK reply & getCanRead() (read CV)
+ * FINISHWRITE --> NOTPROGRAMMING: OK reply received (&& !getCanRead() return OK status and value)
+ * FINISHREAD --> NOTPROGRAMMING: OK reply & value matches (return OK status reply and value)
+ * FINISHREAD --> NOTPROGRAMMING: OK reply & value not match (return error status reply and value)
+ * @enduml
+*/
+
+
 public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**

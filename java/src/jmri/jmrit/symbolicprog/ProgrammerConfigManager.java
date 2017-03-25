@@ -142,7 +142,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
     }
 
     /**
-     * @param canCacheDefault the canCacheDefault to set
+     * @param canCacheDefault new value
      */
     public void setCanCacheDefault(boolean canCacheDefault) {
         boolean oldCanCacheDefault = this.canCacheDefault;
@@ -158,7 +158,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesManager {
     }
 
     /**
-     * @param canCacheDefault the canCacheDefault to set
+     * @param doConfirmRead new value
      */
     public void setDoConfirmRead(boolean doConfirmRead) {
         boolean oldDoConfirmRead = this.doConfirmRead;
