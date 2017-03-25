@@ -168,11 +168,11 @@ public class SwitchboardEditor extends Editor {
     // From Oracle JLayeredPane demo
     private TargetPane switchboardLayeredPane; // JLayeredPane
     private JCheckBox hideUnconnected;
-    private String[] beanTypeStrings = { Bundle.getMessage("BeanNameTurnout"),
-            Bundle.getMessage("BeanNameSensor"),
-            Bundle.getMessage("BeanNameLight")
-    };
-    private JComboBox beanTypeList = new JComboBox(beanTypeStrings);
+    static final String _light = Bundle.getMessage("BeanNameLight");
+    static final String _sensor = Bundle.getMessage("BeanNameSensor");
+    static final String _turnout = Bundle.getMessage("BeanNameTurnout");
+    private String[] beanTypeStrings = { _turnout, _sensor, _light };
+    private JComboBox beanTypeList;// = new JComboBox(beanTypeStrings);
     private char beanTypeChar;
     private Color[] layerColors = { Color.yellow, Color.magenta,
             Color.cyan, Color.red, Color.green };
@@ -181,7 +181,7 @@ public class SwitchboardEditor extends Editor {
             Bundle.getMessage("Icon"),
             Bundle.getMessage("Drawing")
     };
-    private JComboBox switchTypeList;
+    private JComboBox switchTypeList;// = JComboBox(switchTypeStrings);
     private List<String> beanManuPrefixes = new ArrayList<String>();
     private JComboBox beanManuNames;
     //Action commands
@@ -245,6 +245,7 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel("Bean type:");
         beanSetupPane.add(beanTypeTitle);
+        beanTypeList = new JComboBox(beanTypeStrings);
         beanTypeList.setSelectedIndex(0);    // select Turnout in comboBox
         beanTypeList.setActionCommand(LAYER_COMMAND);
         beanTypeList.addActionListener(this);
@@ -291,7 +292,7 @@ public class SwitchboardEditor extends Editor {
         JLabel switchTypeTitle = new JLabel("Switch shape:");
         switchTypePane.add(switchTypeTitle);
         switchTypeList = new JComboBox(switchTypeStrings);
-        switchTypeList.setSelectedIndex(0);    //button
+        switchTypeList.setSelectedIndex(0);    // select Button in comboBox
         switchTypeList.setActionCommand(SWITCHTYPE_COMMAND);
         switchTypeList.addActionListener(this);
         switchTypePane.add(switchTypeList);
@@ -335,6 +336,7 @@ public class SwitchboardEditor extends Editor {
                         beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                         switchTypeList.getSelectedIndex());
                 pack();
+                repaint();
             }
         });
         updatePanel.add(updateButton);
@@ -461,21 +463,21 @@ public class SwitchboardEditor extends Editor {
                     } catch (IllegalArgumentException e) {
                         log.error("invalid turnout name= \"" + name + "\" in Switchboard Button");
                     }
-                    //beanButton.setIcon(appslideOff);
-                    //beanButton.setPressedIcon(appslideOn);
                     beanButton.addMouseListener(new MouseAdapter() { // could we leave this out and let the JPanel handle it?
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            super.mouseClicked(e);
-//                            if (bean != null && getTurnout().getCommandedState() != Turnout.CLOSED) {
-//                                // no need to set a state already set
-//                                getTurnout().setCommandedState(Turnout.CLOSED);
-//                                beanButton.setText(name + ": C");
-//                            } else if (bean != null && getTurnout().getCommandedState() != Turnout.THROWN) {
-//                                getTurnout().setCommandedState(Turnout.THROWN);
-//                                beanButton.setText(name + ": T");
-//                            }
                             log.debug("Button {} clicked", name);
+                            //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
+                            //    return;
+                            //}
+                            //if (e.isMetaDown() || e.isAltDown() || !buttonLive() || getMomentary()) {
+                            //    return;
+                            //}
+                            //if (getDirectControl() && !isEditable()) {
+                            //    getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+                            //} else {
+                            alternateOnClick();
+                            //}
                         }
                     });
                     _text = true;
@@ -609,7 +611,6 @@ public class SwitchboardEditor extends Editor {
         /**
          *  Update switch as state of turnout changes
          */
-
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (log.isDebugEnabled()) {
@@ -741,6 +742,7 @@ public class SwitchboardEditor extends Editor {
         }
 
         public void doMouseClicked(java.awt.event.MouseEvent e) {
+            log.debug("Switch clicked", e);
             //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             //    return;
             //}
@@ -754,11 +756,15 @@ public class SwitchboardEditor extends Editor {
             //}
         }
 
+        /**
+         * Change state of either turnout, light or sensor.
+         * ToDo use a universal: getBean() ?
+         */
         void alternateOnClick() {
-            // TODO add for lights and sensors with a universal: getBean() ?
             char beanTypeLetter = _label.charAt(1);
             switch (beanTypeLetter) {
             case 'T':
+                log.debug("T clicked");
                 if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
                 {
                     getTurnout().setCommandedState(jmri.Turnout.THROWN);
@@ -771,6 +777,7 @@ public class SwitchboardEditor extends Editor {
                 }
                 break;
             case 'L': // Light
+                log.debug("L clicked");
                 if (getLight().getState() == jmri.Light.OFF) {
                     getLight().setState(jmri.Light.ON);
                 } else {
@@ -778,6 +785,7 @@ public class SwitchboardEditor extends Editor {
                 }
                 break;
             case 'S': // Sensor
+                log.debug("S clicked");
                 try {
                     if (getSensor().getKnownState() == jmri.Sensor.INACTIVE) {
                         getSensor().setKnownState(jmri.Sensor.ACTIVE);
@@ -1433,25 +1441,21 @@ public class SwitchboardEditor extends Editor {
         return (int) maxSpinner.getValue();
     }
 
+    private String typePrefix;
+
     /**
      * Store bean type.
      *
      * @return bean type prefix
      */
     public String getSwitchType() {
-        String typePrefix;
-        String switchType = beanTypeList.getSelectedItem();
-        String light = Bundle.getMessage("BeanNameLight");
-        String sensor = Bundle.getMessage("BeanNameSensor");
-        switch (switchType) {
-            case light:
-                typePrefix = "L";
-                break;
-            case sensor:
-                    typePrefix = "S";
-                break;
-            default: // Turnout
-                typePrefix = "T";
+        String switchType = beanTypeList.getSelectedItem().toString();
+        if (switchType == _light) {
+            typePrefix = "L";
+        } else if (switchType == _sensor) {
+            typePrefix = "S";
+        } else { // Turnout
+            typePrefix = "T";
         }
         return typePrefix;
     }
@@ -1461,17 +1465,18 @@ public class SwitchboardEditor extends Editor {
      *
      * @param  bean type prefix
      */
-    public void setSwitchType(String typePrefix) {
+    public void setSwitchType(String prefix) {
+        typePrefix = prefix;
         String type;
         switch (typePrefix) {
             case "L":
-                type = Bundle.getMessage("BeanNameLight");
+                type = _light;
                 break;
             case "S":
-                type = Bundle.getMessage("BeanNameSensor");
+                type = _sensor;
                 break;
             default: // Turnout
-                type = Bundle.getMessage("BeanNameTurnout");
+                type = _turnout;
         }
         try {
             beanTypeList.setSelectedItem(type);
@@ -1486,7 +1491,7 @@ public class SwitchboardEditor extends Editor {
      * @return bean connection prefix
      */
     public String getSwitchManu() {
-        return (String) beanManuPrefixes.get(beanManuNames.getSelectedIndex());
+        return (String) this.beanManuPrefixes.get(beanManuNames.getSelectedIndex());
     }
 
     /**
@@ -1496,16 +1501,16 @@ public class SwitchboardEditor extends Editor {
      */
     public void setSwitchManu(String manuPrefix) {
         int choice = 0;
-        for (int i = 0; i < beanManuPrefixes.length; i++) {
+        for (int i = 0; i < beanManuPrefixes.size(); i++) {
             if (beanManuPrefixes.get(i).equals(manuPrefix)) {
                 choice = i;
                 break;
             }
         }
         try {
-        beanManuNames.setSelectedIndex(beanManuPrefixes.getIndex(choice));
+        beanManuNames.setSelectedItem(beanManuPrefixes.get(choice));
         } catch (IllegalArgumentException e) {
-            log.error("invalid connection [" + typePrefix + "] in Switchboard");
+            log.error("invalid connection [" + manuPrefix + "] in Switchboard");
         }
     }
 
