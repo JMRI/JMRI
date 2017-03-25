@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener {
 
@@ -638,7 +638,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         dispose();
     }
 
-    static private Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrame.class.getName());
 
     
     /**

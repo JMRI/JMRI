@@ -12,21 +12,34 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class RailComTableActionTest {
+public class RailComTableActionTest extends AbstractTableActionBase {
 
     @Test
     public void testCTor() {
-        RailComTableAction t = new RailComTableAction();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",a);
+    }
+
+    @Override
+    public String getTableFrameName(){
+       return Bundle.getMessage("TitleRailComTable");
+    }
+
+    @Override
+    @Test
+    public void testGetClassDescription(){
+         Assert.assertEquals("RailCom Table Action class description","RailCom Locos",a.getClassDescription());
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        a = new RailComTableAction();
     }
 
+    @Override
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();

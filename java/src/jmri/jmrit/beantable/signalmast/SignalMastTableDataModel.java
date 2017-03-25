@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a SignalMastTable
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2003, 2009
+ * @author Egbert Broerse Copyright (C) 2016
  */
 public class SignalMastTableDataModel extends BeanTableDataModel {
 
@@ -291,6 +291,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
         /**
          * @deprecated since 4.5.7
+         * @param row index in the list of Aspect to clear
          */
         public void clearAspectVector(int row) {
             // Clear the old aspect combobox and force it to be rebuilt

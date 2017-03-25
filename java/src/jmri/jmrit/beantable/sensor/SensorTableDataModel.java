@@ -1,7 +1,10 @@
 package jmri.jmrit.beantable.sensor;
 
 import java.util.ResourceBundle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
@@ -19,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a SensorTable
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2009
+ * @author Bob Jacobsen Copyright (C) 2003, 2009
  */
 public class SensorTableDataModel extends BeanTableDataModel {
 
@@ -28,6 +31,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int USEGLOBALDELAY = EDITCOL + 1;
     static public final int ACTIVEDELAY = USEGLOBALDELAY + 1;
     static public final int INACTIVEDELAY = ACTIVEDELAY + 1;
+    static public final int PULLUPCOL = INACTIVEDELAY + 1;
 
     SensorManager senManager = InstanceManager.sensorManagerInstance();
 
@@ -128,48 +132,46 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     @Override
     public int getColumnCount() {
-        return INACTIVEDELAY + 1;
+        return PULLUPCOL + 1;
     }
 
     @Override
     public String getColumnName(int col) {
-        if (col == INVERTCOL) {
-            return Bundle.getMessage("Inverted");
-        }
-        if (col == EDITCOL) {
-            return "";
-        }
-        if (col == USEGLOBALDELAY) {
-            return Bundle.getMessage("SensorUseGlobalDebounce");
-        }
-        if (col == ACTIVEDELAY) {
-            return Bundle.getMessage("SensorActiveDebounce");
-        }
-        if (col == INACTIVEDELAY) {
-            return Bundle.getMessage("SensorInActiveDebounce");
-        } else {
-            return super.getColumnName(col);
+        switch(col) {
+           case INVERTCOL:
+              return Bundle.getMessage("Inverted");
+           case EDITCOL:
+              return "";
+           case USEGLOBALDELAY:
+              return Bundle.getMessage("SensorUseGlobalDebounce");
+           case ACTIVEDELAY:
+              return Bundle.getMessage("SensorActiveDebounce");
+           case INACTIVEDELAY:
+              return Bundle.getMessage("SensorInActiveDebounce");
+           case PULLUPCOL: 
+              return Bundle.getMessage("SensorPullUp");
+           default:
+              return super.getColumnName(col);
         }
     }
 
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == INVERTCOL) {
-            return Boolean.class;
-        }
-        if (col == EDITCOL) {
-            return JButton.class;
-        }
-        if (col == USEGLOBALDELAY) {
-            return Boolean.class;
-        }
-        if (col == ACTIVEDELAY) {
-            return String.class;
-        }
-        if (col == INACTIVEDELAY) {
-            return String.class;
-        } else {
-            return super.getColumnClass(col);
+        switch(col) {
+           case INVERTCOL:
+              return Boolean.class;
+           case EDITCOL:
+              return JButton.class;
+           case USEGLOBALDELAY:
+              return Boolean.class;
+           case ACTIVEDELAY:
+              return String.class;
+           case INACTIVEDELAY:
+              return String.class;
+           case PULLUPCOL:
+              return JComboBox.class;
+           default:
+              return super.getColumnClass(col);
         }
     }
 
@@ -190,7 +192,13 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == INVERTCOL || col == EDITCOL) {
+        String name = sysNameList.get(row);
+        Sensor sen = senManager.getBySystemName(name);
+        if (sen == null) return false;
+        if (col == INVERTCOL) {
+            return sen.canInvert();
+        }
+        if (col == EDITCOL) {
             return true;
         }
         if (col == USEGLOBALDELAY) {
@@ -198,20 +206,16 @@ public class SensorTableDataModel extends BeanTableDataModel {
         }
         //Need to do something here to make it disable 
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
-            String name = sysNameList.get(row);
-            Sensor sen = senManager.getBySystemName(name);
-            if (sen == null) {
+            if (sen.useDefaultTimerSettings()) {
                 return false;
             } else {
-                if (sen.useDefaultTimerSettings()) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return true;
             }
-        } else {
-            return super.isCellEditable(row, col);
         }
+        if(col == PULLUPCOL){
+            return(senManager.isPullResistanceConfigurable());
+        }
+        return super.isCellEditable(row, col);
     }
 
     @Override
@@ -238,6 +242,16 @@ public class SensorTableDataModel extends BeanTableDataModel {
             return s.getSensorDebounceGoingInActiveTimer();
         } else if (col == EDITCOL) {
             return Bundle.getMessage("ButtonEdit");
+        } else if (col == PULLUPCOL) {
+            JComboBox<Sensor.PullResistance> c = new JComboBox<Sensor.PullResistance>(Sensor.PullResistance.values());
+            c.setSelectedItem(s.getPullResistance());
+            c.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   comboBoxAction(e);
+                }
+            });
+            return c;
         } else {
             return super.getValueAt(row, col);
         }
@@ -285,6 +299,9 @@ public class SensorTableDataModel extends BeanTableDataModel {
             }
             WindowMaker w = new WindowMaker(s);
             javax.swing.SwingUtilities.invokeLater(w);
+        } else if (col == PULLUPCOL) {
+            JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
+            s.setPullResistance((Sensor.PullResistance)cb.getSelectedItem());
         } else {
             super.setValueAt(value, row, col);
         }
@@ -309,6 +326,9 @@ public class SensorTableDataModel extends BeanTableDataModel {
     public void configureTable(JTable table) {
         this.table = table;
         showDebounce(false);
+        showPullUp(false);
+        this.table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+        this.table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         super.configureTable(table);
     }
 
@@ -330,6 +350,12 @@ public class SensorTableDataModel extends BeanTableDataModel {
         columnModel.setColumnVisible(column, show);
     }
 
+    public void showPullUp(boolean show) {
+        XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
+        TableColumn column = columnModel.getColumnByModelIndex(PULLUPCOL);
+        columnModel.setColumnVisible(column, show);
+    }
+
     protected String getClassName() {
         return jmri.jmrit.beantable.SensorTableAction.class.getName();
     }
@@ -338,6 +364,15 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");
+    }
+
+    public void comboBoxAction(ActionEvent e) {
+       if (log.isDebugEnabled()) {
+          log.debug("Combobox change");
+       }
+       if (table != null && table.getCellEditor() != null) {
+          table.getCellEditor().stopCellEditing();
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());

@@ -98,6 +98,19 @@ public abstract class AbstractSensorMgrTestBase {
     }
 
     @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("" + getNumToTest1());
+        Sensor t2 = l.provideSensor("" + getNumToTest2());
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+
+        Assert.assertTrue(null == t1.getUserName());
+    }
+
+    @Test
     public void testUpperLower() {
         Sensor t = l.provideSensor("" + getNumToTest2());
         String name = t.getSystemName();
@@ -106,13 +119,18 @@ public abstract class AbstractSensorMgrTestBase {
 
     @Test
     public void testRename() {
-        // get light
+        // get sensor
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
         Sensor t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
+    }
+
+    @Test
+    public void testPullResistanceConfigurable(){
+       Assert.assertFalse("Pull Resistance Configurable",l.isPullResistanceConfigurable());
     }
 
     /**

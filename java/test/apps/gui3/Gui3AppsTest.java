@@ -12,7 +12,9 @@ import org.junit.runners.Suite;
      TabbedPreferencesFrameTest.class,
      TabbedPreferencesProfileActionTest.class,
      TabbedPreferencesTest.class,
-     apps.gui3.paned.PackageTest.class
+     apps.gui3.paned.PackageTest.class,
+     FirstTimeStartUpWizardTest.class,
+     FirstTimeStartUpWizardActionTest.class,
 })
 
 /**

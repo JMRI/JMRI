@@ -9,7 +9,7 @@ import jmri.Memory;
  * <p>
  * Memory system names are always upper case.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractMemory extends AbstractNamedBean implements Memory, java.io.Serializable {
 

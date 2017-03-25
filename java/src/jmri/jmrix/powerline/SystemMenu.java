@@ -5,7 +5,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Create a "Systems" menu containing the Jmri powerline-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003, 2006, 2007, 2008 Converted to multiple
+ * @author Bob Jacobsen Copyright 2003, 2006, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
  */

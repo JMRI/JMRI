@@ -14,8 +14,8 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 /**
  * Panel for configuring a NCE booster
  *
- * @author	ken cameron Copyright (C) 2010 Derived from BoosterProgFrame by
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author ken cameron Copyright (C) 2010 Derived from BoosterProgFrame by
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 

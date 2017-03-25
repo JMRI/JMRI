@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * Also manages the Show Panel menu for all Editor panels.
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2010
+ * @author Bob Jacobsen Copyright 2003, 2004, 2010
  * @author Dave Duchamp Copyright 2007
  * @author Pete Cressman Copyright 2010
  */

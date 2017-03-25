@@ -1,7 +1,7 @@
 /**
  * Concrete subclass of TurnoutOperator for a turnout that has sensor feedback.
  *
- * @author	John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  */
 package jmri.implementation;
 

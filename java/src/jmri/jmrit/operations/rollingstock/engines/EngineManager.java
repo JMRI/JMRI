@@ -31,22 +31,23 @@ public class EngineManager extends RollingStockManager {
 
     /**
      * record the single instance
+     * @return instance
      */
     public static synchronized EngineManager instance() {
-        EngineManager _instance = jmri.InstanceManager.getNullableDefault(EngineManager.class);
-        if (_instance == null) {
+        EngineManager instance = jmri.InstanceManager.getNullableDefault(EngineManager.class);
+        if (instance == null) {
             log.debug("EngineManager creating instance");
             // create and load
-            _instance = new EngineManager();
-            jmri.InstanceManager.setDefault(EngineManager.class,_instance);
+            instance = new EngineManager();
+            jmri.InstanceManager.setDefault(EngineManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             // create manager to load engines and their attributes
             EngineManagerXml.instance();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("EngineManager returns instance {}", _instance);
+            log.debug("EngineManager returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     /**
@@ -321,7 +322,7 @@ public class EngineManager extends RollingStockManager {
      *
      */
     public void store(Element root) {
-        //    	root.addContent(new Element(Xml.OPTIONS));	// nothing to store under options
+        //     root.addContent(new Element(Xml.OPTIONS)); // nothing to store under options
 
         Element values;
         List<String> names = getConsistNameList();

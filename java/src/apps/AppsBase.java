@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * </dl>
  * <P>
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public abstract class AppsBase {
 
@@ -67,7 +67,7 @@ public abstract class AppsBase {
         try {
             Application.setApplicationName(applicationName);
         } catch (IllegalAccessException | IllegalArgumentException ex) {
-            log.error("Unable to set application name: " +ex.getCause());
+            log.error("Unable to set application name: " + ex.getCause());
         }
 
         log.info(Log4JUtil.startupInfo(applicationName));
@@ -365,8 +365,8 @@ public abstract class AppsBase {
     }
 
     /**
-     * Final actions before releasing control of app to user, invoked explicitly
-     * after object has been constructed, e.g. in main().
+     * Final actions before releasing control of the application to the user,
+     * invoked explicitly after object has been constructed in main().
      */
     protected void start() {
         log.debug("main initialization done");

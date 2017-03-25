@@ -9,7 +9,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
@@ -537,56 +536,41 @@ public class LayoutTurntable extends LayoutTrack {
             panel3.setLayout(new FlowLayout());
             panel3.add(addRayTrack = new JButton(rb.getString("AddRayTrack")));
             addRayTrack.setToolTipText(rb.getString("AddRayTrackHint"));
-            addRayTrack.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    addRayTrackPressed(e);
-                    updateRayPanel();
-                }
+            addRayTrack.addActionListener((ActionEvent e) -> {
+                addRayTrackPressed(e);
+                updateRayPanel();
             });
 
             panel3.add(dccControlled = new JCheckBox(rb.getString("TurntableDCCControlled")));
             dccControlled.setSelected(isTurnoutControlled());
-            dccControlled.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setTurnoutControlled(dccControlled.isSelected());
-                    for (RayTrack ray : rayList) {
-                        ray.showTurnoutDetails();
-                    }
-                    editTurntableFrame.pack();
+            dccControlled.addActionListener((ActionEvent e) -> {
+                setTurnoutControlled(dccControlled.isSelected());
+                for (RayTrack ray : rayList) {
+                    ray.showTurnoutDetails();
                 }
+                editTurntableFrame.pack();
             });
             headerPane.add(panel3);
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             panel5.add(turntableEditDone = new JButton(Bundle.getMessage("ButtonDone")));
-            turntableEditDone.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turntableEditDonePressed(e);
-                }
+            turntableEditDone.addActionListener((ActionEvent e) -> {
+                turntableEditDonePressed(e);
             });
 
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    JRootPane rootPane = SwingUtilities.getRootPane(turntableEditDone);
-                    rootPane.setDefaultButton(turntableEditDone);
-                }
+            SwingUtilities.invokeLater(() -> {
+                JRootPane rootPane = SwingUtilities.getRootPane(turntableEditDone);
+                rootPane.setDefaultButton(turntableEditDone);
             });
 
             turntableEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(turntableEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            turntableEditCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    turntableEditCancelPressed(e);
-                }
+            turntableEditCancel.addActionListener((ActionEvent e) -> {
+                turntableEditCancelPressed(e);
             });
             turntableEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             footerPane.add(panel5);
@@ -815,14 +799,11 @@ public class LayoutTurntable extends LayoutTrack {
         public void setTurnout(String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
-                mTurnoutListener = new java.beans.PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        if (getTurnout().getKnownState() == turnoutState) {
-                            lastKnownIndex = connectionIndex;
-                            layoutEditor.redrawPanel();
-                            layoutEditor.setDirty();
-                        }
+                mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
+                    if (getTurnout().getKnownState() == turnoutState) {
+                        lastKnownIndex = connectionIndex;
+                        layoutEditor.redrawPanel();
+                        layoutEditor.setDirty();
                     }
                 };
             }
@@ -935,12 +916,9 @@ public class LayoutTurntable extends LayoutTrack {
                 JButton deleteRayButton;
                 top.add(deleteRayButton = new JButton(Bundle.getMessage("ButtonDelete")));
                 deleteRayButton.setToolTipText(rb.getString("DeleteRayTrack"));
-                deleteRayButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        delete();
-                        updateRayPanel();
-                    }
+                deleteRayButton.addActionListener((ActionEvent e) -> {
+                    delete();
+                    updateRayPanel();
                 });
                 border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
 

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Can be connected to a JMRI Sensor or Memory.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class UsbNode extends DefaultMutableTreeNode {
 

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Utility to load a specific ProgrammerFacade from an XML element
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  */
 public class ProgrammerFacadeSelector {
 
@@ -83,9 +83,10 @@ public class ProgrammerFacadeSelector {
                 String PI = parameters.get(0).getText();
                 String SI = (parameters.size() > 1) ? parameters.get(1).getText() : null;
                 boolean cvFirst = (parameters.size() > 2) ? (parameters.get(2).getText().equals("false") ? false : true) : true;
+                boolean skipDupIndexWrite = (parameters.size() > 3) ? (parameters.get(3).getText().equals("true") ? true : false) : false;
 
                 jmri.implementation.MultiIndexProgrammerFacade pf
-                        = new jmri.implementation.MultiIndexProgrammerFacade(programmer, PI, SI, cvFirst);
+                        = new jmri.implementation.MultiIndexProgrammerFacade(programmer, PI, SI, cvFirst, skipDupIndexWrite);
 
                 log.debug("new programmer " + pf);
                 programmer = pf; // to go around and see if there are more

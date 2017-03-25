@@ -14,7 +14,7 @@ import jmri.jmrix.ecos.EcosTrafficController;
 /**
  * Panel to show ECoS status
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
   */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 

@@ -5,7 +5,7 @@ package jmri.jmrix;
  * upon work by Bob Jacobsen from SerialPortAdapter
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @see jmri.jmrix.NetworkConfigException
  */
 public interface NetworkPortAdapter extends PortAdapter {

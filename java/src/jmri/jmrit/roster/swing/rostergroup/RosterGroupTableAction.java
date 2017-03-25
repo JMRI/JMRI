@@ -12,8 +12,8 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to create and register a Roster Group Table.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
 

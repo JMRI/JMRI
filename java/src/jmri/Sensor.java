@@ -18,14 +18,14 @@ import javax.annotation.CheckForNull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface Sensor extends NamedBean {
 
     // states are parameters; both closed and thrown is possible!
     public static final int ACTIVE = 0x02;
     public static final int INACTIVE = 0x04;
-    
+
     /**
      * Known state on layout is a bound parameter
      *
@@ -51,8 +51,8 @@ public interface Sensor extends NamedBean {
 
     /**
      * Control whether the actual sensor input is considered to be inverted,
-     * e.g. the normal electrical signal that results in an ACTIVE state now
-     * results in an INACTIVE state.
+     * such that the normal electrical signal that normally results in an ACTIVE
+     * state now results in an INACTIVE state.
      * <p>
      * Changing this changes the state from ACTIVE to INACTIVE and vice-versa,
      * with notifications; UNKNOWN and INCONSISTENT are left unchanged.
@@ -68,6 +68,14 @@ public interface Sensor extends NamedBean {
      *         state now results in an INACTIVE state; false otherwise
      */
     public boolean getInverted();
+
+    /**
+     * Determine if sensor can be inverted. When a turnout is inverted the
+     * {@link #ACTIVE} and {@link #INACTIVE} states are inverted on the layout.
+     *
+     * @return true if can be inverted; false otherwise
+     */
+    public boolean canInvert();
 
     /**
      * Remove references to and from this object, so that it can eventually be
@@ -147,4 +155,70 @@ public interface Sensor extends NamedBean {
      */
     @CheckForNull
     public Reporter getReporter();
+
+    /*
+     * Some sensor types allow us to configure a pull up and/or pull down 
+     * resistor at runtime.  The PullResistance enum provides valid values
+     * for the pull resistance.  The short name is used in xml files.
+     */
+    public enum PullResistance {
+        PULL_UP("up","PullResistanceUp"), // NOI18N
+        PULL_DOWN("down","PullResistanceDown"), // NOI18N
+        PULL_OFF("off","PullResistanceOff"); // NOI18N
+
+        PullResistance(String shName, String peopleKey) {
+           this.shortName = shName;
+           this.peopleName = Bundle.getMessage(peopleKey);
+        }
+
+        String shortName;
+        String peopleName;
+
+        public String getShortName() {
+           return shortName;
+        }
+
+        public String getPeopleName() {
+           return peopleName;
+        }
+
+        static public PullResistance getByShortName(String shName) {
+            for (PullResistance p : PullResistance.values()) {
+                if (p.shortName.equals(shName)) {
+                    return p;
+                }
+            }
+            throw new java.lang.IllegalArgumentException("argument value " + shName + " not valid");
+        }
+
+        static public PullResistance getByPeopleName(String pName) {
+            for (PullResistance p : PullResistance.values()) {
+                if (p.peopleName.equals(pName)) {
+                    return p;
+                }
+            }
+            throw new java.lang.IllegalArgumentException("argument value " + pName + " not valid");
+        }
+ 
+       @Override
+       public String toString(){
+          return( peopleName );
+       }
+
+    }
+
+    /**
+     * Set the pull resistance
+     *
+     * @param r PullResistance value to use.
+     */
+    public void setPullResistance(PullResistance r);
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.
+     */
+    public PullResistance getPullResistance();
+
 }

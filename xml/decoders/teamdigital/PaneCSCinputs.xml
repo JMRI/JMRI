@@ -20,62 +20,62 @@
 		<label label="------  Input 1  ------ "/>
 		<label label=" "/>
 		<row>
-		<column> <display item="Address 1" tooltip="Determines the input addess" /> </column>
+		<column> <display item="Address 1" tooltip="Determines the input address" /> </column>
 		<column> <display item="Tog 1" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 		<column> <label label="         "/> </column>
 		<column> <label label="         "/> </column>		
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 1"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 1"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 1" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 1" tooltip="Configures the input simulas" />
+		<display item="Transition 1" tooltip="Configures the input stimulas" />
 		<display item="Delay 1" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
  		<label label=" "/>
  		<label label="------  Input 2  ------ "/>
  		<label label=" "/>
  		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 2" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 2" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 2" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="            "/> </column>
-		<column> <display item="Type 2"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 2"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 2" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 2" tooltip="Configures the input for specfic use" />
+		<display item="Transition 2" tooltip="Configures the input for specific use" />
 		<display item="Delay 2" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 3  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 3" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 3" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 3" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 3"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 3"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 3" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 3" tooltip="Configures the input for specfic use" />
+		<display item="Transition 3" tooltip="Configures the input for specific use" />
 		<display item="Delay 3" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 4  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 4" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 4" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 4" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 4"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 4"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 4" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 4" tooltip="Configures the input for specfic use" />
+		<display item="Transition 4" tooltip="Configures the input for specific use" />
 		<display item="Delay 4" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label=" "/>
@@ -83,61 +83,61 @@
 		<label label=" "/>
 		<row>
 		<column> <label label="         "/> </column>
-		<column> <display item="Address 5" tooltip="Determines the input addess" /> </column>
+		<column> <display item="Address 5" tooltip="Determines the input address" /> </column>
 		<column> <display item="Tog 5" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 		<column> <label label="         "/> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 5"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 5"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 5" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 5" tooltip="Configures the input simulas" />
+		<display item="Transition 5" tooltip="Configures the input stimulas" />
 		<display item="Delay 5" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
  		<label label=" "/>
  		<label label="------  Input 6  ------ "/>
  		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 6" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 6" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 6" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 6"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 6"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 6" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 6" tooltip="Configures the input for specfic use" />
+		<display item="Transition 6" tooltip="Configures the input for specific use" />
 		<display item="Delay 6" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 7  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 7" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 7" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 7" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 7"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 7"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 7" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 7" tooltip="Configures the input for specfic use" />
+		<display item="Transition 7" tooltip="Configures the input for specific use" />
 		<display item="Delay 7" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 8  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 8" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 8" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 8" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 8"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 8"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 8" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 8" tooltip="Configures the input for specfic use" />
+		<display item="Transition 8" tooltip="Configures the input for specific use" />
 		<display item="Delay 8" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 	</column>
@@ -146,122 +146,122 @@
 		<label label="------  Input 9  ------ "/>
 		<label label=" "/>
 		<row>
-		<column> <display item="Address 9" tooltip="Determines the input addess" /> </column>
+		<column> <display item="Address 9" tooltip="Determines the input address" /> </column>
 		<column> <display item="Tog 9" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 		<column> <label label="         "/> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 9"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 9"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 9" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 9" tooltip="Configures the input simulas" />
+		<display item="Transition 9" tooltip="Configures the input stimulas" />
 		<display item="Delay 9" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
  		<label label=" "/>
  		<label label="------  Input 10  ------ "/>
  		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 10" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 10" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 10" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 10"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 10"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 10" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 10" tooltip="Configures the input for specfic use" />
+		<display item="Transition 10" tooltip="Configures the input for specific use" />
 		<display item="Delay 10" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 11  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 11" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 11" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 11" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 11"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 11"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 11" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 11" tooltip="Configures the input for specfic use" />
+		<display item="Transition 11" tooltip="Configures the input for specific use" />
 		<display item="Delay 11" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 12  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 12" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 12" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 12" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 12"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 12"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 12" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 12" tooltip="Configures the input for specfic use" />
+		<display item="Transition 12" tooltip="Configures the input for specific use" />
 		<display item="Delay 12" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 13  ------ "/>
 		<label label=" "/>
 		<row>
 		<column> <label label="         "/> </column>
-		<column> <display item="Address 13" tooltip="Determines the input addess" /> </column>
+		<column> <display item="Address 13" tooltip="Determines the input address" /> </column>
 		<column> <display item="Tog 13" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 		<column> <label label="         "/> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 13"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 13"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 13" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 13" tooltip="Configures the input simulas" />
+		<display item="Transition 13" tooltip="Configures the input stimulas" />
 		<display item="Delay 13" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
  		<label label="------  Input 14  ------ "/>
  		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 14" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 14" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 14" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 14"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 14"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 14" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 14" tooltip="Configures the input for specfic use" />
+		<display item="Transition 14" tooltip="Configures the input for specific use" />
 		<display item="Delay 14" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 15  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 15" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 15" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 15" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 15"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 15"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 15" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 15" tooltip="Configures the input for specfic use" />
+		<display item="Transition 15" tooltip="Configures the input for specific use" />
 		<display item="Delay 15" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>
 		<label label="------  Input 16  ------ "/>
 		<label label=" "/>
 		<row>
  		<column> <label label="         "/> </column>
-		<column> <display item="Address 16" tooltip="Configures the input for specfic use" /></column>
+		<column> <display item="Address 16" tooltip="Configures the input for specific use" /></column>
 		<column> <display item="Tog 16" format="checkbox"  tooltip="Toggles the state close/throw, only for switch type" /> </column>
 			</row>
 		<row>
 		<column> <label label="             "/> </column>
-		<column> <display item="Type 16"  tooltip="Configures the input for specfic use" /> </column>
+		<column> <display item="Type 16"  tooltip="Configures the input for specific use" /> </column>
 		<column> <display item="Inv 16" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
-		<display item="Transition 16" tooltip="Configures the input for specfic use" />
+		<display item="Transition 16" tooltip="Configures the input for specific use" />
 		<display item="Delay 16" tooltip="Value X 256ms = Time between actual low to hi transition to indicated transition"/>
 		<label label=" "/>		
 	</column>

@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -26,20 +25,21 @@ public class EngineManagerXml extends OperationsXml {
 
     /**
      * record the single instance 
+     * @return instance
      */
     public static synchronized EngineManagerXml instance() {
-        EngineManagerXml _instance = jmri.InstanceManager.getNullableDefault(EngineManagerXml.class);
-        if (_instance == null) {
+        EngineManagerXml instance = jmri.InstanceManager.getNullableDefault(EngineManagerXml.class);
+        if (instance == null) {
             log.debug("EngineManagerXml creating instance");
             // create and load
-            _instance = new EngineManagerXml();
-            jmri.InstanceManager.setDefault(EngineManagerXml.class,_instance);
-            _instance.load();
+            instance = new EngineManagerXml();
+            jmri.InstanceManager.setDefault(EngineManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("EngineManagerXml returns instance {}", _instance);
+            log.debug("EngineManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override

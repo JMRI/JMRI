@@ -7,7 +7,7 @@ import javax.swing.JButton;
 /**
  * Provide a JFrame to display a table of Signal Mast Logic.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 
@@ -25,6 +25,7 @@ public class SignallingFrame extends jmri.util.JmriJFrame {
      *
      * @param source The Signal Mast this SML is directly linked to
      * @param dest The Signal Mast this SML is looking at
+     * @throws Exception when an error occurs during initialization
      */
     public void initComponents(jmri.SignalMast source, jmri.SignalMast dest) throws Exception {
         // the following code sets the frame's initial state

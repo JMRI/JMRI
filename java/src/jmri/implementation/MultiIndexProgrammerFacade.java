@@ -27,6 +27,11 @@ import org.slf4j.LoggerFactory;
  * CV, then does write/read/confirm to 123
  * </ul>
  * </ul>
+ * <p>
+ * Is skipDupIndexWrite is true, sequential operations with the same PI and SI
+ * values (and only immediately sequential operations with both PI and SI
+ * unchanged) will skip writing of the PI and SI CVs. This might not work for
+ * some decoders, hence is configurable.
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
@@ -35,27 +40,42 @@ import org.slf4j.LoggerFactory;
 public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param indexPI CV to which the first value is to be written for NN.NN and
-     *                NN.NN.NN forms
-     * @param indexSI CV to which the second value is to be written for NN.NN.NN
-     *                forms
+     * @param prog              the programmer to which this facade is attached
+     * @param indexPI           CV to which the first value is to be written for
+     *                          NN.NN and NN.NN.NN forms
+     * @param indexSI           CV to which the second value is to be written
+     *                          for NN.NN.NN forms
+     * @param cvFirst           true if first value in parsed CV is to be
+     *                          written; false if second value is to be written
+     * @param skipDupIndexWrite true if heuristics can be used to skip PI and SI
+     *                          writes; false requires them to be written each
+     *                          time.
      */
-    public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI, boolean cvFirst) {
+    public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI, boolean cvFirst, boolean skipDupIndexWrite) {
         super(prog);
         this.indexPI = indexPI;
         this.indexSI = indexSI;
         this.cvFirst = cvFirst;
+        this.skipDupIndexWrite = skipDupIndexWrite;
     }
 
     String indexPI;
     String indexSI;
     boolean cvFirst;
+    boolean skipDupIndexWrite;
+
+    long maxDelay = 1000;  // max mSec since last successful end-of-operation for skipDupIndexWrite; longer delay writes anyway
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    String _cv;	// remember the cv number being read/written
-    int valuePI;  //  value to write to PI or -1
-    int valueSI;  //  value to write to SI or -1
+    int _val; // remember the value being read/written for confirmative reply
+    String _cv; // remember the cv number being read/written
+    int valuePI;  //  value to write to PI in current operation or -1
+    int valueSI;  //  value to write to SI in current operation or -1
+
+    // remember last operation for skipDupIndexWrite
+    int lastValuePI = -1;  // value written in last operation
+    int lastValueSI = -1;  // value written in last operation
+    long lastOpTime = -1;  // time of last complete
 
     void parseCV(String cv) {
         valuePI = -1;
@@ -63,38 +83,58 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         if (cv.contains(".")) {
             if (cvFirst) {
                 String[] splits = cv.split("\\.");
-                if (splits.length == 2) {
-                    valuePI = Integer.parseInt(splits[1]);
-                    _cv = splits[0];
-                } else if (splits.length == 3) {
-                    valuePI = Integer.parseInt(splits[1]);
-                    valueSI = Integer.parseInt(splits[2]);
-                    _cv = splits[0];
-                } else {
-                    log.error("Too many parts in CV name " + cv);
-                    valuePI = Integer.parseInt(splits[1]);
-                    valueSI = Integer.parseInt(splits[2]);
-                    _cv = splits[0];
+                switch (splits.length) {
+                    case 2:
+                        valuePI = Integer.parseInt(splits[1]);
+                        _cv = splits[0];
+                        break;
+                    case 3:
+                        valuePI = Integer.parseInt(splits[1]);
+                        valueSI = Integer.parseInt(splits[2]);
+                        _cv = splits[0];
+                        break;
+                    default:
+                        log.error("Too many parts in CV name " + cv);
+                        valuePI = Integer.parseInt(splits[1]);
+                        valueSI = Integer.parseInt(splits[2]);
+                        _cv = splits[0];
+                        break;
                 }
             } else {
                 String[] splits = cv.split("\\.");
-                if (splits.length == 2) {
-                    valuePI = Integer.parseInt(splits[0]);
-                    _cv = splits[1];
-                } else if (splits.length == 3) {
-                    valuePI = Integer.parseInt(splits[0]);
-                    valueSI = Integer.parseInt(splits[1]);
-                    _cv = splits[2];
-                } else {
-                    log.error("Too many parts in CV name " + cv);
-                    valuePI = Integer.parseInt(splits[0]);
-                    valueSI = Integer.parseInt(splits[1]);
-                    _cv = splits[2];
+                switch (splits.length) {
+                    case 2:
+                        valuePI = Integer.parseInt(splits[0]);
+                        _cv = splits[1];
+                        break;
+                    case 3:
+                        valuePI = Integer.parseInt(splits[0]);
+                        valueSI = Integer.parseInt(splits[1]);
+                        _cv = splits[2];
+                        break;
+                    default:
+                        log.error("Too many parts in CV name " + cv);
+                        valuePI = Integer.parseInt(splits[0]);
+                        valueSI = Integer.parseInt(splits[1]);
+                        _cv = splits[2];
+                        break;
                 }
             }
         } else {
             _cv = cv;
         }
+    }
+
+    /**
+     * Check if the last-written PI and SI values can still be counted on.
+     *
+     * @return true if last-written values are reliable; false otherwise
+     */
+    boolean useCachePiSi() {
+        return skipDupIndexWrite
+                && (lastValuePI == valuePI)
+                && (lastValueSI == valueSI)
+                && ((System.currentTimeMillis() - lastOpTime) < maxDelay);
     }
 
     // programming interface
@@ -104,9 +144,20 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         useProgrammer(p);
         parseCV(CV);
         if (valuePI == -1) {
+            lastValuePI = -1;  // next indexed operation needs to write PI, SI
+            lastValueSI = -1;
+
+            // non-indexed operation
+            state = ProgState.PROGRAMMING;
+            prog.writeCV(_cv, val, this);
+        } else if (useCachePiSi()) {
+            // indexed operation with set values is same as non-indexed operation
             state = ProgState.PROGRAMMING;
             prog.writeCV(_cv, val, this);
         } else {
+            lastValuePI = valuePI;  // after check in 'if' statement
+            lastValueSI = valueSI;
+
             // write index first
             state = ProgState.FINISHWRITE;
             prog.writeCV(indexPI, valuePI, this);
@@ -123,9 +174,19 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         useProgrammer(p);
         parseCV(CV);
         if (valuePI == -1) {
+            lastValuePI = -1;  // next indexed operation needs to write PI, SI
+            lastValueSI = -1;
+
+            state = ProgState.PROGRAMMING;
+            prog.readCV(_cv, this);
+        } else if (useCachePiSi()) {
+            // indexed operation with set values is same as non-indexed operation
             state = ProgState.PROGRAMMING;
             prog.readCV(_cv, this);
         } else {
+            lastValuePI = valuePI;  // after check in 'if' statement
+            lastValueSI = valueSI;
+
             // write index first
             state = ProgState.FINISHREAD;
             prog.writeCV(indexPI, valuePI, this);
@@ -138,19 +199,18 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
-            }
+            log.info("programmer already in use by {}", _usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
     enum ProgState {
-
-        PROGRAMMING, FINISHREAD, FINISHWRITE, NOTPROGRAMMING
+        PROGRAMMING,
+        FINISHREAD,
+        FINISHWRITE,
+        NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
 
@@ -158,12 +218,27 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     // Note this assumes that there's only one phase to the operation
     @Override
     public void programmingOpReply(int value, int status) {
-        if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+        log.debug("notifyProgListenerEnd value {} status {} ", value, status);
+
+        if (status != OK) {
+            // clear memory of last PI, SI written
+            lastValuePI = -1;
+            lastValueSI = -1;
+            lastOpTime = -1;
+
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
         }
 
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {
@@ -173,6 +248,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 jmri.ProgListener temp = _usingProgrammer;
                 _usingProgrammer = null; // done
                 state = ProgState.NOTPROGRAMMING;
+                lastOpTime = System.currentTimeMillis();
                 temp.programmingOpReply(value, status);
                 break;
             case FINISHREAD:
@@ -218,6 +294,9 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;
+                lastValuePI = -1;
+                lastValueSI = -1;
+                lastOpTime = -1;
 
         }
     }

@@ -8,7 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Some of the tools used here are also used directly by the Wangrow support in
  * {@link jmri.jmrix.wangrow}.
  *
- * @author	Bob Jacobsen Copyright 2003 moved to swing class
+ * @author Bob Jacobsen Copyright 2003 moved to swing class
  * @author kcameron 2010
  */
 @Deprecated

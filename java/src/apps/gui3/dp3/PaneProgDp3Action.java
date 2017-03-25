@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implements jmri.ProgListener, jmri.jmrit.symbolicprog.tabbedframe.PaneContainer {
 
@@ -265,7 +265,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     });
                     go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                     go2.setEnabled(false);
-                    go2.setToolTipText(SymbolicProgBundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE")); // NOI18N
+                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipSelectLoco")); // NOI18N
                     bottomPanel.add(go2, BorderLayout.EAST);
 
                     return pane3a;

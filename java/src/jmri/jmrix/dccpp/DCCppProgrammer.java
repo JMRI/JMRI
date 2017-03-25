@@ -76,7 +76,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             return false; // check basic implementation first
         }
         if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
-	    return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
+     return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
         } else {
             return Integer.parseInt(addr) <= 256;
         }
@@ -97,7 +97,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             return false; // check basic implementation first
         }
         if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
-	    return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
+     return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
         } else {
             return Integer.parseInt(addr) <= 256;
         }
@@ -109,8 +109,8 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     static protected final int REQUESTSENT = 1; // waiting reply to command to go into programming mode
     static protected final int INQUIRESENT = 2; // read/write command sent, waiting reply
     protected boolean _progRead = false;
-    protected int _val;	// remember the value being read/written for confirmative reply
-    protected int _cv;	// remember the cv being read/written
+    protected int _val; // remember the value being read/written for confirmative reply
+    protected int _cv; // remember the cv being read/written
 
     // programming interface
 
@@ -141,10 +141,10 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
                 //DCCppMessage msg = DCCppMessage.getWriteRegisterMsg(registerFromCV(CV), val);
                 //controller().sendDCCppessage(msg, this);
             }
-	    //} catch (jmri.ProgrammerException e) {
+     //} catch (jmri.ProgrammerException e) {
             //progState = NOTPROGRAMMING;
             //throw e;
-	    //}
+     //}
     }
 
     @Override
@@ -183,10 +183,10 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
                 //DCCppMessage msg = DCCppMessage.getReadRegisterMsg(registerFromCV(CV));
                 //controller().sendDCCppMessage(msg, this);
             }
-	    //} catch (jmri.ProgrammerException e) {
+     //} catch (jmri.ProgrammerException e) {
             //progState = NOTPROGRAMMING;
             //throw e;
-	    //}
+     //}
 
     }
 
@@ -208,20 +208,26 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
     @Override
     synchronized public void message(DCCppReply m) {
-	if (progState == NOTPROGRAMMING) {
-	    return;
-	}
-	if (m.getElement(0) == DCCppConstants.PROGRAM_REPLY) {
+ if (progState == NOTPROGRAMMING) {
+     return;
+ }
+ if (m.getElement(0) == DCCppConstants.PROGRAM_REPLY) {
             if (log.isDebugEnabled()) {
                 log.debug("reply in REQUESTSENT state");
             }
-	    log.debug("DCC++ Programming Reply value = {}", m.getCVString());
-	    // CALLBACKNUM = mt.group(1)
-	    // CALLBACKSUB = mt.group(2)
-	    _val = m.getReadValueInt();
-	    progState = NOTPROGRAMMING;
-	    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-	}
+     log.debug("DCC++ Programming Reply value = {}", m.getCVString());
+     // CALLBACKNUM = mt.group(1)
+     // CALLBACKSUB = mt.group(2)
+     _val = m.getReadValueInt();
+     progState = NOTPROGRAMMING;
+            if (_val == -1) {
+                log.debug("Reporting NoAck");
+                notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
+            } else {
+                log.debug("Reporting OK");
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            }
+ }
     }
 
     // listen for the messages to the LI100/LI101

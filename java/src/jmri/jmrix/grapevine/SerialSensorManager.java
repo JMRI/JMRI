@@ -1,6 +1,11 @@
 package jmri.jmrix.grapevine;
 
+import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Sensor;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Sensors are numbered from 1.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
@@ -41,12 +46,18 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return "G";
     }
 
-    /*
-     * Normalize names
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a system name
+     * for the NamedBeans handled by this manager.
+     *
+     * @param inputName System name to be normalized
+     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
+     * @return A system name in standard normalized form 
      */
     @Override
-    protected String normalizeSystemName(String sysName) {
-        return SerialAddress.normalizeSystemName(sysName);
+    @CheckReturnValue
+    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        return SerialAddress.normalizeSystemName(inputName);
     }
 
     /**

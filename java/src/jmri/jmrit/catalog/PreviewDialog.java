@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a Dialog to display the images in a file system directory.
  * <BR>
+ * PreviewDialog is not modal to allow dragNdrop of icons from it to catalog panels and
+ * functioning of the catalog panels without dismissing this dialog
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -44,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  *
  */
 public class PreviewDialog extends JDialog {

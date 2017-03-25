@@ -9,8 +9,8 @@ import javax.annotation.Nonnull;
  * <P>
  * Programmers come in multiple types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously "Service Mode" or on a programming track
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main"
  * </UL>
  * Different equipment may also require different programmers:
  * <ul>
@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
  */
 public interface Programmer {
 

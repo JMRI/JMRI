@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariable {
@@ -622,6 +622,20 @@ public class ConditionalVariable {
         return (result);
     }
 
+    /**
+     * Compare two values using the comparator set using the comparison
+     * instructions in {@link #setNum1(int)}.
+     *
+     * <strong>Note:</strong> {@link #getNum1()} must be one of {@link #LESS_THAN},
+     * {@link #LESS_THAN_OR_EQUAL}, {@link #EQUAL},
+     * {@link #GREATER_THAN_OR_EQUAL}, or {@link #GREATER_THAN}.
+     *
+     * @param value1          left side of the comparison
+     * @param value2          right side of the comparison
+     * @param caseInsensitive true if comparison should be case insensitive;
+     *                        false otherwise
+     * @return true if values compare per getNum1(); false otherwise
+     */
     boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {
             return value2 == null;

@@ -44,7 +44,8 @@ import org.junit.runners.Suite;
 	StartupActionsManagerTest.class,
 	SystemConsoleActionTest.class,
 	SystemConsoleConfigPanelTest.class,
-        apps.gui.PackageTest.class
+        apps.gui.PackageTest.class,
+        SampleMinimalProgramTest.class
 })
 /**
  * Invoke complete set of tests for the apps package

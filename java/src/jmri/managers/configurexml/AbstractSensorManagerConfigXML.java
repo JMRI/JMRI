@@ -77,6 +77,11 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                     elem.addContent(timer);
                 }
             }
+            if(tm.isPullResistanceConfigurable()){
+               // store the sensor's value for pull resistance.
+               elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
+            }
+
             // store common part
             storeCommon(s, elem);
 
@@ -161,6 +166,8 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
 
             String userName = getUserName(sensorList.get(i));
 
+            checkNameNormalization(sysName, userName, tm);
+
             if (sensorList.get(i).getAttribute("inverted") != null) {
                 if (sensorList.get(i).getAttribute("inverted").getValue().equals("true")) {
                     inverted = true;
@@ -211,6 +218,13 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 }
             }
             s.setInverted(inverted);
+
+            if(sensorList.get(i).getChild("pullResistance")!=null){
+               String pull = sensorList.get(i).getChild("pullResistance")
+                                       .getText();
+               log.debug("setting pull to {} for sensor {}",pull,s);
+               s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
+           }
         }
         return result;
     }

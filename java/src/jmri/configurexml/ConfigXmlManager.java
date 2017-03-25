@@ -65,7 +65,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Note: Should only be called for debugging purposes,, for example, when
      * Log4J DEBUG level is selected, to load fewer classes at startup.
      *
-     * @param o object to verify XML adapter exists for
+     * @param o object to confirm XML adapter exists for
      */
     void confirmAdapterAvailable(Object o) {
         String adapter = adapterName(o);
@@ -632,6 +632,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    private XmlFile.Validate validate = XmlFile.Validate.CheckDtdThenSchema;
+    /** Default XML verification.
+     * Public to allow scripting. */
+    public void setValidate(XmlFile.Validate v) { validate = v;}
+    /** Default XML verification.
+     * Public to allow scripting. */
+    public XmlFile.Validate getValidate() { return validate; }
+
     private boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
@@ -641,9 +649,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
          */
         Map<Element, Integer> loadlist = Collections.synchronizedMap(new LinkedHashMap<>());
 
-        boolean verify = XmlFile.getVerify();
         try {
-            XmlFile.setVerify(true);
+            setValidate(validate);
             root = super.rootFromURL(url);
             // get the objects to load
             List<Element> items = root.getChildren();
@@ -740,7 +747,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             result = false;
         } finally {
             // no matter what, close error reporting
-            XmlFile.setVerify(verify);
             handler.done();
         }
 
@@ -758,7 +764,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } else {
             log.info("Not recording file history");
         }
-        XmlFile.setVerify(verify);
         return result;
     }
 

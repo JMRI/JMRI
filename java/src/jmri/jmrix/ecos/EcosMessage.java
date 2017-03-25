@@ -7,7 +7,7 @@ package jmri.jmrix.ecos;
  * The {@link EcosReply} class handles the response from the command station.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
  */
 public class EcosMessage extends jmri.jmrix.AbstractMRMessage {

@@ -262,7 +262,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (_namedIcon != null) {
             pos._namedIcon = cloneIcon(_namedIcon, pos);
             pos.setIcon(pos._namedIcon);
-            pos.rotate(_degrees);		//this will change text in icon with a new _namedIcon.
+            pos.rotate(_degrees);  //this will change text in icon with a new _namedIcon.
         }
         pos.updateSize();
         return pos;
@@ -569,11 +569,8 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditor.setIcon(0, "plainIcon", icon);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                editIcon();
-            }
+        ActionListener addIconAction = (ActionEvent a) -> {
+            editIcon();
         };
         _iconEditor.complete(addIconAction, true, false, true);
 
@@ -648,11 +645,8 @@ public class PositionableLabel extends JLabel implements Positionable {
             disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disable"));
             disableItem.setSelected(!_controlling);
             popup.add(disableItem);
-            disableItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setControlling(!disableItem.isSelected());
-                }
+            disableItem.addActionListener((java.awt.event.ActionEvent e) -> {
+                setControlling(!disableItem.isSelected());
             });
             return true;
         }
@@ -699,21 +693,21 @@ public class PositionableLabel extends JLabel implements Positionable {
                         setOpaque(_popupUtil.hasBackground());
                         _popupUtil.setBorder(true);
                     }
-                    if (_icon) {
+                    if (_namedIcon != null) {
                         String url = _namedIcon.getURL();
                         _namedIcon = new NamedIcon(url, url);
-                    } else {
-                        _namedIcon = null;
                     }
                     super.setIcon(_namedIcon);
                 } else {
-                    _namedIcon.rotate(deg, this);
+                    if (_namedIcon != null) {
+                        _namedIcon.rotate(deg, this);
+                    }
                     super.setIcon(_namedIcon);
                 }
             } else {
                 if (_text & _icon) {    // update text over icon
                     _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
-                } else if (_text) {     // update text only icon image                  
+                } else if (_text) {     // update text only icon image
                     _namedIcon = makeTextIcon(_unRotatedText);
                 }
                 _namedIcon.rotate(deg, this);
@@ -942,7 +936,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _text = (text != null && text.length() > 0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
         if (/*_rotateText &&*/!isIcon() && _namedIcon != null) {
             log.debug("setText calls rotate({})", _degrees);
-            rotate(_degrees);		//this will change text label as a icon with a new _namedIcon.
+            rotate(_degrees);  //this will change text label as a icon with a new _namedIcon.
         } else {
             log.debug("setText calls super.setText()");
             super.setText(text);

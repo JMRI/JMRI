@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * code just flips from one to the other as the user selects a mode. The
  * individual items all share data models to simplify the logic.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  *
  * Revisions to add facing point sensors, approach lighting, limited speed,
  * changed layout, and tool tips. Dick Bronson (RJB) 2006
@@ -896,6 +896,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     SignalHead sh = null;
 
+    /**
+     * Programmatically open the frame to edit a specific signal by head.
+     *
+     * @param sh signal head of which the name should be entered in the Edit pane
+     */
     public void setSignal(SignalHead sh) {
         this.sh = sh;
         outSignalField.setText(sh.getDisplayName());
@@ -904,7 +909,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Programmatically open the frame to edit a specific signal
+     * Programmatically open the frame to edit a specific signal by name.
+     *
+     * @param name system or user name of the signal head to be entered in the Edit pane
      */
     public void setSignal(String name) {
         sh = null;

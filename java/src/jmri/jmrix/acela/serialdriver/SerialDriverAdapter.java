@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  *
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on Mrc example, modified
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on Mrc example, modified
  * to establish Acela support.
  */
 public class SerialDriverAdapter extends AcelaPortController implements jmri.jmrix.SerialPortAdapter {
@@ -55,8 +55,8 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -117,15 +117,15 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
         // do the common manager config
         // configureManagers();
         //now moved to the adapter memo
-   	/*jmri.InstanceManager.setLightManager(new jmri.jmrix.acela.AcelaLightManager());
+    /*jmri.InstanceManager.setLightManager(new jmri.jmrix.acela.AcelaLightManager());
 
          AcelaSensorManager s;
          jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.acela.AcelaSensorManager());
-         this.getSystemConnectionMemo().getTrafficController().setSensorManager(s);	
+         this.getSystemConnectionMemo().getTrafficController().setSensorManager(s); 
 
          AcelaTurnoutManager t;
          jmri.InstanceManager.setTurnoutManager(t = new jmri.jmrix.acela.AcelaTurnoutManager());
-         this.getSystemConnectionMemo().getTrafficController().setTurnoutManager(t);	*/
+         this.getSystemConnectionMemo().getTrafficController().setTurnoutManager(t); */
         // start operation
         // packets.startThreads();
     }
@@ -163,7 +163,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
      */
     @Override
     public String[] validBaudRates() {
-//	Really just want 9600 Baud for Acela
+// Really just want 9600 Baud for Acela
 //      return new String[]{"9,600 bps", "19,200 bps", "38,400 bps", "57,600 bps"};
         return new String[]{"9,600 bps"};
     }
@@ -173,7 +173,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
      */
     @Override
     public int[] validBaudNumber() {
-//	Really just want 9600 Baud for Acela
+// Really just want 9600 Baud for Acela
 //      return new int[]{9600, 19200, 38400, 57600};
         return new int[]{9600};
     }

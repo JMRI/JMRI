@@ -505,11 +505,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     protected void edit() {
         makeIconEditorFrame(this, "Memory", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                editMemory();
-            }
+        ActionListener addIconAction = (ActionEvent a) -> {
+            editMemory();
         };
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(getMemory());

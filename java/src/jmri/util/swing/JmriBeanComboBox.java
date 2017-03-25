@@ -1,14 +1,24 @@
 package jmri.util.swing;
 
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JComboBox;
+import javax.swing.JComboBox.KeySelectionManager;
 import jmri.NamedBean;
+import jmri.util.AlphanumComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * JComboBox varient for showing and selecting JMRI NamedBeans
+ * from a specific manager.
+ */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
     /*
@@ -16,16 +26,16 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @param manager the jmri manager that is used to populate the combo box
      */
     public JmriBeanComboBox(jmri.Manager manager) {
-        this(manager, null, DISPLAYNAME);
+        this(manager, null, DisplayOptions.DISPLAYNAME);
     }
 
     /*
      * Create a Jmri Combo box for the given bean manager, with the Namedbean already selected and the items displayed and ordered
      * @param manager the jmri manager that is used to populate the combo box
      * @param nBean the namedBean that should automatically be selected
-     * @param displayOrder the way in which the namedbeans should be displayed as
+     * @param displayOrder the way in which the namedbeans should be displayed
      */
-    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, int displayOrder) {
+    public JmriBeanComboBox(jmri.Manager manager, NamedBean nBean, DisplayOptions displayOrder) {
         _displayOrder = displayOrder;
         _manager = manager;
         setSelectedBean(nBean);
@@ -47,13 +57,18 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     }
 
     String _lastSelected = "";
-    int _displayOrder;
+    DisplayOptions _displayOrder;
     boolean _firstBlank = false;
 
     jmri.Manager _manager;
 
     HashMap<String, NamedBean> displayToBean = new HashMap<String, NamedBean>();
 
+    public jmri.Manager getManager()
+    {
+        return _manager;
+    }
+    
     public void refreshCombo() {
         updateComboBox((String) getSelectedItem());
     }
@@ -61,6 +76,30 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     void updateComboBox(String select) {
         displayToBean = new HashMap<String, NamedBean>();
         removeAllItems();
+
+        String[] displayList = getDisplayList();
+
+        for (int i = 0; i < displayList.length; i++) {
+            addItem(displayList[i]);
+            if ((select != null) && (displayList[i].equals(select))) {
+                setSelectedIndex(i);
+            }
+        }
+        if (_firstBlank) {
+            super.insertItemAt("", 0);
+            if (_lastSelected == null || _lastSelected.equals("")) {
+                setSelectedIndex(0);
+            }
+        }
+    }
+    
+    /**
+     * Get the display list used by this combo box
+     *
+     * @return the display list used by this combo box
+     */
+
+    public String[] getDisplayList() {
         ArrayList<String> nameList = new ArrayList<String>(Arrays.asList(_manager.getSystemNameArray()));
 
         for (NamedBean bean : exclude) {
@@ -71,10 +110,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
         String[] displayList = new String[nameList.size()];
 
-        if (_displayOrder == SYSTEMNAME) {
+        if (_displayOrder == DisplayOptions.SYSTEMNAME) {
             displayList = nameList.toArray(displayList);
         } else {
-            //for(String name: nameList){
             for (int i = 0; i < nameList.size(); i++) {
                 String name = nameList.get(i);
                 NamedBean nBean = null;
@@ -118,20 +156,18 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                 }
             }
         }
-        java.util.Arrays.sort(displayList);
-
-        for (int i = 0; i < displayList.length; i++) {
-            addItem(displayList[i]);
-            if ((select != null) && (displayList[i].equals(select))) {
-                setSelectedIndex(i);
-            }
-        }
-        if (_firstBlank) {
-            super.insertItemAt("", 0);
-            if (_lastSelected == null || _lastSelected.equals("")) {
-                setSelectedIndex(0);
-            }
-        }
+        java.util.Arrays.sort(displayList, new AlphanumComparator());
+        return displayList;        
+    }
+    
+    /**
+     * Get the selected namedBean
+     *
+     * @return the selected bean or null if there is no selection
+     */
+    public NamedBean getSelectedNamedBean() {
+        String selectedName = (String) super.getSelectedItem();
+        return displayToBean.get(selectedName);
     }
 
     /**
@@ -141,13 +177,12 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *         selection
      */
     public String getSelectedUserName() {
-        String selectedName = (String) super.getSelectedItem();
-        NamedBean nBean = displayToBean.get(selectedName);
+        String result = null;
+        NamedBean nBean = getSelectedNamedBean();
         if (nBean != null) {
-            return nBean.getDisplayName();
+            result = nBean.getDisplayName();
         }
-        return null;
-
+        return result;
     }
 
     /**
@@ -157,12 +192,12 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *         selection
      */
     public String getSelectedSystemName() {
-        String selectedName = (String) super.getSelectedItem();
-        NamedBean nBean = displayToBean.get(selectedName);
+        String result = null;
+        NamedBean nBean = getSelectedNamedBean();
         if (nBean != null) {
-            return nBean.getSystemName();
+            result = nBean.getSystemName();
         }
-        return null;
+        return result;
     }
 
     /**
@@ -172,12 +207,35 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *         selection
      */
     public String getSelectedDisplayName() {
-        String selectedName = (String) super.getSelectedItem();
-        NamedBean nBean = displayToBean.get(selectedName);
+          String result = null;
+        NamedBean nBean = getSelectedNamedBean();
         if (nBean != null) {
-            return nBean.getDisplayName();
+            result = nBean.getDisplayName();
         }
-        return null;
+        return result;
+   }
+
+    /**
+     * Get the display order of the combobox
+     *
+     * @return the display order of this combobox
+     */
+    public DisplayOptions getDisplayOrder() {
+        return _displayOrder;
+    }
+
+    /**
+     * Set the display order of the combobox
+     *
+     * @param inDisplayOrder - the desired display order for this combobox
+     */
+    public void setDisplayOrder(DisplayOptions inDisplayOrder) {
+        if (_displayOrder != inDisplayOrder) {
+            NamedBean selectedBean = getSelectedBean();
+            _displayOrder = inDisplayOrder;
+            //refreshCombo();
+            setSelectedBean(selectedBean);
+        }
     }
 
     /**
@@ -264,33 +322,68 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         updateComboBox(_lastSelected);
     }
 
-    /**
-     * constant used to format the entries in the combo box using the
-     * displayname
-     */
-    public final static int DISPLAYNAME = 0x00;
-    /**
-     * Constant used to format the entries in the combo box using the username
-     * if the username value is blank for a bean then the system name is used
-     */
-    public final static int USERNAME = 0x01;
+    public List<NamedBean> getExcludeItems()
+    {
+        return this.exclude;
+    }
 
-    /**
-     * constant used to format the entries in the combo box using the systemname
-     */
-    public final static int SYSTEMNAME = 0x02;
+    public enum DisplayOptions {
+        /**
+         * Format the entries in the combo box using the
+         * displayname
+         */
+        DISPLAYNAME(1),
+        /**
+         * Format the entries in the combo box using the username.
+         * If the username value is blank for a bean then the system name is used
+         */
+        USERNAME(2),
 
-    /**
-     * constant used to format the entries in the combo box with the username
-     * followed by the systemname
-     */
-    public final static int USERNAMESYSTEMNAME = 0x03;
+        /**
+         * Format the entries in the combo box using the systemname
+         */
+        SYSTEMNAME(3),
 
-    /**
-     * constant used to format the entries in the combo box with the systemname
-     * followed by the userame
-     */
-    public final static int SYSTEMNAMEUSERNAME = 0x04;
+        /**
+         * Format the entries in the combo box with the username
+         * followed by the systemname
+         */
+        USERNAMESYSTEMNAME(4),
+
+        /**
+         * Format the entries in the combo box with the systemname
+         * followed by the userame
+         */
+        SYSTEMNAMEUSERNAME(5);
+
+        //
+        // following code maps enumsto int and int to enum
+        //
+        private int value;
+
+        private static final Map<Integer, DisplayOptions> enumMap;
+
+        private DisplayOptions(int value) {
+            this.value = value;
+        }
+
+        //Build an immutable map of String name to enum pairs.
+        static {
+            Map<Integer, DisplayOptions> map = new HashMap<Integer, DisplayOptions>();
+
+            for (DisplayOptions instance : DisplayOptions.values()) {
+                map.put(instance.getValue(), instance);
+            }
+            enumMap = Collections.unmodifiableMap(map);
+        }
+        
+        public static DisplayOptions valueOf(int displayOptionInt) {
+            return enumMap.get(displayOptionInt);
+        }
+        public int getValue() {
+            return value;
+        }
+    }
 
     public void dispose() {
         _manager.removePropertyChangeListener(this);

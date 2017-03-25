@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 public class ManageLocationsFrame extends JmriJFrame {
 
@@ -374,7 +374,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         dispose();
     }
 
-    static private Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
 
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations

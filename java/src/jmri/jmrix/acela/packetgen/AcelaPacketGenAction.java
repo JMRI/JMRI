@@ -9,9 +9,9 @@ import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 /**
  * Swing action to create and register an AcelaPacketGenFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaPacketGenAction extends AbstractAction {

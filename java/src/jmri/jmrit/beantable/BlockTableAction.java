@@ -36,16 +36,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a BlockTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class BlockTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
+     * @param actionName the Action title
      */
     public BlockTableAction(String actionName) {
         super(actionName);
@@ -561,7 +562,7 @@ public class BlockTableAction extends AbstractTableAction {
      */
     @Override
     public void addToFrame(BeanTableFrame f) {
-        //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
+        //final BeanTableFrame finalF = f; // needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
         inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
         inchBox.addActionListener(new ActionListener() {

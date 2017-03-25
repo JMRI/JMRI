@@ -85,7 +85,7 @@ package jmri.jmrix.loconet;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
  * @author  Ron W. Auld
  * @author  John Kabat
  * @author  Alain Le Marchand
@@ -462,14 +462,16 @@ public final class LnConstants {
 // reverse-engineered constants
     public final static int RE_IPL_MFR_DIGITRAX = 0x00;
     public final static int RE_IPL_MFR_ALL = 0x00;
+    public final static int RE_IPL_DIGITRAX_HOST_LNRP = 0x01;
     public final static int RE_IPL_DIGITRAX_HOST_UT4 = 0x04;
-    public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
-    public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 27;
-    public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 28;
-    public final static int RE_IPL_DIGITRAX_HOST_DT500 = 50;
-    public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
-    public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
+    public final static int RE_IPL_DIGITRAX_HOST_WTL12 = 0x0c;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 0x1b;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 0x1c;
     public final static int RE_IPL_DIGITRAX_HOST_PR3 = 0x23;
+    public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
+    public final static int RE_IPL_DIGITRAX_HOST_DT500 = 0x32;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
+    public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
     public final static int RE_IPL_DIGITRAX_HOST_ALL = 0x00;
     public final static int RE_IPL_DIGITRAX_SLAVE_RF24 = 0x18;
     public final static int RE_IPL_DIGITRAX_SLAVE_ALL = 0x00;

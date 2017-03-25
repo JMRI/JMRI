@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import jmri.jmrit.operations.OperationsManager;
@@ -46,22 +45,22 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-
     public static synchronized TrainManagerXml instance() {
-        TrainManagerXml _instance = jmri.InstanceManager.getNullableDefault(TrainManagerXml.class);
-        if (_instance == null) {
+        TrainManagerXml instance = jmri.InstanceManager.getNullableDefault(TrainManagerXml.class);
+        if (instance == null) {
             log.debug("TrainManagerXml creating instance");
             // create and load
-            _instance = new TrainManagerXml();
-            jmri.InstanceManager.setDefault(TrainManagerXml.class,_instance);
-            _instance.load();
+            instance = new TrainManagerXml();
+            jmri.InstanceManager.setDefault(TrainManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManagerXml returns instance " + _instance);
+            log.debug("TrainManagerXml returns instance " + instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override

@@ -54,16 +54,16 @@
   <variable CV="2" item="Vstart" default="0" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Start Volts (0-255)</label>
+    <comment>Range 0-255</comment>
     <label xml:lang="it">Tensione di partenza (0-255)</label>
+    <comment xml:lang="it">Valori da 0 a 255</comment>
     <label xml:lang="fr">V démarr. (0-255)</label>
     <label xml:lang="de">Anfahrspannung</label>
-    <label xml:lang="ca">Voltatge d'arrencada</label>
-    <comment>Range 0-255</comment>
-    <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="ca">Voltatge d'arrencada</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
     <label xml:lang="cs">Rozjezdové napětí</label>
     <comment xml:lang="cs">Meze 0-255</comment>
-    <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
   <variable CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
     <decVal min="0" max="255"/>

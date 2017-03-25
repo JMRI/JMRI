@@ -1,5 +1,8 @@
 package jmri.jmrix.openlcb;
 
+import java.util.Timer;
+import jmri.Sensor;
+import jmri.implementation.AbstractSensor;
 import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
@@ -7,15 +10,10 @@ import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Timer;
-
-import jmri.Sensor;
-import jmri.implementation.AbstractSensor;
-
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
 public class OlcbSensor extends AbstractSensor {
 
@@ -127,6 +125,15 @@ public class OlcbSensor extends AbstractSensor {
                 }
             }
         }, ON_TIME);
+    }
+    
+    /*
+     * since the events that drive a sensor can be whichever state a user
+     * wants, the order of the event pair determines what is the 'active' state
+     */
+    @Override
+    public boolean canInvert() {
+        return false;
     }
 
     @Override

@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface SensorManager extends Manager {
 
@@ -34,7 +34,7 @@ public interface SensorManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Sensor doesn't already exist and the
      *                                  manager cannot create the Sensor due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
     @Nonnull
@@ -150,4 +150,13 @@ public interface SensorManager extends Manager {
     public void setDefaultSensorDebounceGoingActive(long timer);
 
     public void setDefaultSensorDebounceGoingInActive(long timer);
+
+    /**
+     * Do the sensor objects provided by this manager support configuring 
+     * an internal pullup or pull down resistor?
+     * 
+     * @return true if pull up/pull down configuration is supported.
+     */
+    public boolean isPullResistanceConfigurable();
+
 }

@@ -20,7 +20,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to display the JMRI context for the user
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  * @author Matt Harris Copyright (C) 2008
  *
  */

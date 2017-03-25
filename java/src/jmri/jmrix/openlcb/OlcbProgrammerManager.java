@@ -12,9 +12,9 @@ import jmri.ProgrammingMode;
  * <P>
  * Programmers come in two types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track. Request
+ * <LI>Global, previously "Service Mode" or on a programming track. Request
  * these from an instance of {@link GlobalProgrammerManager}.
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main". Request
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main". Request
  * these from an instance of this interface.
  * </UL>
  * You get a {@link Programmer} object from a ProgrammerManager, which in turn
@@ -36,7 +36,7 @@ import jmri.ProgrammingMode;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  * @since 4.1.1
  */
 public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManager implements jmri.AddressedProgrammerManager {
@@ -103,7 +103,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
 
     /**
      * Provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
+     * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
     @Override
@@ -111,7 +111,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
 
     /**
      * toString() provides the human-readable representation for including
-     * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
+     * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
     @Override

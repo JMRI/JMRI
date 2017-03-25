@@ -109,22 +109,22 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
             return;
         }
 
-	log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
+ log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
 
         // get the right packet
-	if (mAddress > 0) {
-	    boolean state = (newState == jmri.Light.ON);
-	    DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
-	    //InternalState = COMMANDSENT;
-	    tc.sendDCCppMessage(msg, this);
+ if (mAddress > 0) {
+     boolean state = (newState == jmri.Light.ON);
+     DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
+     //InternalState = COMMANDSENT;
+     tc.sendDCCppMessage(msg, this);
 
-	    if (newState != mState) {
-		int oldState = mState;
-		mState = newState;
-		// notify listeners, if any
-		firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
-	    }
-	}
+     if (newState != mState) {
+  int oldState = mState;
+  mState = newState;
+  // notify listeners, if any
+  firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
+     }
+ }
     }
 
     /*
@@ -137,7 +137,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
-	// We don't expect a reply, so we don't do anything with replies.
+ // We don't expect a reply, so we don't do anything with replies.
     }
 
     // listen for the messages to the LI100/LI101

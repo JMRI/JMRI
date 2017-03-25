@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 

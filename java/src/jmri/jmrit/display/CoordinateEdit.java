@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CoordinateEdit extends JmriJFrame {
 
-    Positionable pl; 			// positional label tracked by this frame
+    Positionable pl;    // positional label tracked by this frame
     int oldX;
     int oldY;
     double oldD;
@@ -392,8 +392,8 @@ public class CoordinateEdit extends JmriJFrame {
         xTextField = new javax.swing.JTextField(15);
         xTextField.setText(pl.getTooltip().getText());
         xTextField.setToolTipText(Bundle.getMessage("EnterTooltip"));
-//		xTextField.setMaximumSize(new Dimension(
-//				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
+//  xTextField.setMaximumSize(new Dimension(
+//    xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
         getContentPane().setLayout(new GridBagLayout());
 
@@ -684,7 +684,7 @@ public class CoordinateEdit extends JmriJFrame {
 
         getContentPane().setLayout(new GridBagLayout());
         addTextItems();
-        oldX = 0;		// counter for warning
+        oldX = 0;  // counter for warning
 
         okButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -763,8 +763,8 @@ public class CoordinateEdit extends JmriJFrame {
         xTextField = new javax.swing.JTextField(15);
         xTextField.setText(oldStr);
         xTextField.setToolTipText(Bundle.getMessage("PromptNewName"));
-//		xTextField.setMaximumSize(new Dimension(1000, xTextField.getPreferredSize().height));
-//				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
+//  xTextField.setMaximumSize(new Dimension(1000, xTextField.getPreferredSize().height));
+//    xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
         getContentPane().setLayout(new GridBagLayout());
 
