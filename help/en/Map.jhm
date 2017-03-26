@@ -2578,6 +2578,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainsTableColors" url="package/jmri/jmrit/operations/Operations.shtml#TrainsTableColors"/>
 
+<mapID target="html.hardware.dccpp.Sensors" url="html/hardware/dccpp/Sensors.shtml"/>
+
 <mapID target="html.tools.throttle.ThrottleWindowMenus_EditMenu" url="html/tools/throttle/ThrottleWindowMenus.shtml#EditMenu"/>
 
 <mapID target="html.hardware.hardware-template_tools" url="html/hardware/hardware-template.shtml#tools"/>
@@ -2865,6 +2867,8 @@
 <mapID target="html.tools.index_lights" url="html/tools/index.shtml#lights"/>
 
 <mapID target="html.apps.DecoderPro.FAQ_lb-xp" url="html/apps/DecoderPro/FAQ.shtml#lb-xp"/>
+
+<mapID target="html.hardware.dccpp.Turnouts" url="html/hardware/dccpp/Turnouts.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.SlipTurnoutIcon" url="package/jmri/jmrit/display/SlipTurnoutIcon.shtml"/>
 
