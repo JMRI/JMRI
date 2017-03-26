@@ -4,8 +4,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
@@ -284,6 +287,21 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
         return ret;
+    }
+
+    /**
+     * Confirmation mode by programming mode; not that this doesn't
+     * yet know whether BDL168 hardware is present to allow DecoderReply
+     * to function; that should be a preference eventually.  See also DCS240...
+     *
+     * @param addr CV address ignored, as there's no variance with this in LocoNet
+     * @return Depends on programming mode
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) {
+        if (getMode().equals(DefaultProgrammerManager.OPSBYTEMODE)) return WriteConfirmMode.NotVerified;
+        return WriteConfirmMode.DecoderReply;
     }
 
     /**
