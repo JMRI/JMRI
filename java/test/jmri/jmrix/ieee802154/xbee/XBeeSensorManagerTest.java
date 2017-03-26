@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.digi.xbee.api.connection.IConnectionInterface;
@@ -94,31 +92,8 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         jmri.util.JUnitUtil.resetInstanceManager();
 
         // setup the mock XBee Connection.
-        // Mock the local device.
-        localDevice = PowerMockito.mock(XBeeDevice.class);
-        Mockito.when(localDevice.getConnectionInterface()).thenReturn(Mockito.mock(IConnectionInterface.class));
-        Mockito.when(localDevice.getXBeeProtocol()).thenReturn(XBeeProtocol.ZIGBEE);
-        // Mock the remote device 1.
-        remoteDevice1 = Mockito.mock(RemoteXBeeDevice.class);
-        Mockito.when(remoteDevice1.getXBeeProtocol()).thenReturn(XBeeProtocol.UNKNOWN);
-        Mockito.when(remoteDevice1.getNodeID()).thenReturn(NODE_ID);
-        Mockito.when(remoteDevice1.get64BitAddress()).thenReturn(new XBee64BitAddress("0013A20040A04D2D"));
-        Mockito.when(remoteDevice1.get16BitAddress()).thenReturn(new XBee16BitAddress("0002"));
+        XBeeTrafficController tc = new XBeeInterfaceScaffold();
 
-
-
-        XBeeTrafficController tc = new XBeeTrafficController() {
-            @Override
-            public void setInstance() {
-            }
-            @Override
-            public void sendXBeeMessage(XBeeMessage m,XBeeListener l){
-            }
-            @Override
-            public XBeeDevice getXBee() {
-               return localDevice;
-            }
-        };
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
         tc.setAdapterMemo(m);
@@ -128,7 +103,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         byte uad[] = {(byte) 0x00, (byte) 0x02};
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         XBeeNode node = new XBeeNode(pan,uad,gad);
-        node.setXBee(remoteDevice1);
+        node.setXBee(((XBeeInterfaceScaffold)tc).getRemoteDevice1());
         tc.registerNode(node);
 
     }
