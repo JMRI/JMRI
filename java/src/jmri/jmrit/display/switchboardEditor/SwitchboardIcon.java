@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Just here to use in the future...
  * An icon to display and input a Bean name in a TextField.
  * <P>
  * Handles the case of either a String or an Integer in the Bean, preserving

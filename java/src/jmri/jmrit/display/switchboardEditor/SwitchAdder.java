@@ -58,6 +58,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Just here to use in the future...
  * Provides a simple editor for selecting N NamedIcons. Class for Switch (Icon) Editors
  * implements "Drag n Drop". Allows drops from icons dragged from a Catalog
  * preview pane.
