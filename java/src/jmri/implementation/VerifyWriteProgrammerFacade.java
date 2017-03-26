@@ -66,10 +66,11 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
 
     @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        _cv = CV;
         useProgrammer(p);
 
         state = ProgState.READING;
-        prog.readCV(_cv, this);
+        prog.readCV(CV, this);
     }
 
     private jmri.ProgListener _usingProgrammer = null;

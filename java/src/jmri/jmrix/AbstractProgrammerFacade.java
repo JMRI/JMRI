@@ -37,32 +37,6 @@ public abstract class AbstractProgrammerFacade implements Programmer {
     }
 
     /**
-     * Are facades allowed to cache programming operations?
-     * E.g. skip writing a PI or SI CV if the correct value 
-     * has already been written.<p>
-     * Unbound parameter.<p>
-     * This is common across all facades to simplify user
-     * decision making. Someday, finer granularity might be desired.
-     */
-    static boolean canCacheDefault = false;
-    
-    static public boolean isCanCacheDefault() { return canCacheDefault; }
-    static public void setCanCacheDefault(boolean v) { canCacheDefault = v; }
-    
-    /**
-     * Should facades check index values after writing them?
-     * E.g. read back a PI or SI value to confirm it has the
-     * right value, and error out if not<p>
-     * Unbound parameter.<p>
-     * This is common across all facades to simplify user
-     * decision making. Someday, finer granularity might be desired.
-     */
-    static boolean doConfirmRead = false;
-    
-    static public boolean isDoConfirmRead() { return doConfirmRead; }
-    static public void setDoConfirmRead(boolean v) { doConfirmRead = v; }
-    
-    /**
      * @param CV  the CV to write
      * @param val the value to write
      * @param p   the listener that will be notified of the write
