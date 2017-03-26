@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * It would be good to replace this with properties-based method for redirecting
  * to classes in particular subpackages.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 abstract public class ConfigurationManager {
 

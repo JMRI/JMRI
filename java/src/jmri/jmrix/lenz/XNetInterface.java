@@ -22,7 +22,7 @@ package jmri.jmrix.lenz;
  * that messages will be returned in any particular thread. See the XNetListener
  * doc for more background.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrix.lenz.XNetListener
  * @see jmri.jmrix.lenz.XNetTrafficController
  *

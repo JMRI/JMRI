@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *</ul>
  * The duration of these can be adjusted by changing the values of those constants in subclasses.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2012, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2012, 2013
  */
 public abstract class AbstractProgrammer implements Programmer {
 

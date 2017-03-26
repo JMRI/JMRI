@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Multiple DecoderIndexFile objects don't make sense, so we use an "instance"
  * member to navigate to a single one.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class DecoderIndexFile extends XmlFile {
 

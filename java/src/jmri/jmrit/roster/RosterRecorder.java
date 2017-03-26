@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Watches a Roster and writes it to file when a change is seen.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
   * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */

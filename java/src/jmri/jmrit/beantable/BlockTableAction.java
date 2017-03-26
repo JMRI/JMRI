@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a BlockTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class BlockTableAction extends AbstractTableAction {
 
@@ -562,7 +562,7 @@ public class BlockTableAction extends AbstractTableAction {
      */
     @Override
     public void addToFrame(BeanTableFrame f) {
-        //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
+        //final BeanTableFrame finalF = f; // needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
         inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
         inchBox.addActionListener(new ActionListener() {

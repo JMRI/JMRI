@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * <LI> (everything else)
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on XNetPacketizer by Bob Jacobsen
  *

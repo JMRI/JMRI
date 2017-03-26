@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author Howard G. Penny Copyright (C) 2005
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  * @deprecated since 3.7.1
  *
  */

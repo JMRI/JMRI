@@ -157,7 +157,7 @@ abstract public class AbstractMRTrafficController {
     public static final int WAITREPLYINNORMMODESTATE = 35;  // xmt has done mode change, await reply
     public static final int OKSENDMSGSTATE = 40;        // mode change reply here, send original msg
     public static final int AUTORETRYSTATE = 45;        // received message where automatic recovery may occur with a retransmission, re-send original msg
-    public static final int POLLSTATE = 50;			// Send program mode or poll message
+    public static final int POLLSTATE = 50;   // Send program mode or poll message
 
     protected boolean allowUnexpectedReply;
 
@@ -341,7 +341,7 @@ abstract public class AbstractMRTrafficController {
                         log.error("left timeout in unexpected state: {}", mCurrentState);
                     }
                     if (mCurrentState == IDLESTATE) {
-                        mCurrentState = POLLSTATE;	// this prevents other transitions from the IDLESTATE
+                        mCurrentState = POLLSTATE; // this prevents other transitions from the IDLESTATE
                     }
                 }
                 // went around with nothing to do; leave programming state if in it

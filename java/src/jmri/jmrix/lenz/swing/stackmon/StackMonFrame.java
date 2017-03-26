@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * will include the ability to set the status of function buttons
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2005-2010
+ * @author Paul Bender Copyright (C) 2005-2010
   */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -149,7 +149,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(CurrentStatus);
-	//getContentPane().add(pane3);
+ //getContentPane().add(pane3);
 
         // Set up the jtable in a Scroll Pane..
         JScrollPane stackPane = new JScrollPane(stackTable);

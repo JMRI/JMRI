@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of NamedBean manager contents.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author  Dennis Miller Copyright (C) 2006
  */
 abstract public class BeanTableDataModel extends AbstractTableModel implements PropertyChangeListener {

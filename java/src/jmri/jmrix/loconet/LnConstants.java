@@ -85,7 +85,7 @@ package jmri.jmrix.loconet;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
  * @author  Ron W. Auld
  * @author  John Kabat
  * @author  Alain Le Marchand

@@ -37,7 +37,7 @@ package jmri;
  * <P>
  * @see jmri.ProgrammerManager
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2014
  */
 public interface AddressedProgrammer extends Programmer {
 

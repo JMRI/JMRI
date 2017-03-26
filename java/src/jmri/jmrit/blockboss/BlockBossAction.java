@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 /**
  * Swing action to create and show a "Simple Signal Logic" GUI panel.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class BlockBossAction extends AbstractAction {
 

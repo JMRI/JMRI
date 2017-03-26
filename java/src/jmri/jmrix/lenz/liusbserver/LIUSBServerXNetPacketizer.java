@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * In particular, LIUSBServerXNetPacketizer counts the number of commands
  * received.
  *
- * @author	Paul Bender, Copyright (C) 2009
+ * @author Paul Bender, Copyright (C) 2009
  *
  */
 public class LIUSBServerXNetPacketizer extends XNetPacketizer {

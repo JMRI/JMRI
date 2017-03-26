@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008-2011
+ * @author Dave Duchamp Copyright (C) 2008-2011
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -1085,7 +1085,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     }
                 }
             }
-            // check/set Transit specific items for automatic running				
+            // check/set Transit specific items for automatic running    
             // validate connectivity for all Sections in this transit            
             int numErrors = t.validateConnectivity(_LE);
             if (numErrors != 0) {
@@ -1135,16 +1135,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        // all information checks out - create	
+        // all information checks out - create 
         ActiveTrain at = new ActiveTrain(t, trainID, tSource);
         //if (at==null) {
-        //	if (showErrorMessages) {
-        //		JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-        //				"Error11"),new Object[] { transitID, trainID }), Bundle.getMessage("ErrorTitle"),
-        //					JOptionPane.ERROR_MESSAGE);
-        //	}
-        //	log.error("Creating Active Train failed, Transit - "+transitID+", train - "+trainID);
-        //	return null;
+        // if (showErrorMessages) {
+        //  JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+        //    "Error11"),new Object[] { transitID, trainID }), Bundle.getMessage("ErrorTitle"),
+        //     JOptionPane.ERROR_MESSAGE);
+        // }
+        // log.error("Creating Active Train failed, Transit - "+transitID+", train - "+trainID);
+        // return null;
         //}
         activeTrainsList.add(at);
         java.beans.PropertyChangeListener listener = null;
@@ -1439,7 +1439,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 return null;
             }
             // Programming Note: if ns is not null, the program will not check for end Block, but will use ns. Calling
-            //		code must do all validity checks on a non-null ns.
+            //  code must do all validity checks on a non-null ns.
             if (ns != null) {
                 nextSection = ns;
             } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
@@ -1580,9 +1580,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
             // check/set turnouts if requested or if autorun
             // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If 
-            //			turnouts are not set correctly, allocation will not proceed without dispatcher override.
-            //		 If in addition Auto setting of turnouts is requested, the turnouts are set automatically
-            //			if not in the correct position.
+            //   turnouts are not set correctly, allocation will not proceed without dispatcher override.
+            //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
+            //   if not in the correct position.
             // Note: Turnout checking and/or setting is not performed when allocating an extra section.
             if ((_UseConnectivity) && (ar.getSectionSeqNumber() != -99)) {
                 if (!checkTurnoutStates(s, ar.getSectionSeqNumber(), nextSection, at, at.getLastAllocatedSection())) {
@@ -2087,7 +2087,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
     }
     private int nowMinutes = 0;    // last read fast clock minutes
-    private int nowHours = 0;		// last read fast clock hours
+    private int nowHours = 0;  // last read fast clock hours
 
     /**
      * This method tests time assuming both times are on the same day (ignoring

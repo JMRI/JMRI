@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2012
  */
 public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 

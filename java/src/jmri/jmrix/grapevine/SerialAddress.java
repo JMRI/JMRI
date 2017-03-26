@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * examples: GT0B2 (node address 0, bit 2), GS1B3 (node address 1, bit 3),
  * GL11B234 (node address 11, bit234)
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2004
+ * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  */
 public class SerialAddress {

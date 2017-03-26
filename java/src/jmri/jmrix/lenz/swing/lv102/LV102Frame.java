@@ -12,7 +12,7 @@ import javax.swing.JToggleButton;
  * This is a container for the LV102 configuration utility. The actual utility
  * is defined in {@link LV102InternalFrame}
  *
- * @author	Paul Bender Copyright (C) 2004,2005
+ * @author Paul Bender Copyright (C) 2004,2005
   */
 public class LV102Frame extends jmri.util.JmriJFrame {
 

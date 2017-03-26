@@ -7,7 +7,7 @@ import javax.swing.JButton;
 /**
  * Provide a JFrame to display a table of Signal Mast Logic.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingFrame extends jmri.util.JmriJFrame {
 

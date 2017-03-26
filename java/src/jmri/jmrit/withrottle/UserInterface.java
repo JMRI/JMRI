@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * UserInterface.java Create a window for WiThrottle information, advertise
  * service, and create a thread for it to run in.
  *
- *	listen() has to run in a separate thread.
+ * listen() has to run in a separate thread.
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Randall Wood Copyright (C) 2013
@@ -85,7 +85,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
         setShutDownTask();
         createServerThread();
-    }	//	End of constructor
+    } // End of constructor
 
     public void createServerThread() {
         ServerThread s = new ServerThread(this);
@@ -219,12 +219,12 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                if (isListen) {	//	Stop server
+                if (isListen) { // Stop server
                     disableServer();
                     serverOnOff.setText(rb.getString("MenuMenuStart"));
                     portLabel.setText(rb.getString("LabelNone"));
                     manualPortLabel.setText(null);
-                } else {	//	Restart server
+                } else { // Restart server
                     serverOnOff.setText(rb.getString("MenuMenuStop"));
                     isListen = true;
 
@@ -252,7 +252,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     public void listen() {
         int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
 
-        try {	//Create socket on available port
+        try { //Create socket on available port
             socket = new ServerSocket(socketPort);
         } catch (IOException e1) {
             log.error("New ServerSocket Failed during listen()");
@@ -341,7 +341,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         withrottlesListModel.updateDeviceList(deviceList);
     }
 
-//	Clear out the deviceList array and close each device thread
+// Clear out the deviceList array and close each device thread
     private void stopDevices() {
         DeviceServer device;
         int cnt = 0;
