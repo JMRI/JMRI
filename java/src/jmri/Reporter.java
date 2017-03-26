@@ -35,7 +35,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Matthew Harris Copyright (C) 2011
  * @see jmri.Sensor
  * @see jmri.ReporterManager

@@ -10,7 +10,7 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 /**
  * Frame for user input of Dcc4Pc messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener {

@@ -9,7 +9,7 @@ import jmri.jmrix.maple.SerialTrafficController;
 /**
  * Frame displaying (and logging) serial command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 

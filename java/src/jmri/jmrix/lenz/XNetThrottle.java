@@ -515,7 +515,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 log.debug("Current throttle status is THROTTLESTATSENT");
             }
             // This throttle has requested status information, so we need 
-            // to process those messages.	
+            // to process those messages. 
             if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
                 if (l.getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
                     /* handle information response about F13-F28 Momentary 

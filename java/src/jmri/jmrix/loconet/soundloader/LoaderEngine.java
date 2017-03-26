@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Controls the actual LocoNet transfers to download sounds into a Digitrax SFX
  * decoder.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class LoaderEngine {
 

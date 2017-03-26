@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Test the SingleIndexProgrammerFacade class.
+ * Test the MultiIndexProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013
  * 

@@ -67,7 +67,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void init() {
         if (!_initialized) {
             super.init();
-            add(initTablePanel(_model, _editor), 0);      // top of Panel    		
+            add(initTablePanel(_model, _editor), 0);      // top of Panel      
             _buttonPosition = 1;
         }
     }

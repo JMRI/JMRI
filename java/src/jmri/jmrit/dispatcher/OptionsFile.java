@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class OptionsFile extends jmri.jmrit.XmlFile {
 

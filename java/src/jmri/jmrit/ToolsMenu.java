@@ -10,7 +10,7 @@ import javax.swing.JSeparator;
  * As a best practice, we are migrating the action names (constructor arguments)
  * out of this class and into the contructors themselves.
  *
- * @author	Bob Jacobsen Copyright 2003, 2008
+ * @author Bob Jacobsen Copyright 2003, 2008
  * @author Matthew Harris copyright (c) 2009
  */
 public class ToolsMenu extends JMenu {

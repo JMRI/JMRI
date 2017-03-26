@@ -22,8 +22,8 @@ import javax.swing.ListSelectionModel;
 /**
  * A very specific dialog for editing the properties of a ThrottleFrame object.
  *
- * @author	Original Unknown
- * @author	Ken Cameron, copyright 2008
+ * @author Original Unknown
+ * @author Ken Cameron, copyright 2008
  */
 public class ThrottleFramePropertyEditor extends JDialog {
 

@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * and displayed.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2007
  * @author Adapted for metric system - S.K. Bosch
  * @author Matthew Harris Copyright (c) 2011
  */

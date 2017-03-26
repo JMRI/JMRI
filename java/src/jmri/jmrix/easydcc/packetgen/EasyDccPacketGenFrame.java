@@ -9,7 +9,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
 /**
  * Frame for user input of EasyDcc messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.easydcc.EasyDccListener {
 

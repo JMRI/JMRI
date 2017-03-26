@@ -19,7 +19,7 @@ import jmri.util.PhysicalLocation;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2012
+ * @author   Mark Underwood Copyright (C) 2012
  */
 public interface PhysicalLocationReporter {
 

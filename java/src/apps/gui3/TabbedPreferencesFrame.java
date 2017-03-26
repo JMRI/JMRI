@@ -9,7 +9,7 @@ import jmri.util.JmriJFrame;
 /**
  * Provide access to the various tables via a listed pane.
  * <P>
- * @author	Kevin Dickerson Copyright 2010
+ * @author Kevin Dickerson Copyright 2010
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
 

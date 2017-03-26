@@ -28,7 +28,7 @@ import jmri.Block;
  * search, Track Segment is returned, Reached End Bumper is set true, and Node
  * Object and Node Type, are not returned.
  *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  */
 public class TrackNode {
 

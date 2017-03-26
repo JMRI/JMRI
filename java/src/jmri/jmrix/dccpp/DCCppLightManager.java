@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on SerialLightManager.java
  *
- * @author	Paul Bender Copyright (C) 2008
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2008
+ * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppLightManager extends AbstractLightManager {
 
@@ -61,7 +61,7 @@ public class DCCppLightManager extends AbstractLightManager {
         if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
             // here if an illegal DCC++ light system name 
             log.error("illegal character in header field of DCC++ light system name: {} prefix {} type {}", 
-		      systemName, getSystemPrefix(), typeLetter());
+        systemName, getSystemPrefix(), typeLetter());
             return (0);
         }
         // name must be in the DCCppLnnnnn format

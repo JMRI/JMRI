@@ -32,7 +32,7 @@ public class EditSwitchListTextAction extends AbstractAction {
             f.initComponents();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(EditSwitchListTextAction.class.getName());

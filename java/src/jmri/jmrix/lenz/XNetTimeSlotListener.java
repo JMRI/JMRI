@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * is true, it is called with a "true paramter.
  * </p>
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
   */
 public class XNetTimeSlotListener implements XNetListener {
 

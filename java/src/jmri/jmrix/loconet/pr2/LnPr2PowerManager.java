@@ -21,7 +21,7 @@ import jmri.jmrix.loconet.SlotManager;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnPr2PowerManager extends LnPowerManager {
 

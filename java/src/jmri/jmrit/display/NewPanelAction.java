@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
  * Uses the individual LayoutEditorAction or PanelEditorAction to start the
  * editors, to ensure consistent operation.
  *
- * @author	Dave Duchamp Copyright (C) 2007
- * @author	Bob Jacobsen Copyright (C) 2008
- * @author	Egbert Broerse Copyright (C) 2017
+ * @author Dave Duchamp Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2008
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class NewPanelAction extends AbstractAction {
 

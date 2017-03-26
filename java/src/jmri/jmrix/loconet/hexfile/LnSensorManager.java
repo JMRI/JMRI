@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
- * @author	Kevin Dickerson Copyright (C) 2001
+ * @author Kevin Dickerson Copyright (C) 2001
  * 
  */
 

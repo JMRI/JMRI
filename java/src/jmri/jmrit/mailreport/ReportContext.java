@@ -128,6 +128,10 @@ public class ReportContext {
         addProperty("user.language");
         addProperty("user.timezone");
         addProperty("jmri.log.path");
+        
+        addString("FileSystemView#getDefaultDirectory(): "+javax.swing.filechooser.FileSystemView.getFileSystemView().getDefaultDirectory().getPath() );
+        addString("FileSystemView#getHomeDirectory(): "+javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getPath() );
+        addString("Default JFileChooser(): "+(new javax.swing.JFileChooser()).getCurrentDirectory().getPath() );
 
         addScreenSize();
 

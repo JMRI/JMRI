@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel displaying (and logging) DCC++ messages derived from DCCppMonFrame.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2004-2014
  * @author Giorgio Terdina Copyright (C) 2007
  * @author Mark Underwood Copyright (C) 2015
@@ -146,10 +146,10 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
             case DCCppConstants.CURRENT_REPLY:
                 text = "Current: " + l.getCurrentString() + " / 1024";
                 break;
-//	case DCCppConstants.LISTPACKET_REPLY:
-//	    // TODO: Implement this fully
-//	    text = "List Packet Reply...\n";
-//	    break;
+// case DCCppConstants.LISTPACKET_REPLY:
+//     // TODO: Implement this fully
+//     text = "List Packet Reply...\n";
+//     break;
             case DCCppConstants.WRITE_EEPROM_REPLY:
                 text = "Write EEPROM Reply...\n";
                 // TODO: Don't use getProgValueString()

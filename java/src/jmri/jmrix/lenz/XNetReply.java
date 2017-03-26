@@ -5,7 +5,7 @@ package jmri.jmrix.lenz;
  * Represents a single response from the XpressNet.
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
   *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -555,9 +555,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * In the interest of code reuse, The following function checks to see 
      * if an XPressNet Message is a communications error message.
      * the errors handeled are:
-     *		01 01 00  -- Error between interface and the PC
-     *		01 02 03  -- Error between interface and the Command Station
-     *		01 03 02  -- Unknown Communications Error
+     *  01 01 00  -- Error between interface and the PC
+     *  01 02 03  -- Error between interface and the Command Station
+     *  01 03 02  -- Unknown Communications Error
      *      01 06 07  -- LI10x Buffer Overflow
      *      01 0A 0B  -- LIUSB only. Request resend of data.
      */
@@ -575,7 +575,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * In the interest of code reuse, The following function checks to see 
      * if an XPressNet Message is a communications error message.
      * the errors handeled are:
-     *		01 05 04  -- Timeslot Error
+     *  01 05 04  -- Timeslot Error
      *      01 07 06  -- Timeslot Restored 
      *      01 08 09  -- Data sent while there is no Timeslot
      */
@@ -848,7 +848,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 text = toString();
             }
             //}
-	/* We want to look at responses to specific requests made to the Command Station */
+ /* We want to look at responses to specific requests made to the Command Station */
         } else if (getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
             if (getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
                 text = Bundle.getMessage("XNetReplyCSStatus");

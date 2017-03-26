@@ -50,9 +50,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SignalHeadTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003,2006,2007, 2008, 2009
- * @author	Petr Koud'a Copyright (C) 2007
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2003,2006,2007, 2008, 2009
+ * @author Petr Koud'a Copyright (C) 2007
+ * @author Egbert Broerse Copyright (C) 2016
  */
 public class SignalHeadTableAction extends AbstractTableAction {
 

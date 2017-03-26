@@ -42,9 +42,9 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Mrc Inc
  * for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Kevin Dickerson Copyright (C) 2014
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Kevin Dickerson Copyright (C) 2014
+ * @author Ken Cameron Copyright (C) 2014
  *
  */
 public class MrcPacketizer extends MrcTrafficController {

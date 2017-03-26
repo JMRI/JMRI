@@ -12,31 +12,52 @@ import org.slf4j.LoggerFactory;
  * Used through the String write/read/confirm interface. Accepts address
  * formats:
  * <ul>
- * <li>If cvFirst is true:<ul>
- * <li> 123 Do write/read/confirm to 123
- * <li> 123.11 Writes 11 to the first index CV, then does write/read/confirm to
- * 123
- * <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index
- * CV, then does write/read/confirm to 123
+ * <li>If cvFirst is true:
+ * <ul>
+ *   <li> 123 Do write/read/confirm to 123
+ *   <li> 123.11 Writes 11 to the first index CV, then does write/read/confirm to 123
+ *   <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *                    then does write/read/confirm to 123
  * </ul>
- * <li>If cvFirst is false:<ul>
- * <li> 123 Do write/read/confirm to 123
- * <li> 11.123 Writes 11 to the first index CV, then does write/read/confirm to
- * 123
- * <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index
- * CV, then does write/read/confirm to 123
+ * <li>If cvFirst is false:
+ * <ul>
+ *   <li> 123 Do write/read/confirm to 123
+ *   <li> 11.123 Writes 11 to the first index CV, then does write/read/confirm to 123
+ *   <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *              then does write/read/confirm to 123
  * </ul>
  * </ul>
+ *
+ *<p>
+ * Is skipDupIndexWrite is true, sequential operations with the same PI and SI values
+ * (and only immediately sequential operations with both PI and SI unchanged) will
+ * skip writing of the PI and SI CVs.  This might not work for some decoders, hence is
+ * configurable. See the logic in {@link jmri.implementation.ProgrammerFacadeSelector}
+ * for how the decoder file contents and default (preferences) interact.
  * <p>
- * Is skipDupIndexWrite is true, sequential operations with the same PI and SI
- * values (and only immediately sequential operations with both PI and SI
- * unchanged) will skip writing of the PI and SI CVs. This might not work for
- * some decoders, hence is configurable.
+ * State Diagram for read and write operations: <img src="doc-files/MultiIndexProgrammerFacade-State-Diagram.png" alt="UML State diagram"><p>
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
  */
+ 
+/*
+ * @startuml jmri/implementation/doc-files/MultiIndexProgrammerFacade-State-Diagram.png
+ * [*] --> NOTPROGRAMMING : Error reply received
+ * [*] --> NOTPROGRAMMING 
+ * NOTPROGRAMMING --> PROGRAMMING: readCV() & & PI==-1 (read CV)
+ * NOTPROGRAMMING --> FINISHREAD: readCV() & PI!=-1 (write PI)
+ * NOTPROGRAMMING --> PROGRAMMING: writeCV() & single CV (write CV)
+ * NOTPROGRAMMING --> FINISHWRITE: writeCV() & PI write needed (write PI)
+ * FINISHREAD --> FINISHREAD: OK reply & SI!=-1 (write SI)
+ * FINISHREAD --> PROGRAMMING: OK reply & SI==-1 (read CV)
+ * FINISHWRITE --> FINISHWRITE: OK reply & SI!=-1 (write SI)
+ * FINISHWRITE --> PROGRAMMING: OK reply & SI==-1 (write CV)
+ * PROGRAMMING --> NOTPROGRAMMING: OK reply received (return status and value)
+ * @enduml
+*/
+
 public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
@@ -67,8 +88,8 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     long maxDelay = 1000;  // max mSec since last successful end-of-operation for skipDupIndexWrite; longer delay writes anyway
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    String _cv;	// remember the cv number being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    String _cv; // remember the cv number being read/written
     int valuePI;  //  value to write to PI in current operation or -1
     int valueSI;  //  value to write to SI in current operation or -1
 

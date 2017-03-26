@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Alex Shepherd Copyright (C) 2003
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Alex Shepherd Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
   * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {

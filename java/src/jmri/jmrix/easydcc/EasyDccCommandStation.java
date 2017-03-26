@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * EasyDcc implementation of the CommandStation interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class EasyDccCommandStation implements CommandStation {
 

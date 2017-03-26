@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 /**
  * Start a PanelEditor.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.display.panelEditor.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {

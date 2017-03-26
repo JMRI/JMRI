@@ -57,7 +57,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     // combo boxes
     JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
 
-    //Spinners	 
+    //Spinners  
     JSpinner spinTrainIconEastX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconEastY = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconWestX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));

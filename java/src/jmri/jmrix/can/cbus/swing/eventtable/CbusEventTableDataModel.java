@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of Cbus events
  *
- * @author	Andrew Crosland (C) 2009
+ * @author Andrew Crosland (C) 2009
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 

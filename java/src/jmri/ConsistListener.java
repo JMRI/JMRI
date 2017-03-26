@@ -19,7 +19,7 @@ import java.util.EventListener;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public interface ConsistListener extends EventListener {
 

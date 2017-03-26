@@ -15,7 +15,7 @@ import jmri.Programmer;
 /**
  * Frame providing a simple command station programmer
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @author Giorgio Terdina Copyright (C) 2007
   */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {

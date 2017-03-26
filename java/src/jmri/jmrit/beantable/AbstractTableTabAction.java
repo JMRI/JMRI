@@ -149,7 +149,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         Boolean AddToFrameRan = false;
         Manager manager;
 
-        int bottomBoxIndex;	// index to insert extra stuff
+        int bottomBoxIndex; // index to insert extra stuff
         static final int bottomStrutWidth = 20;
 
         boolean standardModel = true;
