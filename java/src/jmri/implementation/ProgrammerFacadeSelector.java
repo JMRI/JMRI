@@ -89,7 +89,7 @@ public class ProgrammerFacadeSelector {
                 String PI = parameters.get(0).getText();
                 String SI = (parameters.size() > 1) ? parameters.get(1).getText() : null;
                 boolean cvFirst = (parameters.size() > 2) ? (parameters.get(2).getText().equals("false") ? false : true) : true;
-                boolean skipDupIndexWrite = (parameters.size() > 3) ? (parameters.get(3).getText().equals("true") ? true : false) : allowCache; // not present, use default
+                boolean skipDupIndexWrite = (parameters.size() > 3) ? (parameters.get(3).getText().equals("false") ? false : allowCache) : allowCache; // if not present, use default
 
                 jmri.implementation.MultiIndexProgrammerFacade pf
                         = new jmri.implementation.MultiIndexProgrammerFacade(programmer, PI, SI, cvFirst, skipDupIndexWrite);
