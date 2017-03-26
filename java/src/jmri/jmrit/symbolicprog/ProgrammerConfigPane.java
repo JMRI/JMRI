@@ -54,13 +54,13 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         });
         
         advancedPanel.add(canCacheDefault = new JCheckBox(this.apb.getString("ProgCanCacheDefault")));
-        canCacheDefault.setSelected(jmri.jmrix.AbstractProgrammerFacade.isCanCacheDefault());
+        canCacheDefault.setSelected(PaneProgFrame.getCanCacheDefault());
         canCacheDefault.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setCanCacheDefault(canCacheDefault.isSelected());
         });
 
         advancedPanel.add(doConfirmRead = new JCheckBox(this.apb.getString("ProgDoConfirmRead")));
-        doConfirmRead.setSelected(jmri.jmrix.AbstractProgrammerFacade.isDoConfirmRead());
+        doConfirmRead.setSelected(PaneProgFrame.getDoConfirmRead());
         doConfirmRead.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setDoConfirmRead(doConfirmRead.isSelected());
         });
@@ -157,8 +157,8 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         String programmer = this.getSelectedItem();
         return (this.getShowEmptyTabs() != PaneProgFrame.getShowEmptyPanes()
                 || this.getShowCvNums() != PaneProgFrame.getShowCvNumbers()
-                || this.getCanCacheDefault() != jmri.jmrix.AbstractProgrammerFacade.isCanCacheDefault()
-                || this.getDoConfirmRead() != jmri.jmrix.AbstractProgrammerFacade.isDoConfirmRead()
+                || this.getCanCacheDefault() != PaneProgFrame.getCanCacheDefault()
+                || this.getDoConfirmRead() != PaneProgFrame.getDoConfirmRead()
                 || ((programmer != null)
                         ? !programmer.equals(ProgDefault.getDefaultProgFile())
                         : ProgDefault.getDefaultProgFile() != null));
