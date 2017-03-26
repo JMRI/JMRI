@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
  * Implementing classes need to implement status and configure from the
  * portAdapter interface, along with any system specific requirements.
  * <P>
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public abstract class AbstractStreamPortController extends AbstractPortController {
 

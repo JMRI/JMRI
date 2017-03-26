@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Class is final because it starts a survey thread, which runs while
  * constructor is still active.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
   */
 public final class TreeModel extends DefaultTreeModel {
 

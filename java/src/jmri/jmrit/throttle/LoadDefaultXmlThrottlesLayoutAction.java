@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a new throttle.
  *
- * @author	Lionel Jeanson Copyright 2009
+ * @author Lionel Jeanson Copyright 2009
  */
 public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
 

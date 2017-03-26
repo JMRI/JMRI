@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * Note that ctor starts a listener thread; if you subclass this class, be sure
  * that initialization is in the right order.
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
   */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
@@ -655,7 +655,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         //private Object parent = null;
         progReplyListener(Object Parent) {
-            //parent = Parent;	
+            //parent = Parent; 
         }
 
         @Override

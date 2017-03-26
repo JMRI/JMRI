@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * In particular, LIUSBXNetPacketizer adds functions to add and remove the 0xFF
  * 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
  *
  */
 public class LIUSBXNetPacketizer extends XNetPacketizer {

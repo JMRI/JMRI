@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on SignalHeadTableAction.java
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class LightTableAction extends AbstractTableAction {
 
@@ -741,7 +741,7 @@ public class LightTableAction extends AbstractTableAction {
         int startingAddress = 0;
         if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(sName))
                 && addRangeBox.isSelected() && (fieldNumToAdd.getText().length() > 0)) {
-            // get number requested			
+            // get number requested   
             try {
                 numberOfLights = Integer.parseInt(fieldNumToAdd.getText());
             } catch (NumberFormatException ex) {

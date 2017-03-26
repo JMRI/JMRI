@@ -13,7 +13,7 @@ import jmri.implementation.DefaultRoute;
  * <P>
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Follower implements Constants {
 

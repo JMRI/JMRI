@@ -426,7 +426,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     void updateItem() {
-        _saveMap = _iconMap; 	// setSignalHead() clears _iconMap.  we need a copy for setIcons()
+        _saveMap = _iconMap;  // setSignalHead() clears _iconMap.  we need a copy for setIcons()
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());
         HashMap<String, NamedIcon> map1 = _itemPanel.getIconMap();
@@ -496,7 +496,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             Entry<String, NamedIcon> entry = it.next();
             String name = entry.getKey();
             NamedIcon icon = entry.getValue();
-            NamedIcon oldIcon = _saveMap.get(name);	// setSignalHead() has cleared _iconMap	
+            NamedIcon oldIcon = _saveMap.get(name); // setSignalHead() has cleared _iconMap 
             if (log.isDebugEnabled()) {
                 log.debug("key= " + entry.getKey() + ", localKey= " + name
                         + ", newIcon= " + icon + ", oldIcon= " + oldIcon);
@@ -511,7 +511,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     void updateSignal() {
-        _saveMap = _iconMap; 	// setSignalHead() clears _iconMap.  we need a copy for setIcons()
+        _saveMap = _iconMap;  // setSignalHead() clears _iconMap.  we need a copy for setIcons()
         setSignalHead(_iconEditor.getTableSelection().getDisplayName());
         setIcons(_iconEditor.getIconMap());
         displayState(headState());

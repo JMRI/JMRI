@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Dave Duchamp Copyright (C) 2007
+ * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (C) 2009
  * @author Egbert Broerse i18n 2016
@@ -1077,7 +1077,7 @@ public class DefaultConditional extends AbstractNamedBean
                             if (!w.setTrainId(getActionString(action))) {
                                 String s = "Unable to find train Id " + getActionString(action) + " in Roster  - " + action.getDeviceName();
                                 log.info(s);
-                                errorList.add(s);	// could be serious - display error to UI
+                                errorList.add(s); // could be serious - display error to UI
                             }
                             actionCount++;
                         }

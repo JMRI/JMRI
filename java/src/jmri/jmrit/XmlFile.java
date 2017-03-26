@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  */
 public abstract class XmlFile {
 

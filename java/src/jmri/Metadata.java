@@ -22,7 +22,7 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Randall Wood Copyright (C) 2011
+ * @author Randall Wood Copyright (C) 2011
  */
 public class Metadata {
 

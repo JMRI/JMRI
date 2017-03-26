@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * This is a configuration utility for the LI101. It allows the user to set the
  * XPressNet Address and the port speed used to communicate with the LI101.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
   */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 

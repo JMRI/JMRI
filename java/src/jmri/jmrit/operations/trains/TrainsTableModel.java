@@ -346,7 +346,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public Color getRowColor(int row) {
         Train train = sysList.get(row);
-        //		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
+        //  log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
     }
 
@@ -561,7 +561,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (!isSelected) {
                 int modelRow = table.convertRowIndexToModel(row);
-                //				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
+                //    log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
                 component.setBackground(background);
                 component.setForeground(getForegroundColor(background));

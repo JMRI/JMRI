@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact NCE Inc
  * for separate permission.
  *
- * @author	Ken Cameron Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2007
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  *
@@ -90,9 +90,9 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     public static final double MAX_POLLING_INTERVAL = 120;
     public static final double DEFAULT_POLLING_INTERVAL = 5;
     public static final double TARGET_SYNC_DELAY = 55;
-    public static final int SYNCMODE_OFF = 0;				//0 - clocks independent
-    public static final int SYNCMODE_NCE_MASTER = 1;		//1 - NCE sets Internal
-    public static final int SYNCMODE_INTERNAL_MASTER = 2;	//2 - Internal sets NCE
+    public static final int SYNCMODE_OFF = 0;    //0 - clocks independent
+    public static final int SYNCMODE_NCE_MASTER = 1;  //1 - NCE sets Internal
+    public static final int SYNCMODE_INTERNAL_MASTER = 2; //2 - Internal sets NCE
     public static final int WAIT_CMD_EXECUTION = 1000;
     private static final long MAX_SECONDS_IN_DAY = 24 * 3600;
     private static final double ESTIMATED_NCE_RATE_FACTOR = 0.92;
@@ -140,9 +140,9 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 
     private double rateChgMinimum = 0.001;
 
-    private int nceSyncInitStateCounter = 0;	// NCE master sync initialzation state machine
-    private int nceSyncRunStateCounter = 0;	// NCE master sync runtime state machine
-    private int alarmDisplayStateCounter = 0;	// manages the display update from the alarm
+    private int nceSyncInitStateCounter = 0; // NCE master sync initialzation state machine
+    private int nceSyncRunStateCounter = 0; // NCE master sync runtime state machine
+    private int alarmDisplayStateCounter = 0; // manages the display update from the alarm
 
     Timebase internalClock;
     javax.swing.Timer timerDisplayUpdate = null;
@@ -298,11 +298,11 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2.add(set1224Button);
         add(pane2);
 
-        //		pane2 = new JPanel();
-        //		pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
-        //		pane2.add(new JLabel(" "));
-        //		pane2.add(status);
-        //		add(pane2);
+        //  pane2 = new JPanel();
+        //  pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
+        //  pane2.add(new JLabel(" "));
+        //  pane2.add(status);
+        //  add(pane2);
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
@@ -339,7 +339,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2.add(setSyncButton, gConstraints);
         setSyncModeInternalMaster.setEnabled(true);
         setSyncModeNceMaster.setEnabled(true);
-        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {	// needs memory commands to sync
+        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) { // needs memory commands to sync
             setSyncModeInternalMaster.setEnabled(false);
             setSyncModeNceMaster.setEnabled(false);
         }
@@ -748,7 +748,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         int delay = 60 * 1000;
         if (clockMode == SYNCMODE_INTERNAL_MASTER) {
             if (syncInterval - 3 - now.getSeconds() <= 0) {
-                delay = 10;	// basically trigger right away
+                delay = 10; // basically trigger right away
             } else {
                 delay = (int) ((syncInterval - now.getSeconds()) * 1000 / internalClock.getRate());
             }
@@ -1276,12 +1276,12 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         double iCorr = diffError * ncePidGainIv;
         double dCorr = corrDiff * ncePidGainDv;
         double newRateAdj = pCorr + iCorr + dCorr;
-        //		if (newRateAdj > 0.5) {
-        //	newRateAdj = 0.5;
+        //  if (newRateAdj > 0.5) {
+        // newRateAdj = 0.5;
         //}
         //if (newRateAdj < -0.5) {
-        //		newRateAdj = -0.5;
-        //		}
+        //  newRateAdj = -0.5;
+        //  }
         // save correction to array
         while (priorCorrections.size() >= MAX_ERROR_ARRAY) {
             priorCorrections.remove(0);
@@ -1451,7 +1451,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     // get time from NCE settings and set internal clock
                     setInternalClockFromNce();
                     internalClock.setRun(true);
-                    nceSyncInitStateCounter = 0;	// init is done
+                    nceSyncInitStateCounter = 0; // init is done
                     nceSyncRunStateCounter = 1;
                     nceSyncRunStates();
                     alarmSyncStart();
@@ -1479,7 +1479,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         do {
             priorState = nceSyncRunStateCounter;
             switch (nceSyncRunStateCounter) {
-                case 1:	// issue read for nce time
+                case 1: // issue read for nce time
                     issueReadOnlyRequest();
                     nceSyncRunStateCounter++;
                     break;
@@ -1489,7 +1489,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                         nceSyncRunStateCounter++;
                     }
                     break;
-                case 3:	// compare internal with nce time
+                case 3: // compare internal with nce time
                     intTime = getIntTime();
                     nceTime = getNceTime();
                     diffTime = nceTime - intTime;
@@ -1647,7 +1647,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             waiting++;
             waitingForCmdRead = true;
             tc.sendNceMessage(cmdNce, this);
-            //			log.debug("issueReadOnlyRequest at " + internalClock.getTime());
+            //   log.debug("issueReadOnlyRequest at " + internalClock.getTime());
         }
     }
 
@@ -1764,8 +1764,8 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
      * Handles minute notifications for NCE Clock Monitor/Synchronizer
      */
     public void newInternalMinute() {
-        //		 if (log.isDebugEnabled()) {
-        //	log.debug("newInternalMinute clockMode: " + clockMode + " nceInit: " + nceSyncInitStateCounter + " nceRun: " + nceSyncRunStateCounter);
+        //   if (log.isDebugEnabled()) {
+        // log.debug("newInternalMinute clockMode: " + clockMode + " nceInit: " + nceSyncInitStateCounter + " nceRun: " + nceSyncRunStateCounter);
         //}
         //NCE clock is running
         if (lastClockReadPacket != null && lastClockReadPacket.getElement(CS_CLOCK_STATUS) == 0) {

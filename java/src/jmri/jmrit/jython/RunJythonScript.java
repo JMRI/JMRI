@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * FileDialog to prompt for the file to use. The other, with a File object, will
  * directly invoke that file.
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
 public class RunJythonScript extends JmriAbstractAction {
 

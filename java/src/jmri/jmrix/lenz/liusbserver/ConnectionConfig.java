@@ -9,7 +9,7 @@ import javax.swing.JTextField;
  * <P>
  * This uses the {@link LIUSBServerAdapter} class to do the actual connection.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author Paul Bender Copyright (C) 2009
   *
  * @see LIUSBServerAdapter
  */

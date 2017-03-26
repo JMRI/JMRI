@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * This connects an Dcc4Pc command station via a serial com port.
  * <P>
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jmrix.SerialPortAdapter {
 

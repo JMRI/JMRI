@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * <li>The preferences directory <li>The program directory <li>and any log files
  * seen in the program directory </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
 public class XmlFileLocationAction extends AbstractAction {
 

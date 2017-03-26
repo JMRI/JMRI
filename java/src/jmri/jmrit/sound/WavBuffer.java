@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Wrap a byte array to provide WAV file functionality
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class WavBuffer {
 

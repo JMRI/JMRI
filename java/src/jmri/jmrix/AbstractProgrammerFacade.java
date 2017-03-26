@@ -11,7 +11,7 @@ import jmri.ProgrammingMode;
  * Common implementations of the Programmer interface for making Programmer
  * facade classes.
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  */
 public abstract class AbstractProgrammerFacade implements Programmer {
 

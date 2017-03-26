@@ -7,7 +7,7 @@ import jmri.Turnout;
  * <P>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
  * 
  */

@@ -20,7 +20,7 @@ import jmri.NamedBean;
  * Do not have any overlap between the items in the input and output lists; this
  * will cause a recursive invocation when the output changes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class Siglet extends AbstractAutomaton {
 

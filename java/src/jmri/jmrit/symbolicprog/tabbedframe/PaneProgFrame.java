@@ -1120,7 +1120,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JLabel title = new JLabel(Bundle.getMessage("UseThisTabCustomize"));
         title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         body.add(title);
-        body.add(new JLabel(" "));	// some padding
+        body.add(new JLabel(" ")); // some padding
 
         // add roster info
         _flPane = new FunctionLabelPane(r);
@@ -1162,7 +1162,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JLabel title = new JLabel(Bundle.getMessage("UseThisTabMedia"));
         title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         body.add(title);
-        body.add(new JLabel(" "));	// some padding
+        body.add(new JLabel(" ")); // some padding
 
         // add roster info
         _rMPane = new RosterMediaPane(r);

@@ -43,8 +43,8 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         super(programmer);
     }
 
-    int mfgID = -1; 	// cv8
-    int modelID = -1;	// cv7
+    int mfgID = -1;  // cv8
+    int modelID = -1; // cv7
     int productIDhigh = -1;
     int productIDlow = -1;
     int productID = -1;

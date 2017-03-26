@@ -1,10 +1,10 @@
 /**
  * XNetPowerManager.java
  *
- * Description:	PowerManager implementation for controlling layout power
+ * Description: PowerManager implementation for controlling layout power
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
   */
 package jmri.jmrix.lenz;
 
