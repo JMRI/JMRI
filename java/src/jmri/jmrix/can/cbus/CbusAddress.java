@@ -21,8 +21,8 @@ import jmri.jmrix.can.CanReply;
  * If ddd &lt; 65536 then the CBUS address is taken to represent a short event.
  *
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008
- * @author	Andrew Crosland Copyright (C) 2011
+ * @author Bob Jacobsen Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2011
  */
 public class CbusAddress {
 

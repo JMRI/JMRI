@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * code just flips from one to the other as the user selects a mode. The
  * individual items all share data models to simplify the logic.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  *
  * Revisions to add facing point sensors, approach lighting, limited speed,
  * changed layout, and tool tips. Dick Bronson (RJB) 2006

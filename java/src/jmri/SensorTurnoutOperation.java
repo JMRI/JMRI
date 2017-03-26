@@ -7,7 +7,7 @@ import jmri.implementation.SensorTurnoutOperator;
  * SensorTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with explicit feedback from sensor(s)
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  */
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 
@@ -54,7 +54,7 @@ public class SensorTurnoutOperation extends CommonTurnoutOperation {
     /**
      * get a TurnoutOperator instance for this operation
      *
-     * @return	the operator
+     * @return the operator
      */
     @Override
     public TurnoutOperator getOperator(AbstractTurnout t) {

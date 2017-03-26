@@ -9,7 +9,7 @@ import java.util.Arrays;
  * their corresponding flashing forms. Support for Lunar is deferred to
  * DefaultLunarSignalHead or an extended class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2009
+ * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 

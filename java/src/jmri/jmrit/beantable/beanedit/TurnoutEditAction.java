@@ -21,7 +21,7 @@ import jmri.util.swing.JmriBeanComboBox;
 /**
  * Provides an edit panel for a block object.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class TurnoutEditAction extends BeanEditAction {
 
@@ -163,15 +163,15 @@ public class TurnoutEditAction extends BeanEditAction {
                 }
                 config.endConfigure();
                 switch (automationBox.getSelectedIndex()) {
-                    case 0:			// Off
+                    case 0:   // Off
                         t.setInhibitOperation(true);
                         t.setTurnoutOperation(null);
                         break;
-                    case 1:			// Default
+                    case 1:   // Default
                         t.setInhibitOperation(false);
                         t.setTurnoutOperation(null);
                         break;
-                    default:		// named operation
+                    default:  // named operation
                         t.setInhibitOperation(false);
                         t.setTurnoutOperation(TurnoutOperationManager.getInstance().
                                 getOperation(((String) automationBox.getSelectedItem())));

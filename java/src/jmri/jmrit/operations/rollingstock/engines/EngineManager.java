@@ -322,7 +322,7 @@ public class EngineManager extends RollingStockManager {
      *
      */
     public void store(Element root) {
-        //    	root.addContent(new Element(Xml.OPTIONS));	// nothing to store under options
+        //     root.addContent(new Element(Xml.OPTIONS)); // nothing to store under options
 
         Element values;
         List<String> names = getConsistNameList();

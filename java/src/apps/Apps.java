@@ -103,7 +103,7 @@ import org.slf4j.LoggerFactory;
  * Base class for Jmri applications.
  * <P>
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011

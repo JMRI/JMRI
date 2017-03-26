@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * This connects via a telnet connection. Normally controlled by the
  * NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
   */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 

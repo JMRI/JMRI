@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * Contains the data payload of a serial reply packet. Note that its _only_ the
  * payload.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */

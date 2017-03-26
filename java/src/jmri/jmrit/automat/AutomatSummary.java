@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * This can be invoked from various threads, so switches to the Swing thread to
  * notify it's own listeners.
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
 public class AutomatSummary {
 

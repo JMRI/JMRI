@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Extends the serialdriver.SimDriverAdapter class to act as simulated
  * connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008, 2011
+ * @author Bob Jacobsen Copyright (C) 2002, 2008, 2011
  */
 @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Access to 'self' OK until multiple instance pattern installed")

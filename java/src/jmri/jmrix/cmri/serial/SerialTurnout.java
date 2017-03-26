@@ -43,9 +43,9 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <a href="http://jmri.org/help/en/html/hardware/cmri/CMRI.shtml#options">documentation
  * page</a>.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2008
- * @author	David Duchamp Copyright (C) 2004, 2007
- * @author	Dan Boudreau Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
+ * @author David Duchamp Copyright (C) 2004, 2007
+ * @author Dan Boudreau Copyright (C) 2007
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -74,9 +74,9 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //                    Object oldValue,
+        //      Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states

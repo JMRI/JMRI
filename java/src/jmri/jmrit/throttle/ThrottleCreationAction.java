@@ -10,7 +10,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Create a new throttle.
  *
- * @author	Glen Oberhauser
+ * @author Glen Oberhauser
  */
 public class ThrottleCreationAction extends JmriAbstractAction {
 

@@ -10,7 +10,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
  * The {@link LZV100Frame} is a configuration tool for the LZV100 command
  * Station.
  *
- * @author	Paul Bender Copyright (C) 2003
+ * @author Paul Bender Copyright (C) 2003
  */
 public class LZV100Action extends AbstractXPressNetAction {
 

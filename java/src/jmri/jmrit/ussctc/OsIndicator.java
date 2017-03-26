@@ -18,7 +18,7 @@ import jmri.implementation.DefaultConditionalAction;
  * separate lock/unlocked indication by showing occupied if the associated
  * turnout has been unlocked.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class OsIndicator implements Constants {
 
@@ -82,7 +82,7 @@ public class OsIndicator implements Constants {
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                 Conditional.ACTION_SET_TURNOUT, output,
                 Turnout.THROWN, " "));
-        c.setAction(actionList);										// string data
+        c.setAction(actionList);          // string data
 
         // and put it back in operation
         l.activateLogix();

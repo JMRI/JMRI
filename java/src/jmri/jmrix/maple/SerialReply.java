@@ -8,7 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * payload, not the header or trailer, nor the padding DLE characters are
  * included. But it does include addressing characters, etc.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 

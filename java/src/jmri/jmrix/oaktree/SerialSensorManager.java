@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Sensors are numbered from 1.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dave Duchamp, multi node extensions, 2004
   */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager

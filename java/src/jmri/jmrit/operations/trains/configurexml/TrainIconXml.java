@@ -45,7 +45,7 @@ public class TrainIconXml extends LocoIconXml {
         element.setAttribute(Xml.ICON, Xml.YES);
         element.setAttribute(Xml.DOCK_X, "" + p.getDockX());
         element.setAttribute(Xml.DOCK_Y, "" + p.getDockY());
-//		element.setAttribute("iconId", p.getIconId());
+//  element.setAttribute("iconId", p.getIconId());
         element.addContent(storeIcon(Xml.ICON, (NamedIcon) p.getIcon()));
         RosterEntry entry = p.getRosterEntry();
         if (entry != null) {

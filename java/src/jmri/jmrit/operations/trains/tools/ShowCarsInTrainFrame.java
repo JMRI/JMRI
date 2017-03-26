@@ -112,10 +112,10 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         pRow12.add(carPane);
 
         // row 13
-        //		JPanel pStatus = new JPanel();
-        //		pStatus.setLayout(new GridBagLayout());
+        //  JPanel pStatus = new JPanel();
+        //  pStatus.setLayout(new GridBagLayout());
         textStatus.setBorder(BorderFactory.createTitledBorder(""));
-        //		addItem(pStatus, textStatus, 0, 0);
+        //  addItem(pStatus, textStatus, 0, 0);
         textStatus.setBackground(null);
         textStatus.setEditable(false);
 

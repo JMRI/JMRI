@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * The timeout code is modelled after that in jmri,jmrix.AbstractProgrammer,
  * though there are significant modifications.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LocoIOTableModel
         extends javax.swing.table.AbstractTableModel

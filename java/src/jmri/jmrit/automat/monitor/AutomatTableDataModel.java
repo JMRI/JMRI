@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of Automat instances.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class AutomatTableDataModel extends AbstractTableModel {
 
-    static final int NAMECOL = 0;		// display name
-    static final int TURNSCOL = 1;		// number of times through the loop
-    static final int KILLCOL = 2;		//
+    static final int NAMECOL = 0;  // display name
+    static final int TURNSCOL = 1;  // number of times through the loop
+    static final int KILLCOL = 2;  //
 
     static final int NUMCOLUMN = 3;
 

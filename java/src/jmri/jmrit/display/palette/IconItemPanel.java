@@ -483,7 +483,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                 label.setText(null);
             }
             _iconMap.put(label.getName(), newIcon);
-            if (!_update) {		// only prompt for save from palette
+            if (!_update) {  // only prompt for save from palette
                 ImageIndexEditor.indexChanged(true);
             }
             removeIconFamiliesPanel();
