@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -130,5 +131,9 @@ public abstract class AbstractProgrammerFacade implements Programmer {
     public boolean getCanWrite(String addr) {
         return prog.getCanWrite(addr);
     }
+
+    @Override
+    @Nonnull
+    public WriteConfirmMode getWriteConfirmMode(String addr) { return prog.getWriteConfirmMode(addr); }
 
 }

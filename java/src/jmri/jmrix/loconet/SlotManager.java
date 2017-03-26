@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+
 import jmri.CommandStation;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;
@@ -705,6 +708,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean getCanRead() {
         return mCanRead;
     }
+
+    /**
+     * Service mode always checks for DecoderReply.  (The DCS240 also seems to do
+     * ReadAfterWrite, but that's not fully understood yet)
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.DecoderReply; }
 
     /**
      * Set the command station type to one of the known types in the
