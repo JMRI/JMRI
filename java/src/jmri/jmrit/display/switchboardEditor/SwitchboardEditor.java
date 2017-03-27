@@ -139,6 +139,8 @@ public class SwitchboardEditor extends Editor {
     String iconOnPath = "resources/icons/misc/switchboard/appslide-on-s.png";
     String keyOffPath = "resources/icons/misc/switchboard/markl-off-s.png";
     String keyOnPath = "resources/icons/misc/switchboard/markl-on-s.png";
+    String turnoutOffPath = "resources/icons/misc/switchboard/turnround-thr-s.png";
+    String turnoutOnPath = "resources/icons/misc/switchboard/turnround-cls-s.png";
     private int rangeMin = 1;
     private int rangeMax = 32;
     private int _range = rangeMax - rangeMin;
@@ -490,6 +492,7 @@ public class SwitchboardEditor extends Editor {
                     _uname = "no user name";
                 }
             }
+            //this.setBackground(defaultBackgroundColor);
             this.setLayout(new BorderLayout()); // makes JButtons expand to the whole grid cell
             if (shapeChoice != 0) {
                 _shape = shapeChoice; // Button
@@ -528,9 +531,9 @@ public class SwitchboardEditor extends Editor {
                     });
                     _text = false;
                     _icon = true;
-                    beanIcon.setLabel(switchLabel); // TODO set text color, place on level 2 or draw using graphics
+                    beanIcon.setLabel(switchLabel); // place on level 2 or draw using graphics?
                     beanIcon.setToolTipText(name + " (" + _uname + ")");
-                    //beanIcon.setBorder(BorderFactory.createEmptyBorder());
+                    beanIcon.setBackground(defaultBackgroundColor);
                     //remove the line around icon switches?
                     this.add(beanIcon);
                     break;
@@ -562,9 +565,9 @@ public class SwitchboardEditor extends Editor {
                     });
                     _text = false;
                     _icon = true;
-                    beanKey.setLabel(switchLabel); // TODO set text color, place on level 2 or draw using graphics
+                    beanKey.setLabel(switchLabel); // place on level 2 or draw using graphics?
                     beanKey.setToolTipText(name + " (" + _uname + ")");
-                    //beanKey.setBorder(BorderFactory.createEmptyBorder());
+                    beanKey.setBackground(defaultBackgroundColor);
                     //remove the line around icon switches?
                     this.add(beanKey);
                     break;
@@ -598,6 +601,8 @@ public class SwitchboardEditor extends Editor {
                     });
                     _text = true;
                     _icon = false;
+                    beanButton.setBackground(defaultBackgroundColor);
+                    beanButton.setOpaque(false);
                     beanButton.setToolTipText(name + " (" + _uname + ")");
                     this.add(beanButton);
                     break;
@@ -782,7 +787,7 @@ public class SwitchboardEditor extends Editor {
                 getTurnout().removePropertyChangeListener(this);
             }
             if (typeLabel != null) {
-//            _comboBox.removeMouseMotionListener(this);
+                //_comboBox.removeMouseMotionListener(this);
                 //typeLabel.removeMouseListener(this);
                 typeLabel = null;
             }
@@ -822,7 +827,7 @@ public class SwitchboardEditor extends Editor {
 //        JCheckBoxMenuItem directControlItem = new JCheckBoxMenuItem(Bundle.getMessage("DirectControl"));
 
         /**
-         * Show pop-up on a switch with its unique attributes inclusing the (un)connected bean.
+         * Show pop-up on a switch with its unique attributes including the (un)connected bean.
          *
          * @param popup the items to show as pop-up menu items
          */
@@ -875,7 +880,7 @@ public class SwitchboardEditor extends Editor {
             //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             //    return;
             //}
-            if (namedBean == null) { // || e.isMetaDown() || e.isAltDown() || !buttonLive() || getMomentary()) {
+            if (namedBean == null || e.isMetaDown()) { //|| e.isAltDown() || !buttonLive() || getMomentary()) {
                 return;
             }
 //            if (getDirectControl() && !isEditable()) {
@@ -1346,6 +1351,17 @@ public class SwitchboardEditor extends Editor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultBackgroundColor.equals(desiredColor)) {
+                    // if new bgColor matches thhe defaultTextColor, ask user as labels will become unreadable
+                    if (desiredColor == defaultTextColor) {
+                        int retval = JOptionPane.showOptionDialog(null,
+                                Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
+                                0, JOptionPane.INFORMATION_MESSAGE, null,
+                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+                        log.debug("Retval: "+retval);
+                        if (retval != 1) {
+                            return;
+                        }
+                    }
                     defaultBackgroundColor = desiredColor;
                     setBackgroundColor(desiredColor);
                     setDirty(true);
@@ -1376,6 +1392,17 @@ public class SwitchboardEditor extends Editor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultTextColor.equals(desiredColor)) {
+                    // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
+                    if (desiredColor == defaultBackgroundColor) {
+                        int retval = JOptionPane.showOptionDialog(null,
+                                Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
+                                0, JOptionPane.INFORMATION_MESSAGE, null,
+                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+                        log.debug("Retval: "+retval);
+                        if (retval != 0) {
+                            return;
+                        }
+                    }
                     defaultTextColor = desiredColor;
                     setDirty(true);
                     repaint();
@@ -2113,6 +2140,21 @@ public class SwitchboardEditor extends Editor {
             g.drawString(tag, 16, 53); // draw name on top of button image (horizontal, vertical from top left)
         }
 
+    }
+
+    /**
+     * Create popup for a BeanSwitch object.
+     * <p>
+     * Derived from {@link #showPopUp(Positionable, MouseEvent)}
+     *
+     * @param sw    the switch on the Switchboard
+     * @param event MouseEvent heard
+     */
+    protected void showPopUp(BeanSwitch sw, MouseEvent event) {
+        if (!((JComponent) sw).isVisible()) {
+            return; // component must be showing on the screen to determine its location
+        }
+        JPopupMenu switchPopup = new JPopupMenu();
     }
 
     /**

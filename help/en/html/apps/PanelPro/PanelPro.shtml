@@ -31,7 +31,7 @@
       application for creating control panels. This page describes
       the application, and how to use it.
 
-      <p>PanelPro provides three separate ways to create Control
+      <p>PanelPro provides four separate ways to create Control
       Panels:</p>
 
       <ul>
@@ -50,7 +50,7 @@
         first bringing your layout up.</li>
 
         <li><a href="#swb">Switchboard Editor</a> is a graphic,
-        straight forward control interface, showing a range of switch
+        straightforward control interface, showing a range of switch
         keys to watch and control items.</li>
 
       </ul>
@@ -99,7 +99,8 @@
       etc.) which are then placed on the Panel.</p>
 
       <p><a href=
-      "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"><img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"
+      "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
+      <img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"
       align="right" height="216" width="313"></a> Many people use
       both, with the Layout Editor creating schematic panels to
       handle the actual configuration for signals and Panel Editor
@@ -108,6 +109,10 @@
       "http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html">tutorial</a>
       that describes how Panel Pro and Layout Editor can be used
       together.</p>
+
+      <p>The Switchboard is easier to set up, using a simple grid
+      of pre-defined buttons or indicators. It is limited to the
+      basic inputs (Sensors) and Outputs (Turnouts and Lights).</p>
 
       <p>Please see our <a href=
       "http://jmri.org/community/examples/Gallery.shtml">Gallery
