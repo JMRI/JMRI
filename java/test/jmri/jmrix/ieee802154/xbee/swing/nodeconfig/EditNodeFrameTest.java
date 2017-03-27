@@ -12,6 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+@MockPolicy(Slf4jMockPolicy.class)
+
 /**
  * Test simple functioning of EditNodeFrame
  *
@@ -32,7 +36,6 @@ public class EditNodeFrameTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new XBeeInterfaceScaffold();
         m = new XBeeConnectionMemo();
@@ -44,7 +47,6 @@ public class EditNodeFrameTest {
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
         tc = null;
     }
 }

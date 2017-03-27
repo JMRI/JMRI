@@ -229,12 +229,33 @@ public interface Programmer {
      */
     public boolean getCanWrite(String addr);
 
+    /**
+     * Learn about whether the programmer does any kind of verification of write operations
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return The confirmation behavior that can be counted on (might be better in some cases)
+     */
+    @Nonnull
+    public WriteConfirmMode getWriteConfirmMode(String addr);
+    
+    enum WriteConfirmMode {
+        /** No verification available, writes are blind */
+        NotVerified,
+        
+        /** Programmer signals error if there's no reply from the device */
+        DecoderReply,
+        
+        /** Programmer does a read after write to verify */
+        ReadAfterWrite
+    }
+    
     public void addPropertyChangeListener(PropertyChangeListener p);
 
     public void removePropertyChangeListener(PropertyChangeListener p);
 
     // error handling on request is via exceptions
     // results are returned via the ProgListener callback
+    @Nonnull
     public String decodeErrorCode(int i);
 
 }
