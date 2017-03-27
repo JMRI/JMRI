@@ -80,6 +80,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(XmlFileLocationActionTest.class));
         suite.addTest(new JUnit4TestAdapter(XmlFileValidateActionTest.class));
         suite.addTest(new JUnit4TestAdapter(XmlFileValidateStartupActionFactoryTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(LogixLoadActionTest.class));
         return suite;
     }
 
