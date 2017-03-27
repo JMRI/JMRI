@@ -634,16 +634,15 @@ selects the different algorithm needed here.
             &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
             &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
             &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
-            &lt;parameter name="skipDupIndexWrite"&gt;true&lt;/parameter&gt;
         &lt;/capability&gt;
 </pre>
       <p>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
 by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
 ESU.
       <p>If skipDupIndexWrite is true, certain writes to the PI and SI
-      CVs will be skipped. This speeds up access.
+      CVs can be skipped if the user selects skipping them. This speeds up access.
       Some decoders  require that the CVs be written for each operation, 
-      so this defaults to false.
+      in which case this should be set to false.  The default is true.
       
       <p>If both this and the "access to high CV" capabilities are
       present, this one should be listed second.</p>

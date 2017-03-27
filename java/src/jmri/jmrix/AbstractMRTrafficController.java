@@ -648,7 +648,12 @@ abstract public class AbstractMRTrafficController {
                     }
                 }
             });
-            xmtThread.setName("Transmit");
+            
+            String[] packages = this.getClass().getName().split("\\.");
+            xmtThread.setName(
+                (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                +(packages.length>=1 ? packages[packages.length-1] :"")
+                +" Transmit thread");
             xmtThread.start();
             rcvThread = new Thread(new Runnable() {
                 @Override
@@ -656,7 +661,10 @@ abstract public class AbstractMRTrafficController {
                     receiveLoop();
                 }
             });
-            rcvThread.setName("Receive");
+            rcvThread.setName(
+                (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                +(packages.length>=1 ? packages[packages.length-1] :"")
+                +" Receive thread");
             int xr = rcvThread.getPriority();
             xr++;
             rcvThread.setPriority(xr);      //bump up the priority
