@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import javax.annotation.Nonnull;
+
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammerFacade;
@@ -9,7 +11,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Programmer facade which verifies each write via a read, if possible.
  * <p>
- * If the underlying programmer can read, each write operation is followed by a readback.
+ * If the underlying programmer (1) can read and (2) is not already doing a read verify, 
+ * each write operation is followed by a readback.
  * If the value doesn't match, an error is signaled.
  * <p>
  * State Diagram for read and write operations: <img src="doc-files/VerifyWriteProgrammerFacade-State-Diagram.png" alt="UML State diagram"><p>
@@ -73,6 +76,20 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
         prog.readCV(CV, this);
     }
 
+    /**
+     * This facade ensures that {@link WriteConfirmMode.ReadAfterWrite}
+     * is done, so long as it has permission to read the CV after writing.
+     */
+    @Override
+    @Nonnull
+    public WriteConfirmMode getWriteConfirmMode(String addr) {
+        if ( prog.getCanRead(addr) ) {
+            return WriteConfirmMode.ReadAfterWrite;
+        } else {
+             return prog.getWriteConfirmMode(addr);
+        }
+    }
+
     private jmri.ProgListener _usingProgrammer = null;
 
     // internal method to remember who's using the programmer
@@ -119,8 +136,8 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
         
         switch (state) {
             case FINISHWRITE:
-                // write completed, can we do read, and do we have permission?
-                if (prog.getCanRead(_cv)) {
+                // write completed, can we do read, and is it not already being done?
+                if (prog.getCanRead(_cv) && ! prog.getWriteConfirmMode(_cv).equals(WriteConfirmMode.ReadAfterWrite) ) {
                     state = ProgState.FINISHREAD;
                     try {
                         prog.readCV(_cv, this);
@@ -133,7 +150,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
                     }
                     break;
                 }
-                // can't read
+                // can't read or it's already being done
                 // deliberately fall through to normal completion
             case READING: // done, forward the return code and data
                 // the programmingOpReply handler might send an immediate reply, so
