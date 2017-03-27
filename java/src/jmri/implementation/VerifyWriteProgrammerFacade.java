@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
  * each write operation is followed by a readback.
  * If the value doesn't match, an error is signaled.
  * <p>
- * State Diagram for read and write operations: <img src="doc-files/VerifyWriteProgrammerFacade-State-Diagram.png" alt="UML State diagram"><p>
+ * State Diagram for read and write operations  (click to magnify):
+ * <a href="doc-files/VerifyWriteProgrammerFacade-State-Diagram.png"><img src="doc-files/VerifyWriteProgrammerFacade-State-Diagram.png" alt="UML State diagram" height="50%" width="50%"></a>
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
@@ -24,15 +25,17 @@ import org.slf4j.LoggerFactory;
  
  /*
  * @startuml jmri/implementation/doc-files/VerifyWriteProgrammerFacade-State-Diagram.png
- * [*] --> NOTPROGRAMMING : Error reply received
  * [*] --> NOTPROGRAMMING 
- * NOTPROGRAMMING --> READING: readCV() (read CV)
- * READING --> NOTPROGRAMMING: OK reply received (return status and value)
- * NOTPROGRAMMING --> FINISHWRITE: writeCV() (write CV)
- * FINISHWRITE --> FINISHREAD: OK reply & getCanRead() (read CV)
- * FINISHWRITE --> NOTPROGRAMMING: OK reply received (&& !getCanRead() return OK status and value)
- * FINISHREAD --> NOTPROGRAMMING: OK reply & value matches (return OK status reply and value)
- * FINISHREAD --> NOTPROGRAMMING: OK reply & value not match (return error status reply and value)
+ * NOTPROGRAMMING --> READING: readCV()\n(read CV)
+ * READING --> NOTPROGRAMMING: OK reply received\n(return status and value)
+ * NOTPROGRAMMING --> FINISHWRITE: writeCV()\n(write CV)
+ * FINISHWRITE --> FINISHREAD: OK reply & getCanRead()\n(read CV)
+ * FINISHWRITE --> NOTPROGRAMMING: OK reply received && !getCanRead()\n(return OK status and value)
+ * FINISHREAD --> NOTPROGRAMMING: OK reply & value matches\n(return OK status reply and value)
+ * FINISHREAD --> NOTPROGRAMMING: OK reply & value not match\n(return error status reply and value)
+ * READING --> NOTPROGRAMMING : Error reply received
+ * FINISHWRITE --> NOTPROGRAMMING : Error reply received
+ * FINISHREAD --> NOTPROGRAMMING : Error reply received
  * @enduml
 */
 
@@ -77,7 +80,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
     }
 
     /**
-     * This facade ensures that {@link WriteConfirmMode.ReadAfterWrite}
+     * This facade ensures that {@link Programmer.WriteConfirmMode#ReadAfterWrite}
      * is done, so long as it has permission to read the CV after writing.
      */
     @Override
@@ -103,10 +106,18 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
+    /**
+     * State machine for VerifyWriteProgrammerFacade  (click to magnify):
+     * <a href="doc-files/VerifyWriteProgrammerFacade-State-Diagram.png"><img src="doc-files/VerifyWriteProgrammerFacade-State-Diagram.png" alt="UML State diagram" height="50%" width="50%"></a>
+     */
     enum ProgState {
+        /** Waiting for response to read, will end next */
         READING, 
-        FINISHWRITE, // doing write, issue verify read next
-        FINISHREAD,  // doing verify read, will end next
+        /** Waiting for response to write, issue verify read next */
+        FINISHWRITE,
+        /** Waiting for response to verify read, will end next */
+        FINISHREAD,
+        /** No current operation */
         NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
