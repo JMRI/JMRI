@@ -35,7 +35,7 @@
       <xs:attribute name="height" type="xs:integer" use="required"></xs:attribute>
       <xs:attribute name="width" type="xs:integer" use="required"></xs:attribute>
       <xs:attribute name="editable" type="yesNoType" default="yes"></xs:attribute>
-      <xs:attribute name="positionable" type="yesNoType" default="yes"></xs:attribute>
+      <!--<xs:attribute name="positionable" type="yesNoType" default="yes"></xs:attribute>-->
       <xs:attribute name="controlling" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="hide" type="yesNoType" default="no"></xs:attribute>
       <xs:attribute name="showcoordinates" type="yesNoType" default="no"></xs:attribute>
@@ -48,11 +48,12 @@
       <xs:attribute name="type" type="xs:string"></xs:attribute>
       <xs:attribute name="connection" type="xs:string"></xs:attribute>
       <xs:attribute name="shape" type="xs:string"></xs:attribute>
+      <xs:attribute name="defaulttextcolor" type="screenColorType"/>
       <xs:attribute name="redBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="greenBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="state" type="xs:int"></xs:attribute>
-      <xs:attribute name="shapeSelect" type="yesNoType" default="no"></xs:attribute>
+      <!--<xs:attribute name="shapeSelect" type="yesNoType" default="no"></xs:attribute>-->
 
     </xs:complexType>
 

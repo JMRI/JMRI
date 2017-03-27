@@ -2824,7 +2824,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //background color menu item
         //
-        JMenu backgroundColorMenu = new JMenu(rb.getString("SetBackgroundColor"));
+        JMenu backgroundColorMenu = new JMenu(Bundle.getMessage("SetBackgroundColor"));
         backgroundColorButtonGroup = new ButtonGroup();
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Black"),     Color.black);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("DarkGray"),  Color.darkGray);
@@ -2839,7 +2839,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Blue"),      Color.blue);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Magenta"),   Color.magenta);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Cyan"),      Color.cyan);
-        optionMenu. add(backgroundColorMenu);
+        optionMenu.add(backgroundColorMenu);
 
         //
         //add fast clock menu item
@@ -2956,7 +2956,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //add text color menu item
         //
-        JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
+        JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
         textColorButtonGroup = new ButtonGroup();
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Black"),     Color.black);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
@@ -2971,7 +2971,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
-        optionMenu. add(textColorMenu);
+        optionMenu.add(textColorMenu);
 
         //
         //add turnout options submenu

@@ -50,7 +50,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
-        panel.setAttribute("positionable", "" + (p.allPositionable() ? "yes" : "no"));
+        //panel.setAttribute("positionable", "" + (p.allPositionable() ? "yes" : "no"));
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
@@ -63,6 +63,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("type", p.getSwitchType());
         panel.setAttribute("connection", p.getSwitchManu());
         panel.setAttribute("shape", p.getSwitchShape());
+        panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
             panel.setAttribute("greenBackground", "" + p.getBackgroundColor().getGreen());
@@ -156,17 +157,18 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
         panel.setAllEditable(value);
 
-        value = true;
+/*        value = true;
         if ((a = shared.getAttribute("positionable")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllPositionable(value);
+        */
 /*
         value = false;
         if ((a = shared.getAttribute("showcoordinates"))!=null && a.getValue().equals("yes"))
             value = true;
         panel.setShowCoordinates(value);
-*/
+        */
         value = true;
         if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
@@ -222,6 +224,11 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         shape = shared.getAttribute("shape").getValue();
         panel.setSwitchShape(shape);
 
+        String defaultTextColor = "black";
+        if (shared.getAttribute("defaulttextcolor") != null) {
+            defaultTextColor = shared.getAttribute("defaulttextcolor").getValue();
+        }
+        panel.setDefaultTextColor(defaultTextColor);
         // set color if needed
         try {
             int red = shared.getAttribute("redBackground").getIntValue();

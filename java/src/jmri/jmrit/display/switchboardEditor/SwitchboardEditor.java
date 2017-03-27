@@ -88,6 +88,7 @@ import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
+import jmri.util.ColorUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
@@ -126,6 +127,7 @@ public class SwitchboardEditor extends Editor {
     private ArrayList<Positionable> _secondSelectionGroup;
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
+    private boolean panelChanged = false;
 
     // Switchboard items
     private JPanel navBarPanel = null;
@@ -150,8 +152,6 @@ public class SwitchboardEditor extends Editor {
     private String[] beanTypeStrings = { _turnout, _sensor, _light };
     private JComboBox beanTypeList;
     private char beanTypeChar;
-    private Color[] layerColors = { Color.yellow, Color.magenta,
-            Color.cyan, Color.red, Color.green };
     private String[] switchShapeStrings = {
             Bundle.getMessage("Buttons"),
             Bundle.getMessage("Sliders"),
@@ -167,12 +167,25 @@ public class SwitchboardEditor extends Editor {
     private JPanel editToolBarPanel = null;
     private JScrollPane editToolBarScroll = null;
     private JPanel editToolBarContainer = null;
+    private Color defaultBackgroundColor = Color.lightGray;
+    private Color defaultTextColor = Color.black;
+    private ButtonGroup textColorButtonGroup = null;
+    private ButtonGroup backgroundColorButtonGroup = null;
+    private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
+    private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
+    private Color[] textColors = new Color[13];
+    private Color[] backgroundColors = new Color[13];
+    private int textColorCount = 0;
+    private int backgroundColorCount = 0;
 
     //private JPanel helpBarPanel = null;
     //private JPanel helpBar = new JPanel();
     // option menu items not in Editor
     private boolean showHelpBar = true;
     private boolean _hideUnconnected = false;
+    //saved state of options when panel was loaded or created
+    private boolean savedEditMode = true;
+    private boolean savedControlLayout = true;
     private int height = 100;
     private int width = 100;
 
@@ -1206,6 +1219,40 @@ public class SwitchboardEditor extends Editor {
                 setScroll(SCROLL_VERTICAL);
             }
         });
+        //add background color menu item
+        JMenu backgroundColorMenu = new JMenu(Bundle.getMessage("SetBackgroundColor"));
+        backgroundColorButtonGroup = new ButtonGroup();
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Black"),     Color.black);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("DarkGray"),  Color.darkGray);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Gray"),      Color.gray);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("LightGray"), Color.lightGray);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("White"),     Color.white);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Red"),       Color.red);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Pink"),      Color.pink);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Orange"),    Color.orange);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Yellow"),    Color.yellow);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Green"),     Color.green);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Blue"),      Color.blue);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Magenta"),   Color.magenta);
+        addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Cyan"),      Color.cyan);
+        _optionMenu.add(backgroundColorMenu);
+        //add text color menu item
+        JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
+        textColorButtonGroup = new ButtonGroup();
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Black"),     Color.black);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Gray"),      Color.gray);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("LightGray"), Color.lightGray);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("White"),     Color.white);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Red"),       Color.red);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Pink"),      Color.pink);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Orange"),    Color.orange);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Yellow"),    Color.yellow);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Green"),     Color.green);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
+        addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
+        _optionMenu.add(textColorMenu);
     }
 
     private void makeFileMenu() {
@@ -1291,6 +1338,100 @@ public class SwitchboardEditor extends Editor {
 //        menu.add(button);
 //        return menu;
 //    }
+
+    void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {
+        ActionListener a = new ActionListener() {
+            final Color desiredColor = color;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!defaultBackgroundColor.equals(desiredColor)) {
+                    defaultBackgroundColor = desiredColor;
+                    setBackgroundColor(desiredColor);
+                    setDirty(true);
+                    repaint();
+                }
+            }
+        };
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+
+        r.addActionListener(a);
+        backgroundColorButtonGroup.add(r);
+
+        if (defaultBackgroundColor.equals(color)) {
+            r.setSelected(true);
+        } else {
+            r.setSelected(false);
+        }
+        menu.add(r);
+        backgroundColorMenuItems[backgroundColorCount] = r;
+        backgroundColors[backgroundColorCount] = color;
+        backgroundColorCount++;
+    }
+
+    void addTextColorMenuEntry(JMenu menu, final String name, final Color color) {
+        ActionListener a = new ActionListener() {
+            final Color desiredColor = color;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!defaultTextColor.equals(desiredColor)) {
+                    defaultTextColor = desiredColor;
+                    setDirty(true);
+                    repaint();
+                }
+            }
+        };
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+
+        r.addActionListener(a);
+        textColorButtonGroup.add(r);
+
+        if (defaultTextColor.equals(color)) {
+            r.setSelected(true);
+        } else {
+            r.setSelected(false);
+        }
+        menu.add(r);
+        textColorMenuItems[textColorCount] = r;
+        textColors[textColorCount] = color;
+        textColorCount++;
+    }
+
+    protected void setOptionMenuTextColor() {
+        for (int i = 0; i < textColorCount; i++) {
+            if (textColors[i].equals(defaultTextColor)) {
+                textColorMenuItems[i].setSelected(true);
+            } else {
+                textColorMenuItems[i].setSelected(false);
+            }
+        }
+    }
+
+    protected void setOptionMenuBackgroundColor() {
+        for (int i = 0; i < backgroundColorCount; i++) {
+            if (backgroundColors[i].equals(defaultBackgroundColor)) {
+                backgroundColorMenuItems[i].setSelected(true);
+            } else {
+                backgroundColorMenuItems[i].setSelected(false);
+            }
+        }
+    }
+
+    public void setDefaultTextColor(String color) {
+        defaultTextColor = ColorUtil.stringToColor(color);
+        setOptionMenuTextColor();
+    }
+
+    public void setDefaultBackgroundColor(String color) {
+        defaultBackgroundColor = ColorUtil.stringToColor(color);
+        setOptionMenuBackgroundColor();
+    }
+
+    public String getDefaultTextColor() {
+        return ColorUtil.colorToString(defaultTextColor);
+    }
+
 
     private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
         JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
@@ -1529,6 +1670,36 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
+     * Allow external reset of dirty bit.
+     */
+    public void resetDirty() {
+        setDirty(false);
+        savedEditMode = isEditable();
+        savedControlLayout = allControlling();
+        //savedShowHelpBar = showHelpBar;
+    }
+
+    /**
+     * Allow external set of dirty bit.
+     */
+    public void setDirty(boolean val) {
+        panelChanged = val;
+    }
+
+    public void setDirty() {
+        setDirty(true);
+    }
+
+    /**
+     * Check the dirty state.
+     */
+    public boolean isDirty() {
+        return panelChanged;
+    }
+
+    // ********************** load/store board *******************
+
+    /**
      * Load Range minimum.
      *
      * @param rangemin lowest address to show
@@ -1732,6 +1903,7 @@ public class SwitchboardEditor extends Editor {
                 return InstanceManager.lightManagerInstance();
         }
     }
+
     /**
      * ********* KeyListener of Editor ********
      */
@@ -1873,7 +2045,8 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Class to display individual bean state switches.
+     * Class to display individual bean state switches on a JMRI Switchboard
+     * using 2 image files.
      */
     public class IconSwitch extends JPanel {
 
@@ -1936,8 +2109,8 @@ public class SwitchboardEditor extends Editor {
             super.paintComponent(g);
             g.drawImage(image, 0, 0, null);
             g.setFont(getFont());
-            g.setColor(Color.black); // getBackgroundColor()
-            g.drawString(tag, 20, 60); // draw name on top of button image (horizontal, vertical from top left)
+            g.setColor(defaultTextColor); // getTextColor()
+            g.drawString(tag, 16, 53); // draw name on top of button image (horizontal, vertical from top left)
         }
 
     }
