@@ -48,7 +48,9 @@ public final class TreeModel extends DefaultTreeModel {
         // needed to get the display to start
         // insertNodeInto(new UsbNode("System", null, null), dRoot, 0);
         // start the USB gathering
-        (new Runner()).start();
+        Runner r = new Runner();
+        r.setName("TreeModel loader");
+        r.start();
     }
 
     /**

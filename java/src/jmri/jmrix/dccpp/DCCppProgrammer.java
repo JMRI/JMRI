@@ -2,7 +2,10 @@ package jmri.jmrix.dccpp;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
+import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
@@ -102,6 +105,13 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             return Integer.parseInt(addr) <= 256;
         }
     }
+
+    /**
+     * 
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.DecoderReply; }
 
     // members for handling the programmer interface
     protected int progState = 0;

@@ -207,6 +207,16 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     /**
+     * By default, say that no verification is done.
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return Always WriteConfirmMode.NotVerified
+     */
+    @Nonnull
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
+    
+
+    /**
      * Internal routine to start timer to protect the mode-change.
      */
     protected void startShortTimer() {

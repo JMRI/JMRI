@@ -38,6 +38,7 @@ class VSDecoderManagerThread extends Thread {
     public static VSDecoderManagerThread instance() {
         if (instance == null) {
             VSDecoderManagerThread temp = new VSDecoderManagerThread();
+            temp.setName("VSDecoderManagerThread");
             temp.start();
             instance = temp; // don't allow escape of VSDecoderManagerThread object until running
 
