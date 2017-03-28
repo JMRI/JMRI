@@ -70,7 +70,7 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     @Override
     public String getTitle() {
-        return getTitle(Bundle.getMessage("MenuItemDS64Programmer"));
+        return getTitle(DS64Bundle.getMessage("MenuItemDS64Programmer"));
     }
 
     /**
