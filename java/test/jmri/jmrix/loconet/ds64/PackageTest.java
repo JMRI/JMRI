@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    BundleTest.class,
+    DS64BundleTest.class,
     DS64PanelTest.class
 })
 public class PackageTest {
