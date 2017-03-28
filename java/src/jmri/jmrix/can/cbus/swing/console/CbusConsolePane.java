@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Cbus Console
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 

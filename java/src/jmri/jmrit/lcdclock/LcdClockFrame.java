@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
  * A Run/Stop button is built into this, but because I don't like the way it
  * looks, it's not currently displayed in the GUI.
  *
- * @author	Ken Cameron Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2007
  *
  * This was a very direct steal from the Nixie clock code, ver 1.12. Thank you
  * Bob Jacobson.

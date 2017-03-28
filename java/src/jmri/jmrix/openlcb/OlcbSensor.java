@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
 public class OlcbSensor extends AbstractSensor {
 

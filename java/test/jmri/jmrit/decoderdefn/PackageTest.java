@@ -31,6 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(DecoderFileTest.suite());
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(new JUnit4TestAdapter(DecoderIndexBuilderTest.class));
+        suite.addTest(new JUnit4TestAdapter(NameCheckActionTest.class));
         return suite;
     }
 

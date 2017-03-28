@@ -13,7 +13,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <P>
  * Based in part on SerialTurnoutManager.java
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class SerialLightManager extends AbstractLightManager {
 

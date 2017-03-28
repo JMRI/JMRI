@@ -7,7 +7,7 @@ import javax.swing.JButton;
 /**
  * Frame for Signal Logic Source Mast status.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingSourceFrame extends jmri.util.JmriJFrame {
 

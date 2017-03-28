@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  *
  * This was a copy of simple turnout control.
  *
- * @author	Ken Cameron Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Ken Cameron Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 

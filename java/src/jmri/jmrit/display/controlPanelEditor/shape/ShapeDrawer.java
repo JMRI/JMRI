@@ -182,7 +182,7 @@ public class ShapeDrawer {
     public boolean doMouseDragged(MouseEvent event) {
         if (_drawFrame instanceof DrawPolygon && _currentSelection == null) {
             ((DrawPolygon) _drawFrame).moveTo(event.getX(), event.getY());
-            return true;		// no select rect
+            return true;  // no select rect
         } else if (_currentSelection != null) {
             return _currentSelection.doHandleMove(event);
         }

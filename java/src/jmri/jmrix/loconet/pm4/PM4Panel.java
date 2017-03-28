@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
+ * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
   */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 

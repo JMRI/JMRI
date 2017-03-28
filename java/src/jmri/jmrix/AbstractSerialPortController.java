@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 

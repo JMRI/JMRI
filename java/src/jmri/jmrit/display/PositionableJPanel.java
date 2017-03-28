@@ -364,7 +364,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
 
     @Override
     public void mouseExited(MouseEvent e) {
-//    	transferFocus();
+//     transferFocus();
         _editor.mouseExited(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));

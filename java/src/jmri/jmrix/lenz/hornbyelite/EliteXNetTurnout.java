@@ -6,7 +6,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * Extend jmri.jmrix.XNetTurnout to handle turnouts on Hornby Elite
  * connections. See XNetTurnout for further documentation.
  *
- * @author	Paul Bender Copyright (C) 2008
+ * @author Paul Bender Copyright (C) 2008
   */
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 

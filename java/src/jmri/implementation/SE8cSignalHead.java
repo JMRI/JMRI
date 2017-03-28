@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * The algorithms in this class are a collaborative effort of Digitrax, Inc and
  * Bob Jacobsen.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2010, 2014
+ * @author Bob Jacobsen Copyright (C) 2002, 2010, 2014
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 

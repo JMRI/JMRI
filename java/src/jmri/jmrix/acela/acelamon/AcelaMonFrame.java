@@ -7,8 +7,8 @@ import jmri.jmrix.acela.AcelaReply;
 /**
  * Frame displaying (and logging) Acela command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaListener {

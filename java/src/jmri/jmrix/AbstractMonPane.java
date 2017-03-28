@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base class for JPanels displaying communications monitor information
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
 public abstract class AbstractMonPane extends JmriPanel {
 

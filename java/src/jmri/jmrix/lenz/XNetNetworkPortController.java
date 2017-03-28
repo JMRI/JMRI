@@ -8,8 +8,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  * Abstract base for classes representing a XNet communications port
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2004,2010,2011
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2004,2010,2011
   */
 public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements XNetPortController {
 

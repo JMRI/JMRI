@@ -3,8 +3,8 @@ package jmri.jmrix.powerline.insteon2412s;
 /**
  * Constants and functions specific to the Insteon 2412S interface
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2009
- * @author	Ken Cameron Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2009
+ * @author Ken Cameron Copyright (C) 2010
   */
 public class Constants {
 

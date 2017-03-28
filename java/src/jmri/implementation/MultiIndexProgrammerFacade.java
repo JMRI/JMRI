@@ -7,48 +7,82 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer facade for single index multi-CV access.
+ * Programmer facade for accessing CVs that require one or more "index CVs" 
+ * to have specific values before doing the final read or write operation.
  * <p>
- * Used through the String write/read/confirm interface. Accepts address
- * formats:
+ * Currently supports direct access to CVs (the usual style), operations where
+ * one index CV (called PI, for primary index) must have a specific value first,
+ * and operations where two index CVs (called PI and SI, for secondary index)
+ * must have a specific value first. 
+ * <p>
+ * Accepts two different address formats so that the CV addresses can be 
+ * written in the same style as the decoder manufacturer's documentation:
  * <ul>
- * <li>If cvFirst is true:<ul>
- * <li> 123 Do write/read/confirm to 123
- * <li> 123.11 Writes 11 to the first index CV, then does write/read/confirm to
- * 123
- * <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index
- * CV, then does write/read/confirm to 123
+ * <li>If cvFirst is true:
+ * <ul>
+ *   <li> 123 Do read or write directly to CV 123; this allows unindexed CVs to go through
+ *   <li> 123.11 Writes 11 to PI, the index CV, then does the final read or write to CV 123
+ *   <li> 123.11.12 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *                    then does the final read or write to CV 123
  * </ul>
- * <li>If cvFirst is false:<ul>
- * <li> 123 Do write/read/confirm to 123
- * <li> 11.123 Writes 11 to the first index CV, then does write/read/confirm to
- * 123
- * <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index
- * CV, then does write/read/confirm to 123
+ * <li>If cvFirst is false:
+ * <ul>
+ *   <li> 123 Do read or write directly to CV 123; this allows unindexed CVs to go through
+ *   <li> 11.123 Writes 11 to the first index CV, then does the final read or write to CV 123
+ *   <li> 11.12.123 Writes 11 to the first index CV, then 12 to the second index CV, 
+ *              then does the final read or write to CV 123
  * </ul>
  * </ul>
+ * QSI decoders generally use the 1st format, and ESU LokSound decoders the second.
  *<p>
- * Is skipDupIndexWrite is true, sequential operations with the same PI and SI values
+ * The specific CV numbers for PI and SI are provided when constructing the object.
+ * They can be read from a decoder definition file by e.g. {@link jmri.implementation.ProgrammerFacadeSelector}.
+ *<p>
+ * If skipDupIndexWrite is true, sequential operations with the same PI and SI values
  * (and only immediately sequential operations with both PI and SI unchanged) will
  * skip writing of the PI and SI CVs.  This might not work for some decoders, hence is
- * configurable.
+ * configurable. See the logic in {@link jmri.implementation.ProgrammerFacadeSelector}
+ * for how the decoder file contents and default (preferences) interact.
+ * <p>
+ * State Diagram for read and write operations (click to magnify):
+ * <a href="doc-files/MultiIndexProgrammerFacade-State-Diagram.png"><img src="doc-files/MultiIndexProgrammerFacade-State-Diagram.png" alt="UML State diagram" height="50%" width="50%"></a>
  *
  * @see jmri.implementation.ProgrammerFacadeSelector
  *
  * @author Bob Jacobsen Copyright (C) 2013
  */
+ 
+/*
+ * @startuml jmri/implementation/doc-files/MultiIndexProgrammerFacade-State-Diagram.png
+ * [*] --> NOTPROGRAMMING 
+ * NOTPROGRAMMING --> PROGRAMMING: readCV() & & PI==-1\n(read CV)
+ * NOTPROGRAMMING --> FINISHREAD: readCV() & PI!=-1\n(write PI)
+ * NOTPROGRAMMING --> PROGRAMMING: writeCV() & single CV\n(write CV)
+ * NOTPROGRAMMING --> FINISHWRITE: writeCV() & PI write needed\n(write PI)
+ * FINISHREAD --> FINISHREAD: OK reply & SI!=-1\n(write SI)
+ * FINISHREAD --> PROGRAMMING: OK reply & SI==-1\n(read CV)
+ * FINISHWRITE --> FINISHWRITE: OK reply & SI!=-1\n(write SI)
+ * FINISHWRITE --> PROGRAMMING: OK reply & SI==-1\n(write CV)
+ * PROGRAMMING --> NOTPROGRAMMING: OK reply received\n(return status and value)
+ * FINISHREAD --> NOTPROGRAMMING : Error reply received
+ * FINISHWRITE --> NOTPROGRAMMING : Error reply received
+ * PROGRAMMING --> NOTPROGRAMMING : Error reply received
+ * @enduml
+*/
+
 public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param prog    the programmer to which this facade is attached
-     * @param indexPI CV to which the first value is to be written for NN.NN and
-     *                NN.NN.NN forms
-     * @param indexSI CV to which the second value is to be written for NN.NN.NN
-     *                forms
-     * @param cvFirst true if first value in parsed CV is to be written; false
-     *                if second value is to be written
-     * @param skipDupIndexWrite true if heuristics can be used to skip PI and SI writes;
-     *                 false requires them to be written each time.
+     * @param prog              the programmer to which this facade is attached
+     * @param indexPI           CV to which the first value is to be written for
+     *                          NN.NN and NN.NN.NN forms
+     * @param indexSI           CV to which the second value is to be written
+     *                          for NN.NN.NN forms
+     * @param cvFirst           true if first value in parsed CV is to be
+     *                          written; false if second value is to be written
+     * @param skipDupIndexWrite true if heuristics can be used to skip PI and SI
+     *                          writes; false requires them to be written each
+     *                          time.
      */
     public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI, boolean cvFirst, boolean skipDupIndexWrite) {
         super(prog);
@@ -58,19 +92,19 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         this.skipDupIndexWrite = skipDupIndexWrite;
     }
 
-    String  indexPI;
-    String  indexSI;
+    String indexPI;
+    String indexSI;
     boolean cvFirst;
     boolean skipDupIndexWrite;
 
-    long    maxDelay = 1000;  // max mSec since last successful end-of-operation for skipDupIndexWrite; longer delay writes anyway
+    long maxDelay = 1000;  // max mSec since last successful end-of-operation for skipDupIndexWrite; longer delay writes anyway
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    String _cv;	// remember the cv number being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    String _cv; // remember the cv number being read/written
     int valuePI;  //  value to write to PI in current operation or -1
     int valueSI;  //  value to write to SI in current operation or -1
-    
+
     // remember last operation for skipDupIndexWrite
     int lastValuePI = -1;  // value written in last operation
     int lastValueSI = -1;  // value written in last operation
@@ -125,15 +159,17 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     }
 
     /**
-     * Check to see if the last-written PI and SI values can still be counted on
+     * Check if the last-written PI and SI values can still be counted on.
+     *
+     * @return true if last-written values are reliable; false otherwise
      */
     boolean useCachePiSi() {
         return skipDupIndexWrite
-            && (lastValuePI == valuePI) 
-            && (lastValueSI == valueSI)
-            && ((System.currentTimeMillis() - lastOpTime) < maxDelay);
+                && (lastValuePI == valuePI)
+                && (lastValueSI == valueSI)
+                && ((System.currentTimeMillis() - lastOpTime) < maxDelay);
     }
-    
+
     // programming interface
     @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -203,10 +239,18 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
         }
     }
 
+    /**
+     * State machine for MultiIndexProgrammerFacade  (click to magnify):
+     * <a href="doc-files/MultiIndexProgrammerFacade-State-Diagram.png"><img src="doc-files/MultiIndexProgrammerFacade-State-Diagram.png" alt="UML State diagram" height="50%" width="50%"></a>
+     */
     enum ProgState {
-        PROGRAMMING, 
-        FINISHREAD, 
-        FINISHWRITE, 
+        /** Waiting for response to (final) read or write operation, final reply next */
+        PROGRAMMING,
+        /** Waiting for response to first or second index write before a final read operation */
+        FINISHREAD,
+        /** Waiting for response to first or second index write before a final read operation */
+        FINISHWRITE,
+        /** No current operation */
         NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
@@ -217,7 +261,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
     public void programmingOpReply(int value, int status) {
         log.debug("notifyProgListenerEnd value {} status {} ", value, status);
 
-        if (status != OK ) {
+        if (status != OK) {
             // clear memory of last PI, SI written
             lastValuePI = -1;
             lastValueSI = -1;
@@ -231,7 +275,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
             temp.programmingOpReply(value, status);
             return;
         }
-        
+
         if (_usingProgrammer == null) {
             log.error("No listener to notify, reset and ignore");
             state = ProgState.NOTPROGRAMMING;

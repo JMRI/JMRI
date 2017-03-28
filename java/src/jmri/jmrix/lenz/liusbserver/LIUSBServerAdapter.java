@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * of inactivity on the port. The LIUSB Server disconnects port 5550 if another
  * device puts the system into service mode.
  *
- * @author	Paul Bender (C) 2009-2010
+ * @author Paul Bender (C) 2009-2010
  */
 public class LIUSBServerAdapter extends XNetNetworkPortController {
 

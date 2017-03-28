@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.7.2ish-201702271755-jake-R348fe6e on Mon Feb 27 09:55:43 PST 2017 $Id$-->
-  <decoderIndex version="804">
+  <!--Written by JMRI version 4.7.3ish+jake+20170327T1511Z+R44fcdd3 on Mon Mar 27 08:11:16 PDT 2017 $Id$-->
+  <decoderIndex version="806">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -394,7 +394,12 @@
         </functionlabels>
       </family>
       <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon3_Steam.xml">
-        <model model="Steam" numOuts="3" numFns="30" connector="9pin">
+        <model model="Steam" numOuts="3" numFns="30" connector="other">
+          <versionCV lowVersionID="32" highVersionID="63" />
+          <output name="1" label="headlight" />
+          <output name="2" label="rearlight" />
+        </model>
+        <model model="Steam w/depleting coal, whistle smoke" numOuts="3" numFns="30" connector="other">
           <versionCV lowVersionID="32" highVersionID="63" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
@@ -7843,9 +7848,13 @@
         </model>
       </family>
       <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_lights1650.xml">
-        <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes">
+        <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes" productID="1650">
           <!-- note All functions are NMRA compatible -->
           <size length="25.5" width="12.3" height="4.5" units="mm" />
+        </model>
+        <model model="4 Function decoder 1651" maxTotalCurrent="1.5A" extFnsMRC="yes" productID="1651">
+          <!-- note All functions are NMRA compatible -->
+          <size length="26.5" width="15.0" height="5.0" units="mm" />
         </model>
       </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="20" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1617-1618.xml">
@@ -13808,15 +13817,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -13824,9 +13831,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -13843,15 +13848,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -13859,9 +13862,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -13878,15 +13879,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -13894,9 +13893,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -13913,15 +13910,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -13929,9 +13924,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -13948,15 +13941,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -13964,9 +13955,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -13983,15 +13972,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -13999,9 +13986,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -14018,15 +14003,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -14034,9 +14017,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -14053,15 +14034,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -14069,9 +14048,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -14088,15 +14065,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -14104,9 +14079,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -14123,15 +14096,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -14139,9 +14110,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -14158,15 +14127,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -14174,9 +14141,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>
@@ -14193,15 +14158,13 @@
           <output name="6" label="Bell| ">
             <label xml:lang="it">Campana| </label>
           </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
           </output>
           <output name="8" label="Short|Horn">
             <label xml:lang="it">Breve|Tromba</label>
           </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
+          <output name="9" label="Straight|to 8" />
           <output name="10" label="General|Service" />
           <output name="11" label="Dimming| ">
             <label xml:lang="it">Smorzam| </label>
@@ -14209,9 +14172,7 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
+          <output name="13" label="HEP|Mode" />
           <output name="14" label="Ind/Train|Brake" />
           <output name="15" label="Coupler| ">
             <label xml:lang="it">Accoppiatore| </label>

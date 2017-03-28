@@ -6,7 +6,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 /**
  * Swing action to create and register a StackMonFrame object
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
  */
 public class StackMonAction extends AbstractXPressNetAction {
 

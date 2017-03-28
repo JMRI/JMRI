@@ -7,7 +7,7 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 /**
  * Create a "Systems" menu containing the JMRI Powerline-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2010 Copied from NCE Converted to
+ * @author Bob Jacobsen Copyright 2003, 2010 Copied from NCE Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
@@ -44,7 +44,7 @@ public class PowerlineMenu extends JMenu {
         }
 
         // do we have a TrafficController?
-        setEnabled(memo.getTrafficController() != null);	// disable menu, no connection, no tools!
+        setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
     }

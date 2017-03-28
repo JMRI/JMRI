@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to DCC++ via a FTDI Virtual Comm Port.
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
@@ -213,7 +213,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
-	DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+ DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
         packets.connectPort(this);
 
         // start operation
@@ -234,8 +234,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
 
     @Override
     public DataInputStream getInputStream() {
-	//log.error("Not Using DataInputStream version anymore!");
-    	//return(null);
+ //log.error("Not Using DataInputStream version anymore!");
+     //return(null);
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
         }
@@ -282,8 +282,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                 SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
@@ -312,7 +312,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     InputStream serialStream = null;
 
     @Deprecated
-	static public DCCppAdapter instance() {
+ static public DCCppAdapter instance() {
         if (mInstance == null) {
             mInstance = new DCCppAdapter();
         }

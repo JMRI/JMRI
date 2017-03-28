@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * on the serial bus. E.g. you can manually change a state via an icon, and not
  * have it change back the next time that node is polled.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, revised for Maple, 2009
   */
@@ -30,7 +30,7 @@ public class SerialNode extends AbstractNode {
 
     // class constants
     // node definition instance variables (must persist between runs)
-//	protected int pulseWidth = 500;				// Pulse width for pulsed turnout control (milliseconds)
+// protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
     private int _address = 0;
 
     // operational instance variables  (should not be preserved between runs)

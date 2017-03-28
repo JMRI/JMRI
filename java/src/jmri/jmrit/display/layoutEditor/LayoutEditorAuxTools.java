@@ -636,9 +636,9 @@ public class LayoutEditorAuxTools {
         for (int i = sz - 1; i >= 0; i--) {
             if (!found[i]) {
 // djd debugging - message to list connectivity being removed
-//				LayoutConnectivity xx = (LayoutConnectivity)cList.get(i);
-//				log.error("  Deleting Layout Connectivity - "+xx.getBlock1().getID()+", "+
-//													xx.getBlock2().getID());
+//    LayoutConnectivity xx = (LayoutConnectivity)cList.get(i);
+//    log.error("  Deleting Layout Connectivity - "+xx.getBlock1().getID()+", "+
+//             xx.getBlock2().getID());
 // end debugging
                 cList.remove(i);
             }
@@ -1064,7 +1064,7 @@ public class LayoutEditorAuxTools {
                             // check for block boundary
                             if ((track == null) || (track.getLayoutBlock() != layoutBlock)) {
                                 // moved outside of block - anchor point was a block boundary -OR-
-                                //		reached the end of the defined track
+                                //  reached the end of the defined track
                                 curConnection = null;
                             } else {
                                 prevConnection = curConnection;

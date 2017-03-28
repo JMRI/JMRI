@@ -64,7 +64,7 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
     /**
      * get a TurnoutOperator instance for this operation
      *
-     * @return	the operator
+     * @return the operator
      */
     @Override
     public TurnoutOperator getOperator(AbstractTurnout t) {

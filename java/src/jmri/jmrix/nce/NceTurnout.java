@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
  */
 public class NceTurnout extends AbstractTurnout {
@@ -41,8 +41,8 @@ public class NceTurnout extends AbstractTurnout {
     }
 
     private synchronized void initialize() {
-        numNtTurnouts++;	// increment the total number of NCE turnouts
-        // update feedback modes, MONITORING requires PowerHouse system with new EPROM   	
+        numNtTurnouts++; // increment the total number of NCE turnouts
+        // update feedback modes, MONITORING requires PowerHouse system with new EPROM    
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006 && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
             if (modeNames == null) {
                 if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -81,9 +81,9 @@ public class NceTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
