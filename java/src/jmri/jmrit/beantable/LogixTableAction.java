@@ -365,6 +365,8 @@ public class LogixTableAction extends AbstractTableAction {
      */
     @Override
     public void setMenuBar(BeanTableFrame f) {
+        loadSelectionMode();
+
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
@@ -413,7 +415,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         modeButtonGroup.add(r);
         menu.add(r);
-        menuMulti = r;
+        r.setSelected(_selectionMode == SelectionMode.USEMULTI);
 
         r = new JRadioButtonMenuItem(rbx.getString("UseSinglePick"));
         r.addItemListener(new ItemListener() {
@@ -424,7 +426,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         modeButtonGroup.add(r);
         menu.add(r);
-        menuSingle = r;
+        r.setSelected(_selectionMode == SelectionMode.USESINGLE);
 
         r = new JRadioButtonMenuItem(rbx.getString("UseComboNameBoxes"));
         r.addItemListener(new ItemListener() {
@@ -435,7 +437,7 @@ public class LogixTableAction extends AbstractTableAction {
         });
         modeButtonGroup.add(r);
         menu.add(r);
-        menuCombo = r;
+        r.setSelected(_selectionMode == SelectionMode.USECOMBO);
 
         menuBar.add(menu, pos + offset);
 
@@ -485,40 +487,41 @@ public class LogixTableAction extends AbstractTableAction {
         }.init(f));
         menu.add(item);
         menuBar.add(menu, pos + offset + 1); // add this menu to the right of the previous
-        getSelectionMode();
     }
 
     /**
-     * Get the saved mode selection, if any, and click the appropriate menu item.
+     * Get the saved mode selection, default to the tranditional tabbed pick list.
      * <p>
-     * If the mode is not valid, use the traditional tabbed drag and drop selection table format by clicking on the menuMulti button.
-     * The doClick results in a call to setSelectionMode() which updates the _selectionMode variable.
+     * During the menu build process, the corresponding menu item is set to selected.
+     * @since 4.7.3
      */
-    void getSelectionMode() {
+    void loadSelectionMode() {
         Object modeName = InstanceManager.getDefault(jmri.UserPreferencesManager.class).getProperty(getClassName(), "Selection Mode");
         if (modeName == null) {
-                menuMulti.doClick();
+            _selectionMode = SelectionMode.USEMULTI;
         } else {
             String currentMode = (String) modeName;
             switch (currentMode) {
                 case "USEMULTI":
-                    menuMulti.doClick();
+                    _selectionMode = SelectionMode.USEMULTI;
                     break;
                 case "USESINGLE":
-                    menuSingle.doClick();
+                    _selectionMode = SelectionMode.USESINGLE;
                     break;
                 case "USECOMBO":
-                    menuCombo.doClick();
+                    _selectionMode = SelectionMode.USECOMBO;
                     break;
                 default:
                     log.warn("Invalid Logix conditional selection mode value, '{}', returned", currentMode);
-                    menuMulti.doClick();
+                    _selectionMode = SelectionMode.USEMULTI;
             }
         }        
     }
 
     /**
-     * Save the mode selection.
+     * Save the mode selection.  Called by menu item change events.
+     * @since 4.7.3
+     * @param newMode The SelectionMode enum constant 
      */
     void setSelectionMode(SelectionMode newMode) {
         _selectionMode = newMode;
@@ -660,24 +663,19 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Input selection names
+     * @since 4.7.3
      */ 
     public enum SelectionMode {
-        USEMULTI, USESINGLE, USECOMBO;
+        /** Use the traditional text field, with the tabbed Pick List available for drag-n-drop */
+        USEMULTI,
+        /** Use the traditional text field, but with a single Pick List that responds with a click */
+        USESINGLE,
+        /** Use combo boxes to select names instead of a text field. */
+        USECOMBO;
     }
     SelectionMode _selectionMode;
     
-    // Retain the menu objects for the doClick() method.
-    JRadioButtonMenuItem menuMulti; 
-    JRadioButtonMenuItem menuSingle; 
-    JRadioButtonMenuItem menuCombo; 
-     
-    /**
-     * Single Pick List Name Selecton Method
-     * <p>
-     * A single pick list frame is displayed depending on the variable or action selection.
-     * While 'drag-n-drop' is supported, the SelectionListener will populate the name field with a single click.
-     */
-
+    // Single pick list name selection variables
     PickSinglePanel _pickSingle = null;     // used to build the JFrame, content copied from the table type pick object.
     JFrame _pickSingleFrame = null;
     JTable _pickTable = null;               // Current pick table
@@ -687,6 +685,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Listen for Pick Single table click events.
      * <p>
      * When a table row is selected, the user/system name is copied to the Action or Variable name field.
+     * @since 4.7.3
      */
     class PickSingleListener implements ListSelectionListener {
         int saveItemType = -1;          // Current table type
@@ -742,14 +741,8 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-    /**
-     * Combo Box Name Selecton Method
-     * <p>
-     * Combo boxes for name selection and their JPanel variables
-     * These are shared by the conditional and action selection processs
-     * The JPanels contain the current combo box based on the current selection: sensor, turnout, etc.
-     */
-     
+    // Combo boxes for name selection and their JPanel variables
+    // These are shared by the conditional and action selection processs
     JmriBeanComboBox _sensorNameBox = new JmriBeanComboBox(
             InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
     JmriBeanComboBox _turnoutNameBox = new JmriBeanComboBox(
@@ -781,6 +774,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Listen for name combo box selection events.
      * <p>
      * When a combo box row is selected, the user/system name is copied to the Action or Variable name field.
+     * @since 4.7.3
      */
     class NameBoxListener implements ItemListener {
 
@@ -3216,6 +3210,7 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Close a single panel picklist JFrame and related items.
+     * @since 4.7.3
      */
     void closeSinglePanelPickList() {
         if (_pickSingleFrame != null) {
@@ -3232,6 +3227,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Create a single panel picklist JFrame for choosing action and variable names.
      * <p>
      * Called from {@link #actionItemChanged} and {@link #variableTypeChanged}
+     * @since 4.7.3
      * @param itemType The selected variable or action type
      * @param isVariable True if called by variableTypeChanged
      */
@@ -3304,6 +3300,7 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * For each name combo box, enable first item blank and add the item change listener
+     * @since 4.7.3
      */
     void setNameBoxListeners() {
         if (_nameBoxListenersDone) {
@@ -4283,6 +4280,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Swap the name panel contents and set visible if needed
      * Called by actionItemChanged
      *
+     * @since 4.7.3
      * @param nameBox The name box to be updated.
      * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
      */
@@ -4637,7 +4635,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Update the name combo box selection based on the current contents of the name field.
      * Swap the name panel contents and set visible if needed
      * Called by variableItemChanged
-     *
+     * @since 4.7.3
      * @param nameBox The name box to be updated.
      * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
      */
