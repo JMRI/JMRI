@@ -48,7 +48,7 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel"), // NOI18N
         new Item("MenuItemPM4Programmer", "jmri.jmrix.loconet.pm4.PM4Panel"), // NOI18N
         new Item("MenuItemSE8cProgrammer", "jmri.jmrix.loconet.se8.SE8Panel"), // NOI18N
-        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.DS64Panel"), // NOI18N
+        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.Ds64Panel"), // NOI18N
         new Item("MenuItemCmdStnConfig", "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"), // NOI18N
         new Item("MenuItemSetID", "jmri.jmrix.loconet.locoid.LocoIdPanel"), // NOI18N
         new Item("MenuItemDuplex", "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel"), // NOI18N
@@ -61,7 +61,9 @@ public class LocoNetMenu extends JMenu {
         null,
         new Item("MenuItemDownload", "jmri.jmrix.loconet.downloader.LoaderPane"), // NOI18N
         new Item("MenuItemSoundload", "jmri.jmrix.loconet.soundloader.LoaderPane"), // NOI18N
-        new Item("MenuItemSoundEditor", "jmri.jmrix.loconet.soundloader.EditorPane") // NOI18N
+        new Item("MenuItemSoundEditor", "jmri.jmrix.loconet.soundloader.EditorPane"), // NOI18N
+        null, 
+        new Item("MenuItemDS64PanelEnhanced", "jmri.jmrix.loconet.ds64.Ds64TabbedPanel")
     };
 
     static class Item {
