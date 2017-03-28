@@ -45,6 +45,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(WarrantManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(WarrantPreferencesPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(WarrantPreferencesTest.class));
+        suite.addTest(new JUnit4TestAdapter(TrackerTableActionTest.class));
         return suite;
     }
 
