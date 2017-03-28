@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Objects;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -153,13 +152,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
 
-    /**
-     * {@inheritDoc}
+    /* What super does currently is fine.  If that changes
      *
-     * Note: equality consists of the underlying (superclass) Block
-     * implementation being the same.
-     */
-    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -171,23 +165,17 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (!(getClass() == obj.getClass())) {
             return false;
         }
-
+        if (!((Block)obj).getSystemName().equals(this.getSystemName())) {
+            return false;
+        }
         return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this._portals);
-        hash = 97 * hash + Objects.hashCode(this._warrant);
-        hash = 97 * hash + Objects.hashCode(this._pathName);
-        hash = 97 * hash + (int) (this._entryTime ^ (this._entryTime >>> 32));
-        hash = 97 * hash + (this._metric ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this._markerForeground);
-        hash = 97 * hash + Objects.hashCode(this._markerBackground);
-        hash = 97 * hash + Objects.hashCode(this._markerFont);
-        return hash;
+        return this.getSystemName().hashCode();
     }
+    */
 
     /**
      * override to only set an existing sensor and to amend state with not UNDETECTED

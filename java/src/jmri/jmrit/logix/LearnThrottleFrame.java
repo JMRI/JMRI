@@ -104,7 +104,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      */
     public void notifyThrottleFound(DccThrottle t) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyThrottleFound address= " + t.getLocoAddress().toString());
+            log.debug("notifyThrottleFound address= " + t.getLocoAddress().toString()+" class= "+t.getClass().getName());
         }
         _throttle = t;
         _controlPanel.notifyThrottleFound(t);
