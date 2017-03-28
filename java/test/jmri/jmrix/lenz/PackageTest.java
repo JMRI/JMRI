@@ -70,7 +70,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(XNetSimulatorPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetTimeSlotListenerTest.class));
         suite.addTest(new JUnit4TestAdapter(XNetConstantsTest.class));
-
+        suite.addTest(new JUnit4TestAdapter(XNetFeedbackMessageCacheTest.class));
+        suite.addTest(new JUnit4TestAdapter(AbstractXNetSerialConnectionConfigTest.class));
+        suite.addTest(new JUnit4TestAdapter(AbstractXNetInitializationManagerTest.class));
         return suite;
     }
 

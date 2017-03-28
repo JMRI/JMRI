@@ -31,7 +31,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
         ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
@@ -159,7 +159,6 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
@@ -178,7 +177,6 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             if (!m.isResponseOK()) {
                 log.warn("Reply \"" + m.toString() + "\"");
             }
-            return;
         } else if (progState == COMMANDSENT) {
             if (log.isDebugEnabled()) {
                 log.debug("reply in COMMANDSENT state");
@@ -244,8 +242,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
      * <P>
-     * Here, it sends a request to exit from programming mode. But subclasses,
-     * e.g. ops mode, may redefine that.
+     * Here, it sends a request to exit from programming mode. But subclasses
+     * may redefine that.
      */
     void cleanup() {
         controller().sendSRCPMessage(SRCPMessage.getExitProgMode(_bus), this);
@@ -276,6 +274,3 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     private final static Logger log = LoggerFactory.getLogger(SRCPProgrammer.class.getName());
 
 }
-
-
-

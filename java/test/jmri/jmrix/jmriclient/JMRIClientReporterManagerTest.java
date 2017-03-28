@@ -14,7 +14,7 @@ import org.junit.Before;
 public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "JR" + i;
     }
 

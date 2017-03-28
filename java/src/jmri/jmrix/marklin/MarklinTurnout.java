@@ -71,7 +71,7 @@ public class MarklinTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newCommandedState" to indicate it's
      * taken place. Must be followed by "newKnownState" to complete the turnout
      * action.
@@ -89,7 +89,7 @@ public class MarklinTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
      * <P>

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.beans.*;
 
 public class SlotManagerTest extends TestCase {
 
@@ -19,7 +20,6 @@ public class SlotManagerTest extends TestCase {
     private LocoNetSlot testSlot;
 
     public void testGetDirectFunctionAddressOK() {
-        SlotManager slotmanager = new SlotManager(lnis);
         LocoNetMessage m1;
 
         m1 = new LocoNetMessage(11);
@@ -54,7 +54,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testGetDirectDccPacketOK() {
-        SlotManager slotmanager = new SlotManager(lnis);
         LocoNetMessage m1;
 
         m1 = new LocoNetMessage(11);
@@ -89,7 +88,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testGetSlotSend() {
-        SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2 = new SlotListener() {
             @Override
@@ -109,7 +107,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testGetSlotRcv() {
-        SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2 = new SlotListener() {
             @Override
@@ -150,7 +147,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVPaged() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 12;
         ProgListener p2 = null;
         slotmanager.setMode(DefaultProgrammerManager.PAGEMODE);
@@ -165,7 +161,6 @@ public class SlotManagerTest extends TestCase {
     // you can rename these. Note that not all (int,...) tests may have a 
     // String(String, ...) test defined, in which case you should create those.
     public void testReadCVPagedString() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         String CV1 = "12";
         ProgListener p2 = null;
         slotmanager.setMode(DefaultProgrammerManager.PAGEMODE);
@@ -176,7 +171,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVRegister() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 2;
         ProgListener p2 = null;
         slotmanager.setMode(DefaultProgrammerManager.REGISTERMODE);
@@ -187,7 +181,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVRegisterString() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         String CV1 = "2";
         ProgListener p2 = null;
         slotmanager.setMode(DefaultProgrammerManager.REGISTERMODE);
@@ -198,18 +191,34 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVDirect() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
-        int CV1 = 12;
-        ProgListener p2 = null;
+        log.debug(".... start testReadCVDirect ...");
+        int CV1 = 29;
         slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
-        slotmanager.readCV(CV1, p2);
+        slotmanager.readCV(CV1, lstn);
         Assert.assertEquals("read message",
-                "EF 0E 7C 2B 00 00 00 00 02 0B 7F 7F 7F 00",
+                "EF 0E 7C 2B 00 00 00 00 02 1C 7F 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence)
+        log.debug("send LACK back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, 150);
+        Assert.assertEquals("post-LACK status", -999, status);
+        
+        // read received back (DCS240 sequence)
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B}));
+        jmri.util.JUnitUtil.releaseThread(this, 150);
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", 35, value);
+
+        log.debug(".... end testReadCVDirect ...");
     }
 
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 12;
         ProgListener p2 = null;
         slotmanager.readCVOpsMode(CV1, p2, 4 * 128 + 0x23, true);
@@ -219,7 +228,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 12;
         ProgListener p2 = null;
         slotmanager.readCVOpsMode(CV1, p2, 22, false);
@@ -229,7 +237,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVPaged() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 12;
         int val2 = 34;
         ProgListener p3 = null;
@@ -241,7 +248,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVPagedString() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;
@@ -253,7 +259,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVRegister() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 2;
         int val2 = 34;
         ProgListener p3 = null;
@@ -265,7 +270,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVDirect() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 12;
         int val2 = 34;
         ProgListener p3 = null;
@@ -277,7 +281,6 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVDirectString() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;
@@ -288,19 +291,51 @@ public class SlotManagerTest extends TestCase {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    public void testWriteCVDirectStringDCS240() throws jmri.ProgrammerException {
+        log.debug(".... start testWriteCVDirectStringDCS240 ...");
+        String CV1 = "31";
+        int val2 = 16;
+        slotmanager.setMode(DefaultProgrammerManager.DIRECTBYTEMODE);
+        slotmanager.writeCV(CV1, val2, lstn);
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        Assert.assertEquals("write message",
+                "EF 0E 7C 6B 00 00 00 00 00 1E 10 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+ 
+        // LACK received back (DCS240 sequence)
+        log.debug("send LACK back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
+        jmri.util.JUnitUtil.releaseThread(this, 150);
+        Assert.assertEquals("post-LACK status", -999, status);
+        
+        // read received back (DCS240 sequence)
+        log.debug("send E7 reply back");
+        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x6B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1E, 0x10, 0x7F, 0x7F, 0x4A}));
+        Assert.assertEquals("no immediate reply", -999, status);
+        jmri.util.JUnitUtil.releaseThread(this, 150);
+        log.debug("checking..");
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", -1, value);
+
+        log.debug(".... end testWriteCVDirectStringDCS240 ...");
+    }
+
     public void testWriteCVOpsLongAddr() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 12;
         int val2 = 34;
         ProgListener p3 = null;
         slotmanager.writeCVOpsMode(CV1, val2, p3, 4 * 128 + 0x23, true);
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
         Assert.assertEquals("write message",
                 "EF 0E 7C 67 00 04 23 00 00 0B 22 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
     public void testWriteCVOpsShortAddr() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager(lnis);
         int CV1 = 12;
         int val2 = 34;
         ProgListener p3 = null;
@@ -324,12 +359,31 @@ public class SlotManagerTest extends TestCase {
 
     // The minimal setup for log4J
     LocoNetInterfaceScaffold lnis;
-
+    SlotManager slotmanager;
+    int status;
+    int value;
+    
+    ProgListener lstn;
+    
     @Override
     protected void setUp() {
         jmri.util.JUnitUtil.resetInstanceManager();
+        
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
+        slotmanager = new SlotManager(lnis);
+        status = -999;
+        value = -999;
+        
+        lstn = new ProgListener(){
+            @Override
+            public void programmingOpReply(int val, int stat) {
+                log.debug("   reply val: {} status: {}", val, stat);
+                status = stat;
+                value = val;
+            }
+        };
+        
         apps.tests.Log4JFixture.setUp();
     }
 
@@ -337,5 +391,7 @@ public class SlotManagerTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManager.class.getName());
 
 }

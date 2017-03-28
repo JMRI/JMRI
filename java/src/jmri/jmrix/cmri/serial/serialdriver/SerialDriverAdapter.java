@@ -188,6 +188,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     @Override
     public void configure() {
+        if (((CMRISystemConnectionMemo)getSystemConnectionMemo()).getTrafficController() != null) return; // don't do twice
         // connect to the traffic controller
         SerialTrafficController tc = new SerialTrafficController();
         tc.connectPort(this);

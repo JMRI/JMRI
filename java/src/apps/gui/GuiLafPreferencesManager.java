@@ -83,7 +83,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 this.setFontSize(this.getDefaultFontSize());
             }
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
-            this.setVerticalToolBar(preferences.getBoolean(VERTICAL_TOOLBAR, this.isToolBarVertical()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
             Locale.setDefault(this.getLocale());
             this.applyLookAndFeel();
@@ -125,7 +124,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
-        preferences.putBoolean(VERTICAL_TOOLBAR, this.isToolBarVertical());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -261,24 +259,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         this.setDirty(true);
         this.setRestartRequired(true);
         firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
-    }
-
-    /**
-     * @return the verticalToolBar
-     */
-    public boolean isToolBarVertical() {
-        return verticalToolBar;
-    }
-
-    /**
-     * @param verticalToolBar the verticalToolBar to set
-     */
-    public void setVerticalToolBar(boolean verticalToolBar) {
-        boolean oldVerticalToolBar = this.verticalToolBar;
-        this.verticalToolBar = verticalToolBar;
-        this.setDirty(true);
-        this.setRestartRequired(true);
-        firePropertyChange(VERTICAL_TOOLBAR, oldVerticalToolBar, verticalToolBar);
     }
 
     /**

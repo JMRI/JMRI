@@ -8,7 +8,6 @@ import jmri.SignalGroup;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.jmrit.beantable.SignalGroupTableAction;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -73,7 +72,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("user name", "TestGroup", _sGroupTable._userName.getText());
         _sGroupTable._systemName.setText("R1");
         Assert.assertEquals("system name", "R1", _sGroupTable._systemName.getText());
-        _sGroupTable.mainSignal.setSelectedBeanByName("VM1");
+        _sGroupTable.mainSignalComboBox.setSelectedBeanByName("VM1");
         SignalGroup g = _sGroupTable.checkNamesOK();
         _sGroupTable.setValidSignalMastAspects();
         // add the head to the group:

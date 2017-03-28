@@ -1638,14 +1638,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
     }
 
-    // utility for setMovement()
+    /* utility for setMovement()
+     * returns a default length for block with unspecified lengths.
+     * e.g. 625mm for N scale, 1148mm for HO, 2326 for O, etc.
+     */
     private float getBlockPathLength(BlockOrder blkOrder) {
         float len = blkOrder.getPath().getLengthMm();
         if (len <= 0) {
-            // todo find a better guess (and consistent one) for blocks user has not provided a length
-            //a rampLen guess - half throttle for 7 sec.
-            len = _engineer.getDistanceTraveled(0.5f, Normal, 7000);
-            // len = 155000.0f*scale
+            len = 100000 / WarrantPreferences.getDefault().getLayoutScale();
         }
         return len;
     }
@@ -2040,7 +2040,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if(log.isDebugEnabled()) log.debug("Get time to wait in block \"{}\" before ramping to {}. warrant {}",
                 getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), speedType, getDisplayName());
         blkSpeedInfo = _speedInfo.get(idxBlockOrder);
-        long waitTime = getWaitTime(blkSpeedInfo, availDist, blkOrder.getEntranceSpace(), speedType);
+        long waitTime = getWaitTime(idxBlockOrder, availDist, blkOrder.getEntranceSpace(), speedType);
         if (waitTime < 300) {
             _engineer.rampSpeedTo(speedType);            
             if (speedType.equals(Stop) || speedType.equals(EStop)) {
@@ -2065,11 +2065,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @param distAdj extra space user wants before entering block
      * @return time to wait before starting ramp down
      */
-    private long getWaitTime(BlockSpeedInfo blkSpeedInfo, float availDist, float distAdj, String endSpeedType) {
+    private long getWaitTime(int idxBlockOrder, float availDist, float distAdj, String endSpeedType) {
         if (_engineer.secondGreaterThanFirst(_curSpeedType, endSpeedType)) {
             log.error("getWaitTime called when increasing speed _curSpeedType={} endSpeedType={}", _curSpeedType, endSpeedType);
             return 0;
         }
+        BlockSpeedInfo blkSpeedInfo = _speedInfo.get(idxBlockOrder);
         float speed = blkSpeedInfo.getEntranceSpeed();  // unmodified recorded speed
         float waitSpeed = _engineer.modifySpeed(speed, _curSpeedType); // speed while waiting to start ramp
         long waitTime = 0;      // time to wait before starting ramp
@@ -2081,7 +2082,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         } else {
             timeRatio = 1.0f;
         }
-        
+
+        // look at all the commands done in this block and find the time and distance to wait before ramping
+        // the speed change to the endspeed.
+        // Note getDistanceTraveled() and getTimeForDistance() are generally unreliable when only a
+        // throttle factor is known (i.e. no speed profile)
         float rampLen = 0.0f;   //_engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType)+distAdj;
         float waitDist = 0.0f;      // distance traveled until ramp is started
         int startIdx = blkSpeedInfo.getFirstIndex();
@@ -2100,12 +2105,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if ((waitDist + dist) > (availDist - rampLen)) {
 //                    float backupDist = availDist - waitDist;    // overshoot distance, if any                    
                     float backupDist = (waitDist + dist) - (availDist - rampLen);
-                    if (backupDist>0.1f) {
-                        waitTime = _engineer.getTimeForDistance(waitSpeed, backupDist);
-//                      waitTime += (long)(speedTime * (backupDist/dist));
-//                      waitDist +=  backupDist;
-                        dist = backupDist;
-                    }
+                    waitTime += _engineer.getTimeForDistance(waitSpeed, backupDist);
+                    waitDist += backupDist;
                     break;
                     
                 }
@@ -2127,6 +2128,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if(log.isDebugEnabled()) log.debug("getWaitTime: rampLen= {}, waitDist= {}, waitTime= {} waitSpeed= {} -{}",
                     rampLen, waitDist, waitTime, waitSpeed, ts.toString());
         }
+        
         if(log.isDebugEnabled()) log.debug("getWaitTime: waitDist= {}, waitTime= {}, rampLen= {}, ramp start speed= {}",
                 waitDist, waitTime, rampLen, waitSpeed);
         return waitTime;

@@ -16,6 +16,8 @@ public class NceMenu extends JMenu {
     /**
      * Create a NCE menu. And loads the NceSystemConnectionMemo to the various
      * actions. Actions will open new windows.
+     *
+     * @param memo the system connection memo to associate menu items with
      */
     // Need to Sort out the NCE server menu items;
     public NceMenu(NceSystemConnectionMemo memo) {

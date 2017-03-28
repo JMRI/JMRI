@@ -150,6 +150,7 @@ public class DirectorySearcher {
             _waitText.setText(Bundle.getMessage(msgkey, dir.getName()));
             _waitDialog.setVisible(true);
             _waitDialog.pack();
+            _waitDialog.toFront();
         }
     }
 
@@ -200,6 +201,7 @@ public class DirectorySearcher {
         if (_previewDialog != null) {
             _previewDialog.dispose();
         }
+        closeWaitFrame();
         JOptionPane.showMessageDialog(null, Bundle.getMessage("numFound", count, dir.getAbsolutePath()),
                 Bundle.getMessage("info"), JOptionPane.INFORMATION_MESSAGE);
     }
@@ -238,18 +240,20 @@ public class DirectorySearcher {
         private void getImageDirectory(File dir, String[] filter) {
             File[] files = dir.listFiles();
             if (files == null || quit) {
+                // no sub directories
                 return;
             }
             int cnt = numImageFiles(dir);
+            if (log.isDebugEnabled()) {
+                log.debug("getImageDirectory dir= {} has {} files", dir.getAbsolutePath(), cnt);
+            }
             count += cnt;
             if (cnt > 0) {
-                if (log.isDebugEnabled()) {
-                    log.debug("getImageDirectory dir= {} has {} files", dir.getAbsolutePath(), numImageFiles(dir));
-                }
                 ThreadingUtil.runOnGUI(() -> {
                     doPreviewDialog(dir, new MActionListener(dir, false),
                             new LActionListener(dir), new CActionListener(), 0);
                 });
+                // Since PreviewDialog is not modal, wait until user clicks a button to continue
                 synchronized (this) {
                     try {
                         wait();
