@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
     ControlPanelEditorTest.class,
     ControlPanelEditorActionTest.class,
     PortalIconTest.class,
-    CircuitBuilderTest.class
+    CircuitBuilderTest.class,
+    PortalListTest.class,
 })
 
 /**
