@@ -17,7 +17,8 @@ public class TamsProgrammerManagerTest {
     @Test
     public void testCTor() {
         TamsTrafficController tc = new TamsTrafficController();
-        TamsProgrammerManager t = new TamsProgrammerManager(tc);
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        TamsProgrammerManager t = new TamsProgrammerManager(new TamsProgrammer(tc),memo);
         Assert.assertNotNull("exists",t);
     }
 

@@ -16,6 +16,7 @@ public class TamsProgrammerTest {
 
     @Test
     public void testCTor() {
+        TamsTrafficController tc = new TamsTrafficController();
         TamsProgrammer t = new TamsProgrammer(tc);
         Assert.assertNotNull("exists",t);
     }
