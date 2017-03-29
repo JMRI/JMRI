@@ -348,7 +348,7 @@ public class SwitchboardEditor extends Editor {
             @Override
             public void actionPerformed(ActionEvent event) {
                 log.debug("Update clicked");
-                for (int i = switchlist.size() -1; i >= 0; i--) {
+                for (int i = switchlist.size() - 1; i >= 0; i--) {
                     // deleting items starting from 0 will result in skipping the even numbered items
                     switchboardLayeredPane.remove(i);
                 }
@@ -422,8 +422,7 @@ public class SwitchboardEditor extends Editor {
                     return;
             }
             _switch = new BeanSwitch(i, nb, name, switchShape); // add button instance i
-            //_switch.setBackground(Color.black); // TODO listen to menu choice
-            // log.debug("Added switch {} ({})", i + "", name);
+            log.debug("Added switch {} ({})", i + "", name);
             if (nb == null) {
                 _switch.setEnabled(false); // not connected
                 if(!hideUnconnected()) {
@@ -652,13 +651,24 @@ public class SwitchboardEditor extends Editor {
             // from finishClone
             setTristate(getTristate());
             setMomentary(getMomentary());
-            // setDirectControl(getDirectControl());
             log.debug("Created button {}", index + "");
             return;
         }
 
         public NamedBean getNamedBean() {
             return _bname;
+        }
+
+        public void setNamedBean(@Nonnull NamedBean bean) {
+            try {
+                if (bean != null) {
+                    namedBean = nbhm.getNamedBeanHandle(_label, bean);
+                }
+            } catch (IllegalArgumentException e) {
+                log.error("invalid bean name= \"" + _label + "\" in Switchboard Button");
+            }
+            _uname = bean.getUserName();
+            _control = true;
         }
 
         public Turnout getTurnout() {
@@ -1864,7 +1874,8 @@ public class SwitchboardEditor extends Editor {
                 return InstanceManager.turnoutManagerInstance();
             case 'S':
                 return InstanceManager.sensorManagerInstance();
-            default: // Light
+            case 'L': // Light
+            default:
                 return InstanceManager.lightManagerInstance();
         }
     }
@@ -1892,22 +1903,24 @@ public class SwitchboardEditor extends Editor {
             ActionListener cancelListener = (ActionEvent ev) -> {
                 cancelAddPressed(ev);
             };
-            sysName.setEditable(false);
             AddNewDevicePanel switchConnect = new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener);
+            switchConnect.setSystemNameFieldIneditable(); // prevent user interference with switch label
+            switchConnect.setOK(); // activate OK button on Add new device pane
             addFrame.add(switchConnect);
         }
         addFrame.pack();
         addFrame.setVisible(true);
     }
 
-    void cancelAddPressed(ActionEvent e) {
+    protected void cancelAddPressed(ActionEvent e) {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
     }
 
-    void okAddPressed(ActionEvent e) {
-        String user = userName.getText();
+    protected void okAddPressed(ActionEvent e) {
+        NamedBean nb = null;
+        String user = userName.getText().trim();
         if (user.equals("")) {
             user = null;
         }
@@ -1921,6 +1934,44 @@ public class SwitchboardEditor extends Editor {
             handleCreateException(sName);
             return; // without creating
         }
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+
+        switch (sName.charAt(1)) {
+            case 'T':
+                nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(sName);
+                break;
+            case 'S':
+                nb = jmri.InstanceManager.sensorManagerInstance().getSensor(sName);
+                break;
+            case 'L':
+                nb = jmri.InstanceManager.lightManagerInstance().getLight(sName);
+                break;
+            default:
+                log.error("connectNew: cannot parse bean name. sName = {}", sName);
+                return;
+        }
+        if (nb == null) {
+            log.warn("failed to connect switch to item {}", sName);
+        } else {
+            // set switch on Switchboard to display current state of just connected bean
+            log.debug("sName state: {}", nb.getState());
+            try {
+                if (getSwitch(sName) == null) {
+                    log.warn("failed to update switch to state of {}", sName);
+                } else {
+                    getSwitch(sName).setNamedBean(nb);
+                    getSwitch(sName).displayState(nb.getState());
+                    getSwitch(sName).setEnabled(true);
+                }
+            }
+            catch (NullPointerException npe) {
+                handleCreateException(sName);
+                return; // without updating
+            }
+        }
+
     }
 
     void handleCreateException(String sysName) {
@@ -2141,6 +2192,24 @@ public class SwitchboardEditor extends Editor {
             g.drawString(tag, 16, 53); // draw name on top of button image (horizontal, vertical from top left)
         }
 
+    }
+
+    /**
+     * Get a beanSwitch object from this switchBoard panel by a given name.
+     *
+     * @param sName name of switch label/connected bean
+     * @return beanSwitch switch object with the given name
+     */
+    protected BeanSwitch getSwitch(String sName) {
+        for (int i = 0; i < switchlist.size(); i++) {
+            log.debug("comparing switch {} to {}", switchlist.get(i), sName);
+            if (switchlist.get(i).equals(sName)) {
+                return (BeanSwitch) switchboardLayeredPane.getComponent(i);
+            } else {
+                log.warn("switch {} not found on panel", sName);
+            }
+        }
+        return null;
     }
 
     /**
