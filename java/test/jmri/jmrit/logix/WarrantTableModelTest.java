@@ -14,12 +14,13 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class WarrantTableFrameTest {
+public class WarrantTableModelTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WarrantTableFrame t = WarrantTableFrame.getInstance();
+        WarrantTableFrame f = WarrantTableFrame.getInstance();
+        WarrantTableModel t = new WarrantTableModel(f);
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +37,6 @@ public class WarrantTableFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantTableFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableModelTest.class.getName());
 
 }
