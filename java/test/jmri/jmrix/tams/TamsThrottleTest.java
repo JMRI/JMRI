@@ -16,7 +16,7 @@ public class TamsThrottleTest {
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsTrafficController();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
         TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
         TamsThrottle t = new TamsThrottle(memo,new jmri.DccLocoAddress(1234,false));
         Assert.assertNotNull("exists",t);

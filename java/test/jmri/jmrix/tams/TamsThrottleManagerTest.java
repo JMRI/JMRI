@@ -16,7 +16,7 @@ public class TamsThrottleManagerTest {
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsTrafficController();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
         TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
         TamsThrottleManager t = new TamsThrottleManager(memo);
         Assert.assertNotNull("exists",t);

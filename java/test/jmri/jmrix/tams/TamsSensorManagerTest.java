@@ -16,7 +16,7 @@ public class TamsSensorManagerTest {
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsTrafficController();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
         TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
         TamsSensorManager t = new TamsSensorManager(memo);
         Assert.assertNotNull("exists",t);

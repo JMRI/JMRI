@@ -16,7 +16,7 @@ public class TamsPowerManagerTest {
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsTrafficController();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
         TamsPowerManager t = new TamsPowerManager(tc);
         Assert.assertNotNull("exists",t);
     }
