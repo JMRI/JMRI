@@ -16,7 +16,7 @@ public class TamsTurnoutTest {
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsTrafficController();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
         TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
         TamsTurnout t = new TamsTurnout(5,memo.getSystemPrefix(),tc);
         Assert.assertNotNull("exists",t);
