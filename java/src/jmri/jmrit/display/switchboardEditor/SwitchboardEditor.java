@@ -54,6 +54,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
@@ -72,6 +73,7 @@ import jmri.Turnout;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.beantable.AddNewDevicePanel;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrack;
@@ -120,7 +122,7 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
-    protected JMenu _iconMenu;
+//    protected JMenu _iconMenu;
     protected JMenu _zoomMenu;
     private JMenu _markerMenu;
     private JMenu _drawMenu;
@@ -352,12 +354,12 @@ public class SwitchboardEditor extends Editor {
                 }
                 switchlist.clear(); // reset list
                 switchboardLayeredPane.setSize(300, 300);
-                //switchboardLayeredPane.setBackgroundColor(Color.black); // is not visible
                 switchboardLayeredPane.setLayout(new GridLayout(4,8)); // vertical, horizontal
                 addSwitchRange((Integer) minSpinner.getValue(), (Integer) maxSpinner.getValue(),
                         beanTypeList.getSelectedIndex(),
                         beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                         switchShapeList.getSelectedIndex());
+                log.debug("bgcolor: {}", getBackgroundColor().toString() );
                 pack();
                 repaint();
             }
@@ -522,11 +524,16 @@ public class SwitchboardEditor extends Editor {
                             if (namedBean == null || e.isMetaDown()) { // || e.isAltDown() || !buttonLive() || getMomentary()) {
                                 return;
                             }
-//                            if (getDirectControl() && !isEditable()) {
-//                                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-//                            } else {
-                                alternateOnClick();
-//                            }
+                            alternateOnClick();
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            setToolTip(null); // ends tooltip if displayed
+                            if (e.isPopupTrigger()) {
+                                log.debug("mousePressed calls showPopUp");
+                                // display the popup:
+                                showPopUp(e);
+                            }
                         }
                     });
                     _text = false;
@@ -537,7 +544,7 @@ public class SwitchboardEditor extends Editor {
                     //remove the line around icon switches?
                     this.add(beanIcon);
                     break;
-                case 2: // Marklin keyboard (until we can draw)
+                case 2: // Marklin keyboard
                     log.debug("create Key");
                     try {
                         if (bean != null) {
@@ -556,11 +563,16 @@ public class SwitchboardEditor extends Editor {
                             if (namedBean == null || e.isMetaDown()) { // || e.isAltDown() || !buttonLive() || getMomentary()) {
                                 return;
                             }
-//                            if (getDirectControl() && !isEditable()) {
-//                                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-//                            } else {
                             alternateOnClick();
-//                            }
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            setToolTip(null); // ends tooltip if displayed
+                            if (e.isPopupTrigger()) {
+                                log.debug("mousePressed calls showPopUp");
+                                // display the popup:
+                                showPopUp(e);
+                            }
                         }
                     });
                     _text = false;
@@ -592,11 +604,16 @@ public class SwitchboardEditor extends Editor {
                             if (namedBean == null || e.isMetaDown()) { // || e.isAltDown() || !buttonLive() || getMomentary()) {
                                 return;
                             }
-//                            if (getDirectControl() && !isEditable()) {
-//                                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-//                            } else {
                             alternateOnClick();
-//                            }
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            setToolTip(null); // ends tooltip if displayed
+                            if (e.isPopupTrigger()) {
+                                log.debug("mousePressed calls showPopUp");
+                                // display the popup:
+                                showPopUp(e);
+                            }
                         }
                     });
                     _text = true;
@@ -607,7 +624,6 @@ public class SwitchboardEditor extends Editor {
                     this.add(beanButton);
                     break;
             }
-            //setPopupUtility(new PositionablePopupUtil(this, this));
             if (bean == null) {
                 if(!hideUnconnected()) {
                     switch (_shape) {
@@ -636,10 +652,9 @@ public class SwitchboardEditor extends Editor {
             // from finishClone
             setTristate(getTristate());
             setMomentary(getMomentary());
-//            setDirectControl(getDirectControl());
+            // setDirectControl(getDirectControl());
             log.debug("Created button {}", index + "");
             return;
-
         }
 
         public NamedBean getNamedBean() {
@@ -776,9 +791,17 @@ public class SwitchboardEditor extends Editor {
             return _state2nameMap.get(Integer.valueOf(state));
         }
 
+        public void mousePressed(MouseEvent e) {
+            setToolTip(null); // ends tooltip if displayed
+            if (e.isPopupTrigger()) {
+                log.debug("mousePressed calls showPopUp");
+                // display the popup:
+                showPopUp(e);
+            }
+            //_targetPanel.repaint(); // needed for ToolTip
+        }
+
         public void mouseExited(MouseEvent e) {
-            //typeLabel.setFocusable(false);
-            //typeLabel.transferFocus();
             //super.mouseExited(e);
         }
 
@@ -813,51 +836,43 @@ public class SwitchboardEditor extends Editor {
             momentary = m;
         }
 
-//        boolean directControl = false;
-//
-//        public boolean getDirectControl() {
-//            return directControl;
-//        }
-//
-//        public void setDirectControl(boolean m) {
-//            directControl = m;
-//        }
-
-        JCheckBoxMenuItem momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
-//        JCheckBoxMenuItem directControlItem = new JCheckBoxMenuItem(Bundle.getMessage("DirectControl"));
+        JMenuItem connectNewMenu = new JMenuItem(Bundle.getMessage("ConnectNewMenu", "..."));
+        JPopupMenu switchPopup;
 
         /**
          * Show pop-up on a switch with its unique attributes including the (un)connected bean.
-         *
-         * @param popup the items to show as pop-up menu items
+         * Derived from {@link #showPopUp(Positionable, MouseEvent)}
+         * @param popup the menu to add pop-up menu items to
          */
-        public boolean showPopUp(JPopupMenu popup) {
+        public boolean showPopUp(MouseEvent e) {
+            if (switchPopup != null) {
+                switchPopup.removeAll();
+            } else {
+                switchPopup = new JPopupMenu();
+            }
+            JPopupMenu switchPopup = new JPopupMenu();
+
+            switchPopup.add(getNameString());
+
             if (isEditable()) {
                 // add tristate option if turnout has feedback
-                if (namedBean != null) { // && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
-                    addTristateEntry(popup);
+                if (namedBean != null) {
+                    addTristateEntry(switchPopup);
+                } else {
+                    // show option to attach a new bean
+                    switchPopup.add(connectNewMenu);
+                    connectNewMenu.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            connectNew(_label);
+                        }
+                    });
                 }
-
-                popup.add(momentaryItem);
-                momentaryItem.setSelected(getMomentary());
-                momentaryItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        setMomentary(momentaryItem.isSelected());
-                    }
-                });
-
-//                popup.add(directControlItem);
-//                directControlItem.setSelected(getDirectControl());
-//                directControlItem.addActionListener(new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(java.awt.event.ActionEvent e) {
-//                        setDirectControl(directControlItem.isSelected());
-//                    }
-//                });
-//            } else if (getDirectControl()) {
-//                getTurnout().setCommandedState(jmri.Turnout.THROWN);
             }
+            // display the popup
+            switchPopup.show(this, this.getWidth() / 3 + (int) ((getPaintScale() - 1.0) * this.getX()),
+                    this.getHeight() / 3 + (int) ((getPaintScale() - 1.0) * this.getY()));
+
             return true;
         }
 
@@ -883,11 +898,7 @@ public class SwitchboardEditor extends Editor {
             if (namedBean == null || e.isMetaDown()) { //|| e.isAltDown() || !buttonLive() || getMomentary()) {
                 return;
             }
-//            if (getDirectControl() && !isEditable()) {
-//                getTurnout().setCommandedState(jmri.Turnout.CLOSED);
-//            } else {
-                alternateOnClick();
-//            }
+            alternateOnClick();
         }
 
         /**
@@ -939,22 +950,9 @@ public class SwitchboardEditor extends Editor {
 
     }
 
-    /*    //Create and set up a colored label. In Grid
-    private JLabel createColoredLabel(String text,
-                                      Color color) {
-        JLabel label = new JLabel(text);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setOpaque(true);
-        label.setBackground(color);
-        label.setForeground(Color.black);
-        label.setBorder(BorderFactory.createLineBorder(Color.black));
-        label.setPreferredSize(new Dimension(140, 140));
-        return label;
-    }*/
-
-    // Create the control pane for the top of the frame.
-    // From layeredpane demo
+    /** Create the control pane for the top of the frame.
+    /* From layeredpane demo
+     */
     private JPanel createControlPanel() {
         JPanel controls = new JPanel();
 
@@ -998,7 +996,6 @@ public class SwitchboardEditor extends Editor {
         next.setToolTipText(Bundle.getMessage("NextToolTip"));
         navBarPanel.add(Box.createHorizontalGlue());
 
-        //getTargetPane(name).switchboardLayeredPane.setBackgroundColor(Color.RED); // test
         // put on which Frame?
         controls.add(navBarPanel); // on 2nd Editor Panel
         //super.getTargetFrame().add(navBarPanel); // on (top of) Switchboard Frame/Panel
@@ -1023,11 +1020,6 @@ public class SwitchboardEditor extends Editor {
 
         editToolBarPanel = new JPanel();
         editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
-
-        //JPanel outerBorderPanel = editToolBarPanel;
-        //JPanel innerBorderPanel = editToolBarPanel;
-
-        //Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
 
         JPanel innerBorderPanel = new JPanel();
         innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
@@ -1065,69 +1057,6 @@ public class SwitchboardEditor extends Editor {
 //        contentPane.add(helpBarPanel);
         //helpBarPanel.setVisible(isEditable() && showHelpBar);
     }
-
-    //@Override
-    protected void makeIconMenu() {
-//        _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
-//        _menuBar.add(_iconMenu, 0);
-//        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPalette"));
-//        mi.addActionListener(new ActionListener() {
-//            Editor editor;
-//
-//            ActionListener init(Editor ed) {
-//                editor = ed;
-//                return this;
-//            }
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (_itemPalette == null) {
-//                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPalette"), editor);
-//                }
-//                _itemPalette.setVisible(true);
-//            }
-//        }.init(this));
-//        if (SystemType.isMacOSX()) {
-//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
-//        } else {
-//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
-//        }
-//        _iconMenu.add(mi);
-//        _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTableList")));
-//        mi = (JMenuItem) _iconMenu.getMenuComponent(2);
-//        if (SystemType.isMacOSX()) {
-//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.META_MASK));
-//        } else {
-//            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
-//        }
-    }
-
-//    protected void makeDrawMenu() {
-//        if (_drawMenu == null) {
-//            _drawMenu = _shapeDrawer.makeMenu();
-//            _drawMenu.add(disableShapeSelect);
-//            disableShapeSelect.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent event) {
-//                    _disableShapeSelection = disableShapeSelect.isSelected();
-//                }
-//            });
-//        }
-//        _menuBar.add(_drawMenu, 0);
-//    }
-
-//    public boolean getShapeSelect() {
-//        return !_disableShapeSelection;
-//    }
-//
-//    public void setShapeSelect(boolean set) {
-//        _disableShapeSelection = !set;
-//        disableShapeSelect.setSelected(_disableShapeSelection);
-//    }
-
-    //public ShapeDrawer getShapeDrawer() {
-//        return _shapeDrawer;
-//    }
 
     //@Override
     protected void makeOptionMenu() {
@@ -1260,6 +1189,34 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(textColorMenu);
     }
 
+    protected void makeZoomMenu() {
+        _zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+        _menuBar.add(_zoomMenu, 0);
+        JMenuItem addItem = new JMenuItem(Bundle.getMessage("NoZoom"));
+        _zoomMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                zoomRestore();
+            }
+        });
+
+        addItem = new JMenuItem(Bundle.getMessage("Zoom", "..."));
+        _zoomMenu.add(addItem);
+        PositionableJComponent z = new PositionableJComponent(this);
+        z.setScale(getPaintScale());
+        addItem.addActionListener(CoordinateEdit.getZoomEditAction(z));
+
+        addItem = new JMenuItem(Bundle.getMessage("ZoomFit"));
+        _zoomMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                zoomToFit();
+            }
+        });
+    }
+
     private void makeFileMenu() {
         _fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         _menuBar.add(_fileMenu, 0);
@@ -1320,29 +1277,6 @@ public class SwitchboardEditor extends Editor {
             }
         });
     }
-
-// Not sure how to use this, option is in Editor pane
-//    private JMenu makeSelectTypeMenu() {
-//        JMenu menu = new JMenu(Bundle.getMessage("SelectType"));
-//        ButtonGroup typeGroup = new ButtonGroup();
-//        // I18N use existing jmri.NamedBeanBundle keys
-//        JRadioButtonMenuItem button = makeSelectTypeButton("BeanNameTurnout", "jmri.jmrit.display.TurnoutIcon");
-//        typeGroup.add(button);
-//        menu.add(button);
-//        button = makeSelectTypeButton("BeanNameSensor", "jmri.jmrit.display.SensorIcon");
-//        typeGroup.add(button);
-//        menu.add(button);
-//        button = makeSelectTypeButton("Shape", "jmri.jmrit.display.controlPanelEditor.shape.PositionableShape");
-//        typeGroup.add(button);
-//        menu.add(button);
-//        button = makeSelectTypeButton("MemoryInput", "jmri.jmrit.display.PositionableJPanel");
-//        typeGroup.add(button);
-//        menu.add(button);
-//        button = makeSelectTypeButton("BeanNameLight", "jmri.jmrit.display.LightIcon");
-//        typeGroup.add(button);
-//        menu.add(button);
-//        return menu;
-//    }
 
     void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
@@ -1450,87 +1384,92 @@ public class SwitchboardEditor extends Editor {
         setOptionMenuTextColor();
     }
 
-    public void setDefaultBackgroundColor(String color) {
-        defaultBackgroundColor = ColorUtil.stringToColor(color);
-        setOptionMenuBackgroundColor();
-    }
-
     public String getDefaultTextColor() {
         return ColorUtil.colorToString(defaultTextColor);
     }
 
-
-    private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
-        JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
-        button.addActionListener(new ActionListener() {
-            String cName;
-
-            ActionListener init(String name) {
-                cName = name;
-                return this;
-            }
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                selectType(cName);
-            }
-        }.init(className));
-        return button;
+    /**
+     * Load from xml and set bg color of _targetpanel as well as variable.
+     *
+     * @param color RGB Color for switchboard background and beanSwitches
+     */
+    public void setDefaultBackgroundColor(Color color) {
+        setBackgroundColor(color); // via Editor
+        defaultBackgroundColor = color;
+        setOptionMenuBackgroundColor();
     }
 
-    private void selectType(String name) {
-        try {
-            Class<?> cl = Class.forName(name);
-            _selectionGroup = new ArrayList<Positionable>();
-            Iterator<Positionable> it = _contents.iterator();
-            while (it.hasNext()) {
-                Positionable pos = it.next();
-                if (cl.isInstance(pos)) {
-                    _selectionGroup.add(pos);
-                }
-            }
-        } catch (ClassNotFoundException cnfe) {
-            log.error("selectType Menu " + cnfe.toString());
-        }
-        _targetPanel.repaint();
-    }
+//    private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
+//        JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
+//        button.addActionListener(new ActionListener() {
+//            String cName;
+//
+//            ActionListener init(String name) {
+//                cName = name;
+//                return this;
+//            }
+//
+//            @Override
+//            public void actionPerformed(ActionEvent event) {
+//                selectType(cName);
+//            }
+//        }.init(className));
+//        return button;
+//    }
+//
+//    private void selectType(String name) {
+//        try {
+//            Class<?> cl = Class.forName(name);
+//            _selectionGroup = new ArrayList<Positionable>();
+//            Iterator<Positionable> it = _contents.iterator();
+//            while (it.hasNext()) {
+//                Positionable pos = it.next();
+//                if (cl.isInstance(pos)) {
+//                    _selectionGroup.add(pos);
+//                }
+//            }
+//        } catch (ClassNotFoundException cnfe) {
+//            log.error("selectType Menu " + cnfe.toString());
+//        }
+//        _targetPanel.repaint();
+//    }
 
-    private JMenu makeSelectLevelMenu() {
-        JMenu menu = new JMenu(Bundle.getMessage("SelectLevel"));
-        ButtonGroup levelGroup = new ButtonGroup();
-        JRadioButtonMenuItem button = null;
-        for (int i = 0; i < 11; i++) {
-            button = new JRadioButtonMenuItem(Bundle.getMessage("selectLevel", "" + i));
-            levelGroup.add(button);
-            menu.add(button);
-            button.addActionListener(new ActionListener() {
-                int j;
+//    private JMenu makeSelectLevelMenu() {
+//        JMenu menu = new JMenu(Bundle.getMessage("SelectLevel"));
+//        ButtonGroup levelGroup = new ButtonGroup();
+//        JRadioButtonMenuItem button = null;
+//        for (int i = 0; i < 11; i++) {
+//            button = new JRadioButtonMenuItem(Bundle.getMessage("selectLevel", "" + i));
+//            levelGroup.add(button);
+//            menu.add(button);
+//            button.addActionListener(new ActionListener() {
+//                int j;
+//
+//                ActionListener init(int k) {
+//                    j = k;
+//                    return this;
+//                }
+//
+//                @Override
+//                public void actionPerformed(ActionEvent event) {
+//                    selectLevel(j);
+//                }
+//            }.init(i));
+//        }
+//        return menu;
+//    }
 
-                ActionListener init(int k) {
-                    j = k;
-                    return this;
-                }
-
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    selectLevel(j);
-                }
-            }.init(i));
-        }
-        return menu;
-    }
-
-    private void selectLevel(int i) {
-        _selectionGroup = new ArrayList<Positionable>();
-        Iterator<Positionable> it = _contents.iterator();
-        while (it.hasNext()) {
-            Positionable pos = it.next();
-            if (pos.getDisplayLevel() == i) {
-                _selectionGroup.add(pos);
-            }
-        }
-        _targetPanel.repaint();
-    }
+//    private void selectLevel(int i) {
+//        _selectionGroup = new ArrayList<Positionable>();
+//        Iterator<Positionable> it = _contents.iterator();
+//        while (it.hasNext()) {
+//            Positionable pos = it.next();
+//            if (pos.getDisplayLevel() == i) {
+//                _selectionGroup.add(pos);
+//            }
+//        }
+//        _targetPanel.repaint();
+//    }
 
     // *********************** end Menus ************************
 
@@ -1540,10 +1479,15 @@ public class SwitchboardEditor extends Editor {
             if (_editorMenu != null) {
                 _menuBar.remove(_editorMenu);
             }
-            if (_iconMenu == null) {
-                makeIconMenu();
+//            if (_iconMenu == null) {
+//                makeIconMenu();
+//            } else {
+//                _menuBar.add(_iconMenu, 0);
+//            }
+            if (_zoomMenu == null) {
+                makeZoomMenu();
             } else {
-                _menuBar.add(_iconMenu, 0);
+                _menuBar.add(_zoomMenu, 0);
             }
             if (_optionMenu == null) {
                 makeOptionMenu();
@@ -1563,9 +1507,9 @@ public class SwitchboardEditor extends Editor {
             if (_optionMenu != null) {
                 _menuBar.remove(_optionMenu);
             }
-            if (_iconMenu != null) {
-                _menuBar.remove(_iconMenu);
-            }
+//            if (_iconMenu != null) {
+//                _menuBar.remove(_iconMenu);
+//            }
             if (_editorMenu == null) {
                 _editorMenu = new JMenu(Bundle.getMessage("MenuEdit"));
                 _editorMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
@@ -1592,8 +1536,8 @@ public class SwitchboardEditor extends Editor {
 
     private void zoomRestore() {
         List<Positionable> contents = getContents();
-        for (Positionable p : contents) {
-            p.setLocation(p.getX() + _fitX, p.getY() + _fitY);
+        for (Positionable sw : contents) {
+            sw.setLocation(sw.getX() + _fitX, sw.getY() + _fitY);
         }
         setPaintScale(1.0);
     }
@@ -1607,11 +1551,11 @@ public class SwitchboardEditor extends Editor {
         double minY = 1000.0;
         double maxY = 0.0;
         List<Positionable> contents = getContents();
-        for (Positionable p : contents) {
-            minX = Math.min(p.getX(), minX);
-            minY = Math.min(p.getY(), minY);
-            maxX = Math.max(p.getX() + p.getWidth(), maxX);
-            maxY = Math.max(p.getY() + p.getHeight(), maxY);
+        for (Positionable sw : contents) {
+            minX = Math.min(sw.getX(), minX);
+            minY = Math.min(sw.getY(), minY);
+            maxX = Math.max(sw.getX() + sw.getWidth(), maxX);
+            maxY = Math.max(sw.getY() + sw.getHeight(), maxY);
         }
         _fitX = (int) Math.floor(minX);
         _fitY = (int) Math.floor(minY);
@@ -1651,8 +1595,8 @@ public class SwitchboardEditor extends Editor {
          } */
         _fitX = (int) Math.floor(minX);
         _fitY = (int) Math.floor(minY);
-        for (Positionable p : contents) {
-            p.setLocation(p.getX() - _fitX, p.getY() - _fitY);
+        for (Positionable sw : contents) {
+            sw.setLocation(sw.getX() - _fitX, sw.getY() - _fitY);
         }
         setScroll(SCROLL_BOTH);
         setPaintScale(ratio);
@@ -1765,6 +1709,8 @@ public class SwitchboardEditor extends Editor {
     }
 
     private String typePrefix;
+
+    // ***************** Store & Load xml ********************
 
     /**
      * Store bean type.
@@ -1912,14 +1858,6 @@ public class SwitchboardEditor extends Editor {
         log.debug("InitView done");
     }
 
-    /**
-     * set up item(s) to be copied by paste
-     *
-     */
-    @Override
-    protected void copyItem(Positionable p) {
-    };
-
     protected Manager getManager(char typeChar) {
         switch (typeChar) {
             case 'T':
@@ -1929,6 +1867,69 @@ public class SwitchboardEditor extends Editor {
             default: // Light
                 return InstanceManager.lightManagerInstance();
         }
+    }
+
+    JmriJFrame addFrame = null;
+    JTextField sysName = new JTextField(12);
+    JTextField userName = new JTextField(15);
+
+    /**
+     * Create new bean and connect it to this switch.
+     * Use 2nd letter from switch label (S, T or L).
+     */
+    protected void connectNew(String systemName) {
+        log.debug("Request new bean");
+        sysName.setText(systemName);
+        // provide etc.
+        if (addFrame == null) {
+            addFrame = new JmriJFrame(Bundle.getMessage("ConnectNewMenu", ""), false, true);
+            addFrame.addHelpMenu("package.jmri.jmrit.display.switchboardEditor.SwitchboardEditor", true);
+            addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
+
+            ActionListener okListener = (ActionEvent ev) -> {
+                okAddPressed(ev);
+            };
+            ActionListener cancelListener = (ActionEvent ev) -> {
+                cancelAddPressed(ev);
+            };
+            sysName.setEditable(false);
+            AddNewDevicePanel switchConnect = new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener);
+            addFrame.add(switchConnect);
+        }
+        addFrame.pack();
+        addFrame.setVisible(true);
+    }
+
+    void cancelAddPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+    }
+
+    void okAddPressed(ActionEvent e) {
+        String user = userName.getText();
+        if (user.equals("")) {
+            user = null;
+        }
+        String sName = sysName.getText(); // can't be changed, but pick it up from panel
+        Turnout t;
+        try {
+            t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
+            t.setUserName(user);
+        } catch (IllegalArgumentException ex) {
+            // user input no good
+            handleCreateException(sName);
+            return; // without creating
+        }
+    }
+
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                        Bundle.getMessage("ErrorSwitchAddFailed"),
+                        new Object[]{sysName}),
+                Bundle.getMessage("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -2100,18 +2101,18 @@ public class SwitchboardEditor extends Editor {
         }
 
         protected void setOpacity(float opac) {
-            //this.opacity = opac;
+            //this.opacity = opac; // not functional, use alfa instead
         }
 
         protected void showSwitchIcon(int stateIndex) {
             log.debug("showSwitchIcon {}", stateIndex);
             if (image1 != null && image2 != null) {
                 switch (stateIndex) {
-                    case 2:
-                        image = image1;
+                    case 4:
+                        image = image2;
                         break;
                     default:
-                        image = image2;
+                        image = image1; // off, also for connected & unknown
                         break;
                 };
                 this.repaint();
@@ -2143,22 +2144,18 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Create popup for a BeanSwitch object.
+     * Set up item(s) to be copied by paste.
      * <p>
-     * Derived from {@link #showPopUp(Positionable, MouseEvent)}
-     *
-     * @param sw    the switch on the Switchboard
-     * @param event MouseEvent heard
+     * Not used on switchboards but has to override Editor
      */
-    protected void showPopUp(BeanSwitch sw, MouseEvent event) {
-        if (!((JComponent) sw).isVisible()) {
-            return; // component must be showing on the screen to determine its location
-        }
-        JPopupMenu switchPopup = new JPopupMenu();
-    }
+    @Override
+    protected void copyItem(Positionable p) {
+    };
 
     /**
      * Set an object's location when it is created.
+     * <p>
+     * Not used on switchboards but has to override Editor
      *
      * @param obj object to position
      */
@@ -2172,95 +2169,14 @@ public class SwitchboardEditor extends Editor {
      * <p>
      * Popup items common to all positionable objects are done before and
      * after the items that pertain only to specific Positionable types.
+     * <p>
+     * Not used on switchboards but has to override Editor
      *
      * @param p     the item on the Panel
      * @param event MouseEvent heard
      */
     @Override
     protected void showPopUp(Positionable p, MouseEvent event) {
-        if (!((JComponent) p).isVisible()) {
-            return; // component must be showing on the screen to determine its location
-        }
-        JPopupMenu popup = new JPopupMenu();
-
-        PositionablePopupUtil util = p.getPopupUtility();
-        if (p.isEditable()) {
-            // items common to all
-            if (p.doViemMenu()) {
-                popup.add(p.getNameString());
-                setPositionableMenu(p, popup);
-                if (p.isPositionable()) {
-                    setShowCoordinatesMenu(p, popup);
-                    setShowAlignmentMenu(p, popup);
-                }
-                setDisplayLevelMenu(p, popup);
-                setHiddenMenu(p, popup);
-                popup.addSeparator();
-                //setCopyMenu(p, popup);
-            }
-
-            // items with defaults or using overrides
-            boolean popupSet = false;
-//            popupSet |= p.setRotateOrthogonalMenu(popup);
-            popupSet |= p.setRotateMenu(popup);
-            popupSet |= p.setScaleMenu(popup);
-            if (popupSet) {
-                popup.addSeparator();
-                popupSet = false;
-            }
-            popupSet = p.setEditItemMenu(popup);
-            if (popupSet) {
-                popup.addSeparator();
-                popupSet = false;
-            }
-            if (p instanceof PositionableLabel) {
-                PositionableLabel pl = (PositionableLabel) p;
-                /*                if (pl.isIcon() && "javax.swing.JLabel".equals(pl.getClass().getSuperclass().getName()) ) {
-                    popupSet |= setTextAttributes(pl, popup);       // only for plain icons
-                }   Add backgrounds & text over icons later */
-                if (!pl.isIcon()) {
-                    popupSet |= setTextAttributes(pl, popup);
-                    if (p instanceof MemoryIcon) {
-                        popupSet |= p.setTextEditMenu(popup);
-                    }
-                } else if (p instanceof SensorIcon) {
-                    popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
-                    if (pl.isText()) {
-                        popupSet |= setTextAttributes(p, popup);
-                    }
-                } else {
-                    popupSet = p.setTextEditMenu(popup);
-                }
-            } else if (p instanceof PositionableJPanel) {
-                popupSet |= setTextAttributes(p, popup);
-            }
-            if (p instanceof LinkingObject) {
-                ((LinkingObject) p).setLinkMenu(popup);
-            }
-            if (popupSet) {
-                popup.addSeparator();
-                popupSet = false;
-            }
-            p.setDisableControlMenu(popup);
-            if (util != null) {
-                util.setAdditionalEditPopUpMenu(popup);
-            }
-            // for Positionables with unique settings
-            p.showPopUp(popup);
-
-            if (p.doViemMenu()) {
-                setShowTooltipMenu(p, popup);
-                setRemoveMenu(p, popup);
-            }
-        } else {
-            p.showPopUp(popup);
-            if (util != null) {
-                util.setAdditionalViewPopUpMenu(popup);
-            }
-        }
-        popup.show((Component) p, p.getWidth() / 2 + (int) ((getPaintScale() - 1.0) * p.getX()),
-                p.getHeight() / 2 + (int) ((getPaintScale() - 1.0) * p.getY()));
-
         _currentSelection = null;
     }
 

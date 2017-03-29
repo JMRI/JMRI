@@ -234,7 +234,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             int red = shared.getAttribute("redBackground").getIntValue();
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
-            panel.setBackgroundColor(new Color(red, green, blue));
+            panel.setDefaultBackgroundColor(new Color(red, green, blue));
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
