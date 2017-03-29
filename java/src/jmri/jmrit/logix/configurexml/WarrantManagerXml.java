@@ -6,7 +6,6 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.ThrottleSetting;
 import jmri.jmrit.logix.Warrant;
@@ -60,6 +59,7 @@ public class WarrantManagerXml //extends XmlFile
             if (warrant instanceof SCWarrant) {
                 elem.setAttribute("wtype", "SC");
                 elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
+                elem.setAttribute("forward", ((SCWarrant) warrant).getForward()?"true":"false");
             } else {
                 elem.setAttribute("wtype", "normal");
             }
@@ -221,7 +221,13 @@ public class WarrantManagerXml //extends XmlFile
                 log.info("Warrant \""+sysName+"("+userName+")\" previously loaded. This version not loaded.");
                 continue;
             }
-            warrant.setNoRamp(SCWa);
+            if (SCWa) {
+                if (elem.getAttribute("forward") != null) {
+                    ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
+                }
+                warrant.setNoRamp(SCWa);
+                warrant.setShareRoute(SCWa);
+            }
             List<Element> orders = elem.getChildren("blockOrder");
             for (int k=0; k<orders.size(); k++) {
                 BlockOrder bo = loadBlockOrder(orders.get(k));

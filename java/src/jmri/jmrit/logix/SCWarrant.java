@@ -23,6 +23,7 @@ public class SCWarrant extends Warrant {
     public static final float SPEED_TO_PLATFORM = 0.2f;
     public static final float SPEED_UNSIGNALLED = 0.4f;
     private long timeToPlatform = 500;
+    private boolean forward = true;
     
     /**
      * Create an object with no route defined. The list of BlockOrders is the
@@ -36,6 +37,14 @@ public class SCWarrant extends Warrant {
 
     public long getTimeToPlatform() {
         return timeToPlatform;
+    }
+    
+    public void setForward(boolean set) {
+        forward = set;
+    }
+    
+    public boolean getForward() {
+        return forward;
     }
 
     /**

@@ -92,9 +92,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (_abort) {
                 break;
             }
-            if (cmdBlockIdx < _warrant.getCurrentOrderIndex()) {
+            if (cmdBlockIdx < _warrant.getCurrentOrderIndex() || (command.equals("NOOP") && (cmdBlockIdx <= _warrant.getCurrentOrderIndex()))) {
                 // Train advancing too fast, need to process commands more quickly,
                 // allowing half second for whistle toots etc.
+                if (log.isDebugEnabled()) log.debug("Train reached block \"{}\" before et={}ms . Warrant {}", 
+                        ts.getBlockName(), time, _warrant.getDisplayName());
                 time = Math.min(time, 500);
             }
             // actual playback total elapsed time is "ts.getTime()" before record time.
@@ -121,7 +123,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (!_runOnET && _syncIdx > _warrant.getCurrentOrderIndex()) {
                 // commands are ahead of current train position
                 // When the next block goes active or a control command is made, a call to rampSpeedTo()
-                // will test these indexes again and can trigger a notify() to free the wait
+                // will test these indexes again and can trigger a notifyAll() to free the wait
                 if (log.isDebugEnabled()) log.debug("Wait for train to enter \"{}\". Warrant {}", ts.getBlockName(), _warrant.getDisplayName());
                 ThreadingUtil.runOnLayoutEventually(() -> {
                     _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
@@ -302,8 +304,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if ( !set) {
             _waitForClear = false;
             if (_atClear) {
-                if (log.isDebugEnabled()) log.debug("setWaitforClear({}) calls notify()",set);
-                notify();   // if wait is cleared, this sets _waitForClear= false                
+                if (log.isDebugEnabled()) log.debug("setWaitforClear({}) calls notifyAll()",set);
+                notifyAll();   // if wait is cleared, this sets _waitForClear= false                
             }
         } else {
             _waitForClear = true;
@@ -321,8 +323,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     synchronized protected void clearWaitForSync() {
         _waitForClear = false;
         if (_waitForSync) {
-            if (log.isDebugEnabled()) log.debug("clearWaitForSync calls notify()");
-            notify();   // if wait is cleared, this sets _waitForSync= false
+            if (log.isDebugEnabled()) log.debug("clearWaitForSync calls notifyAll()");
+            notifyAll();   // if wait is cleared, this sets _waitForSync= false
         }
         if (log.isDebugEnabled()) log.debug("clearWaitForSync() _waitForClear= {}",
                 _waitForClear);            
@@ -535,8 +537,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (!halt) {    // resume normal running
             _halt = false;
             if (_atHalt) {
-                notify();  // if wait is freed this sets _halt = false;
-                if (log.isDebugEnabled()) log.debug("setHalt({}) calls notify()", halt);
+                notifyAll();  // if wait is freed this sets _halt = false;
+                if (log.isDebugEnabled()) log.debug("setHalt({}) calls notifyAll()", halt);
             }
             if (!_waitForClear) {
                 rampSpeedTo(_speedType);                            
@@ -870,11 +872,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if ((evt.getPropertyName().equals("KnownState")
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
             synchronized (this) {
-//                if (!_halt && !_waitForClear) {
+                if (!_halt && !_waitForClear) {
                     clearSensor();
-                    this.notify();
+                    this.notifyAll();
 
-//                }
+                }
             }
         }
     }
@@ -1053,8 +1055,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         synchronized void quit() {
             stop = true;
-            if (log.isDebugEnabled()) log.debug("ThrottleRamp.quit calls notify()");
-            notify();
+            if (log.isDebugEnabled()) log.debug("ThrottleRamp.quit calls notifyAll()");
+            notifyAll();
         }
 
         @Override
