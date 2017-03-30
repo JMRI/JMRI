@@ -847,7 +847,7 @@ public class SwitchboardEditor extends Editor {
          * Show pop-up on a switch with its unique attributes including the (un)connected bean.
          * Derived from {@link #showPopUp(Positionable, MouseEvent)}
          *
-         * @param popup the menu to add pop-up menu items to
+         * @param e the event
          */
         public boolean showPopUp(MouseEvent e) {
             if (switchPopup != null) {
@@ -1771,7 +1771,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Load connection type.
      *
-     * @param  bean connection prefix
+     * @param  manuPrefix connection prefix
      */
     public void setSwitchManu(String manuPrefix) {
         int choice = 0;
@@ -1809,7 +1809,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Load switch shape.
      *
-     * @param prefix the bean type prefix
+     * @param switchShape name of switch shape 
      */
     public void setSwitchShape(String switchShape) {
         int shape;
