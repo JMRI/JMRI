@@ -38,6 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(JythonWindowTest.class));
         suite.addTest(new JUnit4TestAdapter(JynstrumentTest.class));
         suite.addTest(new JUnit4TestAdapter(JynstrumentPopupMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(RunJythonScriptTest.class));
 
         return suite;
     }
