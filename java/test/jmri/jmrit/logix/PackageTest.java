@@ -51,6 +51,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(WarrantTableFrameTest.class));
         suite.addTest(new JUnit4TestAdapter(WarrantTableModelTest.class));
         suite.addTest(new JUnit4TestAdapter(LearnThrottleFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(TrackerTest.class));
+        suite.addTest(new JUnit4TestAdapter(BlockOrderTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControlPanelTest.class));
         return suite;
     }
 
