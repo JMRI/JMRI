@@ -291,7 +291,7 @@ public class JsonUtilHttpService extends JsonHttpService {
     /**
      *
      * @param locale the client's Locale.
-     * @return the JSON networkServices message.
+     * @return the JSON systemConnections message.
      */
     public JsonNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
@@ -303,6 +303,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 data.put(JSON.NAME, config.getConnectionName());
                 data.put(JSON.MFG, config.getManufacturer());
                 data.put(JSON.PREFIX, config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
+                data.put(JSON.DESCRIPTION, Bundle.getMessage(locale, "ConnectionSucceeded", config.getConnectionName(), config.name(), config.getInfo()));
                 prefixes.add(config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
                 root.add(connection);
             }
@@ -314,6 +315,7 @@ public class JsonUtilHttpService extends JsonHttpService {
             data.put(JSON.NAME, memo.getUserName());
             data.put(JSON.PREFIX, memo.getSystemPrefix());
             data.putNull(JSON.MFG);
+            data.putNull(JSON.DESCRIPTION);
             prefixes.add(memo.getSystemPrefix());
             root.add(connection);
         });
@@ -327,6 +329,7 @@ public class JsonUtilHttpService extends JsonHttpService {
             data.put(JSON.NAME, ConnectionNameFromSystemName.getConnectionName(prefix));
             data.put(JSON.PREFIX, prefix);
             data.putNull(JSON.MFG);
+            data.putNull(JSON.DESCRIPTION);
             root.add(connection);
         }
         return root;
