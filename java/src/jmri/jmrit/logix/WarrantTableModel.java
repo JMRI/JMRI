@@ -482,7 +482,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         Bundle.getMessage("pathsSet", w.getDisplayName()),
                         myGreen, false);
             } else {
-                w.deAllocate();
+//                w.deAllocate();
                 _frame.setStatusText(msg, myGold, false);
                 msg = null;
             }
@@ -500,7 +500,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             // getRunningMessage()
             int mode = w.getRunMode();
             if (mode == Warrant.MODE_LEARN) {
-                Bundle.getMessage("Learning", w.getCurrentBlockName());
+                msg = Bundle.getMessage("Learning", w.getCurrentBlockName());
             } else if (value!=null) {
                 String setting = (String) value;
                 if (mode == Warrant.MODE_RUN || mode == Warrant.MODE_MANUAL) {
@@ -544,6 +544,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
            log.error("Invalid Column " + col + " requested.");
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
+        fireTableRowsUpdated(row, row);                    
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"),

@@ -120,16 +120,7 @@ public class SCWarrant extends Warrant {
      * Set this train to run backwards or forwards as specified in the command list.
      */
     public void setTrainDirection () {
-        for (int i = 0; i < _commands.size(); i++) {
-            ThrottleSetting ts = _commands.get(i);
-            if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                boolean isForward = Boolean.parseBoolean(ts.getValue());
-                _engineer._throttle.setIsForward(isForward);
-                log.debug(_trainName+" setTrainDirection - forward="+isForward);
-                return;
-            }
-            log.debug(_trainName+" setTrainDirection could not determine direction.");
-        }   
+        _engineer._throttle.setIsForward(forward);
     }
 
     /**
@@ -509,15 +500,15 @@ public class SCWarrant extends Warrant {
                 }
                 if (timeToPlatform > 100) {
                     log.debug(_warrant._trainName+" runSignalControlledTrain is now fully into the stopping block. Proceeding for "+timeToPlatform+" miliseconds");
-                    long timeWhenDone = System.currentTimeMillis() + timeToPlatform;
-                    long remaining;
-                    while ((remaining = timeWhenDone - System.currentTimeMillis()) > 0) {
+//                    long timeWhenDone = System.currentTimeMillis() + timeToPlatform;
+//                    long remaining;
+//                    while ((remaining = timeWhenDone - System.currentTimeMillis()) > 0) {
                         try {
-                            _warrant.wait(remaining);
+                            _warrant.wait(timeToPlatform);  // was remaining.  (?)
                         } catch (InterruptedException e) {
                             log.debug(_warrant._trainName+" InterruptedException "+e);
                         }
-                    }
+//                    }
                 }
                 log.debug(_warrant._trainName+" runSignalControlledTrain STOPPING TRAIN IN STOP BLOCK");
                 _engineer.setSpeed(SPEED_STOP);

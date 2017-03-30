@@ -249,24 +249,25 @@ public class WarrantManagerXml //extends XmlFile
             if (order!=null) {
                 warrant.setAvoidOrder(loadBlockOrder(order));               
             }
-            
+
+            boolean forward =true;
             List<Element> throttleCmds = elem.getChildren("throttleCommand");
-            for (int k=0; k<throttleCmds.size(); k++) {
-                warrant.addThrottleCommand(loadThrottleCommand(throttleCmds.get(k)));
+            if (throttleCmds != null) {
+                for (int k=0; k<throttleCmds.size(); k++) {
+                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
+                    warrant.addThrottleCommand(ts);
+                    if (ts.getCommand().toUpperCase().equals("FORWARD")) {
+                        forward = ts.getValue().toUpperCase().equals("TRUE");
+                    }
+                }                
             }
-            if (SCWa && throttleCmds.size()<2) {
-                // replicate SCWarrant's hard coded speeds
-                List <BlockOrder> bo = warrant.getBlockOrders();
-                warrant.addThrottleCommand(
-                        new ThrottleSetting(100, "Speed", "0.8", bo.get(0).getBlock().getDisplayName()));
-                for (BlockOrder o: bo) {
-                    warrant.addThrottleCommand(
-                            new ThrottleSetting(100, "NoOp", "Enter Block", o.getBlock().getDisplayName()));                 
+            if (SCWa) {
+                if (elem.getAttribute("forward") != null) {
+                    forward = elem.getAttribute("forward").getValue().equals("true");
                 }
-                warrant.addThrottleCommand(
-                        new ThrottleSetting(0, "Speed", "0.2", bo.get(0).getBlock().getDisplayName()));
-                warrant.addThrottleCommand(
-                        new ThrottleSetting(timeToPlatform, "Speed", "0.0", bo.get(0).getBlock().getDisplayName()));
+                ((SCWarrant)warrant).setForward(forward);
+                warrant.setNoRamp(SCWa);
+                warrant.setShareRoute(SCWa);
             }
             Element train = elem.getChild("train");
             if (train!=null) {

@@ -89,7 +89,7 @@ public class WarrantFrame extends WarrantRoute {
     JRadioButton _resume = new JRadioButton(Bundle.getMessage("Resume"), false);
     JRadioButton _abort = new JRadioButton(Bundle.getMessage("Abort"), false);
     JRadioButton _invisible = new JRadioButton();
-    JTextField _statusBox = new JTextField(90);
+    JTextField   _statusBox = new JTextField(90);
 
     JTextField _searchStatus = new JTextField();
 
@@ -144,22 +144,14 @@ public class WarrantFrame extends WarrantRoute {
         if (warrant instanceof SCWarrant) {
             _TTP = ((SCWarrant)warrant).getTimeToPlatform();
             _forward = ((SCWarrant)warrant).getForward();
-            if (tList!=null) {
-                for (int i = 0; i < tList.size(); i++) {
-                    ThrottleSetting ts = new ThrottleSetting(tList.get(i));
-                    if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                        _forward = ts.getValue().toUpperCase().equals("TRUE");
-                    }
-                    _throttleCommands.add(ts);
-                }                
-            }
-        } else {
+        }
+        if (tList!=null) {
             for (int i = 0; i < tList.size(); i++) {
                 ThrottleSetting ts = new ThrottleSetting(tList.get(i));
                 _throttleCommands.add(ts);
-            }            
+            }                
         }
-        _shareRouteBox.setSelected(warrant.getShareRoute());
+       _shareRouteBox.setSelected(warrant.getShareRoute());
         _warrant.setShareRoute(warrant.getShareRoute());
         _noRampBox.setSelected(warrant.getNoRamp());
         _warrant.setNoRamp(warrant.getNoRamp());
@@ -168,7 +160,7 @@ public class WarrantFrame extends WarrantRoute {
         setTrainName(warrant.getTrainName());
         setTrainInfo(warrant.getTrainId());
         _warrant.setTrainName(warrant.getTrainName());
-//        _warrant.setTrainId(warrant.getTrainId());
+        _warrant.setTrainId(warrant.getTrainId());
     }
 
     private void init() {

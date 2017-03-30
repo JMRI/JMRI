@@ -423,6 +423,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
     
     public boolean isAllocatedTo(Warrant warrant) {
+        if (warrant == null) {
+            return false;
+        }
         return (warrant == _warrant);
     }
 
@@ -570,8 +573,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return error message, if any
      */
     public String deAllocate(Warrant warrant) {
-        //if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
-        //				"\" from warrant \""+warrant.getDisplayName()+"\"");
         if (_warrant != null) {
             if (!_warrant.equals(warrant)) {
                 // check if _warrant is registered
@@ -584,6 +585,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 // warrant not found, fall through and clear
             }
             try {
+                if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
+                        "\" from warrant \""+warrant.getDisplayName()+"\"");
                 removePropertyChangeListener(_warrant);
             } catch (Exception ex) {
                 // disposed warrant may throw null pointer - continue deallocation

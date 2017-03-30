@@ -579,7 +579,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (getDccAddress() == null) {
                     return Bundle.getMessage("NoLoco");
                 }
-                if (getThrottleCommands().size() == 0) {
+                if (!(this instanceof SCWarrant) && _throttleCommands.size() <= _savedOrders.size()) {
                     return Bundle.getMessage("NoCommands", getDisplayName());
                 }
                 if (_idxCurrentOrder!=0 && _idxLastOrder ==_idxCurrentOrder) {
@@ -1026,10 +1026,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
             
         _allocated = true;      // partial allocation
+        // don't return message, if any, OK to have warrant in effect from origin bl;ock
         allocateFromIndex(1);                        
         return null;
     }
-    private void allocateFromIndex(int index) {
+    private String allocateFromIndex(int index) {
         int limit;
         if (_partialAllocate) {
             limit = index+1;
@@ -1043,12 +1044,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
            if (!block.isAllocatedTo(this) || ((block.getState() & OBlock.OCCUPIED) != 0)) {
                setStoppingBlock(block);
                _totalAllocated = false;
-               return;
+               return _message;
            }
         }
         if (!_partialAllocate) {
             _totalAllocated = true;            
         }
+        return null;
     }
 
     /**
@@ -1499,7 +1501,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     _engineer.setRunOnET(false);                                    
                 }
             }
-            allocateFromIndex(_idxCurrentOrder+1);
+            String msg = allocateFromIndex(_idxCurrentOrder + 1);
+            BlockOrder bo = getBlockOrderAt(_idxCurrentOrder + 1);
+            bo.setPath(this);
         }
         setMovement(BEG);
 
@@ -2023,7 +2027,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), speedType, getDisplayName());
         blkSpeedInfo = _speedInfo.get(idxBlockOrder);
         long waitTime = getWaitTime(idxBlockOrder, availDist, blkOrder.getEntranceSpace(), speedType);
-        if (waitTime < 300) {
+        waitTime -= 300;    // shorten time a bit to allow for possible processing time.
+        if (waitTime <= 0) {
             _engineer.rampSpeedTo(speedType);            
             if (speedType.equals(Stop) || speedType.equals(EStop)) {
                 _engineer.setWaitforClear(true);                    
