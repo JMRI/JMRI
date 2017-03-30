@@ -12,13 +12,32 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TamsTurnoutTest {
+public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
+
+    @Override
+    public int numListeners() {
+        return tnis.numListeners();
+    }
+
+    protected TamsInterfaceScaffold tnis;
+
+    @Override
+    public void checkClosedMsgSent() {
+        Assert.assertEquals("closed message", "xT 5,r,1",
+                tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
+        Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
+    }
+
+    @Override
+    public void checkThrownMsgSent() {
+        Assert.assertEquals("thrown message", "xT 5,g,1",
+                tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
+        Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
+    }
+
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
-        TamsTurnout t = new TamsTurnout(5,memo.getSystemPrefix(),tc);
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +46,9 @@ public class TamsTurnoutTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        tnis = new TamsInterfaceScaffold();
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tnis);  
+        t = new TamsTurnout(5,memo.getSystemPrefix(),tnis);
     }
 
     @After
