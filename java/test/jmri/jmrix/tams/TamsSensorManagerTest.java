@@ -12,14 +12,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TamsSensorManagerTest {
+public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+
+    @Override
+    public String getSystemName(int i){
+       return "TMS" + i;
+    }
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
-        TamsSensorManager t = new TamsSensorManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",l);
     }
 
     // The minimal setup for log4J
@@ -27,6 +29,9 @@ public class TamsSensorManagerTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        l = new TamsSensorManager(memo);
     }
 
     @After
