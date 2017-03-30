@@ -12,14 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TamsThrottleManagerTest {
+public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase{
 
     @Test
     public void testCTor() {
-        TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
-        TamsThrottleManager t = new TamsThrottleManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tm);
     }
 
     // The minimal setup for log4J
@@ -27,6 +24,9 @@ public class TamsThrottleManagerTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        tm = new TamsThrottleManager(memo);
     }
 
     @After
