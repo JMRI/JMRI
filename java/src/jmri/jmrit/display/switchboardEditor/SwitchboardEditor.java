@@ -99,18 +99,21 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display.switchBoard items
- * to a JLayeredPane inside a captive JFrame.
- * <P>
- * GUI is structured as a separate control panel to set the visible range and type
+ * to a JLayeredPane inside a captive JFrame. Primary use is for new users.
+ * <p>
+ * GUI is structured as a separate setup panel to set the visible range and type
  * plus menus.
- * <P>
+ * <p>
  * All created objects are put insite a GridLayout grid.
  * No special use of the LayeredPane layers. Inspired by Oracle JLayeredPane demo.
- * <P>
+ * <p>
  * The "contents" List keeps track of all the objects added to the target frame
- * for later manipulation.
+ * for later manipulation. May be used in an update to store mixed switchboards
+ * with more than 1 connection and more than 1 bean type/range.
+ * <p>
  * No DnD as panels will be automatically populated in order of the DCC address.
- * <P>
+ * New beans may be created from the Switchboard by right clicking an unconnected switch.
+ *
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
  * @author Egbert Broerse Copyright (c) 2017
  *
@@ -188,8 +191,8 @@ public class SwitchboardEditor extends Editor {
     private boolean showHelpBar = true;
     private boolean _hideUnconnected = false;
     //saved state of options when panel was loaded or created
-    private boolean savedEditMode = true;
-    private boolean savedControlLayout = true;
+    private boolean savedEditMode = true; // TODO store/load accordingly
+    private boolean savedControlLayout = true; // TODO add menu option to turn this off
     private int height = 100;
     private int width = 100;
 
@@ -221,7 +224,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Ctor by a given name
+     * Ctor by a given name.
      *
      * @param name title to assign to the new SwitchBoard
      */
@@ -231,7 +234,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Initialize the SwitchBoard.
+     * Initialize the newly created SwitchBoard.
      *
      * @param name name of the switchboard frame
      */
@@ -281,7 +284,6 @@ public class SwitchboardEditor extends Editor {
         if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // from abstractTableTabAction
             jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager(beanTypeChar);
             List<jmri.Manager> managerList = proxy.getManagerList();
-            //beanManuList.addItem(Bundle.getMessage("All")); // NOI18N
             for (int x = 0; x < managerList.size(); x++) {
                 String manuPrefix = managerList.get(x).getSystemPrefix();
                 log.debug("Prefix = [{}]", manuPrefix);
@@ -320,6 +322,7 @@ public class SwitchboardEditor extends Editor {
 
         // Next, add the buttons to the layered pane.
         switchboardLayeredPane.setLayout(new GridLayout(4,8)); // vertical, horizontal
+        // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
         addSwitchRange((Integer) minSpinner.getValue(), (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
@@ -373,7 +376,7 @@ public class SwitchboardEditor extends Editor {
         pack();
         setVisible(true);
 
-        // TODO use an icon
+        // TODO choose your own icons
 //        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
 //
 //            @Override
@@ -387,8 +390,11 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * From default or user entry in Editor, fill the _targetpane
-     * with a series of Switches. Items in range that can connect
+     * with a series of Switches.
+     * <p>
+     * Items in range that can connect
      * to existing beans in JMRI are active. The others are greyed out.
+     * Option to later connect (new) beans to switches.
      *
      * @param rangeMin starting ordinal of Switch address range
      * @param rangeMax highest ordinal of Switch address range
@@ -474,6 +480,7 @@ public class SwitchboardEditor extends Editor {
 
         /**
          * Ctor
+         *
          * @param index DCC address
          * @param bean layout object to connect to
          * @param name descriptive name corresponding with system name to display in switch tooltip, i.e. LT1
@@ -493,7 +500,6 @@ public class SwitchboardEditor extends Editor {
                     _uname = "no user name";
                 }
             }
-            //this.setBackground(defaultBackgroundColor);
             this.setLayout(new BorderLayout()); // makes JButtons expand to the whole grid cell
             if (shapeChoice != 0) {
                 _shape = shapeChoice; // Button
@@ -504,6 +510,7 @@ public class SwitchboardEditor extends Editor {
             beanTypeChar = _label.charAt(1); // bean type, i.e. L
             log.debug("beanconnect = {}, beantype = {}", beanManuChar, beanTypeChar);
             switch (_shape) {
+                // TODO move per case code copies to methods
                 case 1: // icon shape
                     log.debug("create Icon");
                     try {
@@ -582,7 +589,7 @@ public class SwitchboardEditor extends Editor {
                     //remove the line around icon switches?
                     this.add(beanKey);
                     break;
-                case 3: // drawing shape
+                case 3: // drawing shape turnout/sensor/light (look at type from letter in switch name/label)
                     log.debug("not working yet, try Keys or Sliders");
                 default: // 0 = "Button" shape
                     log.debug("create Button");
@@ -731,19 +738,6 @@ public class SwitchboardEditor extends Editor {
             }
         }
 
-        /**
-         * Get icon by its localized bean state name.
-         *
-         * @param state descriptive name of state to select an icon for
-         */
-        public NamedIcon getIcon(String state) {
-            return _iconStateMap.get(_name2stateMap.get(state));
-        }
-
-        public NamedIcon getIcon(int state) {
-            return _iconStateMap.get(Integer.valueOf(state));
-        }
-
         public final boolean isIcon() {
             return _icon;
         }
@@ -852,6 +846,7 @@ public class SwitchboardEditor extends Editor {
         /**
          * Show pop-up on a switch with its unique attributes including the (un)connected bean.
          * Derived from {@link #showPopUp(Positionable, MouseEvent)}
+         *
          * @param popup the menu to add pop-up menu items to
          */
         public boolean showPopUp(MouseEvent e) {
@@ -960,8 +955,8 @@ public class SwitchboardEditor extends Editor {
 
     }
 
-    /** Create the control pane for the top of the frame.
-    /* From layeredpane demo
+    /** Create the setup pane for the top of the frame.
+     * From layeredpane demo
      */
     private JPanel createControlPanel() {
         JPanel controls = new JPanel();
