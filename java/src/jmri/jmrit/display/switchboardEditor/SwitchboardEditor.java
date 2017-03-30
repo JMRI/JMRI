@@ -315,9 +315,14 @@ public class SwitchboardEditor extends Editor {
         add(switchShapePane);
 
         JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
-        hideUnconnected.setSelected(false);
-        hideUnconnected.setActionCommand(HIDE_COMMAND);
-        hideUnconnected.addActionListener(this);
+        hideUnconnected.setSelected(hideUnconnected());
+        //hideUnconnected.setActionCommand(HIDE_COMMAND);
+        hideUnconnected.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                setHideUnconnected(hideUnconnected.isSelected());
+            }
+        });
         add(hideUnconnected);
 
         // Next, add the buttons to the layered pane.
@@ -362,7 +367,7 @@ public class SwitchboardEditor extends Editor {
                         beanTypeList.getSelectedIndex(),
                         beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                         switchShapeList.getSelectedIndex());
-                log.debug("bgcolor: {}", getBackgroundColor().toString() );
+                //log.debug("bgcolor: {}", getBackgroundColor().toString() );
                 pack();
                 repaint();
             }
@@ -550,7 +555,7 @@ public class SwitchboardEditor extends Editor {
                     //remove the line around icon switches?
                     this.add(beanIcon);
                     break;
-                case 2: // Marklin keyboard
+                case 2: // Maerklin style keyboard
                     log.debug("create Key");
                     try {
                         if (bean != null) {
@@ -950,7 +955,7 @@ public class SwitchboardEditor extends Editor {
         }
 
         public void setBackgroundColor(Color bgcolor) {
-            this.setBackgroundColor(bgcolor);
+            this.setBackground(bgcolor);
         }
 
     }
@@ -1033,7 +1038,7 @@ public class SwitchboardEditor extends Editor {
         innerBorderPanel.add(new JTextArea (Bundle.getMessage("Help1")));
         if (!hideUnconnected()) {
             innerBorderPanel.add(new JTextArea (Bundle.getMessage("Help2")));
-            // TODO hide when hideUnconnected() is set to false from menu
+            // TODO hide this panel when hideUnconnected() is set to false from menu or checkbox
         }
         contentPane.add(innerBorderPanel);
         //Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -1194,33 +1199,33 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(textColorMenu);
     }
 
-    protected void makeZoomMenu() {
-        _zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-        _menuBar.add(_zoomMenu, 0);
-        JMenuItem addItem = new JMenuItem(Bundle.getMessage("NoZoom"));
-        _zoomMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                zoomRestore();
-            }
-        });
-
-        addItem = new JMenuItem(Bundle.getMessage("Zoom", "..."));
-        _zoomMenu.add(addItem);
-        PositionableJComponent z = new PositionableJComponent(this);
-        z.setScale(getPaintScale());
-        addItem.addActionListener(CoordinateEdit.getZoomEditAction(z));
-
-        addItem = new JMenuItem(Bundle.getMessage("ZoomFit"));
-        _zoomMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                zoomToFit();
-            }
-        });
-    }
+//    protected void makeZoomMenu() {
+//        _zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+//        _menuBar.add(_zoomMenu, 0);
+//        JMenuItem addItem = new JMenuItem(Bundle.getMessage("NoZoom"));
+//        _zoomMenu.add(addItem);
+//        addItem.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent event) {
+//                zoomRestore();
+//            }
+//        });
+//
+//        addItem = new JMenuItem(Bundle.getMessage("Zoom", "..."));
+//        _zoomMenu.add(addItem);
+//        PositionableJComponent z = new PositionableJComponent(this);
+//        z.setScale(getPaintScale());
+//        addItem.addActionListener(CoordinateEdit.getZoomEditAction(z));
+//
+//        addItem = new JMenuItem(Bundle.getMessage("ZoomFit"));
+//        _zoomMenu.add(addItem);
+//        addItem.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent event) {
+//                zoomToFit();
+//            }
+//        });
+//    }
 
     private void makeFileMenu() {
         _fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
@@ -1489,11 +1494,11 @@ public class SwitchboardEditor extends Editor {
 //            } else {
 //                _menuBar.add(_iconMenu, 0);
 //            }
-            if (_zoomMenu == null) {
-                makeZoomMenu();
-            } else {
-                _menuBar.add(_zoomMenu, 0);
-            }
+//            if (_zoomMenu == null) {
+//                makeZoomMenu();
+//            } else {
+//                _menuBar.add(_zoomMenu, 0);
+//            }
             if (_optionMenu == null) {
                 makeOptionMenu();
             } else {
@@ -1724,9 +1729,9 @@ public class SwitchboardEditor extends Editor {
      */
     public String getSwitchType() {
         String switchType = beanTypeList.getSelectedItem().toString();
-        if (switchType == _light) {
+        if (switchType.equals(_light)) { // switch-case doesn't work here
             typePrefix = "L";
-        } else if (switchType == _sensor) {
+        } else if (switchType.equals(_sensor)) {
             typePrefix = "S";
         } else { // Turnout
             typePrefix = "T";

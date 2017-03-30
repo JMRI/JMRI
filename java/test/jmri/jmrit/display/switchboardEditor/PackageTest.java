@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
 
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.panelEditor.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.switchboardEditor.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(SwitchboardEditorTest.class));
 
         return suite;

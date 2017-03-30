@@ -26,7 +26,6 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>The Switchboard Editor</h1>
-      (add link to general Panels help page)
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
       To create a new Switchboard, from the Panels menu, choose New Panel &gt; Switchboard Editor.<br>
       A default pane with switches for Turnouts in the range 1 - 32 opens.<br>
@@ -46,7 +45,7 @@
         </ul></li>
       </ul>
       <p>Optionally, select a background color for this Switchboard from the Options menu.
-      To use the new settings, click either [Update Switchboard] to replace all current switches, or click [Add].
+      To use the new settings, click [Update Switchboard] to replace all current switches<!--, or click [Add]-->.
       Note that hybrid Switchboards containing more than one bean type or connection are not saved to disk.
       You can create and save separate Switchboards for different connections, address ranges and object types like Turnouts.
       Change the name of this Switchboard by choosing Rename Switchboard... from the Edit menu while the Editor is open.</p>
@@ -65,8 +64,8 @@
         <li>attach a new item to an inactive switch (using the name of the switch and the object type as set in the Editor)</li>
       </ul>
       <p>Remember to save your setup and configured items by choosing Save Panels... from the File menu.<br>
-        You can have your Switchboards open automatically upon startup by setting them as as a Startup Action under Preferences > Startup.</p>
-
+        You can have your Switchboards open automatically upon startup by setting them as as a Startup Action under Preferences &gt; Startup.</p>
+      <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">PanelPro help page</a>.
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
