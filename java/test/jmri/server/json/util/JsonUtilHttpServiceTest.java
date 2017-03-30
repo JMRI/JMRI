@@ -115,6 +115,7 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(instance.getMetadata(locale), instance.doGetList(JSON.METADATA, locale));
         Assert.assertEquals(instance.getNetworkServices(locale), instance.doGetList(JSON.NETWORK_SERVICES, locale));
         Assert.assertEquals(instance.getSystemConnections(locale), instance.doGetList(JSON.SYSTEM_CONNECTIONS, locale));
+        Assert.assertEquals(instance.getConfigProfiles(locale), instance.doGetList(JSON.CONFIG_PROFILES, locale));
     }
 
     /**
