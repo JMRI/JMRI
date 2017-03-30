@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.Application;
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFileLocationAction;
-import jmri.jmrit.mailreport.ReportContext;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.profile.ProfileManager;
@@ -39,12 +37,6 @@ public class AboutServlet extends HttpServlet {
                 comma = ", ";
             }
         }     
-        //retrieve JMRI context listing as text
-        ReportContext r = new ReportContext();
-        String jmriContext = r.getReport(true);
-
-        //retrieve JMRI locations listing as text
-        String jmriLocations = XmlFileLocationAction.getLocationsReport();
 
         //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
@@ -60,9 +52,7 @@ public class AboutServlet extends HttpServlet {
                 jmri.Version.getCopyright(),                                        //Copyright is parm 7
                 System.getProperty("java.version", "<unknown>"),                    //Java version is parm 8
                 Locale.getDefault().toString(),                                     //locale is parm 9
-                ProfileManager.getDefault().getActiveProfile().getName(),           //active profile name is 10
-                jmriLocations,                                                      //JMRI Locations report is 11
-                jmriContext                                                         //JMRI Context is 12
+                ProfileManager.getDefault().getActiveProfile().getName()           //active profile name is 10
         ));
     }
 
