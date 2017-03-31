@@ -180,22 +180,42 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     public void register(NamedBean s) {
         String systemName = s.getSystemName();
         _tsys.put(systemName, s);
+
+        registerUserName(s);
+
+        firePropertyChange("length", null, _tsys.size());
+        // listen for name and state changes to forward
+        s.addPropertyChangeListener(this, "", "Manager");
+    }
+    
+    /**
+     * Invoked by {@see #register()} to register 
+     * the user name of the bean
+     */
+    protected void registerUserName(NamedBean s) {
         String userName = s.getUserName();
+        if (userName == null) return;
         
+        handleUserNameUniqueness(s);
+        // since we've handled uniqueness,
+        // store the new bean under the name
+        _tuser.put(userName, s);        
+    }
+    
+    /**
+     * Invoked by {@see #registerUserName()} to 
+     * ensure uniqueness of the NamedBean during registration
+     */
+    protected void handleUserNameUniqueness(NamedBean s) {
+        String userName = s.getUserName();        
         if (userName != null) {
             // enforce uniqueness of user names
             // by setting username to null in any existing bean with the same name
             // Note that this is not a "move" operation for the user name
             if (_tuser.get(userName)!=null && _tuser.get(userName)!=s ) _tuser.get(userName).setUserName(null);
-            
-            // store the new bean under the name
-            _tuser.put(userName, s);
         }
-        firePropertyChange("length", null, _tsys.size());
-        // listen for name and state changes to forward
-        s.addPropertyChangeListener(this, "", "Manager");
     }
-
+    
     /**
      * Forget a NamedBean Object created outside the manager.
      * <P>
