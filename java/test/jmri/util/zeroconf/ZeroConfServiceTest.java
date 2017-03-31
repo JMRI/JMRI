@@ -5,6 +5,12 @@ import java.util.HashMap;
 import javax.jmdns.ServiceInfo;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
+import javax.jmdns.JmDNS;
+import javax.jmdns.impl.JmDNSImpl;
+import javax.jmdns.impl.DNSOutgoing;
+import javax.jmdns.impl.DNSIncoming;
+import javax.jmdns.ServiceInfo;
+import java.net.InetAddress;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -12,6 +18,21 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.modules.junit4.PowerMockRunner;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+
+
+@MockPolicy(Slf4jMockPolicy.class)
+@PrepareForTest({ JmDNS.class})
+
 
 /**
  * Tests for the ZeroConfService class
@@ -19,12 +40,27 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2014
  * @author Randall Wood Copyright (C) 2016
  */
+@RunWith(PowerMockRunner.class)
 public class ZeroConfServiceTest {
 
     private static final String HTTP = "_http._tcp.local.";
 
+    private static JmDNS jmdns;
+
     @BeforeClass
     public static void setUpClass() throws Exception {
+       mockStatic(JmDNS.class);
+       java.net.InetAddress addr = java.net.Inet4Address.getLoopbackAddress();
+
+       JmDNSImpl jmdnsi = PowerMockito.spy(new JmDNSImpl(addr,"test"));
+
+       PowerMockito.doNothing().when(jmdnsi).send(any(DNSOutgoing.class));
+       PowerMockito.doNothing().when(jmdnsi).respondToQuery(any(DNSIncoming.class));
+       jmdns = jmdnsi;
+       Mockito.when(JmDNS.create()).thenReturn(jmdns);
+       Mockito.when(JmDNS.create(any(InetAddress.class))).thenReturn(jmdns);
+       Mockito.when(JmDNS.create(any(InetAddress.class), anyString())).thenReturn(jmdns);
+
     }
 
     @AfterClass
@@ -33,7 +69,6 @@ public class ZeroConfServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
     }
 
     @After
@@ -42,7 +77,7 @@ public class ZeroConfServiceTest {
         JUnitUtil.waitFor(() -> {
             return (ZeroConfService.allServices().isEmpty());
         }, "Stopping all ZeroConf Services");
-        Log4JFixture.tearDown();
+        jmdns = null;
     }
 
     /**
