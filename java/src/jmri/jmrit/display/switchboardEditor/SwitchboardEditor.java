@@ -125,10 +125,10 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
-//    protected JMenu _iconMenu;
-    protected JMenu _zoomMenu;
-    private JMenu _markerMenu;
-    private JMenu _drawMenu;
+    //protected JMenu _iconMenu;
+    //protected JMenu _zoomMenu;
+    //private JMenu _markerMenu;
+    //private JMenu _drawMenu;
     private ArrayList<Positionable> _secondSelectionGroup;
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
@@ -261,7 +261,10 @@ public class SwitchboardEditor extends Editor {
         switchboardLayeredPane = new TargetPane(); //extends JLayeredPane();
         switchboardLayeredPane.setPreferredSize(new Dimension(300, 310));
         switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(
-                Bundle.getMessage("SwitchboardTitle"))); // TODO specify for turnout, sensor, light, mixed (wait for Editor to be created)
+                BorderFactory.createLineBorder(defaultTextColor),
+                Bundle.getMessage("SwitchboardTitle"), 2, 4, getFont(), defaultTextColor));
+        // create contrast with background, should also specify border style
+        // TODO specify title for turnout, sensor, light, mixed (wait for the Editor to be created)
         switchboardLayeredPane.addMouseMotionListener(this);
 
         //Add control pane and layered pane to this JPanel.
@@ -368,6 +371,11 @@ public class SwitchboardEditor extends Editor {
                         beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                         switchShapeList.getSelectedIndex());
                 //log.debug("bgcolor: {}", getBackgroundColor().toString() );
+                switchboardLayeredPane.setBorder(BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(defaultTextColor),
+                        beanManuNames.getSelectedItem().toString() + " " + beanTypeList.getSelectedItem().toString() +
+                                " - " + Bundle.getMessage("SwitchboardTitle"),
+                        2, 4, getFont(), defaultTextColor));
                 pack();
                 repaint();
             }
@@ -1295,14 +1303,14 @@ public class SwitchboardEditor extends Editor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!defaultBackgroundColor.equals(desiredColor)) {
-                    // if new bgColor matches thhe defaultTextColor, ask user as labels will become unreadable
+                    // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
                     if (desiredColor == defaultTextColor) {
                         int retval = JOptionPane.showOptionDialog(null,
                                 Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"),
                                 0, JOptionPane.INFORMATION_MESSAGE, null,
                                 new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
                         log.debug("Retval: "+retval);
-                        if (retval != 1) {
+                        if (retval != 0) {
                             return;
                         }
                     }
@@ -1623,6 +1631,7 @@ public class SwitchboardEditor extends Editor {
     @Override
     public void setTitle() {
         String name = getName(); // get name of JFrame
+        log.debug("JFrame name = {}", name);
         if (name == null || name.length() == 0) {
             name = Bundle.getMessage("SwitchboardDefaultName","");
         }

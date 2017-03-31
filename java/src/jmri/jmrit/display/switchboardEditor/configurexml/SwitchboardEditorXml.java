@@ -130,7 +130,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             result = false;
         }
         // find the name
-        name = "Switchboard"; // this should be replaced by the name as stored NOI18N
+        name = "Switchboard"; // this will be replaced by the name as stored NOI18N
         if (shared.getAttribute("name") != null) {
             name = shared.getAttribute("name").getValue();
         }
@@ -234,6 +234,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             int red = shared.getAttribute("redBackground").getIntValue();
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
+            //panel.setBackground(new Color(red, green, blue));
             panel.setDefaultBackgroundColor(new Color(red, green, blue));
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
