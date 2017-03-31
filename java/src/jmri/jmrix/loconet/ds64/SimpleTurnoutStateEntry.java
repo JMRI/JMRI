@@ -1,5 +1,3 @@
-// simpleTurnoutStateEntry.java
-
 package jmri.jmrix.loconet.ds64;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author      B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015
- * @version	$Revision: 0 $
+ * @author      B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2017
  */
 public class SimpleTurnoutStateEntry extends SimpleTurnout {
     private JPanel entryPanel = null;
@@ -88,10 +85,10 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      */
     public SimpleTurnoutStateEntry(Integer address, boolean isClosed) {
         super(address,isClosed);
-        thrownRadioButton = new JRadioButton(DS64Bundle.getMessage("RadioButtonTextThrown"));
-        closedRadioButton = new JRadioButton(DS64Bundle.getMessage("RadioButtonTextClosed"));
+        thrownRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextThrown"));
+        closedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextClosed"));
         unusedRadioButton = null;
-        addressField = new ValidatedTextField(5, true, 1, 2048, DS64Bundle.getMessage("ErrorTextAddressInvalid"));
+        addressField = new ValidatedTextField(5, true, 1, 2048, Bundle.getMessage("ErrorTextAddressInvalid"));
         entryPanel = null;
         addressField.setText(Integer.toString(address));
         setAddressLastQueriedValue(address);
@@ -145,12 +142,16 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      */
     public SimpleTurnoutStateEntry(Integer address, boolean closed, boolean unused) {
         super(address, closed, unused);
-        thrownRadioButton = new JRadioButton(DS64Bundle.getMessage("RadioButtonTextThrown"));
-        closedRadioButton = new JRadioButton(DS64Bundle.getMessage("RadioButtonTextClosed"));
-        unusedRadioButton = new JRadioButton(DS64Bundle.getMessage("RadioButtonTextUnused"));
-        addressField = new ValidatedTextField(5, true, 1, 2048, DS64Bundle.getMessage("ErrorTextAddressInvalid"));
+        thrownRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextThrown"));
+        closedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextClosed"));
+        unusedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextUnused"));
+        addressField = new ValidatedTextField(5, true, 1, 2048, Bundle.getMessage("ErrorTextAddressInvalid"));
         entryPanel = null;
-        addressField.setText(Integer.toString(address));
+        if (unused) {
+            addressField.setText("");
+        } else {
+            addressField.setText(Integer.toString(address));
+        }
         setAddressLastQueriedValue(address);
         if (closed == true) {
             thrownRadioButton.setSelected(false);
@@ -195,6 +196,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (unusedRadioButton.isSelected()) {
                     setIsUnused();
+                    addressField.setText("");
                 }
             }
         });
@@ -226,7 +228,14 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         p2.setLayout(new BoxLayout(p2,BoxLayout.X_AXIS));
         ButtonGroup g = new ButtonGroup();
         
-        if (Integer.parseInt(addressField.getText()) == 2048) {
+        if (addressField.getText().length() == 0) {
+            closedRadioButton.setSelected(false);
+            thrownRadioButton.setSelected(false);
+            if (unusedRadioButton != null) {
+                unusedRadioButton.setSelected(true);
+            }
+            addressField.setText("");
+        } else if (Integer.parseInt(addressField.getText()) == 2048) {
             closedRadioButton.setSelected(false);
             thrownRadioButton.setSelected(false);
             if (unusedRadioButton != null) {

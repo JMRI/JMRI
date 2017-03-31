@@ -1,5 +1,3 @@
-// DS64Bundle.java
-
 package jmri.jmrix.loconet.ds64;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
@@ -35,10 +33,10 @@ import java.util.Locale;
  * @author      Bob Jacobsen  Copyright (C) 2012
  * @version     $Revision: 0 $
  */
-public class DS64Bundle extends jmri.jmrix.loconet.Bundle {
+public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     private final static String name = "jmri.jmrix.loconet.ds64.Bundle"; // NOI18N
-    private final static DS64Bundle b = new DS64Bundle();
+    private final static Bundle b = new Bundle();
     //
     // below here is boilerplate to be copied exactly
     //
@@ -50,7 +48,7 @@ public class DS64Bundle extends jmri.jmrix.loconet.Bundle {
      * Note that this is intentionally package-local
      * access.
      * 
-     * @param key DS64Bundle key to be translated
+     * @param key Bundle key to be translated
      * @return Internationalized text
      */
     static String getMessage(String key) {
@@ -68,7 +66,7 @@ public class DS64Bundle extends jmri.jmrix.loconet.Bundle {
      * access.
      *
      * @see java.text.MessageFormat
-     * @param key DS64Bundle key to be translated
+     * @param key Bundle key to be translated
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
@@ -107,5 +105,3 @@ public class DS64Bundle extends jmri.jmrix.loconet.Bundle {
     }
 
 }
-
-/* @(#)DS64Bundle.java */
