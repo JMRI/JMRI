@@ -33,6 +33,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BlockPathTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(PathTurnoutTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TableFramesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OBlockTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockPortalTableModelTest.class));
         return suite;
     }
 
