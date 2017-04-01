@@ -189,7 +189,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     }
     
     /**
-     * Invoked by {@link #register()} to register 
+     * Invoked by {@link #register(NamedBean)} to register 
      * the user name of the bean
      */
     protected void registerUserName(NamedBean s) {
@@ -203,7 +203,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     }
     
     /**
-     * Invoked by {@link #registerUserName()} to 
+     * Invoked by {@link #registerUserName(NamedBean)} to 
      * ensure uniqueness of the NamedBean during registration
      */
     protected void handleUserNameUniqueness(NamedBean s) {
