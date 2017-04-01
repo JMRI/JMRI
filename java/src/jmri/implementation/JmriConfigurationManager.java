@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
+import jmri.jmrit.XmlFile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
@@ -272,4 +273,15 @@ public class JmriConfigurationManager implements ConfigureManager {
     public HashMap<PreferencesManager, InitializationException> getInitializationExceptions() {
         return new HashMap<>(initializationExceptions);
     }
+
+    @Override
+    public void setValidate(XmlFile.Validate v) {
+        legacy.setValidate(v);
+    }
+
+    @Override
+    public XmlFile.Validate getValidate() {
+        return legacy.getValidate();
+    }
+
 }

@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Common base for all the SDF macro editors.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public abstract class SdfMacroEditor extends JPanel {
 

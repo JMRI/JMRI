@@ -10,7 +10,7 @@ import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
   *
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
  * to establish Acela support.
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {

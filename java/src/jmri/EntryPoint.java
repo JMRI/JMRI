@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * This module delays initialization of Blocks until first reference after an
  * Entry Point is loaded from a configuration file.
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class EntryPoint {
 

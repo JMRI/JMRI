@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * support firmware updates according to the Firmware Upgrade Protocol.
  *<p>
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B. Milhaupt Copyright (C) 2013, 2014)
+ * @author Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B. Milhaupt Copyright (C) 2013, 2014)
  *          David R Harris (C) 2016
  *          Balazs Racz (C) 2016
  */

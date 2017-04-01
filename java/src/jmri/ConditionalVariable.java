@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariable {
@@ -297,12 +297,9 @@ public class ConditionalVariable {
     public void setDataString(String data) {
         _dataString = data;
         if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
-            try {
-                NamedBean bean = InstanceManager.memoryManagerInstance().provideMemory(data);
+            NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
+            if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
-            } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide memory \"{}\" in setDataString", data);
-                _namedBeanData = null;
             }
         }
     }
@@ -623,8 +620,18 @@ public class ConditionalVariable {
     }
 
     /**
-     * Note: _num1 determines the comparison used. Can be 0, LESS_THAN, LESS_THAN_OR_EQUAL,
-     * EQUAL, GREATER_THAN_OR_EQUAL or GREATER_THAN.
+     * Compare two values using the comparator set using the comparison
+     * instructions in {@link #setNum1(int)}.
+     *
+     * <strong>Note:</strong> {@link #getNum1()} must be one of {@link #LESS_THAN},
+     * {@link #LESS_THAN_OR_EQUAL}, {@link #EQUAL},
+     * {@link #GREATER_THAN_OR_EQUAL}, or {@link #GREATER_THAN}.
+     *
+     * @param value1          left side of the comparison
+     * @param value2          right side of the comparison
+     * @param caseInsensitive true if comparison should be case insensitive;
+     *                        false otherwise
+     * @return true if values compare per getNum1(); false otherwise
      */
     boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {

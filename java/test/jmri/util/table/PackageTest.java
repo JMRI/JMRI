@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BasicCellEditorTest.class,
-    ButtonRendererTest.class
+    ButtonRendererTest.class,
+    ButtonEditorTest.class
 })
 /**
  * Tests for the jmri.util.table package

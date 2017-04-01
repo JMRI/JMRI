@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener {
 
@@ -258,6 +258,11 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     @Override
     protected void throttleDispose() {
         finishRecord();
+    }
+
+    @Override
+    public String toString() {
+        return getLocoAddress().toString();
     }
 
     //Might need to look at other packets from handsets to see if they also have control of our loco and adjust from that.

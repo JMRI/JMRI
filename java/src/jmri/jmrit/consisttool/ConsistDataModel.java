@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of consist information.
  *
- * @author	Paul Bender Copyright (c) 2004-2005
+ * @author Paul Bender Copyright (c) 2004-2005
  */
 public class ConsistDataModel extends AbstractTableModel {
 

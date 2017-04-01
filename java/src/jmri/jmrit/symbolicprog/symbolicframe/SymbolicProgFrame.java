@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Frame providing a table-organized command station programmer from decoder
  * definition files
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame {
 
@@ -458,7 +458,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
             // This is taken in large part from "Java and XML" page 368
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.dtdLocation + "locomotive-config.dtd");
+            Document doc = jmri.jmrit.XmlFile.newDocument(root, jmri.jmrit.XmlFile.getDefaultDtdLocation() + "locomotive-config.dtd");
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>

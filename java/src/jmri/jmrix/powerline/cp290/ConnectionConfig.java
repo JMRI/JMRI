@@ -7,7 +7,7 @@ import javax.swing.JPanel;
  * Definition of objects to handle configuring a layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author	Ken Cameron	Copyright (C) 2011
+ * @author Ken Cameron Copyright (C) 2011
   */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 

@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2010-2011
+ * @author Dave Duchamp Copyright (C) 2010-2011
  */
 public class AutoTrainAction {
 
@@ -61,7 +61,7 @@ public class AutoTrainAction {
     private ArrayList<TransitSection> _activeTransitSectionList = new ArrayList<TransitSection>();
     private ArrayList<TransitSectionAction> _activeActionList = new ArrayList<TransitSectionAction>();
 
-    // this method is called when an AutoActiveTrain enters a Section	
+    // this method is called when an AutoActiveTrain enters a Section 
     protected synchronized void addTransitSection(TransitSection ts) {
         _activeTransitSectionList.add(ts);
         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
@@ -643,7 +643,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action						
+                        // interrupting will cause termination without executing the action      
                     }
                 } else if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTART) {
                     if ((_autoActiveTrain.getAutoEngineer() != null)
@@ -660,7 +660,7 @@ public class AutoTrainAction {
                                 }
                             }
                         } catch (InterruptedException e) {
-                            // interrupting will cause termination without executing the action						
+                            // interrupting will cause termination without executing the action      
                         }
                     }
                     // train is stopped, wait for it to start 
@@ -675,7 +675,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action						
+                        // interrupting will cause termination without executing the action      
                     }
                 }
             }

@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Each Memory has a two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, if any, and provides a unique mapping to the layout control
- * system (e.g. LocoNet, NCE, etc) and address within that system. Note that
+ * system (for example LocoNet or NCE) and address within that system. Note that
  * most (all?) layout systems don't have anything corresponding to this, in
  * which case the "Internal" Memory objects are still available with names like
  * IM23.
@@ -37,7 +37,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  * @see jmri.Memory
  * @see jmri.managers.AbstractMemoryManager
  * @see jmri.InstanceManager
@@ -55,7 +55,7 @@ public interface MemoryManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Memory doesn't already exist and the
      *                                  manager cannot create the Memory due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
     @Nonnull

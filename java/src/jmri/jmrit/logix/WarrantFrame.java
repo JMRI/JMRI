@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -28,7 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -82,7 +82,8 @@ public class WarrantFrame extends WarrantRoute {
     JRadioButton _isWarrant = new JRadioButton(Bundle.getMessage("NormalWarrant"), true);
     JCheckBox    _runForward = new JCheckBox(Bundle.getMessage("Forward"));
     JFormattedTextField _TTPtextField = new JFormattedTextField();
-    JCheckBox    _noRampBox = new JCheckBox();
+//    JCheckBox    _noRampBox = new JCheckBox();
+    JCheckBox    _shareRouteBox = new JCheckBox();
     JCheckBox    _runETOnlyBox = new JCheckBox();
     JRadioButton _eStop = new JRadioButton(Bundle.getMessage("EStop"), false);
     JRadioButton _halt = new JRadioButton(Bundle.getMessage("Halt"), false);
@@ -153,8 +154,10 @@ public class WarrantFrame extends WarrantRoute {
             }
             _throttleCommands.add(ts);
         }
-        _noRampBox.setSelected(warrant.getNoRamp());
-        _warrant.setNoRamp(warrant.getNoRamp());
+        _shareRouteBox.setSelected(warrant.getShareRoute());
+        _warrant.setShareRoute(warrant.getShareRoute());
+//        _noRampBox.setSelected(warrant.getNoRamp());
+//        _warrant.setNoRamp(warrant.getNoRamp());
         _runETOnlyBox.setSelected(warrant.getRunBlind());
         _warrant.setRunBlind(warrant.getRunBlind());
         setTrainName(warrant.getTrainName());
@@ -533,7 +536,8 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(_noRampBox, "NoRamping", "ToolTipNoRamping"));
+        panel.add(makeTextBoxPanel(_shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
+//        panel.add(makeTextBoxPanel(_noRampBox, "NoRamping", "ToolTipNoRamping"));
         panel.add(makeTextBoxPanel(_runETOnlyBox, "RunETOnly", "ToolTipRunETOnly"));
                 
         paramsPanel.add(panel);
@@ -1004,7 +1008,8 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         _warrant.setTrainName(getTrainName());
-        _warrant.setNoRamp(_noRampBox.isSelected());
+        _warrant.setShareRoute(_shareRouteBox.isSelected());
+//        _warrant.setNoRamp(_noRampBox.isSelected());
         if (!_warrant.hasRouteSet() && _runETOnlyBox.isSelected()) {
             msg = Bundle.getMessage("BlindRouteNotSet", _warrant.getDisplayName());
             JOptionPane.showMessageDialog(this, msg,
@@ -1344,13 +1349,14 @@ public class WarrantFrame extends WarrantRoute {
             _warrant = _saveWarrant;
             // _saveWarrant already registered, but might not be the correct class.
             InstanceManager.getDefault(WarrantManager.class).deregister(_saveWarrant);
-        } else {
-            _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(_sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
         }
+        _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(_sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+
         _warrant.setDccAddress(getTrainId());
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
-        _warrant.setNoRamp(_noRampBox.isSelected());
+        _warrant.setShareRoute(_shareRouteBox.isSelected());
+//        _warrant.setNoRamp(_noRampBox.isSelected());
         _warrant.setUserName(_userNameBox.getText());
 
         _warrant.setViaOrder(getViaBlockOrder());

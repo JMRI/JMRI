@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * In particular, LIUSBEthernetXNetPacketizer counts the number of commands
  * received.
  *
- * @author	Paul Bender, Copyright (C) 2011
+ * @author Paul Bender, Copyright (C) 2011
  *
  */
 public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNetPacketizer {

@@ -40,6 +40,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -51,24 +53,35 @@ import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.LightManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
 import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.Route;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.picker.PickSinglePanel;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -97,12 +110,19 @@ import org.slf4j.LoggerFactory;
  * lists:<br>
  * 1. the previous policy - Trigger on change of state only <br>
  * 2. the new default - Trigger on any enabled state calculation
- * <p>
  * Jan 15, 2011 - Pete Cressman
- *
+ * <p>
+ * Two additional action and variable name selection methods have been added:
+ * 1) Single Pick List
+ * 2) Combo Box Selection
+ * The traditional tabbed Pick List with text entry is the default method.
+ * The Options menu has been expanded to list the 3 methods.
+ * Mar 27, 2017 - Dave Sand
+ * <p>
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
+ * @author Dave Sand copyright (c) 2017
  */
 public class LogixTableAction extends AbstractTableAction {
 
@@ -345,6 +365,8 @@ public class LogixTableAction extends AbstractTableAction {
      */
     @Override
     public void setMenuBar(BeanTableFrame f) {
+        loadSelectionMode();
+
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
@@ -370,6 +392,7 @@ public class LogixTableAction extends AbstractTableAction {
         enableButtonGroup.add(r);
         r.setSelected(true);
         menu.add(r);
+        
         r = new JRadioButtonMenuItem(rbx.getString("DisableAll"));
         r.addActionListener(new ActionListener() {
             @Override
@@ -379,6 +402,43 @@ public class LogixTableAction extends AbstractTableAction {
         });
         enableButtonGroup.add(r);
         menu.add(r);
+
+        menu.addSeparator();
+
+        ButtonGroup modeButtonGroup = new ButtonGroup();
+        r = new JRadioButtonMenuItem(rbx.getString("UseMultiPick"));
+        r.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setSelectionMode(SelectionMode.USEMULTI);
+            }
+        });
+        modeButtonGroup.add(r);
+        menu.add(r);
+        r.setSelected(_selectionMode == SelectionMode.USEMULTI);
+
+        r = new JRadioButtonMenuItem(rbx.getString("UseSinglePick"));
+        r.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setSelectionMode(SelectionMode.USESINGLE);
+            }
+        });
+        modeButtonGroup.add(r);
+        menu.add(r);
+        r.setSelected(_selectionMode == SelectionMode.USESINGLE);
+
+        r = new JRadioButtonMenuItem(rbx.getString("UseComboNameBoxes"));
+        r.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                setSelectionMode(SelectionMode.USECOMBO);
+            }
+        });
+        modeButtonGroup.add(r);
+        menu.add(r);
+        r.setSelected(_selectionMode == SelectionMode.USECOMBO);
+
         menuBar.add(menu, pos + offset);
 
         menu = new JMenu(Bundle.getMessage("MenuTools"));
@@ -427,6 +487,45 @@ public class LogixTableAction extends AbstractTableAction {
         }.init(f));
         menu.add(item);
         menuBar.add(menu, pos + offset + 1); // add this menu to the right of the previous
+    }
+
+    /**
+     * Get the saved mode selection, default to the tranditional tabbed pick list.
+     * <p>
+     * During the menu build process, the corresponding menu item is set to selected.
+     * @since 4.7.3
+     */
+    void loadSelectionMode() {
+        Object modeName = InstanceManager.getDefault(jmri.UserPreferencesManager.class).getProperty(getClassName(), "Selection Mode");
+        if (modeName == null) {
+            _selectionMode = SelectionMode.USEMULTI;
+        } else {
+            String currentMode = (String) modeName;
+            switch (currentMode) {
+                case "USEMULTI":
+                    _selectionMode = SelectionMode.USEMULTI;
+                    break;
+                case "USESINGLE":
+                    _selectionMode = SelectionMode.USESINGLE;
+                    break;
+                case "USECOMBO":
+                    _selectionMode = SelectionMode.USECOMBO;
+                    break;
+                default:
+                    log.warn("Invalid Logix conditional selection mode value, '{}', returned", currentMode);
+                    _selectionMode = SelectionMode.USEMULTI;
+            }
+        }        
+    }
+
+    /**
+     * Save the mode selection.  Called by menu item change events.
+     * @since 4.7.3
+     * @param newMode The SelectionMode enum constant 
+     */
+    void setSelectionMode(SelectionMode newMode) {
+        _selectionMode = newMode;
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setProperty(getClassName(), "Selection Mode", newMode.toString());
     }
 
     /**
@@ -532,7 +631,6 @@ public class LogixTableAction extends AbstractTableAction {
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnSystemName") + ":");
     JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogix") + " " + Bundle.getMessage("ColumnUserName") + ":");
-    jmri.UserPreferencesManager prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     JButton create;
 
@@ -562,6 +660,190 @@ public class LogixTableAction extends AbstractTableAction {
     private int _logicType = Conditional.ALL_AND;
     private String _antecedent = null;
     private boolean _newItem = false; // marks a new Action or Variable object was added
+
+    /**
+     * Input selection names
+     * @since 4.7.3
+     */ 
+    public enum SelectionMode {
+        /** Use the traditional text field, with the tabbed Pick List available for drag-n-drop */
+        USEMULTI,
+        /** Use the traditional text field, but with a single Pick List that responds with a click */
+        USESINGLE,
+        /** Use combo boxes to select names instead of a text field. */
+        USECOMBO;
+    }
+    SelectionMode _selectionMode;
+    
+    // Single pick list name selection variables
+    PickSinglePanel _pickSingle = null;     // used to build the JFrame, content copied from the table type pick object.
+    JFrame _pickSingleFrame = null;
+    JTable _pickTable = null;               // Current pick table
+    PickSingleListener _pickListener = null;
+
+    /**
+     * Listen for Pick Single table click events.
+     * <p>
+     * When a table row is selected, the user/system name is copied to the Action or Variable name field.
+     * @since 4.7.3
+     */
+    class PickSingleListener implements ListSelectionListener {
+        int saveItemType = -1;          // Current table type
+        boolean dragNdrop = false;      // Not currently used
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            // Drag and drop can be controlled programmtically.
+            if (dragNdrop) {
+                return;
+            }
+
+            // Determine the current sub-panel type: Variable or Action, ignore item state changes if neither is active
+            String chkMode = "None";
+            if (_editVariableFrame == null) {
+                if (_editActionFrame == null) {
+                    return;         // There is no active variable or action input frame
+                } else {
+                    chkMode = "Action";
+                }
+            } else {
+                chkMode = "Variable";
+            }
+
+            int selectedRow = _pickTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                int selectedCol = _pickTable.getSelectedColumn();
+                String newName = (String) _pickTable.getValueAt(selectedRow, selectedCol);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Pick single panel row event: row = '{}', column = '{}', selected name = '{}'", selectedRow, selectedCol, newName);
+                }
+
+                // Set the appropriate name field
+                if (chkMode.equals("Action")) {
+                    _actionNameField.setText(newName);
+                } else if (chkMode.equals("Variable")) {
+                    _variableNameField.setText(newName);
+                }
+            }
+        }
+        
+        public int getItemType() {
+            return saveItemType;
+        }
+
+        public void setItemType(int itemType) {
+            saveItemType = itemType;
+        }
+
+        public void setDragDrop(boolean dNd) {
+            dragNdrop = dNd;
+        }
+    }
+
+    // Combo boxes for name selection and their JPanel variables
+    // These are shared by the conditional and action selection processs
+    JmriBeanComboBox _sensorNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _turnoutNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(TurnoutManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _lightNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LightManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _sigheadNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _sigmastNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _memoryNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _warrantNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(WarrantManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _oblockNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(OBlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _conditionalNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(ConditionalManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    JmriBeanComboBox _logixNameBox = new JmriBeanComboBox(
+            InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+//    JmriBeanComboBox _entryexitNameBox = new JmriBeanComboBox(
+//            InstanceManager.getDefault(EntryExitManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+
+    JPanel _actionComboNamePanel;
+    JPanel _variableComboNamePanel;
+    boolean _nameBoxListenersDone = false;
+
+    /**
+     * Listen for name combo box selection events.
+     * <p>
+     * When a combo box row is selected, the user/system name is copied to the Action or Variable name field.
+     * @since 4.7.3
+     */
+    class NameBoxListener implements ItemListener {
+
+        String _nameType;               // sensor, turnout, memory, etc.
+        boolean _programEvent = false;  // When true, program code created the event.  This way we don't update the field that just supplied the new value.
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            // Determine the current sub-panel type: Variable or Action, ignore item state changes if neither is active
+            String chkMode = "None";
+            if (_editVariableFrame == null) {
+                if (_editActionFrame == null) {
+                    return;             // There is no active variable or action input frame
+                } else {
+                    chkMode = "Action";
+                }
+            } else {
+                chkMode = "Variable";
+            }
+
+            // Get the combo box, the display name and the new state
+            int newState = e.getStateChange();
+            Object src = e.getSource();
+            if (!(src instanceof JmriBeanComboBox)) {
+                return;
+            }
+            JmriBeanComboBox srcBox = (JmriBeanComboBox) src;
+            String newName = srcBox.getSelectedDisplayName();
+
+            if (newState == ItemEvent.SELECTED && !_programEvent) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Name ComboBox Item Event: type = '{}', mode = '{}', name = '{}'", _nameType, chkMode, newName);
+                }
+
+                // Set the appropriate name field
+                if (chkMode.equals("Action")) {
+                    _actionNameField.setText(newName);
+                } else if (chkMode.equals("Variable")) {
+                    _variableNameField.setText(newName);
+                }
+            }
+            _programEvent = false;
+        }
+
+        public void setNameType(String type) {
+            _nameType = type;
+        }
+
+        public void setProgramEvent() {
+            _programEvent = true;
+        }
+    }
+
+    NameBoxListener _sensorNameListener;
+    NameBoxListener _turnoutNameListener;
+    NameBoxListener _lightNameListener;
+    NameBoxListener _sigheadNameListener;
+    NameBoxListener _sigmastNameListener;
+    NameBoxListener _memoryNameListener;
+
+    NameBoxListener _warrantNameListener;
+    NameBoxListener _oblockNameListener;
+    NameBoxListener _conditionalNameListener;
+    NameBoxListener _logixNameListener;
+    NameBoxListener _entryexitNameListener;
+
+// warrent
+// oblock
+// entry exit (var only)
 
     /**
      * Components of Edit Variable panes
@@ -689,9 +971,9 @@ public class LogixTableAction extends AbstractTableAction {
         addLogixFrame.pack();
         addLogixFrame.setVisible(true);
         _autoSystemName.setSelected(false);
-        if (prefMgr.getSimplePreferenceState(systemNameAuto)) {
-            _autoSystemName.setSelected(true);
-        }
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+        });
     }
 
     /**
@@ -844,9 +1126,9 @@ public class LogixTableAction extends AbstractTableAction {
                 addLogixFrame.pack();
                 addLogixFrame.setVisible(true);
                 _autoSystemName.setSelected(false);
-                if (prefMgr.getSimplePreferenceState(systemNameAuto)) {
-                    _autoSystemName.setSelected(true);
-                }
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+                });
             }
         };
         if (log.isDebugEnabled()) {
@@ -1118,7 +1400,9 @@ public class LogixTableAction extends AbstractTableAction {
         cancelAddPressed(null);
         // create the Edit Logix Window
         makeEditLogixWindow();
-        prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        });
     }
 
     void handleCreateException(String sysName) {
@@ -1162,6 +1446,7 @@ public class LogixTableAction extends AbstractTableAction {
      * Create and/or initialize the Edit Logix pane.
      */
     void makeEditLogixWindow() {
+        setNameBoxListeners();      // Setup the name box components.
         //if (log.isDebugEnabled()) log.debug("makeEditLogixWindow ");
         editUserName.setText(_curLogix.getUserName());
         // clear conditional table if needed
@@ -2504,7 +2789,9 @@ public class LogixTableAction extends AbstractTableAction {
      * @return true if an _editActionFrame or _editVariableFrame exists
      */
     boolean alreadyEditingActionOrVariable() {
-        OpenPickListTable();
+        if (_selectionMode == SelectionMode.USEMULTI) {
+            OpenPickListTable();
+        }
         if (_editActionFrame != null) {
             // Already editing an Action, ask for completion of that edit
             javax.swing.JOptionPane.showMessageDialog(_editActionFrame,
@@ -2560,6 +2847,13 @@ public class LogixTableAction extends AbstractTableAction {
         _variableNamePanel.setVisible(false);
         panel1.add(_variableNamePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
+
+        // Arbitrary name combo box to facilitate the panel construction
+        _variableComboNamePanel = makeEditPanel(_sensorNameBox, "LabelItemName", null);
+        _variableComboNamePanel.setVisible(false);
+        panel1.add(_variableComboNamePanel);
+        panel1.add(Box.createHorizontalStrut(STRUT));
+
         // State Box
         _variableStateBox = new JComboBox<String>();
         _variableStateBox.addItem("XXXXXXX");
@@ -2701,6 +2995,12 @@ public class LogixTableAction extends AbstractTableAction {
                 new Dimension(50, _namePanel.getPreferredSize().height));
         _namePanel.setVisible(false);
         panel1.add(_namePanel);
+        panel1.add(Box.createHorizontalStrut(STRUT));
+
+        // Arbitrary name combo box to facilitate the panel construction
+        _actionComboNamePanel = makeEditPanel(_sensorNameBox, "LabelItemName", null);
+        _actionComboNamePanel.setVisible(false);
+        panel1.add(_actionComboNamePanel);
         panel1.add(Box.createHorizontalStrut(STRUT));
 
         _actionTypeBox = new JComboBox<String>();
@@ -2908,6 +3208,165 @@ public class LogixTableAction extends AbstractTableAction {
         return panel3;
     }
 
+    /**
+     * Close a single panel picklist JFrame and related items.
+     * @since 4.7.3
+     */
+    void closeSinglePanelPickList() {
+        if (_pickSingleFrame != null) {
+            _pickSingleFrame.setVisible(false);
+            _pickSingleFrame.dispose();
+            _pickSingleFrame = null;
+            _pickListener = null;
+            _pickTable = null;
+            _pickSingle = null;
+        }
+    }
+    
+    /**
+     * Create a single panel picklist JFrame for choosing action and variable names.
+     * <p>
+     * Called from {@link #actionItemChanged} and {@link #variableTypeChanged}
+     * @since 4.7.3
+     * @param itemType The selected variable or action type
+     * @param isVariable True if called by variableTypeChanged
+     */
+    void createSinglePanelPickList(int itemType, boolean isVariable) {
+        if (_pickListener != null) {
+            int saveType = _pickListener.getItemType();
+            if (saveType != itemType) {
+                // The type has changed, need to start over
+                closeSinglePanelPickList();
+            } else {
+                // The pick list has already been created
+                return;
+            }
+        }
+
+        switch (itemType) {
+            case Conditional.ITEM_TYPE_SENSOR:      // 1
+                _pickSingle = new PickSinglePanel(PickListModel.sensorPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_TURNOUT:     // 2
+                _pickSingle = new PickSinglePanel(PickListModel.turnoutPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_LIGHT:       // 3
+                _pickSingle = new PickSinglePanel(PickListModel.lightPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_SIGNALHEAD:  // 4
+                _pickSingle = new PickSinglePanel(PickListModel.signalHeadPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_SIGNALMAST:  // 5
+                _pickSingle = new PickSinglePanel(PickListModel.signalMastPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_MEMORY:      // 6
+                _pickSingle = new PickSinglePanel(PickListModel.memoryPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_WARRANT:     // 8
+                _pickSingle = new PickSinglePanel(PickListModel.warrantPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_OBLOCK:      // 10
+                _pickSingle = new PickSinglePanel(PickListModel.oBlockPickModelInstance());
+                break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
+                _pickSingle = new PickSinglePanel(PickListModel.entryExitPickModelInstance());
+                break;
+//            case Conditional.ITEM_TYPE_BLOCK:     // Future ??
+//                _pickSingle = new PickSinglePanel(PickListModel.blockPickModelInstance());
+//                break;
+            default:
+                if (itemType == Conditional.ITEM_TYPE_CONDITIONAL && isVariable) {
+                    _pickSingle = new PickSinglePanel(PickListModel.conditionalPickModelInstance());
+                    break;      // Conditional (type 7) Variable, no pick list for Action
+                }
+                return;             // Skip any other items.
+        }
+
+        // Create the JFrame
+        _pickSingleFrame = new JmriJFrame(rbx.getString("SinglePickFrame"));
+        _pickSingleFrame.setContentPane(_pickSingle);
+        _pickSingleFrame.pack();
+        _pickSingleFrame.setVisible(true);
+        _pickSingleFrame.toFront();
+
+        // Set the table selection listener
+        _pickListener = new PickSingleListener();
+        _pickTable = _pickSingle.getTable();
+        _pickTable.getSelectionModel().addListSelectionListener(_pickListener);
+        
+        // Save the current item type
+        _pickListener.setItemType(itemType);
+    }
+
+    /**
+     * For each name combo box, enable first item blank and add the item change listener
+     * @since 4.7.3
+     */
+    void setNameBoxListeners() {
+        if (_nameBoxListenersDone) {
+            return;
+        }
+
+        _sensorNameBox.setFirstItemBlank(true);
+        _turnoutNameBox.setFirstItemBlank(true);
+        _lightNameBox.setFirstItemBlank(true);
+        _sigheadNameBox.setFirstItemBlank(true);
+        _sigmastNameBox.setFirstItemBlank(true);
+        _memoryNameBox.setFirstItemBlank(true);
+        _warrantNameBox.setFirstItemBlank(true);
+        _oblockNameBox.setFirstItemBlank(true);
+        _conditionalNameBox.setFirstItemBlank(true);
+        _logixNameBox.setFirstItemBlank(true);
+//        _entryexitNameBox.setFirstItemBlank(true);
+
+        _sensorNameListener = new NameBoxListener();
+        _sensorNameListener.setNameType("sensor");
+        _sensorNameBox.addItemListener(_sensorNameListener);
+
+        _turnoutNameListener = new NameBoxListener();
+        _turnoutNameListener.setNameType("turnout");
+        _turnoutNameBox.addItemListener(_turnoutNameListener);
+
+        _lightNameListener = new NameBoxListener();
+        _lightNameListener.setNameType("light");
+        _lightNameBox.addItemListener(_lightNameListener);
+
+        _sigheadNameListener = new NameBoxListener();
+        _sigheadNameListener.setNameType("signalhead");
+        _sigheadNameBox.addItemListener(_sigheadNameListener);
+
+        _sigmastNameListener = new NameBoxListener();
+        _sigmastNameListener.setNameType("signalmast");
+        _sigmastNameBox.addItemListener(_sigmastNameListener);
+
+        _memoryNameListener = new NameBoxListener();
+        _memoryNameListener.setNameType("memory");
+        _memoryNameBox.addItemListener(_memoryNameListener);
+
+        _warrantNameListener = new NameBoxListener();
+        _warrantNameListener.setNameType("warrant");
+        _warrantNameBox.addItemListener(_warrantNameListener);
+
+        _oblockNameListener = new NameBoxListener();
+        _oblockNameListener.setNameType("oblock");
+        _oblockNameBox.addItemListener(_oblockNameListener);
+
+        _conditionalNameListener = new NameBoxListener();
+        _conditionalNameListener.setNameType("conditional");
+        _conditionalNameBox.addItemListener(_conditionalNameListener);
+
+        _logixNameListener = new NameBoxListener();
+        _logixNameListener.setNameType("logix");
+        _logixNameBox.addItemListener(_logixNameListener);
+
+//        _entryexitNameListener = new NameBoxListener();
+//        _entryexitNameListener.setNameType("entryexit");
+//        _entryexitNameBox.addItemListener(_entryexitNameListener);
+        
+        _nameBoxListenersDone = true;
+
+    }
+
     // *********** Responses for Edit Action and Edit Variable Buttons **********
 
     /**
@@ -2967,6 +3426,7 @@ public class LogixTableAction extends AbstractTableAction {
             _editActionFrame.setVisible(false);
             _editActionFrame.dispose();
             _editActionFrame = null;
+            closeSinglePanelPickList();
         }
         _curActionRowNumber = -1;
     }
@@ -2996,6 +3456,7 @@ public class LogixTableAction extends AbstractTableAction {
             _editVariableFrame.setVisible(false);
             _editVariableFrame.dispose();
             _editVariableFrame = null;
+            closeSinglePanelPickList();
         }
         _curVariableRowNumber = -1;
     }
@@ -3466,6 +3927,7 @@ public class LogixTableAction extends AbstractTableAction {
         _namePanel.setVisible(false);
         _actionPanel.setVisible(false);
         _optionPanel.setVisible(false);
+        _actionComboNamePanel.setVisible(false);
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
         if (type == Conditional.TYPE_NONE && itemType == Conditional.TYPE_NONE) {
             return;
@@ -3485,6 +3947,10 @@ public class LogixTableAction extends AbstractTableAction {
         _actionTypeBox.addItem("");
         _actionNameField.removeActionListener(actionSignalHeadNameListener);
         _actionNameField.removeActionListener(actionSignalMastNameListener);
+
+        if (_selectionMode == SelectionMode.USESINGLE) {
+            createSinglePanelPickList(itemType, false);
+        }
 
         switch (itemType) {
             case Conditional.ITEM_TYPE_TURNOUT:
@@ -3521,6 +3987,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintTurnout"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_turnoutNameBox, _turnoutNameListener);
                 break;
             case Conditional.ITEM_TYPE_SENSOR:
                 for (int i = 0; i < Conditional.ITEM_TO_SENSOR_ACTION.length; i++) {
@@ -3549,6 +4018,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintSensor"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_sensorNameBox, _sensorNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 _actionNameField.addActionListener(actionSignalHeadNameListener);
@@ -3569,6 +4041,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintSignal"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_sigheadNameBox, _sigheadNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 _actionNameField.addActionListener(actionSignalMastNameListener);
@@ -3589,6 +4064,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_sigmastNameBox, _sigmastNameListener);
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
                 for (int i = 0; i < Conditional.ITEM_TO_LIGHT_ACTION.length; i++) {
@@ -3619,6 +4097,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintLight"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_lightNameBox, _lightNameListener);
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 for (int i = 0; i < Conditional.ITEM_TO_MEMORY_ACTION.length; i++) {
@@ -3637,6 +4118,9 @@ public class LogixTableAction extends AbstractTableAction {
                 _shortTextPanel.setVisible(true);
                 _namePanel.setToolTipText(rbx.getString("NameHintMemory"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_memoryNameBox, _memoryNameListener);
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 for (int i = 0; i < Conditional.ITEM_TO_CLOCK_ACTION.length; i++) {
@@ -3658,6 +4142,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintLogix"));
                 _namePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setActionNameBox(_logixNameBox, _logixNameListener);
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
                 for (int i = 0; i < Conditional.ITEM_TO_WARRANT_ACTION.length; i++) {
@@ -3691,6 +4178,9 @@ public class LogixTableAction extends AbstractTableAction {
                     }
                     _shortTextPanel.setVisible(true);
                 }
+
+                // Set and swap name boxes
+                setActionNameBox(_warrantNameBox, _warrantNameListener);
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:
                 for (int i = 0; i < Conditional.ITEM_TO_OBLOCK_ACTION.length; i++) {
@@ -3706,6 +4196,9 @@ public class LogixTableAction extends AbstractTableAction {
                     l.setText(rbx.getString("LabelBlockValue"));
                     _shortTextPanel.setVisible(true);
                 }
+
+                // Set and swap name boxes
+                setActionNameBox(_oblockNameBox, _oblockNameListener);
                 break;
             case Conditional.ITEM_TYPE_AUDIO:
                 for (int i = 0; i < Conditional.ITEM_TO_AUDIO_ACTION.length; i++) {
@@ -3783,6 +4276,35 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     /**
+     * Update the name combo box selection based on the current contents of the name field.
+     * Swap the name panel contents and set visible if needed
+     * Called by actionItemChanged
+     *
+     * @since 4.7.3
+     * @param nameBox The name box to be updated.
+     * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
+     */
+    void setActionNameBox (JmriBeanComboBox nameBox, NameBoxListener nameBoxListener) {
+        if (_selectionMode != SelectionMode.USECOMBO) {
+            return;
+        }
+        
+        // Select the current entry
+        String dispName = nameBox.getSelectedDisplayName();
+        String newName = _curAction.getDeviceName();
+        if (newName != null && !(newName.equals(dispName))) {
+            nameBoxListener.setProgramEvent();
+            nameBox.setSelectedBeanByName(newName);
+        }
+
+        // Swap the name boxes
+        _actionComboNamePanel.remove(1);
+        _actionComboNamePanel.add(nameBox, null, 1);
+        _namePanel.setVisible(false);
+        _actionComboNamePanel.setVisible(true);
+    }
+
+    /**
      * Check if Memory type in a Conditional was changed by the user.
      * <p>
      * Update GUI if it has. Called from {@link #makeEditVariableWindow(int)}
@@ -3811,10 +4333,13 @@ public class LogixTableAction extends AbstractTableAction {
                     + "\" _variableStateBox.getSelectedIndex()= \"" + _variableStateBox.getSelectedIndex() + "\"");
 
             int itemType = _variableTypeBox.getSelectedIndex();
-            if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD || itemType == Conditional.ITEM_TYPE_SIGNALMAST) {
-                // index 1 is Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS or Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS
-                if (_variableStateBox.getSelectedIndex() == 1) {
+            
+            if (_variableStateBox.getSelectedIndex() == 1) {
+                if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD) {
                     loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
+                    _variableSignalPanel.setVisible(true);
+                } else if (itemType == Conditional.ITEM_TYPE_SIGNALMAST) {
+                    loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
                 } else {
                     _variableSignalPanel.setVisible(false);
@@ -3822,6 +4347,7 @@ public class LogixTableAction extends AbstractTableAction {
             } else {
                 _variableSignalPanel.setVisible(false);
             }
+            
             _variableSignalBox.setMaximumSize(_variableSignalBox.getPreferredSize());
             if (_editVariableFrame != null) {
                 _editVariableFrame.pack();
@@ -3934,10 +4460,16 @@ public class LogixTableAction extends AbstractTableAction {
         _variableSignalPanel.setVisible(false);
         _variableData1Panel.setVisible(false);
         _variableData2Panel.setVisible(false);
+        _variableComboNamePanel.setVisible(false);
         _variableStateBox.removeAllItems();
         _variableNameField.removeActionListener(variableSignalHeadNameListener);
         _variableNameField.removeActionListener(variableSignalMastNameListener);
         _variableStateBox.removeActionListener(variableSignalTestStateListener);
+
+        if (_selectionMode == SelectionMode.USESINGLE) {
+            createSinglePanelPickList(itemType, true);
+        }
+
         switch (itemType) {
             case Conditional.TYPE_NONE:
                 return;
@@ -3949,6 +4481,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_sensorNameBox, _sensorNameListener);
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintTurnout"));
@@ -3958,6 +4493,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_turnoutNameBox, _turnoutNameListener);
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintLight"));
@@ -3967,6 +4505,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_lightNameBox, _lightNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 _variableNameField.addActionListener(variableSignalHeadNameListener);
@@ -3985,6 +4526,9 @@ public class LogixTableAction extends AbstractTableAction {
                 } else {
                     _variableSignalPanel.setVisible(false);
                 }
+
+                // Set and swap name boxes
+                setVariableNameBox(_sigheadNameBox, _sigheadNameListener);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 _variableNameField.addActionListener(variableSignalMastNameListener);
@@ -4003,6 +4547,9 @@ public class LogixTableAction extends AbstractTableAction {
                 } else {
                     _variableSignalPanel.setVisible(false);
                 }
+
+                // Set and swap name boxes
+                setVariableNameBox(_sigmastNameBox, _sigmastNameListener);
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 JPanel p = (JPanel) _variableData1Panel.getComponent(0);
@@ -4020,6 +4567,9 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableData1Panel.setToolTipText(rbx.getString("DataHintMemory"));
                 _variableData1Panel.setVisible(true);
                 _variableComparePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_memoryNameBox, _memoryNameListener);
                 break;
             case Conditional.ITEM_TYPE_CONDITIONAL:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintConditional"));
@@ -4029,6 +4579,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_conditionalNameBox, _conditionalNameListener);
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintWarrant"));
@@ -4038,6 +4591,9 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_warrantNameBox, _warrantNameListener);
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 p = (JPanel) _variableData1Panel.getComponent(0);
@@ -4056,6 +4612,9 @@ public class LogixTableAction extends AbstractTableAction {
                     _variableStateBox.addItem(names.next());
                 }
                 _variableStatePanel.setVisible(true);
+
+                // Set and swap name boxes
+                setVariableNameBox(_oblockNameBox, _oblockNameListener);
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 _variableNameField.setText(_curVariable.getName());
@@ -4070,6 +4629,34 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
         }
         _variableStateBox.setMaximumSize(_variableStateBox.getPreferredSize());
+    }
+
+    /**
+     * Update the name combo box selection based on the current contents of the name field.
+     * Swap the name panel contents and set visible if needed
+     * Called by variableItemChanged
+     * @since 4.7.3
+     * @param nameBox The name box to be updated.
+     * @param nameBoxListener The name box listener:  setProgramEvent() to disable the redundant field update since this is a result of a field update.
+     */
+    void setVariableNameBox (JmriBeanComboBox nameBox, NameBoxListener nameBoxListener) {
+        if (_selectionMode != SelectionMode.USECOMBO) {
+            return;
+        }
+        
+        // Select the current entry
+        String dispName = nameBox.getSelectedDisplayName();
+        String newName = _curVariable.getName();
+        if (newName != null && !(newName.equals(dispName))) {
+            nameBoxListener.setProgramEvent();
+            nameBox.setSelectedBeanByName(newName);
+        }
+
+        // Swap the name boxes
+        _variableComboNamePanel.remove(1);
+        _variableComboNamePanel.add(nameBox, null, 1);
+        _variableNamePanel.setVisible(false);
+        _variableComboNamePanel.setVisible(true);
     }
 
     /**

@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager

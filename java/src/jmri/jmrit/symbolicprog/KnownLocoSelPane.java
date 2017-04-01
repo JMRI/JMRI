@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * (e.g. in a local anonymous class) to create the programmer frame you're
  * interested in.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class KnownLocoSelPane extends LocoSelPane {
 

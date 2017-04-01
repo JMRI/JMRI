@@ -12,7 +12,7 @@ import jmri.jmrix.JmrixConfigPane;
  * <P>
  * This uses the {@link XnTcpAdapter} class to do the actual connection.
  *
- * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob
+ * @author Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob
  * Jacobsen, Copyright (C) 2003
  *  GT - May 2008 - Added possibility of manually
  * defining the IP address and the TCP port number GT - May 2011 - Fixed

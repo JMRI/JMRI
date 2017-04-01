@@ -7,7 +7,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * Editor panel for the GENERATE_TRIGGER macro from the Digitrax sound
  * definition language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 class GenerateTriggerEditor extends SdfMacroEditor {
 

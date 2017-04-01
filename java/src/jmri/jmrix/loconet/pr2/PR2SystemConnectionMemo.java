@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.SlotManager;
 /**
  * Lightweight class to denote that a PR2 is active
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 

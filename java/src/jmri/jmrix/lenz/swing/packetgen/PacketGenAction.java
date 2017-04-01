@@ -1,10 +1,10 @@
 /**
  * PacketGenAction.java
  *
- * Description:	Swing action to create and register a XpressNet PacketGenFrame
+ * Description: Swing action to create and register a XpressNet PacketGenFrame
  * object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
   */
 package jmri.jmrix.lenz.swing.packetgen;
 

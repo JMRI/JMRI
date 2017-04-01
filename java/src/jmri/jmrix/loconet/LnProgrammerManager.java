@@ -10,7 +10,7 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet
  *
  * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
   */
 public class LnProgrammerManager extends DefaultProgrammerManager {
 

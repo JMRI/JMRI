@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
   */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {

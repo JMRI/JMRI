@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * This class remains in the {@code apps} package for historical reasons related
  * to preferences storage.</p>
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  * @see apps.startup.CreateButtonModelFactory
  */
 public class CreateButtonModel extends AbstractActionModel {

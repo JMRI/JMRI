@@ -15,7 +15,7 @@ import jmri.Sensor;
  * Provides an edit panel for a sensor debounce object This is designed so that
  * it can be re-used in other panels.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SensorDebounceEditAction extends BeanEditAction {
 

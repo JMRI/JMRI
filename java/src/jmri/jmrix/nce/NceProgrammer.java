@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * This has two states: NOTPROGRAMMING, and COMMANDSENT. The transitions to and
  * from programming mode are now handled in the TrafficController code.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2016
+ * @author Bob Jacobsen Copyright (C) 2001, 2016
  * @author kcameron Copyright (C) 2014
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
@@ -89,11 +89,11 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
-    static final int COMMANDSENT_2 = 4;	// ops programming mode, send msg twice
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
+    static final int COMMANDSENT_2 = 4; // ops programming mode, send msg twice
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override
