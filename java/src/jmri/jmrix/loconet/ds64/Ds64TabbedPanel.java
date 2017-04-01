@@ -249,8 +249,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.ds64.DS64Frame";
-    } // NOI18N
+        return "package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"; // NOI18N
+    }
 
     @Override
     public String getTitle() {
@@ -302,17 +302,17 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         updateGuiBasicOpSw(9);
         opsw[10] = commandType.getSelectedIndex() == 1;
         updateGuiBasicOpSw(10);
-        opsw[11] = routesControl.getSelectedIndex() == 2;
+        opsw[11] = (routesControl.getSelectedIndex() == 1) || (routesControl.getSelectedIndex() == 3);
         updateGuiBasicOpSw(11);
-        opsw[12] = localControlOfOutputsStyle.getSelectedIndex() == 2;  //2 -> OpSw12="c"
+        opsw[12] = (localControlOfOutputsStyle.getSelectedIndex() & 1) == 1;  //2 -> OpSw12="c"
         updateGuiBasicOpSw(12);
         opsw[13] = (sensorMessageTrigger.getSelectedIndex() == 1);
         updateGuiBasicOpSw(13);
         opsw[14] = commandSource.getSelectedIndex() == 1;
         updateGuiBasicOpSw(14);
-        opsw[15] = localControlOfOutputsStyle.getSelectedIndex() == 0;  //0 -> OpSw15="c"
+        opsw[15] = (localControlOfOutputsStyle.getSelectedIndex() >= 2);  //0 -> OpSw15="c"
         updateGuiBasicOpSw(15);
-        opsw[16] = routesControl.getSelectedIndex() == 0;
+        opsw[16] = routesControl.getSelectedIndex() >=2;
         updateGuiBasicOpSw(16);
         opsw[17] = output1CrossbuckFlasherCheckBox.isSelected();
         updateGuiBasicOpSw(17);
@@ -356,11 +356,11 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 break;
             case 11:
             case 16:
-                routesControl.setSelectedIndex(((opsw[16] == true) ? 0 : ((opsw[11] ? 2 : 1))));
+                routesControl.setSelectedIndex((((opsw[16] == true) ? 2 : 0) + (opsw[11] ? 1 : 0)));
                 break;
             case 15:
             case 12:
-                localControlOfOutputsStyle.setSelectedIndex((opsw[15] == true) ? 0 : (opsw[12] ? 2 : 1));
+                localControlOfOutputsStyle.setSelectedIndex(((opsw[15] == true) ? 2 : 0) + (opsw[12] ? 1 : 0));
                 break;
             case 13:
                 sensorMessageTrigger.setSelectedIndex((opsw[13] == true) ? 1 : 0);   // selection 0 - only for A inputs; 1 - both A and S inputs
@@ -2129,7 +2129,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         // DS64 routes
         String[] routesControls = {Bundle.getMessage("ComboBoxEntryRoutesOption0"),
             Bundle.getMessage("ComboBoxEntryRoutesOption1"),
-            Bundle.getMessage("ComboBoxEntryRoutesOption2")};
+            Bundle.getMessage("ComboBoxEntryRoutesOption2"),
+            Bundle.getMessage("ComboBoxEntryRoutesOption3")};
         routesControlLabel = new JLabel(Bundle.getMessage("LabelTriggerDs64Routes"));
         routesControl = new JComboBox<>(routesControls);    // opSws 11, 16
         routesControl.setToolTipText(Bundle.getMessage("ToolTipLabelRouteControlOptions"));
@@ -2140,7 +2141,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         String[] localControlOfOutputsStyles = {
             Bundle.getMessage("ComboBoxInputsControlOutputsType0"),
             Bundle.getMessage("ComboBoxInputsControlOutputsType1"),
-            Bundle.getMessage("ComboBoxInputsControlOutputsType2")};
+            Bundle.getMessage("ComboBoxInputsControlOutputsType2"),
+            Bundle.getMessage("comboboxInputsControlOutputsType3")};
         localControlOfOutputsStyleLabel = new JLabel(Bundle.getMessage("LabelLocalInputsControlOutputs"));
         localControlOfOutputsStyle = new JComboBox<>(localControlOfOutputsStyles); // opSw12
         localControlOfOutputsStyle.setToolTipText(Bundle.getMessage("ToolTipLocalInputsControl"));
@@ -2231,7 +2233,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         generalTabbedPane = new JTabbedPane();
         generalPanel = new JPanel();
         generalPanel.setLayout(new BoxLayout(generalPanel, BoxLayout.Y_AXIS));
-        generalPanel.setName("Basic Settings");
+        generalPanel.setName("Basic Settings"); // NOI18N
 
         JPanel allOutputControls = new JPanel();
         allOutputControls.setLayout(new BoxLayout(allOutputControls, BoxLayout.Y_AXIS));
@@ -2308,7 +2310,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         localRoutesPanel.setLayout(new BoxLayout(localRoutesPanel, BoxLayout.Y_AXIS));
         javax.swing.border.TitledBorder localRoutesTitleBorder;
         localRoutesTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
-                Bundle.getMessage("TitledBorderLabelDS64Routes"));
+                Bundle.getMessage("TitledBorderLabelRoutes"));
         localRoutesPanel.setBorder(localRoutesTitleBorder);
 
         JPanel routesControlPanel = new JPanel();
@@ -2355,7 +2357,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         opswsValues.setLayout(new BoxLayout(opswsValues, BoxLayout.Y_AXIS));
         javax.swing.border.TitledBorder opswsValuesTitleBorder;
         opswsValuesTitleBorder = javax.swing.BorderFactory.createTitledBorder(blackline,
-                "OpSws");
+                Bundle.getMessage("TitledBorderLabelOpSws"));
         opswsValues.setBorder(opswsValuesTitleBorder);
 
         opswsPanel.setLayout(new BoxLayout(opswsPanel, BoxLayout.Y_AXIS));
@@ -2383,7 +2385,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         int ind = source.index;
                         boolean st = (event.getStateChange() == ItemEvent.DESELECTED);
                         log.debug("ItemEventListener Opsw values: " + ind + " thrown radio button event: "
-                                + st + " " + (st ? "Closed" : "thrown") + ".");
+                                + st + " " + (st ? "Closed" : "Thrown") + "."); // NOI18N
                         opsw[ind] = st;
                     }
                 });
@@ -2394,7 +2396,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         opswsScrollPane.setPreferredSize(new java.awt.Dimension(180, 200));
         opswsScrollPane.setName("Simple OpSws"); // NOI18N
 
-        generalTabbedPane.addTab("Basic OpSws", null, opswsScrollPane, "OpSws for basic settings");
+        generalTabbedPane.addTab(Bundle.getMessage("TabTextOpSwValues"), null, 
+                opswsScrollPane, Bundle.getMessage("TabToolTipOpSwValues"));
 
         outputAddrsPanel = new JPanel();
         outputAddrsPanel.setLayout(new BoxLayout(outputAddrsPanel, BoxLayout.Y_AXIS));
@@ -3007,14 +3010,14 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         break;
 
                     case "1116": // NOI18N
-                        opsw[11] = routesControl.getSelectedIndex() == 2;
-                        opsw[16] = routesControl.getSelectedIndex() == 0;
+                        opsw[11] = (routesControl.getSelectedIndex()  == 1) || (routesControl.getSelectedIndex() == 3);
+                        opsw[16] = routesControl.getSelectedIndex() >= 2;
                         updateGuiBasicOpSw(11);
                         updateGuiBasicOpSw(16);
                         break;
                     case "1215": // NOI18N
-                        opsw[12] = localControlOfOutputsStyle.getSelectedIndex() == 2;  //2 -> OpSw12="c"
-                        opsw[15] = localControlOfOutputsStyle.getSelectedIndex() == 0;  //0 -> OpSw15="c"
+                        opsw[12] = (localControlOfOutputsStyle.getSelectedIndex() & 1) == 1;  //2 -> OpSw12="c"
+                        opsw[15] = (localControlOfOutputsStyle.getSelectedIndex() >= 2);  //0 -> OpSw15="c"
                         updateGuiBasicOpSw(12);
                         updateGuiBasicOpSw(15);
                         break;
