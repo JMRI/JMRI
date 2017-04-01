@@ -353,12 +353,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case WARRANT_COLUMN:
             return w.getDisplayName();
         case ROUTE_COLUMN:
-            BlockOrder bo = w.getfirstOrder();
-            if (bo != null) {
-                return Bundle.getMessage("Origin", bo.getBlock()
-                        .getDisplayName());
-            }
-            break;
+            BlockOrder bo0 = w.getfirstOrder();
+            BlockOrder bo1 = w.getLastOrder();
+            return Bundle.getMessage("WarrantRoute", 
+                        (bo0==null?"?":bo0.getBlock().getDisplayName()),
+                        (bo1==null?"?":bo1.getBlock().getDisplayName()));
         case TRAIN_NAME_COLUMN:
             return w.getTrainName();
         case ADDRESS_COLUMN:

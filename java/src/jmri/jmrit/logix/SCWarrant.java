@@ -500,15 +500,15 @@ public class SCWarrant extends Warrant {
                 }
                 if (timeToPlatform > 100) {
                     log.debug(_warrant._trainName+" runSignalControlledTrain is now fully into the stopping block. Proceeding for "+timeToPlatform+" miliseconds");
-//                    long timeWhenDone = System.currentTimeMillis() + timeToPlatform;
-//                    long remaining;
-//                    while ((remaining = timeWhenDone - System.currentTimeMillis()) > 0) {
+                    long timeWhenDone = System.currentTimeMillis() + timeToPlatform;
+                    long remaining;
+                    while ((remaining = timeWhenDone - System.currentTimeMillis()) > 0) {
                         try {
-                            _warrant.wait(timeToPlatform);  // was remaining.  (?)
+                            _warrant.wait(remaining);
                         } catch (InterruptedException e) {
                             log.debug(_warrant._trainName+" InterruptedException "+e);
                         }
-//                    }
+                    }
                 }
                 log.debug(_warrant._trainName+" runSignalControlledTrain STOPPING TRAIN IN STOP BLOCK");
                 _engineer.setSpeed(SPEED_STOP);

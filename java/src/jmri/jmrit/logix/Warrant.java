@@ -1786,6 +1786,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _cmdIndex = cmdIndex;
             if(log.isDebugEnabled()) log.debug("CommandDelay: will wait {}ms, then Ramp to {}", startWait, speedType);
         }
+        
+        void quit(){
+            quit = true;
+        }
 
         @Override
         public void run() {
@@ -1803,9 +1807,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                             _startWait, nextSpeedType);
                     jmri.util.ThreadingUtil.runOnLayout(() ->{ // move to layout-handling thread
                         _engineer.rampSpeedTo(nextSpeedType);                      
-                        if (nextSpeedType.equals(Stop) || nextSpeedType.equals(EStop)) {
-                            _engineer.setWaitforClear(true);
-                        } else {
+                        if (!nextSpeedType.equals(Stop) && !nextSpeedType.equals(EStop)) {
                             _curSpeedType = nextSpeedType;
                         }
                         _engineer.advanceToCommandIndex(_cmdIndex);
@@ -1836,13 +1838,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     /**
-     * Called to set the correct speed for the train. Assumes 
-     * the train occupies the block of the current block order.
-     * Will resume movement is train is stopped.
-     * Look for speed restrictions in this block and ahead. 
-     * If speed restriction changes are required in this block, set the 
-     * appropriate flags in the Engineer. if the change is not immediate
-     * determine the proper time delay to change speed.
+     * Called to set the correct speed for the train. Whether to modify the
+     * scripted speed due to a track condition (signaled speed or rogue
+     * occupation) or to return to the scripted speed after the condition
+     * is cleared. Assumes the train occupies the block of the current
+     * block order.
+     * Looks for speed requirements of this block and takes immediate
+     * action if found. Otherwise looks ahead for future speed change
+     * needs.  If speed restriction changes are required to begin in  
+     * this block, but the change is not immediate, then
+     * determine the proper time delay to start the speed change.
      * @param position estimated position of train inn the block
      * @return false on errors
      */
@@ -1874,6 +1879,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _engineer.setSpeedToType(Stop);
             return false;
         }
+        // Error checking done.
+        // Cancel any delayed speed changes currently in progress.
+        if (_delayCommand!=null) {
+            _delayCommand.interrupt();
+            _delayCommand.quit();
+        }
+        _engineer.cancelRamp();
+        
         // checking situation for the current block
         // _curSpeedType is the speed type train is currently running
         // currentType is the required speed limit for this block
@@ -1889,9 +1902,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.warn("Train {} moved past required speed of \"{}\" at speed \"{}\" in block \"{}\"! Set speed to {}. warrant= {}",
                         getTrainName(), currentType, _curSpeedType, curBlock.getDisplayName(), currentType, getDisplayName());
                 _engineer.setSpeedToType(currentType);
-                if (currentType.equals(Stop) || currentType.equals(EStop)) {
-                    _engineer.setWaitforClear(true);
-                } else {
+                if (!currentType.equals(Stop) && !currentType.equals(EStop)) {
                     _curSpeedType = currentType;
                 }
             } else {
@@ -2014,9 +2025,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             log.warn("Train {} ramping to speed \"{}\" in block \"{}\", warrant= {}",
                     getTrainName(), speedType, curBlock.getDisplayName(), getDisplayName());
             firePropertyChange("SpeedChange", _idxCurrentOrder-1, _idxCurrentOrder);
-            if (speedType.equals(Stop) || speedType.equals(EStop)) {
-                _engineer.setWaitforClear(true);
-            } else {
+            if (!speedType.equals(Stop) && !speedType.equals(EStop)) {
                 _curSpeedType = speedType;
             }
             return true;
@@ -2030,15 +2039,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         waitTime -= 300;    // shorten time a bit to allow for possible processing time.
         if (waitTime <= 0) {
             _engineer.rampSpeedTo(speedType);            
-            if (speedType.equals(Stop) || speedType.equals(EStop)) {
-                _engineer.setWaitforClear(true);                    
-            } else {
+            if (!speedType.equals(Stop) && !speedType.equals(EStop)) {
                 _curSpeedType = speedType;
             }
         } else {
-            if (_delayCommand!=null) {
-                _delayCommand.interrupt();
-            }
             CommandDelay _delayCommand = new CommandDelay(speedType, waitTime, blkSpeedInfo.getLastIndex());
             _delayCommand.start();            
         }
