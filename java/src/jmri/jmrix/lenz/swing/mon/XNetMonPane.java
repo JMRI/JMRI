@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel displaying (and logging) XpressNet messages derived from XNetMonFrame.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2004-2014
  * @author Giorgio Terdina Copyright (C) 2007
  */
@@ -55,7 +55,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     }
 
     @Override
-    public synchronized void message(XNetReply l) {				// receive a XpressNet message and log it
+    public synchronized void message(XNetReply l) {    // receive a XpressNet message and log it
         // display the raw data if requested
         StringBuilder raw = new StringBuilder();
         if (rawCheckBox.isSelected()) {

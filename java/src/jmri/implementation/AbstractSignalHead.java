@@ -9,7 +9,7 @@ import jmri.Turnout;
  * <p>
  * SignalHead system names are always upper case.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
         implements SignalHead, java.io.Serializable, java.beans.VetoableChangeListener {
@@ -47,9 +47,9 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //						Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //      Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state
     /**
      * By default, signals are lit.

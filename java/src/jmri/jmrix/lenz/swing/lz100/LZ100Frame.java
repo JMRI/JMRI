@@ -12,7 +12,7 @@ import javax.swing.JToggleButton;
  * This is a container for the LZ100 configuration utility. The actual utiliy is
  * defined in {@link LZ100InternalFrame}
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
   */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 

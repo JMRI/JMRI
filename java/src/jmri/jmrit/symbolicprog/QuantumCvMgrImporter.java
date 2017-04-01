@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Alex Shepherd Copyright (C) 2003
- * @author	Dave Heap Copyright (C) 2015
+ * @author Alex Shepherd Copyright (C) 2003
+ * @author Dave Heap Copyright (C) 2015
  */
 public class QuantumCvMgrImporter {
 

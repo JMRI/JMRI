@@ -63,7 +63,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		// Layout the panel by rows
+  // Layout the panel by rows
 
         // row 1
         JPanel pOption = new JPanel();

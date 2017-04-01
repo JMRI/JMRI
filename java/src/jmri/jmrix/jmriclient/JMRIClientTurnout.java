@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
  * JMRIClient implementation of the Turnout interface.
  * <P>
  *
- * Description:	extend jmri.AbstractTurnout for JMRIClient layouts
+ * Description: extend jmri.AbstractTurnout for JMRIClient layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
  */
 public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientListener {
 

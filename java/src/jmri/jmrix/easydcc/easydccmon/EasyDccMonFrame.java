@@ -8,7 +8,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
 /**
  * Frame displaying (and logging) EasyDcc command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 

@@ -385,7 +385,7 @@ public class SCWarrant extends Warrant {
         }
         String property = evt.getPropertyName();
         log.debug(_trainName+" propertyChange \"" + property + "\" new= " + evt.getNewValue()
-            		+ " source= " + ((NamedBean) evt.getSource()).getDisplayName()
+              + " source= " + ((NamedBean) evt.getSource()).getDisplayName()
                     + " - warrant= " + getDisplayName());
         if (_nextSignal != null && _nextSignal == evt.getSource()) {
             if (property.equals("Aspect") || property.equals("Appearance")) {

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * LocoNet Monitor pane displaying (and logging) LocoNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
 

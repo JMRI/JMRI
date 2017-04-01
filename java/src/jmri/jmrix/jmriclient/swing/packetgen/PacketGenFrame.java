@@ -7,9 +7,9 @@ import jmri.jmrix.jmriclient.JMRIClientReply;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 
 /**
- * Description:	Frame for user input of JMRIClient messages
+ * Description: Frame for user input of JMRIClient messages
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.jmriclient.JMRIClientListener {
 

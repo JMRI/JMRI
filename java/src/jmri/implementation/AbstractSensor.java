@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Sensor system names are always upper case.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2009
+ * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -33,9 +33,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //					       Object oldValue,
-    //					       Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //            Object oldValue,
+    //            Object newValue)
     // _once_ if anything has changed state
     @Override
     public int getKnownState() {

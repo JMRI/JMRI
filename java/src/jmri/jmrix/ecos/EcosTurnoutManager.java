@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         implements EcosListener {

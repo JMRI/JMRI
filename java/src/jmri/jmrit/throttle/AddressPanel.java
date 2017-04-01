@@ -461,8 +461,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     private void changeOfAddress() {
         currentAddress = addrSelector.getAddress();
         if (currentAddress == null) {
-            return;	// no address
-        }		// send notification of new address
+            return; // no address
+        }  // send notification of new address
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {
@@ -480,8 +480,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     private void changeOfConsistAddress() {
         if (consistAddress == null) {
-            return;	// no address
-        }		// send notification of new address
+            return; // no address
+        }  // send notification of new address
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {

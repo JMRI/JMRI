@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 /**
  * Create a menu containing the XBee specific tools
  *
- * @author	Paul Bender Copyright 2013
+ * @author Paul Bender Copyright 2013
  */
 public class XBeeMenu extends JMenu {
 

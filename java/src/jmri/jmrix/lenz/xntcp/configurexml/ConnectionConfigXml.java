@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob
+ * @author Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob
  * Jacobsen, Copyright (C) 2003
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {

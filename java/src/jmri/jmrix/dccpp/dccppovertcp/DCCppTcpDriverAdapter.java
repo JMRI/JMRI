@@ -25,7 +25,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
 
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());
-	// TODO: Figure out what these options are, and should be.
+ // TODO: Figure out what these options are, and should be.
         //option2Name = "CommandStation";
         //option3Name = "TurnoutHandle";
         //options.put(option2Name, new Option("Command station type:", commandStationNames, false));
@@ -49,7 +49,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
         // do the common manager config
 
-	new DCCppInitializationManager(this.getSystemConnectionMemo());
+ new DCCppInitializationManager(this.getSystemConnectionMemo());
 
         // start operation
         packets.startThreads();

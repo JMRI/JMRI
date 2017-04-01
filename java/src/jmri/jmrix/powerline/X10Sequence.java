@@ -15,7 +15,7 @@ package jmri.jmrix.powerline;
  * easier by converting to and from the standard line-code sequences, but you
  * should check the coding of your new specific adapter before using them.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class X10Sequence {
 

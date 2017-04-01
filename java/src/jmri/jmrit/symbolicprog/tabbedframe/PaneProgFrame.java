@@ -497,8 +497,12 @@ abstract public class PaneProgFrame extends JmriJFrame
                 if (decoderRoot != null
                         && (programming = decoderRoot.getChild("decoder").getChild("programming")) != null) {
 
-                    // add any needed facades
-                    Programmer pf = jmri.implementation.ProgrammerFacadeSelector.loadFacadeElements(programming, mProgrammer);
+                    // add a verify-write facade if configured
+                    Programmer pf = mProgrammer;
+                    if (getDoConfirmRead()) pf = new jmri.implementation.VerifyWriteProgrammerFacade(pf);
+                    // add any facades defined in the decoder file
+                    pf = jmri.implementation.ProgrammerFacadeSelector
+                                    .loadFacadeElements(programming, pf, getCanCacheDefault());
                     log.debug("new programmer " + pf);
                     mProgrammer = pf;
                     cvModel.setProgrammer(pf);
@@ -1116,7 +1120,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JLabel title = new JLabel(Bundle.getMessage("UseThisTabCustomize"));
         title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         body.add(title);
-        body.add(new JLabel(" "));	// some padding
+        body.add(new JLabel(" ")); // some padding
 
         // add roster info
         _flPane = new FunctionLabelPane(r);
@@ -1158,7 +1162,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         JLabel title = new JLabel(Bundle.getMessage("UseThisTabMedia"));
         title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         body.add(title);
-        body.add(new JLabel(" "));	// some padding
+        body.add(new JLabel(" ")); // some padding
 
         // add roster info
         _rMPane = new RosterMediaPane(r);
@@ -1815,6 +1819,28 @@ abstract public class PaneProgFrame extends JmriJFrame
         return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
             true :
             InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
+    }
+
+    public static void setCanCacheDefault(boolean yes) {
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setCanCacheDefault(yes);
+    }
+
+    public static boolean getCanCacheDefault() {
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
+            true :
+            InstanceManager.getDefault(ProgrammerConfigManager.class).isCanCacheDefault();
+    }
+
+    public static void setDoConfirmRead(boolean yes) {
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null)
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDoConfirmRead(yes);
+    }
+
+    public static boolean getDoConfirmRead() {
+        return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ) ?
+            true :
+            InstanceManager.getDefault(ProgrammerConfigManager.class).isDoConfirmRead();
     }
 
     public RosterEntry getRosterEntry() {

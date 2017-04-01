@@ -88,7 +88,7 @@ import org.slf4j.LoggerFactory;
  * Although this is named an "Abstract" class, it's actually concrete so scripts
  * can easily use some of the methods.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -696,8 +696,8 @@ public class AbstractAutomaton implements Runnable {
      * Convenience function to set a bunch of turnouts and wait until they are
      * all in a consistent state
      *
-     * @param closed	turnouts to set to closed state
-     * @param thrown	turnouts to set to thrown state
+     * @param closed turnouts to set to closed state
+     * @param thrown turnouts to set to thrown state
      */
     public void setTurnouts(Turnout[] closed, Turnout[] thrown) {
         Turnout[] turnouts = new Turnout[closed.length + thrown.length];

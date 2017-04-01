@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Update the decoder definitions in the roster
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  * @see jmri.jmrit.XmlFile
  */
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {

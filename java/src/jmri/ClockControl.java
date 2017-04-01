@@ -31,7 +31,7 @@ import java.util.Date;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Dave Duchamp Copyright (C) 2007
+ * @author Dave Duchamp Copyright (C) 2007
  */
 public interface ClockControl {
 

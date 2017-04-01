@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on LIUSBEthernetXnetPacketizer
  * 
- * @author	Paul Bender, Copyright (C) 2011
+ * @author Paul Bender, Copyright (C) 2011
  * @author      Mark Underwood, Copyright (C) 2015
  *
  */

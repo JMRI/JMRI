@@ -446,25 +446,25 @@ public class MrcPackets {
     static void appendClockMessage(MrcMessage m, StringBuilder txt) {
         int clockModeBits = m.getElement(2) & 0xC0;
         switch (clockModeBits) {
-            case 0x00:	// AM format
+            case 0x00: // AM format
                 txt.append((m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockModeAm")); //IN18N
                 break;
-            case 0x40:	// PM format
+            case 0x40: // PM format
                 txt.append((m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockModePm")); //IN18N
                 break;
-            case 0x80:	// 24 hour format
+            case 0x80: // 24 hour format
                 txt.append(twoDigits.format(m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockMode24"));//IN18N
                 break;
-            case 0xC0:	// Unk format
+            case 0xC0: // Unk format
                 txt.append(twoDigits.format(m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))

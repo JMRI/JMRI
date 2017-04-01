@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  */
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
 
@@ -361,9 +361,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             jmri.util.StringUtil.sort(sbox);
         }
 // djd debugging - print list of TrainInfoFiles
-//		log.error("TrainInfoFilename list:");
-//		for (int j=0; j<sbox.length; j++) {
-//			log.error("   "+(j+1)+" "+sbox[j]);
+//  log.error("TrainInfoFilename list:");
+//  for (int j=0; j<sbox.length; j++) {
+//   log.error("   "+(j+1)+" "+sbox[j]);
 //        }
 // end djd debugging
         return sbox;

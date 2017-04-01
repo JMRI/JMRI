@@ -57,6 +57,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
         this.getSystemConnectionMemo().setTrafficController(packets);
 
         sourceThread = new Thread(this);
+        sourceThread.setName("Z21SimulatorAdapter sourceThread");
         sourceThread.start();
 
         this.getSystemConnectionMemo().configureManagers();
