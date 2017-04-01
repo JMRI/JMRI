@@ -587,7 +587,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                     log.error(msg);
                     return msg;
                 }
-                // warrant not found, fall through and clear
             }
             try {
                 if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
