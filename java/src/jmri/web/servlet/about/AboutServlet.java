@@ -28,6 +28,7 @@ public class AboutServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        //retrieve the list of JMRI connections as a string
         String connList = "";
         String comma = "";
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -36,7 +37,8 @@ public class AboutServlet extends HttpServlet {
                 comma = ", ";
             }
         }     
-        
+
+        //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         response.setContentType(UTF8_TEXT_HTML);
         response.getWriter().print(String.format(request.getLocale(),
@@ -50,8 +52,7 @@ public class AboutServlet extends HttpServlet {
                 jmri.Version.getCopyright(),                                        //Copyright is parm 7
                 System.getProperty("java.version", "<unknown>"),                    //Java version is parm 8
                 Locale.getDefault().toString(),                                     //locale is parm 9
-                ProfileManager.getDefault().getActiveProfile().getName()            //active profile name is 10 
-
+                ProfileManager.getDefault().getActiveProfile().getName()           //active profile name is 10
         ));
     }
 
