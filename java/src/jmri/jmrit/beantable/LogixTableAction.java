@@ -120,6 +120,12 @@ import org.slf4j.LoggerFactory;
  * The Options menu has been expanded to list the 3 methods.
  * Mar 27, 2017 - Dave Sand
  * <p>
+ * Add a Browse Option to the Logix Select Menu
+ * This will display a window that creates a formatted list of the contents of the
+ * seletcted Logix with each Conditional, Variable and Action.
+ * The code is courtesy of Chuck Catania and is used with his permission.
+ * Apr 2, 2017 - Dave Sand
+ * <p>
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
@@ -247,7 +253,7 @@ public class LogixTableAction extends AbstractTableAction {
                     if (Bundle.getMessage("ButtonEdit").equals(value)) {
                         editPressed(sName);
                         
-                    } else if (rbx.getString("BrowserButton").equals(value)) {  //CC
+                    } else if (rbx.getString("BrowserButton").equals(value)) {
                       conditionalRowNumber = row;
                       browserPressed(sName);
                       
@@ -331,7 +337,7 @@ public class LogixTableAction extends AbstractTableAction {
                 JComboBox<String> editCombo = new JComboBox<String>();
                 editCombo.addItem(Bundle.getMessage("ButtonSelect"));
                 editCombo.addItem(Bundle.getMessage("ButtonEdit"));
-				editCombo.addItem(rbx.getString("BrowserButton"));  //CC
+				editCombo.addItem(rbx.getString("BrowserButton"));
                 editCombo.addItem(Bundle.getMessage("ButtonCopy"));
                 editCombo.addItem(Bundle.getMessage("ButtonDelete"));
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
@@ -658,17 +664,6 @@ public class LogixTableAction extends AbstractTableAction {
     JTextField conditionalUserName = new JTextField(22);
     private JRadioButton _triggerOnChangeButton;
 
-    //CC
-    // Conditional Browser Variables
-//    boolean inBrowseMode = false;
-    JmriJFrame condBrowserFrame = null;
-    JTextArea condText = null;
-
-//    private JComboBox _browserOps;
-//    static public final int BROWSEOP_SELECT= 0,
-//                            BROWSEOP_PRINT = 1,
-//                            BROWSEOP_LAST  = 2;
-
     private ActionTableModel _actionTableModel = null;
     private VariableTableModel _variableTableModel = null;
     private JComboBox<String> _operatorBox;
@@ -679,6 +674,10 @@ public class LogixTableAction extends AbstractTableAction {
     private int _logicType = Conditional.ALL_AND;
     private String _antecedent = null;
     private boolean _newItem = false; // marks a new Action or Variable object was added
+
+    // Conditional Browser Variables
+    JmriJFrame condBrowserFrame = null;
+    JTextArea condText = null;
 
     /**
      * Input selection names
@@ -6533,10 +6532,8 @@ public class LogixTableAction extends AbstractTableAction {
         
         // Logix was found, create the window
         _curLogix =  _logixManager.getBySystemName(sName);
-//        numConditionals = _curLogix.getNumConditionals();      
         makeBrowserWindow();
     }
-
 
  	/**
 	 * Builds the text representing the current conditionals for the selected
@@ -6650,7 +6647,7 @@ public class LogixTableAction extends AbstractTableAction {
         condBrowserFrame.pack();
         condBrowserFrame.setVisible(true);
 
-}  // makeBrowserWindow
+    }  // makeBrowserWindow
 
     private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
