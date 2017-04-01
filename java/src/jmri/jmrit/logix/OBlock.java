@@ -153,6 +153,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
 
     /* What super does currently is fine.  If that changes
+     * Do the following equals() and hashCode()
      *
     public boolean equals(Object obj) {
         if (obj == this) {
