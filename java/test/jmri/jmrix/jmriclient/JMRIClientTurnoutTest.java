@@ -27,16 +27,26 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertEquals("closed message", "52 05 88 DF",
+        Assert.assertEquals("closed message", "TURNOUT "+ t.getSystemName()+ " CLOSED\n",
                 jcins.outbound.elementAt(jcins.outbound.size() - 1).toString());
         Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertEquals("thrown message", "52 05 89 DE",
+        Assert.assertEquals("thrown message", "TURNOUT "+ t.getSystemName() + " THROWN\n",
                 jcins.outbound.elementAt(jcins.outbound.size() - 1).toString());
         Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
+    }
+
+    @Override
+    @Test
+    public void testDispose() {
+        t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
+
+        //is deferred to after first use
+        t.dispose();
+        Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
 
@@ -57,6 +67,7 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
     @After
     public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jcins = null;
     }
 
 }
