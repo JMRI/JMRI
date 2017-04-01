@@ -112,6 +112,7 @@ public interface PortAdapter {
     /**
      * Sets whether the connection is disabled
      *
+     * @param disabled When true, disables operation
      */
     public void setDisabled(boolean disabled);
 
