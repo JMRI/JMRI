@@ -75,7 +75,7 @@
 
   <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
 
-  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+  <indexitem text="DS64 (simple tool) " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
 
   <indexitem text="LocoNet ID " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
@@ -214,8 +214,6 @@
   <indexitem text="Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
 
   <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
-
-  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
 
   <indexitem text="Fast Clock " target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame"/>
 
@@ -560,4 +558,6 @@
   <indexitem text="XML Editors " target="html.doc.Technical.XmlEditors"/>
 
  </indexitem>
+ <indexitem text="DS64 (enhanced tool) " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
+
 </index>

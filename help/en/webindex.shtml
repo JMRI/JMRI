@@ -241,7 +241,7 @@
 
   
 <li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 </a>
+<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 (simple tool) </a>
 <ul></ul>
 </li>
 
@@ -658,12 +658,6 @@
   
 <li>
 <a href="html/hardware/loconet/DS54.shtml">DS54 </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 </a>
 <ul></ul>
 </li>
 
@@ -1704,6 +1698,12 @@
  
 </ul>
 </li>
+ 
+<li>
+<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 (enhanced tool) </a>
+<ul></ul>
+</li>
+
 
 </ul>
 <!--#include virtual="/Footer" -->

@@ -1228,6 +1228,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_RouteFeatures" url="package/jmri/jmrit/operations/Operations.shtml#RouteFeatures"/>
 
+<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_capability" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#capability"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_EditCarType" url="package/jmri/jmrit/operations/Operations.shtml#EditCarType"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Trains_Menu" url="manual/JMRI_OPS_UsersGuide/Ops_Trains_Menu.shtml"/>
@@ -2074,6 +2076,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Settings_menubar_resetdb" url="manual/JMRI_OPS_UsersGuide/Ops_Settings_menubar.shtml#resetdb"/>
 
+<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_indexedcap" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#indexedcap"/>
+
 <mapID target="package.jmri.jmrit.signalling.SignallingSourceFrame" url="package/jmri/jmrit/signalling/SignallingSourceFrame.shtml"/>
 
 <mapID target="html.hardware.ecos.index_connecting" url="html/hardware/ecos/index.shtml#connecting"/>
@@ -2493,6 +2497,8 @@
 <mapID target="html.hardware.loconet.Digitrax_hardware" url="html/hardware/loconet/Digitrax.shtml#hardware"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddRoutes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddRoutes.shtml#Top"/>
+
+<mapID target="package.jmri.jmrit.display.LayoutEditor_toolbox" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolbox"/>
 
 <mapID target="manual.DecoderPro.Main_CMRI_Diagnostics" url="manual/DecoderPro/Main_CMRI.shtml#Diagnostics"/>
 
@@ -3103,6 +3109,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation_trackMenu_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation_trackMenu.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.beantable.BlockTable_addBlock" url="package/jmri/jmrit/beantable/BlockTable.shtml#addBlock"/>
+
+<mapID target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel" url="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_XpressNet_Info" url="manual/DecoderPro/Main_XpressNet.shtml#Info"/>
 

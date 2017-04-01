@@ -1434,6 +1434,12 @@
 
    
 <li>
+<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 Configuration Tool (Enhanced) </a>
+<ul></ul>
+</li>
+
+   
+<li>
 <a href="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Duplex Network Configuration Tool </a>
 <ul></ul>
 </li>
@@ -1715,7 +1721,13 @@
 
    
 <li>
-<a href="html/doc/Technical/IntroStructure.shtml">JMRI Program Structure </a>
+<a href="html/doc/Technical/IntroStructure.shtml">JMRI Library Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/AppStructure.shtml">JMRI Program Structure </a>
 <ul></ul>
 </li>
 
@@ -1739,7 +1751,13 @@
 
    
 <li>
-<a href="html/doc/Technical/Threads.shtml">External Connection Structure </a>
+<a href="html/doc/Technical/SystemStructure.shtml">External Connection Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Threads.shtml">Threads and Threading </a>
 <ul></ul>
 </li>
 
