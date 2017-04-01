@@ -43,7 +43,7 @@ public class DefaultLogixManagerTest extends TestCase {
 
         // test of some fails
         Assert.assertNull(m.createNewLogix(l1.getUserName()));
-        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));      
+        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));  
     }
 
     public void testEmptyUserName() {
