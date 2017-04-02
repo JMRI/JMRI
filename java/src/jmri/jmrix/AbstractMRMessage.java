@@ -1,6 +1,7 @@
 package jmri.jmrix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,15 +34,9 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
     // copy one
-    @SuppressWarnings("null")
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
-            justification = "we want to force an exception")
-    public AbstractMRMessage(AbstractMRMessage m) {
+    public AbstractMRMessage(@Nonnull AbstractMRMessage m) {
         this();
-        if (m == null) {
-            log.error("copy ctor of null message");
-            throw new IllegalArgumentException("copy ctor of null message");
-        }
+        Objects.requireNonNull(m, "copy ctor of null message");
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         System.arraycopy(m._dataChars, 0, _dataChars, 0, _nDataChars);
