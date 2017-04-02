@@ -507,7 +507,7 @@ public class SwitchboardEditor extends Editor {
                 _uname = bean.getUserName();
                 log.debug("UserName: {}", _uname);
                 if (_uname == null){
-                    _uname = "no user name";
+                    _uname = Bundle.getMessage("NoUserName");
                 }
             }
             switchTooltip = switchName + " (" + _uname + ")";
@@ -802,7 +802,18 @@ public class SwitchboardEditor extends Editor {
             if (e.getPropertyName().equals("KnownState")) {
                 int now = ((Integer) e.getNewValue()).intValue();
                 displayState(now);
-                log.debug("Turnout changed");
+                log.debug("Turnout state changed");
+            }
+            if (e.getPropertyName().equals("UserName")) {
+                // update tooltip
+                if (showTooltip()) {
+                    String newUserName = ((String) e.getNewValue());
+                    beanButton.setToolTipText(_label + " (" + newUserName + ")");
+                    beanIcon.setToolTipText(_label + " (" + newUserName + ")");
+                    beanKey.setToolTipText(_label + " (" + newUserName + ")");
+                    beanSymbol.setToolTipText(_label + " (" + newUserName + ")");
+                }
+                log.debug("User Name changed");
             }
         }
 
@@ -923,21 +934,25 @@ public class SwitchboardEditor extends Editor {
         javax.swing.JMenuItem EditItem = null;
 
         void addEditUserName(JPopupMenu popup) {
-            EditItem = new javax.swing.JMenuItem(Bundle.getMessage("EditUserName", "..."));
+            EditItem = new javax.swing.JMenuItem(Bundle.getMessage("EditNameTitle", "..."));
             popup.add(EditItem);
             EditItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     String newUserName = JOptionPane.showInputDialog(null,
-                            Bundle.getMessage("EnterNewName", _uname),
-                            Bundle.getMessage("EditNameTitle", ""), 1);
+                            Bundle.getMessage("EnterNewName", _label),
+                            Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, _uname).toString();
                     log.debug("New name: {}", newUserName);
-                    if (newUserName.trim().length() == 0 || newUserName.trim() == "") {
-                        _uname = null;
+                    if (newUserName.trim().length() == 0 || newUserName.trim().equals("")) {
+                        newUserName = null;
+                        _uname = Bundle.getMessage("NoUserName");
                     } else {
-                        _uname = newUserName.trim();
+                        newUserName = newUserName.trim();
                     }
-                    _bname.setUserName(_uname);
+                    log.debug(_uname + " " + newUserName);
+                    if (!newUserName.equals(_uname)) { // only update if changed
+                        _bname.setUserName(newUserName);
+                    }
                 }
             });
         }
