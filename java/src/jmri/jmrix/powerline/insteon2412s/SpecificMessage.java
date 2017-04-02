@@ -179,6 +179,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l length of expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);
@@ -208,8 +209,10 @@ public class SpecificMessage extends SerialMessage {
 
     /**
      * create an Insteon message with the X10 address
+     * @param housecode  X10 housecode
+     * @param devicecode X10 devicecode
      *
-     * @return message
+     * @return message   formated message
      */
     static public SpecificMessage getX10Address(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(4);
@@ -224,7 +227,11 @@ public class SpecificMessage extends SerialMessage {
     /**
      * create an Insteon message with the X10 address and dim steps
      *
-     * @return message
+     * @param housecode  X10 housecode
+     * @param devicecode X10 devicecode
+     * @param dimcode    value for dimming
+     *
+     * @return message   formated message
      */
     static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(4);
