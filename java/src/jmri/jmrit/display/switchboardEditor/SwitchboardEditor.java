@@ -63,8 +63,10 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
+import jmri.JmriException;
 import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
@@ -741,7 +743,7 @@ public class SwitchboardEditor extends Editor {
                 if (isText()) {
                     beanButton.setText(_label + ":" + state); //_state2nameMap.get(state));
                 }
-                if (isIcon() && beanIcon != null) {
+                if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
                     log.debug("set icon to {}", state);
                     beanIcon.showSwitchIcon(state);
                     beanIcon.setLabel(_label + ":" + state);
@@ -808,12 +810,15 @@ public class SwitchboardEditor extends Editor {
                 // update tooltip
                 if (showTooltip()) {
                     String newUserName = ((String) e.getNewValue());
+                    if (newUserName == null && newUserName.equals("")) {
+                        newUserName = Bundle.getMessage("NoUserName");
+                    }
                     beanButton.setToolTipText(_label + " (" + newUserName + ")");
                     beanIcon.setToolTipText(_label + " (" + newUserName + ")");
                     beanKey.setToolTipText(_label + " (" + newUserName + ")");
                     beanSymbol.setToolTipText(_label + " (" + newUserName + ")");
+                    log.debug("User Name changed to {}", newUserName);
                 }
-                log.debug("User Name changed");
             }
         }
 
@@ -939,22 +944,100 @@ public class SwitchboardEditor extends Editor {
             EditItem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    String newUserName = JOptionPane.showInputDialog(null,
-                            Bundle.getMessage("EnterNewName", _label),
-                            Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, _uname).toString();
-                    log.debug("New name: {}", newUserName);
-                    if (newUserName.trim().length() == 0 || newUserName.trim().equals("")) {
-                        newUserName = null;
-                        _uname = Bundle.getMessage("NoUserName");
-                    } else {
-                        newUserName = newUserName.trim();
-                    }
-                    log.debug(_uname + " " + newUserName);
-                    if (!newUserName.equals(_uname)) { // only update if changed
-                        _bname.setUserName(newUserName);
-                    }
+                    renameBean();
                 }
             });
+        }
+
+        /**
+         * Edit user name on a switch using N11N.
+         * Copied from BeanTableDataModel.
+         */
+        public void renameBean() {
+            NamedBean nb = null;
+            String oldName = _uname;
+            // show input dialog
+            String newUserName = (String) JOptionPane.showInputDialog(null,
+                        Bundle.getMessage("EnterNewName", _label),
+                        Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, oldName);
+            if (newUserName == null ) { // user cancelled
+                log.debug("NewName dialog returned Null, cancelled");
+                return;
+            }
+            newUserName = newUserName.trim(); // N11N
+            log.debug("New name: {}", newUserName);
+            if (newUserName.length() == 0) {
+                log.debug("new user name is empty");
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningEmptyUserName"),
+                        Bundle.getMessage("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // old style dialog in BeanTableDataModel
+//            JTextField _newName = new JTextField(20);
+//            _newName.setText(oldName);
+//            Object[] renameBeanOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), _newName};
+//            int retval = JOptionPane.showOptionDialog(null,
+//                    Bundle.getMessage("EnterNewName", oldName), Bundle.getMessage("EditNameTitle", ""),
+//                    0, JOptionPane.INFORMATION_MESSAGE, null,
+//                    renameBeanOption, renameBeanOption[2]);
+//            if (retval != 1) {
+//                return;
+//            }
+            if (newUserName.equals(oldName)) { // name was not changed by user
+                return;
+            } else { // check if name is already in use
+                switch (beanTypeChar) {
+                    case 'T':
+                        nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(newUserName);
+                        break;
+                    case 'S':
+                        nb = jmri.InstanceManager.sensorManagerInstance().getSensor(newUserName);
+                        break;
+                    case 'L':
+                        nb = jmri.InstanceManager.lightManagerInstance().getLight(newUserName);
+                        break;
+                    default:
+                        log.error("Check userName: cannot parse bean name. userName = {}", newUserName);
+                        return;
+                }
+                if (nb != null) {
+                    log.error("User name is not unique " + newUserName);
+                    String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + newUserName)});
+                    JOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            _bname.setUserName(newUserName);
+            if (!newUserName.equals("")) {
+                if (oldName == null || oldName.equals("")) {
+                    if (!nbhm.inUse(_label, _bname)) {
+                        return; // no problem, so stop
+                    }
+                    String msg = Bundle.getMessage("UpdateToUserName", new Object[]{type, newUserName, _label});
+                    int optionPane = JOptionPane.showConfirmDialog(null,
+                            msg, Bundle.getMessage("UpdateToUserNameTitle"),
+                            JOptionPane.YES_NO_OPTION);
+                    if (optionPane == JOptionPane.YES_OPTION) {
+                        //This will update the bean reference from the systemName to the userName
+                        try {
+                            nbhm.updateBeanFromSystemToUser(_bname);
+                        } catch (JmriException ex) {
+                            //We should never get an exception here as we already check that the username is not valid
+                        }
+                    }
+
+                } else {
+                    nbhm.renameBean(oldName, newUserName, _bname);
+                }
+
+            } else {
+                //This will update the bean reference from the old userName to the SystemName
+                nbhm.updateBeanFromUserToSystem(_bname);
+
+            }
         }
 
         public void doMouseClicked(java.awt.event.MouseEvent e) {
@@ -1777,6 +1860,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     private String typePrefix;
+    private String type;
 
     // ***************** Store & Load xml ********************
 
@@ -1804,7 +1888,7 @@ public class SwitchboardEditor extends Editor {
      */
     public void setSwitchType(String prefix) {
         typePrefix = prefix;
-        String type;
+//        String type;
         switch (typePrefix) {
             case "L":
                 type = _light;
@@ -1985,6 +2069,7 @@ public class SwitchboardEditor extends Editor {
         String sName = sysName.getText(); // can't be changed, but pick it up from panel
         Turnout t;
         try {
+            // TODO add switch-case for Light and Sensor (w/appropriate manager)
             t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
             t.setUserName(user);
         } catch (IllegalArgumentException ex) {
@@ -2122,6 +2207,20 @@ public class SwitchboardEditor extends Editor {
     public void mouseExited(MouseEvent event) {
         setToolTip(null);
         _targetPanel.repaint(); // needed for ToolTip
+    }
+
+    /**
+     * Handle close of editor window.
+     * <P>
+     * Overload/override method in JmriJFrame parent, which by default is
+     * permanently closing the window. Here, we just want to make it invisible,
+     * so we don't dispose it (yet).
+     *
+     */
+    @Override
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        setVisible(false);
+        setAllEditable(false);
     }
 
     // ************* implementation of Abstract Editor methods **********
