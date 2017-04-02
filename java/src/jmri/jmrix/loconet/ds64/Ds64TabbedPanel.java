@@ -2961,9 +2961,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     private ActionListener basicConfigChangeActionListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            log.info("basicConfigChangeActionListener " + e.getSource().toString());
             if (e.getSource().getClass() == JComboBox.class) {
-                log.info("basicConfigChangeActionListener for JComboBox " + ((JComboBox) e.getSource()).getName());
                 switch (((Component) e.getSource()).getName()) {
                     case "1": // NOI18N
                         opsw[1] = (outputType.getSelectedIndex() == 1);
@@ -3045,8 +3043,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         break;
                 }
 
-            } else {
-                log.info("Neither checkbox nor combobox for " + e.getSource().toString());
             }
         }
     };
