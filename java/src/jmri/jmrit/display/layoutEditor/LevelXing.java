@@ -1260,7 +1260,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = layoutEditor.getUserNameForComboBox(block1NameComboBox);
+        String newName = block1NameComboBox.getUserName();
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1301,7 +1301,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = layoutEditor.getUserNameForComboBox(block2NameComboBox);
+        String newName = block2NameComboBox.getUserName();
         if (-1 != block2NameComboBox.getSelectedIndex()) {
             newName = block2NameComboBox.getSelectedDisplayName();
         } else {
@@ -1347,7 +1347,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
-        String newName = layoutEditor.getUserNameForComboBox(block1NameComboBox);
+        String newName = block1NameComboBox.getUserName();
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1375,7 +1375,7 @@ public class LevelXing extends LayoutTrack {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
-        newName = layoutEditor.getUserNameForComboBox(block2NameComboBox);
+        newName = block2NameComboBox.getUserName();
         if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {

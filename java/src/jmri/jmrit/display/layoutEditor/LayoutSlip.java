@@ -1068,8 +1068,8 @@ public class LayoutSlip extends LayoutTurnout {
         turnAState = turnoutStates.get(testState).getTestTurnoutAState();
         turnBState = turnoutStates.get(testState).getTestTurnoutBState();
 
-        ((Turnout) turnoutAComboBox.getSelectedBean()).setCommandedState(turnAState);
-        ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
+        ((Turnout) turnoutAComboBox.getSelectedNamedBean()).setCommandedState(turnAState);
+        ((Turnout) turnoutBComboBox.getSelectedNamedBean()).setCommandedState(turnBState);
         /*if(getTurnout()!=null)
          getTurnout().setCommandedState(turnAState);
          if(getTurnoutB()!=null)
@@ -1092,7 +1092,7 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        String newName = layoutEditor.getUserNameForComboBox(turnoutAComboBox);
+        String newName = turnoutAComboBox.getUserName();
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1102,7 +1102,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = layoutEditor.getUserNameForComboBox(turnoutBComboBox);
+        newName = turnoutBComboBox.getUserName();
         if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
@@ -1114,7 +1114,7 @@ public class LayoutSlip extends LayoutTurnout {
             needRedraw = true;
         }
 
-        newName = layoutEditor.getUserNameForComboBox(blockNameComboBox);
+        newName = blockNameComboBox.getUserName();
         if (!blockName.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((block != null)) {
