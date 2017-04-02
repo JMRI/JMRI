@@ -23,6 +23,7 @@ public class SCWarrant extends Warrant {
     public static final float SPEED_TO_PLATFORM = 0.2f;
     public static final float SPEED_UNSIGNALLED = 0.4f;
     private long timeToPlatform = 500;
+    private boolean forward = true;
     
     /**
      * Create an object with no route defined. The list of BlockOrders is the
@@ -36,6 +37,14 @@ public class SCWarrant extends Warrant {
 
     public long getTimeToPlatform() {
         return timeToPlatform;
+    }
+    
+    public void setForward(boolean set) {
+        forward = set;
+    }
+    
+    public boolean getForward() {
+        return forward;
     }
 
     /**
@@ -111,16 +120,7 @@ public class SCWarrant extends Warrant {
      * Set this train to run backwards or forwards as specified in the command list.
      */
     public void setTrainDirection () {
-        for (int i = 0; i < _commands.size(); i++) {
-            ThrottleSetting ts = _commands.get(i);
-            if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                boolean isForward = Boolean.parseBoolean(ts.getValue());
-                _engineer._throttle.setIsForward(isForward);
-                log.debug(_trainName+" setTrainDirection - forward="+isForward);
-                return;
-            }
-            log.debug(_trainName+" setTrainDirection could not determine direction.");
-        }   
+        _engineer._throttle.setIsForward(forward);
     }
 
     /**
