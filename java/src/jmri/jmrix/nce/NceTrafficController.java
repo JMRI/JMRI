@@ -372,7 +372,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return cmdGroups;
     }
 
-    private boolean nceProgMode = false;					// Do not use exit program mode unless active
+    private boolean nceProgMode = false;     // Do not use exit program mode unless active
 
     /**
      * Gets the state of the command station
@@ -464,7 +464,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         } catch (JmriException e) {
             log.error(e.getMessage());
             new Exception().printStackTrace();
-            return;		// don't send bogus message to interface
+            return;  // don't send bogus message to interface
         }
         sendMessage(m, reply);
     }

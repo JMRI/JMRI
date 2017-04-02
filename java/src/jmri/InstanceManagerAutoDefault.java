@@ -12,7 +12,7 @@ package jmri;
  * DefaultFooManager, see {@link InstanceInitializer} and its default
  * implementation in {@link jmri.managers.DefaultInstanceInitializer}.
  *
- * @author	Bob Jacobsen Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2012
  */
 public interface InstanceManagerAutoDefault {
 }

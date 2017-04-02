@@ -1,6 +1,5 @@
 package jmri.jmrix.configurexml;
 
-import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrix.NetworkPortAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -108,27 +107,24 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         if (mdnsConfig) {
 
             // configure host name
-            String hostName = null;
             try {
-                hostName = shared.getAttribute("address").getValue();
+                String hostName = shared.getAttribute("address").getValue();
                 // the hostname is optional when mDNS is being used.
                 adapter.setHostName(hostName);
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
             }
 
             // configure the Service Type
-            String serviceType = null;
             try {
-                serviceType = shared.getAttribute("serviceType").getValue();
+                String serviceType = shared.getAttribute("serviceType").getValue();
                 // the Service Type is optional when mDNS is being used.
                 adapter.setServiceType(serviceType);
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
             }
 
             // configure the advertisement name
-            String advertisementName = null;
             try {
-                advertisementName = shared.getAttribute("advertisementName").getValue();
+                String advertisementName = shared.getAttribute("advertisementName").getValue();
                 // the Advertisement Name is optional when mDNS is being used.
                 adapter.setAdvertisementName(advertisementName);
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
@@ -139,7 +135,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             adapter.autoConfigure();
 
         } else {
-           // get the host name and port number via parameters.
+            // get the host name and port number via parameters.
 
             // configure host name
             String hostName = null;
@@ -169,11 +165,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         try {
             adapter.connect();
         } catch (Exception ex) {
-            ConfigXmlManager.creationErrorEncountered(
-                    null, "opening connection",
-                    ex.getMessage(),
-                    null, null, null
-            );
+            handleException(ex.getMessage(), "opening connection", null, null, ex);
             return false;
         }
 

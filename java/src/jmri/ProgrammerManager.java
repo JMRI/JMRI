@@ -29,7 +29,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @deprecated 3.9.6
  */
 @Deprecated

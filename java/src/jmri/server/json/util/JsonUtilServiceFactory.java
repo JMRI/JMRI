@@ -23,7 +23,8 @@ public class JsonUtilServiceFactory implements JsonServiceFactory {
             JSON.PANELS,
             JSON.PING,
             JSON.RAILROAD,
-            JSON.SYSTEM_CONNECTIONS};
+            JSON.SYSTEM_CONNECTIONS,
+            JSON.CONFIG_PROFILES};
     }
 
     @Override

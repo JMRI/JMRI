@@ -373,6 +373,8 @@
           <td>PanelPro</td>
         </tr>
 
+        <tr><td>configProfiles</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
+
         <tr>
           <td>systemConnections</td>
 

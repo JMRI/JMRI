@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * use any other options at configuration time.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004
  */
 public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -97,8 +97,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
             Serialio.SerialPort activeSerialPort = new SerialPortLocal(config);
 
             // set RTS high, DTR low to power the MS100
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(false);  // pin 1 in DIN8; on main connector, this is DTR
 
             // get and save stream
             serialInStream = new SerInputStream(activeSerialPort);

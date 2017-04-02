@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Some rudimentary support is provided for the "binary" option.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
  */
 public class EcosReply extends jmri.jmrix.AbstractMRReply {

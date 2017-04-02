@@ -9,8 +9,8 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * <P>
  * Just provide the specific objects at creation time.
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009 Converted to
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */

@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  * This object doesn't listen to the Grapevine serial communications. It
  * probably should, however, in case
  *
- * Description:	extend jmri.AbstractSignalHead for grapevine serial signals
+ * Description: extend jmri.AbstractSignalHead for grapevine serial signals
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
   */
 public class SerialSignalHead extends DefaultSignalHead {
 

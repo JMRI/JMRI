@@ -1092,12 +1092,7 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        String newName = turnoutAComboBox.getEditor().getItem().toString();
-        if (-1 != turnoutAComboBox.getSelectedIndex()) {
-            newName = turnoutAComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(turnoutAComboBox);
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1107,12 +1102,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = turnoutBComboBox.getEditor().getItem().toString();
-        if (-1 != turnoutBComboBox.getSelectedIndex()) {
-            newName = turnoutBComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        newName = layoutEditor.getUserNameForComboBox(turnoutBComboBox);
         if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
@@ -1124,12 +1114,7 @@ public class LayoutSlip extends LayoutTurnout {
             needRedraw = true;
         }
 
-        newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        newName = layoutEditor.getUserNameForComboBox(blockNameComboBox);
         if (!blockName.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((block != null)) {

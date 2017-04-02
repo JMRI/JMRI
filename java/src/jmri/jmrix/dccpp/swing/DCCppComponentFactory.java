@@ -5,8 +5,8 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 /**
  * Provide access to Swing components for the DCC++ subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010
  * @author      Mark Underwood Copyright (C) 2015
  * @since 4.2.2
  */

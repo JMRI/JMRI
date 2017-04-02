@@ -11,7 +11,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 /**
  * Create frame for an Add Entry Exit.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 

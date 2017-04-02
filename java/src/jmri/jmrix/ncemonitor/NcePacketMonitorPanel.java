@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
  * When opened, the user must first select a serial port and click "Start". The
  * rest of the GUI then appears.
  *
- * @author	Ken Cameron Copyright (C) 2010 derived from -
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Ken Cameron Copyright (C) 2010 derived from -
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
@@ -241,7 +241,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end hex/verbose group
 
-        {	// start acc off/on
+        { // start acc off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -269,7 +269,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end acc off/on
 
-        {	// start idle off/on
+        { // start idle off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -297,7 +297,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end idle off/on
 
-        {	// start loco off/on
+        { // start loco off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -324,7 +324,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end loco off/on
 
-        {	// start reset off/on
+        { // start reset off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -352,7 +352,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end reset off/on
 
-        {	// start signal on/off
+        { // start signal on/off
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -380,7 +380,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end signal off/on
 
-        {	// Monitor command acc single/double
+        { // Monitor command acc single/double
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             JLabel t = new JLabel("Monitor Command");
@@ -534,8 +534,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);

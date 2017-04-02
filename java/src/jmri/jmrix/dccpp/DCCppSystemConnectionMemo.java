@@ -113,7 +113,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (powerManager == null) {
             powerManager = new DCCppPowerManager(this);
         }
-	log.debug("power manager created: {}", powerManager);
+ log.debug("power manager created: {}", powerManager);
         return powerManager;
 
     }
@@ -202,11 +202,11 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private MultiMeter multiMeter = null;
     
     public MultiMeter getMultiMeter() {
-	return(multiMeter);
+ return(multiMeter);
     }
 
     public void setMultiMeter(MultiMeter m) {
-	multiMeter = m;
+ multiMeter = m;
     }
 
     @Override
@@ -227,7 +227,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 return false;
             }
             return p.isAddressedModePossible();
-	    //TODO: Update return value of the following as Managers are brought online.
+     //TODO: Update return value of the following as Managers are brought online.
         } else if (type.equals(jmri.ThrottleManager.class)) {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
@@ -242,8 +242,8 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
-	} else if (type.equals(jmri.MultiMeter.class)) {
-	    return true;
+ } else if (type.equals(jmri.MultiMeter.class)) {
+     return true;
         } else {
             return false; // nothing, by default
         }
@@ -285,9 +285,9 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
-	if (T.equals(jmri.MultiMeter.class)) {
-	    return (T) getMultiMeter();
-	}
+ if (T.equals(jmri.MultiMeter.class)) {
+     return (T) getMultiMeter();
+ }
         return null; // nothing, by default
     }
 

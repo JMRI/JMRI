@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * currently-active system-specific tools, see {@link ActiveSystemsMenu}.
  *
  * @see ActiveSystemsMenu
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class SystemsMenu extends JMenu {
 

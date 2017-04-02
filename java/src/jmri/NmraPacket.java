@@ -850,7 +850,7 @@ public class NmraPacket {
         if (speed > 0) {
             speedC = speedC + 1;
         }
-        int c = (speed & 0x01) << 4;	// intermediate speed step
+        int c = (speed & 0x01) << 4; // intermediate speed step
 
         speedC = speedC + c;
 
@@ -893,7 +893,7 @@ public class NmraPacket {
             return null;
         }
         int speedC = (speed & 0x1F) >> 1;
-        int c = (speed & 0x01) << 4;	// intermediate speed step
+        int c = (speed & 0x01) << 4; // intermediate speed step
 
         speedC = speedC + c;
 

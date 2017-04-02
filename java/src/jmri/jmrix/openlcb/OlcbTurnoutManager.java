@@ -14,7 +14,7 @@ import jmri.managers.AbstractTurnoutManager;
  * <p>
  * Turnouts must be manually created.
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
   * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {

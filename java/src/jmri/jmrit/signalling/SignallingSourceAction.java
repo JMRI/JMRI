@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SignallingFrame object.
  * Displayed when user clicks Edit Logic button in the Signal Mast table.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingSourceAction extends AbstractAction {
 

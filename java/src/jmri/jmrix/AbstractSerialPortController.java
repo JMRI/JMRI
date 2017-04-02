@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 
@@ -32,8 +32,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         log.error(portName + " port is in use: " + p.getMessage());
         /*JOptionPane.showMessageDialog(null, "Port is in use",
          "Error", JOptionPane.ERROR_MESSAGE);*/
-        ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
-        return portName + " port is in use";
+        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        return Bundle.getMessage("SerialPortInUse", portName);
     }
 
     /**
@@ -43,8 +43,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         log.error("Serial port " + portName + " not found");
         /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
          "Error", JOptionPane.ERROR_MESSAGE);*/
-        ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
-        return portName + " not found";
+        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
     @Override

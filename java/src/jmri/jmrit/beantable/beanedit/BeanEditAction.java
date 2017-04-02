@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * Provides the basic information and structure for for a editing the details of
  * a bean object.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 abstract class BeanEditAction extends AbstractAction {
 
@@ -482,7 +482,7 @@ abstract class BeanEditAction extends AbstractAction {
         public void updateModel(NamedBean nb) {
             if (!wasModified()) {
                 return; //No changed made
-            }			// add and update keys
+            }   // add and update keys
             for (int i = 0; i < attributes.size(); i++) {
                 KeyValueModel kv = attributes.get(i);
                 if ((kv.key != null)

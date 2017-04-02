@@ -4,9 +4,9 @@ import jmri.InstanceManager;
 import org.jdom2.Element;
 
 /**
- * Persistency implementation for the default MemoryManager persistance.
+ * Persistency implementation for the default MemoryManager persistence.
  * <P>
- * The state of memory objects is not persisted, just their existance.
+ * The state of memory objects is not persisted, just their existence.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  */

@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user configuration of CMRI serial nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -63,7 +63,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected int nodeType = SerialNode.SMINI; // Node type
     protected int bitsPerCard = 24;         // number of bits per card
     protected int receiveDelay = 0;         // transmission delay
-    protected int pulseWidth = 500;			// pulse width for turnout control (milliseconds)
+    protected int pulseWidth = 500;   // pulse width for turnout control (milliseconds)
     protected int num2LSearchLights = 0;    // number of 2-lead oscillating searchlights
 
     protected int numCards = 0;             //set by consistency check routine
@@ -597,7 +597,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -623,7 +623,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel

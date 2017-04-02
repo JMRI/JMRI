@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002, 2014
+ * @author Bob Jacobsen Copyright (C) 2002, 2014
  * @author kcameron Copyright (C) 2014
  */
 public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProgrammer {
@@ -62,7 +62,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
             if (contents == null) {
                 throw new ProgrammerException();
             }
-            msg = NceMessage.sendPacketMessage(tc, contents, 5);	// retry 5 times
+            msg = NceMessage.sendPacketMessage(tc, contents, 5); // retry 5 times
         }
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);

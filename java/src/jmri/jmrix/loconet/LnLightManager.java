@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on SerialLightManager.java
  *
- * @author	Dave Duchamp Copyright (C) 2006
+ * @author Dave Duchamp Copyright (C) 2006
   */
 public class LnLightManager extends AbstractLightManager {
 

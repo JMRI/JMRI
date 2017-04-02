@@ -37,9 +37,9 @@ import jmri.Light;
  * stores both CurrentIntensity and TargetIntensity in a single location,
  * forcing them to be the same
  *
- * @author	Dave Duchamp Copyright (C) 2004, 2010
- * @author	Ken Cameron Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2010
+ * @author Ken Cameron Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public abstract class AbstractLight extends AbstractNamedBean
         implements Light, java.io.Serializable {

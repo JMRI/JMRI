@@ -22,8 +22,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * Frame providing a Cbus event table. Menu code copied from BeanTableFrame
  * <P>
  *
- * @author	Andrew Crosland (C) 2009
- * @author	Kevin Dickerson (C) 2012
+ * @author Andrew Crosland (C) 2009
+ * @author Kevin Dickerson (C) 2012
  *
  * @since 2.99.2
  */

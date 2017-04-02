@@ -650,27 +650,27 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //setup group for radio buttons selecting items to add and line style
         itemGroup = new ButtonGroup();
-        itemGroup.  add(turnoutRHButton);
-        itemGroup.  add(turnoutLHButton);
-        itemGroup.  add(turnoutWYEButton);
-        itemGroup.  add(doubleXoverButton);
-        itemGroup.  add(rhXoverButton);
-        itemGroup.  add(lhXoverButton);
-        itemGroup.  add(levelXingButton);
-        itemGroup.  add(layoutSingleSlipButton);
-        itemGroup.  add(layoutDoubleSlipButton);
-        itemGroup.  add(endBumperButton);
-        itemGroup.  add(anchorButton);
-        itemGroup.  add(edgeButton);
-        itemGroup.  add(trackButton);
-        itemGroup.  add(multiSensorButton);
-        itemGroup.  add(sensorButton);
-        itemGroup.  add(signalButton);
-        itemGroup.  add(signalMastButton);
-        itemGroup.  add(textLabelButton);
-        itemGroup.  add(memoryButton);
-        itemGroup.  add(blockContentsButton);
-        itemGroup.  add(iconLabelButton);
+        itemGroup.add(turnoutRHButton);
+        itemGroup.add(turnoutLHButton);
+        itemGroup.add(turnoutWYEButton);
+        itemGroup.add(doubleXoverButton);
+        itemGroup.add(rhXoverButton);
+        itemGroup.add(lhXoverButton);
+        itemGroup.add(levelXingButton);
+        itemGroup.add(layoutSingleSlipButton);
+        itemGroup.add(layoutDoubleSlipButton);
+        itemGroup.add(endBumperButton);
+        itemGroup.add(anchorButton);
+        itemGroup.add(edgeButton);
+        itemGroup.add(trackButton);
+        itemGroup.add(multiSensorButton);
+        itemGroup.add(sensorButton);
+        itemGroup.add(signalButton);
+        itemGroup.add(signalMastButton);
+        itemGroup.add(textLabelButton);
+        itemGroup.add(memoryButton);
+        itemGroup.add(blockContentsButton);
+        itemGroup.add(iconLabelButton);
 
         //This is used to enable/disable property controls depending on which (radio) button is selected
         ActionListener selectionListAction = (ActionEvent a) -> {
@@ -808,8 +808,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //this is enabled/disabled via selectionListAction above
         JLabel extraTurnoutLabel = new JLabel(rb.getString("SecondName"));
         extraTurnoutLabel.setEnabled(false);
-        extraTurnoutPanel.  add(extraTurnoutLabel);
-        extraTurnoutPanel.  add(extraTurnoutNameComboBox);
+        extraTurnoutPanel.add(extraTurnoutLabel);
+        extraTurnoutPanel.add(extraTurnoutNameComboBox);
         extraTurnoutPanel.setEnabled(false);
 
         String[] angleStrings = {"-180", "-135", "-90", "-45", "0", "+45", "+90", "+135", "+180"};
@@ -819,11 +819,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rotationComboBox.setToolTipText(rb.getString("RotationToolTip"));
 
         JLabel rotationLabel = new JLabel(rb.getString("Rotation"));
-        rotationPanel.  add(rotationLabel);
-        rotationPanel.  add(rotationComboBox);
+        rotationPanel.add(rotationLabel);
+        rotationPanel.add(rotationComboBox);
 
-        zoomPanel.  add(new JLabel(rb.getString("ZoomLabel") + ":"));
-        zoomPanel.  add(zoomLabel);
+        zoomPanel.add(new JLabel(rb.getString("ZoomLabel") + ":"));
+        zoomPanel.add(zoomLabel);
 
         Dimension coordSize = xLabel.getPreferredSize();
         coordSize.width *= 2;
@@ -831,12 +831,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         yLabel.setPreferredSize(coordSize);
 
 //locationPanel.add(new JLabel("    " + rb.getString("Location") + ":"));
-        locationPanel.  add(new JLabel(rb.getString("Location") + ":"));
-        locationPanel.  add(new JLabel("{x:"));
-        locationPanel.  add(xLabel);
-        locationPanel.  add(new JLabel(", y:"));
-        locationPanel.  add(yLabel);
-        locationPanel.  add(new JLabel("}    "));
+        locationPanel.add(new JLabel(rb.getString("Location") + ":"));
+        locationPanel.add(new JLabel("{x:"));
+        locationPanel.add(xLabel);
+        locationPanel.add(new JLabel(", y:"));
+        locationPanel.add(yLabel);
+        locationPanel.add(new JLabel("}    "));
 
         //second row of edit tool bar items
         levelXingButton.setToolTipText(rb.getString("LevelCrossingToolTip"));
@@ -1216,25 +1216,25 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.setLayout(new BoxLayout(floatEditTurnout, BoxLayout.Y_AXIS));
 
         JPanel turnoutGroup1 = new JPanel(floatContentLayout);
-        turnoutGroup1.  add(turnoutRHButton);
-        turnoutGroup1.  add(turnoutLHButton);
-        turnoutGroup1.  add(turnoutWYEButton);
+        turnoutGroup1.add(turnoutRHButton);
+        turnoutGroup1.add(turnoutLHButton);
+        turnoutGroup1.add(turnoutWYEButton);
         floatEditTurnout.add(turnoutGroup1);
 
         JPanel turnoutGroup2 = new JPanel(floatContentLayout);
-        turnoutGroup2.  add(doubleXoverButton);
-        turnoutGroup2.  add(rhXoverButton);
-        turnoutGroup2.  add(lhXoverButton);
+        turnoutGroup2.add(doubleXoverButton);
+        turnoutGroup2.add(rhXoverButton);
+        turnoutGroup2.add(lhXoverButton);
         floatEditTurnout.add(turnoutGroup2);
 
         JPanel turnoutGroup3 = new JPanel(floatContentLayout);
-        turnoutGroup3.  add(layoutSingleSlipButton);
-        turnoutGroup3.  add(layoutDoubleSlipButton);
+        turnoutGroup3.add(layoutSingleSlipButton);
+        turnoutGroup3.add(layoutDoubleSlipButton);
         floatEditTurnout.add(turnoutGroup3);
 
         JPanel turnoutGroup4 = new JPanel(floatContentLayout);
-        turnoutGroup4.  add(turnoutNamePanel);
-        turnoutGroup4.  add(extraTurnoutPanel);
+        turnoutGroup4.add(turnoutNamePanel);
+        turnoutGroup4.add(extraTurnoutPanel);
         floatEditTurnout.add(turnoutGroup4);
 
         JPanel turnoutGroup5 = new JPanel(floatContentLayout);
@@ -1658,14 +1658,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (!useBorders) {
                 hTop1Left.add(turnoutLabel);
             }
-            hTop1Left.  add(turnoutRHButton);
-            hTop1Left.  add(turnoutLHButton);
-            hTop1Left.  add(turnoutWYEButton);
-            hTop1Left.  add(doubleXoverButton);
-            hTop1Left.  add(rhXoverButton);
-            hTop1Left.  add(lhXoverButton);
-            hTop1Left.  add(layoutSingleSlipButton);
-            hTop1Left.  add(layoutDoubleSlipButton);
+            hTop1Left.add(turnoutRHButton);
+            hTop1Left.add(turnoutLHButton);
+            hTop1Left.add(turnoutWYEButton);
+            hTop1Left.add(doubleXoverButton);
+            hTop1Left.add(rhXoverButton);
+            hTop1Left.add(lhXoverButton);
+            hTop1Left.add(layoutSingleSlipButton);
+            hTop1Left.add(layoutDoubleSlipButton);
             hTop1Panel.add(hTop1Left);
 
             if (toolBarIsWide) {
@@ -1709,9 +1709,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (!useBorders) {
                 hTop3Left.add(trackLabel);
             }
-            hTop3Left.  add(levelXingButton);
-            hTop3Left.  add(trackButton);
-            hTop3Left.  add(trackSegmentPropertiesPanel);
+            hTop3Left.add(levelXingButton);
+            hTop3Left.add(trackButton);
+            hTop3Left.add(trackSegmentPropertiesPanel);
 
             hTop3Panel. add(hTop3Left);
             hTop3Panel. add(Box.createHorizontalGlue());
@@ -1747,10 +1747,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //Row 4 : Left Components
             JPanel hTop4Left = new JPanel(leftRowLayout);
             nodesLabel = new JLabel(rb.getString("Nodes") + ":  ");
-            hTop4Left.  add(nodesLabel);
-            hTop4Left.  add(endBumperButton);
-            hTop4Left.  add(anchorButton);
-            hTop4Left.  add(edgeButton);
+            hTop4Left.add(nodesLabel);
+            hTop4Left.add(endBumperButton);
+            hTop4Left.add(anchorButton);
+            hTop4Left.add(edgeButton);
             hTop4Panel. add(hTop4Left);
             hTop4Panel. add(Box.createHorizontalGlue());
 
@@ -1782,14 +1782,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 editToolBarPanel.add(hTop4Panel);
 
                 JPanel hTop5Left = new JPanel(leftRowLayout);
-                hTop5Left.  add(labelsLabel);
-                hTop5Left.  add(textLabelButton);
-                hTop5Left.  add(textLabelTextField);
-                hTop5Left.  add(memoryButton);
-                hTop5Left.  add(textMemoryComboBox);
-                hTop5Left.  add(blockContentsButton);
-                hTop5Left.  add(blockContentsComboBox);
-                hTop5Left.  add(Box.createHorizontalGlue());
+                hTop5Left.add(labelsLabel);
+                hTop5Left.add(textLabelButton);
+                hTop5Left.add(textLabelTextField);
+                hTop5Left.add(memoryButton);
+                hTop5Left.add(textMemoryComboBox);
+                hTop5Left.add(blockContentsButton);
+                hTop5Left.add(blockContentsComboBox);
+                hTop5Left.add(Box.createHorizontalGlue());
                 editToolBarPanel.add(hTop5Left);
             }
 
@@ -1800,16 +1800,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //Row 6 : Left Components
             //JPanel hTop6Left = new JPanel(centerRowLayout);
             JPanel hTop6Left = new JPanel(leftRowLayout);
-            hTop6Left.  add(multiSensorButton);
-            hTop6Left.  add(changeIconsButton);
-            hTop6Left.  add(sensorButton);
-            hTop6Left.  add(sensorComboBox);
-            hTop6Left.  add(signalMastButton);
-            hTop6Left.  add(signalMastComboBox);
-            hTop6Left.  add(signalButton);
-            hTop6Left.  add(signalHeadComboBox);
-            hTop6Left.  add(new JLabel("      "));
-            hTop6Left.  add(iconLabelButton);
+            hTop6Left.add(multiSensorButton);
+            hTop6Left.add(changeIconsButton);
+            hTop6Left.add(sensorButton);
+            hTop6Left.add(sensorComboBox);
+            hTop6Left.add(signalMastButton);
+            hTop6Left.add(signalMastComboBox);
+            hTop6Left.add(signalButton);
+            hTop6Left.add(signalHeadComboBox);
+            hTop6Left.add(new JLabel("      "));
+            hTop6Left.add(iconLabelButton);
 
             hTop6Panel.add(hTop6Left);
             editToolBarPanel.add(hTop6Panel);
@@ -2128,10 +2128,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return null != getBeanForComboBox(inComboBox);
     }
 
-    //
-    //return the user name for this combobox
-    //
-    private String getUserNameForComboBox(JmriBeanComboBox inComboBox) {
+    /**
+     * return the user name for this JmriBeanComboBox
+    */
+    public String getUserNameForComboBox(JmriBeanComboBox inComboBox) {
         String result = inComboBox.getEditor().getItem().toString();
         result = (null != result) ? result.trim() : "";
 
@@ -2537,7 +2537,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
-    ///TODO: update menu item based on focused combobox (if any)
+                ///TODO: update menu item based on focused combobox (if any)
                 log.debug("update menu item based on focused combobox");
             }
 
@@ -2804,7 +2804,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setDirty(true);
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
-            	// Rebuild the toolbox after a name change.
+             // Rebuild the toolbox after a name change.
                 deleteFloatingEditToolBox();
                 createFloatingEditToolBox();
             }
@@ -3141,7 +3141,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
 
                     //now try to get a preference specific to this combobox
-
                     JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
                     if (inComponent instanceof JTextField) {
                         jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(jbcb);
@@ -3213,7 +3212,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (null != floatingEditToolBox) {
                     deleteFloatingEditToolBox();
                 }
-				floatingEditContent = null;  // The switch to toolbar will move the toolbox content to the new toolbar
+                floatingEditContent = null;  // The switch to toolbar will move the toolbox content to the new toolbar
                 editToolBarContainer.setVisible(isEditable());
             }
             toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));

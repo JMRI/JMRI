@@ -7,7 +7,7 @@ import javax.swing.JPanel;
  * <P>
  * This uses the {@link LIUSBEthernetAdapter} class to do the actual connection.
  *
- * @author	Paul Bender Copyright (C) 2011
+ * @author Paul Bender Copyright (C) 2011
   *
  * @see LIUSBEthernetAdapter
  */

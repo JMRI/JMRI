@@ -11,7 +11,7 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {

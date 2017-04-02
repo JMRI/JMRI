@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Inserts DP3 interface elements stored in xml/config/parts/jmri/
  * that are also used in the web server interface.
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
+ * @author Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
  */
 public class DecoderPro3 extends apps.gui3.Apps3 {
 
@@ -103,7 +103,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     static public void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
-        setConfigFilename("DecoderProConfig3.xml", args);
+        apps.gui3.Apps3.setConfigFilename("DecoderProConfig3.xml", args);
     }
 
     /**

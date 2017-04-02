@@ -57,7 +57,9 @@ public class DefaultLogixManager extends AbstractManager
     }
 
     /**
-     * Method to create a new Logix if the Logix does not exist Returns null if
+     * Method to create a new Logix if the Logix does not exist. 
+     * <p>
+     * Returns null if
      * a Logix with the same systemName or userName already exists, or if there
      * is trouble creating a new Logix.
      */

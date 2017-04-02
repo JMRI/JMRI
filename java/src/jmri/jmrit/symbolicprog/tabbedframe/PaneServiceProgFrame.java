@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * If no programmer is provided, the programmer parts of the GUI are suppressed.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
 public class PaneServiceProgFrame extends PaneProgFrame
         implements java.beans.PropertyChangeListener {

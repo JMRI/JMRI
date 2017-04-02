@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.NamedBean
  * @see jmri.NamedBeanHandle
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable {
 

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * Carries a sequence of characters, with accessors.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 

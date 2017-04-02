@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * Any exception thrown by at method is used to select an error message to
  * display in the status line of the pane.
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2015
+ * @author Bob Jacobsen Copyright (C) 2005, 2015
  * @author B. Milhaupt Copyright (C) 2013, 2014
  */
 public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
