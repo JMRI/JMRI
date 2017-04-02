@@ -49,6 +49,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l length of expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);
@@ -56,6 +57,7 @@ public class SpecificMessage extends SerialMessage {
 
     /**
      * Find 1st byte that's not 0xFF, or -1 if none
+     * @return -1 or index of first valid byte
      */
     int startIndex() {
         int len = getNumDataElements();
