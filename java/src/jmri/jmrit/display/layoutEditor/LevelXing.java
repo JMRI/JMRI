@@ -1260,12 +1260,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = block1NameComboBox.getEditor().getItem().toString();
-        if (-1 != block1NameComboBox.getSelectedIndex()) {
-            newName = block1NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(block1NameComboBox);
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1306,7 +1301,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = block2NameComboBox.getEditor().getItem().toString();
+        String newName = layoutEditor.getUserNameForComboBox(block2NameComboBox);
         if (-1 != block2NameComboBox.getSelectedIndex()) {
             newName = block2NameComboBox.getSelectedDisplayName();
         } else {
@@ -1352,12 +1347,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
-        String newName = block1NameComboBox.getEditor().getItem().toString();
-        if (-1 != block1NameComboBox.getSelectedIndex()) {
-            newName = block1NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(block1NameComboBox);
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1385,12 +1375,7 @@ public class LevelXing extends LayoutTrack {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
-        newName = block2NameComboBox.getEditor().getItem().toString();
-        if (-1 != block2NameComboBox.getSelectedIndex()) {
-            newName = block2NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        newName = layoutEditor.getUserNameForComboBox(block2NameComboBox);
         if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
