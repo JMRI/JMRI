@@ -1428,13 +1428,7 @@
 
    
 <li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 Configuration Tool </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 Configuration Tool (Enhanced) </a>
+<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 Configuration Tool </a>
 <ul></ul>
 </li>
 

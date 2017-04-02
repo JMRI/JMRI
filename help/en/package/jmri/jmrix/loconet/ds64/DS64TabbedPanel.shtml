@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Configure Digitrax DS64 (Enhanced)</title>
+  <title>JMRI: Configure Digitrax DS64</title>
   <meta content="B. Milhaupt" name="Author">
   <meta name="keywords" content="JMRI help configure loconet DS64">
   <!-- Style -->
@@ -25,17 +25,16 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Configure DS64 (Enhanced)</h1><a href=
+      <h1>Configure DS64</h1><a href=
       "../../../../../html/hardware/loconet/images/DS64TabbedPanel.png"><img src="../../../../../html/hardware/loconet/images/DS64TabbedPanel.png"
-      align="right" width="300" alt=
-      "Configure DS64 (Enhanced) panel image"></a>
+      align="right" height="400" width="300" alt=
+      "Configure DS64 panel image"></a>
 
-      <p>The JMRI Enhanced DS64 Configuration tool lets you configure the
+      <p>The JMRI DS64 Configuration tool lets you configure the
       internal options of a Digitrax DS64 Stationary Decoder
-      directly from your computer running JMRI.  This is an expanded version
-      of the more-simple <a href="DS64Frame.shtml">DS64 Configuration</a> tool.</p>
+      directly from your computer running JMRI.</p>
 
-      <p>To open this tool select "Configure DS64 (Enhanced)" from the LocoNet
+      <p>To open this tool select "Configure DS64" from the LocoNet
       menu.</p>
       
       <h2>Selecting the DS64 board</h2>
