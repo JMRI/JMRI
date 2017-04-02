@@ -81,7 +81,7 @@ abstract public class SerialLight extends AbstractVariableLight {
      * Invoked the first time intensity is set.
      * <p>
      * Default implementation doesn't do anything.
-     * @param intensity float for 0->1.0
+     * @param intensity float for 0-&gt;1.0
      */
     protected void initIntensity(double intensity) {
     }
