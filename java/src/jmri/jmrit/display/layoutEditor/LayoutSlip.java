@@ -1068,8 +1068,8 @@ public class LayoutSlip extends LayoutTurnout {
         turnAState = turnoutStates.get(testState).getTestTurnoutAState();
         turnBState = turnoutStates.get(testState).getTestTurnoutBState();
 
-        ((Turnout) turnoutAComboBox.getSelectedNamedBean()).setCommandedState(turnAState);
-        ((Turnout) turnoutBComboBox.getSelectedNamedBean()).setCommandedState(turnBState);
+        ((Turnout) turnoutAComboBox.getSelectedBean()).setCommandedState(turnAState);
+        ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
         /*if(getTurnout()!=null)
          getTurnout().setCommandedState(turnAState);
          if(getTurnoutB()!=null)
