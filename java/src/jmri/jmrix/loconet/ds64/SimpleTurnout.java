@@ -71,7 +71,7 @@ public class SimpleTurnout {
     /**
      * Returns the "validity" state of the simpleTurnout object.  This "validity" 
      * state does not necessarily reflect the "validity" state of a physical turnout.
-     * @return
+     * @return true if the address is valid 
      */
     public boolean isValid() {
         if ((address >=1) && (address <=2048)) {
@@ -84,7 +84,7 @@ public class SimpleTurnout {
     /**
      * Sets the turnout address of the simpleTurnout object.
      * 
-     * @param addr
+     * @param addr - address value
      */
     public void setAddress(Integer addr) {
         address = addr;
@@ -101,7 +101,7 @@ public class SimpleTurnout {
     /**
      * Returns the address field of the simpleTurnout object.
      * 
-     * @return
+     * @return the address from the GUI element
      */
     public Integer getAddress() {return address;}
     
@@ -110,7 +110,7 @@ public class SimpleTurnout {
      * This position does not necessarily reflect the actual position of an associated
      * physical turnout.
      * 
-     * @param isclosed
+     * @param isclosed - true if the object is to be marked as closed.
      */
     public void setIsClosed(boolean isclosed) {
         isClosed = isclosed;

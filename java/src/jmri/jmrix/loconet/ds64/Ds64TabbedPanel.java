@@ -1421,7 +1421,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     /**
      * Set index into OpSw table
      *
-     * @param index
+     * @param index - the indirect address
      */
     protected void setOpSwIndex(int index) {
         opsw[25] = (index & 1) == 1;
@@ -1438,12 +1438,12 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * Updates data register to reflect address, state, and enable for two
      * turnouts.
      *
-     * @param address1
-     * @param state1
-     * @param is1Unused
-     * @param address2
-     * @param state2
-     * @param is2Unused
+     * @param address1 - first turnout address
+     * @param state1 - first turnout's state
+     * @param is1Unused - true if first turnout entry is to be "unused"
+     * @param address2 - second turnout address
+     * @param state2 - second turnout's state
+     * @param is2Unused - true if second turnout entry is to be "unused"
      */
     protected void updateOpSwsOutAddr(int address1, boolean state1, boolean is1Unused, int address2, boolean state2, boolean is2Unused) {
         int addr1 = address1 - 1;
@@ -1504,7 +1504,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     /**
      * Updates OpSw values for a given index into the data array
      *
-     * @param index
+     * @param index - indirect address
      */
     protected void updateOpswForWrite(int index) {
         Integer value1Address = 0;

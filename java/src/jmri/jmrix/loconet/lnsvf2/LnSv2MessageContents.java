@@ -887,8 +887,8 @@ public class LnSv2MessageContents {
     /**
      * Create LocoNet message for another query of an SV of this object
      * 
-     * @param deviceAddress
-     * @param svNum
+     * @param deviceAddress - address of the device
+     * @param svNum - SV number
      * @return LocoNet message
      */
     public static LocoNetMessage createSvReadRequest(int deviceAddress, int svNum) {
