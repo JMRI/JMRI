@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DS64PanelTest {
+public class DS64TabbedPanelTest {
 
     @Test
     public void testCTor() {
-        DS64Panel t = new DS64Panel();
+        Ds64TabbedPanel t = new Ds64TabbedPanel();
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +33,6 @@ public class DS64PanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DS64PanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DS64TabbedPanelTest.class.getName());
 
 }

@@ -254,7 +254,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     @Override
     public String getTitle() {
-        return getTitle(Bundle.getMessage("MenuItemDS64PanelEnhanced"));
+        return getTitle(Bundle.getMessage("MenuItemDS64Programmer"));
     }
 
     public javax.swing.Timer boardResetResponseTimer = null;
