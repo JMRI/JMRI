@@ -22,9 +22,6 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -46,7 +43,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -74,7 +70,6 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import javax.swing.text.JTextComponent;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -864,7 +859,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (highlightSelectedBlockFlag) {
                 highlightBlockInComboBox(blockIDComboBox);
             }
-            String newName = getUserNameForComboBox(blockIDComboBox);
+            String newName = blockIDComboBox.getUserName();
             LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
 
             if (b != null) {
@@ -2010,138 +2005,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //setup editable JmriBeanComboBoxes
     //
-    //note: inValidateMode if true valid == green, invalid == red background
-    //if false valid == green, invalid == yellow background
+    //note: inValidateMode if true valid text == green, invalid == red background
+    //if false valid text == green, invalid == yellow background
     //
     public void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
         inComboBox.setEditable(true);
         inComboBox.getEditor().setItem("");
         inComboBox.setSelectedIndex(-1);
         inComboBox.setEnabled(inEnable);
-
-        //fires when drop down list item is selected
-        inComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent event) {
-                if (event.getStateChange() == ItemEvent.SELECTED) {
-                    JmriBeanComboBox cb = (JmriBeanComboBox) event.getSource();
-                    validateComboBox(cb, inValidateMode);
-                }
-            }
-        });
-
-        //fires when key is released while typing in combox editor
-        inComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent event) {
-                JTextComponent c = (JTextComponent) event.getSource();
-                JmriBeanComboBox cb = (JmriBeanComboBox) c.getParent();
-                validateComboBox(cb, inValidateMode);
-            }
-        });
+        inComboBox.setValidateMode(inValidateMode);
     }   //setupComboBox
-
-    //
-    //
-    //
-    private void validateComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode) {
-        ComboBoxEditor cbe = inComboBox.getEditor();
-        JTextComponent c = (JTextComponent) cbe.getEditorComponent();
-        String comboBoxText = cbe.getItem().toString();
-
-        if (!comboBoxText.isEmpty()) {
-            if (validateComboBoxEntry(inComboBox)) {
-                c.setBackground(new Color(0xBDECB6));   //pastel green
-            } else {
-                if (inValidateMode) {
-                    c.setBackground(new Color(0xFFC0C0));   //pastel red
-                } else {
-                    c.setBackground(new Color(0xFDFD96));   //pastel yellow
-                }
-            }
-        } else {
-            c.setBackground(new Color(0xFFFFFF));   //white
-        }
-    }   //validateComboBox
-
-    //
-    //
-    //
-    private NamedBean getBeanForComboBox(JmriBeanComboBox inComboBox) {
-        NamedBean result = null;
-
-        jmri.Manager uDaManager = inComboBox.getManager();
-
-        String comboBoxText = inComboBox.getEditor().getItem().toString();
-        comboBoxText = (null != comboBoxText) ? comboBoxText.trim() : "";
-
-        //try user name
-        result = uDaManager.getBeanByUserName(comboBoxText);
-
-        if (null == result) {
-            //try system name
-            //note: don't use getBeanBySystemName here
-            //throws an IllegalArgumentException if text is invalid
-            result = uDaManager.getNamedBean(comboBoxText);
-        }
-
-        if (null == result) {
-            //quick search to see if text matches anything in the drop down list
-            String[] displayList = inComboBox.getDisplayList();
-            boolean found = false;  //assume failure (pessimist!)
-
-            for (String item : displayList) {
-                if (item.equals(comboBoxText)) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (found) {    //if we found it there then…
-                //walk the namedBeanList…
-                List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
-
-                for (NamedBean namedBean : namedBeanList) {
-                    //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
-                    String uname = namedBean.getUserName();
-                    String sname = namedBean.getSystemName();
-
-                    if ((null != uname) && (null != sname)) {
-                        String usname = uname + " - " + sname;
-                        String suname = sname + " - " + uname;
-
-                        if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
-                            result = namedBean;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }   //getBeanForComboBox
-
-    //
-    //is the combo box text valid?
-    //
-    private boolean validateComboBoxEntry(JmriBeanComboBox inComboBox) {
-        return null != getBeanForComboBox(inComboBox);
-    }
-
-    /**
-     * return the user name for this JmriBeanComboBox
-    */
-    public String getUserNameForComboBox(JmriBeanComboBox inComboBox) {
-        String result = inComboBox.getEditor().getItem().toString();
-        result = (null != result) ? result.trim() : "";
-
-        NamedBean b = getBeanForComboBox(inComboBox);
-
-        if (null != b) {
-            result = b.getUserName();
-        }
-        return result;
-    }   //getUserNameForComboBox
 
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
@@ -8534,7 +8407,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setLink(newTrack,   LayoutTrack.TRACK,  foundObject,    foundPointType);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -8542,7 +8415,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             auxTools.setBlockConnectivityChanged();
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8585,7 +8458,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -8593,7 +8466,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             o.setLayoutBlockBD(b);
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8652,14 +8525,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8670,7 +8543,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        String turnoutName = getUserNameForComboBox(turnoutNameComboBox);
+        String turnoutName = turnoutNameComboBox.getUserName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8684,7 +8557,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.getEditor().setItem("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
-        turnoutName = getUserNameForComboBox(extraTurnoutNameComboBox);
+        turnoutName = extraTurnoutNameComboBox.getUserName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8745,14 +8618,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8767,7 +8640,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         o.setContinuingSense(Turnout.CLOSED);
 
         //check on a physical turnout
-        String turnoutName = getUserNameForComboBox(turnoutNameComboBox);
+        String turnoutName = turnoutNameComboBox.getUserName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -9932,7 +9805,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-        String newName = getUserNameForComboBox(sensorComboBox);
+        String newName = sensorComboBox.getUserName();
 
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
@@ -9982,7 +9855,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addSignalHead() {
         //check for valid signal head entry
-        String newName = getUserNameForComboBox(signalHeadComboBox);
+        String newName = signalHeadComboBox.getUserName();
         SignalHead mHead = null;
 
         if (!newName.equals("")) {
@@ -10077,7 +9950,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     void addSignalMast() {
         //check for valid signal head entry
-        String newName = getUserNameForComboBox(signalMastComboBox);
+        String newName = signalMastComboBox.getUserName();
         SignalMast mMast = null;
 
         if (!newName.equals("")) {
@@ -10186,7 +10059,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-        String memoryName = getUserNameForComboBox(textMemoryComboBox);
+        String memoryName = textMemoryComboBox.getUserName();
 
         if (memoryName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11a"),
@@ -10215,7 +10088,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //addMemory
 
     void addBlockContents() {
-        String newName = getUserNameForComboBox(blockContentsComboBox);
+        String newName = blockContentsComboBox.getUserName();
 
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11b"),
@@ -10803,7 +10676,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         boolean result = false;
 
         if (null != inComboBox) {
-            jmri.Block b = (jmri.Block)getBeanForComboBox(inComboBox);
+            jmri.Block b = (jmri.Block) inComboBox.getNamedBean();
             result = highlightBlock(b);
         }
         return result;
