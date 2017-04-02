@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.ds64;
 
 import java.util.Locale;
+import jmri.jmrix.loconet.ds64.Bundle;
+import jmri.jmrix.loconet.ds64.Bundle;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,7 +12,7 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
-public class BundleTest  {
+public class DS64BundleTest  {
 
     @Test public void testGoodKeyMessage() {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));

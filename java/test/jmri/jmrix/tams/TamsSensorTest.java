@@ -1,4 +1,4 @@
-package jmri.jmrix.loconet.ds64;
+package jmri.jmrix.tams;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DS64PanelTest {
+public class TamsSensorTest {
 
     @Test
     public void testCTor() {
-        DS64Panel t = new DS64Panel();
+        TamsSensor t = new TamsSensor("TMS1");
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +33,6 @@ public class DS64PanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DS64PanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsSensorTest.class.getName());
 
 }

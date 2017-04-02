@@ -2639,12 +2639,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(blockNameComboBox);
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((block != null) && (block != blockB) && (block != blockC)
@@ -2680,12 +2675,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = blockBNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockBNameComboBox.getSelectedIndex()) {
-            newName = blockBNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(blockBNameComboBox);
         if (!blockBName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockB != null) && (block != blockB) && (blockB != blockC)
@@ -2721,12 +2711,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = blockCNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockCNameComboBox.getSelectedIndex()) {
-            newName = blockCNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(blockCNameComboBox);
         if (!blockCName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockC != null) && (block != blockC) && (blockB != blockC)
@@ -2762,12 +2747,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = blockDNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockDNameComboBox.getSelectedIndex()) {
-            newName = blockDNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(blockDNameComboBox);
         if (!blockDName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((blockD != null) && (block != blockD) && (blockB != blockD)
@@ -2803,12 +2783,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        String newName = firstTurnoutComboBox.getEditor().getItem().toString();
-        if (-1 != firstTurnoutComboBox.getSelectedIndex()) {
-            newName = firstTurnoutComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = layoutEditor.getUserNameForComboBox(firstTurnoutComboBox);
         if (!turnoutName.equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
@@ -2853,12 +2828,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         // check if Block changed
-        newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        newName = layoutEditor.getUserNameForComboBox(blockNameComboBox);
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if ((block != null) && (block != blockB) && (block != blockC)
@@ -2881,12 +2851,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
             // check if Block 2 changed
-            newName = blockBNameComboBox.getEditor().getItem().toString();
-            if (-1 != blockBNameComboBox.getSelectedIndex()) {
-                newName = blockBNameComboBox.getSelectedDisplayName();
-            } else {
-                newName = (null != newName) ? newName.trim() : "";
-            }
+            newName = layoutEditor.getUserNameForComboBox(blockBNameComboBox);
             if (!blockBName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockB != null) && (block != blockB) && (blockB != blockC)
@@ -2909,12 +2874,7 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 3 changed
-            newName = blockCNameComboBox.getEditor().getItem().toString();
-            if (-1 != blockCNameComboBox.getSelectedIndex()) {
-                newName = blockCNameComboBox.getSelectedDisplayName();
-            } else {
-                newName = (null != newName) ? newName.trim() : "";
-            }
+            newName = layoutEditor.getUserNameForComboBox(blockCNameComboBox);
             if (!blockCName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockC != null) && (block != blockC) && (blockB != blockC)
@@ -2938,12 +2898,7 @@ public class LayoutTurnout extends LayoutTrack {
                 needsBlockUpdate = true;
             }
             // check if Block 4 changed
-            newName = blockDNameComboBox.getEditor().getItem().toString();
-            if (-1 != blockDNameComboBox.getSelectedIndex()) {
-                newName = blockDNameComboBox.getSelectedDisplayName();
-            } else {
-                newName = (null != newName) ? newName.trim() : "";
-            }
+            newName = layoutEditor.getUserNameForComboBox(blockDNameComboBox);
             if (!blockDName.equals(newName)) {
                 // block has changed, if old block exists, decrement use
                 if ((blockD != null) && (block != blockD) && (blockB != blockD)
