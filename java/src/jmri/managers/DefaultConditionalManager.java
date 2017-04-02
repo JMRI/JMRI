@@ -24,7 +24,10 @@ import org.slf4j.LoggerFactory;
  * Conditional system names are set automatically when the Conditional is
  * created. All alphabetic characters in a Conditional system name must be upper
  * case. This is enforced when a new Conditional is created via
- * LogixTableAction.java.
+ * {@link jmri.jmrit.beantable.LogixTableAction}
+ * <p>
+ * Conditional user names have specific requirements that are
+ * addressed in the {@link jmri.Conditional} class.
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cresman Copyright (C) 2009
@@ -57,6 +60,8 @@ public class DefaultConditionalManager extends AbstractManager
      * Conditional is still created. The scenario can happen when a Logix is
      * loaded from a file after its Conditionals.
      *
+     * @param systemName properly formatted system name for the new Conditional
+     * @param userName must not be null, use "" instead
      * @return null if a Conditional with the same systemName or userName
      *         already exists, or if there is trouble creating a new Conditional
      */
@@ -96,6 +101,15 @@ public class DefaultConditionalManager extends AbstractManager
         // save in the maps
         register(c);
         return c;
+    }
+
+    /**
+     * Do not insist that Conditional user names are unique,
+     * unlike the usual NamedBean support
+     */
+    @Override
+    protected void handleUserNameUniqueness(jmri.NamedBean s) {
+        // eventually needs error checking and reporting
     }
 
     /**
