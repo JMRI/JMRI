@@ -48,7 +48,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         }
     }
 
-    protected ArrayList<XpaListener> cmdListeners = new ArrayList<>();
+    protected final ArrayList<XpaListener> cmdListeners = new ArrayList<>();
 
     @Override
     public boolean status() {
