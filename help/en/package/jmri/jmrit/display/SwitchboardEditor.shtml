@@ -43,26 +43,29 @@
           <li>Key - the classic layout keyboard inspired by the M&auml;rklin hardware Keyboard</li>
           <li>Symbol - schematics like the traditional (Control) Panel</li>
         </ul></li>
+        <li>Set the number of switches to be displayed in each row (number of rows is calculated)</li>
       </ul>
+      <a href="images/Switchboard.png"><img src="images/Switchboard.png" width="276" height="221" align="right"></a>
       <p>Optionally, select a background color for this Switchboard from the Options menu.
-      To use the new settings, click [Update Switchboard] to replace all current switches<!--, or click [Add]-->.
+      To use the new settings, click [Update Switchboard] to replace all current switches.
       Note that hybrid Switchboards containing more than one bean type or connection are not saved to disk.
       You can create and save separate Switchboards for different connections, address ranges and object types like Turnouts.
       Change the name of this Switchboard by choosing Rename Switchboard... from the Edit menu while the Editor is open.</p>
       <p>When ready, close the Editor by clicking the Close box in the title bar. Open the Editor at any time from the Edit menu.</p>
 
-      <a href="images/Switchboard.png"><img src="images/Switchboard.png" width="237" height="282" align="right"></a>
       <h2>Quick Reference Guide - Using the Switchboard</h2>
       <p>Clicking on an active switch on the board will send an instruction to the layout to toggle the item (on/off, closed/thrown).
       Depending on the hardware, the switch on the board will change to show the new state.</p>
       <p>A tooltip appears when you hover your mouse over a switch, showing the user name of that item (if it's connected and set).</p>
-      <p>Upcoming: Right-click a switch to open a context-menu and:</p>
+      <p>Right-click a switch to open a context-menu and:</p>
+      <a href="images/Keyboard.png"><img src="images/Keyboard.png" width="230" height="165" align="right"></a>
       <ul>
-        <li>invert a turnout so it displays the intended state (depending on protocol support)</li>
-        <li>flip the switch icon to better represent the position of the connected turnout (presently not saved)</li>
         <li>set the user name of a connected item (stored in the item, not in the board)</li>
         <li>attach a new item to an inactive switch (using the name of the switch and the object type as set in the Editor)</li>
+        <li>To come: invert a turnout so it displays the intended state (depending on protocol support)</li>
+        <li>To come: flip the switch icon to better represent the position of the connected turnout (presently not saved)</li>
       </ul>
+
       <p>Remember to save your setup and configured items by choosing Save Panels... from the File menu.<br>
         You can have your Switchboards open automatically upon startup by setting them as as a Startup Action under Preferences &gt; Startup.</p>
       <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">PanelPro help page</a>.

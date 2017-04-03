@@ -162,6 +162,7 @@ public class SwitchboardEditor extends Editor {
     private String[] beanTypeStrings = { _turnout, _sensor, _light };
     private JComboBox beanTypeList;
     private char beanTypeChar;
+    JSpinner Columns = new JSpinner(new SpinnerNumberModel(4, 1, 10, 1));
     private String[] switchShapeStrings = {
             Bundle.getMessage("Buttons"),
             Bundle.getMessage("Sliders"),
@@ -264,10 +265,9 @@ public class SwitchboardEditor extends Editor {
                 TitledBorder.LEADING, TitledBorder.ABOVE_BOTTOM, getFont(),
                 defaultTextColor));
         // create contrast with background, should also specify border style
-        // TODO specify title for turnout, sensor, light, mixed (wait for the Editor to be created)
+        // specify title for turnout, sensor, light, mixed? (wait for the Editor to be created)
         switchboardLayeredPane.addMouseMotionListener(this);
-
-        //Add control pane and layered pane to this JPanel.
+        //Add control pane and layered pane to this JPanel
         JPanel beanSetupPane = new JPanel();
         beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
@@ -277,9 +277,7 @@ public class SwitchboardEditor extends Editor {
         beanTypeList.setActionCommand(LAYER_COMMAND);
         beanTypeList.addActionListener(this);
         beanSetupPane.add(beanTypeList);
-        add(beanSetupPane);
-
-        //Add connection selection comboBox.
+        //Add connection selection comboBox
         beanTypeChar = beanTypeList.getSelectedItem().toString().charAt(0);
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
@@ -308,6 +306,8 @@ public class SwitchboardEditor extends Editor {
         add(beanSetupPane);
 
         JPanel switchShapePane = new JPanel();
+        switchShapePane.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        // add shape combobox
         JLabel switchShapeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SwitchShape")));
         switchShapePane.add(switchShapeTitle);
         switchShapeList = new JComboBox(switchShapeStrings);
@@ -315,6 +315,10 @@ public class SwitchboardEditor extends Editor {
         switchShapeList.setActionCommand(SWITCHTYPE_COMMAND);
         switchShapeList.addActionListener(this);
         switchShapePane.add(switchShapeList);
+        // add column spinner
+        JLabel columnLabel = new JLabel(Bundle.getMessage("NumberOfColumns"));
+        switchShapePane.add(columnLabel);
+        switchShapePane.add(Columns);
         add(switchShapePane);
 
         JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
@@ -328,7 +332,7 @@ public class SwitchboardEditor extends Editor {
         add(hideUnconnected);
 
         // Next, add the buttons to the layered pane.
-        switchboardLayeredPane.setLayout(new GridLayout(4,8)); // vertical, horizontal
+        switchboardLayeredPane.setLayout(new GridLayout(_range % ((Integer) Columns.getValue()), (Integer) Columns.getValue())); // vertical, horizontal
         // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
         addSwitchRange((Integer) minSpinner.getValue(), (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
@@ -364,7 +368,9 @@ public class SwitchboardEditor extends Editor {
                 }
                 switchlist.clear(); // reset list
                 switchboardLayeredPane.setSize(300, 300);
-                switchboardLayeredPane.setLayout(new GridLayout(4,8)); // vertical, horizontal
+                // update selected address range
+                _range = (Integer) minSpinner.getValue() - (Integer) maxSpinner.getValue();
+                switchboardLayeredPane.setLayout(new GridLayout(_range % ((Integer) Columns.getValue()), (Integer) Columns.getValue())); // vertical, horizontal
                 addSwitchRange((Integer) minSpinner.getValue(), (Integer) maxSpinner.getValue(),
                         beanTypeList.getSelectedIndex(),
                         beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
@@ -421,22 +427,24 @@ public class SwitchboardEditor extends Editor {
         NamedBean nb = null;
         int _currentState;
         String _manu = manuPrefix; // cannot use All group as in Tables
+        String _insert = "";
+        if (_manu.equals("M")) { _insert = "+"; }; // create CANbus.MERG On event
         for (int i = rangeMin; i <= rangeMax; i++) {
             switch (beanType) {
                 case 0:
-                    name = _manu + "T" + i;
+                    name = _manu + "T" + _insert + i;
                     nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
                     break;
                 case 1:
-                    name = _manu + "S" + i;
+                    name = _manu + "S" + _insert + i;
                     nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
                     break;
                 case 2:
-                    name = _manu + "L" + i;
+                    name = _manu + "L" + _insert + i;
                     nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
                     break;
                 default:
-                    log.error("addSwitchRange: cannot parse bean name. _manu = {}; i = {}", _manu, i);
+                    log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}", manuPrefix, i);
                     return;
             }
             _switch = new BeanSwitch(i, nb, name, switchShape); // add button instance i
@@ -590,7 +598,7 @@ public class SwitchboardEditor extends Editor {
                     //remove the line around icon switches?
                     this.add(beanKey);
                     break;
-                case 3: // drawing turnout/sensor/light symbol (look at type from letter in switch name/label)
+                case 3: // drawing turnout/sensor/light symbol (selecting image by letter in switch name/label)
                     log.debug("create Symbols");
                     beanSymbol.addMouseListener(new MouseAdapter() { // handled by JPanel
                         @Override
@@ -609,7 +617,7 @@ public class SwitchboardEditor extends Editor {
                     _text = false;
                     _icon = true;
                     beanSymbol.setLabel(switchLabel);
-                    beanSymbol.positionLabel(40, 10); // provide x, y offset, depending on image size and free space
+                    beanSymbol.positionLabel(24, 20); // provide x, y offset, depending on image size and free space
                     if (showTooltip()) {
                         beanSymbol.setToolTipText(switchTooltip);
                     }
