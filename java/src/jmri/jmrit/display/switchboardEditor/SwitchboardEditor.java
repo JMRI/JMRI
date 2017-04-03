@@ -808,9 +808,10 @@ public class SwitchboardEditor extends Editor {
             }
             if (e.getPropertyName().equals("UserName")) {
                 // update tooltip
+                String newUserName = "unconnected";
                 if (showTooltip()) {
-                    String newUserName = ((String) e.getNewValue());
-                    if (newUserName == null && newUserName.equals("")) {
+                    newUserName = ((String) e.getNewValue());
+                    if (newUserName == null || newUserName.equals("")) {
                         newUserName = Bundle.getMessage("NoUserName");
                     }
                     beanButton.setToolTipText(_label + " (" + newUserName + ")");
