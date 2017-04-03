@@ -848,8 +848,9 @@ public class SwitchboardEditor extends Editor {
         }
 
         /**
-         * Process mouseClick on switch
-         * @param e
+         * Process mouseClick on switch.
+         
+         * @param e the event heard
          */
         public void operate(MouseEvent e, String name) {
             log.debug("Button {} clicked", name);
