@@ -60,6 +60,9 @@ abstract public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Create light of a specific type for the interface
+     * @param systemName name encoding device
+     * @param userName user name
+     * @return light object
      */
     abstract protected Light createNewSpecificLight(String systemName, String userName);
 

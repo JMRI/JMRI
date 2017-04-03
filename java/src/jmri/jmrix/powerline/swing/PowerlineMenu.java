@@ -16,6 +16,7 @@ public class PowerlineMenu extends JMenu {
     /**
      * Create a Powerline menu. And loads the SerialSystemConnectionMemo to the
      * various actions. Actions will open new windows.
+     * @param memo Connection details memo
      */
     // Need to Sort out the Powerline server menu items;
     public PowerlineMenu(SerialSystemConnectionMemo memo) {
