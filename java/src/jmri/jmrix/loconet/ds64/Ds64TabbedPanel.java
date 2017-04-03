@@ -2526,11 +2526,28 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                         routeNumber = 8;
                     }
                     if (routeNumber != 0) {
+                        // before proceeding, make sure that the user really wants to go forward
+                        Object[] dialogBoxButtonOptions = {
+                            Bundle.getMessage("ButtonTextResetRouteN", routeNumber),
+                            Bundle.getMessage("ButtonTextCancelBoardReset")};
+                        int userReply = JOptionPane.showOptionDialog(this.getParent(),
+                                Bundle.getMessage("DialogTextClearRouteWarning",routeNumber),
+                                Bundle.getMessage("DialogHeadingClearRouteWarning"),
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                                null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
+                        if (userReply != 0) {
+                            resetRouteButton.setSelected(false);
+                            return; // compare only to exactly the value for executing the "clear route" operation!
+                        }
+
+
+
                         resetRouteOperation(routeNumber);
                     }
                     readAllButton.setEnabled(true);
                     writeAllButton.setEnabled(true);
                     factoryResetButton.setEnabled(true);
+                    resetRouteButton.setSelected(false);
                 }
         );
 
