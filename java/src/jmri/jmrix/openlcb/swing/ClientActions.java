@@ -35,13 +35,13 @@ public class ClientActions {
         this.iface = iface;
     }
 
-    public void openCdiWindow(NodeID destNode) {
+    public void openCdiWindow(NodeID destNode, String description) {
         final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<JButton>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
 
         JmriJFrame f = new JmriJFrame();
-        f.setTitle("Configure " + destNode);
+        f.setTitle("Configure " + description);
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
         CdiPanel m = new CdiPanel();
