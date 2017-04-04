@@ -45,14 +45,11 @@ public class ClientActions {
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
         CdiPanel m = new CdiPanel();
-        JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        Dimension minScrollerDim = new Dimension(800, 12);
-        scrollPane.setMinimumSize(minScrollerDim);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(50);
+        f.add(m);
 
         // create an object to add "New Sensor" buttons
         CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory() {
+            private boolean haveButtons = false;
             @Override
             public JButton handleReadButton(JButton button) {
                 readList.add(button);
@@ -118,7 +115,11 @@ public class ClientActions {
                         JFormattedTextField mevt1 = evt1;
                         JFormattedTextField mevt2 = evt2;
                     });
-
+                    if (!haveButtons) {
+                        haveButtons = true;
+                        m.addButtonToFooter(buttonForList(sensorButtonList, "Make All Sensors"));
+                        m.addButtonToFooter(buttonForList(turnoutButtonList, "Make All Turnouts"));
+                    }
                     gpane = null;
                     evt1 = null;
                     evt2 = null;
@@ -153,43 +154,6 @@ public class ClientActions {
         ConfigRepresentation rep = iface.getConfigForNode(destNode);
 
         m.initComponents(rep, factory);
-
-        JButton b = new JButton("Read All");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                int delay = 0; //milliseconds
-                for (final JButton b : readList) {
-
-                    ActionListener taskPerformer = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent evt) {
-                            target.doClick();
-                        }
-
-                        JButton target = b;
-                    };
-                    Timer t = new Timer(delay, taskPerformer);
-                    t.setRepeats(false);
-                    t.start();
-                    delay = delay + 150;
-                }
-            }
-        });
-
-        f.add(scrollPane);
-        JPanel bottomPane = new JPanel();
-        bottomPane.setLayout(new FlowLayout());
-        f.add(bottomPane);
-        bottomPane.add(b);
-
-        if (sensorButtonList.size() > 0) {
-            bottomPane.add(buttonForList(sensorButtonList, "Make All Sensors"));
-        }
-
-        if (turnoutButtonList.size() > 0) {
-            bottomPane.add(buttonForList(turnoutButtonList, "Make All Turnouts"));
-        }
 
         f.pack();
         f.setVisible(true);
