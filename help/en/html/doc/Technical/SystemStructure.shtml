@@ -66,9 +66,10 @@
       <p>
       Within that, the code should be separated further by subpackages for:
       <ul>
-      <li>Specific hardware options should go in their own subpackages, for example <code>jmri.jmrix.loconet.locobuffer</code>
-        <code>jmri.jmrix.loconet.pr3</code>
-        or <code>jmri.jmrix.nce.serialdriver</code> or <code>jmri.jmrix.nce.usbdriver</code>.
+      <li>Specific hardware options should go in their own subpackages, for example <br/>
+        <code>jmri.jmrix.loconet.locobuffer</code> vs
+        <code>jmri.jmrix.loconet.pr3</code><br/>
+        or <code>jmri.jmrix.nce.serialdriver</code> vs. <code>jmri.jmrix.nce.usbdriver</code>.
       <li><a href="Swing.shtml">Swing-based tools</a> should go in their own 
         <a href="Swing.shtml">swing subpackage</a> or at a further level within the swing subpackage.
       </ul>
@@ -85,8 +86,12 @@
       provides access to a number of LocoNet-specific objects and LocoNet-specific implementations of common objects.
       Although some of those (e.g. a SensorManager) might be separately
       available from the InstanceManager, accessing them from a SystemConnectionMemo
-      allows you to find the consistent set associated with a specific connection.
-      This can be very valuable when working with multiple connections.
+      allows you to find the consistent set associated with one specific connection
+      of a multiple-connection setup, even when there are multiple connections of a specific type.
+      There are also a few tools that work with the 
+      <code>SystemConnectionManager</code> objects themselves after
+      obtaining them from the <code>InstanceManager</code>.
+    
       
       <h2>Initialization</h2>
       
@@ -109,7 +114,7 @@
       LocoNet implementation of the new (post-multiple) configuration
       system. 
       This is similar for LocoBuffer, LocoBuffer-USB, PR3, etc connections, but
-      we use the 
+      we use the specific LocoBuffer-USB case for concreteness.
       This sequence picks up after the basic startup of the 
       application itself, see the 
       <a href="AppStructure.shtml">App Structure page</a> for that.
@@ -118,10 +123,11 @@
      <p>
       There are several objects involved in startup:
         <ul>
-            <li>ConnectionConfigXml, created by the <a href="">ConfigureXML system</a> as part of reading the preferences. 
+            <li>A <code>ConnectionConfigXml</code> object, 
+                created by the <a href="XmlPersistance.shtml">ConfigureXML system</a> as part of reading the preferences. 
                 It drives the process.
-            <li>A ConnectionConfig object, registered so that a later store of the preferences will write out the right stuff
-            <li>An Adapter object of a very specific type, which handles both the connection to the system hardware, and 
+            <li>A <code>ConnectionConfig</code> object, registered so that a later store of the preferences will write out the right stuff
+            <li>An <code>Adapter</code> object of a very specific type, which handles both the connection to the system hardware, and 
                 (through its <code>configure()</code> method) the creation of the rest of the system.
         </ul>
 
@@ -145,7 +151,7 @@
         &lt;/connection&gt;
       </pre>
 
-      <a href="images/ConnectionStartSequence.png"><img src="images/LocoNetConnectionStartSequence.png" align="right" height="40%" width="40%" /></a>
+      <a href="images/LocoNetConnectionStartSequence.png"><img src="images/LocoNetConnectionStartSequence.png" align="right" height="40%" width="40%" /></a>
       Initialization proceeds through multiple steps (click on the diagram to expand it):
       <ul>
         <li>An object of type 
@@ -176,8 +182,25 @@
                 <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/locobufferusb/LocoBufferUsbAdapter.html">jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter</a></code>
                 to the "adapter" member of "ConnectionConfigXml"  That's used later on to configure the port, etc.
                 
-            <li>Basic load of serial port information, e.g. port name
-                and speed values, along with common settings.
+            <li>Some load of serial port information, e.g. port name
+                and speed values, followed by calling
+                <code>loadCommon(shared, perNode, adapter)</code> from the base class,
+                which brings in common information:
+                <ul>
+                <li>Values for four generic options: "option1" through "option4". 
+                    The port adapters then convert this to specific, connection-specific 
+                    options as needed later on
+                <li>Calls <code>loadOptions(perNode.getChild("options"), perNode.getChild("options"), adapter)</code>
+                    to do any additional handling of info coded in an 
+                    <code>&lt;options&gt;</code> element. 
+                    Although overridden in some cases, the default for this is to
+                    invoke <code>adapter.setOptionState(name, value)</code>
+                    In this LocoNet case, that stores the command station name, see the element above.
+                    
+                <li>Sets a "manufacturer" attribute/name in the TrafficController
+                <li>Sets the system prefix and user name in the SystemConnectionMemo
+                <li>Sets the adapter disabled or non-disabled
+                </ul>
                 
             <li><code>register()</code>, which is implemented in <code>jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</code>
                 by invoking <code>this.register(new ConnectionConfig(adapter))</code>, which in turn is implemented

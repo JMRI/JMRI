@@ -24,6 +24,16 @@ note left LocoBufferUsbAdapter: Assigned to "adapter" member
 note left LocoBufferUsbAdapter #FFAAAA: Which object is "adapter" in?
 deactivate ConnectionConfigXml
 
+ConnectionConfigXml -> ConnectionConfigXml : loadCommon()
+activate ConnectionConfigXml
+ConnectionConfigXml -> ConnectionConfigXml : loadOptions()
+activate ConnectionConfigXml
+ConnectionConfigXml -> LocoBufferUsbAdapter : setOptionState(name, value)
+activate LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
+deactivate ConnectionConfigXml
+deactivate ConnectionConfigXml
+
 ConnectionConfigXml -> ConnectionConfigXml : register()
 activate ConnectionConfigXml
 ConnectionConfigXml -> ConnectionConfigXml : register(new ConnectionConfig(adapter))
