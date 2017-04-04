@@ -40,6 +40,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ScheduleResetHitsActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesByLoadActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesResetHitsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SchedulesTableActionTest.class));
         return suite;
     }
 
