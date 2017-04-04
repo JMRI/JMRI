@@ -41,7 +41,7 @@ public class ClientActions {
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
 
         JmriJFrame f = new JmriJFrame();
-        f.setTitle("Configure " + description);
+        f.setTitle(Bundle.getMessage("CdiPanelConfigure") + " " + description);
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
         CdiPanel m = new CdiPanel();
@@ -77,7 +77,7 @@ public class ClientActions {
                     p.setLayout(new FlowLayout());
                     p.setAlignmentX(-1.0f);
                     pane.add(p);
-                    JButton button = new JButton("Make Sensor");
+                    JButton button = new JButton(Bundle.getMessage("CdiPanelMakeSensor"));
                     p.add(button);
                     sensorButtonList.add(button);
                     button.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +96,7 @@ public class ClientActions {
                         JFormattedTextField mevt1 = evt1;
                         JFormattedTextField mevt2 = evt2;
                     });
-                    button = new JButton("Make Turnout");
+                    button = new JButton(Bundle.getMessage("CdiPanelMakeTurnout"));
                     p.add(button);
                     turnoutButtonList.add(button);
                     button.addActionListener(new java.awt.event.ActionListener() {
@@ -117,8 +117,8 @@ public class ClientActions {
                     });
                     if (!haveButtons) {
                         haveButtons = true;
-                        m.addButtonToFooter(buttonForList(sensorButtonList, "Make All Sensors"));
-                        m.addButtonToFooter(buttonForList(turnoutButtonList, "Make All Turnouts"));
+                        m.addButtonToFooter(buttonForList(sensorButtonList, Bundle.getMessage("CdiPanelMakeAllSensors")));
+                        m.addButtonToFooter(buttonForList(turnoutButtonList, Bundle.getMessage("CdiPanelMakeAllTurnouts")));
                     }
                     gpane = null;
                     evt1 = null;
