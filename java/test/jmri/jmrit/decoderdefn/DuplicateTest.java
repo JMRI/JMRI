@@ -27,18 +27,20 @@ public class DuplicateTest extends TestCase {
         File dir = new File("xml/decoders/");
         File[] files = dir.listFiles();
         boolean failed = false;
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().endsWith("xml")) {
-                failed = check(files[i]) || failed;
+        for (File file : files) {
+            if (file.getName().endsWith("xml")) {
+                failed = check(file) || failed;
             }
         }
         System.out.println("checked total of " + models.size());
+        System.out.println("skipped due to migration total of " + skipped);
         if (failed) {
             Assert.fail("test failed, see System.err");
         }
     }
 
-    ArrayList<String> models = new ArrayList<String>();
+    ArrayList<String> models = new ArrayList<>();
+    int skipped = 0;
 
     @SuppressWarnings("unchecked")
     boolean check(File file) throws JDOMException, IOException {
@@ -50,18 +52,29 @@ public class DuplicateTest extends TestCase {
             return false;
         }
 
-        String family = root.getChild("decoder").getChild("family").getAttributeValue("name") + "][";
+        String family = "[" + root.getChild("decoder").getChild("family").getAttributeValue("name") + "][";
         Iterator<Element> iter = root.getChild("decoder").getChild("family")
                 .getDescendants(new ElementFilter("model"));
 
         boolean failed = false;
         while (iter.hasNext()) {
-            String model = iter.next().getAttributeValue("model");
-            if (models.contains(family + model)) {
-                System.err.println("found duplicate for " + family + model);
+            Element e = iter.next();
+            String model = e.getAttributeValue("model") + "][";
+            String productID = e.getAttributeValue("productID")+ "]";
+            if (models.contains(family + model + productID)) {
+                System.err.println("found duplicate for " + family + model + productID);
                 failed = true;
             }
-            models.add(family + model);
+            // Check if this decoder definition has a replacement model and
+            // family defined meaning that it's been migrated.
+            // If so, skip adding it to the models list as this can otherwise
+            // result in an erroneous duplicate
+            if (e.getAttributeValue("replacementModel") != null && e.getAttributeValue("replacementFamily") != null) {
+                skipped += 1;
+                System.out.println("skipping due to migration " + family + model + productID);
+            } else {
+                models.add(family + model + productID);
+            }
         }
         return failed;
     }
