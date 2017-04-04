@@ -184,7 +184,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) 
             log.debug("Throttle " + getDccAddress() + " - recieved message " + l.toString());
-        if((l.getElement(0)&0xE0)==0xE0 && (l.getElement(0)&0x0f) >= 7 && (l.getElement(0)&0x0f) <=14 ){
+        if((l.getElement(0)&0xE0)==0xE0 && ((l.getElement(0)&0x0f) >= 7 && (l.getElement(0)&0x0f) <=15 )){
             //This is a Roco specific throttle information message.
             //Data Byte 0 and 1 contain the locomotive address
             int messageaddress=((l.getElement(1)&0x3F) << 8)+l.getElement(2);
