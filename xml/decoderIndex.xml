@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.7.3ish+jake+20170327T1511Z+R44fcdd3 on Mon Mar 27 08:11:16 PDT 2017 $Id$-->
-  <decoderIndex version="806">
+  <!--Written by JMRI version 4.7.3ish+heap+20170404T2322Z+R44cd411 on Wed Apr 05 09:22:38 AEST 2017 $Id$-->
+  <decoderIndex version="808">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -6724,7 +6724,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="SwitchPilot Servo (2013)" connector="Wires">
+        <model model="SwitchPilot Servo (2013)" lowVersionID="177" highVersionID="177" connector="Wires">
           <output name="1" label="Servo|1" />
           <output name="2" label="Servo|2" />
           <output name="3" label="Servo|3" />
@@ -6748,7 +6748,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="SwitchPilot Servo V2.0" lowVersionID="153" highVersionID="153" connector="Wires" productID="33554522">
+        <model model="SwitchPilot Servo V2.0" lowVersionID="153" highVersionID="200" connector="Wires" productID="33554522">
           <output name="1" label="Servo|1" />
           <output name="2" label="Servo|2" />
           <output name="3" label="Servo|3" />
