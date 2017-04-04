@@ -82,22 +82,45 @@
       <p>Within each individual Route, the "Top" turnout command is the command 
           which begins the sequence.  The received LocoNet command must match the "Top" turnout
           command exactly - both in address and direction, in order to trigger the 
-          route.  Once triggered, the DS64 will transmit the subsequent turnout messages
-          to LocoNet.</p>
-      <p>When DS64 inputs are used to trigger the route, the DS64 will transmit the
-          "Top" switch command, as well as the subsequent commands.
-      <p>Each entry in the route may be "unused" or may have a turnout address plus 
-          a direction.  The DS64 will only send those entries which are not "Unused",
-          starting from the "Top" of the list, working downward until the first "Unused" 
-          entry is found, or until the last entry is sent.</p>
+          route via a LocoNet command.  Once triggered, the DS64 will transmit the 
+          subsequent turnout messages to LocoNet, until it finds an entry marked as 
+          "unused", or until it has sent the 8th entry, which ever comes first.</p>
+      <p>When a DS64 input is used to trigger the route, and the route has a "Top" entry 
+          which is something other than "Unused", the DS64 will transmit (on LocoNet) the
+          "Top" switch command, as well as any subsequent commands, until the 8th entry 
+          of the route has been sent or until it reaches an entry marked as "Unused", 
+          whichever happens first.
+      <p>If the topmost entry of a route is marked as "unused", the whole route is 
+          considered invalid.</p>
       <p>Note that it is not necessary to enter a duplicate turnout command to terminate 
           the route before the end of the list.  Simply configure a turnout as "Unused" 
-          to terminate the route.</p>
+          to terminate the route.  For example, if there are five turnouts in the route,
+          including the top-most turnout, then set the sixth turnout entry as "Unused".
+          The DS64 will then ignore the sixth, seventh and eighth entries for the route.</p>
+      <h3>Clearing a Route</h3>
+      <p>When the "Routes" tab has been selected, the tool provides an additional 
+          button for "clearing" the route.  This button is found at the top of the 
+          window.  When this button is pressed, the tool will ask for confirmation 
+          before making any changes to the DS64.  Upon user confirmation, the tool
+          updates the DS64 to clear the route which is selected.</p>
+      <p>Only the selected route will be cleared; other routes remain unmodified.</p>   
 
       <h2>Limitations</h2>
-      <p>Because of the way the DS64 board works,
-          this tool can't change the basic address of the unit.</p>
-      <p>This tool does not have the capability to save the DS64 configuration.
+      <ul>
+          <li>Because of the way the DS64 board works, this tool can't change the 
+              basic address of the unit.</li>
+          <li>This tool does not have the capability to save the DS64 configuration.</li>
+          <li>The "Output Addresses" tab shows the state of the output <i>at the time
+              that the "sheet" was last read from the DS64</i>.  This tool does not attempt
+              to track any ongoing turnout control messages, so it cannot provide real-time
+              updates of the DS64 output state.</li>
+          <li>When a route is "cleared", the tool will simply update the DS64 with
+              the information that the top-most entry is "Unused", and then clear 
+              the route display.  The remaining information from the route remains 
+              un-modified in the DS64.  It cannot be executed as a route.
+              A "read full sheet" operation, for the route, will display the remaining 
+              "orphaned" route information.
+      </ul>
       <!--#include virtual="/Footer" -->
     </div>
   </div>
