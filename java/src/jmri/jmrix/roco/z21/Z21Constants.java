@@ -30,7 +30,7 @@ public final class Z21Constants {
 
     /* XPressNet Locomotive Message Constants */
     public final static int LAN_X_LOCO_INFO_REQUEST_Z21 = 0xF0; // defined in section 4.1 of the protocol documentation.
-    public final static int LAN_X_LOCO_INFO_RESPONSE = 0xE8; // defined in section 4.4 of the protocol documentation.
+    public final static int LAN_X_LOCO_INFO_RESPONSE = 0xEF; // defined in section 4.4 of the protocol documentation.
     public final static int LAN_X_SET_LOCO_FUNCTION = 0xF8; // defined in section 4.3 of the protocol documentation.
     public final static int LAN_X_GET_TURNOUT_INFO = 0x43; // defined in section 5.1 of the protocol documentation.
     public final static int LAN_X_SET_TURNOUT= 0x53; // defined in section 5.2 of the protocol documentation.
