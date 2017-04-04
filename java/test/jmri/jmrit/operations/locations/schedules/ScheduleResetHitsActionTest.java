@@ -16,7 +16,7 @@ public class ScheduleResetHitsActionTest {
 
     @Test
     public void testCTor() {
-        ScheduleResetHitsAction t = new ScheduleResetHitsAction(test);
+        ScheduleResetHitsAction t = new ScheduleResetHitsAction("Test");
         Assert.assertNotNull("exists",t);
     }
 
