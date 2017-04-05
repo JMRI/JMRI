@@ -44,7 +44,7 @@ public class AllTest extends TestCase {
         suite.addTest(jmri.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
         // at the end, we check for Log4J messages again
-        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
         return suite;
     }
 

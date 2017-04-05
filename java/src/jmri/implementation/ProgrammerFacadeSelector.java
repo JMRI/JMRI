@@ -14,7 +14,13 @@ import org.slf4j.LoggerFactory;
  */
 public class ProgrammerFacadeSelector {
 
-    public static Programmer loadFacadeElements(Element element, Programmer programmer) {
+    /**
+     * Add facades specified in an XML decoder definition element to the front of a programmer.
+     * @param element Contains "capability" elements that define the Facades
+     * @param programmer Programmer implementation to decorate
+     * @param allowCache Passed to facades that optionally cache
+     */
+    public static Programmer loadFacadeElements(Element element, Programmer programmer, boolean allowCache) {
         // iterate over any facades and add them
         List<Element> facades = element.getChildren("capability");
         if (log.isDebugEnabled()) {
@@ -83,7 +89,7 @@ public class ProgrammerFacadeSelector {
                 String PI = parameters.get(0).getText();
                 String SI = (parameters.size() > 1) ? parameters.get(1).getText() : null;
                 boolean cvFirst = (parameters.size() > 2) ? (parameters.get(2).getText().equals("false") ? false : true) : true;
-                boolean skipDupIndexWrite = (parameters.size() > 3) ? (parameters.get(3).getText().equals("true") ? true : false) : false;
+                boolean skipDupIndexWrite = (parameters.size() > 3) ? (parameters.get(3).getText().equals("false") ? false : allowCache) : allowCache; // if not present, use default
 
                 jmri.implementation.MultiIndexProgrammerFacade pf
                         = new jmri.implementation.MultiIndexProgrammerFacade(programmer, PI, SI, cvFirst, skipDupIndexWrite);

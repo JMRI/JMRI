@@ -274,6 +274,9 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### rscbundlecheck.jar
 - check for duplicated properties
 
+##### system-rules-1.16.0.jar
+- Handle rules for testing calls to java.System methods
+
 ##### AppleJavaExtensions.jar
 - version 1.5
 - from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>

@@ -171,7 +171,14 @@ should include explanatory text:
       java/src/jmri/jmrix/lenz/XNetProgrammer.java</a> file. The
       resulting diagrams are visible in the <a href=
       "http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">
-      Javadoc output</a>.</p>
+      Javadoc output</a>.
+      <p>PlantUml can also be used for standalone diagrams, c.f.
+      <a href="SystemStructure.shtml">the connection sequence diagram</a>.
+      To do this, create a .txt file, and then manually process with
+      <pre>
+      java -jar lib/plantuml.jar help/en/my/file/path/name
+      </pre>
+      A .png with the diagram will be created alongside the source.
 
       <h2>Processing</h2>The standard JMRI Ant build provides three
       documentation targets:

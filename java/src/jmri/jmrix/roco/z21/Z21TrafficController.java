@@ -224,7 +224,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 }
             }
         });
-        xmtThread.setName("Transmit");
+        xmtThread.setName("z21.Z21TrafficController Transmit thread");
         xmtThread.start();
         rcvThread = new Thread(new Runnable() {
             @Override
@@ -232,7 +232,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 receiveLoop();
             }
         });
-        rcvThread.setName("Receive");
+        rcvThread.setName("z21.Z21TrafficController Receive thread");
         int xr = rcvThread.getPriority();
         xr++;
         rcvThread.setPriority(xr);      //bump up the priority

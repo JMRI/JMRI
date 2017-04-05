@@ -154,6 +154,44 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         return;
     }
 
+
+    /**
+     * Set the pull resistance
+     * <p>
+     * In this default implementation, the input value is ignored.
+     *
+     * @param r PullResistance value to use.
+     */
+    @Override
+    public void setPullResistance(PullResistance r){
+       try { 
+          node.setPRParameter(pin,r);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
+    }
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.
+     */
+    @Override
+    public PullResistance getPullResistance(){
+       try {
+          return node.getPRValueForPin(pin);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
+       return PullResistance.PULL_UP; // return the default if we get this far.
+    }
+
+
+
     @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);

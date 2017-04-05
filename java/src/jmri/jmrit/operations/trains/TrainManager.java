@@ -70,9 +70,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public TrainManager() {
     }
 
-    /**
-     * record the single instance *
-     */
     private int _id = 0; // train ids
 
     public static synchronized TrainManager instance() {

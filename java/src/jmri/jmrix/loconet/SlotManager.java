@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+
 import jmri.CommandStation;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;
@@ -707,6 +710,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
+     * Service mode always checks for DecoderReply.  (The DCS240 also seems to do
+     * ReadAfterWrite, but that's not fully understood yet)
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.DecoderReply; }
+
+    /**
      * Set the command station type to one of the known types in the
      * {@link LnCommandStationType} enum.
      */
@@ -918,7 +929,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        tc.sendLocoNetMessage(progTaskStart(progByte, -1, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(progByte, 0, CV, false));
     }
 
     private jmri.ProgListener _usingProgrammer = null;
@@ -959,7 +970,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(7, 0);  // TRK was 0, then 7 for PR2, now back to zero
 
         // store address in CVH, CVL. Note CVH format is truely wierd...
-        m.setElement(8, (addr & 0x300) / 16 + (addr & 0x80) / 128 + (val & 0x80) / 128 * 2);
+        m.setElement(8, ((addr & 0x300)>>4) | ((addr & 0x80) >> 7) | ((val & 0x80) >> 6));
         m.setElement(9, addr & 0x7F);
 
         // store low bits of CV value
