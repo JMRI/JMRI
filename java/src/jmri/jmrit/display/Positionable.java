@@ -137,17 +137,17 @@ public interface Positionable extends Cloneable {
 
     /**
      * Use the 'Standard' presentation of the popup menu items. The editor will
-     * call this method to find out whether it should creates any popup viewing
+     * call this method to find out whether it should create any popup viewing
      * menu items.
      *
      * @return true if Editor may add the standardpopup menu items
      */
     public boolean doViemMenu();
-    /*
+
+    /**
      * Utility to handle Margins, Borders and other common popup items
      * @return null if these item do not apply
      */
-
     public PositionablePopupUtil getPopupUtility();
 
     public void setPopupUtility(PositionablePopupUtil tu);
