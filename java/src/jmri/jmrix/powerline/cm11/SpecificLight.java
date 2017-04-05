@@ -30,6 +30,8 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName systemName for light
+     * @param tc         tc for connection
      */
     public SpecificLight(String systemName, SerialTrafficController tc) {
         super(systemName, tc);
@@ -40,6 +42,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName systemName for light
+     * @param tc         tc for connection
+     * @param userName   userName for light
      */
     public SpecificLight(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, tc, userName);

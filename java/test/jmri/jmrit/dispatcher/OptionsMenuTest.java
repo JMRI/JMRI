@@ -1,22 +1,28 @@
-package jmri.jmrix.loconet.ds64;
+package jmri.jmrit.dispatcher;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DS64PanelTest {
+public class OptionsMenuTest {
 
     @Test
     public void testCTor() {
-        DS64Panel t = new DS64Panel();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
+
+        DispatcherFrame d = DispatcherFrame.instance();
+        OptionsMenu t = new OptionsMenu(d);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +39,6 @@ public class DS64PanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DS64PanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OptionsMenuTest.class.getName());
 
 }

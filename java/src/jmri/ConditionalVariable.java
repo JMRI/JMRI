@@ -297,12 +297,9 @@ public class ConditionalVariable {
     public void setDataString(String data) {
         _dataString = data;
         if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
-            try {
-                NamedBean bean = InstanceManager.memoryManagerInstance().provideMemory(data);
+            NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
+            if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
-            } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide memory \"{}\" in setDataString", data);
-                _namedBeanData = null;
             }
         }
     }

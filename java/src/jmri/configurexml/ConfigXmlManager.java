@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -289,13 +288,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     protected boolean addConfigStore(Element root) {
         boolean result = true;
         ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<>(clist.entrySet());
-        Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>() {
-
-            @Override
-            public int compare(Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) {
-                return o1.getValue().compareTo(o2.getValue());
-            }
-        });
+        Collections.sort(l, (Map.Entry<Object, Integer> o1, Map.Entry<Object, Integer> o2) -> o1.getValue().compareTo(o2.getValue()));
         for (int i = 0; i < l.size(); i++) {
             try {
                 Object o = l.get(i).getKey();
@@ -681,13 +674,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             }
 
             ArrayList<Map.Entry<Element, Integer>> l = new ArrayList<>(loadlist.entrySet());
-            Collections.sort(l, new Comparator<Map.Entry<Element, Integer>>() {
-
-                @Override
-                public int compare(Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) {
-                    return o1.getValue().compareTo(o2.getValue());
-                }
-            });
+            Collections.sort(l, (Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) -> o1.getValue().compareTo(o2.getValue()));
             for (int i = 0; i < l.size(); i++) {
                 Element item = l.get(i).getKey();
                 String adapterName = item.getAttribute("class").getValue();
@@ -855,10 +842,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Invoke common handling of errors that happen during the "load" process.
      * <p>
-     * Generally, this is invoked by {@link XmlAdapter} implementations of their
-     * creationErrorEncountered() method (note different arguments, though). The
-     * standard implementation of that is in {@link AbstractXmlAdapter}.
-     * <p>
      * Exceptions passed into this are absorbed.
      *
      * @param adapter     Object that encountered the error (for reporting), may
@@ -882,16 +865,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ErrorMemo e = new ErrorMemo(
                 adapter, operation, description,
                 systemName, userName, exception, "loading");
-
-        handler.handle(e);
+        if (adapter != null) {
+            ErrorHandler aeh = adapter.getExceptionHandler();
+            if (aeh != null) {
+                aeh.handle(e);
+            }
+        } else {
+            handler.handle(e);
+        }
     }
 
     /**
      * Invoke common handling of errors that happen during the "store" process.
-     * <p>
-     * Generally, this is invoked by {@link XmlAdapter} implementations of their
-     * creationErrorEncountered() method (note different arguemments, though).
-     * The standard implemenation of that is in {@link AbstractXmlAdapter}.
      * <p>
      * Exceptions passed into this are absorbed.
      *
@@ -916,8 +901,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         ErrorMemo e = new ErrorMemo(
                 adapter, operation, description,
                 systemName, userName, exception, "storing");
-
-        handler.handle(e);
+        if (adapter != null) {
+            ErrorHandler aeh = adapter.getExceptionHandler();
+            if (aeh != null) {
+                aeh.handle(e);
+            }
+        } else {
+            handler.handle(e);
+        }
     }
 
     static ErrorHandler handler = new ErrorHandler();

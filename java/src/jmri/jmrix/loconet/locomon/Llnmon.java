@@ -2622,7 +2622,6 @@ public class Llnmon {
         return "";
     }
     private String interpretOpcMultiSense(LocoNetMessage l ) {
-        int pCMD = (l.getElement(3) & 0xF0);
         int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
         switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:

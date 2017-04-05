@@ -177,6 +177,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return boolean of xmit port status
      */
     public boolean okToSend() {
         return true;
@@ -251,6 +252,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * Local method to do specific port configuration
+     * @throws gnu.io.UnsupportedCommOperationException used if invalid parms
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

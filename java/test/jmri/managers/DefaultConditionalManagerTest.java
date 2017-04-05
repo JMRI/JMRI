@@ -3,6 +3,10 @@ package jmri.managers;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import junit.framework.Assert;
+
+import jmri.Conditional;
+import jmri.ConditionalManager;
 
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
@@ -13,6 +17,28 @@ public class DefaultConditionalManagerTest extends TestCase {
 
     public void testCtor() {
         new DefaultConditionalManager();
+    }
+
+    public void testCreate() {
+        ConditionalManager m = new DefaultConditionalManager();
+
+        Conditional c1 = m.createNewConditional("IX01C01", "");        
+        Conditional c2 = m.createNewConditional("IX01C02", "");
+        
+        Assert.assertFalse(c1 == c2);
+        Assert.assertFalse(c1.equals(c2));
+        
+    }
+
+    public void testUserNameOverlap() {
+        ConditionalManager m = new DefaultConditionalManager();
+
+        Conditional c1 = m.createNewConditional("IX01C01", "Foo");        
+        Conditional c2 = m.createNewConditional("IX01C02", "Foo");
+        
+        Assert.assertTrue(c1.getUserName().equals("Foo"));
+        Assert.assertTrue(c2.getUserName().equals("Foo"));
+        
     }
 
     // from here down is testing infrastructure
