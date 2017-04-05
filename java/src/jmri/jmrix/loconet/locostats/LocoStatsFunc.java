@@ -39,7 +39,7 @@ public class LocoStatsFunc implements LocoNetListener {
         LocoNetMessage l = new LocoNetMessage(new int[] {0x81, 0x7f});
         memo.getLnTrafficController().sendLocoNetMessage(l);
         updatePending = true;
-        log.info("Sent a query");
+        log.debug("Sent a LocoNet interface status query");
     }
     
     /**
@@ -65,7 +65,7 @@ public class LocoStatsFunc implements LocoNetListener {
             );
             updatePending = false;
             updateListeners();
-            log.info("Got a query reply: LocoBufferII");
+            log.debug("Got a LocoNet interface status reply: LocoBufferII");
 
         } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (msg.getElement(1) == 0x10)
@@ -83,7 +83,7 @@ public class LocoStatsFunc implements LocoNetListener {
                         data[4],
                         data[5]
                 );
-                log.info("Got a reply: PR2 mode");
+                log.debug("Got a LocoNet interface status reply: PR2 mode");
 
             } else {
                 // MS100 format
@@ -93,7 +93,7 @@ public class LocoStatsFunc implements LocoNetListener {
                         data[5] * 256 + data[4],
                         data[2]
                 );
-                log.info("Got a reply: MS100 mode");
+                log.debug("Got a LocoNet interface status reply: PR3 MS100 mode");
             }
             updatePending = false;
             updateListeners();
@@ -108,7 +108,7 @@ public class LocoStatsFunc implements LocoNetListener {
 
                 updatePending = false;
                 updateListeners();
-                log.info("Got a reply: Raw mode");
+                log.debug("Got a LocoNet interface status reply: Raw mode");
             } catch (Exception e) {
                 log.error("Error parsing update: " + msg);
             }
