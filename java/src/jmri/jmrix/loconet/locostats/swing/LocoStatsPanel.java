@@ -8,8 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locostats.LocoNetInterfaceStatsListener;
 import jmri.jmrix.loconet.locostats.LocoBufferIIStatus;
@@ -47,6 +45,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JPanel rawPanel;
     JPanel pr2Panel;
     JPanel ms100Panel;
+    boolean updateRequestPending = false;
     
     private LocoStatsFunc stats;
 
@@ -57,14 +56,14 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
 
     @Override
     public String getTitle() {
-        return getTitle(Bundle.getMessage("MenuItemLocoStats"));
+        return getTitle("MenuItemLocoStats");
     }
 
     public LocoStatsPanel() {
         super();
     }
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle");
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.swing.LocoStatsBundle");
 
     @Override
     public void initComponents() {
@@ -127,13 +126,9 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         add(panel);
 
         // install "update" button handler
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                requestUpdate();
-            }
-        }
-        );
+        updateButton.addActionListener((ActionEvent a) -> {
+            requestUpdate();
+        });
 
         // and prep for display
         lb2Panel.setVisible(false);
@@ -150,6 +145,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         super.initComponents(memo);
         
         stats = new LocoStatsFunc(memo);
+        stats.addLocoNetInterfaceStatsListener(this);
 
         // request data
         stats.getInterfaceStatus();
@@ -160,9 +156,8 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     }
 
     public void requestUpdate() {
-        LocoNetMessage msg = new LocoNetMessage(2);
-        msg.setOpCode(LnConstants.OPC_GPBUSY);
-        memo.getLnTrafficController().sendLocoNetMessage(msg);
+        stats.sendLocoNetInterfaceStatusQueryMessage();
+        updateRequestPending = true;
     }
 
     JTextField r1 = new JTextField(5);
@@ -204,8 +199,18 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         }
     }
 
+    /**
+     * Listener for LocoNet Interface Status changes
+     * 
+     * @param o a LocoNetStatus object
+     */
     @Override
     public void notifyChangedInterfaceStatus(Object o) {
+        log.debug("Update is being handled:" +o.toString());
+        if (!updateRequestPending) {
+            return;
+        }
+        
         if (o.getClass() == LocoBufferIIStatus.class) {
             LocoBufferIIStatus s = (LocoBufferIIStatus) o;
             version.setText((Integer.toString(s.version)));
@@ -215,7 +220,6 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             pr2Panel.setVisible(false);
             ms100Panel.setVisible(false);
             lb2Panel.setVisible(true);
-            return;
         } else if (o.getClass() == PR2Status.class) {
             PR2Status s = (PR2Status) o;
             serial.setText(Integer.toString(s.serial));
@@ -227,7 +231,6 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             rawPanel.setVisible(false);
             ms100Panel.setVisible(false);
             pr2Panel.setVisible(true);
-            return;
         } else if (o.getClass() == PR3MS100ModeStatus.class) {
             PR3MS100ModeStatus s = (PR3MS100ModeStatus) o;
             goodMsgCnt.setText(Integer.toString(s.goodMsgCnt));
@@ -237,7 +240,6 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             rawPanel.setVisible(false);
             pr2Panel.setVisible(false);
             ms100Panel.setVisible(true);
-            return;
         } else if (o.getClass() == RawStatus.class) {
             RawStatus s = (RawStatus)o;
             r1.setText(Integer.toString(s.raw[0]));
@@ -252,9 +254,8 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             pr2Panel.setVisible(false);
             ms100Panel.setVisible(false);
             rawPanel.setVisible(true);
-            return;
         }
-        return;
     }
+
     private final static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
 }

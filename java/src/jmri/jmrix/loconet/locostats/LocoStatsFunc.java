@@ -27,6 +27,9 @@ public class LocoStatsFunc implements LocoNetListener {
     private boolean updatePending;
     private Object ifaceStatus;
     
+    /**
+     * Request LocoNet interface Status
+     */
     public void sendLocoNetInterfaceStatusQueryMessage() {
         if (memo == null) {
             return;
@@ -37,10 +40,14 @@ public class LocoStatsFunc implements LocoNetListener {
         log.info("Sent a query");
     }
     
+    /**
+     * LocoNet message handler.
+     * 
+     * @param msg - incoming LocoNet message to be interpreted
+     */
     @Override
     public void message(LocoNetMessage msg) {
-        if (updatePending
-                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
+        if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (msg.getElement(1) == 0x10)
                 && (msg.getElement(2) == 0x50)
                 && (msg.getElement(3) == 0x50)
@@ -58,8 +65,7 @@ public class LocoStatsFunc implements LocoNetListener {
             updateListeners();
             log.info("Got a query reply: LocoBufferII");
 
-        } else if (updatePending
-                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
+        } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (msg.getElement(1) == 0x10)
                 && (msg.getElement(2) == 0x22)
                 && (msg.getElement(3) == 0x22)
@@ -90,8 +96,7 @@ public class LocoStatsFunc implements LocoNetListener {
             updatePending = false;
             updateListeners();
 
-        } else if (updatePending
-                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)) {
+        } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)) {
             // raw mode
             try {
                 int[] data = msg.getPeerXfrData();
@@ -137,7 +142,13 @@ public class LocoStatsFunc implements LocoNetListener {
     // The methods to implement adding and removing listeners
     protected Vector<LocoNetInterfaceStatsListener> listeners = new Vector<LocoNetInterfaceStatsListener>();
 
-    public synchronized void addLocoNetInterfaceStatsListener(int mask, LocoNetInterfaceStatsListener l) {
+    /**
+     * Add a listener to the list of listeners which will be notified upon receipt 
+     * a LocoNet message containing interface statistics.
+     * 
+     * @param l - LocoNetInterfaceStatsListener to be added
+     */
+    public synchronized void addLocoNetInterfaceStatsListener(LocoNetInterfaceStatsListener l) {
         // add only if not already registered
         if (l == null) {
             throw new java.lang.NullPointerException();
@@ -147,7 +158,13 @@ public class LocoStatsFunc implements LocoNetListener {
         }
     }
 
-    public synchronized void removeLocoNetInterfaceStatsListener(int mask, LocoNetInterfaceStatsListener l) {
+    /**
+     * Remove a listener (if present) from the list of listeners which will be 
+     * notified upon receipt LocoNet message containing interface statistics.
+     * 
+     * @param l - LocoNetInterfaceStatsListener to be removed
+     */
+    public synchronized void removeLocoNetInterfaceStatsListener(LocoNetInterfaceStatsListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
