@@ -19,7 +19,7 @@ public class PositionablePolygonTest {
     @Test
     public void testCTor() {
         Editor e = new EditorScaffold();
-        PositionablePolygon t = new PositionablePolygon(e,new PositionableRectangle(e));
+        PositionablePolygon t = new PositionablePolygon(e,new java.awt.Polygon());
         Assert.assertNotNull("exists",t);
     }
 
