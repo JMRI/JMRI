@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user configuration of serial nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -412,7 +412,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -438,7 +438,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel

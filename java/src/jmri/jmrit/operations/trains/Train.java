@@ -2918,7 +2918,7 @@ public class Train implements java.beans.PropertyChangeListener {
             // find the number of active threads
             ThreadGroup root = Thread.currentThread().getThreadGroup();
             int numberOfThreads = root.activeCount();
-            //	log.debug("Number of active threads: {}", numberOfThreads);
+            // log.debug("Number of active threads: {}", numberOfThreads);
             for (String scriptPathname : scripts) {
                 try {
                     JmriScriptEngineManager.getDefault()

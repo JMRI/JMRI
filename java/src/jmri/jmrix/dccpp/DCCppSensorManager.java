@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "DCCppSnnn", where nnn is the sensor number without padding.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 

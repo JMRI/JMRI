@@ -77,6 +77,11 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                     elem.addContent(timer);
                 }
             }
+            if(tm.isPullResistanceConfigurable()){
+               // store the sensor's value for pull resistance.
+               elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
+            }
+
             // store common part
             storeCommon(s, elem);
 
@@ -152,8 +157,8 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         for (int i = 0; i < sensorList.size(); i++) {
             String sysName = getSystemName(sensorList.get(i));
             if (sysName == null) {
-                creationErrorEncountered("Unexpected missing system name while loading sensors",
-                        null, null, null);
+                handleException("Unexpected missing system name while loading sensors",
+                        null, null, null, null);
                 result = false;
                 break;
             }
@@ -178,8 +183,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 s = tm.newSensor(sysName, userName);
             } catch (IllegalArgumentException e) {
-                creationErrorEncountered("Could not create sensor",
-                        sysName, userName, null);
+                handleException("Could not create sensor", null, sysName, userName, null);
                 result = false;
                 continue;
             }
@@ -214,6 +218,13 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 }
             }
             s.setInverted(inverted);
+
+            if(sensorList.get(i).getChild("pullResistance")!=null){
+               String pull = sensorList.get(i).getChild("pullResistance")
+                                       .getText();
+               log.debug("setting pull to {} for sensor {}",pull,s);
+               s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
+           }
         }
         return result;
     }

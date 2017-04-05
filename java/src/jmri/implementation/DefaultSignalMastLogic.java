@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Default implementation of {@link jmri.SignalMastLogic}
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
 

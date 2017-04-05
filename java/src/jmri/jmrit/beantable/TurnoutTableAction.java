@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a TurnoutTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  */
 public class TurnoutTableAction extends AbstractTableAction {
 
@@ -845,8 +845,8 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Create a {@literal JComboBox<String>} containing all the options for
      * turnout automation parameters for this turnout
      *
-     * @param t	the turnout
-     * @return	the JComboBox
+     * @param t the turnout
+     * @return the JComboBox
      */
     protected JComboBox<String> makeAutomationBox(Turnout t) {
         String[] str = new String[]{"empty"};
@@ -857,7 +857,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setTurnoutOperation(myTurnout, cb);
-                cb.removeActionListener(this);		// avoid recursion
+                cb.removeActionListener(this);  // avoid recursion
                 updateAutomationBox(myTurnout, cb);
                 cb.addActionListener(this);
             }
@@ -868,7 +868,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * Create a JButton to edit a turnout operation.
      *
-     * @return	the JButton
+     * @return the JButton
      */
     protected JButton editButton() {
         JButton editButton = new JButton(Bundle.getMessage("EditTurnoutOperation"));
@@ -879,8 +879,8 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Add the content and make the appropriate selection to a combox box for a
      * turnout's automation choices
      *
-     * @param t	 turnout
-     * @param cb	the JComboBox
+     * @param t  turnout
+     * @param cb the JComboBox
      */
     public static void updateAutomationBox(Turnout t, JComboBox<String> cb) {
         TurnoutOperation[] ops = TurnoutOperationManager.getInstance().getTurnoutOperations();
@@ -919,7 +919,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             try {
                 strings.insertElementAt(defStrings.elementAt(i), i + 2);
             } catch (java.lang.ArrayIndexOutOfBoundsException obe) {
-                //	           strings.insertElementAt(defStrings.elementAt(i),i+2);
+                //            strings.insertElementAt(defStrings.elementAt(i),i+2);
             }
         }
         for (int i = 0; i < strings.size(); ++i) {
@@ -939,20 +939,20 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * set the turnout's operation info based on the contents of the combo box
      *
-     * @param t	 turnout
+     * @param t  turnout
      * @param cb JComboBox
      */
     protected void setTurnoutOperation(Turnout t, JComboBox<String> cb) {
         switch (cb.getSelectedIndex()) {
-            case 0:			// Off
+            case 0:   // Off
                 t.setInhibitOperation(true);
                 t.setTurnoutOperation(null);
                 break;
-            case 1:			// Default
+            case 1:   // Default
                 t.setInhibitOperation(false);
                 t.setTurnoutOperation(null);
                 break;
-            default:		// named operation
+            default:  // named operation
                 t.setInhibitOperation(false);
                 t.setTurnoutOperation(TurnoutOperationManager.getInstance().
                         getOperation(((String) cb.getSelectedItem())));
@@ -1031,7 +1031,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                             }
                             setTitle();
                             myTurnout.setTurnoutOperation(null);
-                            myTurnout.setTurnoutOperation(myOp);	// no-op but updates display - have to <i>change</i> value
+                            myTurnout.setTurnoutOperation(myOp); // no-op but updates display - have to <i>change</i> value
                         }
                     }
                 });
@@ -1253,7 +1253,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      */
     @Override
     public void setMenuBar(BeanTableFrame f) {
-        final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
+        final jmri.util.JmriJFrame finalF = f;   // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
         boolean menuAbsent = true;

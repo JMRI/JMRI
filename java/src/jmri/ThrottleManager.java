@@ -23,8 +23,8 @@ import java.beans.PropertyChangeListener;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Glen Oberhauser
- * @author	Bob Jacobsen Copyright 2006
+ * @author Glen Oberhauser
+ * @author Bob Jacobsen Copyright 2006
  */
 public interface ThrottleManager {
 

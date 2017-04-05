@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * on the cab bus. E.g. you can manually change a state via an icon, and not
  * have it change back the next time that AIU is polled.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
   */
 public class NceAIU {
 

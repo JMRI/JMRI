@@ -20,7 +20,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.1.6
  */
 public interface ModifiedFlag {

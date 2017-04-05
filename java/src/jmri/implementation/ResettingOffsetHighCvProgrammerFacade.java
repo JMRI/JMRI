@@ -59,8 +59,8 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     int indicator;
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override
@@ -138,8 +138,20 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
+        if (status != OK ) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+        
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {

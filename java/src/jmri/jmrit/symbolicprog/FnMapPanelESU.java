@@ -88,8 +88,8 @@ import org.slf4j.LoggerFactory;
  * </dd>
  * </dl>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Dave Heap Copyright (C) 2016
  */
 public class FnMapPanelESU extends JPanel {
 

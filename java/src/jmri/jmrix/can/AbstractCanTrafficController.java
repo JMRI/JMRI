@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * CAN messages and the message format of the CAN adapter that connects to the
  * layout.
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 abstract public class AbstractCanTrafficController
         extends AbstractMRTrafficController

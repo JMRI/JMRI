@@ -21,7 +21,7 @@ package jmri.jmrit.vsdecoder.swing;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.BorderLayout;
@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * Virtual Sound Decoder for playing sounds off of LocoNet messages. Based on
  * the LocoMon tool by Bob Jacobsen
  *
- * @author	Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  * 
  */
 @SuppressWarnings("serial")

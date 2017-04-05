@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * Description:	Implement Reporter manager for loconet
+ * Description: Implement Reporter manager for loconet
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
@@ -74,7 +74,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
 
         LnReporter r = (LnReporter) provideReporter("LR" + addr); // NOI18N
-        r.message(l);	// make sure it got the message
+        r.message(l); // make sure it got the message
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class.getName());

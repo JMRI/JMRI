@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Provides for delayed initializatio of Section when loading panel files, so
  * that this is not dependent on order of items in the panel file.
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class TransitSection {
 

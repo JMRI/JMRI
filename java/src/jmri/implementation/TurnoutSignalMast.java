@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <li>(IT1)(IT2) - colon-separated list of names for Turnouts
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
 

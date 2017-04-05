@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <li>IH1:IH2 - colon-separated list of names for SignalHeads
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
 

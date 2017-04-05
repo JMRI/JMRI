@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "PLnnn", where nnn is the bit number without padding.
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
   */
@@ -60,6 +60,9 @@ abstract public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Create light of a specific type for the interface
+     * @param systemName name encoding device
+     * @param userName user name
+     * @return light object
      */
     abstract protected Light createNewSpecificLight(String systemName, String userName);
 

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The {@link EasyDccReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
   */
 public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 

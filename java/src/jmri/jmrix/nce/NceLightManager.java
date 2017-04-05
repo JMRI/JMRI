@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on SerialLightManager.java
  *
- * @author	Dave Duchamp Copyright (C) 2010
+ * @author Dave Duchamp Copyright (C) 2010
  */
 public class NceLightManager extends AbstractLightManager {
 

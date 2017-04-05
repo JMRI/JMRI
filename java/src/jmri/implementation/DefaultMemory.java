@@ -3,7 +3,7 @@ package jmri.implementation;
 /**
  * Concrete implementation of the Reporter interface for the Internal system.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class DefaultMemory extends AbstractMemory {
 

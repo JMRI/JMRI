@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * that there was no selection in that box. Here, the lack of a selection
  * indicates there's no selection.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane {
 

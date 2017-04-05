@@ -9,19 +9,19 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 /**
  * Swing action to create and register a NodeConfigFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NodeConfigAction extends AbstractAction {
 
     CMRISystemConnectionMemo _memo = null;
 
-    public NodeConfigAction(String s,CMRISystemConnectionMemo memo) {
+    public NodeConfigAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public NodeConfigAction(CMRISystemConnectionMemo memo) {
-        this("Configure C/MRI Nodes",memo);
+        this("Configure C/MRI Nodes", memo);
     }
 
     @Override

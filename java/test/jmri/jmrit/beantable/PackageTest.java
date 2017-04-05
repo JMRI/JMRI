@@ -63,6 +63,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TransitTableActionTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutTableActionTest.class));
         suite.addTest(new JUnit4TestAdapter(TurnoutTableTabActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(SetPhysicalLocationActionTest.class));
         return suite;
     }
 
