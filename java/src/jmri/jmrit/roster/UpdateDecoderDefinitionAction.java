@@ -58,14 +58,14 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
             if (replacementModel != null || replacementFamily != null) {
 
                 // change the roster entry
-            if (replacementFamily != null) {
-                log.info("   *** Will update. replacementFamily='{}'",replacementFamily);
-                entry.setDecoderFamily(replacementFamily);
-            }
-            if (replacementModel != null) {
-                log.info("   *** Will update. replacementModel='{}'",replacementModel);
-                entry.setDecoderModel(replacementModel);
-            }
+                if (replacementFamily != null) {
+                    log.info("   *** Will update. replacementFamily='{}'", replacementFamily);
+                    entry.setDecoderFamily(replacementFamily);
+                }
+                if (replacementModel != null) {
+                    log.info("   *** Will update. replacementModel='{}'", replacementModel);
+                    entry.setDecoderModel(replacementModel);
+                }
 
                 // write it out (not bothering to do backup?)
                 entry.updateFile();
