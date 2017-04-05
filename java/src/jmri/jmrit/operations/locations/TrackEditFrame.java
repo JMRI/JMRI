@@ -1221,7 +1221,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (_track != null) {
             _track.removePropertyChangeListener(this);
         }
-        if ({location !=null) {
+        if (_location !=null) {
             _location.removePropertyChangeListener(this);
         }
         CarRoads.instance().removePropertyChangeListener(this);
