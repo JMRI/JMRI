@@ -2,12 +2,14 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.display.EditorScaffold;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -17,6 +19,7 @@ public class PositionableCircleTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PositionableCircle t = new PositionableCircle(new EditorScaffold());
         Assert.assertNotNull("exists",t);
     }

@@ -2,11 +2,13 @@ package jmri.jmrit.display;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -16,6 +18,7 @@ public class MemoryInputIconTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MemoryInputIcon t = new MemoryInputIcon(5,new EditorScaffold());
         Assert.assertNotNull("exists",t);
     }
