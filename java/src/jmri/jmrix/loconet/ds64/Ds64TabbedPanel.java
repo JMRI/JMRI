@@ -195,7 +195,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     SimpleTurnoutStateEntry[] routeA8;
     JToggleButton resetRouteButton = null;
 
-    JComboBox addressComboBox;
+    JComboBox<Integer> addressComboBox;
 
     // output controls
     JLabel outputTypeLabel;
@@ -1410,7 +1410,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         Route7Read, Route7Write,
         Route8Read, Route8Write,
         BasicsRead, BasicsWrite
-    };
+    }
 
     private OpSwOpType operationType = null;
     Boolean isRead;
@@ -2396,7 +2396,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         opswsScrollPane.setPreferredSize(new java.awt.Dimension(180, 200));
         opswsScrollPane.setName("Simple OpSws"); // NOI18N
 
-        generalTabbedPane.addTab(Bundle.getMessage("TabTextOpSwValues"), null, 
+        generalTabbedPane.addTab(Bundle.getMessage("TabTextOpSwValues"), null,
                 opswsScrollPane, Bundle.getMessage("TabToolTipOpSwValues"));
 
         outputAddrsPanel = new JPanel();
@@ -2599,7 +2599,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     updateUI();
                 }
             }
-        ;
+
         });
 
         generalTabbedPane.addChangeListener(new ChangeListener() {
@@ -2670,7 +2670,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 (pane.getRootPane().getParent()).setPreferredSize(null);
                 ((Window) pane.getRootPane().getParent()).pack();
             }
-        ;
+
         });
 
         responseTimer.addActionListener(routeResetResponseTimerListener);
