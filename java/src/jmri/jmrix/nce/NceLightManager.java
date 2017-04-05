@@ -55,6 +55,8 @@ public class NceLightManager extends AbstractLightManager {
 
     /**
      * Get the bit address from the system name
+     * @param systemName systemName for light
+     * @return index value for light
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters

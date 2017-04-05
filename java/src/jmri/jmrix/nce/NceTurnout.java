@@ -25,6 +25,9 @@ public class NceTurnout extends AbstractTurnout {
     /**
      * NCE turnouts use the NMRA number (0-2044) as their numerical
      * identification.
+     * @param tc traffic controller for connection
+     * @param p system connection prefix
+     * @param i NMRA turnout number
      */
     public NceTurnout(NceTrafficController tc, String p, int i) {
         super(p + "T" + i);
@@ -170,6 +173,7 @@ public class NceTurnout extends AbstractTurnout {
      * NCE turnouts support two types of lockouts, pushbutton and cab. Cab
      * lockout requires the feedback mode to be Monitoring
      */
+    @SuppressWarnings("null")
     @Override
     public boolean canLock(int turnoutLockout) {
         // can not lock if using a USB
@@ -177,9 +181,12 @@ public class NceTurnout extends AbstractTurnout {
             return false;
         }
         // check to see if push button lock is enabled and valid decoder
-        if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0 && _enablePushButtonLockout
-                && !getDecoderName().equals(PushbuttonPacket.unknown)) {
-            return true;
+        if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0 && _enablePushButtonLockout) {
+                if (getDecoderName() != null) {
+                    if (!getDecoderName().equals(PushbuttonPacket.unknown)) {
+                        return true;
+                }
+            }
         }
         // check to see if cab lockout is enabled
         if ((turnoutLockout & CABLOCKOUT) != 0

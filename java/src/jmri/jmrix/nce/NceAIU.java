@@ -83,6 +83,8 @@ public class NceAIU {
 
     /**
      * The numbers here are 0 to 15, not 1 to 16
+     * @param s bit within the AIU card
+     * @param i index for AIU card
      *
      */
     public void registerSensor(Sensor s, int i) {

@@ -88,6 +88,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Set the number of characters expected back from the command station. Used
      * in binary mode, where there's no end-of-reply string to look for.
+     * @param len length of expected reply
      */
     public void setReplyLen(int len) {
         replyLen = len;
@@ -153,6 +154,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * enter programming track mode
+     * @param tc traffic controller for connection
+     * @return message for entering programming track mode
      *
      */
     public static NceMessage getProgMode(NceTrafficController tc) {
@@ -182,7 +185,9 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      * station if the EPROM was built before 2006. This method uses a state flag
      * ({@link NceTrafficController#getNceProgMode}) to detect whether a command
      * to enter program mode has been generated, and presumably sent, when using
-     * the later EPROMS. *
+     * the later EPROMS. 
+     * @param tc tc for connection
+     * @return message to exit programming track mode
      */
     public static NceMessage getExitProgMode(NceTrafficController tc) {
         NceMessage m = new NceMessage(1);
@@ -216,6 +221,9 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Read Paged mode CV on programming track
+     * @param tc traffic controller for connection
+     * @param cv decoder cv to read
+     * @return message to read cv from programming track
      *
      */
     public static NceMessage getReadPagedCV(NceTrafficController tc, int cv) {
@@ -248,6 +256,10 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * write paged mode CV to programming track
+     * @param tc traffic controller for connection
+     * @param cv decoder cv to write
+     * @param val value to write to decoder
+     * @return message for Paged write of cv value
      *
      */
     public static NceMessage getWritePagedCV(NceTrafficController tc, int cv, int val) {
