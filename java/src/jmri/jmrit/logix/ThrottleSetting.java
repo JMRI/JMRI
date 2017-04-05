@@ -1,24 +1,36 @@
 package jmri.jmrit.logix;
 
+import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
+import jmri.Sensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ThrottleSetting {
 
-    long _time;
-    String _command;
-    String _value;
-    String _blockName;
+    private long _time;
+    private String _command;
+    private String _value;
+    @SuppressWarnings("rawtypes") // _namedHandle may be of 3 different types
+    private NamedBeanHandle _namedHandle = null;
 
     public ThrottleSetting() {
     }
 
-    public ThrottleSetting(long time, String command, String value, String blockName) {
+    public ThrottleSetting(long time, String command, String value, String beanName) {
         _time = time;
         _command = command;
         _value = value;
-        _blockName = blockName;
+        setNamedBean(command, beanName); 
     }
 
     public ThrottleSetting(ThrottleSetting ts) {
-        this(ts.getTime(), ts.getCommand(), ts.getValue(), ts.getBlockName());
+        _time = ts.getTime();
+        _command = ts.getCommand();
+        _value = ts.getValue();
+        _namedHandle = ts.getNamedBeanHandle();
     }
 
     /**
@@ -51,16 +63,57 @@ public class ThrottleSetting {
         return _value;
     }
 
-    public void setBlockName(String blockName) {
-        _blockName = blockName;
+    //_namedHandle may be of 3 different types
+    public void setNamedBean(String cmd, String name) {
+        if (log.isDebugEnabled()) {
+            log.debug("setNamedBean({}, {})", cmd, name);
+        }
+        if (cmd == null || name == null || name.trim() == "") {
+            _namedHandle = null;
+            return;
+        }
+        cmd = cmd.toUpperCase();
+        try {
+            if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
+                Sensor s = InstanceManager.sensorManagerInstance().provideSensor(name);
+                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, s);            
+            } else if ("RUN WARRANT".equals(cmd)) {
+                Warrant w = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).provideWarrant(name);
+                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, w);                        
+            } else {
+                OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).provideOBlock(name);
+                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, b);            
+            }            
+        } catch (IllegalArgumentException iae) {
+            log.error(iae.toString());
+        }
+    }
+  
+    @SuppressWarnings("unchecked") // _namedHandle may be of 3 different types
+    public <T extends NamedBean> void setNamedBeanHandle(NamedBeanHandle <T> bh) {
+        _namedHandle = bh;
+    }
+    
+    @SuppressWarnings("unchecked") // _namedHandle may be of 3 different types
+    public <T extends NamedBean> NamedBeanHandle <T> getNamedBeanHandle() {
+        return _namedHandle;
     }
 
-    public String getBlockName() {
-        return _blockName;
+    public String getBeanDisplayName() {
+        if (_namedHandle == null) {
+            return null;
+        }
+        return _namedHandle.getBean().getDisplayName();
+    }
+
+    public String getBeanSystemName() {
+        return _namedHandle.getBean().getSystemName();
     }
 
     @Override
     public String toString() {
-        return "ThrottleSetting: wait " + _time + "ms then set " + _command + " " + _value + " at block " + _blockName;
+        return "ThrottleSetting: wait " + _time + "ms then do " + _command + " = " + _value + " for bean " + getBeanDisplayName();
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());
 }

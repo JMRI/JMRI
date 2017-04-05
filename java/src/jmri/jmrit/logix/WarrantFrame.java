@@ -32,6 +32,8 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1298,13 +1300,13 @@ public class WarrantFrame extends WarrantRoute {
         msg = checkLocoAddress();
         if (msg==null && !_isSCWarrant.isSelected()) {
             if (_throttleCommands.size() <= getOrders().size() || 
-                    !_throttleCommands.get(_throttleCommands.size()-1).getBlockName().equals(getOrders().get( getOrders().size()-1).getBlock().getDisplayName())) {
+                    !_throttleCommands.get(_throttleCommands.size()-1).getBeanDisplayName().equals(getOrders().get( getOrders().size()-1).getBlock().getDisplayName())) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
             } else {
                 for (int i=0; i<_throttleCommands.size(); i++) {
                     ThrottleSetting ts = _throttleCommands.get(i);
-                    if (ts.getValue()==null || ts.getCommand()==null || ts.getBlockName()==null) {
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("BadThrottleSetting", i+1)+" - "+ts.toString(),
+                    if (ts.getValue()==null || ts.getCommand()==null || ts.getNamedBeanHandle()==null) {
+                        JOptionPane.showMessageDialog(this, Bundle.getMessage("BadThrottleSetting", i+1, ts.toString()),
                                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         return false;
                     }
@@ -1475,7 +1477,7 @@ public class WarrantFrame extends WarrantRoute {
                     }
                     return ts.getValue();
                 case BLOCK_COLUMN:
-                    return ts.getBlockName();
+                    return ts.getBeanDisplayName();
             }
             return "";
         }
@@ -1641,7 +1643,7 @@ public class WarrantFrame extends WarrantRoute {
                         ts.setValue(null);                        
                     }
                     if (resetBlockColumn) {
-                        ts.setBlockName(getPreviousBlockName(row));
+                        ts.setNamedBeanHandle(getPreviousBlockHandle(row));
                     }
                     break;
                 case BLOCK_COLUMN:
@@ -1650,7 +1652,7 @@ public class WarrantFrame extends WarrantRoute {
                         try {
                             jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor((String) value);
                             if (s != null) {
-                                ts.setBlockName((String) value);
+                                ts.setNamedBean(cmd, (String) value);
                             } else {
                                 msg = Bundle.getMessage("BadSensor", (String) value);
                             }
@@ -1663,7 +1665,7 @@ public class WarrantFrame extends WarrantRoute {
                         try {
                             Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant((String) value);
                             if (w != null) {
-                                ts.setBlockName((String) value);
+                                ts.setNamedBean(cmd, (String) value);
                             } else {
                                 msg = Bundle.getMessage("BadWarrant", (String) value);
                             }
@@ -1671,10 +1673,13 @@ public class WarrantFrame extends WarrantRoute {
                             msg = Bundle.getMessage("BadWarrant", value, cmd) + ex;
                         }
                     } else {
-                        String name = getPreviousBlockName(row);
-                        if (!name.equals(value)) {
-                            msg = Bundle.getMessage("commandInBlock", name);
-                            ts.setBlockName(name);
+                        NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
+                        if (bh != null) {
+                            String name = bh.getBean().getDisplayName();
+                            if (!name.equals(value)) {
+                                msg = Bundle.getMessage("commandInBlock", name);
+                                ts.setNamedBeanHandle(bh);
+                            }                            
                         }
                     }
                     break;
@@ -1686,15 +1691,14 @@ public class WarrantFrame extends WarrantRoute {
             }
         }
 
-        private String getPreviousBlockName(int row) {
+        private <T extends NamedBean> NamedBeanHandle <T> getPreviousBlockHandle(int row) {
             for (int i = row; i > 0; i--) {
-                String name = _throttleCommands.get(i - 1).getBlockName();
-                OBlock b = InstanceManager.getDefault(OBlockManager.class).getOBlock(name);
-                if (b != null) {
-                    return name;
+                NamedBeanHandle <T> bh = _throttleCommands.get(i - 1).getNamedBeanHandle();
+                if (bh != null && (bh.getBean() instanceof OBlock)) {
+                    return bh;
                 }
             }
-            return "StartBlock";
+            return null;
         }
 
     }

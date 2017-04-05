@@ -152,9 +152,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
 
-    /* What super does currently is fine.  If that changes
-     * Do the following equals() and hashCode()
-     *
+    /* What super does currently is fine.
+     * FindBug wants us to duplicate and override anyway
+     */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -166,7 +167,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (!(getClass() == obj.getClass())) {
             return false;
         }
-        if (!((Block)obj).getSystemName().equals(this.getSystemName())) {
+        if (!((OBlock)obj).getSystemName().equals(this.getSystemName())) {
             return false;
         }
         return super.equals(obj);
@@ -176,7 +177,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public int hashCode() {
         return this.getSystemName().hashCode();
     }
-    */
 
     /**
      * override to only set an existing sensor and to amend state with not UNDETECTED

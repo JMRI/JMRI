@@ -70,7 +70,7 @@ public class WarrantManagerXml //extends XmlFile
                 elem.addContent(c);
             }
             
-            List <BlockOrder> orders = warrant.getBlockOrders();
+            List <BlockOrder> orders = warrant.getSavedOrders();
             for (int j=0; j<orders.size(); j++) {
                 elem.addContent(storeOrder(orders.get(j), "blockOrder"));
             }
@@ -163,8 +163,11 @@ public class WarrantManagerXml //extends XmlFile
         if (str==null) str = "";
         elem.setAttribute("value", str);
 
-        str = command.getBlockName();
-        if (str==null) str = "";
+        str = command.getBeanSystemName();
+        if (str==null) {
+            str = "";
+            log.error("ThrottleSetting command has no bean name! "+ command.toString());
+        }
         elem.setAttribute("block", str);
 
         return elem;
@@ -356,7 +359,7 @@ public class WarrantManagerXml //extends XmlFile
         Attribute attr = elem.getAttribute("command");
         String command = null;
         if (attr != null)
-            command =attr.getValue();
+            command = attr.getValue();
 
         attr = elem.getAttribute("value");
         String value = null;
@@ -367,7 +370,7 @@ public class WarrantManagerXml //extends XmlFile
         String block = null;
         if (attr != null)
             block =attr.getValue();
-
+        
         return new ThrottleSetting(time, command, value, block);
     }
     

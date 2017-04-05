@@ -151,7 +151,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     
     /**
-     * Return permanently saved BlockOrders
+     * Return copy of permanently saved BlockOrders
      * @return list of block orders
      */
     public List<BlockOrder> getBlockOrders() {
@@ -160,6 +160,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             orders.add(new BlockOrder(_savedOrders.get(i)));
         }
         return orders;
+    }
+    
+    public List<BlockOrder> getSavedOrders() {
+        return _savedOrders;
     }
 
     /**
@@ -343,7 +347,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return OBlock.UNKNOWN;
     }
 
-    synchronized public List<ThrottleSetting> getThrottleCommands() {
+    public List<ThrottleSetting> getThrottleCommands() {
         ArrayList<ThrottleSetting> list = new ArrayList<ThrottleSetting>();
         for (int i = 0; i < _throttleCommands.size(); i++) {
             list.add(new ThrottleSetting(_throttleCommands.get(i)));
@@ -637,7 +641,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     case Warrant.WAIT_FOR_SENSOR:
                         return Bundle.getMessage("WaitForSensor",
                                 cmdIdx, _engineer.getWaitSensor().getDisplayName(),
-                                _commands.get(cmdIdx).getBlockName());
+                                _commands.get(cmdIdx).getBeanSystemName());
                     case Warrant.SPEED_RESTRICTED:
                         msg = Bundle.getMessage("SpeedRestricted", blockName, cmdIdx, speed);
                         break;
@@ -1651,14 +1655,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _speedInfo.add(new BlockSpeedInfo(firstSpeed, maxSpeed, lastSpeed, blkTime, firstIdx, i));
                 if(log.isDebugEnabled()) log.debug("block: {} speeds: entrance= {} max= {} exit= {} time: {}ms. index {} to {}",
                         blkName, firstSpeed, maxSpeed, lastSpeed, blkTime, firstIdx, i);
-                blkName = ts.getBlockName();               
+                blkName = ts.getBeanDisplayName();               
                 blkTime = 0;
                 firstSpeed = lastSpeed;
                 maxSpeed = lastSpeed;
                 hasSpeedChange = false;
                 firstIdx = i+1;     // first in next block is next index
             } else {        // collect block info
-                blkName = ts.getBlockName();               
                 blkTime += ts.getTime();
                 if (cmd.equals("SPEED")) {
                     lastSpeed = Float.parseFloat(ts.getValue());
