@@ -572,7 +572,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Check if path connects to Portal
-     *
+     * @param path OPath to test
+     * @return true if valid
      */
     public boolean isValidPath(OPath path) {
         String name = path.getName();
@@ -592,7 +593,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     /**
      * Check portal has both blocks and they are different blocks
      * 
-     * @return check
+     * @return true if valid
      */
     public boolean isValid() {
         if (_toBlock == null || _fromBlock==null) {
