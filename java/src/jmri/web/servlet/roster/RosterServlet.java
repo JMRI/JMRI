@@ -85,7 +85,7 @@ public class RosterServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (request.getRequestURI().equals("/prefs/roster.xml")) { // NOI18N
+        if (request.getRequestURI().startsWith("/prefs/roster.xml")) { // NOI18N
             response.sendRedirect("/roster?format=xml"); // NOI18N
             return;
         }

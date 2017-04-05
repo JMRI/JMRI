@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Does configuration for OpenLCB communications implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  *
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {

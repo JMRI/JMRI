@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008-2009
+ * @author Dave Duchamp Copyright (C) 2008-2009
  */
 public class AutoTurnouts {
 
@@ -124,7 +124,7 @@ public class AutoTurnouts {
             exitPt = s.getExitPointToSection(nextSection, direction);
         }
         Block curBlock = null;    // must be in the section
-        Block prevBlock = null;	  // must start outside the section or be null
+        Block prevBlock = null;   // must start outside the section or be null
         int curBlockSeqNum = -1;   // sequence number of curBlock in Section
         if (entryPt != null) {
             curBlock = entryPt.getBlock();

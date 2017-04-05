@@ -13,7 +13,7 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnectionMemo {
 

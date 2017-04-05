@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to implement filtering of CBUS events.
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class CbusEventFilter {
 

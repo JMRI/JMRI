@@ -184,8 +184,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     static protected final int REQUESTSENT = 1; // waiting reply to command to go into programming mode
     static protected final int INQUIRESENT = 2; // read/write command sent, waiting reply
     protected boolean _progRead = false;
-    protected int _val;	// remember the value being read/written for confirmative reply
-    protected int _cv;	// remember the cv being read/written
+    protected int _val; // remember the value being read/written for confirmative reply
+    protected int _cv; // remember the cv being read/written
 
     // programming interface
     @Override

@@ -24,10 +24,10 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  *
- * @author	Bob Coleman Copyright (C) 2007. 2008 Based on CMRI serial example,
+ * @author Bob Coleman Copyright (C) 2007. 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {

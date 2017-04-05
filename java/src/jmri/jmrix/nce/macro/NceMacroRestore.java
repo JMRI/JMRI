@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
  *
  * Macro data byte:
  *
- * bit	15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 _ _ _ _ 1 0 A A A A A A 1 A A A C D
- * D D addr bit 7 6 5 4 3 2 10 9 8 1 0 turnout	T
+ * bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 _ _ _ _ 1 0 A A A A A A 1 A A A C D
+ * D D addr bit 7 6 5 4 3 2 10 9 8 1 0 turnout T
  *
  * By convention, MSB address bits 10 - 8 are one's complement. NCE macros
  * always set the C bit to 1. The LSB "D" (0) determines if the accessory is to
@@ -59,12 +59,12 @@ import org.slf4j.LoggerFactory;
  */
 public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_MACRO_MEM = 0xC800;	// start of NCE CS Macro memory 
-    private static final int MACRO_LNTH = 20;		// 20 bytes per macro
-    private static final int REPLY_1 = 1;			// reply length of 1 byte expected
-    private int replyLen = 0;				// expected byte length
-    private int waiting = 0;					// to catch responses not intended for this module
-    private boolean fileValid = false;		// used to flag status messages
+    private static final int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory 
+    private static final int MACRO_LNTH = 20;  // 20 bytes per macro
+    private static final int REPLY_1 = 1;   // reply length of 1 byte expected
+    private int replyLen = 0;    // expected byte length
+    private int waiting = 0;     // to catch responses not intended for this module
+    private boolean fileValid = false;  // used to flag status messages
 
     javax.swing.JLabel textMacro = new javax.swing.JLabel();
     javax.swing.JLabel macroNumber = new javax.swing.JLabel();
@@ -113,10 +113,10 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
         // Now read the file and check the macro address
         waiting = 0;
-        fileValid = false;					// in case we break out early
-        int macroNum = 0;					// for user status messages
-        int curMacro = CS_MACRO_MEM;		// load the start address of the NCE macro memory
-        byte[] macroAccy = new byte[20]; 	// NCE Macro data
+        fileValid = false;     // in case we break out early
+        int macroNum = 0;     // for user status messages
+        int curMacro = CS_MACRO_MEM;  // load the start address of the NCE macro memory
+        byte[] macroAccy = new byte[20];  // NCE Macro data
         String line = " ";
 
         while (true) {
@@ -128,7 +128,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
             macroNumber.setText(Integer.toString(macroNum++));
 
-            if (line == null) {				// while loop does not break out quick enough
+            if (line == null) {    // while loop does not break out quick enough
                 log.error("NCE macro file terminator :0000 not found");
                 break;
             }
@@ -167,7 +167,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 
             // now read the entire line from the file and create NCE messages
             for (int i = 0; i < 10; i++) {
-                int j = i << 1;				// i = word index, j = byte index
+                int j = i << 1;    // i = word index, j = byte index
 
                 byte b[] = StringUtil.bytesFromHexString(macroLine[i + 1]);
 
@@ -234,7 +234,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 bl[j] = b[i + 16];
             }
 
-            // write 16 bytes	
+            // write 16 bytes 
         } else {
             bl = NceBinaryCommand.accMemoryWriteN(curMacro, 16);
             int j = bl.length - 16;

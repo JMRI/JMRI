@@ -15,7 +15,7 @@ import jmri.util.FileUtil;
 /**
  * A splash screen for showing during JMRI startup
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  * @author Dennis Miller Copyright 2007
  */
 public class SplashWindow extends JFrame {

@@ -52,7 +52,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
             element.addContent(storeNamedBean("occupancyblock", b));
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
-        if (b == null && s != null) {	// only write sensor if no OBlock
+        if (b == null && s != null) { // only write sensor if no OBlock
             element.addContent(storeNamedBean("occupancysensor", s));
         }
 

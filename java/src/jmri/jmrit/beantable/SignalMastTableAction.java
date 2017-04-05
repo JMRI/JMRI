@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SignalMastTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2009, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2009, 2010
  */
 public class SignalMastTableAction extends AbstractTableAction {
 

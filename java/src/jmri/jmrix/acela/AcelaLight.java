@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaLight extends AbstractLight {

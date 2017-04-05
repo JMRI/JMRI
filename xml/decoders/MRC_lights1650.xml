@@ -13,15 +13,21 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="2" lastUpdated="20150501"/>
+  <version author="Marc N Fournier" version="3" lastUpdated="20170323"/>
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150501"/>  
   <version author="Bill Chown" version="1" lastUpdated="20080226"/>
   <!-- made from the MRC_1656 (Pete Cesaro) file by Bill Chown orrrbrit2004@yahoo.com -->
   <!-- version 2: Regular CV21 on Consist pane - removed MRC pane                     -->
+  <!-- version 3: Added MRC 1651 decoder modelm cv112, cv113										  -->
   <decoder>
     <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes">
+      <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes" productID="1650">
         <!-- note All functions are NMRA compatible -->
         <size length="25.5" width="12.3" height="4.5" units="mm"/>
+      </model>
+      <model model="4 Function decoder 1651" maxTotalCurrent="1.5A" extFnsMRC="yes" productID="1651">
+        <!-- note All functions are NMRA compatible -->
+        <size length="26.5" width="15.0" height="5.0" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -80,7 +86,7 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable CV="59" item="Function 4 behavior" default="0" tooltip="range 0(Double)-1(Single)" comment="Range 0(Double)-1(Single)">
+      <variable CV="59" item="Function 4 behavior" default="0" tooltip="range 0(Double)-1(Single)" include="1650" comment="Range 0(Double)-1(Single)">
         <enumVal>
           <enumChoice choice="Double Strobe" value="0">
             <choice>Double Strobe</choice>
@@ -92,7 +98,7 @@
         <label>Strobe Light</label>
         <comment>Range 0(Double)-1(Single)</comment>
       </variable>
-      <variable CV="60" item="Global lighting option 1" default="0" tooltip="range 0, 1 or 2" comment="Range 0-2">
+      <variable CV="60" item="Global lighting option 1" default="0" tooltip="range 0, 1 or 2" include="1650,1651" comment="Range 0-2">
         <enumVal>
           <enumChoice choice="Directional" value="0">
             <choice>Directional</choice>
@@ -107,22 +113,22 @@
         <label>Head/Rear Light</label>
         <comment>Range 0-2</comment>
       </variable>
-      <variable CV="61" item="Function 1 options" default="10" tooltip="range 0-32, F2 enables 10 flashes" comment="Range 0-32">
+      <variable CV="61" item="Function 1 options" default="10" tooltip="range 0-32, F2 enables 10 flashes" include="1650" comment="Range 0-32">
         <decVal max="3"/>
         <label>Ditch Light Rate, F1</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable CV="62" item="Function 3 options" default="10" tooltip="range 0-32" comment="Range 0-32">
+      <variable CV="62" item="Function 3 options" default="10" tooltip="range 0-32" include="1650" comment="Range 0-32">
         <decVal max="3"/>
         <label>Mars Light Rate, F3</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable CV="63" item="Function 4 options" default="10" tooltip="range 0-32" comment="Range 0-32">
+      <variable CV="63" item="Function 4 options" default="10" tooltip="range 0-32" include="1650" comment="Range 0-32">
         <decVal max="3"/>
         <label>Strobe Light Rate, F4</label>
         <comment>Range 0-32</comment>
       </variable>
-      <variable item="Function 1 effect generated" CV="64" default="1" tooltip="1(default) enables dedicated lighting effects">
+      <variable item="Function 1 effect generated" CV="64" default="1" tooltip="1(default) enables dedicated lighting effects" include="1650">
         <enumVal>
           <enumChoice choice="F1-F4 normal On/Off" value="0">
             <choice>F1-F4 normal On/Off</choice>
@@ -135,6 +141,55 @@
       </variable>
       <!-- CV 105-106 -->
 <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+	  <!-- CV 112-113  ACC1, ACC2 lght control -->
+	  <variable CV="112" item="Function 1 effect generated" default="0" include="1651" tooltip="ACC1 light type control (green wire)">
+		<enumVal>
+          <enumChoice choice="Ditch" value="0">
+            <choice>Ditch</choice>
+          </enumChoice>
+          <enumChoice choice="Gyra" value="1">
+            <choice>Gyra</choice>
+		  </enumChoice>
+		  <enumChoice choice="Mars" value="2">
+            <choice>Mars</choice>
+		  </enumChoice>
+		  <enumChoice choice="Prime Strato" value="3">
+            <choice>Prime Strato</choice>
+		  </enumChoice>
+		  <enumChoice choice="Single Strobe" value="4">
+            <choice>Single Strobe</choice>
+		  </enumChoice>
+		  <enumChoice choice="Double Strobe" value="5">
+            <choice>Double Strobe</choice>
+          </enumChoice>
+        </enumVal>
+		<label>ACC1 Light type Control</label>
+      </variable>
+	  
+	  <variable CV="113" item="Function 2 effect generated" default="0" include="1651" tooltip="ACC2 light type control (pink wire)">
+	    <enumVal>
+          <enumChoice choice="Ditch" value="0">
+            <choice>Ditch</choice>
+          </enumChoice>
+          <enumChoice choice="Gyra" value="1">
+            <choice>Gyra</choice>
+		  </enumChoice>
+		  <enumChoice choice="Mars" value="2">
+            <choice>Mars</choice>
+		  </enumChoice>
+		  <enumChoice choice="Prime Strato" value="3">
+            <choice>Prime Strato</choice>
+		  </enumChoice>
+		  <enumChoice choice="Single Strobe" value="4">
+            <choice>Single Strobe</choice>
+		  </enumChoice>
+		  <enumChoice choice="Double Strobe" value="5">
+            <choice>Double Strobe</choice>
+          </enumChoice>
+        </enumVal>
+		<label>ACC2 Light type Control</label>
+	  </variable>	
+		
       <variable CV="123" item="EMF Static Config" default="0" tooltip="default Back EMF is Off">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Load Control Back emf</label>

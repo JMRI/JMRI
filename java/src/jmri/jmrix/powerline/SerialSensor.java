@@ -5,7 +5,7 @@ import jmri.implementation.AbstractSensor;
 /**
  * Extend jmri.AbstractSensor for serial systems
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */

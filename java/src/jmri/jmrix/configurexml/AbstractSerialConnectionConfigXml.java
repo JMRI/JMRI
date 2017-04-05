@@ -1,6 +1,5 @@
 package jmri.jmrix.configurexml;
 
-import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrix.SerialPortAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -30,7 +29,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
      * Default implementation for storing the static contents of the serial port
      * implementation
      *
-     * @param object Object to store, of type AbstractSerialConnectionConfig 
+     * @param object Object to store, of type AbstractSerialConnectionConfig
      * @return Element containing the complete info
      */
     @Override
@@ -98,11 +97,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         String status = adapter.openPort(portName, "JMRI app");
         if (status != null) {
             // indicates an error, return it
-            ConfigXmlManager.creationErrorEncountered(
-                    null, "opening connection",
-                    status,
-                    null, null, null
-            );
+            handleException(status, "opening connection", null, null, null);
             // now force end to operation
             log.debug("load failed");
             return false;

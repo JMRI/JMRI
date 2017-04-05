@@ -123,7 +123,7 @@ public class TrainPrintUtilities {
                 }
                 break;
             }
-            //			log.debug("Line: {}", line.toString());
+            //   log.debug("Line: {}", line.toString());
             // check for build report print level
             if (isBuildReport) {
                 line = filterBuildReport(line, false); // no indent

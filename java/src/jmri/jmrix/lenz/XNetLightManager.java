@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * System names are "XLnnnnn", where nnnnn is the bit number without padding.
  * <P>
  * Based in part on SerialLightManager.java
- * @author	Paul Bender Copyright (C) 2008
+ * @author Paul Bender Copyright (C) 2008
  * @navassoc 1 - * jmri.jmrix.lenz.XNetLight
  */
 public class XNetLightManager extends AbstractLightManager {

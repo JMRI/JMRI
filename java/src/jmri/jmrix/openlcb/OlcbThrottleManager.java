@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of a ThrottleManager for OpenLCB
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2005, 2012
+ * @author Bob Jacobsen Copyright (C) 2003, 2005, 2012
  */
 public class OlcbThrottleManager extends AbstractThrottleManager {
 

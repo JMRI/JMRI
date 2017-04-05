@@ -16,7 +16,7 @@ import jmri.SensorManager;
  * made to TrainInfoFile.java and dispatcher-traininfo.DTD as well as this
  * module.
  *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  */
 public class TrainInfo {
 

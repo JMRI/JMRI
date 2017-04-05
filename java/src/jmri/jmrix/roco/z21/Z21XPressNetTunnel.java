@@ -54,6 +54,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // start a thread to read from the input pipe.
         sourceThread = new Thread(this);
+        sourceThread.setName("z21.Z21XPressNetTunnel sourceThread");
         sourceThread.start();
 
         // Then use those pipes as the input and output pipes for
