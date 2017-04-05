@@ -302,6 +302,70 @@
       </ul>
     </ul>
 
+    <h3>More Complex Initialization: C/MRI</h2>
+    For a more complex example, consider C/MRI, which has more content
+    in it's <code>&lt;connection&gt;</code>element:
+<pre>    
+  &lt;connection userName="C/MRI" systemPrefix="C" manufacturer="C/MRI" 
+                    disabled="no" port="(none selected)" speed="9,600 baud" 
+                    class="jmri.jmrix.cmri.serial.sim.configurexml.ConnectionConfigXml"&gt;
+    &lt;options /&gt;
+    &lt;node name="0"&gt;
+      &lt;parameter name="nodetype"&gt;2&lt;/parameter&gt;
+      &lt;parameter name="bitspercard"&gt;32&lt;/parameter&gt;
+      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+      &lt;parameter name="cardtypelocation"&gt;1122221112000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;/node&gt;
+    &lt;node name="1"&gt;
+      &lt;parameter name="nodetype"&gt;1&lt;/parameter&gt;
+      &lt;parameter name="bitspercard"&gt;24&lt;/parameter&gt;
+      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+      &lt;parameter name="cardtypelocation"&gt;2210000000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;/node&gt;
+    &lt;node name="2"&gt;
+      &lt;parameter name="nodetype"&gt;2&lt;/parameter&gt;
+      &lt;parameter name="bitspercard"&gt;32&lt;/parameter&gt;
+      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+      &lt;parameter name="cardtypelocation"&gt;2212120000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;/node&gt;
+    &lt;node name="4"&gt;
+      &lt;parameter name="nodetype"&gt;1&lt;/parameter&gt;
+      &lt;parameter name="bitspercard"&gt;24&lt;/parameter&gt;
+      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+      &lt;parameter name="cardtypelocation"&gt;2210000000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;/node&gt;
+  &lt;/connection&gt;
+</pre>
+      
+      How this gets read in.
+      <p>
+      Implications for internal structure.
+      <p>
+      Proper internal structure
+      
+      <h2>Configuration Process</h2>
+      
+      <h3>Creating from scratch</h3>
+      
+      <h3>Storing</h3>
+      
+      <h3>Updating with a new connection</h3>
+      
+      <h3>Changing options</h3>
+      
+      <h3>Deleting a connection</h3>
       
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
