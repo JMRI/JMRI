@@ -50,8 +50,6 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("height", "" + size.height);
         panel.setAttribute("width", "" + size.width);
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
-        //panel.setAttribute("positionable", "" + (p.allPositionable() ? "yes" : "no"));
-        //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
@@ -63,6 +61,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("type", p.getSwitchType());
         panel.setAttribute("connection", p.getSwitchManu());
         panel.setAttribute("shape", p.getSwitchShape());
+        panel.setAttribute("columns", "" + p.getColumns());
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
@@ -115,9 +114,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int width = 300;
         int rangemin = 1;
         int rangemax = 32;
+        int columns = 4;
         String type = "T";
         String connection = "I";
-        String shape = "button";
+        String shape = "key";
         String name;
 
         try {
@@ -157,18 +157,6 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
         panel.setAllEditable(value);
 
-/*        value = true;
-        if ((a = shared.getAttribute("positionable")) != null && a.getValue().equals("no")) {
-            value = false;
-        }
-        panel.setAllPositionable(value);
-        */
-/*
-        value = false;
-        if ((a = shared.getAttribute("showcoordinates"))!=null && a.getValue().equals("yes"))
-            value = true;
-        panel.setShowCoordinates(value);
-        */
         value = true;
         if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
@@ -209,7 +197,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             rangemin = shared.getAttribute("rangemin").getIntValue();
             rangemax = shared.getAttribute("rangemax").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert Switchboard's attribute");
+            log.error("failed to convert Switchboard's range");
             result = false;
         }
         panel.setPanelMenuRangeMin(rangemin);
@@ -223,6 +211,14 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         shape = shared.getAttribute("shape").getValue();
         panel.setSwitchShape(shape);
+
+        try {
+            columns = shared.getAttribute("columns").getIntValue();
+        } catch (org.jdom2.DataConversionException e) {
+            log.error("failed to convert Switchboard's column count");
+            result = false;
+        }
+        panel.setColumns(columns);
 
         String defaultTextColor = "black";
         if (shared.getAttribute("defaulttextcolor") != null) {
@@ -283,6 +279,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
+        panel.updatePressed();
         return result;
     }
 

@@ -154,6 +154,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l lenght of expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);

@@ -31,6 +31,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
     /**
      * Find 1st byte that's not 0xFF, or -1 if none
+     * @return -1 or index to first valid byte
      */
     int startIndex() {
         int len = getNumDataElements();

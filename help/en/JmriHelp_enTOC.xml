@@ -464,7 +464,7 @@
 
    <tocitem text="Digitrax Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
 
-   <tocitem text="DS64 Configuration Tool " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+   <tocitem text="DS64 Configuration Tool " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
 
    <tocitem text="Duplex Network Configuration Tool " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 

@@ -676,12 +676,7 @@ public class TrackSegment extends LayoutTrack {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = blockNameComboBox.getUserName();
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
@@ -744,12 +739,7 @@ public class TrackSegment extends LayoutTrack {
             needsRedraw = true;
         }
         // check if Block changed
-        String newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = blockNameComboBox.getUserName();
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {

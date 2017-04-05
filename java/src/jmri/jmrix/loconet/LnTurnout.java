@@ -330,7 +330,9 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                     }
                 }
             }
+            //$FALL-THROUGH$
             default:
+                return;
         }
         // reach here only in error
     }

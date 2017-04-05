@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
     DefaultConditionalManagerTest.class,
     DefaultIdTagManagerTest.class,
     DefaultLogixManagerTest.class,
+    LogixSystemTest.class,
     DefaultSignalSystemManagerTest.class,
     DefaultUserMessagePreferencesTest.class, // no longer used in JMRI - may be used in other applications
     InternalLightManagerTest.class,
