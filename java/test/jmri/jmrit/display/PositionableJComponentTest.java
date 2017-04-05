@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations;
+package jmri.jmrit.display;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,14 +14,13 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrackEditFrameTest {
+public class PositionableJComponentTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame t = new TrackEditFrame();
+        PositionableJComponent t = new PositionableJComponent(new EditorScaffold());
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +36,6 @@ public class TrackEditFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackEditFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJComponentTest.class.getName());
 
 }

@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.locations;
+package jmri.jmrit.display.controlPanelEditor.shape;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -8,20 +8,20 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrit.display.EditorScaffold;
 import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrackEditFrameTest {
+public class PositionableEllipseTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackEditFrame t = new TrackEditFrame();
+        PositionableEllipse t = new PositionableEllipse(new EditorScaffold());
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -37,6 +37,6 @@ public class TrackEditFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackEditFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableEllipseTest.class.getName());
 
 }
