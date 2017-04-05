@@ -70,7 +70,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutIconTest.class));
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutTextEditTest.class));
         suite.addTest(new JUnit4TestAdapter(NewPanelActionTest.class));
-        suite.addTest(new JUnit4TestAdapter(MemoryIconInputTest.class));
+        suite.addTest(new JUnit4TestAdapter(MemoryInputIconTest.class));
         suite.addTest(new JUnit4TestAdapter(PositionableJComponentTest.class));
         suite.addTest(new JUnit4TestAdapter(PositionableJPanelTest.class));
         return suite;
