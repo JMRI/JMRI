@@ -47,7 +47,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JPanel ms100Panel;
     boolean updateRequestPending = false;
     
-    private LocoStatsFunc stats;
+    LocoStatsFunc stats;
 
     @Override
     public String getHelpTarget() {

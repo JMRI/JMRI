@@ -22,7 +22,9 @@ public class LocoStatsFunc implements LocoNetListener {
         this.memo = memo;
         updatePending = false;
         ifaceStatus = null;
-        this.memo.getLnTrafficController().addLocoNetListener(0, this);
+        if (memo != null) {
+            this.memo.getLnTrafficController().addLocoNetListener(0, this);
+        }
     }
     private boolean updatePending;
     private Object ifaceStatus;

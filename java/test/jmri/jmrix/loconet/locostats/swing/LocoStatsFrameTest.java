@@ -1,4 +1,4 @@
-package jmri.jmrix.loconet.locostats;
+package jmri.jmrix.loconet.locostats.swing;
 
 import jmri.jmrix.loconet.locostats.swing.LocoStatsPanel;
 import java.awt.GraphicsEnvironment;
@@ -22,11 +22,11 @@ public class LocoStatsFrameTest {
         LocoStatsPanel p = new LocoStatsPanel() {
             @Override
             public void requestUpdate() {  // replace actual transmit
-                updatePending = true;
+                updateRequestPending = true;
             }
 
             @Override
-            void report(String m) {
+            public void report(String m) {
             }  // suppress messages
         };
         p.initComponents();
@@ -52,7 +52,8 @@ public class LocoStatsFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocoStatsPanel p = getFrame("LocoBuffer Stats Window", 150);
         p.requestUpdate();
-        p.message(new LocoNetMessage(
+        p.stats = new jmri.jmrix.loconet.locostats.LocoStatsFunc(null); // initialize with a null traffic controller
+        p.stats.message(new LocoNetMessage(
                 new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x50, 0x50, 0x01, 0x0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         ));
@@ -66,7 +67,8 @@ public class LocoStatsFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocoStatsPanel p = getFrame("PR2 Stats Window", 300);
         p.requestUpdate();
-        p.message(new LocoNetMessage(
+        p.stats = new jmri.jmrix.loconet.locostats.LocoStatsFunc(null); // initialize with a null traffic controller
+        p.stats.message(new LocoNetMessage(
                 new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01,
                     0x00, 1, 2, 0, 4,
                     0x00, 5, 6, 0, 0,
@@ -82,7 +84,9 @@ public class LocoStatsFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocoStatsPanel p = getFrame("MS100 Stats Window", 450);
         p.requestUpdate();
-        p.message(new LocoNetMessage(
+        Assert.assertNotNull("p isn't supposed to be null",p);
+        p.stats = new jmri.jmrix.loconet.locostats.LocoStatsFunc(null); // initialize with a null traffic controller
+        p.stats.message(new LocoNetMessage(
                 new int[]{LnConstants.OPC_PEER_XFER, 0x10, 0x22, 0x22, 0x01,
                     0x00, 1, 2, 0x20, 4,
                     0x00, 5, 6, 0, 0,
@@ -92,4 +96,5 @@ public class LocoStatsFrameTest {
         Assert.assertTrue("found frame", f != null);
         f.dispose();
     }
+
 }

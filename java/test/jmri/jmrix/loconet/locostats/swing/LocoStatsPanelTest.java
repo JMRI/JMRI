@@ -1,4 +1,4 @@
-package jmri.jmrix.loconet.locostats;
+package jmri.jmrix.loconet.locostats.swing;
 
 import jmri.jmrix.loconet.locostats.swing.LocoStatsPanel;
 import org.junit.After;
