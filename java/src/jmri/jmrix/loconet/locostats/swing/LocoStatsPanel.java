@@ -1,9 +1,11 @@
 package jmri.jmrix.loconet.locostats.swing;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,6 +18,7 @@ import jmri.jmrix.loconet.locostats.PR2Status;
 import jmri.jmrix.loconet.locostats.RawStatus;
 import jmri.jmrix.loconet.locostats.PR3MS100ModeStatus;
 import jmri.jmrix.loconet.swing.LnPanel;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +84,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         rawPanel.add(r6);
         rawPanel.add(r7);
         rawPanel.add(r8);
-
+        
         lb2Panel = new JPanel();
         lb2Panel.setLayout(new BoxLayout(lb2Panel, BoxLayout.X_AXIS));
         lb2Panel.add(new JLabel(rb.getString("LabelVersion")));
@@ -216,10 +219,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             version.setText((Integer.toString(s.version)));
             breaks.setText((Integer.toString(s.breaks)));
             errors.setText((Integer.toString(s.errors)));
-            rawPanel.setVisible(false);
-            pr2Panel.setVisible(false);
-            ms100Panel.setVisible(false);
             lb2Panel.setVisible(true);
+            rawPanel.setVisible(false);
+            ms100Panel.setVisible(false);
+            pr2Panel.setVisible(false);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
         } else if (o.getClass() == PR2Status.class) {
             PR2Status s = (PR2Status) o;
             serial.setText(Integer.toString(s.serial));
@@ -229,8 +234,10 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             software.setText(Integer.toString(s.software));
             lb2Panel.setVisible(false);
             rawPanel.setVisible(false);
-            ms100Panel.setVisible(false);
+            ms100Panel.setVisible(true);
             pr2Panel.setVisible(true);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
         } else if (o.getClass() == PR3MS100ModeStatus.class) {
             PR3MS100ModeStatus s = (PR3MS100ModeStatus) o;
             goodMsgCnt.setText(Integer.toString(s.goodMsgCnt));
@@ -238,8 +245,10 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             ms100status.setText(Integer.toString(s.ms100status));
             lb2Panel.setVisible(false);
             rawPanel.setVisible(false);
-            pr2Panel.setVisible(false);
             ms100Panel.setVisible(true);
+            pr2Panel.setVisible(true);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
         } else if (o.getClass() == RawStatus.class) {
             RawStatus s = (RawStatus)o;
             r1.setText(Integer.toString(s.raw[0]));
@@ -251,9 +260,11 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
             r7.setText(Integer.toString(s.raw[6]));
             r8.setText(Integer.toString(s.raw[7]));
             lb2Panel.setVisible(false);
-            pr2Panel.setVisible(false);
-            ms100Panel.setVisible(false);
             rawPanel.setVisible(true);
+            ms100Panel.setVisible(false);
+            pr2Panel.setVisible(false);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
         }
     }
 
