@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements functionality to query the LocoNet interface device for status.
  * 
- * @author Bob Milhaupt
- * @copyright 2017
+ * @author Bob Milhaupt Copyright (C) 2017
  */
 public class LocoStatsFunc implements LocoNetListener {
     private LocoNetSystemConnectionMemo memo;
