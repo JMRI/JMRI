@@ -81,6 +81,12 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     public String toMonitorString() {
+        switch(getOpCode()){
+           case 0x0040:
+               return "XPressNet Tunnel Reply: " + getXNetReply().toMonitorString();
+           default:
+        }
+
         return toString();
     }
 

@@ -200,6 +200,8 @@
 
  <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
+ <indexitem text="Switchboard Editor " target="package.jmri.jmrit.display.SwitchbaordEditor"/>
+
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
  <indexitem text="Lights " target="html.tools.Lights">

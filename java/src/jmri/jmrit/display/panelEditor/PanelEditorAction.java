@@ -17,14 +17,14 @@ public class PanelEditorAction extends AbstractAction {
 
     public PanelEditorAction() {
         this("New Panel");
-    }
+    } // NOI18N
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String name = "Panel";
+        String name = Bundle.getMessage("PanelDefaultName", ""); // "Panel"
         for (int i = 2; i < 100; i++) {
             if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
-                name = "Panel " + i;
+                name = Bundle.getMessage("PanelDefaultName", i);
             }
         }
         PanelEditor frame = new PanelEditor(name);
