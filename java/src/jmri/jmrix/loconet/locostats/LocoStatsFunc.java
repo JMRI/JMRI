@@ -1,8 +1,5 @@
 package jmri.jmrix.loconet.locostats;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Vector;
-import jmri.util.StringUtil;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -33,13 +30,17 @@ public class LocoStatsFunc implements LocoNetListener {
      * Request LocoNet interface Status
      */
     public void sendLocoNetInterfaceStatusQueryMessage() {
+        updatePending = true;
+        log.debug("Sent a LocoNet interface status query");
+        sendQuery();
+    }
+    
+    private void sendQuery() {
         if (memo == null) {
             return;
         }
         LocoNetMessage l = new LocoNetMessage(new int[] {0x81, 0x7f});
         memo.getLnTrafficController().sendLocoNetMessage(l);
-        updatePending = true;
-        log.debug("Sent a LocoNet interface status query");
     }
     
     /**
@@ -84,6 +85,10 @@ public class LocoStatsFunc implements LocoNetListener {
                         data[5]
                 );
                 log.debug("Got a LocoNet interface status reply: PR2 mode");
+                if (updatePending) {
+                    updatePending = false;
+                    sendQuery();
+                }
 
             } else {
                 // MS100 format
@@ -94,8 +99,11 @@ public class LocoStatsFunc implements LocoNetListener {
                         data[2]
                 );
                 log.debug("Got a LocoNet interface status reply: PR3 MS100 mode");
+                if (updatePending) {
+                    updatePending = false;
+                    sendQuery();
+                }
             }
-            updatePending = false;
             updateListeners();
 
         } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)) {
@@ -112,15 +120,12 @@ public class LocoStatsFunc implements LocoNetListener {
             } catch (Exception e) {
                 log.error("Error parsing update: " + msg);
             }
-        } else if (!updatePending && (msg.getOpCode() == LnConstants.OPC_GPBUSY)) {
-            updatePending = true;
         }
     }
     private void updateListeners() {
         listeners.stream().forEach((l) -> {
             l.notifyChangedInterfaceStatus(ifaceStatus);
         });
-        return;
     }
     
     /**
