@@ -16,6 +16,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection memo
      */
     public NceThrottleManager(NceSystemConnectionMemo memo) {
         super(memo);
