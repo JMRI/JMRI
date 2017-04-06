@@ -41,6 +41,7 @@ public class XmlFileLocationAction extends AbstractAction {
     final static String scripts = FileUtil.getScriptsPath();
     final static String prog = System.getProperty("user.dir");
     final static String logDir = System.getProperty("jmri.log.path");
+    final static String tmpDir = System.getProperty("java.io.tmpdir");
 
 
     @Override
@@ -187,6 +188,7 @@ public class XmlFileLocationAction extends AbstractAction {
         s += "Scripts Location: " + scripts + "\n";
         s += "Program Location: " + prog + "\n";
         s += "Log Files Location: " + logDir + "\n";
+        s += "Temp Files Location: " + tmpDir + "\n";
         
         //include names of any *.log files in log folder
         File dir = new File(logDir);
