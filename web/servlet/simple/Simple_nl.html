@@ -25,46 +25,41 @@
         <script src="/js/jquery.jmri.js"></script>
         <script src="/js/main.js"></script>
         <script src="/js/user.js"></script>
-        <script src="/js/json-console.js"></script>
+        <script src="/js/simple-console.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
-            <p class="chromeframe">Sie benützen ein <strong>veralteten</strong> Browser. Bitte <a href="http://browsehappy.com/">Ihre Browser aktualisieren</a> oder <a href="http://www.google.com/chromeframe/?redirect=true">aktiviere Google Chrome Frame</a> um die Erfahrung zu verbessern.</p>
+            <p class="chromeframe">U gebruikt een <strong>verouderde</strong> Browser. <a href="http://browsehappy.com/">werk uw browser bij</a> of <a href="http://www.google.com/chromeframe/?redirect=true">activeer Google Chrome Frame</a> om de gebruikerservaring te verbeteren.</p>
         <![endif]-->
         <div id="wrap">
             <!-- Navigation Bar %2$s -->
 
             <div class="container">
 
-                <div id="alert-websocket-connecting" class="alert alert-info alert-dismissable">Konsole verbinden...</div>
+                <div id="alert-websocket-connecting" class="alert alert-info alert-dismissable">Verbinden met Server...</div>
                 <div id="error-alert" class="hidden alert alert-warning alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <div></div>
                 </div>
                 <div id="alert-websocket-closed" class="hidden alert alert-danger alert-dismissable">
-                    Verbindung beendet.
+                    Verbinding verbroken.
                 </div>
-                <h1>JSON Konsole</h1>
+                <h1>Simpele JMRI Server Console</h1>
                 <div class="row">
                     <div class="col-md-12" id="console"><pre></pre></div>
                 </div>
                 <form class="form-horizontal" role="form">
                     <div class="row">
                         <div class="col-md-11">
-                            <input id='command' class="form-control" type='text' placeholder="JSON protocol command">
+                            <input id='command' class="form-control" type='text' placeholder="Simple JMRI server command">
                         </div>
                         <div class="col-md-1">
                             <input id='sendCmd' class='form-control btn btn-primary' type='button' name='Send' value='Send'>
                         </div>
                     </div>
-                    <div class="checkbox">
-                        <label data-toggle="tooltip" title="Wird effektiv beim nächsten Bericht. Bestehende Berichte werden nicht umformatiert.">
-                            <input id="pretty-print" type="checkbox"> Formattierte JSON Ausgabe
-                        </label>
-                    </div>
                 </form>
-                <p>Diese Seite ist eine Vorführung der <a href="/help/en/html/web/JsonServlet.shtml" target="new">JSON WebSockets</a> Dienstleistung.</p>
-                <p>Herzschlagsignale werden nicht in der Konsole gezeigt. Die "Sende" Taste leuchtet hellblau auf beim Senden eines Herzschlag; eine Rückmeldung leuchtet ihn grün vor eine Sekunde.</p>
+                <p>Deze pagina geeft een demonstratie van de Simpele JMRI Server.</p>
+                <p>Waarschuwing: Een ongeldig commando kan de Server blokkeren zonder dat de verinding wordt afgesloten.</p>
             </div> <!-- /container -->
         </div> <!-- /wrap -->
         <!-- Footer %4$s -->

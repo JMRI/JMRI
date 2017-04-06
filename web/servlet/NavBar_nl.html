@@ -17,46 +17,46 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
             <ul class="nav navbar-nav">
                 <!-- <li class="context-home"><a href="/">Home</a></li> -->
                 <li class="dropdown context-panel">
-                    <a href="/panel" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + space -->Gleisbilder <b class="caret"></b></a>
+                    <a href="/panel" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + space -->Panelen <b class="caret"></b></a>
                     <ul id="navbar-panels" class="dropdown-menu">
-                        <li id="navbar-panel-thumbnails"><a href="/panel"><!-- I18N -->Zeige Gleisbilder</a></li>
+                        <li id="navbar-panel-thumbnails"><a href="/panel"><!-- I18N -->Toon Panelen</a></li>
                         <li class="divider"></li>
                         <!-- <li class="dropdown-header context-panel-only">Nav header</li> -->
-                        <li id="navbar-panel-reload" class="context-panel-only"><a href="#"><!-- I18N -->Wieder laden</a></li>
-                        <li id="navbar-panel-xml" class="context-panel-only"><a href="#"><!-- I18N -->Gleisbild XML</a></li>
+                        <li id="navbar-panel-reload" class="context-panel-only"><a href="#"><!-- I18N -->Opnieuw inlezen</a></li>
+                        <li id="navbar-panel-xml" class="context-panel-only"><a href="#"><!-- I18N -->Paneel XML</a></li>
                         <li class="divider context-panel-only"></li>
                         <!-- will populate with ajax query -->
-                        <li id="empty-panel-list" class="disabled"><a href="#">Keine Gleisbilder geladen</a></li>
+                        <li id="empty-panel-list" class="disabled"><a href="#">Geen Panelen geladen</a></li>
                     </ul>
                 </li>
                 <li class="dropdown context-roster">
-                    <a href="/roster" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + space -->Lokpark <b class="caret"></b></a>
+                    <a href="/roster" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + space -->Loclijst <b class="caret"></b></a>
                     <ul id="navbar-roster-groups" class="dropdown-menu"></ul>
                 </li>
                 <li class="dropdown context-operations">
-                    <a href="/operations" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + 1 space -->Betrieb <b class="caret"></b></a>
+                    <a href="/operations" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + 1 space -->Operations <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/operations/trains"><!-- I18N -->Z&uuml;ge</a></a></li>
+                        <li><a href="/operations/trains"><!-- I18N -->Treinen</a></a></li>
                         <li id="navbar-operations-train-divider" class="divider context-operations-only"></li>
                         <li id="navbar-operations-train" class="dropdown-header context-operations-only"></li>
-                        <li id="navbar-operations-manifest" class="context-operations-only"><a href="#"><!-- I18N -->Ladungsverzeichnis</a></li>
-                        <li id="navbar-operations-conductor" class="context-operations-only"><a href="#"><!-- I18N -->Zugbegleiter</a></li>
+                        <li id="navbar-operations-manifest" class="context-operations-only"><a href="#"><!-- I18N -->Vrachtbrief</a></li>
+                        <li id="navbar-operations-conductor" class="context-operations-only"><a href="#"><!-- I18N -->Treindienstleider</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li id="navbar-power" data-power="readonly" class="disabled"><a href="#" class="visible-xs"><!-- I18N -->Stromversorgung unbekannt</a><button type="button" class="btn navbar-btn disabled btn-warning hidden-xs"><span class="glyphicon glyphicon-off"></span></button></li>
                 <li class="dropdown context-config">
-                    <a href="/config" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + 1 space -->Voreinstellungen <b class="caret"></b></a>
+                    <a href="/config" class="dropdown-toggle" data-toggle="dropdown"><!-- I18N + 1 space -->Instellingen <b class="caret"></b></a>
                     <ul id="navbar-config" class="dropdown-menu">
-                        <li class="dropdown-header"><span id="font-size-value" class="pull-right"></span><!-- I18N -->Schriftgr&ouml;&szlig;e</li>
+                        <li class="dropdown-header"><span id="font-size-value" class="pull-right"></span><!-- I18N -->Tekstgrootte</li>
                         <li><a href="#" id="font-size-smaller" style="font-size: smaller"><!-- I18N -->Kleiner</a></li>
-                        <li><a href="#" id="font-size-larger" style="font-size: larger"><!-- I18N -->Gr&ouml;&szlig;er</a></li>
+                        <li><a href="#" id="font-size-larger" style="font-size: larger"><!-- I18N -->Groter</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-header"><!-- I18N -->Navigationsliste</li>
-                        <li><div class="navbar-form checkbox"><label><input id="navbar-fixed-position" type="checkbox" checked="checked"> <!-- 1 space + I18N -->Fixieren am Oberseite</label></div></li>
+                        <li class="dropdown-header"><!-- I18N -->Knoppenbalk</li>
+                        <li><div class="navbar-form checkbox"><label><input id="navbar-fixed-position" type="checkbox" checked="checked"> <!-- 1 space + I18N -->Vastmaken aan bovenrand</label></div></li>
                         <li class="divider"></li>
-                        <li><a href="#" id="reset-local-preferences"><!-- I18N -->Zur&uuml;cksetzen</a></li>
+                        <li><a href="#" id="reset-local-preferences"><!-- I18N -->Herstel</a></li>
                         <!-- divider and header for system preferences, should personal preferences be supported
                         <li class="divider"></li>
                         <li class="dropdown-header">System Preferences</li>
@@ -65,11 +65,11 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="" class="dropdown-toggle navbar-right" data-toggle="dropdown"><!-- I18N + 1 space -->Hilfe <b class="caret"></b></a>
+                    <a href="" class="dropdown-toggle navbar-right" data-toggle="dropdown"><!-- I18N + 1 space -->Help <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/help/en/index.html"><!-- I18N -->Einf&uuml;hrung</a></li>
-                        <li><a href="/help/en/webtoc.shtml"><!-- I18N -->Hilfe Inhalt</a></li>
-                        <li><a href="/help/en/webindex.shtml"><!-- I18N -->Index</a></li>
+                        <li><a href="/help/en/index.html"><!-- I18N -->Introductie</a></li>
+                        <li><a href="/help/en/webtoc.shtml"><!-- I18N -->Inhoudsopgave</a></li>
+                        <li><a href="/help/en/webindex.shtml"><!-- I18N -->Register</a></li>
                     </ul>
                 </li>
 
@@ -82,12 +82,12 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="navbar-power-modal-label"><!-- I18N -->Stromversorgung</h4>
+                <h4 class="modal-title" id="navbar-power-modal-label"><!-- I18N -->Baanspanning</h4>
             </div>
             <div class="modal-body">
-                <!-- I18N -->Schalte Strom<br class="visible-xs">
-                <button type="button" class="btn btn-success btn-lg" id="navbar-power-modal-on"><!-- I18N -->Ein</button>
-                <button type="button" class="btn btn-danger btn-lg" id="navbar-power-modal-off"><!-- I18N -->Aus</button>
+                <!-- I18N -->Schakel<br class="visible-xs">
+                <button type="button" class="btn btn-success btn-lg" id="navbar-power-modal-on"><!-- I18N -->Aan</button>
+                <button type="button" class="btn btn-danger btn-lg" id="navbar-power-modal-off"><!-- I18N -->Uit</button>
             </div>
         </div>
     </div>
@@ -109,13 +109,13 @@ navigation bar silently attempts a reconnection and does not use this dialog.
                 <h4 class="modal-title" id="modal-websocket-reconnecting-label"><!-- I18N -->Versuche Wiederverbindung mit <!-- Railroad name %1$s --></h4>
             </div>
             <div class="modal-body">
-                <p><!-- I18N -->Die WebSocket Verbindung mit <!-- Railroad name %1$s --> auf JMRI ist verbrochen.</p>
-                <p id="modal-websocket-reconnecting-attempt"><!-- I18N -->Versuche Wiederverbindung <span id="modal-websocket-reconnecting-next"><!-- I18N -->bald</span> <!-- I18N -->(Versuch <span id="modal-websocket-reconnecting-attempts">1</span> <!-- I18N -->von 20).</p>
-                <p id="modal-websocket-reconnecting-failed" class="hidden"><!-- I18N -->Wiederverbindung gescheitert.</p>
+                <p><!-- I18N -->De WebSocket Verbinding met <!-- Railroad name %1$s --> via JMRI is verbroken.</p>
+                <p id="modal-websocket-reconnecting-attempt"><!-- I18N -->Opnieuw verbinden <span id="modal-websocket-reconnecting-next"><!-- I18N -->spoedig</span> <!-- I18N -->(Poging <span id="modal-websocket-reconnecting-attempts">1</span> <!-- I18N -->van 20).</p>
+                <p id="modal-websocket-reconnecting-failed" class="hidden"><!-- I18N -->Opnieuw verbinden mislukt.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="modal-websocket-reconnecting-reload"><!-- I18N -->Seite neu einlesen</button>
-                <button type="button" class="btn btn-primary" id="modal-websocket-reconnecting-now"><!-- I18N -->Jetzt wiederverbinden</button>
+                <button type="button" class="btn btn-danger" id="modal-websocket-reconnecting-reload"><!-- I18N -->Pagina opnieuw laden</button>
+                <button type="button" class="btn btn-primary" id="modal-websocket-reconnecting-now"><!-- I18N -->Nu opnieuw verbinden</button>
             </div>
         </div>
     </div>
