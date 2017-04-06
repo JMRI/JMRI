@@ -515,15 +515,20 @@ public final class FileUtil {
      * {@link java.net.URI} for that file.
      * <p>
      * Search order is:
-     * <ol><li>For any provided searchPaths, iterate over the searchPaths by
+     * <ol>
+     * <li>For any provided searchPaths, iterate over the searchPaths by
      * prepending each searchPath to the path and following the following search
-     * order:
-     * <ol><li>As a {@link java.io.File} in the user preferences directory</li>
+     * order:<ol>
+     * <li>As a {@link java.io.File} in the user preferences directory</li>
      * <li>As a File in the current working directory (usually, but not always
-     * the JMRI distribution directory)</li> <li>As a File in the JMRI
-     * distribution directory</li> <li>As a resource in jmri.jar</li></ol></li>
+     * the JMRI distribution directory)</li>
+     * <li>As a File in the JMRI distribution directory</li>
+     * <li>As a resource in jmri.jar</li>
+     * </ol></li>
      * <li>If the file or resource has not been found in the searchPaths, search
-     * in the four locations listed without prepending any path</li></ol>
+     * in the four locations listed without prepending any path</li>
+     * <li>As a File with an absolute path</li>
+     * </ol>
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.

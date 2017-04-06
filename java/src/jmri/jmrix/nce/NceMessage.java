@@ -1,6 +1,8 @@
 package jmri.jmrix.nce;
 
 import java.util.Arrays;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,13 +74,13 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // copy one
-    public NceMessage(NceMessage m) {
+    public NceMessage(@Nonnull NceMessage m) {
         super(m);
         replyLen = m.replyLen;
     }
 
     // from String
-    public NceMessage(String m) {
+    public NceMessage(@Nonnull String m) {
         super(m);
     }
 
@@ -154,11 +156,12 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * enter programming track mode
-     * @param tc traffic controller for connection
-     * @return message for entering programming track mode
      *
+     * @param tc controller for the associated connection
+     * @return a new message to enter programming track mode
      */
-    public static NceMessage getProgMode(NceTrafficController tc) {
+    @Nonnull
+    public static NceMessage getProgMode(@Nonnull NceTrafficController tc) {
         // test if supported on current connection
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
@@ -185,11 +188,13 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      * station if the EPROM was built before 2006. This method uses a state flag
      * ({@link NceTrafficController#getNceProgMode}) to detect whether a command
      * to enter program mode has been generated, and presumably sent, when using
-     * the later EPROMS. 
-     * @param tc tc for connection
-     * @return message to exit programming track mode
+     * the later EPROMS.
+     *
+     * @param tc controller for the associated connection
+     * @return a new message to exit programming track mode
      */
-    public static NceMessage getExitProgMode(NceTrafficController tc) {
+    @CheckForNull
+    public static NceMessage getExitProgMode(@Nonnull NceTrafficController tc) {
         NceMessage m = new NceMessage(1);
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             // Sending exit programming mode binary can crash pre 2006 EPROMs
@@ -220,13 +225,14 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Read Paged mode CV on programming track
-     * @param tc traffic controller for connection
-     * @param cv decoder cv to read
-     * @return message to read cv from programming track
+     * Read Paged mode CV on programming track.
      *
+     * @param tc controller for the associated connection
+     * @param cv the CV to read
+     * @return a new message to read a CV
      */
-    public static NceMessage getReadPagedCV(NceTrafficController tc, int cv) {
+    @Nonnull
+    public static NceMessage getReadPagedCV(@Nonnull NceTrafficController tc, int cv) {
         // test if supported on current connection
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
@@ -255,14 +261,15 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * write paged mode CV to programming track
-     * @param tc traffic controller for connection
-     * @param cv decoder cv to write
-     * @param val value to write to decoder
-     * @return message for Paged write of cv value
+     * Write paged mode CV to programming track.
      *
+     * @param tc  controller for the associated connection
+     * @param cv  CV to write
+     * @param val value to write to cv
+     * @return a new message to write a CV
      */
-    public static NceMessage getWritePagedCV(NceTrafficController tc, int cv, int val) {
+    @Nonnull
+    public static NceMessage getWritePagedCV(@Nonnull NceTrafficController tc, int cv, int val) {
         // test if supported on current connection
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
@@ -293,7 +300,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
-    public static NceMessage getReadRegister(NceTrafficController tc, int reg) {
+    @CheckForNull
+    public static NceMessage getReadRegister(@Nonnull NceTrafficController tc, int reg) {
         // not supported by USB connected to SB3 or PH
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
                 || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5

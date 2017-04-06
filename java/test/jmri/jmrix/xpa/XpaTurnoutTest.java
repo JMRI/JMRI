@@ -3,10 +3,7 @@ package jmri.jmrix.xpa;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaTurnout class
@@ -26,14 +23,14 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
     @Override
     public void checkClosedMsgSent() {
         Assert.assertEquals("closed message", "ATDT#3#3;",
-                xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
+                xnis.outbound.get(xnis.outbound.size() - 1).toString());
         Assert.assertEquals("CLOSED state", jmri.Turnout.CLOSED, t.getCommandedState());
     }
 
     @Override
     public void checkThrownMsgSent() {
         Assert.assertEquals("thrown message", "ATDT#3#1;",
-                xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
+                xnis.outbound.get(xnis.outbound.size() - 1).toString());
         Assert.assertEquals("THROWN state", jmri.Turnout.THROWN, t.getCommandedState());
     }
 
