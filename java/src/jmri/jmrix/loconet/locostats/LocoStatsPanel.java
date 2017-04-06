@@ -43,6 +43,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     JPanel rawPanel;
     JPanel pr2Panel;
     JPanel ms100Panel;
+    Boolean headless = false;
 
     @Override
     public String getHelpTarget() {
@@ -56,6 +57,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
     public LocoStatsPanel() {
         super();
+    }
+
+    public LocoStatsPanel(LocoNetSystemConnectionMemo memo) {
+        super();
+        initComponents(memo);
+        headless = true;
     }
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle");
@@ -130,11 +137,13 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         );
 
         // and prep for display
-        lb2Panel.setVisible(false);
-        rawPanel.setVisible(true);
-        pr2Panel.setVisible(false);
-        ms100Panel.setVisible(false);
-        revalidate();
+        if (!headless) {
+            lb2Panel.setVisible(false);
+            rawPanel.setVisible(true);
+            pr2Panel.setVisible(false);
+            ms100Panel.setVisible(false);
+            revalidate();
+        }
 
         // will connect when memo is available
     }
@@ -175,11 +184,13 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
             breaks.setText(Integer.toString((data[5] << 16) + (data[6] << 8) + data[7]));
             errors.setText(Integer.toString((data[1] << 16) + (data[2] << 8) + data[3]));
 
-            lb2Panel.setVisible(true);
-            rawPanel.setVisible(false);
-            pr2Panel.setVisible(false);
-            ms100Panel.setVisible(false);
-            revalidate();
+            if (!headless) {
+                lb2Panel.setVisible(true);
+                rawPanel.setVisible(false);
+                pr2Panel.setVisible(false);
+                ms100Panel.setVisible(false);
+                revalidate();
+            }
 
             updatePending = false;
 
@@ -199,7 +210,9 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
                 hardware.setText(Integer.toString(data[4]));
                 software.setText(Integer.toString(data[5]));
 
-                pr2Panel.setVisible(true);
+                if (!headless) {
+                    pr2Panel.setVisible(true);
+                }
             } else {
                 // MS100 format
                 int[] data = msg.getPeerXfrData();
@@ -207,12 +220,16 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
                 badMsgCnt.setText(Integer.toString(data[5] * 256 + data[4]));
                 ms100status.setText(StringUtil.twoHexFromInt(data[2]));
 
-                ms100Panel.setVisible(true);
+                if (!headless) {
+                    ms100Panel.setVisible(true);
+                }
             }
-            lb2Panel.setVisible(false);
-            rawPanel.setVisible(false);
-
-            revalidate();
+            if (!headless) {
+                lb2Panel.setVisible(false);
+                rawPanel.setVisible(false);
+    
+                revalidate();
+            }
             updatePending = false;
 
         } else if (updatePending
@@ -228,11 +245,13 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
                 r7.setText(StringUtil.twoHexFromInt(data[6]));
                 r8.setText(StringUtil.twoHexFromInt(data[7]));
 
-                lb2Panel.setVisible(false);
-                rawPanel.setVisible(true);
-                pr2Panel.setVisible(false);
-                ms100Panel.setVisible(false);
-                revalidate();
+                if (!headless) {
+                    lb2Panel.setVisible(false);
+                    rawPanel.setVisible(true);
+                    pr2Panel.setVisible(false);
+                    ms100Panel.setVisible(false);
+                    revalidate();
+                }
 
                 updatePending = false;
             } catch (Exception e) {
@@ -285,6 +304,22 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     boolean updatePending = false;
 
     JButton updateButton = new JButton("Update");
+    
+    public String getBreaksText() {
+        return breaks.getText();
+    }
+
+    public void setBreaksText(String txt) {
+        this.breaks.setText(txt);
+    }
+    public String getErrorsText() {
+        return errors.getText();
+    }
+
+    public void setErrorsText(String txt) {
+        this.errors.setText(txt);
+    }
+
 
     /**
      * Nested class to create one of these using old-style defaults

@@ -18,10 +18,18 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
         self.lastTransmittedMsgs = 0
         self.lastBreaks = -1
         self.lastErrors = -1
+        self.firstTime = True
         
         # create, but don't show, a LocoBufferStatsFrame
-        self.monitor = jmri.jmrix.loconet.locobuffer.LocoBufferStatsFrame()
-        
+        #print("fetching default memo")
+        self.memo = jmri.InstanceManager.getDefault(jmri.jmrix.loconet.LocoNetSystemConnectionMemo)
+        #print("got memo")
+        self.monitor = jmri.jmrix.loconet.locostats.LocoStatsPanel(self.memo)
+        #self.monitor = jmri.jmrix.loconet.swing.LnNamedPaneAction("Loco Stats", 
+        #	jmri.util.swing.sdi.JmriJFrameInterface(), 
+        #	"jmri.jmrix.loconet.locostats.LocoStatsPanel", 
+        #	self.memo).actionPerformed(None)
+        #print("got monitor")
         return
         
         
@@ -29,7 +37,7 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
     delay = 15
     
     # define the filename used for the output file
-    filename = 'LocoNetStatsSamples'
+    filename = 'LocoNetStatsSamples.csv'
     
     # handle() is called repeatedly until it returns false.
     #
@@ -37,12 +45,12 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
     def handle(self):
 
         # request the current error counts
-        self.monitor.breaks.text='-1'
-        self.monitor.errors.text='-1'
+        self.monitor.setBreaksText('-1')
+        self.monitor.setErrorsText('-1')
         self.monitor.requestUpdate()
         self.waitMsec(1000)  
-        nowErrors = int(self.monitor.errors.text)
-        nowBreaks = int(self.monitor.breaks.text)
+        nowErrors = int(self.monitor.getErrorsText())
+        nowBreaks = int(self.monitor.getBreaksText())
         
         # if the LocoBuffer wasn't read, that's a special case
         if ( nowErrors == -1 or self.lastErrors == -1) :
@@ -62,7 +70,7 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
         nowTransmittedMsgs = t.getTransmittedMsgCount()
 
         # get the current values for slots in use
-        s = jmri.jmrix.loconet.SlotManager.instance()
+        s = jmri.jmrix.loconet.SlotManager(t)
         nowSlotsUsed = s.getInUseCount()
         
         # calculate changes
@@ -78,13 +86,21 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
         
         date = java.util.Date().toString()
         # convert numbers to a single output string in the CSV format
+        if (self.firstTime) :
+        	header = 'Date,RecvMsg,RecvBytes,XmitMsgs,SlotsUsed,Breaks,Errors'
+        	#print header
         result = ''+date+','+str(delReceivedMsgs)+','+str(delReceivedBytes)+','+str(delTransmittedMsgs)+','+str(nowSlotsUsed)+','+str(delBreaks)+','+str(delErrors)
-        print result
+        #print result
 
         # also open the file for appending, append the line, and close
+        #print("writing to file")
         f = open(self.filename, "a")
+        if (self.firstTime) :
+        	f.write(header+'\n')
+        	self.firstTime = False
         f.write(result+'\n')
         f.close()
+        #print("File Closed")
         
         # wait to do next sample ( 1 second was used in the error count)
         self.waitMsec((self.delay-2)*1000)
