@@ -643,9 +643,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         String oldName = nBean.getUserName();
         JTextField _newName = new JTextField(20);
         _newName.setText(oldName);
-        Object[] renameBeanOption = {"Cancel", "OK", _newName};
+        Object[] renameBeanOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), _newName};
         int retval = JOptionPane.showOptionDialog(null,
-                "Rename UserName From " + oldName, "Rename " + getBeanType(),
+                Bundle.getMessage("RenameFrom", oldName), Bundle.getMessage("RenameTitle", getBeanType()),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 renameBeanOption, renameBeanOption[2]);
 
@@ -735,7 +735,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         int retval = JOptionPane.showOptionDialog(null,
                 "Move " + getBeanType() + " " + currentName + " from " + oldNameBean.getSystemName(), "Move UserName",
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", box}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null); // TODO I18N
         log.debug("Dialog value " + retval + " selected " + box.getSelectedIndex() + ":"
                 + box.getSelectedItem());
         if (retval != 1) {
@@ -900,9 +900,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         public Void doInBackground() throws Exception {
             StringBuilder message = new StringBuilder();
             try {
-                getManager().deleteBean(t, "CanDelete");  //IN18N
+                getManager().deleteBean(t, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
-                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
+                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //NOI18N
                     log.warn(e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),

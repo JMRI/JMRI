@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
-<!-- $Id$ -->
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -18,14 +17,14 @@
             ">
   <xs:annotation>
     <xs:documentation>
-      Defines XML stuctures common to Layout Editor and Panel Editor
+      Defines XML structures common to Layout Editor and Panel Editor
     </xs:documentation>
   </xs:annotation>
 
     <xs:complexType name="EditorIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing an icon reference
+          Define the XML structure for storing an icon reference
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableLabelXml#storeIcon
@@ -71,7 +70,7 @@
     <xs:complexType name="EditorSensorTextType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing sensor text information
+          Define the XML structure for storing sensor text information
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
@@ -101,7 +100,7 @@
     <xs:attributeGroup name="EditorCommonAttributesGroup">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing common PositionableLabel child attributes
+          Define the XML structure for storing common PositionableLabel child attributes
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
@@ -120,7 +119,7 @@
     <xs:attributeGroup name="EditorCommonTextInfoGroup">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing text information of PositionableLabel children
+          Define the XML structure for storing text information of PositionableLabel children
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
@@ -179,7 +178,7 @@
     <xs:complexType name="EditorIconsType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing icon information in a paneleditor element
+          Define the XML structure for storing icon information in a paneleditor element
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PanelEditor
@@ -208,7 +207,7 @@
     <xs:complexType name="EditorPositionableLabelType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a PositionableLabel
+          Define the XML structure for storing a PositionableLabel
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableLabelXml
@@ -233,7 +232,7 @@
     <xs:complexType name="EditorPositionablePointType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a PositionablePoint
+          Define the XML structure for storing a PositionablePoint
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionablePointXml
@@ -263,7 +262,7 @@
     <xs:complexType name="ShapeColorType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a Shape's color
+          Define the XML structure for storing a Shape's color
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableShapeXml
@@ -282,7 +281,7 @@
      <xs:attributeGroup name="ShapeCommonAttributesGroup">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a Shape's attributes
+          Define the XML structure for storing a Shape's attributes
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableShapeXml#storeCommonAttributes
@@ -302,7 +301,7 @@
     <xs:complexType name="EditorPositionableRectangleType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a PositionableRectangle
+          Define the XML structure for storing a PositionableRectangle
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableRectangleXml
@@ -333,7 +332,7 @@
     <xs:complexType name="EditorPositionableRoundRectType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a PositionableRoundRectangle
+          Define the XML structure for storing a PositionableRoundRectangle
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableRoundRectXml
@@ -365,7 +364,7 @@
     <xs:complexType name="EditorPositionableCircleType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a Positionablecircle
+          Define the XML structure for storing a Positionablecircle
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableCircleXml
@@ -395,7 +394,7 @@
     <xs:complexType name="EditorPositionableEllipseType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a PositionableEllipse
+          Define the XML structure for storing a PositionableEllipse
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionableEllipseXml
@@ -426,7 +425,7 @@
     <xs:complexType name="EditorPositionablePolygonType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a PositionablePolygon
+          Define the XML structure for storing a PositionablePolygon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.PositionablePolygonXml
@@ -468,7 +467,7 @@
     <xs:complexType name="EditorSensorIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a SensorIcon
+          Define the XML structure for storing a SensorIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SensorIconXml
@@ -629,7 +628,7 @@
     <xs:complexType name="EditorReporterIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a ReporterIcon
+          Define the XML structure for storing a ReporterIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.ReporterIconXml
@@ -651,7 +650,7 @@
     <xs:complexType name="EditorMemoryIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a MemoryIcon
+          Define the XML structure for storing a MemoryIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.MemoryIconXml
@@ -686,7 +685,7 @@
     <xs:complexType name="EditorMemoryInputIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a MemoryInputIcon
+          Define the XML structure for storing a MemoryInputIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.MemoryInputIconXml
@@ -711,7 +710,7 @@
     <xs:complexType name="EditorMemoryComboIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a MemoryComboIcon
+          Define the XML structure for storing a MemoryComboIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.MemoryComboIconXml
@@ -750,7 +749,7 @@
     <xs:complexType name="EditorFastClockIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a FastClock
+          Define the XML structure for storing a FastClock
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.FastClockXml
@@ -769,7 +768,7 @@
     <xs:complexType name="EditorMultiSensorIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a MultiSensorIcon
+          Define the XML structure for storing a MultiSensorIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.MultiSensorIconXml
@@ -826,7 +825,7 @@
     <xs:complexType name="EditorSignalHeadIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a SignalHeadIcon
+          Define the XML structure for storing a SignalHeadIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SignalHeadIconXml
@@ -945,7 +944,7 @@
     <xs:complexType name="EditorSignalMastIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a SignalMastIcon
+          Define the XML structure for storing a SignalMastIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.SignalMastIconXml
@@ -976,7 +975,7 @@
     <xs:complexType name="EditorTurnoutIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a TurnoutIcon
+          Define the XML structure for storing a TurnoutIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.TurnoutIconXml
@@ -1080,7 +1079,7 @@
     <xs:complexType name="EditorLayoutTurnoutType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a LayoutTurnout
+          Define the XML structure for storing a LayoutTurnout
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.LayoutTurnoutXml
@@ -1148,7 +1147,7 @@
     <xs:complexType name="EditorLayoutSlipType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a SlipLayout
+          Define the XML structure for storing a SlipLayout
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.layouteditor.configurexml.LayoutSlipXml
@@ -1242,7 +1241,7 @@
     <xs:complexType name="EditorLocoIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a LocoIcon
+          Define the XML structure for storing a LocoIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.LocoIconXml
@@ -1273,7 +1272,7 @@
     <xs:complexType name="EditorLocoLabelType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a LocoLabel shape
+          Define the XML structure for storing a LocoLabel shape
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.controlPanelEditor.shape.configurexml.LocoLabelXML??
@@ -1304,7 +1303,7 @@
     <xs:complexType name="EditorBlockContentsIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a BlockContentsIcon
+          Define the XML structure for storing a BlockContentsIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.BlockContentsIconXml
@@ -1327,7 +1326,7 @@
     <xs:complexType name="EditorTrackSegmentType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a TrackSegment
+          Define the XML structure for storing a TrackSegment
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.TrackSegmentXml
@@ -1357,7 +1356,7 @@
     <xs:complexType name="EditorLevelXingType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a LevelXing
+          Define the XML structure for storing a LevelXing
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.LevelXingXml
@@ -1408,7 +1407,7 @@
     <xs:complexType name="EditorLayoutTurntableType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a LayoutTurntable.
+          Define the XML structure for storing a LayoutTurntable.
           (Not present in 2.9.3 DTD, done by observation)
         </xs:documentation>
         <xs:appinfo>
@@ -1442,7 +1441,7 @@
     <xs:complexType name="EditorLinkingLabelType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a LinkingLabel
+          Define the XML structure for storing a LinkingLabel
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.LinkingLabelXml
@@ -1468,7 +1467,7 @@
     <xs:complexType name="EditorIndicatorTrackIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a MultiSensorIcon
+          Define the XML structure for storing a MultiSensorIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.IndicatorTrackIconXml
@@ -1670,7 +1669,7 @@
     <xs:complexType name="EditorPortalIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a PortalIcon
+          Define the XML structure for storing a PortalIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml
@@ -1700,7 +1699,7 @@
     <xs:complexType name="EditorLightIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a Light Icon
+          Define the XML structure for storing a Light Icon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.LightIconXml

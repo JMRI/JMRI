@@ -38,6 +38,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
@@ -118,6 +119,12 @@ import org.slf4j.LoggerFactory;
  * The traditional tabbed Pick List with text entry is the default method.
  * The Options menu has been expanded to list the 3 methods.
  * Mar 27, 2017 - Dave Sand
+ * <p>
+ * Add a Browse Option to the Logix Select Menu
+ * This will display a window that creates a formatted list of the contents of the
+ * seletcted Logix with each Conditional, Variable and Action.
+ * The code is courtesy of Chuck Catania and is used with his permission.
+ * Apr 2, 2017 - Dave Sand
  * <p>
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
@@ -245,8 +252,14 @@ public class LogixTableAction extends AbstractTableAction {
                     String sName = (String) getValueAt(row, SYSNAMECOL);
                     if (Bundle.getMessage("ButtonEdit").equals(value)) {
                         editPressed(sName);
+                        
+                    } else if (rbx.getString("BrowserButton").equals(value)) {
+                      conditionalRowNumber = row;
+                      browserPressed(sName);
+                      
                     } else if (Bundle.getMessage("ButtonCopy").equals(value)) {
                         copyPressed(sName);
+                        
                     } else if (Bundle.getMessage("ButtonDelete").equals(value)) {
                         deletePressed(sName);
                     }
@@ -324,6 +337,7 @@ public class LogixTableAction extends AbstractTableAction {
                 JComboBox<String> editCombo = new JComboBox<String>();
                 editCombo.addItem(Bundle.getMessage("ButtonSelect"));
                 editCombo.addItem(Bundle.getMessage("ButtonEdit"));
+				editCombo.addItem(rbx.getString("BrowserButton"));
                 editCombo.addItem(Bundle.getMessage("ButtonCopy"));
                 editCombo.addItem(Bundle.getMessage("ButtonDelete"));
                 TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
@@ -660,6 +674,10 @@ public class LogixTableAction extends AbstractTableAction {
     private int _logicType = Conditional.ALL_AND;
     private String _antecedent = null;
     private boolean _newItem = false; // marks a new Action or Variable object was added
+
+    // Conditional Browser Variables
+    JmriJFrame condBrowserFrame = null;
+    JTextArea condText = null;
 
     /**
      * Input selection names
@@ -6500,6 +6518,136 @@ public class LogixTableAction extends AbstractTableAction {
     protected String getClassName() {
         return LogixTableAction.class.getName();
     }
+
+// *********** Methods for Conditional Browser Window ********************
+
+    /**
+     * Responds to the Browse button pressed in Logix table
+     * @param sName The selected Logix system name
+     */
+    void browserPressed(String sName) {
+        if (!checkFlags(sName)) {
+            return;
+        }
+        
+        // Logix was found, create the window
+        _curLogix =  _logixManager.getBySystemName(sName);
+        makeBrowserWindow();
+    }
+
+ 	/**
+	 * Builds the text representing the current conditionals for the selected
+     * Logix statement
+	 */
+    void buildConditionalListing() {
+        String  showSystemName,
+        showUserName,
+        showCondName,
+        condName,
+        operand,
+        tStr;
+        
+        ConditionalVariable variable;
+        ConditionalAction action;
+        
+        numConditionals = _curLogix.getNumConditionals();
+        showSystemName  = _curLogix.getSystemName();
+        showUserName    = _curLogix.getUserName();
+        
+        condText.setText(null);
+        
+        for (int rx = 0; rx < numConditionals; rx++) {
+            conditionalRowNumber = rx;
+            _curConditional = _conditionalManager.getBySystemName(_curLogix.getConditionalByNumberOrder(rx));
+            _variableList = _curConditional.getCopyOfStateVariables();
+            _logixSysName = _curConditional.getSystemName();
+            _actionList = _curConditional.getCopyOfActions();
+            
+            showCondName = _curConditional.getUserName();
+            if (showCondName == null) {
+                showCondName = "";
+            }
+            showSystemName=_curConditional.getSystemName();
+
+            // If no user name for a conditional, create one using C + row number
+            if (showCondName.equals("")) {
+                showCondName = "C"+(rx+1);
+            }
+            condText.append("\n   "+showSystemName+"  "+showCondName+"\n");
+            if (_curConditional.getLogicType() == Conditional.MIXED) {
+               _antecedent = _curConditional.getAntecedentExpression();
+                condText.append("   "+rbx.getString("BrowserAntecedent")+" "+_antecedent+"\n");
+            }
+
+            for (int i = 0; i < _variableList.size(); i++) {
+                variable = _variableList.get(i);
+                tStr = "        ";
+                tStr = tStr + " R" + (i+1) + (i>9?"":"  ");  // Makes {Rx}bb or {Rxx}b
+                condText.append(tStr);
+                
+                operand = variable.getOpernString();
+                if (i==0) { // add the IF to the first conditional
+                    condText.append(rbx.getString("BrowserIF")+" "+operand+" ");
+                } else {
+                    condText.append(" "+operand+" ");
+                }
+                if (variable.isNegated()) {
+                    condText.append(rbx.getString("LogicNOT")+" ");
+                }
+                
+                condText.append(variable.toString()+"\n");
+            } // for _variableList
+
+            if (_actionList.size() > 0) {
+                condText.append("              "+rbx.getString("BrowserTHEN")+"\n");
+                for (int i=0; i<_actionList.size(); i++) {
+                    action = _actionList.get(i);
+                    condName=action.description(false);
+                    condText.append("                 "+condName+"\n");
+                }  // for _actionList
+            } else {
+                condText.append("            "+rbx.getString("BrowserNoAction")+"\n");
+            }
+        } // for numConditionals
+        condText.setCaretPosition(0);
+
+    }  // buildConditionalListing
+
+    /**
+     * creates and initializes the conditionals browser window
+     */
+    void makeBrowserWindow() {
+        condBrowserFrame = new JmriJFrame(rbx.getString("BrowserTitle"));
+        condBrowserFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);
+
+        Container contentPane = condBrowserFrame.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+        // LOGIX header information
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new FlowLayout());
+        String tStr = rbx.getString("BrowserLogix")+" "+_curLogix.getSystemName()+"    "+
+                                     _curLogix.getUserName()+"    "+
+                           (Boolean.valueOf(_curLogix.getEnabled()) ?
+                                rbx.getString("BrowserEnabled") :
+                                rbx.getString("BrowserDisabled"));
+        panel1.add(new JLabel(tStr));
+        contentPane.add(panel1);
+
+        JScrollPane scrollPane = null;
+        condText = new javax.swing.JTextArea(50,50);
+        condText.setEditable(false);
+        condText.setTabSize(4);
+
+        // Build the conditionals listing
+        buildConditionalListing();
+        scrollPane = new JScrollPane(condText);
+        contentPane.add(scrollPane);
+
+        condBrowserFrame.pack();
+        condBrowserFrame.setVisible(true);
+
+    }  // makeBrowserWindow
 
     private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
