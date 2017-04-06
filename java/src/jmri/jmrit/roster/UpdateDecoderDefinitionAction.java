@@ -51,8 +51,8 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
                 if (decoder.getReplacementFamily() != null || decoder.getReplacementModel() != null) {
                     log.info("   Recommended replacement is family \"" + decoder.getReplacementFamily() + "\" model \"" + decoder.getReplacementModel() + "\"");
                 }
-                replacementFamily = (decoder.getReplacementFamily() != null) ? decoder.getReplacementFamily() : null;
-                replacementModel = (decoder.getReplacementModel() != null) ? decoder.getReplacementModel() : null;
+                replacementFamily = decoder.getReplacementFamily();
+                replacementModel = decoder.getReplacementModel();
             }
 
             if (replacementModel != null || replacementFamily != null) {
