@@ -43,6 +43,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
 
     /**
      * Create a ClockControl object for a NCE clock
+     * @param tc traffic controller for connection
+     * @param prefix system connection prefix
      */
     public NceClockControl(NceTrafficController tc, String prefix) {
         super();
