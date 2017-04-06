@@ -180,7 +180,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton layoutSingleSlipButton = new JRadioButton(rb.getString("LayoutSingleSlip"));
     private JRadioButton layoutDoubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
 
-    //Default flow layout definiitons for JPanels
+    //Default flow layout definitions for JPanels
     private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
     private FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
     private FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
@@ -2697,7 +2697,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //background color menu item
         //
-        JMenu backgroundColorMenu = new JMenu(rb.getString("SetBackgroundColor"));
+        JMenu backgroundColorMenu = new JMenu(Bundle.getMessage("SetBackgroundColor"));
         backgroundColorButtonGroup = new ButtonGroup();
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Black"),     Color.black);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("DarkGray"),  Color.darkGray);
@@ -2712,7 +2712,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Blue"),      Color.blue);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Magenta"),   Color.magenta);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Cyan"),      Color.cyan);
-        optionMenu. add(backgroundColorMenu);
+        optionMenu.add(backgroundColorMenu);
 
         //
         //add fast clock menu item
@@ -2829,7 +2829,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //add text color menu item
         //
-        JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
+        JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
         textColorButtonGroup = new ButtonGroup();
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Black"),     Color.black);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
@@ -2844,7 +2844,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
-        optionMenu. add(textColorMenu);
+        optionMenu.add(textColorMenu);
 
         //
         //add turnout options submenu
@@ -10282,7 +10282,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //deletePanel
 
     /**
-     * Control whether target panel items are editable. Does this by invoke the
+     * Control whether target panel items are editable. Does this by invoking the
      * {@link Editor#setAllEditable} function of the parent class. This also
      * controls the relevant pop-up menu items (which are the primary way that
      * items are edited).
@@ -10324,7 +10324,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         awaitingIconChange = false;
         editModeItem.setSelected(editable);
         repaint();
-    }   //setAllEditable
+    }
 
     /**
      * Control whether panel items are positionable. Markers are always

@@ -240,6 +240,7 @@
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
         <pathelement location="${libdir}/jemmy-2.2.7.5.jar"/>
+        <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
     </path>
 
     <!-- path to run regular executables -->
