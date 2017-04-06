@@ -41,7 +41,7 @@ public class ClientActions {
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
 
         JmriJFrame f = new JmriJFrame();
-        f.setTitle(Bundle.getMessage("CdiPanelConfigure") + " " + description);
+        f.setTitle(Bundle.getMessage("CdiPanelConfigure", description));
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
         CdiPanel m = new CdiPanel();
