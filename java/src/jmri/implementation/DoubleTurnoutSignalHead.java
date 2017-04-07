@@ -129,7 +129,9 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
             mRed.getBean().removePropertyChangeListener(turnoutChangeListener);
         }
         mRed = t;
-        mRed.getBean().addPropertyChangeListener(turnoutChangeListener);
+        if (mRed != null) {
+            mRed.getBean().addPropertyChangeListener(turnoutChangeListener);
+        }
     }
 
     public void setGreen(NamedBeanHandle<Turnout> t) {
@@ -137,7 +139,9 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
             mGreen.getBean().removePropertyChangeListener(turnoutChangeListener);
         }
         mGreen = t;
-        mGreen.getBean().addPropertyChangeListener(turnoutChangeListener);
+        if (mGreen != null) {
+            mGreen.getBean().addPropertyChangeListener(turnoutChangeListener);
+        }
     }
 
     @Override
