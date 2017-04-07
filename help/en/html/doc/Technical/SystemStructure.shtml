@@ -301,6 +301,61 @@
             the resource's class.</li>
       </ul>
     </ul>
+    
+    <h4>Lessons</h4> <!-- Should this part move up? -->
+
+    Should this part move up?
+    
+    <ul>
+    <li>It's important that managers only be created once. More specifically,
+    the managers and the SystemConnectionMemo should only be registered in the
+    InstanceManager once.  If they're registered more times than that, they''
+    appear as duplicates in various auto-constructed lists, menus and tab sets.
+    
+    <li>Much work is done in the PortAdapter subclasses.  From a common
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/PortAdapter.html"><code>jmrix.PortAdapter</code></a>
+    interface, JMRI has two different
+    forms for those:  
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/SerialPortAdapter.html"><code>jmrix.SerialPortAdapter</code></a> (Serial/USB connections)
+    and
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/NetworkPortAdapter.html"><code>jmrix.NetworkPortAdapter</code></a> (network connections).
+    <p>
+    
+    
+    
+    Abstract base classes implement those as 
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractSerialPortController.html"><code>jmrix.AbstractSerialPortControllerr</code></a> (Serial/USB connections)
+    and
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractNetworkPortController.html"><code>jmrix.AbstractNetworkPortController</code></a> (network connections).
+    (Note most, but not all, systems use those) with a common base for the two of those of
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractPortController.html"><code>jmrix.AbstractPortController</code></a> (Serial/USB connections)
+    
+    
+    
+    The switch from "PortAdapter" to "PortController" is confusing. In many cases, it's 
+    
+        Abstract*PortAdapter <- Sys*PortController <- Sys*PortAdapter
+        
+    as you work down the abstraction.  Fix in C/MRI?
+    
+    How does jmrix.AbstractStreamPortController fit in? (there is no *StreamPortController as defined in its header;
+            it extends AbstractPortController)
+            
+    link to images/JmrixLocoNetClassDiagram.png
+    
+    
+    <p>These in turn are inherited into the system-specific classes, e.g
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"><code>loconet.LnPortController</code></a>
+    and
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnNetworkPortController.html"><code>loconet.LnNetworkPortController</code></a>
+    respectively (see UML diagrams on those linked Javadoc pages).
+    <p>
+    Because Java doesn't allow multiple inheritance, the system-specific descendants of the two abstract base classes can't 
+    actually share a single common system-specific base class.  This results in some code duplication in 
+    e.g. serial/USB connections vs the network connection classes.
+    
+    
+    </ul>
 
     <h3>More Complex Initialization: C/MRI</h2>
     For a more complex example, consider C/MRI, which has more content
