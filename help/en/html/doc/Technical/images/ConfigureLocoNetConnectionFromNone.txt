@@ -1,0 +1,24 @@
+@startuml
+actor user
+participant JmrixConfigPane
+participant "locobufferusb.ConnectionConfig\nextends AbstractSerialConnectionConfig\nextends AbstractConnectionConfig" as ConnectionConfig
+participant "locobufferusb.LocoBufferUsbAdapter\nextends LocoBufferAdapter\nimplements jmri.jmrix.SerialPortAdapter" as LocoBufferUsbAdapter
+
+note over JmrixConfigPane: Wait for combobox selection
+user --> JmrixConfigPane : fireActionEvent
+activate JmrixConfigPane
+JmrixConfigPane --> JmrixConfigPane : updateComboConnection
+activate JmrixConfigPane
+JmrixConfigPane --> ConnectionConfig : null ctor
+activate ConnectionConfig
+
+ConnectionConfig --> LocoBufferUsbAdapter : null ctor
+activate LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
+
+deactivate ConnectionConfig
+
+deactivate JmrixConfigPane
+deactivate JmrixConfigPane
+
+@enduml
