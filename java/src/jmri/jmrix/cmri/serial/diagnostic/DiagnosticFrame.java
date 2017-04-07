@@ -20,7 +20,7 @@ import jmri.jmrix.cmri.serial.SerialReply;
 /**
  * Frame for running CMRI diagnostics
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 

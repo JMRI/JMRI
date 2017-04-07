@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * it not restart? Optional restart?)
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
   */
 public class StoppingBlock {
 

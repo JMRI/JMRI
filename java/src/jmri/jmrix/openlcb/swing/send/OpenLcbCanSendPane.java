@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2012
+ * @author Bob Jacobsen Copyright (C) 2008, 2012
  * 
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
@@ -479,7 +479,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void openCdiPane() {
-        actions.openCdiWindow(destNodeID());
+        actions.openCdiWindow(destNodeID(), destNodeID().toString());
     }
 
     // control sequence operation

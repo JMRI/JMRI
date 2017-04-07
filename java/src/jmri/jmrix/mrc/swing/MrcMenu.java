@@ -6,7 +6,7 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 /**
  * Create a "Systems" menu containing the JMRI MRC-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2010 Copied from nce.swing
+ * @author Bob Jacobsen Copyright 2003, 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
@@ -40,7 +40,7 @@ public class MrcMenu extends JMenu {
         }
 
         // do we have a MrcTrafficController?
-        setEnabled(memo.getMrcTrafficController() != null);	// disable menu, no connection, no tools!
+        setEnabled(memo.getMrcTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
     }

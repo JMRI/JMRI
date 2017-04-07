@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * argument, it checks that directly, otherwise it pops a file selection dialog.
  * (The dialog form has to be manually canceled when done)
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2007
+ * @author Bob Jacobsen Copyright (C) 2005, 2007
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileCheckAction
  */

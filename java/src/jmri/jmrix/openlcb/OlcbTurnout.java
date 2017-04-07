@@ -9,9 +9,27 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Turnout for OpenLCB connections.
+ * <p>
+ * State Diagram for read and write operations  (click to magnify):
+ * <a href="doc-files/OlcbTurnout-State-Diagram.png"><img src="doc-files/OlcbTurnout-State-Diagram.png" alt="UML State diagram" height="50%" width="50%"></a>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010, 2011
  */
+ 
+ /*
+ * @startuml jmri/jmrix/openlcb/doc-files/OlcbTurnout-State-Diagram.png
+ * CLOSED --> CLOSED: Event 1
+ * THROWN --> CLOSED: Event 1
+ * THROWN --> THROWN: Event 0
+ * CLOSED --> THROWN: Event 0
+ * [*] --> UNKNOWN 
+ * UNKNOWN --> CLOSED: Event 1\nEvent 1 Produced msg with valid set\nEvent 1 Consumed msg with valid set
+ * UNKNOWN --> THROWN: Event 0\nEvent 1 Produced msg with valid set\nEvent 0 Consumed msg with valid set
+ * state INCONSISTENT
+ * @enduml
+*/
+
+
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     OlcbAddress addrThrown;   // go to thrown state
@@ -116,13 +134,14 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
+        System.out.println("forward to layout "+s);
         if (s == Turnout.THROWN) {
-            turnoutListener.setFromOwner(true);
+            turnoutListener.setFromOwnerWithForceNotify(true);
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(THROWN);
             }
         } else if (s == Turnout.CLOSED) {
-            turnoutListener.setFromOwner(false);
+            turnoutListener.setFromOwnerWithForceNotify(false);
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(CLOSED);
             }

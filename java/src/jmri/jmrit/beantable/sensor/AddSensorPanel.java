@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JPanel to create a new Sensor
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @deprecated Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
  */
 @Deprecated

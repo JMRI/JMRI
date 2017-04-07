@@ -391,6 +391,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * Return error message if warrant cannot be run.
      *
      * @param w warrant
+     * @param mode running type
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {

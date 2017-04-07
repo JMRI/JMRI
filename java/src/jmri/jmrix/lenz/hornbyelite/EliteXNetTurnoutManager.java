@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2008
+ * @author Paul Bender Copyright (C) 2008
   */
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 

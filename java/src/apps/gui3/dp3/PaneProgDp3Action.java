@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implements jmri.ProgListener, jmri.jmrit.symbolicprog.tabbedframe.PaneContainer {
 

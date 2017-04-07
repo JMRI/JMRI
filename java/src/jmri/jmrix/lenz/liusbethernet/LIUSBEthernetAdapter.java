@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
  *
- * @author	Paul Bender (C) 2011-2013
+ * @author Paul Bender (C) 2011-2013
  */
 public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 

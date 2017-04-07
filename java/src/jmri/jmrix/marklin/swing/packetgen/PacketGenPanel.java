@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user input of Marklin messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implements MarklinListener {

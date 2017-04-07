@@ -362,7 +362,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 });
         showAdvancedItems();
 
-        init = false;		// need to reload action listeners
+        init = false;  // need to reload action listeners
         checkInitDone();
     }
 

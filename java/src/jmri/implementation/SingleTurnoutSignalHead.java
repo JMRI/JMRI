@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2010
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead implements PropertyChangeListener {
 

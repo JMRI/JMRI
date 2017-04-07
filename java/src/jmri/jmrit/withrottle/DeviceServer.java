@@ -163,7 +163,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         String inPackage = null;
 
-        keepReading = true;	//	Gets set to false when device sends 'Q'uit
+        keepReading = true; // Gets set to false when device sends 'Q'uit
         int consecutiveErrors = 0;
 
         do {
@@ -362,7 +362,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     log.error("readLine failure limit exceeded, ending thread run loop for device '{}'", getName());
                 }
             }
-        } while (keepReading);	//	'til we tell it to stop
+        } while (keepReading); // 'til we tell it to stop
         log.debug("Ending thread run loop for device '{}'", getName());
         closeThrottles();
 

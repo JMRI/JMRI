@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  *
  * Differs only in handling PR2's non-echo
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  *
  */
 public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
@@ -22,5 +22,5 @@ public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
         echo = true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());
 }

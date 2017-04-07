@@ -11,9 +11,9 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into Powerline for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into Powerline for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011
+ * @author Ken Cameron Copyright (C) 2011
  */
 public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -31,6 +31,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return tc
      */
     public SerialTrafficController getTrafficController() {
         return SerialTrafficController;
@@ -43,6 +44,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provide access to a SerialAddress for this particular connection
+     * @return SerialAddress
      */
     public SerialAddress getSerialAddress() {
         return SerialAddress;
@@ -55,6 +57,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Always null as powerline doesn't have a programmer
+     * @return null
      */
     @SuppressWarnings("deprecation")
     public ProgrammerManager getProgrammerManager() {

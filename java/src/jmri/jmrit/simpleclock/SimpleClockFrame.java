@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * The current implementation (2007) handles the internal clock and one hardware
  * clock.
  *
- * @author	Dave Duchamp Copyright (C) 2004, 2007
+ * @author Dave Duchamp Copyright (C) 2004, 2007
  */
 public class SimpleClockFrame extends JmriJFrame
         implements java.beans.PropertyChangeListener {
@@ -36,7 +36,7 @@ public class SimpleClockFrame extends JmriJFrame
     //private boolean correct = true;
     private boolean changed = false;
     protected boolean showTime = false;
-    DecimalFormat threeDigits = new DecimalFormat("0.000");	// 3 digit precision for speedup factor
+    DecimalFormat threeDigits = new DecimalFormat("0.000"); // 3 digit precision for speedup factor
 
     protected JComboBox<String> timeSourceBox = null;
     protected JComboBox<String> clockStartBox = null;
@@ -655,7 +655,7 @@ public class SimpleClockFrame extends JmriJFrame
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         if (changed) {
-            // remind to save		
+            // remind to save  
             javax.swing.JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuClocks")),
                     Bundle.getMessage("ReminderTitle"),

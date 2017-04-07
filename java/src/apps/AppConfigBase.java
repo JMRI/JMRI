@@ -26,9 +26,9 @@ import org.slf4j.LoggerFactory;
  * Basic configuration infrastructure, to be used by specific GUI
  * implementations
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2008, 2010
  * @author Matthew Harris copyright (c) 2009
- * @author	Ken Cameron Copyright (C) 2011
+ * @author Ken Cameron Copyright (C) 2011
  */
 public class AppConfigBase extends JmriPanel {
 

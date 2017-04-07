@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Dave Duchamp Copyright (C) 2011
+ * @author Dave Duchamp Copyright (C) 2011
  */
 public class AutoAllocate {
 
@@ -683,10 +683,10 @@ public class AutoAllocate {
 
     private boolean isThereConflictingPlan(ActiveTrain at, Section aSec, int aSecSeq,
             ActiveTrain nt, Section nSec, int nSecSeq, int type) {
-        // returns 'true' if there is a conflicting	plan that may result in gridlock 
+        // returns 'true' if there is a conflicting plan that may result in gridlock 
         //    if this plan is set up, return 'false' if not.
         // Note: may have to add other tests to this method in the future to prevent gridlock 
-        //	  situations not currently tested for.
+        //   situations not currently tested for.
         if (_planList.size() == 0) {
             return false;
         }

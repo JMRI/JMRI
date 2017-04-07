@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * The default contents are taken from the NamedBeanBundle properties file. This
  * makes creation a little more heavy-weight, but speeds operation.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 

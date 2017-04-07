@@ -34,8 +34,8 @@ import jmri.util.table.ButtonRenderer;
  * <LI>Not present
  * </OL>
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 

@@ -36,7 +36,7 @@ import jmri.util.swing.JmriPanel;
 /**
  * Pane to show User Message Preferences
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class UserMessagePreferencesPane extends JmriPanel implements PreferencesPanel {
 

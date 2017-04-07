@@ -560,7 +560,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     }
 
     // Check to see if a consist address is selected, and if it
-    //	is, dissable the "add button" if the maximum consist size is reached
+    // is, dissable the "add button" if the maximum consist size is reached
     public void canAdd() {
         // If a consist address is selected, dissable the "add button"
         // if the maximum size is reached
@@ -688,7 +688,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         _status.setText(ConsistMan.decodeErrorCode(status));
         // For some status codes, we want to trigger specific actions
         //if((status & jmri.ConsistListener.CONSIST_FULL)!=0) {
-        //	canAdd();
+        // canAdd();
         //} else {
         canAdd();
         //}

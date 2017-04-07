@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class OptionsMenu extends JMenu {
 
@@ -402,7 +402,7 @@ public class OptionsMenu extends JMenu {
         try {
             OptionsFile.instance().writeDispatcherOptions(dispatcher);
         } //catch (org.jdom2.JDOMException jde) { 
-        //	log.error("Exception writing Dispatcher options: "+jde); 
+        // log.error("Exception writing Dispatcher options: "+jde); 
         //}                           
         catch (java.io.IOException ioe) {
             log.error("Exception writing Dispatcher options: " + ioe);

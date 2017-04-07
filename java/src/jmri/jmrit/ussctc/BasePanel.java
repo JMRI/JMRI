@@ -6,7 +6,7 @@ import jmri.*;
 /**
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class BasePanel extends JPanel implements Constants {
 
