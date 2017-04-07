@@ -157,10 +157,17 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
         @Override
         public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
             if (propertyChangeEvent.getPropertyName().equals("KnownState")) {
+                if (propertyChangeEvent.getSource().equals(mRed.getBean()) && propertyChangeEvent.getNewValue().equals(mRedCommanded)) {
+                    return; // ignore change that we commanded
+                }
+                if (propertyChangeEvent.getSource().equals(mGreen.getBean()) && propertyChangeEvent.getNewValue().equals(mGreenCommanded)) {
+                    return; // ignore change that we commanded
+                }
                 if (readUpdateTimer == null) {
                     readUpdateTimer = new javax.swing.Timer(200, (ActionEvent actionEvent) ->
                             readOutput());
                     readUpdateTimer.setRepeats(false);
+                    readUpdateTimer.start();
                 } else {
                     readUpdateTimer.restart();
                 }

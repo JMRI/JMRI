@@ -171,7 +171,8 @@ public class DoubleTurnoutSignalHeadTest {
         Assert.assertEquals(Turnout.THROWN, mRedTurnout.getKnownState());
         Assert.assertEquals(Turnout.CLOSED, mGreenTurnout.getKnownState());
         Assert.assertEquals(SignalHead.FLASHRED, mHead.getAppearance());
-        Assert.assertNotNull(mHead.readUpdateTimer); // Should be running.
+        // Should not be running, since all commands came from us.
+        Assert.assertNull(mHead.readUpdateTimer);
         verifyNoMoreInteractions(l.m);
 
         // Wait for the flash
@@ -187,6 +188,7 @@ public class DoubleTurnoutSignalHeadTest {
 
         mGreenTurnout.setCommandedState(Turnout.THROWN);
         verifyNoMoreInteractions(l.m);
+        Assert.assertNotNull(mHead.readUpdateTimer); // now it's started
         waitForTimer();
         verifyNoMoreInteractions(l.m);
         Assert.assertEquals(SignalHead.FLASHRED, mHead.getAppearance()); // hasn't changed
