@@ -46,7 +46,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             panel.setAttribute("width", Integer.toString(frame.getContentPane().getWidth()));
             panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
-
+            // add more properties (check configurexml)
             panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
             if (editor.getBackgroundColor() != null) {
@@ -57,34 +57,34 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                 panel.addContent(color);
             }
 
-            // include contents
-            List<Positionable> contents = editor.getContents();
-            log.debug("N elements: {}", contents.size());
-            for (Positionable sub : contents) {
-                if (sub != null) {
-                    try {
-                        Element e = ConfigXmlManager.elementFromObject(sub);
-                        if (e != null) {
-                            if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
-                                //e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
-                            }
-                            try {
-                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-                            } catch (NullPointerException ex) {
-                                if (sub.getNamedBean() == null) {
-                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-                                } else {
-                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
-                                }
-                            }
-                            parsePortableURIs(e);
-                            panel.addContent(e);
-                        }
-                    } catch (Exception ex) {
-                        log.error("Error storing panel element: " + ex, ex);
-                    }
-                }
-            }
+            // include switches
+//            List<BeanSwitch> contents = editor.getSwitches(); // TODO add method to swbEditor
+//            log.debug("N elements: {}", contents.size());
+//            for (Positionable sub : contents) {
+//                if (sub != null) {
+//                    try {
+//                        Element e = ConfigXmlManager.elementFromObject(sub);
+//                        if (e != null) {
+//                            if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
+//                                //e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+//                            }
+//                            try {
+//                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+//                            } catch (NullPointerException ex) {
+//                                if (sub.getNamedBean() == null) {
+//                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+//                                } else {
+//                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+//                                }
+//                            }
+//                            parsePortableURIs(e);
+//                            panel.addContent(e);
+//                        }
+//                    } catch (Exception ex) {
+//                        log.error("Error storing panel element: " + ex, ex);
+//                    }
+//                }
+//            }
 
             Document doc = new Document(panel);
             XMLOutputter out = new XMLOutputter();

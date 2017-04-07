@@ -214,6 +214,7 @@ public class SwitchboardEditor extends Editor {
     private static String SWITCHTYPE_COMMAND = "switchshape";
 
     private List<String> switchlist = new ArrayList<String>();
+    protected ArrayList<BeanSwitch> _contents = new ArrayList<BeanSwitch>();
 
     /**
      * Ctor
@@ -2426,6 +2427,13 @@ public class SwitchboardEditor extends Editor {
         }
         return null;
     }
+
+//    public List<BeanSwitch> getSwitches() {
+//        for (int i = 0; i < switchlist.size(); i++) {
+//            _contents.add(switchboardLayeredPane.getComponent(i));
+//        }
+//        return _contents;
+//    }
 
     /**
      * Set up item(s) to be copied by paste.
