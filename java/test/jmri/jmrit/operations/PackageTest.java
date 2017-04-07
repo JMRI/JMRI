@@ -41,6 +41,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsMenuTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(OpsPropertyChangeListenerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsManagerTest.class));
 
         return suite;
     }

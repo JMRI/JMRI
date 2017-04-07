@@ -46,6 +46,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarsSetFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CarsTableActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ImportCarsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CarLoadTest.class));
         return suite;
     }
 
