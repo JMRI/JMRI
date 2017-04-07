@@ -69,6 +69,9 @@ public class PortNameMapper {
 
     private static void getDetailsFromWinRegistry(String path) {
         ArrayList<String> friendlyName = new ArrayList<>();
+        if (!Advapi32Util.registryKeyExists(WinReg.HKEY_LOCAL_MACHINE, path)) {
+            return;
+        }
         String[] regEntries = Advapi32Util.registryGetKeys(WinReg.HKEY_LOCAL_MACHINE, path);
         if (regEntries == null) {
             return;
