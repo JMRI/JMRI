@@ -4229,7 +4229,7 @@ public class Llnmon {
                 case 0x00: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
                 }
-                case 0x01: {
+                case 0x02: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
                 }
                 case 0x03: {
