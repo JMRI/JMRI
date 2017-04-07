@@ -42,7 +42,7 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemLocoNetMonitor", "jmri.jmrix.loconet.locomon.LocoMonPane"), // NOI18N
         new Item("MenuItemSlotMonitor", "jmri.jmrix.loconet.slotmon.SlotMonPane"), // NOI18N
         new Item("MenuItemClockMon", "jmri.jmrix.loconet.clockmon.ClockMonPane"), // NOI18N
-        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.LocoStatsPanel"), // NOI18N
+        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.swing.LocoStatsPanel"), // NOI18N
         null,
         new Item("MenuItemBDL16Programmer", "jmri.jmrix.loconet.bdl16.BDL16Panel"), // NOI18N
         new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel"), // NOI18N
