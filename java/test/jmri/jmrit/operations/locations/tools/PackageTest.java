@@ -42,6 +42,19 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackDestinationEditFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackLoadEditFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackRoadEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AlternateTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AlternateTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeTrackTypeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IgnoreUsedTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IgnoreUsedTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackDestinationEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackLoadEditActionTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackRoadEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditCommentsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditCommentsFrameTest.class));
         return suite;
     }
 

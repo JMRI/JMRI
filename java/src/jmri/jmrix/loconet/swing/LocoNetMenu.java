@@ -42,13 +42,13 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemLocoNetMonitor", "jmri.jmrix.loconet.locomon.LocoMonPane"), // NOI18N
         new Item("MenuItemSlotMonitor", "jmri.jmrix.loconet.slotmon.SlotMonPane"), // NOI18N
         new Item("MenuItemClockMon", "jmri.jmrix.loconet.clockmon.ClockMonPane"), // NOI18N
-        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.LocoStatsPanel"), // NOI18N
+        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.swing.LocoStatsPanel"), // NOI18N
         null,
         new Item("MenuItemBDL16Programmer", "jmri.jmrix.loconet.bdl16.BDL16Panel"), // NOI18N
         new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel"), // NOI18N
         new Item("MenuItemPM4Programmer", "jmri.jmrix.loconet.pm4.PM4Panel"), // NOI18N
         new Item("MenuItemSE8cProgrammer", "jmri.jmrix.loconet.se8.SE8Panel"), // NOI18N
-        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.DS64Panel"), // NOI18N
+        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.Ds64TabbedPanel"), // NOI18N
         new Item("MenuItemCmdStnConfig", "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"), // NOI18N
         new Item("MenuItemSetID", "jmri.jmrix.loconet.locoid.LocoIdPanel"), // NOI18N
         new Item("MenuItemDuplex", "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel"), // NOI18N

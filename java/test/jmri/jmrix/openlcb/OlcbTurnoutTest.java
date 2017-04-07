@@ -107,6 +107,16 @@ public class OlcbTurnoutTest extends TestCase {
         verifyNoMoreInteractions(l.m);
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
+
+        // repeated set of local state
+        t.tc.rcvMessage = null;
+        s.setState(Turnout.CLOSED);
+        t.flush();
+        verify(l.m).onChange(COMMANDED_STATE, Turnout.CLOSED);
+        verify(l.m).onChange(KNOWN_STATE, Turnout.CLOSED);
+        verifyNoMoreInteractions(l.m);
+        Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
 
     public void testDirectFeedback() throws jmri.JmriException {

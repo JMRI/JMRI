@@ -15,6 +15,7 @@ $(document).ready(function() {
         },
         console: function(data) {
             if (data !== '{"type":"pong"}') {
+                $("#error-alert").addClass("hidden").removeClass("show");
                 var console = $("#console pre");
                 if (window.localStorage.getItem("jmri.json-console.json.pretty-print") === "true") {
                     console.append(JSON.stringify(JSON.parse(data), null, 2) + "<br>");

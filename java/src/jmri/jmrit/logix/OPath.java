@@ -276,11 +276,10 @@ public class OPath extends jmri.Path {
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.getBlock());
         hash = 67 * hash + Objects.hashCode(this._fromPortal);
         hash = 67 * hash + Objects.hashCode(this._toPortal);
-        hash = 67 * hash + Objects.hashCode(this._name);
-        hash = 67 * hash + Objects.hashCode(this._timer);
-        hash = 67 * hash + (this._timerActive ? 1 : 0);
+        hash = 67 * hash + Objects.hashCode(this.getSettings());
         return hash;
     }
 
@@ -301,6 +300,9 @@ public class OPath extends jmri.Path {
             return false;
         }
         OPath path = (OPath) obj;
+        if (getBlock() != path.getBlock()) {
+            return false;
+        }
         if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal())) {
             return false;
         }
