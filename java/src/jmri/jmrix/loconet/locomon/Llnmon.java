@@ -1063,6 +1063,7 @@ public class Llnmon {
                 }
                 break;
             } // case LnConstants.OPC_IMM_PACKET
+
             case LnConstants.RE_OPC_PR3_MODE: {
                 result = interpretOpcPr3Mode(l);
                 if (result.length() > 0) {
@@ -4228,7 +4229,7 @@ public class Llnmon {
                 case 0x00: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
                 }
-                case 0x02: {
+                case 0x01: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
                 }
                 case 0x03: {
