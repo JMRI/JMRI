@@ -1,5 +1,17 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
+import java.awt.Dimension;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.swing.CanPanelInterface;
+import jmri.jmrix.openlcb.swing.ClientActions;
+import jmri.util.JmriJFrame;
 import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
@@ -12,21 +24,6 @@ import org.openlcb.swing.networktree.NodeTreeRep;
 import org.openlcb.swing.networktree.TreePane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.Dimension;
-
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.swing.CanPanelInterface;
-import jmri.jmrix.openlcb.swing.ClientActions;
-import jmri.util.JmriJFrame;
 
 /**
  * Frame displaying tree of OpenLCB nodes
@@ -121,6 +118,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         }
     }
 
+    @SuppressWarnings("unused")
     private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class.getName());
 
     /**
