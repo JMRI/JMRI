@@ -39,9 +39,6 @@
 
 <!-- =================================================== -->
 
-              <p>Basic core is communications code, often a
-              "TrafficManager"</p>
-
               <p>See also the <a href=
               "MultiConnectionUpdate.shtml">Multiple Connection Update</a>
               page.</p>
@@ -49,7 +46,6 @@
 <!-- =================================================== -->
     
       <h2>Code Structure</h2>
-      (Needs work)
       
       The code for a general type, like "LocoNet connections"
       or "NCE connections", should be gathered in a specific 
@@ -59,21 +55,28 @@
       <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">jmri.jmrix.loconet</a></code>
       and
       <code><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/nce/package-summary.html">jmri.jmrix.nce</a></code>. 
-      This provides a level of grouping, which we may someday want to use for 
+      In the preferences dialog and <code>JmrixConfigPane</code> main configuration code, this 
+      level is called the "manufacturer selection".
+      It provides a level of grouping, which we may someday want to use for 
       e.g. providing separate updates for specific hardware, while still
       separating the system-specific code from the system-independent parts of JMRI.
       
       <p>
-      Within that, the code should be separated further by subpackages for:
+      Within that, the code should be separated further by putting
+      specific hardware options into their own subpackages, for example
       <ul>
-      <li>Specific hardware options should go in their own subpackages, for example <br/>
-        <code>jmri.jmrix.loconet.locobuffer</code> vs
-        <code>jmri.jmrix.loconet.pr3</code><br/>
-        or <code>jmri.jmrix.nce.serialdriver</code> vs. <code>jmri.jmrix.nce.usbdriver</code>.
-      <li><a href="Swing.shtml">Swing-based tools</a> should go in their own 
-        <a href="Swing.shtml">swing subpackage</a> or at a further level within the swing subpackage.
+      <li><code>jmri.jmrix.loconet.locobuffer</code> vs
+        <code>jmri.jmrix.loconet.locobufferusb</code> vs.
+        <code>jmri.jmrix.loconet.pr3</code> vs.
+        <code>jmri.jmrix.loconet.locormi</code>
+      <li><code>jmri.jmrix.nce.serialdriver</code> vs. <code>jmri.jmrix.nce.usbdriver</code>
+        vs. <code>jmri.jmrix.nce.simulator</code> vs. <code>jmri.jmrix.nce.networkdriver</code>
       </ul>
+      In the preferences, this is called the "connection mode" selection.
+      <p>
       Additional subpackages can be used grouping various functions as needed.
+      For example, <a href="Swing.shtml">Swing-based tools</a> should go in their own 
+        <a href="Swing.shtml">swing subpackage</a> or at a further level within the swing subpackage.
       
       <h2>Normal Operation</h2>
       
@@ -309,9 +312,10 @@
     <ul>
     <li>It's important that managers only be created once. More specifically,
     the managers and the SystemConnectionMemo should only be registered in the
-    InstanceManager once.  If they're registered more times than that, they''
+    InstanceManager once.  If they're registered more times than that, they
     appear as duplicates in various auto-constructed lists, menus and tab sets.
     
+    <a href="images/JmrixLocoNetClassDiagram.png"><img src="images/JmrixLocoNetClassDiagram.png" align="right" alt="Class Diagram with diamond shape" height="25%" width="25%"></a>
     <li>Much work is done in the PortAdapter subclasses.  From a common
     <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/PortAdapter.html"><code>jmrix.PortAdapter</code></a>
     interface, JMRI has two different
@@ -322,27 +326,12 @@
     <p>
     
     
-    
     Abstract base classes implement those as 
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractSerialPortController.html"><code>jmrix.AbstractSerialPortControllerr</code></a> (Serial/USB connections)
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractSerialPortController.html"><code>jmrix.AbstractSerialPortController</code></a> (Serial/USB connections)
     and
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractNetworkPortController.html"><code>jmrix.AbstractNetworkPortController</code></a> (network connections).
-    (Note most, but not all, systems use those) with a common base for the two of those of
-    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractPortController.html"><code>jmrix.AbstractPortController</code></a> (Serial/USB connections)
-    
-    
-    
-    The switch from "PortAdapter" to "PortController" is confusing. In many cases, it's 
-    
-        Abstract*PortAdapter <- Sys*PortController <- Sys*PortAdapter
-        
-    as you work down the abstraction.  Fix in C/MRI?
-    
-    How does jmrix.AbstractStreamPortController fit in? (there is no *StreamPortController as defined in its header;
-            it extends AbstractPortController)
-            
-    link to images/JmrixLocoNetClassDiagram.png
-    
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractNetworkPortController.html"><code>jmrix.AbstractNetworkPortController</code></a> (network connections)
+    (most, but not all, systems use one of those) with a common base of
+    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/AbstractPortController.html"><code>jmrix.AbstractPortController</code></a>.
     
     <p>These in turn are inherited into the system-specific classes, e.g
     <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnPortController.html"><code>loconet.LnPortController</code></a>
@@ -352,8 +341,19 @@
     <p>
     Because Java doesn't allow multiple inheritance, the system-specific descendants of the two abstract base classes can't 
     actually share a single common system-specific base class.  This results in some code duplication in 
-    e.g. serial/USB connections vs the network connection classes.
-    
+    e.g. serial/USB connections vs the network connection classes in the system-specific classes.
+    <ul>
+      <li>
+        The terminology switch from "PortAdapter" to "PortController" is confusing. In many cases, it's 
+        <pre>
+            Abstract*PortAdapter <- Sys*PortController <- Sys*PortAdapter
+        </pre>
+        as you work down the abstraction.  This should eventually be fixed.
+      <li>
+        How does jmrix.AbstractStreamPortController fit into the <code>PortAdapter</code>
+        class hierarchy? (there is no *StreamPortController as defined in its header;
+                it extends AbstractPortController)
+    </ul>
     
     </ul>
 
@@ -412,14 +412,78 @@
       
       <h2>Configuration Process</h2>
       
+      See <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane Javadoc</a>
+      for links to configuration elements.
+      (Is there another place that the configuration process and preferences support is described? If so, it should
+      be linked from here.)
+      <p/>
+      Any particular system connection is included in the preferences by 
+      being listed in the <code>java/src/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list.
+      <pre>
+# Providers of System Connections type lists in Preferences
+# Order is Insignificant
+jmri.jmrix.internal.InternalConnectionTypeList
+jmri.jmrix.lenz.LenzConnectionTypeList
+...
+jmri.jmrix.loconet.LnConnectionTypeList
+...
+      </pre>
+      This provides the contents for the 1st-level selection in the top JComboBox, e.g.
+      in this case "Digitrax". This (generally) corresponds to selecting a system
+      package within the JMRI package that might contain multiple varients of a specific connection.
+      Within <code>JmrixConfigPane</code> this is called the "manufacturer" selection.
+      <p>
+      The contents of the 
+      <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/LnConnectionTypeList.java"><code>jmri.jmrix.loconet.LnConnectionTypeList</code></a>, an instance of
+      <A href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html"><code>jmri.jmrix.ConnectionTypeList</code></a>
+      then provides the contents for the second-level JComboBox of specific connection
+      types, each corresponding (generally) to a specific 
+      <code>ConnectionConfig</code> implementation that can configure a specific connection type.
+      Within <code>JmrixConfigPane</code> this is called the "mode" selection.
+      
+      
       <h3>Creating from scratch</h3>
-      <a href="images/onfigureLocoNetConnectionFromNone.png"><img src="images/onfigureLocoNetConnectionFromNone.png" align="right" height="40%" width="40%" /></a>
+      <a href="images/ConfigureLocoNetConnectionFromNone.png"><img src="images/ConfigureLocoNetConnectionFromNone.png" align="right" height="40%" width="40%" /></a>
+      
+      Note this starts off by creating a ConnectionConfig, which creates a PortAdapter, similar to the 
+      read-from-XML version.
+      But we don't want a running connection: We want one that we can 
+      work with to set/store configuration information. So, although we "register()", 
+      we do not "configure()".
+      
+      <p>
+      Filling the <code>details</code> JPanel is done within the 
+      <code>ConnectionConfig</code> object via a call to 
+      <code>loadDetails()</code>.  In many cases, including
+      this LocoNet example, that's referred up to a 
+      base class:
+      <ul>
+      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractSerialConnectionConfig.java"><code>AbstractSerialConnectionConfig</code></a>
+            handles connections through serial links that need specification of serial port name, baud rate, etc.
+      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractNetworkConnectionConfig.java"><code>AbstractNetworkConnectionConfig</code></a>
+            handles connections through network (TCP) connections that need specification of network address, port, etc.
+      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractStreamConnectionConfig.java"><code>AbstractStreamConnectionConfig</code></a>
+            handles configuration of connections based on streams.
+      <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/AbstractSimulatorConnectionConfig.java"><code>AbstractSimulatorConnectionConfig</code></a>
+            handles configuration of simulated connections.
+      </ul>
+      
       
       <h3>Storing</h3>
       
-      <h3>Updating with a new connection</h3>
+      <h3>Changing Options</h3>
       
-      <h3>Changing options</h3>
+      The Swing panel that shows the main options (e.g. option1 through option4)
+      sets changes to those values directly into the ConnectionConfig/PortAdapter
+      without asking them to act further via e.g. configure().
+
+      <h3>Updating A Connection Mode</h3>
+      
+      Changing the mode JComboBox in <code>JmrixConfigPane</code>
+      first clears the existing contents of the <code>details</code>
+      JPanel with <code>removeAll()</code>, 
+      then calls the <code>JmrixConfigPane.selection()</code>
+      method to refill it.
       
       <h3>Deleting a connection</h3>
       

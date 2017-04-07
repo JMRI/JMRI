@@ -7,7 +7,7 @@ participant "locobufferusb.ConnectionConfig\nextends AbstractSerialConnectionCon
 
 ...
 
-configurexml -> ConnectionConfigXml: ctor
+configurexml -> ConnectionConfigXml: null ctor (via reflection)
 activate ConnectionConfigXml
 deactivate ConnectionConfigXml
 
@@ -17,7 +17,7 @@ activate ConnectionConfigXml
 ConnectionConfigXml -> ConnectionConfigXml: getInstance()
 activate ConnectionConfigXml
 
-ConnectionConfigXml -> LocoBufferUsbAdapter:  ctor
+ConnectionConfigXml -> LocoBufferUsbAdapter:  null ctor
 activate LocoBufferUsbAdapter
 deactivate LocoBufferUsbAdapter
 note left LocoBufferUsbAdapter: Assigned to "adapter" member
@@ -67,7 +67,11 @@ deactivate LocoBufferUsbAdapter
 
 ConnectionConfigXml -> LocoBufferUsbAdapter : configure()
 activate LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
 
+deactivate ConnectionConfigXml
+
+deactivate configurexml
 
 @enduml
 
