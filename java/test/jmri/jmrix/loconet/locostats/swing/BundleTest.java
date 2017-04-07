@@ -1,5 +1,6 @@
-package jmri.jmrix.loconet.locostats;
+package jmri.jmrix.loconet.locostats.swing;
 
+import jmri.jmrix.loconet.locostats.swing.Bundle;
 import java.util.Locale;
 
 import org.junit.Assert;

@@ -35,24 +35,21 @@ public class ClientActions {
         this.iface = iface;
     }
 
-    public void openCdiWindow(NodeID destNode) {
+    public void openCdiWindow(NodeID destNode, String description) {
         final java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<JButton>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<JButton>();
 
         JmriJFrame f = new JmriJFrame();
-        f.setTitle("Configure " + destNode);
+        f.setTitle(Bundle.getMessage("CdiPanelConfigure", description));
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
 
         CdiPanel m = new CdiPanel();
-        JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        Dimension minScrollerDim = new Dimension(800, 12);
-        scrollPane.setMinimumSize(minScrollerDim);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(50);
+        f.add(m);
 
         // create an object to add "New Sensor" buttons
         CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory() {
+            private boolean haveButtons = false;
             @Override
             public JButton handleReadButton(JButton button) {
                 readList.add(button);
@@ -80,7 +77,7 @@ public class ClientActions {
                     p.setLayout(new FlowLayout());
                     p.setAlignmentX(-1.0f);
                     pane.add(p);
-                    JButton button = new JButton("Make Sensor");
+                    JButton button = new JButton(Bundle.getMessage("CdiPanelMakeSensor"));
                     p.add(button);
                     sensorButtonList.add(button);
                     button.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +96,7 @@ public class ClientActions {
                         JFormattedTextField mevt1 = evt1;
                         JFormattedTextField mevt2 = evt2;
                     });
-                    button = new JButton("Make Turnout");
+                    button = new JButton(Bundle.getMessage("CdiPanelMakeTurnout"));
                     p.add(button);
                     turnoutButtonList.add(button);
                     button.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +115,11 @@ public class ClientActions {
                         JFormattedTextField mevt1 = evt1;
                         JFormattedTextField mevt2 = evt2;
                     });
-
+                    if (!haveButtons) {
+                        haveButtons = true;
+                        m.addButtonToFooter(buttonForList(sensorButtonList, Bundle.getMessage("CdiPanelMakeAllSensors")));
+                        m.addButtonToFooter(buttonForList(turnoutButtonList, Bundle.getMessage("CdiPanelMakeAllTurnouts")));
+                    }
                     gpane = null;
                     evt1 = null;
                     evt2 = null;
@@ -153,43 +154,6 @@ public class ClientActions {
         ConfigRepresentation rep = iface.getConfigForNode(destNode);
 
         m.initComponents(rep, factory);
-
-        JButton b = new JButton("Read All");
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                int delay = 0; //milliseconds
-                for (final JButton b : readList) {
-
-                    ActionListener taskPerformer = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent evt) {
-                            target.doClick();
-                        }
-
-                        JButton target = b;
-                    };
-                    Timer t = new Timer(delay, taskPerformer);
-                    t.setRepeats(false);
-                    t.start();
-                    delay = delay + 150;
-                }
-            }
-        });
-
-        f.add(scrollPane);
-        JPanel bottomPane = new JPanel();
-        bottomPane.setLayout(new FlowLayout());
-        f.add(bottomPane);
-        bottomPane.add(b);
-
-        if (sensorButtonList.size() > 0) {
-            bottomPane.add(buttonForList(sensorButtonList, "Make All Sensors"));
-        }
-
-        if (turnoutButtonList.size() > 0) {
-            bottomPane.add(buttonForList(turnoutButtonList, "Make All Turnouts"));
-        }
 
         f.pack();
         f.setVisible(true);

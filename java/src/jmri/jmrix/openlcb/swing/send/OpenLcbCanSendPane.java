@@ -479,7 +479,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void openCdiPane() {
-        actions.openCdiWindow(destNodeID());
+        actions.openCdiWindow(destNodeID(), destNodeID().toString());
     }
 
     // control sequence operation
