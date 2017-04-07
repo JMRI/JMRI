@@ -40,10 +40,10 @@ java/src/jmri/jmrix/cmri//serial/SerialTurnout.java
     - [ ] AbstractSerialPortControllerTestBase
     - [ ] AbstractNetworkPortControllerTestBase
     - [ ] AbstractStreamPortControllerTestBase
-  - [ ] As time allows, rename in the specific implementatio
+  - [ ] As time allows, rename in the specific implementation
   
 C/MRI long term?
-- [ ] SerialNode constants to enum, including storage via digit or enum-entry-name
+- [ ] SerialNode constants to enum, including storage via digit or enum-entry-name (and schema)
 - [ ] SerialAddress static action - should all this static stuff be here, or moved to e.g. List object which has info about e.g. system name?
    ```
    java/src/jmri/jmrix/cmri//serial/SerialAddress.java:    public static int getNodeAddressFromSystemName(String systemName) {
