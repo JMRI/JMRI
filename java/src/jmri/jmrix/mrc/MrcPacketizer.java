@@ -202,7 +202,7 @@ public class MrcPacketizer extends MrcTrafficController {
      * repeated to get the next real character.
      * @param istream data input stream from layout
      * @return byte stream from interface
-     * @throws java.io.IOException float errors upwards
+     * @throws java.io.IOException from read errors
      *
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {

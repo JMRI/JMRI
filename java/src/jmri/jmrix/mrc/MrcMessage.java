@@ -341,7 +341,7 @@ public class MrcMessage {
      * set the fast clock ratio ratio is integer and max of 60 and min of 1
      * @param ratio value to set new clock speed
      *
-     * @return MrcMessage new message to set the clock speed ratio
+     * @return new message to set the clock speed ratio
      */
     static public MrcMessage setClockRatio(int ratio) {
         if (ratio < 0 || ratio > 60) {
@@ -363,7 +363,7 @@ public class MrcMessage {
      * @param hour hour value for fast clock
      * @param minute minute value for fast clock
      *
-     * @return MrcMessage new message to set the hour/minutes of the fast clock
+     * @return new message to set the hour/minutes of the fast clock
      */
     static public MrcMessage setClockTime(int hour, int minute) {
         if (hour < 0 || hour > 23) {
