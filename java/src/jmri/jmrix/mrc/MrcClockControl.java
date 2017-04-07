@@ -36,6 +36,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
 
     /**
      * Create a ClockControl object for a Mrc clock
+     * @param tc traffic control for connection
+     * @param prefix system prefix for connection
      */
     public MrcClockControl(MrcTrafficController tc, String prefix) {
         super();

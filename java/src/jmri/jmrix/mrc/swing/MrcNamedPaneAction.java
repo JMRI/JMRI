@@ -18,6 +18,10 @@ public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
+     * @param s human readable panel name
+     * @param wi window to contain panel 
+     * @param paneClass class name for panel. must be subclass of JmriPanel
+     * @param memo system connection memo
      */
     public MrcNamedPaneAction(String s, WindowInterface wi, String paneClass, MrcSystemConnectionMemo memo) {
         super(s, wi, paneClass);
