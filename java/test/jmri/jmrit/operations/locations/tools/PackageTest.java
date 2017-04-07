@@ -60,6 +60,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackCopyActionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackCopyFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ShowCarsByLocationActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintSwitchListActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetPhysicalLocationActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetPhysicalLocationFrameTest.class));
         return suite;
     }
 

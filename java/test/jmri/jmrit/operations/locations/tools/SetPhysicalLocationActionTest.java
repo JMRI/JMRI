@@ -2,24 +2,23 @@ package jmri.jmrit.operations.locations.tools;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.locations.Location;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrackRoadEditFrameTest {
+public class SetPhysicalLocationActionTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackRoadEditFrame t = new TrackRoadEditFrame();
+        Location l = new Location("Test id", "Test Name");
+        SetPhysicalLocationAction t = new SetPhysicalLocationAction("Test",l);
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +35,6 @@ public class TrackRoadEditFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class.getName());
 
 }

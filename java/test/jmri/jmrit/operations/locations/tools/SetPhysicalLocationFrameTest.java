@@ -8,18 +8,20 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.locations.Location;
 import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrackRoadEditFrameTest {
+public class SetPhysicalLocationFrameTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TrackRoadEditFrame t = new TrackRoadEditFrame();
+        Location l = new Location("Test id", "Test Name");
+        SetPhysicalLocationFrame t = new SetPhysicalLocationFrame(l);
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +38,6 @@ public class TrackRoadEditFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrameTest.class.getName());
 
 }
