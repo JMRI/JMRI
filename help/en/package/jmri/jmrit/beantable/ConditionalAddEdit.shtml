@@ -25,7 +25,7 @@
       <p>The Edit Conditional window is where logical expressions
       are set up and where actions are specified. The Edit
       Conditional window is displayed when a Conditional is
-      created, or when the <b>Edit</b> button of a Conditional is
+      created, or when the <strong>Edit</strong> button of a Conditional is
       pressed in the <a href="LogixAddEdit.shtml">Edit Logix
       window</a>. The Edit Conditional window displays the system
       name and user name of the Conditional at the top. The system
@@ -42,7 +42,7 @@
       expression and one for set up of actions. Conditionals are
       statements of the form:</p>
 
-      <blockquote><code>if (logical expression) then (action)</code></blockquote>
+      <div style="margin-left: 2em;"><p><code>if (logical expression) then (action)</code></p></div>
       
       <p>A Conditional has two distinct parts: its "logical
       expression" and its "action". The window has separate
@@ -52,9 +52,9 @@
       <p>The logical expression section contains a table of state
       variables, with two buttons below. The first column in the
       state variable table displays the row number of the state
-      variable. This is only of importance when the <b>Logic
-      Operator</b> choice is set to 'Mixed'. The second column
-      contains an automatic AND when the <b>Logic Operator</b>
+      variable. This is only of importance when the <strong>Logic
+      Operator</strong> choice is set to 'Mixed'. The second column
+      contains an automatic AND when the <strong>Logic Operator</strong>
       choice is set to 'AND' or an automatic OR when the choice is
       'OR'. When the choice is 'Mixed' the user may select AND or
       OR as needed. The third column contains a choice box that
@@ -75,31 +75,31 @@
       calculate the state of the Conditional, but take no action on
       the result of the calculation.</p>
 
-      <p>The last two columns of the table (<b>Edit</b> and
-      <b>Delete</b> buttons) are used to edit or delete that row in
+      <p>The last two columns of the table (<strong>Edit</strong> and
+      <strong>Delete</strong> buttons) are used to edit or delete that row in
       the state variable table. Delete a state variable if you
       decide it is no longer needed. The State column of the table
       shows the state (true or false) of each state variable when
       it is evaluated.</p>
 
       <p>At any time during the entry of state variable data,
-      <b>Check State Variables</b> may be clicked to check entered
+      <strong>Check State Variables</strong> may be clicked to check entered
       data and evaluate state variables. When this button is
       pressed, checking and evaluation proceeds until the check
       completes successfully, or an error is detected. If an error
       is detected, checking stops for you to correct the error and
-      click <b>Check State Variables</b> again. <i>Please remember
+      click <strong>Check State Variables</strong> again. <em>Please remember
       after editing name and data items to click a different cell
-      in the table before clicking <b>Check State Variables</b> (or
-      <b>Update Conditional</b> at the bottom of the window) so
+      in the table before clicking <strong>Check State Variables</strong> (or
+      <strong>Update Conditional</strong> at the bottom of the window) so
       that the program is notified that you have finished your
       entry. Otherwise your entry may not take effect, and an error
-      may be reported unnecessarily.</i></p>
+      may be reported unnecessarily.</em></p>
 
-      <p>The default <b>Logic Operator</b> is "AND". In this case
+      <p>The default <strong>Logic Operator</strong> is "AND". In this case
       the Conditional will test if all variable tests are true,
       after taking the "NOT" negations into account. Using the
-      <b>Logic Operator</b> box below the list of variables, you
+      <strong>Logic Operator</strong> box below the list of variables, you
       can change that to "OR" or "Mixed". "OR" means the
       conditional will be true if any one of the variable tests are
       true, after accounting for the negations. Selecting "Mixed"
@@ -110,15 +110,15 @@
       "and", "or" and "not" in addition to parentheses. Some
       examples:</p>
       
-      <blockquote><code>
+      <div style="margin-left: 2em;"><p><code>
       R1 and R2<br>
       R1 or (R2 and R3)<br>
       (R2 and R3) or (R3 and R1)
-      </code></blockquote>
+      </code></p></div>
 
       <h3>Adding a New State Variable</h3>
 
-      <p>Press the <b>Add State Variable</b> to add a state
+      <p>Press the <strong>Add State Variable</strong> to add a state
       variable (a row in the state variable table). This brings up
       a window with a choice box for the user to select a state
       variable type. Available state variables are documented
@@ -135,29 +135,29 @@
       Conditional Name Selection Method</a>.</p>
       
       <p>After the name is entered, select the required state from the
-      <b>Variable State</b> drop down box.  Depending on the selected
+      <strong>Variable State</strong> drop down box.  Depending on the selected
       variable type and state, additional fields may be displayed.
 
       <p>At any time during the entry of state variable data, the
-      <b>Check State Variables</b> button may be clicked to check
+      <strong>Check State Variables</strong> button may be clicked to check
       the entered data and evaluate the state variables. When this
       button is pressed, the checking and evaluation proceeds until
       the check completes successfully, or an error is detected. If
       an error is detected, the checking stops for the user to
-      correct the error and click <b>Check State Variables</b>
-      again. <i>Please remember after editing the system name and
+      correct the error and click <strong>Check State Variables</strong>
+      again. <em>Please remember after editing the system name and
       data items to click a different cell in the table before
-      clicking <b>Check State Variables</b> (or <b>Update
-      Conditional</b> at the bottom of the window) so that the
+      clicking <strong>Check State Variables</strong> (or <strong>Update
+      Conditional</strong> at the bottom of the window) so that the
       program is notified that you have finished your entry.
       Otherwise your entry may not take effect, and an error may be
-      reported unnecessarily.</i></p>
+      reported unnecessarily.</em></p>
 
       <h2>Action</h2>
       <p>The action section contains a table of actions, with two
       buttons below.  The action list shows a description of each
-      action.  The <b>Edit</b> is used to change an action. The
-      <b>Delete</b> button is used to delete an action.
+      action.  The <strong>Edit</strong> is used to change an action. The
+      <strong>Delete</strong> button is used to delete an action.
 
       <p>Actions are evaluated in the order listed. To change that
       order, click the "Reorder" button on the "Edit Conditional"
@@ -183,8 +183,6 @@
       See <a href="LogixTable.shtml#selectMethod">
       Conditional Name Selection Method</a></p>
 
-      </p>
-
       <p>For each action, three options are available for when to
       trigger the action:</p>
       <ul>
@@ -201,25 +199,25 @@
       action entirely.</p>
 
       <p>When the logical expression and actions have been
-      specified, click <b>Update Conditional</b> at the bottom of
+      specified, click <strong>Update Conditional</strong> at the bottom of
       the window. This initiates a check of the logical expression
-      (the same as done by <b>Check State Variables</b>) and a
+      (the same as done by <strong>Check State Variables</strong>) and a
       check of entered data for actions. If the user name has been
       edited, it is also checked. If an error is found, a message
       box opens announcing the error, and the update is stopped to
-      allow you to correct the error and click <b>Update
-      Conditional</b> again. If no error is found, the action is
+      allow you to correct the error and click <strong>Update
+      Conditional</strong> again. If no error is found, the action is
       updated with the entered data, the Edit Conditional window is
       closed, and the user is returned to the Edit Logix
       window.</p>
 
       <p>Two other buttons are available at the bottom of the Edit
-      Conditional window. Clicking <b>Cancel</b> will close the
+      Conditional window. Clicking <strong>Cancel</strong> will close the
       Edit Conditional window without updating the Conditional.
-      Clicking <b>Cancel</b> results in loss of any data that has
-      been entered. The other button, <b>Delete Conditional</b>,
+      Clicking <strong>Cancel</strong> results in loss of any data that has
+      been entered. The other button, <strong>Delete Conditional</strong>,
       provides an easy way to delete an unneeded Conditional. Click
-      <b>Delete Conditional</b> to delete the Conditional being
+      <strong>Delete Conditional</strong> to delete the Conditional being
       edited and return to the Edit Logix window.</p>
 
       <p>Available state variables and actions are listed below. For
@@ -248,56 +246,56 @@
           <ul>
 
             <li>Sensor<ul>
-              <li><b>Sensor Active</b>: Evaluates to true if the
+              <li><strong>Sensor Active</strong>: Evaluates to true if the
               state of the specified sensor is active.</li>
 
-              <li><b>Sensor Inactive</b>: Evaluates to true if the
+              <li><strong>Sensor Inactive</strong>: Evaluates to true if the
               state of the specified sensor is inactive.</li>
 
             </ul></li>
             <li>Turnout<ul>
-              <li><b>Turnout Thrown</b>: Evaluates to true if the
+              <li><strong>Turnout Thrown</strong>: Evaluates to true if the
               known state of the specified turnout is thrown.</li>
 
-              <li><b>Turnout Closed</b>: Evaluates to true if the
+              <li><strong>Turnout Closed</strong>: Evaluates to true if the
               known state of the specified turnout is closed.</li>
 
             </ul></li>
             <li>Light<ul>
-              <li><b>Light On</b>: Evaluates to true if the specified
+              <li><strong>Light On</strong>: Evaluates to true if the specified
               light is on.</li>
 
-              <li><b>Light Off</b>: Evaluates to true if the
+              <li><strong>Light Off</strong>: Evaluates to true if the
               specified light is off.</li>
 
             </ul></li>
             <li>Signal Head<ul>
-              <li><b>Signal Head Appearance equals</b>: Evaluates to
+              <li><strong>Signal Head Appearance equals</strong>: Evaluates to
               true if the appearance of the specified signal head matches
               the selected Variable Aspect (appearance).</li>
 
-              <li><b>Signal Head Lit</b>: Evaluates to true if the
+              <li><strong>Signal Head Lit</strong>: Evaluates to true if the
               specified signal head is lit.</li>
 
-              <li><b>Signal Head Held</b>: Evaluates to true if the
+              <li><strong>Signal Head Held</strong>: Evaluates to true if the
               specified signal head is being held.</li>
 
             </ul></li>
             <li>Signal Mast<ul>
-              <li><b>Signal Mast Aspect Equals</b>: Evaluates to true if
+              <li><strong>Signal Mast Aspect Equals</strong>: Evaluates to true if
               the aspect of the specified signal mast equals the aspect
               specified in the state variable. Calculation is triggered
               when the aspect of the signal mast changes.</li>
 
-              <li><b>Signal Mast Lit</b>: Evaluates to true if the
+              <li><strong>Signal Mast Lit</strong>: Evaluates to true if the
               specified signal mast is Lit.</li>
 
-              <li><b>Signal Mast Held</b>: Evaluates to true if the
+              <li><strong>Signal Mast Held</strong>: Evaluates to true if the
               specified signal mast is being held.</li>
             </ul></li>
             <li>Memory<ul>
               <li>
-              <b>Memory-Value Compare</b>: Compares the value saved in
+              <strong>Memory-Value Compare</strong>: Compares the value saved in
               the specified memory to the value specified in the state
               variable using a specified comparison operator. Evaluates
               to true if the comparison is true. There are 5 comparison
@@ -315,7 +313,7 @@
               </li>
 
               <li>
-              <b>Memory-Memory Compare</b>: Compares the value saved in
+              <strong>Memory-Memory Compare</strong>: Compares the value saved in
               one specified memory to the value saved in a second
               memory location. There are 5 comparison operators that
               may be used for the evaluation:
@@ -333,13 +331,13 @@
             </ul></li>
 
             <li>Conditional<ul>
-              <li><b>Conditional True</b>: Evaluates to true if the state
+              <li><strong>Conditional True</strong>: Evaluates to true if the state
               of the specified Conditional is true. Note that because
               Conditional user names may be duplicated across different
               Logix, a System Name must be used to specify a Conditional
               belonging to a different Logix.</li>
 
-              <li><b>Conditional False</b>: Evaluates to true if the
+              <li><strong>Conditional False</strong>: Evaluates to true if the
               state of the specified Conditional is false. Note that
               because Conditional user names may be duplicated across
               different Logix, a System Name must be used to specify a
@@ -347,20 +345,20 @@
             </ul></li>
 
             <li>Warrant<ul>
-              <li><b>Route Free</b>: Evaluates to true when the
+              <li><strong>Route Free</strong>: Evaluates to true when the
               route is available.</li>
-              <li><b>Route Set</b>: Evaluates to true when the
+              <li><strong>Route Set</strong>: Evaluates to true when the
               route has bee set.</li>
-              <li><b>Route Allocated</b>: Evaluates to true when the
+              <li><strong>Route Allocated</strong>: Evaluates to true when the
               route has been allocated.</li>
-              <li><b>Route Occupied</b>: Evaluates to true when the
+              <li><strong>Route Occupied</strong>: Evaluates to true when the
               route has been occupied.</li>
-              <li><b>Train Running</b>: Evaluates to true< when a
+              <li><strong>Train Running</strong>: Evaluates to true< when a
               train is running./li>
             </ul></li>
 
             <li>Fast Clock<ul>
-              <li><b>Fast Clock Range</b>: Evaluates to true if the
+              <li><strong>Fast Clock Range</strong>: Evaluates to true if the
               current fast clock time is between the begin time and
               end time specified for the range. Times must be
               specified in hh:mm format, where hh is hours and mm is
@@ -370,26 +368,26 @@
             </ul></li>
 
             <li>Occupancy Block<ul>
-              <li><b>Occupied</b>: Evaluates to true when the 
+              <li><strong>Occupied</strong>: Evaluates to true when the 
               block is occupied.</li>
-              <li><b>Power Error</b>: Evaluates to true when a
+              <li><strong>Power Error</strong>: Evaluates to true when a
               power error has occurred.</li>
-              <li><b>Out Of Service</b>: Evaluates to true when
+              <li><strong>Out Of Service</strong>: Evaluates to true when
               a block is out of service.</li>
-              <li><b>Dark</b>: Evaluates to true when a block is
+              <li><strong>Dark</strong>: Evaluates to true when a block is
               to dark.</li>
-              <li><b>Path Occupied</b>: Evaluates to true when a
+              <li><strong>Path Occupied</strong>: Evaluates to true when a
               path is occupied</li>
-              <li><b>Unoccupied</b>: Evaluates to true when a 
+              <li><strong>Unoccupied</strong>: Evaluates to true when a 
               path is not occupied.</li>
-              <li><b>Allocated</b>: Evaluates to true when the
+              <li><strong>Allocated</strong>: Evaluates to true when the
               block is allocated.</li>
             </ul></li>
 
             <li>Entry Exit<ul>
-              <li><b>Active</b>: Evaluates to true when the Entry/Exit
+              <li><strong>Active</strong>: Evaluates to true when the Entry/Exit
               is active.</li>
-              <li><b>Inactive</b>: Evaluates to true when the
+              <li><strong>Inactive</strong>: Evaluates to true when the
               Entry/Exit is not active.</li>
             </ul></li>
           </ul>
@@ -404,12 +402,12 @@
 
           <ul>
             <li>Sensor<ul>
-              <li><b>Set Sensor</b>: Sets the specified sensor to the
+              <li><strong>Set Sensor</strong>: Sets the specified sensor to the
               chosen state. Specify the sensor to set by entering its
               name. Specify the state to set by choosing Active or
               Inactive in the popup menu.</li>
 
-              <li><b>Delayed Set Sensor</b>: Sets the specified
+              <li><strong>Delayed Set Sensor</strong>: Sets the specified
               sensor to the chosen state after waiting for a
               specified number of seconds. Specify the sensor to set
               by entering its name. Specify the state to set by
@@ -418,24 +416,24 @@
               sensor by entering a number in the right-most field. If
               this Conditional is already waiting to set this sensor,
               this action is ignored, and the previous action
-              continues as originally scheduled.(see also <b>Reset
-              Delayed Set Sensor</b> below.)</li>
+              continues as originally scheduled.(see also <strong>Reset
+              Delayed Set Sensor</strong> below.)</li>
 
-              <li><b>Reset Delayed Set Sensor</b>: Sets the specified
+              <li><strong>Reset Delayed Set Sensor</strong>: Sets the specified
               sensor to the chosen state after waiting for a
               specified number of seconds. Specify the sensor to set
               by entering its name. Specify the state to set by
               choosing Active or Inactive in the popup menu. Specify
               the number of seconds to delay before setting the
               sensor by entering a number in the right-most field.
-              This action is the same as <b>Delayed Set Sensor</b>,
+              This action is the same as <strong>Delayed Set Sensor</strong>,
               except if this Conditional is already actively waiting
               to set the specified sensor, the previous wait is
               cancelled, and a new wait period is started. In effect,
               the wait time is restarted. The sensor is not set until
               the most recent wait period expires.</li>
 
-              <li><b>Cancel Timers for Sensor</b>: Cancels all timers
+              <li><strong>Cancel Timers for Sensor</strong>: Cancels all timers
               waiting to set the specified sensor in all Conditionals
               in all Logixs. Specify the sensor by entering its name.
               The sensor is not set; all active delayed actions for
@@ -444,12 +442,12 @@
             </ul></li>
 
             <li>Turnout<ul>
-              <li><b>Set Turnout</b>: Sets the specified turnout to
+              <li><strong>Set Turnout</strong>: Sets the specified turnout to
               the chosen state. Specify the turnout to set by
               entering its name. Specify the state to set by choosing
               Closed or Thrown in the popup menu.</li>
 
-              <li><b>Delayed Set Turnout</b>: Sets the specified
+              <li><strong>Delayed Set Turnout</strong>: Sets the specified
               turnout to the chosen state after waiting for a
               specified number of seconds. Specify the turnout to set
               by entering its name. Specify the state to set by
@@ -459,30 +457,30 @@
               If this Conditional is already waiting to set this
               turnout, this action is ignored, and the previous
               action continues as originally scheduled.(see also
-              <b>Reset Delayed Set Turnout</b> below.)</li>
+              <strong>Reset Delayed Set Turnout</strong> below.)</li>
 
-              <li><b>Turnout Lock</b>: Locks or unlocks a turnout.
+              <li><strong>Turnout Lock</strong>: Locks or unlocks a turnout.
               Enter the name for the turnout, and choose the
-              operation from the popup menu. <b>Note:</b> To control the
+              operation from the popup menu. <strong>Note:</strong> To control the
               type of turnout lock go to the <a href=
               "TurnoutTable.shtml">Turnout Table</a> and select the
               Lock Mode.</li>
 
-              <li><b>Cancel Timers for Turnout</b>: Cancels all timers
+              <li><strong>Cancel Timers for Turnout</strong>: Cancels all timers
               waiting to set the specified turnouts in all
               Conditionals in all Logixs. Specify the turnout by
               entering its name. The turnout is not set; all active
               delayed actions for setting the specified turnout are
               cancelled without setting the turnout.</li>
 
-              <li><b>Reset Delayed Set Turnout</b>: Sets the
+              <li><strong>Reset Delayed Set Turnout</strong>: Sets the
               specified turnout to the chosen state after waiting for
               a specified number of seconds. Specify the turnout to
               set by entering its name. Specify the state to set by
               choosing Closed or Thrown in the popup menu. Specify
               the number of seconds to delay before setting the
               turnout by entering a number in the right-most field.
-              This action is the same as <b>Delayed Set Turnout</b>,
+              This action is the same as <strong>Delayed Set Turnout</strong>,
               except if this Conditional is already actively waiting
               to set the specified turnout, the previous wait is
               cancelled, and a new wait period is started. In effect,
@@ -491,12 +489,12 @@
             </ul></li>
 
             <li>Light<ul>
-              <li><b>Set Light</b>: Sets the specified light to the
+              <li><strong>Set Light</strong>: Sets the specified light to the
               chosen state. Specify the light to set by entering its
               name. Specify the state to set by choosing On or Off in
               the popup menu.</li>
 
-              <li><b>Set Light Intensity</b>: Sets the intensity of a
+              <li><strong>Set Light Intensity</strong>: Sets the intensity of a
               specified variable intensity light to the entered
               intensity value. Specify the light to set by entering
               its name. Specify the intensity by entering the percent
@@ -505,7 +503,7 @@
               intensity value entered is not an integer in the
               required range, an error message is displayed.</li>
 
-              <li><b>Set Light Transition Time</b>: Sets the
+              <li><strong>Set Light Transition Time</strong>: Sets the
               transition time of a specified variable intensity light
               to the entered time. Specify the light to set by
               entering its name. Specify the transition time by
@@ -517,58 +515,58 @@
             </ul></li>
 
             <li>Signal Head<ul>
-              <li><b>Set Signal Appearance</b>: Sets the specified
+              <li><strong>Set Signal Appearance</strong>: Sets the specified
               signal head to the chosen appearance. Specify the
               signal head to set by entering its name. Specify the
               appearance to set by choosing from the popup menu.</li>
 
-              <li><b>Set Signal Held</b>: Sets the specified signal
+              <li><strong>Set Signal Held</strong>: Sets the specified signal
               head to hold. Specify the signal head to hold by
               entering its name.</li>
 
-              <li><b>Clear Signal Held</b>: Clears the hold on the
+              <li><strong>Clear Signal Held</strong>: Clears the hold on the
               specified signal head. Specify the signal head by
               entering its name.</li>
 
-              <li><b>Set Signal Dark</b>: Sets the specified signal
+              <li><strong>Set Signal Dark</strong>: Sets the specified signal
               head to not lit. Specify the signal head by entering
               its name.</li>
 
-              <li><b>Set Signal Lit</b>: Sets the specified signal
+              <li><strong>Set Signal Lit</strong>: Sets the specified signal
               head to lit. Specify the signal head by entering its
               name.</li>
             </ul></li>
 
             <li>Signal Mast<ul>
-              <li><b>Set Signal Mast Aspect</b>: Sets the specified
+              <li><strong>Set Signal Mast Aspect</strong>: Sets the specified
               signal mast to the chosen aspect. Specify the
               signal mast to set by entering its name. Select the
               aspect from the Signal Mast Aspect list.</li>
 
-              <li><b>Set Signal Mast Held</b>: Sets the specified signal
+              <li><strong>Set Signal Mast Held</strong>: Sets the specified signal
               mast to hold. Specify the signal mast to hold by
               entering its name.</li>
 
-              <li><b>Clear Signal Mast Held</b>: Clears the hold on the
+              <li><strong>Clear Signal Mast Held</strong>: Clears the hold on the
               specified signal mast. Specify the signal mast by
               entering its name.</li>
 
-              <li><b>Set Signal Mast Dark</b>: Sets the specified signal
+              <li><strong>Set Signal Mast Dark</strong>: Sets the specified signal
               mast to not lit. Specify the signal mast by entering
               its name.</li>
 
-              <li><b>Clear Signal Mast Dark</b>: Sets the specified signal
+              <li><strong>Clear Signal Mast Dark</strong>: Sets the specified signal
               mast to lit. Specify the signal mast by entering its
               name.</li>
             </ul></li>
 
             <li>Memory<ul>
-              <li><b>Set Memory</b>: Sets the specified memory to the
+              <li><strong>Set Memory</strong>: Sets the specified memory to the
               entered value. Specify the memory to set by entering
               its name. Specify the value to set in the memory by
               entering it in the right-most field.</li>
 
-              <li><b>Copy Memory To Memory</b>: Copies the value of a
+              <li><strong>Copy Memory To Memory</strong>: Copies the value of a
               memory variable to another memory variable. Specify the
               memory to be copied from by entering its name in the
               leftmost field. Specify the memory to receive the
@@ -577,38 +575,38 @@
             </ul></li>
 
             <li>Logix<ul>
-              <li><b>Enable Logix</b>: Enables the specified logix.
+              <li><strong>Enable Logix</strong>: Enables the specified logix.
               Specify the logix to enable by entering its name.</li>
 
-              <li><b>Disable Logix</b>: Disables the specified logix.
+              <li><strong>Disable Logix</strong>: Disables the specified logix.
               Specify the logix to disable by entering its name.</li>
             </ul></li>
 
             <li>Warrant<ul>
-              <li><b>Allocate Warrant Route</b>: Allocates (reserves) the
+              <li><strong>Allocate Warrant Route</strong>: Allocates (reserves) the
               OBlocks comprising the route of the warrant for use by the
               warrant. Specify the warrant by entering its System Name or
               User Name.</li>
 
-              <li><b>Deallocate Warrant</b>: Deallocates the OBlocks
+              <li><strong>Deallocate Warrant</strong>: Deallocates the OBlocks
               comprising the route of the warrant so they may be
               allocated to other warrants. Specify the warrant by
               entering its System Name or User Name.</li>
 
-              <li><b>Set Route Turnouts</b>: Sets all the
+              <li><strong>Set Route Turnouts</strong>: Sets all the
               turnouts comprising the route of the warrant. Specify the
               warrant by entering its System Name or User Name.</li>
 
-              <li><b>Auto Run Train</b>: Starts playback of the recorded
+              <li><strong>Auto Run Train</strong>: Starts playback of the recorded
               script for the train specified in the warrant. Specify the
               warrant by entering its System Name or User Name.</li>
 
-              <li><b>Manually Run Train</b>: Serves a "clearance" to an
+              <li><strong>Manually Run Train</strong>: Serves a "clearance" to an
               operator that a humanly run train has running rights for
               the extent of the warrant's route. Specify the warrant by
               entering its System Name or User Name.</li>
 
-              <li><b>Control Auto Train</b>: Issues the specified
+              <li><strong>Control Auto Train</strong>: Issues the specified
               command to an auto run train. Specify the warrant of the
               train by entering its System Name or User Name.
               The Commands are:<ul>
@@ -617,86 +615,86 @@
                 <li>Abort</li>
                </ul></li>
 
-              <li><b>Set Train ID</b>: Set the train ID from the roster or
+              <li><strong>Set Train ID</strong>: Set the train ID from the roster or
               the DCC address.  When a DCC address is used, also specify
               Long or Short.  Example: 1234(L) or 10(S).</li>
 
-              <li><b>Set Train Name</b>: Set the train Name for the
+              <li><strong>Set Train Name</strong>: Set the train Name for the
               selected Warrant.</li>
 
-              <li><b>Set Throttle Factor</b>: Increases or decreases the
+              <li><strong>Set Throttle Factor</strong>: Increases or decreases the
               throttle settings of an auto run train by the specified
               factor. Specify the warrant of the train by entering its
               System Name or User Name.</li>
             </ul></li>
 
             <li>Fast Clock<ul>
-              <li><b>Set Fast Clock Time</b>: Sets the time on the
+              <li><strong>Set Fast Clock Time</strong>: Sets the time on the
               fast clock to the entered time. The time is entered as
-              <i>hh:mm</i> where <i>hh</i> is hours and <i>mm</i> is
+              <em>hh:mm</em> where <em>hh</em> is hours and <em>mm</em> is
               minutes on a 24-hour clock. This action sets the fast
               clock to the specified time regardless of whether the
               fast clock is running or stopped.</li>
 
-              <li><b>Start Fast Clock</b>: Starts the JMRI fast clock
+              <li><strong>Start Fast Clock</strong>: Starts the JMRI fast clock
               running. If the fast clock is already running, this
               action has no effect.</li>
 
-              <li><b>Stop Fast Clock</b>: Pauses the JMRI fast clock.
+              <li><strong>Stop Fast Clock</strong>: Pauses the JMRI fast clock.
               If the fast clock is not running, this action has no
               effect.</li>
             </ul></li>
 
             <li>Occupancy Block<ul>
-              <li><b>Deallocate Block</b>: Deallocates an Occupancy
+              <li><strong>Deallocate Block</strong>: Deallocates an Occupancy
               block. Specify the OBlock by entering its System Name or
               User Name.</li>
 
-              <li><b>Set Block Value</b>: Set a value for the 
+              <li><strong>Set Block Value</strong>: Set a value for the 
               selected block.</li>
 
-              <li><b>Set Block Error</b>: Set the selected
+              <li><strong>Set Block Error</strong>: Set the selected
               block status to "block error".</li>
 
-              <li><b>Clear Block Error</b>: Remove the "block
+              <li><strong>Clear Block Error</strong>: Remove the "block
               error" status for the selected block</li>
 
-              <li><b>Set Block OutOfService</b>: Sets the status of an
+              <li><strong>Set Block OutOfService</strong>: Sets the status of an
               Occupancy block to Out-Of-Service. Specify the OBlock by
               entering its System Name or User Name.</li>
 
-              <b>Clear Block OutOfService</b>: Sets the status of an
+              <li><strong>Clear Block OutOfService</strong>: Sets the status of an
               Occupancy Block to the current normal status.  Specify
-              the OBlock by entering its System Name or User Name.</p>
+              the OBlock by entering its System Name or User Name.</li>
             </ul></li>
 
             <li>Audio<ul>
-              <li><b>Play Sound File</b>: Plays the specified sound
+              <li><strong>Play Sound File</strong>: Plays the specified sound
               file. Specify the sound file to play by entering its
-              name in the field provided. Click <b>Set</b> to bring
+              name in the field provided. Click <strong>Set</strong> to bring
               up a file selection dialog to aid in finding the file.
               Navigate to your sound file, then click your sound
               file's name in the dialog to copy it (including its
               path) to the field.</li>
 
-              <li><b>Control Audio object</b>:</li>
+              <li><strong>Control Audio object</strong>:</li>
             </ul></li>
 
             <li>Script<ul>
-              <li><b>Script: Run Script</b>: Starts the specified script.
+              <li><strong>Script: Run Script</strong>: Starts the specified script.
               Specify the script to start by entering its name in the
-              field provided. Click <b>Set</b> to bring up a file
+              field provided. Click <strong>Set</strong> to bring up a file
               selection dialog for finding the file. Navigate to your
               script file, then click your script file's name in the
               dialog to copy it (including its path) to the
               field.</li>
 
-              <li><b>Script: Execute Jython Command</b>: Enter the 
+              <li><strong>Script: Execute Jython Command</strong>: Enter the 
               command in the Script Command field.</li>
             </ul></li>
 
             <li>Other<ul>
-              <li><b>Trigger Route</b>: Triggers the specified route.
+              <li><strong>Trigger Route</strong>: Triggers the specified route.
               Specify the route by entering its name.</li>
             </ul></li>
           </ul>

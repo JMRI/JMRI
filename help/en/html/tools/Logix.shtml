@@ -73,7 +73,7 @@
         <li><a href="#notes">Additional Notes</a></li>
       </ul><a name="intro" id="intro"></a>
 
-      <p>Detail <b>State Variable</b> and <b>Action</b> Lists:</p>
+      <p>Detail <strong>State Variable</strong> and <strong>Action</strong> Lists:</p>
       <ul>
         <li><a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable">State Variables</a> </li>
         <li><a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action">Actions</a></li>
@@ -85,7 +85,7 @@
       "#conditional">Conditional</a> may be viewed as a statement
       of the form:</p>
 
-      <blockquote><code>if (logical expression) then (action)</code></blockquote>
+      <div style="margin-left: 2em;"><p><code>if (logical expression) then (action)</code></p></div>
 
       <p>The "logical expression" part of a Conditional tests the
       state of a group of user-specified conditions on the layout,
@@ -105,7 +105,7 @@
       Logix, a user should be able to set up the required logic for
       setting the appearance of one signal head.</p>
 
-      <p>Think of a Logix as a <b>small</b> group of one or more
+      <p>Think of a Logix as a <strong>small</strong> group of one or more
       Conditionals that address a single need. Being able to group
       all the Conditionals that address that single need in one
       Logix simplifies things. Only one System Name is needed for
@@ -128,7 +128,7 @@
 
       <p>The monitored entities specified in the logical expression
       of a Conditional are called "State Variables" and the result
-      of the calculation is the <b>state</b> of the Conditional. It
+      of the calculation is the <strong>state</strong> of the Conditional. It
       is the change of state of the Conditional that causes it to
       issue commands for its actions to occur. The logical
       expression is also referred to as the "antecedent" of the
@@ -151,25 +151,25 @@
 
       <p>A Logix is defined via the <a href=
       "../../package/jmri/jmrit/beantable/LogixTable.shtml">Logix
-      Table</a> that can be accessed by selecting <b>Logix
-      Table</b> in the Tools menu. The Logix Table lists all
+      Table</a> that can be accessed by selecting <strong>Logix
+      Table</strong> in the Tools menu. The Logix Table lists all
       currently defined Logix by their System Name and User Name.
       The table also shows whether a Logix is "Enabled". The last
       column of the table provides an easy way to edit a Logix and
-      its Conditionals. Clicking the <b>Select</b> choice box for a
-      Logix, will drop down a menu with four choices; <b>Edit</b>,
-      <b>Browse</b>, <b>Copy</b> and <b>Delete</b>. Each choice will bring up a
-      pane for the corresponding operation.</p>
+      its Conditionals. Clicking the <strong>Select</strong> choice box for a
+      Logix, will drop down a menu with four choices; <strong>Edit</strong>,
+      <strong>Browse</strong>, <strong>Copy</strong> and <strong>Delete</strong>.
+      Each choice will bring up a pane for the corresponding operation.</p>
 
       <h4>Logix Table controls</h4>
 
       <ul>
-        <li>Below the Logix Table is the <b>Add...</b> button.</li>
+        <li>Below the Logix Table is the <strong>Add...</strong> button.</li>
 
         <li>The Options menu has two sections:
           <ul><li>
-          The first section lets you <b>Enable</b> or <b>Disable</b>
-          all Logixs.
+          The first section lets you <strong>Enable</strong> or
+          <strong>Disable</strong> all Logixs.
           </li><li>
           The second section lets you select a user name selection
           method.  See the <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod">Conditional Name Selection Method</a> for details.
@@ -191,10 +191,10 @@
 
       <h3>Creating a new Logix</h3>
 
-      <p>To create a new Logix, click the <b>Add...</b> button at
+      <p>To create a new Logix, click the <strong>Add...</strong> button at
       the bottom of the Logix Table pane. This will bring up a
       Create Logix window. Entering a System Name and a User Name,
-      then clicking <b>Create Logix</b>, will create the Logix, and
+      then clicking <strong>Create Logix</strong>, will create the Logix, and
       bring up the Edit Logix window. This window allows
       Conditionals to be created and edited. Once a Logix is
       created, its System Name cannot be changed. Its User Name,
@@ -222,25 +222,25 @@
       Name of the Logix at the top. The User Name may be changed by
       entering/modifying the text in the User Name field. Next is a
       table of Conditionals belonging to the Logix. To add a new
-      Conditional, click the <b>New Conditional</b> button under
+      Conditional, click the <strong>New Conditional</strong> button under
       the Conditional Table. This will create a new Conditional and
       open the Edit Conditional window allowing the logical
       expression and actions of the new Conditional to be defined.
       An existing Conditional may be edited by clicking the
-      <b>Edit</b> button of that Conditional in the table. The User
+      <strong>Edit</strong> button of that Conditional in the table. The User
       Name of the Conditional may be changed in the table. The User
       Name of a Conditional may be any useful text, provided it is
       not the same as the User Name of another Conditional in the
       same Logix. The User Name may be the same as the User Name of
-      a Conditional in another Logix. <b>Note: The name must
+      a Conditional in another Logix. <strong>Note: The name must
        be unique among all conditionals if it is going to be 
-      referred to by another Logix.</b>  <i>When editing the User Name
+      referred to by another Logix.</strong>  <em>When editing the User Name
       (or any item in any JMRI table) please remember to move to
       another cell in the table so that the program is notified
       that you have finished your entry, otherwise the entry may
-      not take effect.</i></p>
+      not take effect.</em></p>
 
-      <p>Clicking <b>Calculate</b> under the Conditional Table
+      <p>Clicking <strong>Calculate</strong> under the Conditional Table
       causes all Conditionals of the Logix to be calculated.
       Resulting states are displayed in the State column of the
       table. However, since the Logix is being edited it is
@@ -250,13 +250,13 @@
       actions.</p>
 
       <p>The order of Conditionals in the Conditional Table may be
-      changed by clicking <b>Reorder</b> (below the Conditional
-      Table). Clicking <b>Reorder</b> changes all edit buttons in
-      the last Column of the table to <b>First</b>. Select the
+      changed by clicking <strong>Reorder</strong> (below the Conditional
+      Table). Clicking <strong>Reorder</strong> changes all edit buttons in
+      the last Column of the table to <strong>First</strong>. Select the
       Conditional that is to be first, and it is immediately moved
       to the top of the table. All remaining buttons change to
-      <b>Next</b>. Select remaining Conditionals in desired order,
-      until all buttons change back to <b>Edit</b>.</p>
+      <strong>Next</strong>. Select remaining Conditionals in desired order,
+      until all buttons change back to <strong>Edit</strong>.</p>
 
       <p>The only time when the Conditionals are evaluated in the
       order listed is when all of their states are UNKNOWN, such as
@@ -266,7 +266,7 @@
       conditional, it is indeterminate which conditional is
       evaluated first.</p>
 
-      <p>When <b>Done</b> is clicked at the bottom of the Edit
+      <p>When <strong>Done</strong> is clicked at the bottom of the Edit
       Logix window, any change in the Logix User Name is checked
       and made. A check is made for inconsistencies in specifying
       that an entity (sensor, turnout, etc.) referenced in multiple
@@ -280,20 +280,20 @@
       calculated.</p>
 
       <p>The Edit Logix window also provides a way to delete a
-      Logix if it is no longer needed. Click <b>Delete Logix</b> to
+      Logix if it is no longer needed. Click <strong>Delete Logix</strong> to
       delete the Logix being edited and all its Conditionals. This
-      operation can also be done by selecting the <b>Delete</b>
-      item from the drop down <b>Select</b> menu on the Logix
+      operation can also be done by selecting the <strong>Delete</strong>
+      item from the drop down <strong>Select</strong> menu on the Logix
       Table.</p>
 
-      <p>Selecting the <b>Browse</b> item from the drop down
+      <p>Selecting the <strong>Browse</strong> item from the drop down
       menu on the Logix Table will open a window with a list showing
       the details for each conditional. It is an effective way to
       review the entire contents of a Logix. Click on the close button
       to close the window.
 
-      <p>Selecting the <b>Copy</b> item from the drop down
-      <b>select</b> menu on the Logix Table will show a series of
+      <p>Selecting the <strong>Copy</strong> item from the drop down
+      <strong>select</strong> menu on the Logix Table will show a series of
       dialog windows that provide a way to copy the Logix and any
       or all of its Conditional to a new or existing
       Logix.</p><a name="conditional" id="conditional"></a>
@@ -302,7 +302,7 @@
 
       <p>A Conditional's System Name has the form IXnnnnCmm, and is
       set automatically when the Conditional is created by the user
-      clicking <b>New Conditional</b> in the Edit Logix window. The
+      clicking <strong>New Conditional</strong> in the Edit Logix window. The
       System Name of the first Conditional for Logix IXnnn will
       always be IXnnnC1, the second Conditional will have System
       Name IXnnnC2, and so on. The User Name of a Conditional is
@@ -320,7 +320,8 @@
       <p>As mentioned above, Conditionals are statements of the
       form:</p>
 
-      <blockquote><code>if (antecedent) then (consequent).</code></blockquote>
+      <div style="margin-left: 2em;"><p><code>if (antecedent) then (consequent).
+      </code></p></div>
 
       <p>Therefore a Conditional has two distinct parts: its
       "logical expression" and its "actions". These are discussed
@@ -385,16 +386,16 @@
       actions)</li>
 
       <li>if (antecedent state changes) then (do "on change"
-      actions)</p><a name="editconditional" id=
-      "editconditional"></li>
+      actions)</li>
       </ul>
 
+      <a name="editconditional" id="editconditional"></a>
       <h3>The Edit Conditional Window</h3>
 
       <p>The Edit Conditional window is where logical expressions
       are set up and where actions are specified. The Edit
       Conditional window is displayed when a Conditional is
-      created, or when the <b>Edit</b> button of a Conditional is
+      created, or when the <strong>Edit</strong> button of a Conditional is
       pressed in the Edit Logix window. The Edit Conditional window
       displays the System Name and User Name of the Conditional at
       the top. The User Name may be edited by entering/modifying
@@ -411,10 +412,10 @@
       variables, with two buttons and a drop down menu box below.
       The drop down menu allows the choice of what logical
       operators to use in the antecedent. The choices are: all
-      <b>AND</b>'s, all <b>OR</b>'s or <b>Mixed</b>. Mixed allows
-      the user to specify any combination of AND's, OR's and NOT's.
-      When this choice is made the logical expression requires
-      parentheses in order to be unambiguous. So, when this choice
+      <strong>AND</strong>'s, all <strong>OR</strong>'s or
+      <strong>Mixed</strong>. Mixed allows the user to specify any combination of
+      AND's, OR's and NOT's. When this choice is made the logical expression
+      requires parentheses in order to be unambiguous. So, when this choice
       is made, a text field is displayed so that parentheses can be
       inserted and the expression modified. The state variables are
       represented in the expression by their row number.</p>
@@ -438,25 +439,25 @@
       <p>The "Trigger" column sets whether the state variable
       should cause the Conditional to perform its actions when this
       variable changes. Note that the current states of all the
-      variables are <b>always</b> used in the calculation of the
+      variables are <strong>always</strong> used in the calculation of the
       Conditional's state. The "Trigger" setting allows a state
       variable to be "passive" and not cause the conditional to
       evaluate its state. That is, such a variable state is a
       necessary condition, but not a sufficient one to cause any
       actions to take place.</p>
 
-      <p><b>Note:</b> Disabling state variable triggers should be
+      <p><strong>Note:</strong> Disabling state variable triggers should be
       done with caution. Actions are performed only when the state
       of the logical expression changes. Disabling a trigger can
       prevent actions from be executed even when this state has
       changed.</p>
 
-      <p>Next is a column of <b>Edit</b> button to modify an
+      <p>Next is a column of <strong>Edit</strong> button to modify an
       existing state variable. The last column of the table
-      (<b>Delete</b> buttons) is used to delete a state variable if
+      (<strong>Delete</strong> buttons) is used to delete a state variable if
       you decide it is no longer needed.</p>
 
-      <p>Press the <b>Add State Variable</b> to add a state
+      <p>Press the <strong>Add State Variable</strong> to add a state
       variable (a row in the state variable table). This brings up
       a window with a choice box for the user to select a state
       variable type. Available state variables are documented at
@@ -470,19 +471,19 @@
       aid in name selection.</p>
 
       <p>At any time during the entry of state variable data, the
-      <b>Check State Variables</b> button may be clicked to check
+      <strong>Check State Variables</strong> button may be clicked to check
       the entered data and evaluate the state variables. When this
       button is pressed, the checking and evaluation proceeds until
       the check completes successfully, or an error is detected. If
       an error is detected, the checking stops for the user to
-      correct the error and click <b>Check State Variables</b>
-      again. <i>Please remember after editing the System Name and
+      correct the error and click <strong>Check State Variables</strong>
+      again. <em>Please remember after editing the System Name and
       data items to click a different cell in the table before
-      clicking <b>Check State Variables</b> (or <b>Update
-      Conditional</b> at the bottom of the window) so that the
+      clicking <strong>Check State Variables</strong> (or <strong>Update
+      Conditional</strong> at the bottom of the window) so that the
       program is notified that you have finished your entry.
       Otherwise your entry may not take effect, and an error may be
-      reported unnecessarily.</i></p><a name="thepolicy" id=
+      reported unnecessarily.</em></p><a name="thepolicy" id=
       "thepolicy"></a>
 
       <h3>Triggering the Actions</h3>
@@ -499,8 +500,8 @@
       </ul>
 
       <p>Which policy to use is chosen by the radio buttons in the
-      middle of the Edit Conditional window. The <b>Execute actions
-      on change of state only</b> button prevents unwanted behavior
+      middle of the Edit Conditional window. The <strong>Execute actions
+      on change of state only</strong> button prevents unwanted behavior
       from occurring when multiple instances of the "on true" or
       "on false" actions are executed. That is, if successive
       triggers cause the logical expression to be evaluated to the
@@ -508,8 +509,8 @@
       Normally, it is best for a conditional to execute its actions
       only when the state of the conditional changes. However, if
       it is important to maintain the actions associated with a
-      particular state of the Conditional the <b>Execute actions
-      whenever triggered</b> button should be used. If external
+      particular state of the Conditional the <strong>Execute actions
+      whenever triggered</strong> button should be used. If external
       events undo some of the actions of the conditional but do not
       change the state of the conditional, then this policy will
       execute the action on any trigger.</p><a name="theactions"
@@ -523,8 +524,8 @@
       section provides for specifying the actions to be taken when
       a Conditional is calculated and changes its state. The action
       table consists of a column for the description of the action
-      to be taken and two columns of buttons, <b>Edit</b> and
-      <b>Delete</b>, for editing or deleting an existing action. To
+      to be taken and two columns of buttons, <strong>Edit</strong> and
+      <strong>Delete</strong>, for editing or deleting an existing action. To
       add a new action, press the "Add Action" button. A new "Edit
       Action" window will appear. Select an action type in the type
       box, and data items needed to completely specify the action
@@ -536,9 +537,9 @@
       combo box will be displayed to aid in name selection. Available
       action types are described in detail at
       <a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action">Actions</a>.
-      <i>If you use User Names to specify your actions, the same caution noted above
+      <em>If you use User Names to specify your actions, the same caution noted above
       applies. Be very careful when editing User Names that are used to
-      specify actions.</i></p>
+      specify actions.</em></p>
 
       <p>For each action, three options are available for when to
       perform the action: 1) On Change to True, 2) On Change to
@@ -566,25 +567,25 @@
       <h3>Saving the Conditional</h3>
 
       <p>When the logical expression and actions have been
-      specified, click <b>Update Conditional</b> at the bottom of
+      specified, click <strong>Update Conditional</strong> at the bottom of
       the window. This initiates a check of the logical expression
-      (the same as done by <b>Check State Variables</b>) and a
+      (the same as done by <strong>Check State Variables</strong>) and a
       check of entered data for actions. If the Conditional's User
       Name has been edited, it is also checked. If an error is
       found, a message box opens announcing the error, and the
       update is stopped to allow the user to correct the error and
-      click <b>Update Conditional</b> again. If no error is found,
+      click <strong>Update Conditional</strong> again. If no error is found,
       the Conditional is updated with the entered data, the Edit
       Conditional window is closed, and the user is returned to the
       Edit Logix window.</p>
 
       <p>Two other buttons are available at the bottom of the Edit
-      Conditional window. Clicking <b>Cancel</b> will close the
+      Conditional window. Clicking <strong>Cancel</strong> will close the
       Edit Conditional window without updating the Conditional.
-      Clicking <b>Cancel</b> results in loss of any data that has
-      been entered. The other button, <b>Delete Conditional</b>,
+      Clicking <strong>Cancel</strong> results in loss of any data that has
+      been entered. The other button, <strong>Delete Conditional</strong>,
       provides an easy way to delete an unneeded Conditional. Click
-      <b>Delete Conditional</b> to delete the Conditional being
+      <strong>Delete Conditional</strong> to delete the Conditional being
       edited and return to the Edit Logix window.</p><a name=
       "start" id="start"></a>
 
@@ -594,23 +595,23 @@
       become familiar with how the Logix user interface works.</p>
 
       <ol>
-        <li>Select Table -&gt; <b><a href=
-        "../../package/jmri/jmrit/beantable/LogixTable.shtml">Logix</a></b>
-        in the <b>Tools</b> menu.</li>
+        <li>Select Table -&gt; <strong><a href=
+        "../../package/jmri/jmrit/beantable/LogixTable.shtml">Logix</a></strong>
+        in the <strong>Tools</strong> menu.</li>
 
-        <li>Click the <b><a href=
-        "../../package/jmri/jmrit/beantable/LogixAddEdit.shtml">Add...</a></b>
+        <li>Click the <strong><a href=
+        "../../package/jmri/jmrit/beantable/LogixAddEdit.shtml">Add...</a></strong>
         button below the Logix Table.</li>
 
         <li>In the Create Logix window that appears, enter 6 for
-        System Name, and "test" for User Name, then click <b>Create
-        Logix</b>.</li>
+        System Name, and "test" for User Name, then click <strong>Create
+        Logix</strong>.</li>
 
-        <li>In the Edit Logix window that appears, click <b>New
-        Conditional</b>.</li>
+        <li>In the Edit Logix window that appears, click <strong>New
+        Conditional</strong>.</li>
 
         <li>In the Edit Conditional window that appears, click
-        <b>Add State Variable</b> to begin defining a logical
+        <strong>Add State Variable</strong> to begin defining a logical
         expression for the Conditional.</li>
 
         <li>In the new window that appears, click the "Variable
@@ -620,14 +621,14 @@
         <li>Note that a text field appears asking for entry of a
         sensor name. Enter the name (either System Name or User
         Name) of any of your existing sensors. (If you don't have
-        an existing sensor, select <b>Sensor Table</b> in the
-        <b>Tools</b> menu and create one.)  Select <b>Inactive</b>
+        an existing sensor, select <strong>Sensor Table</strong> in the
+        <strong>Tools</strong> menu and create one.)  Select <strong>Inactive</strong>
         from the Variable State drop down.</li>
 
-        <li>Click the <b>Update</b> button and note the row entries
+        <li>Click the <strong>Update</strong> button and note the row entries
         that appear in the state variable table.</li>
 
-        <li>Click <b>New State Variable</b> to create another row
+        <li>Click <strong>New State Variable</strong> to create another row
         in the table. Note that AND appears in the first column of
         the new row. Again select "Sensor" as the variable
         type, and enter the name and desired state of a different
@@ -635,33 +636,33 @@
 
         <li>Click the third column entry of the second row to
         reveal the selection box for NOT. Select NOT, then click
-        <b>Check State Variables</b> again. Note that the State of
+        <strong>Check State Variables</strong> again. Note that the State of
         the second state variable has reversed.</li>
 
-        <li>For an Action click <b>Add Action</b>.</li>
+        <li>For an Action click <strong>Add Action</strong>.</li>
 
         <li>In the new window that appears, click the "Action Type"
         choice box to reveal a scrolling selection box. Select
          "Turnout", and enter the name (System Name or User Name) of
         one of your turnouts. (If you don't have any turnouts,
-        create one using the <b>Add</b> button in the Turnout
-        Table.) Select <b>Set Turnout</b> for the Action Type,
+        create one using the <strong>Add</strong> button in the Turnout
+        Table.) Select <strong>Set Turnout</strong> for the Action Type,
         leave the "Turnout Position" option at "Closed" and
         "Change Option" at "On Change to True".</li>
 
-        <li>Click the <b>Update</b> button and note the row entries
+        <li>Click the <strong>Update</strong> button and note the row entries
         that appear in the action table.</li>
 
-        <li>For another Action - again click <b>Add Action</b> and
+        <li>For another Action - again click <strong>Add Action</strong> and
         select "Turnout". Enter the name of the same turnout
         entered before. Select "On Change to False" as the Trigger
         Option, and "Thrown" as the Turnout Position.</li>
 
-        <li>Click <b>Update</b> to close the Edit Conditional
+        <li>Click <strong>Update</strong> to close the Edit Conditional
         window and return to the Edit Logix window.</li>
 
-        <li>Click <b>Done</b> to close the Edit Logix window and
-        activate your new Logix. Click <b>OK</b> in the
+        <li>Click <strong>Done</strong> to close the Edit Logix window and
+        activate your new Logix. Click <strong>OK</strong> in the
         reminder-to-save dialog that appears.</li>
       </ol>
 
@@ -680,8 +681,8 @@
 
       <ul>
         <li>
-          <p><b>Why have a "group" of Conditionals instead of just
-          single Conditionals?</b></p>
+          <p><strong>Why have a "group" of Conditionals instead of just
+          single Conditionals?</strong></p>
 
           <p>A group of Conditionals was chosen for several
           reasons, including:</p>
@@ -719,7 +720,7 @@
         </li>
 
         <li>
-          <p><b>How is a Logix started?</b></p>
+          <p><strong>How is a Logix started?</strong></p>
 
           <p>Start of a Logix is similar to the way a light, a
           route, or other continuously running JMRI entity starts.
@@ -735,8 +736,8 @@
         </li>
 
         <li>
-          <p><b>What is the initial state of a Logix and its
-          Conditionals?</b></p>
+          <p><strong>What is the initial state of a Logix and its
+          Conditionals?</strong></p>
 
           <p>When a Logix is created or edited, the initial state
           of each Conditional is true or false as shown in the Edit
@@ -765,8 +766,8 @@
         </li>
 
         <li>
-          <b>What happens when a JMRI program starts up or when a
-          configuration file is loaded by a JMRI program?</b>
+          <strong>What happens when a JMRI program starts up or when a
+          configuration file is loaded by a JMRI program?</strong>
 
           <p>This is a complex question that depends upon many
           things, such as, how the user has set up for turnout
@@ -798,8 +799,8 @@
         </li>
 
         <li>
-          <b>When should Triggers Calculation be unchecked in a
-          state variable?</b>
+          <strong>When should Triggers Calculation be unchecked in a
+          state variable?</strong>
 
           <p>Normally Triggers Calculation should be checked in all
           state variables, so a change in any of its state variable
@@ -820,7 +821,7 @@
           could result. The easiest way out of this dilemma is to
           test the turnout, without using it as a triggering
           entity. This is done by unchecking Triggers Calculation
-          in <b>all</b> state variables where the turnout is
+          in <strong>all</strong> state variables where the turnout is
           specified. If the turnout is used in state variables of
           more than one Conditional of the Logix, it must be
           unchecked everywhere it is used to suppress using it as a
@@ -840,7 +841,7 @@
         </li>
 
         <li>
-          <b>What is a "logic loop" and how can it be avoided?</b>
+          <strong>What is a "logic loop" and how can it be avoided?</strong>
 
           <p>A "logic loop" results when the program appears to
           slow down significantly or lock up as multiple Logixs are
@@ -854,7 +855,7 @@
           Logix is also changed by that same Logix. The Logix
           editor will detect some situations that could result in a
           loop, and will issue a warning when you close the Logix.
-          <b>Heed these warnings!</b> A warning doesn't mean that a
+          <strong>Heed these warnings!</strong> A warning doesn't mean that a
           loop definitely will result if you continue. The warning
           message is a "wake up call" that you should study
           carefully what you're doing to make sure a loop won't
@@ -874,7 +875,7 @@
         </li>
 
         <li>
-          <b>What should I do if I think I have a "logic loop"?</b>
+          <strong>What should I do if I think I have a "logic loop"?</strong>
 
           <p>When they do occur, "logic loops" can be a bit scary
           to trouble shoot. Your computer may appear to be locked
@@ -896,8 +897,8 @@
           Logixs disabled.</p>
 
           <p>If you load your panel file manually using the Panels
-          menu, before loading your file, go to the <b>Debug</b>
-          menu and select <b>Load Logixs Disabled</b>. After
+          menu, before loading your file, go to the <strong>Debug</strong>
+          menu and select <strong>Load Logixs Disabled</strong>. After
           responding OK to the message, load your panel file as you
           normally would. Your panel file will be loaded with all
           Logixs disabled.</p>
@@ -914,13 +915,13 @@
           with all Logixs disabled, and fix or delete the Logix you
           identified.</p>
 
-          <p><b>CAUTION:</b> <b>It's wise to save your panel file
-          frequently when entering Logixs.</b> If a logic loop
+          <p><strong>CAUTION:</strong> <strong>It's wise to save your panel file
+          frequently when entering Logixs.</strong> If a logic loop
           occurs, it may be difficult, if not impossible, to save
           your panel file before shutting down the program.
           Remember that a Logix is activated as soon as you click
-          <b>Done</b> in the Edit Logix window. Also, remember that
-          hitting an <b>Edit</b> button in the Logix Table
+          <strong>Done</strong> in the Edit Logix window. Also, remember that
+          hitting an <strong>Edit</strong> button in the Logix Table
           deactivates the selected Logix before opening it for
           editing, offering a possible way to break into a logic
           loop without restarting the program.</p>

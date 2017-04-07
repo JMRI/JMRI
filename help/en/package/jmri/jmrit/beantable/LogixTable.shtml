@@ -25,7 +25,7 @@
       single task on the layout. Each Conditional may be viewed as
       a statement of the form:</p>
 
-      <blockquote><code>if (logical expression) then (action).</code></blockquote>
+      <div style="margin-left: 2em;"><p><code>if (logical expression) then (action).</code></p></div>
       
       The "logical expression" part of a Conditional tests
       the state of a group of user-specified conditions on the
@@ -41,30 +41,30 @@
 
       <p>The last column of the table provides four things you can
       do with a Logix; Edit it, Browse it, Duplicate it, or Delete
-      it. Simply clicking <b>Select</b> will drop down a menu with the
-      choices: <b>Edit</b>, <b>Browse</b>, <b>Copy</b>, <b>Delete
-      </b>.</p>
+      it. Simply clicking <strong>Select</strong> will drop down a menu with the
+      choices: <strong>Edit</strong>, <strong>Browse</strong>,
+      <strong>Copy</strong>, <strong>Delete</strong>.</p>
       <ul><li>
-      Selecting <b>Edit</b> will bring up the Edit Logix window
+      Selecting <strong>Edit</strong> will bring up the Edit Logix window
       which provides a way to edit a Logix and its Conditionals. See
       <a href="LogixAddEdit.shtml">the help page on adding
       Logix</a> for more information on creating and editing Logix
       Conditionals.
       </li><li>
-      Selecting <b>Browse</b> will bring up the Conditional Browser
+      Selecting <strong>Browse</strong> will bring up the Conditional Browser
       window. The window provides a summary view of the Conditionals
       and their definitions in the Logix.  When you are done, just
       close the window.
       </li><li>
-      Selecting <b>Copy</b> will bring up windows that allow you to
+      Selecting <strong>Copy</strong> will bring up windows that allow you to
       make a new copy of Logix and its Conditionals or to copy its
       Conditionals into an existing Logix.
       </li><li>
-      Selecting <b>Delete</b> will delete the Logix and its
+      Selecting <strong>Delete</strong> will delete the Logix and its
       Conditionals.
       </li></ul>
 
-      <p>The <b>Enabled</b> column allows you to enable (checked)
+      <p>The <strong>Enabled</strong> column allows you to enable (checked)
       or disable (unchecked) a Logix. A Logix does not have a state
       as many JMRI entities do. A Logix does have the capability of
       being "enabled" or "disabled". When a Logix is not enabled,
@@ -76,10 +76,10 @@
 
       <h2>Creating a Logix</h2>
 
-      <p>To create a new Logix, click the <b>Add...</b> button at
+      <p>To create a new Logix, click the <strong>Add...</strong> button at
       the bottom of the Logix Table. This will bring up a "Create
       Logix" pane. Entering a System Name and optionally a User
-      Name, then clicking <b>Create Logix</b>, will create the
+      Name, then clicking <strong>Create Logix</strong>, will create the
       Logix, and bring up the Edit Logix window. Once a Logix is
       created, its System Name cannot be changed. Its User Name,
       however, may be changed in either the Logix Table or the Edit
@@ -93,7 +93,7 @@
 
       <h2>Logix Table Menu</h2>
 
-      <p>The <b>File</b> menu at the top of the Logix Table
+      <p>The <strong>File</strong> menu at the top of the Logix Table
       provides for printing this table and for storing the Logixs
       and their Conditionals in a layout configuration file.
       Selecting either store option will bring up a dialog for
@@ -104,11 +104,11 @@
       into the name entry.</p>
       
       <a name="selectMethod" id="selectMethod"></a>
-      <p>The <b>Options</b> menu has 2 sections.  The first section is
-      used to <b>Enable</b> or <b>Disable</b> all of the Logix
-      definitions.  The second section is used to select one of three 
-      methods for entering names into the Logix Conditional Variables
-      and Actions:
+      <p>The <strong>Options</strong> menu has 2 sections.  The first section is
+      used to <strong>Enable</strong> or <strong>Disable</strong> all
+      of the Logix definitions.  The second section is used to select
+      one of three methods for entering names into the Logix Conditional
+      Variables and Actions:</p>
       <ul>
         <li>The default method uses a text field where the system or
           user name is entered, such as a turnout or sensor.  This
@@ -122,9 +122,8 @@
         <li>The Combo Box method changes the text field to a drop
           down combo box.  Clicking on an item selects the name.</li>
       </ul>
-      </p>
 
-      <p>The <b>Tools</b> menu has 4 items:
+      <p>The <strong>Tools</strong> menu has 4 items:</p>
       <ul>
         <li>Open PickList Tables - Opens the tabbed Pick List tables
           as described above for the first method.</li>
