@@ -195,7 +195,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
-    static public SerialTrafficController instance() {
+    static public SerialTrafficController Xinstance() {
         if (self == null) {
             if (log.isDebugEnabled()) {
                 log.debug("creating a new SerialTrafficController object");
