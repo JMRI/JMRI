@@ -247,15 +247,28 @@ public class OPath extends jmri.Path {
     }
 
     public String getDescription() {
-        return "\"" + _name + "\"" + (_fromPortal == null ? "" : " from portal " + _fromPortal.getName())
-                + (_toPortal == null ? "" : " to portal " + _toPortal.getName());
+        StringBuilder sb = new StringBuilder("\"");
+        sb.append(_name);
+        sb.append("\" from portal \"");
+        sb.append(_fromPortal==null?"null":_fromPortal.getName());
+        sb.append("\" to portal \"");
+        sb.append(_toPortal==null?"null":_toPortal.getName());
+        sb.append("\"");
+        return sb.toString();
     }
 
     @Override
     public String toString() {
-        return "OPath \"" + _name + "\"on block " + (getBlock() != null ? getBlock().getDisplayName() : "null")
-                + (_fromPortal == null ? "" : " from portal " + _fromPortal.getName())
-                + (_toPortal == null ? "" : " to portal " + _toPortal.getName());
+        StringBuilder sb = new StringBuilder("OPath \"");
+        sb.append(_name);
+        sb.append("\" on block \"");
+        sb.append(getBlock()==null?"null":getBlock().getDisplayName());
+        sb.append("\" from portal \"");
+        sb.append(_fromPortal==null?"null":_fromPortal.getName());
+        sb.append("\" to portal \"");
+        sb.append(_toPortal==null?"null":_toPortal.getName());
+        sb.append("\"");
+        return sb.toString();
     }
 
     /**
