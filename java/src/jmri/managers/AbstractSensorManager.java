@@ -274,5 +274,19 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         }
     }
 
+    /**
+     * Do the sensor objects provided by this manager support configuring
+     * an internal pullup or pull down resistor?
+     * <p>
+     * This default implementaiton always returns false.
+     *
+     * @return true if pull up/pull down configuration is supported.
+     */
+    @Override
+    public boolean isPullResistanceConfigurable(){
+       return false;
+    }
+
+
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
 }

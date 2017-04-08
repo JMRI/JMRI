@@ -82,6 +82,8 @@
             };
             jmri.reporter = function(name, value, data) {
             };
+            jmri.roster = function(name, state, data) {
+            };
             jmri.rosterEntry = function(id, data) {
             };
             jmri.route = function(name, state, data) {
@@ -633,6 +635,12 @@
             		turnout: function(e) {
             			jmri.turnout(e.data.name, e.data.state, e.data);
             		},
+            		roster: function(e) {
+            			jmri.roster(e.data.name, e.data.state, e.data);
+            		},
+            		rosterEntry: function(e) {
+            			jmri.rosterEntry(e.data.name, e.data.state, e.data);
+            		},
             		pong: function(e) {
             			jmri.pong();
             		}
@@ -659,7 +667,9 @@
                         var m = JSON.parse(e.originalEvent.data);
                         var h = jmri.events[m.type];
                         if (h) h.call(this, m);
-                        if (!m.type) {
+                        if ($.isArray(m)) {
+                        	jmri.log("ERROR: message is an array of " + m.length + " elements");
+                        } else if (!m.type) {
                         	jmri.log("ERROR: 'type' element not found in json message:" +
                         			e.originalEvent.data);
                         } else if (!h)

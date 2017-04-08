@@ -11,7 +11,7 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -52,6 +52,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return tc for this connection
      */
     public NceTrafficController getNceTrafficController() {
         return nceTrafficController;
@@ -87,6 +88,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Sets the NCE message option.
+     * @param val command option value
      */
     public void configureCommandStation(int val) {
         getNceTrafficController().setCommandOptions(val);

@@ -9,7 +9,7 @@ package jmri.jmrit.logix;
  * <P>
  *
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class BlockOrder {
 

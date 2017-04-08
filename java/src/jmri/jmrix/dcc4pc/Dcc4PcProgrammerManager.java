@@ -10,7 +10,7 @@ import jmri.managers.DefaultProgrammerManager;
  * DefaultProgrammerManager to provide ops mode programmers on XPressNet
  *
  * @see jmri.ProgrammerManager
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {

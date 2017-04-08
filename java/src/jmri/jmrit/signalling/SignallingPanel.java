@@ -58,8 +58,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a JFrame to configure Signal Mast Logic Pairs (Source + Destination Masts).
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @author	Egbert Broerse Copyright (C) 2017
+ * @author Kevin Dickerson Copyright (C) 2011
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
 

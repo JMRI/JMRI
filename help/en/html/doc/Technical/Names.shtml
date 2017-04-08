@@ -364,17 +364,21 @@ knows to look for routes of this name.
       <p>The list of tools currently working this way is:</p>
 
       <ul>
+        <li>Logix - auto-generated 
+            <a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/Logix.html">Logix</a> 
+            system names are of the form IX:AUTO:0001</li>
         <li>SENSOR GROUPS - <a href=
         "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/sensorgroup/package-summary.html">
         jmri.jmrit.sensorgroup</a></li>
+
+        <li>SignalHeads - particularly the <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">
+        SE8C signal head</a></li>
 
         <li>USS CTC - <a href=
         "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">
         jmri.jmrit.ussctc</a></li>
 
-        <li>SignalHeads - particularly the <a href=
-        "http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">
-        SE8C signal head</a></li>
       </ul>
 
       <h2>Notes</h2>
@@ -384,6 +388,13 @@ knows to look for routes of this name.
         of more than one yet. The DCC programmer is the first
         example, but there may be others.</li>
 
+        <li><a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/Conditional.html">Conditionals</a>
+        are a special case.  Although they have things called
+        "System Names" and "User Names", they don't really obey the 
+        conventions here.  See the 
+        <a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
+        for more information.</li>
+        
         <li>The system name convention doesn't provide a specific
         way to identify more than one adapter of a given type. E.g.
         if you're connected to more than one LocoNet, or more than

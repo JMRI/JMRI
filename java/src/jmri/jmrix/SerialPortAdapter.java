@@ -6,7 +6,7 @@ import org.slf4j.Logger;
  * Enables basic setup of a serial interface for a jmrix implementation.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @see jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {

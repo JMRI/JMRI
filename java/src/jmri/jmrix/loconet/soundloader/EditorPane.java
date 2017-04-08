@@ -20,7 +20,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *
  * This handles file read/write.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
  */
 public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 

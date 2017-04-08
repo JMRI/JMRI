@@ -24,29 +24,29 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel for configuring a NCE USB interface
  *
- * @author	ken cameron Copyright (C) 2013
+ * @author ken cameron Copyright (C) 2013
  */
 public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.usbinterface.UsbInterfaceBundle");
 
-    private int replyLen = 0;						// expected byte length
-    private int waiting = 0;						// to catch responses not
+    private int replyLen = 0;      // expected byte length
+    private int waiting = 0;      // to catch responses not
     // intended for this module
-    private int minCabNum = -1;		// either the USB or serial size depending on what we connect to
-    private int maxCabNum = -1;		// either the USB or serial size depending on what we connect to
+    private int minCabNum = -1;  // either the USB or serial size depending on what we connect to
+    private int maxCabNum = -1;  // either the USB or serial size depending on what we connect to
     private int minCabSetNum = -1;
     private int maxCabSetNum = -1;
-    private static final int CAB_MIN_USB = 2;			// USB cabs start at 2
-    private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
-    private static final int CAB_MAX_USB_128 = 4;			// There are up to 4 cabs on 1.28
-    private static final int CAB_MAX_USB_165 = 10;			// There are up to 10 cabs on 1.65
-    private static final int CAB_MAX_PRO = 63;			// There are up to 63 cabs
-    private static final int CAB_MAX_SB3 = 5;			// There are up to 5 cabs
+    private static final int CAB_MIN_USB = 2;   // USB cabs start at 2
+    private static final int CAB_MIN_PRO = 2;   // Serial cabs start at 2
+    private static final int CAB_MAX_USB_128 = 4;   // There are up to 4 cabs on 1.28
+    private static final int CAB_MAX_USB_165 = 10;   // There are up to 10 cabs on 1.65
+    private static final int CAB_MAX_PRO = 63;   // There are up to 63 cabs
+    private static final int CAB_MAX_SB3 = 5;   // There are up to 5 cabs
 
-    private static final int REPLY_1 = 1;			// reply length of 1 byte
-    private static final int REPLY_2 = 2;			// reply length of 2 byte
-    private static final int REPLY_4 = 4;			// reply length of 4 byte
+    private static final int REPLY_1 = 1;   // reply length of 1 byte
+    private static final int REPLY_2 = 2;   // reply length of 2 byte
+    private static final int REPLY_4 = 4;   // reply length of 4 byte
 
     Thread NceCabUpdateThread;
     private boolean setRequested = false;
@@ -221,7 +221,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         if (firstTime) {
             try {
-                Thread.sleep(1000);	// wait for panel to display 
+                Thread.sleep(1000); // wait for panel to display 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -331,7 +331,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     // USB set Cab Id in USB 
     private void writeUsbCabId(int value) {
-        replyLen = REPLY_1;			// Expect 1 byte response
+        replyLen = REPLY_1;   // Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.usbSetCabId(value);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);

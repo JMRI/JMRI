@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
  */
 public class PaneNewProgAction extends AbstractAction {
 

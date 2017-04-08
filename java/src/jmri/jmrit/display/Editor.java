@@ -148,7 +148,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     private boolean _loadFailed = false;
 
-    boolean showCloseInfoMessage = true;	//display info message when closing panel
+    boolean showCloseInfoMessage = true; //display info message when closing panel
 
     protected ArrayList<Positionable> _contents = new ArrayList<Positionable>();
     protected JLayeredPane _targetPanel;
@@ -802,10 +802,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Control whether target panel items are controlling layout items. Does
-     * this by invoke the {@link Positionable#setControlling} function of each
-     * item on the target panel. This also controls the relevant pop-up menu
-     * items.
+     * Control whether target panel items are controlling layout items.
+     * <p>
+     * Does this by invoking the {@link Positionable#setControlling} function
+     * of each item on the target panel. This also controls the relevant
+     * pop-up menu items.
      *
      * @param state true for controlling.
      */
@@ -3217,10 +3218,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * set up target panel, frame etc.
      */
     abstract protected void init(String name);
+
     /*
      * Closing of Target frame window.
      */
-
     abstract protected void targetWindowClosingEvent(java.awt.event.WindowEvent e);
 
     /**

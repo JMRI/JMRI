@@ -6,7 +6,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 /**
  * Editor panel for the SdfMacro for carrying a comment
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 class CommentMacroEditor extends SdfMacroEditor {
 

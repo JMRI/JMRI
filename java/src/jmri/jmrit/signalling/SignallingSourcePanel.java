@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for the Signal Mast Table - Edit Logic Pane.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @author	Egbert Broerse Copyright (C) 2017
+ * @author Kevin Dickerson Copyright (C) 2011
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
 

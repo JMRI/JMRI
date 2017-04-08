@@ -16,7 +16,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  *
  *  * @see jmri.implementation.DefaultSignalMastLogic
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public interface SignalMastLogic {
 

@@ -18,7 +18,7 @@ import jmri.util.FileUtil;
  * JFileChooser. These bring the user back to the same place in the file system
  * each time an action is invoked.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  * @see jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {

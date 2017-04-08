@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * configuring nodes, etc, during the initial configuration. A subclass must be
  * instantiated to actually communicate with an adapter.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to multiple connection
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
  */

@@ -27,7 +27,7 @@ public class IndicatorTOIconDialog extends IconDialog {
      */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key,
             HashMap<String, NamedIcon> iconMap) {
-        super(type, key, parent, iconMap);	// temporarily use key for family to set JL
+        super(type, key, parent, iconMap); // temporarily use key for family to set JL
         _family = family;
         _key = key;
         sizeLocate();
@@ -93,7 +93,7 @@ public class IndicatorTOIconDialog extends IconDialog {
             if (key != null) {
                 _key = key;
                 createNewStatusSet();
-//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);        		
+//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);          
             }
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame,

@@ -17,7 +17,7 @@ import jmri.jmrit.progsupport.ProgModeSelector;
  * that there was no selection in that box. Here, the lack of a selection
  * indicates there's no selection.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008, 2015
  */
 public class LocoSelTreePane extends CombinedLocoSelTreePane {
 

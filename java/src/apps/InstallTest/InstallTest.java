@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Ken Cameron Copyright 2008
+ * @author Ken Cameron Copyright 2008
  */
 public class InstallTest extends Apps {
 

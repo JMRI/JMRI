@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Editing Nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Paul Bender Copyright (C) 2013,2016
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2013,2016
  */
 public class EditNodeFrame extends jmri.util.JmriJFrame {
 

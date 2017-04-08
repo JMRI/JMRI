@@ -10,13 +10,14 @@ import org.slf4j.LoggerFactory;
 /**
  * MRC implementation of a ThrottleManager.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
 public class MrcThrottleManager extends AbstractThrottleManager {
 
     /**
-     * Constructor.
+     * Throttle Manager Constructor.
+     * @param memo system connection memo
      */
     public MrcThrottleManager(MrcSystemConnectionMemo memo) {
         super(memo);

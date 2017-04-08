@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
  * commented out. This code from the C/MRI version was not deleted in case it is
  * needed in the future.
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2008
- * @author	Dave Duchamp Copyright (C) 2004, 2009
+ * @author Bob Jacobsen Copyright (C) 2004, 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2009
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.nodeconfig.NodeConfigBundle");
@@ -56,10 +56,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected SerialNode curNode = null;    // Serial Node being editted
     protected int nodeAddress = 0;          // Node address
     protected int pollTimeoutTime = 2000;   // reply timeout time
-    protected int sendDelay = 200;			// delay time after send commands
-//	protected int pulseWidth = 500;			// pulse width for turnout control (milliseconds)
-    protected int inputBits = 40;			// maximum number of input bits - all nodes
-    protected int outputBits = 40;			// maximum number of output bits - all nodes
+    protected int sendDelay = 200;   // delay time after send commands
+// protected int pulseWidth = 500;   // pulse width for turnout control (milliseconds)
+    protected int inputBits = 40;   // maximum number of input bits - all nodes
+    protected int outputBits = 40;   // maximum number of output bits - all nodes
 
     protected boolean errorInStatus1 = false;
     protected boolean errorInStatus2 = false;
@@ -140,7 +140,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel1.add(panel11);
         panel1.add(panel12);
         panel1.add(panel120);
-//		panel1.add(panel13);
+//  panel1.add(panel13);
         panel1.add(panel14);
         panel1.add(panel15);
         contentPane.add(panel1);
@@ -273,7 +273,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (!readSendDelay()) {
             return;
         }
-//		if ( !readPulseWidth() ) return;
+//  if ( !readPulseWidth() ) return;
         if (!readNumInputBits()) {
             return;
         }
@@ -317,7 +317,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
         nodeAddrField.setVisible(false);
         nodeAddrStatic.setVisible(true);
-//		// set up pulse width
+//  // set up pulse width
 //        pulseWidth = curNode.getPulseWidth();
 //        pulseWidthField.setText(Integer.toString(pulseWidth));
         // set up number of input and output bits
@@ -422,7 +422,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (!readSendDelay()) {
             return;
         }
-//		if ( !readPulseWidth() ) return;
+//  if ( !readPulseWidth() ) return;
         if (!readNumInputBits()) {
             return;
         }
@@ -442,7 +442,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -468,7 +468,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -727,7 +727,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //            statusText1.setText(rb.getString("Error16"));
 //            statusText1.setVisible(true);
 //            pulseWidth = 100;
-//			pulseWidthField.setText(Integer.toString(pulseWidth));
+//   pulseWidthField.setText(Integer.toString(pulseWidth));
 //            errorInStatus1 = true;
 //            resetNotes2();
 //            return (false);

@@ -23,7 +23,7 @@
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
- *  TODO: add support for LayoutSlip
+ *  TODO: add support for LayoutSlip, slipturnouticon (one2beros)
  *  TODO: improve handling of layoutBlock with systemname != username
  *   
  **********************************************************************************************/

@@ -19,6 +19,8 @@
    <!--Fix defualt values 4.37                             -->
    <version author="Michael Mosher" version="4" lastUpdated="20170110"/>
    <!--Add CV1.34 & 4.38 & 4.40                             -->
+	<version author="Michael Mosher" version="5" lastUpdated="20170317"/>
+	<!-- update factory resets -->
    <decoder>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems">
          <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="130">
@@ -2966,15 +2968,22 @@
          <xi:include href="http://jmri.org/xml/decoders/tcs/wowSteamCV.xml"/>
       </variables>
       <resets>
-         <factReset label="Entire decoder (All motor, light, and sound settings)" CV="T2CV.5.0" default="2"/>
-         <factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
-         <factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
-         <factReset label="Chuff timing" CV="T2CV.5.0" default="5"/>
-         <factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
-         <factReset label="Sound type volumes" CV="T2CV.5.0" default="7"/>
-         <factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
-         <factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
-         <factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
+			<mode>PAGEMODE</mode>
+			<mode>DIRECTMODE</mode>
+			<mode>OPSBYTEMODE</mode>
+			<factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
+			<factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
+			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
+			<factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
+			<factReset label="Chuff timing" CV="T2CV.5.0" default="5"/>
+			<factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
+			<factReset label="Sound type volumes" CV="T2CV.5.0" default="7"/>
+			<factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
+			<factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
+			<factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Ditch Lights" CV="8" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Trolley" CV="8" default="11"/>
+			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
       </resets>
    </decoder>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>

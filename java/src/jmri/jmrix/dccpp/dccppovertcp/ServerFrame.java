@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2004
+ * @author Bob Jacobsen Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
  * @author      Mark Underwood Copyright (C) 2015
   */

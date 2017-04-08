@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * overwrite those _after_ writing CV1, so that the DP values are forced to be
  * the correct ones.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {

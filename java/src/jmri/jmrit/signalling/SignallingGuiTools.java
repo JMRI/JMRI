@@ -7,7 +7,7 @@ import jmri.SignalMast;
 import jmri.util.JmriJFrame;
 
 /**
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingGuiTools {
 

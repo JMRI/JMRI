@@ -596,7 +596,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
     /**
      * Create a JButton to edit a turnout operation.
      *
-     * @return	the JButton
+     * @return the JButton
      */
     protected JButton stopButton() {
         JButton stopButton = new JButton("STOP");

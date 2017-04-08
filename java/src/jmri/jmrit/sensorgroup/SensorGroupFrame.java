@@ -36,8 +36,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 

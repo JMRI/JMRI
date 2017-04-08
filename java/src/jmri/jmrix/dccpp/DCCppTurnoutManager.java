@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "DCCppTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Paul Bender Copyright (C) 2003-2010
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
@@ -49,28 +49,28 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             log.debug("recieved message: " + l.toString());
         }
         if (l.isTurnoutReply()) {
-	    // parse message type
-	    int addr = l.getTOIDInt();
-	    if (addr >= 0) {
-		// check to see if the address has been operated before
-		// continuing.
-		if (log.isDebugEnabled()) {
-		    log.debug("message has address: " + addr);
-		}
-		// reach here for switch command; make sure we know 
-		// about this one
-		String s = prefix + typeLetter() + addr;
-		if (null == getBySystemName(s)) {
-		    // need to create a new one, and send the message on 
-		    // to the newly created object.
-		    ((DCCppTurnout) provideTurnout(s)).initmessage(l);
-		} else {
-		    // The turnout exists, forward this message to the 
-		    // turnout
-		    ((DCCppTurnout) getBySystemName(s)).message(l);
-		}
-	    }
-	}
+     // parse message type
+     int addr = l.getTOIDInt();
+     if (addr >= 0) {
+  // check to see if the address has been operated before
+  // continuing.
+  if (log.isDebugEnabled()) {
+      log.debug("message has address: " + addr);
+  }
+  // reach here for switch command; make sure we know 
+  // about this one
+  String s = prefix + typeLetter() + addr;
+  if (null == getBySystemName(s)) {
+      // need to create a new one, and send the message on 
+      // to the newly created object.
+      ((DCCppTurnout) provideTurnout(s)).initmessage(l);
+  } else {
+      // The turnout exists, forward this message to the 
+      // turnout
+      ((DCCppTurnout) getBySystemName(s)).message(l);
+  }
+     }
+ }
     }
 
     /**

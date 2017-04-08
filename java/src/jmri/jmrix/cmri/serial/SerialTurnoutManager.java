@@ -12,7 +12,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <P>
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
