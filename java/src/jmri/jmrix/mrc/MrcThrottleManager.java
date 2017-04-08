@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 public class MrcThrottleManager extends AbstractThrottleManager {
 
     /**
-     * Constructor.
+     * Throttle Manager Constructor.
+     * @param memo system connection memo
      */
     public MrcThrottleManager(MrcSystemConnectionMemo memo) {
         super(memo);
