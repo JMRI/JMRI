@@ -222,6 +222,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             };
             Thread thr = new Thread(r);
             thr.setName(getDisplayName() + " delayed set appearance");
+            thr.setDaemon(true);
             try {
                 thr.start();
             } catch (java.lang.IllegalThreadStateException ex) {
@@ -252,6 +253,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
             Thread thr = new Thread(r);
             thr.setName(getDisplayName());
+            thr.setDaemon(true);
             try {
                 thr.start();
                 thr.join();
