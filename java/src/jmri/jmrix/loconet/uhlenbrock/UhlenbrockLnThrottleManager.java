@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * communications.
  *
  * @see jmri.jmrix.loconet.SlotManager
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
 public class UhlenbrockLnThrottleManager extends LnThrottleManager implements ThrottleManager, SlotListener {
@@ -39,6 +39,7 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
      * no response is received from the command station after 2 seconds.
      * Otherwise it will send a failthrottlerequest message out.
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         slotManager.slotFromLocoAddress(((DccLocoAddress) address).getNumber(), this);
 
@@ -52,6 +53,7 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
                 this.list = list;
             }
 
+            @Override
             public void run() {
                 int count = 0;
                 while (count < 3) {
@@ -80,6 +82,7 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      */
+    @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         DccThrottle throttle = new LocoNetThrottle((LocoNetSystemConnectionMemo) adapterMemo, s);
         notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(), isLongAddress(s.locoAddr())));

@@ -1,14 +1,11 @@
 package jmri.jmrix.lenz.xntcp;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 
 /**
  * <p>

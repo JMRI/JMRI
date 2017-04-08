@@ -19,6 +19,7 @@ public class PanedInterface implements jmri.util.swing.WindowInterface {
 
     MultiPaneWindow frame;
 
+    @Override
     public void show(jmri.util.swing.JmriPanel child,
             JmriAbstractAction act,
             Hint hint) {
@@ -40,6 +41,7 @@ public class PanedInterface implements jmri.util.swing.WindowInterface {
         }
     }
 
+    @Override
     public void show(final jmri.util.swing.JmriPanel child,
             jmri.util.swing.JmriAbstractAction act) {
 
@@ -51,6 +53,7 @@ public class PanedInterface implements jmri.util.swing.WindowInterface {
     /**
      * Return the same instance for multiple requests
      */
+    @Override
     public boolean multipleInstances() {
         return false;
     }
@@ -58,6 +61,7 @@ public class PanedInterface implements jmri.util.swing.WindowInterface {
     /**
      * Dispose when associated window is complete
      */
+    @Override
     public void dispose() {
         for (JmriAbstractAction a : actions) {
             a.dispose();

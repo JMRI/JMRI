@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.beans.PropertyChangeEvent;
@@ -167,6 +167,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 
         // Get the SoundEvent's button type and create it.
         engine_pane.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 guiAction(evt);
             }

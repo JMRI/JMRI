@@ -53,8 +53,8 @@ public class BeanSelectCreatePanel extends JPanel {
 
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
-        existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.USERNAMESYSTEMNAME);
-        //If the combo list is empty we go straight to creation.
+        existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+        // If the combo list is empty we go straight to creation.
         if (existingCombo.getItemCount() == 0) {
             newItem.setSelected(true);
         }
@@ -104,7 +104,7 @@ public class BeanSelectCreatePanel extends JPanel {
         bean.add(existingCombo);
         bean.add(prefixBox);
         bean.add(hardwareAddress);
-        hardwareAddress.setToolTipText("Enter in the Hardware address");
+        hardwareAddress.setToolTipText(Bundle.getMessage("EnterHWaddressAsIntTooltip"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(radio);
         add(bean);

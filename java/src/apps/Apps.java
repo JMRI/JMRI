@@ -1,6 +1,7 @@
 package apps;
 
 import apps.gui3.TabbedPreferences;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -102,7 +103,7 @@ import org.slf4j.LoggerFactory;
  * Base class for Jmri applications.
  * <P>
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -111,7 +112,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static String profileFilename;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
+    @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
             justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public Apps(JFrame frame) {
 
@@ -176,7 +177,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
@@ -330,7 +331,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         // return until deferred load is completed
                         SwingUtilities.invokeAndWait(new Runnable() {
                             @Override
-                            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
+                            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "configDeferredLoadOK write is semi-global")
                             public void run() {
                                 configDeferredLoadOK = doDeferredLoad(file);
                             }
@@ -398,6 +399,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             r = new Runnable() {
+                @Override
                 public void run() {
                     try {
                         JmriScriptEngineManager.getDefault().initializeAllEngines();
@@ -492,7 +494,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * additional buttons appended to it later. The default implementation here
      * just creates an empty space for these to be added to.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
@@ -500,7 +502,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
     static JComponent _jynstrumentSpace = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
@@ -729,21 +731,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void helpMenu(JMenuBar menuBar, WindowInterface wi) {
-        try {
+        // create menu and standard items
+        JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
 
-            // create menu and standard items
-            JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-            // use as main help menu 
-            menuBar.add(helpMenu);
-
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help.", e3);
-        }
-
+        // use as main help menu 
+        menuBar.add(helpMenu);
     }
 
     /**
@@ -964,7 +959,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     static AWTEventListener debugListener = null;
 
     // TODO: Remove the "static" nature of much of the initialization someday.
-    //       It exits to allow splash() to be called first-thing in main(), see e.g.
+    //       It exits to allow splash() to be called first-thing in main(), see
     //       apps.DecoderPro.DecoderPro.main(...) 
     //       Or maybe, just not worry about this here, in the older base class,
     //       and address it in the newer apps.gui3.Apps3 as that's the base class of the future.
@@ -978,9 +973,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     /**
      * Invoke the standard Log4J logging initialization.
      * <p>
-     * No longer used here. ({@link #splash} calls the initialization directly.
-     * Left as a deprecated method because other code, e.g. CATS is still using
-     * in in JMRI 3.7 and perhaps 3.8
+     * No longer used in JMRI. ({@link #splash} calls the initialization
+     * directly. Left as a deprecated method because other code, such as CATS,
+     * is still using in in JMRI 3.7 and perhaps 3.8
      *
      * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
      * directly.
@@ -998,7 +993,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
                 @Override
-                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
+                @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button
@@ -1168,10 +1163,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     static String configFilename = System.getProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");  // usually overridden, this is default
     // The following MUST be protected for 3rd party applications 
     // (such as CATS) which are derived from this class.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configOK;
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
+    @SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configDeferredLoadOK;
     // GUI members

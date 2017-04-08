@@ -1,4 +1,3 @@
-// TrainEditBuildOptionsFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
@@ -329,7 +328,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         // row 15 buttons
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
-//		pB.setMaximumSize(new Dimension(2000, 250));
+//  pB.setMaximumSize(new Dimension(2000, 250));
         addItem(pB, saveTrainButton, 3, 0);
 
         getContentPane().add(p1);
@@ -396,7 +395,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             if (_train.getTrainDepartsRouteLocation() != null
                     && _train.getTrainDepartsRouteLocation().getLocation() != null
                     && _train.getTrainDepartsRouteLocation().getLocation().isStaging()) {
-                buildConsistCheckBox.setEnabled(false);	// can't build a consist out of staging
+                buildConsistCheckBox.setEnabled(false); // can't build a consist out of staging
             }
             // does train depart and return to same staging location?
             if (_train.getTrainDepartsRouteLocation() != null

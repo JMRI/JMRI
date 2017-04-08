@@ -1,4 +1,3 @@
-// LZ100InternalFrame.java
 package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.event.ActionEvent;
@@ -24,14 +23,9 @@ import org.slf4j.LoggerFactory;
  * This is a configuration utility for the LZ100. It allows the user to set the
  * statup mode (automatic or manual) and to reset the command station.
  *
- * @author	Paul Bender Copyright (C) 2005-2010
+ * @author Paul Bender Copyright (C) 2005-2010
   */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8054742294210908919L;
 
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lz100.LZ100Bundle");
 
@@ -95,6 +89,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
         // install reset Command Station button handler
         resetCSButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 resetLZ100CS();
             }
@@ -103,6 +98,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
         // install Auto/Manual mode retreive button handler.
         amModeGetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 amModeGet();
 
@@ -112,6 +108,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
         // install Auto/Manual mode Save button handler.
         amModeSetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 amModeSave();
 
@@ -121,6 +118,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
         // install Auto mode button handler.
         isAutoMode.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 AutoModeAction();
             }
@@ -129,6 +127,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
         // install Manual  mode button handler.
         isManualMode.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 ManualModeAction();
             }
@@ -176,6 +175,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     protected int[] validELineStatusValues = new int[]{90, 91, 99};
 
     // listen for responses from the LZ100
+    @Override
     synchronized public void message(XNetReply l) {
         if (l.isOkMessage()) {
             /* this was an "OK" message
@@ -219,10 +219,12 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     synchronized public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -290,6 +292,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         autoMode = false;
     }
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

@@ -33,6 +33,7 @@ public class PortalList extends JList<Portal> {
 
     private static class PortalCellRenderer extends JLabel implements ListCellRenderer<Portal> {
 
+        @Override
         public Component getListCellRendererComponent(
                 JList<? extends Portal> list, // the list
                 Portal value, // value to display
@@ -64,10 +65,12 @@ public class PortalList extends JList<Portal> {
             _homeBlock = block;
         }
 
+        @Override
         public int getSize() {
             return _homeBlock.getPortals().size();
         }
 
+        @Override
         public Portal getElementAt(int index) {
             if (index < getSize()) {
                 return _homeBlock.getPortals().get(index);

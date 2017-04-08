@@ -1,6 +1,5 @@
 package jmri.jmrix.xpa;
 
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +12,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private XpaSystemConnectionMemo memo = null;
 

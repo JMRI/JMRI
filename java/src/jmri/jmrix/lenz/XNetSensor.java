@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -87,6 +87,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     /**
      * request an update on status by sending an XPressNet message
      */
+    @Override
     public void requestUpdateFromLayout() {
         // To do this, we send an XpressNet Accessory Decoder Information 
         // Request.
@@ -127,6 +128,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * directly)
      *
      */
+    @Override
     public synchronized void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -159,16 +161,19 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

@@ -14,7 +14,7 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of serial messages
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.oaktree.SerialListener {
 
@@ -30,6 +30,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -56,6 +57,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -74,6 +76,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 pollButtonActionPerformed(e);
             }
@@ -106,9 +109,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
+    @Override
     public void message(SerialMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(SerialReply r) {
     } // ignore replies
 }

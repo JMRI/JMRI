@@ -1,6 +1,6 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.liusbserver;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -9,7 +9,7 @@ import javax.swing.JTextField;
  * <P>
  * This uses the {@link LIUSBServerAdapter} class to do the actual connection.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author Paul Bender Copyright (C) 2009
   *
  * @see LIUSBServerAdapter
  */
@@ -31,6 +31,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "Lenz LIUSB Server";
     }
@@ -39,12 +40,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LIUSBServerAdapter();
         }
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
         hostNameField.setText(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);
@@ -55,7 +58,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         options.get(adapter.getOption1Name()).getComponent().setEnabled(false); // we can't change this now.
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "the server uses a fixed port, but we want users to see what it is")
+    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "the server uses a fixed port, but we want users to see what it is")
     protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
 
 }

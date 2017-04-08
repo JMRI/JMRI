@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman (C) 2009
+ * @author Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
@@ -129,7 +129,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String _pathName;      // when not null, this is the allocated path
-    protected long _entryTime;		// time when block became occupied
+    protected long _entryTime;  // time when block became occupied
     private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // path keys a list of Blocks whose paths conflict with the path.  These Blocks key 
@@ -152,11 +152,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
 
-    /** 
-     * Note: equality consists of the underlying (superclass) Block implementation
-     * being the same.
-     */
-    @Override
+    /* What super does currently is fine.  If that changes
+     * Do the following equals() and hashCode()
+     *
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -168,9 +166,17 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (!(getClass() == obj.getClass())) {
             return false;
         }
-
+        if (!((Block)obj).getSystemName().equals(this.getSystemName())) {
+            return false;
+        }
         return super.equals(obj);
     }
+
+    @Override
+    public int hashCode() {
+        return this.getSystemName().hashCode();
+    }
+    */
 
     /**
      * override to only set an existing sensor and to amend state with not UNDETECTED
@@ -269,6 +275,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _errNamedSensor;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: " + getDisplayName() + " property " + evt.getPropertyName() + " is now "
@@ -398,7 +405,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return If warrant exists and path==pathname, return warrant display
      *         name, else null.
      */
-    private String isPathSet(String path) {
+    public String isPathSet(String path) {
         String msg = null;
         if (_warrant != null) {
             if (path.equals(_pathName)) {
@@ -417,6 +424,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
     
     public boolean isAllocatedTo(Warrant warrant) {
+        if (warrant == null) {
+            return false;
+        }
         return (warrant == _warrant);
     }
 
@@ -506,28 +516,34 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      *         block is OUT_OF_SERVICE
      */
     protected String allocate(Warrant warrant) {
-        if (log.isDebugEnabled()) {
-            log.debug("Allocate block \"" + getDisplayName()
-                    + "\" to warrant \"" + warrant.getDisplayName() + "\"");
-        }
         if (warrant == null) {
             return "ERROR! allocate called with null warrant in block \"" + getDisplayName() + "\"!";
         }
-        if (_warrant != null && !warrant.equals(_warrant)) {
-            // allocated to another warrant
-            return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
+        String msg = null;
+        if (_warrant != null) {
+            if (!warrant.equals(_warrant)) {
+                msg = Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
+            }
+        }            
+        if (msg == null) {
+            int state = getState();
+            if ((state & OUT_OF_SERVICE) != 0) {
+                msg =  Bundle.getMessage("BlockOutOfService", getDisplayName());
+            }            
         }
-        int state = getState();
-        if ((state & OUT_OF_SERVICE) != 0) {
-            return Bundle.getMessage("BlockOutOfService", getDisplayName());
-        }
-        if (_pathName == null) {
-            _pathName = warrant.getRoutePathInBlock(this);
-        }
-        _warrant = warrant;
-        // firePropertyChange signaled in super.setState()
-        setState(getState() | ALLOCATED);
-        return null;
+        if (msg == null) {
+            if (_pathName == null) {
+                _pathName = warrant.getRoutePathInBlock(this);
+            }
+            _warrant = warrant;
+            // firePropertyChange signaled in super.setState()
+            setState(getState() | ALLOCATED);
+            if (log.isDebugEnabled()) log.debug("Allocate block \"{}\" to warrant \"{}\".", getDisplayName(), warrant.getDisplayName()); 
+        } else {
+            if (log.isDebugEnabled()) log.debug("Allocate block \"{}\" failed for warrant {}. err= {}",
+                        msg, getDisplayName(), warrant.getDisplayName()); 
+        }        
+        return msg;
     }
 
     /**
@@ -563,20 +579,19 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return error message, if any
      */
     public String deAllocate(Warrant warrant) {
-        //if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
-        //				"\" from warrant \""+warrant.getDisplayName()+"\"");
         if (_warrant != null) {
             if (!_warrant.equals(warrant)) {
                 // check if _warrant is registered
                 if (jmri.InstanceManager.getDefault(WarrantManager.class).getBySystemName(_warrant.getSystemName()) != null) {
-                    String msg = "cannot deAllocate. warrant \"" + _warrant.getDisplayName()
-                            + "\" owns block \"" + getDisplayName() + "\"!";
+                    String msg = "Block \""+ getDisplayName() +"\" owned by warrant \"" +_warrant.getDisplayName()+
+                     "\" warrant \"" + (warrant==null?"null":warrant.getDisplayName()) + "\" cannot deallocate!";
                     log.error(msg);
                     return msg;
                 }
-                // warrant not found, fall through and clear
             }
             try {
+                if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
+                        "\" from warrant \""+warrant.getDisplayName()+"\"");
                 removePropertyChangeListener(_warrant);
             } catch (Exception ex) {
                 // disposed warrant may throw null pointer - continue deallocation
@@ -804,14 +819,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return error message if the call fails. null if the call succeeds
      */
     protected String setPath(String pathName, Warrant warrant) {
-        if (log.isDebugEnabled()) {
-            log.debug("setPath: OBlock \"" + getDisplayName() + "\", path  \""
-                    + pathName + "\" for warrant " + warrant.getDisplayName());
-        }
         String msg = null;
         if (_warrant != null && !_warrant.equals(warrant)) {
             msg = Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
             return msg;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("setPath: OBlock \"" + getDisplayName() + "\", path  \""
+                    + pathName + "\" for warrant " + warrant.getDisplayName());
         }
         pathName = pathName.trim();
         OPath path = getPathByName(pathName);
@@ -829,7 +844,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             _warrant = warrant;
             setState(getState() | ALLOCATED);
             if (!_ownsTOs) {
-                msg = checkSharedTO();		// does a callback to the warrant to set up a wait            	
+                msg = checkSharedTO();  // does a callback to the warrant to set up a wait             
             }
             if (msg == null) {
                 int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;

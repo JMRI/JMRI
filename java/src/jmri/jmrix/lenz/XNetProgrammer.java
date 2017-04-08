@@ -184,10 +184,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     static protected final int REQUESTSENT = 1; // waiting reply to command to go into programming mode
     static protected final int INQUIRESENT = 2; // read/write command sent, waiting reply
     protected boolean _progRead = false;
-    protected int _val;	// remember the value being read/written for confirmative reply
-    protected int _cv;	// remember the cv being read/written
+    protected int _val; // remember the value being read/written for confirmative reply
+    protected int _cv; // remember the cv being read/written
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -220,10 +221,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
+    @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -277,6 +280,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         }
     }
 
+    @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
                 && m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY) {
@@ -492,10 +496,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     synchronized public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -556,4 +562,4 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 }
 
 
-/* @(#)XNetProgrammer.java */
+

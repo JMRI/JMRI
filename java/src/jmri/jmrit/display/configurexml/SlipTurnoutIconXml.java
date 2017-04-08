@@ -24,6 +24,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
      * @param o Object to store, of type TurnoutIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         SlipTurnoutIcon p = (SlipTurnoutIcon) o;
@@ -31,8 +32,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             return null;  // if flagged as inactive, don't store
         }
         Element element = new Element("slipturnouticon");
-        //element.setAttribute("turnoutEast", p.getNamedTurnout(SlipTurnoutIcon.WEST).getName());
-        //element.setAttribute("turnoutWest", p.getNamedTurnout(SlipTurnoutIcon.EAST).getName());
+
         element.addContent(new Element("turnoutEast").addContent(p.getNamedTurnout(SlipTurnoutIcon.EAST).getName()));
         element.addContent(new Element("turnoutWest").addContent(p.getNamedTurnout(SlipTurnoutIcon.WEST).getName()));
 
@@ -92,6 +92,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
      * @param o       Editor as an Object
      */
     @SuppressWarnings("null")
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;

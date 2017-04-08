@@ -27,12 +27,14 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
         addMenuListener(this);
     }
 
+    @Override
     public void menuSelected(MenuEvent e) {
         String windowName;
         framesList = JmriJFrame.getFrameList();
         removeAll();
 
         add(new AbstractAction(Bundle.getMessage("MenuItemMinimize")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // the next line works on Java 2, but not 1.1.8
                 if (parentFrame != null) {
@@ -50,11 +52,12 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
                 windowName = "Untitled";
             }
             JCheckBoxMenuItem newItem = new JCheckBoxMenuItem(new AbstractAction(windowName) {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     JMenuItem selectedItem = (JMenuItem) e.getSource();
                     // Since different windows can have the same name, look for the position of the selected menu item
                     int itemCount = getItemCount();
-                    // Skip possible other items at the top of the menu (e.g. "Minimize")
+                    // Skip possible other items at the top of the menu (for example, "Minimize")
                     int firstItem = itemCount - framesList.size();
                     for (int i = firstItem; i < itemCount; i++) {
                         if (selectedItem == getItem(i)) {
@@ -76,9 +79,11 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
         }
     }
 
+    @Override
     public void menuDeselected(MenuEvent e) {
     }
 
+    @Override
     public void menuCanceled(MenuEvent e) {
     }
 

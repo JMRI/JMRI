@@ -1,9 +1,9 @@
 package jmri.util;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Works with the JUnitAppender class to 
@@ -12,36 +12,21 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2016
  */
-public class Log4JErrorIsErrorTest extends TestCase {
+public class Log4JErrorIsErrorTest {
 
+    @Test
     public void testNoLog4JMessages() {
         Assert.assertFalse("Unexpected ERROR or FATAL messages emitted", jmri.util.JUnitAppender.unexpectedMessageSeen(org.apache.log4j.Level.ERROR));
     }
-    
-
-    // from here down is testing infrastructure
-    public Log4JErrorIsErrorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Log4JErrorIsErrorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Log4JErrorIsErrorTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * In particular, XnTcpXNetPacketizer counts the number of commands received.
  *
- * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LIUSB packetizer by
+ * @author Giorgio Terdina Copyright (C) 2008-2011, based on LIUSB packetizer by
  * Paul Bender, Copyright (C) 2005
  *  GT - May 2011 - Removed calls to deprecated
  * method "XnTcpAdapter.instance()"
@@ -76,4 +76,4 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
     private final static Logger log = LoggerFactory.getLogger(XnTcpXNetPacketizer.class.getName());
 }
 
-/* @(#)XnTcpXNetPacketizer.java */
+

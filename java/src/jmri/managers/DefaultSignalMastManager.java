@@ -26,18 +26,22 @@ public class DefaultSignalMastManager extends AbstractManager
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
+    @Override
     public int getXMLOrder() {
         return Manager.SIGNALMASTS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'F';
     }
 
+    @Override
     public SignalMast getSignalMast(String name) {
         if (name == null || name.length() == 0) {
             return null;
@@ -50,6 +54,7 @@ public class DefaultSignalMastManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public SignalMast provideSignalMast(String prefix, // nominally IF$shsm
             String signalSystem,
             String mastName,
@@ -66,24 +71,27 @@ public class DefaultSignalMastManager extends AbstractManager
         return provideSignalMast(new String(name));
     }
 
+    @Override
     public SignalMast provideSignalMast(String name) {
         SignalMast m = getSignalMast(name);
         if (m == null) {
             m = new jmri.implementation.SignalHeadSignalMast(name);
-
             register(m);
         }
         return m;
     }
 
+    @Override
     public SignalMast getBySystemName(String key) {
         return (SignalMast) _tsys.get(key);
     }
 
+    @Override
     public SignalMast getByUserName(String key) {
         return (SignalMast) _tuser.get(key);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalMast");
     }

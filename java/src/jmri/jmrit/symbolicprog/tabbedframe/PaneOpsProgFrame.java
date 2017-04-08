@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend the PaneProgFrame to handle ops mode operations
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
 public class PaneOpsProgFrame extends PaneProgFrame
         implements java.beans.PropertyChangeListener {
@@ -27,6 +27,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
      * In this case, provide just an empty JPanel; we presently don't want a
      * selection GUI to be present when in ops mode.
      */
+    @Override
     protected JPanel getModePane() {
         if (modePane == null) {
             modePane = new JPanel();
@@ -52,10 +53,12 @@ public class PaneOpsProgFrame extends PaneProgFrame
         }
     }
 
+    @Override
     void addHelp() {
         addHelpMenu("package.jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame", true);
     }
 
+    @Override
     protected void pickProgrammerMode(@Nonnull Element programming) {
         // find an accepted mode to set it to
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
@@ -88,6 +91,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
      * local dispose, which also invokes parent. Note that we remove the
      * components (removeAll) before taking those apart.
      */
+    @Override
     public void dispose() {
 
         if (log.isDebugEnabled()) {

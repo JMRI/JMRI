@@ -4,14 +4,13 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.acela.AcelaMessage;
 import jmri.jmrix.acela.AcelaReply;
-import jmri.jmrix.acela.AcelaTrafficController;
 
 /**
  *
- * Description:	Frame for user input of Acela messages
+ * Description: Frame for user input of Acela messages
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.acela.AcelaListener {
@@ -27,6 +26,7 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -50,9 +50,9 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         getContentPane().add(packetTextField);
         getContentPane().add(sendButton);
 
-        sendButton.addActionListener(
-                new java.awt.event.ActionListener() {
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
 
+            @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendButtonActionPerformed(e);
                     }
@@ -123,11 +123,11 @@ public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
         }
     }
 
+    @Override
     public void message(AcelaMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(AcelaReply r) {
     } // ignore replies
 }
-
-/* @(#)AcelaPacketGenFrame.java */

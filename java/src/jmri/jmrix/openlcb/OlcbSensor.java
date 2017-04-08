@@ -1,5 +1,8 @@
 package jmri.jmrix.openlcb;
 
+import java.util.Timer;
+import jmri.Sensor;
+import jmri.implementation.AbstractSensor;
 import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
@@ -7,15 +10,10 @@ import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Timer;
-
-import jmri.Sensor;
-import jmri.implementation.AbstractSensor;
-
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
 public class OlcbSensor extends AbstractSensor {
 
@@ -89,6 +87,7 @@ public class OlcbSensor extends AbstractSensor {
      * <p>
      * There is no known way to do this, so the request is just ignored.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 
@@ -98,6 +97,7 @@ public class OlcbSensor extends AbstractSensor {
      * should use setOwnState to handle internal sets and bean notifies.
      *
      */
+    @Override
     public void setKnownState(int s) throws jmri.JmriException {
         setOwnState(s);
         if (s == Sensor.ACTIVE) {
@@ -116,6 +116,7 @@ public class OlcbSensor extends AbstractSensor {
      */
     void setTimeout() {
         timer.schedule(new java.util.TimerTask() {
+            @Override
             public void run() {
                 try {
                     setKnownState(Sensor.INACTIVE);
@@ -125,7 +126,17 @@ public class OlcbSensor extends AbstractSensor {
             }
         }, ON_TIME);
     }
+    
+    /*
+     * since the events that drive a sensor can be whichever state a user
+     * wants, the order of the event pair determines what is the 'active' state
+     */
+    @Override
+    public boolean canInvert() {
+        return false;
+    }
 
+    @Override
     public void dispose() {
         if (sensorListener != null) sensorListener.release();
         if (pc != null) pc.release();

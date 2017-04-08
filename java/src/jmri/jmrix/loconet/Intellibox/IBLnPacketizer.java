@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.Intellibox;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -29,12 +30,12 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public IBLnPacketizer() {
         echo = true;
@@ -53,7 +54,7 @@ public class IBLnPacketizer extends LnPacketizer {
          */
         LnPacketizer trafficController;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+        @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                 justification = "single threaded during init; will eventually be replaced for multi-connection support")
         public RcvHandler(LnPacketizer lt) {
             trafficController = lt;
@@ -71,6 +72,7 @@ public class IBLnPacketizer extends LnPacketizer {
             }
         }
 
+        @Override
         public void run() {
 
             int opCode;
@@ -177,6 +179,7 @@ public class IBLnPacketizer extends LnPacketizer {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater);
                             }
@@ -202,6 +205,7 @@ public class IBLnPacketizer extends LnPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently
@@ -260,6 +264,7 @@ public class IBLnPacketizer extends LnPacketizer {
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = " + priority

@@ -21,7 +21,7 @@ package jmri.jmrit.vsdecoder.swing;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.BorderLayout;
@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * Virtual Sound Decoder for playing sounds off of LocoNet messages. Based on
  * the LocoMon tool by Bob Jacobsen
  *
- * @author	Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  * 
  */
 @SuppressWarnings("serial")
@@ -210,18 +210,21 @@ public class VSDControl extends JPanel {
         this.add(configPanel, setConstraints(3, 0));
 
         optionButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 optionButtonPressed(e);
             }
 
         });
         configButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 configButtonPressed(e);
             }
 
         });
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteButtonPressed(e);
             }
@@ -263,6 +266,7 @@ public class VSDControl extends JPanel {
         log.debug("(" + address + ") Option Button Pressed");
         VSDOptionsDialog d = new VSDOptionsDialog(this, Bundle.getMessage("OptionsDialogTitlePrefix") + " " + this.address);
         d.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent event) {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 optionsDialogPropertyChange(event);
@@ -278,6 +282,7 @@ public class VSDControl extends JPanel {
         log.debug("(" + address + ") Config Button Pressed");
         VSDConfigDialog d = new VSDConfigDialog(this, Bundle.getMessage("ConfigDialogTitlePrefix") + " " + this.address, config);
         d.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent event) {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 configDialogPropertyChange(event);
@@ -314,6 +319,7 @@ public class VSDControl extends JPanel {
     /**
      * Add a listener for this Pane's property change events
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
         if (!l.contains(listener)) {
@@ -324,6 +330,7 @@ public class VSDControl extends JPanel {
     /**
      * Remove a listener
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         listenerList.remove(PropertyChangeListener.class, listener);
     }

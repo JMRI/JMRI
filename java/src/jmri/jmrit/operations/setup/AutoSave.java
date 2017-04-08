@@ -1,6 +1,6 @@
-// AutoSave.java
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ public class AutoSave {
 
     static Thread autoSave = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR")
+    @SuppressFBWarnings(value = "SC_START_IN_CTOR")
     public AutoSave() {
         synchronized (this) {
             if (Setup.isAutoSaveEnabled() && autoSave == null) {
@@ -34,7 +34,7 @@ public class AutoSave {
     private synchronized void saveFiles() {
         while (true) {
             try {
-                wait(60000);	// check every minute
+                wait(60000); // check every minute
             } catch (InterruptedException e) {
             }
             if (!Setup.isAutoSaveEnabled()) {
@@ -43,7 +43,7 @@ public class AutoSave {
             if (OperationsXml.areFilesDirty()) {
                 log.debug("Detected dirty operation files");
                 try {
-                    wait(60000);	// wait another minute before saving
+                    wait(60000); // wait another minute before saving
                 } catch (InterruptedException e) {
                 }
                 if (TrainManager.instance().isAnyTrainBuilding()) {
@@ -56,7 +56,7 @@ public class AutoSave {
                 }
             }
         }
-        autoSave = null;	// done
+        autoSave = null; // done
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoSave.class.getName());

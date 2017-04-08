@@ -6,6 +6,7 @@ import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.tams.TamsPortController;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.TamsTrafficController;
@@ -31,6 +32,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         setManufacturer(jmri.jmrix.tams.TamsConnectionTypeList.TAMS);
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -111,6 +113,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
      * set up all of the other objects to operate with an NCE command station
      * connected to this port
      */
+    @Override
     public void configure() {
         TamsTrafficController tc = new TamsTrafficController();
         this.getSystemConnectionMemo().setTamsTrafficController(tc);
@@ -122,6 +125,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
     }
 
     // base class methods for the TamsPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -130,6 +134,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -142,16 +147,14 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     private String[] validSpeeds = new String[]{"57,600 baud", "2,400 baud", "9,600 baud", "19,200 baud"};

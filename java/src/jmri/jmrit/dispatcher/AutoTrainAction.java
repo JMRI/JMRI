@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import jmri.Block;
@@ -39,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2010-2011
+ * @author Dave Duchamp Copyright (C) 2010-2011
  */
 public class AutoTrainAction {
 
@@ -60,7 +61,7 @@ public class AutoTrainAction {
     private ArrayList<TransitSection> _activeTransitSectionList = new ArrayList<TransitSection>();
     private ArrayList<TransitSectionAction> _activeActionList = new ArrayList<TransitSectionAction>();
 
-    // this method is called when an AutoActiveTrain enters a Section	
+    // this method is called when an AutoActiveTrain enters a Section 
     protected synchronized void addTransitSection(TransitSection ts) {
         _activeTransitSectionList.add(ts);
         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
@@ -152,6 +153,7 @@ public class AutoTrainAction {
         java.beans.PropertyChangeListener sensorListener = null;
         s.addPropertyChangeListener(sensorListener
                 = new java.beans.PropertyChangeListener() {
+                    @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("KnownState")) {
                             handleSensorChange(sensorName);
@@ -284,6 +286,7 @@ public class AutoTrainAction {
         // set up listener
         s.addPropertyChangeListener(_doneSensorListener
                 = new java.beans.PropertyChangeListener() {
+                    @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("KnownState")) {
                             int state = _doneSensor.getKnownState();
@@ -310,7 +313,7 @@ public class AutoTrainAction {
     // this method is called to execute the action, when the "When" event has happened.
     // it is "public" because it may be called from a TransitSectionAction.
 // djd debugging - need to check this out - probably useless, but harmless
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
+    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
             justification = "used only by thread that can be stopped, no conflict with other threads expected")
     public synchronized void executeAction(TransitSectionAction tsa) {
         if (tsa == null) {
@@ -532,6 +535,7 @@ public class AutoTrainAction {
             _delay = delay;
         }
 
+        @Override
         public void run() {
             try {
                 Thread.sleep(_delay);
@@ -553,6 +557,7 @@ public class AutoTrainAction {
             _tsa = tsa;
         }
 
+        @Override
         public void run() {
             _autoActiveTrain.incrementHornExecution();
             if (_tsa.getWhatCode() == TransitSectionAction.SOUNDHORN) {
@@ -622,6 +627,7 @@ public class AutoTrainAction {
             _tsa = tsa;
         }
 
+        @Override
         public void run() {
             if (_tsa != null) {
                 boolean waitingOnTrain = true;
@@ -637,7 +643,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action						
+                        // interrupting will cause termination without executing the action      
                     }
                 } else if (_tsa.getWhenCode() == TransitSectionAction.TRAINSTART) {
                     if ((_autoActiveTrain.getAutoEngineer() != null)
@@ -654,7 +660,7 @@ public class AutoTrainAction {
                                 }
                             }
                         } catch (InterruptedException e) {
-                            // interrupting will cause termination without executing the action						
+                            // interrupting will cause termination without executing the action      
                         }
                     }
                     // train is stopped, wait for it to start 
@@ -669,7 +675,7 @@ public class AutoTrainAction {
                         }
                         executeAction(_tsa);
                     } catch (InterruptedException e) {
-                        // interrupting will cause termination without executing the action						
+                        // interrupting will cause termination without executing the action      
                     }
                 }
             }
@@ -689,6 +695,7 @@ public class AutoTrainAction {
             _tsa = tsa;
         }
 
+        @Override
         public void run() {
             while ((_autoActiveTrain.getAutoEngineer() != null)
                     && (!_autoActiveTrain.getAutoEngineer().isAtSpeed())) {

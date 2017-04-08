@@ -1,6 +1,6 @@
 package jmri.jmrix.grapevine;
 
-import jmri.implementation.AbstractLightTest;
+import jmri.implementation.AbstractLightTestBase;
 import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -10,10 +10,11 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
   */
-public class SerialLightTest extends AbstractLightTest {
+public class SerialLightTest extends AbstractLightTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
 
+    @Override
     public void setUp() {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
@@ -22,15 +23,18 @@ public class SerialLightTest extends AbstractLightTest {
         t = new SerialLight("GL1104", "t4");
     }
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkOffMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 1C 81 04", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
+    @Override
     public void checkOnMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 18 81 0C", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message

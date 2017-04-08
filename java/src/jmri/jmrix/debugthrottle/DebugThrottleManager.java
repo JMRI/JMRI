@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of a ThrottleManager for debugging.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 
@@ -25,6 +25,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         super(memo);
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         // Immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;
@@ -36,6 +37,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
      * Address 1 and above can be a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return (address >= 1);
     }
@@ -44,6 +46,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
      * Address 127 and below can be a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return (address <= 127);
     }
@@ -51,10 +54,12 @@ public class DebugThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
+    @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
         if (super.disposeThrottle(t, l)) {
@@ -69,6 +74,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
      * What speed modes are supported by this system? value should be xor of
      * possible modes specifed by the DccThrottle interface
      */
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128
                 | DccThrottle.SpeedStepMode28

@@ -1,4 +1,3 @@
-// SetupExcelProgramFrameAction.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.Frame;
@@ -31,4 +30,4 @@ public class SetupExcelProgramFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)SetupExcelProgramFrameAction.java */
+

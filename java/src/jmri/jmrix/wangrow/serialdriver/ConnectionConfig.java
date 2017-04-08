@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.wangrow.serialdriver;
 
 import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
@@ -8,30 +7,33 @@ import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
  * Wangrow SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = "Serial";
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter.
+     *
+     * @param p the adapter associated with the connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Create a connection configuration with no preexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

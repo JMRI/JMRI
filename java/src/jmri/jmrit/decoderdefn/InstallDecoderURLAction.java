@@ -1,5 +1,6 @@
 package jmri.jmrit.decoderdefn;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Install decoder definition from URL
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends JmriAbstractAction {
@@ -61,6 +62,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         return null;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (rb == null) {
             rb = ResourceBundle.getBundle("jmri.jmrit.decoderdefn.DecoderFile");
@@ -113,7 +115,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         JOptionPane.showMessageDialog(who, rb.getString("CompleteOK"));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "Looks like false positive")
+    @SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "Looks like false positive")
     boolean copyfile(URL from, File toFile, JPanel who) {
         InputStream in = null;
         OutputStream out = null;
@@ -191,6 +193,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

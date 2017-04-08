@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.pr2;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,18 +9,18 @@ import org.slf4j.LoggerFactory;
  *
  * Differs only in handling PR2's non-echo
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  *
  */
 public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", // NOI18N
+            justification = "Only used during system initialization") // NOI18N
     public LnPr2Packetizer() {
         super();
         self = this;
         echo = true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());
 }

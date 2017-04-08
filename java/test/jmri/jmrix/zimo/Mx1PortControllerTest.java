@@ -1,12 +1,8 @@
 package jmri.jmrix.zimo;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the Mx1PortController class
@@ -14,14 +10,13 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTest {
+public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
     @Before
     public void setUp(){
        apps.tests.Log4JFixture.setUp();
        JUnitUtil.resetInstanceManager();
-       Mx1SystemConnectionMemo memo = new Mx1SystemConnectionMemo();
        Mx1TrafficController tc = new Mx1TrafficController(){
           @Override
           public boolean status(){
@@ -31,6 +26,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
           public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
           }
        };
+       Mx1SystemConnectionMemo memo = new Mx1SystemConnectionMemo(tc);
        apc = new Mx1PortController(memo){
             @Override
             public boolean status(){

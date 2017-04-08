@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001, modified 2009 by Kevin Dickerson
+ * @author Bob Jacobsen Copyright (C) 2001, modified 2009 by Kevin Dickerson
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
@@ -521,7 +522,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     //The values here might need a bit of re-working
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @Override
     public void setSpeedSetting(float speed) {
         if (!_haveControl) {
             return;
@@ -561,6 +563,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     int speedMessageSent = 0;
 
+    @Override
     public void setIsForward(boolean forward) {
         if (!_haveControl) {
             return;
@@ -573,10 +576,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     private DccLocoAddress address;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    @Override
     protected void throttleDispose() {
         String message = "release(" + this.objectNumber + ", control)";
         EcosMessage m = new EcosMessage(message);
@@ -586,7 +591,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         finishRecord();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @Override
     public void reply(EcosReply m) {
         int resultCode = m.getResultCode();
         if (resultCode == 0) {
@@ -920,6 +926,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         //System.out.println("Ecos message - "+ m);
         // messages are ignored

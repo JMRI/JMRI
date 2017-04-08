@@ -1,4 +1,3 @@
-// EcosReporterManager.java
 package jmri.jmrix.ecos;
 
 import jmri.Reporter;
@@ -6,9 +5,9 @@ import jmri.Reporter;
 /**
  * EcosReporterManager implements the ReporterManager.
  * <P>
- * Description:	Implement Reporter manager for ecos
+ * Description: Implement Reporter manager for ecos
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
 
@@ -19,14 +18,17 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
 
     EcosSystemConnectionMemo memo;
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
+    @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter r = new EcosReporter(systemName, userName);
         register(r);
@@ -34,4 +36,4 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
     }
 }
 
-/* @(#)EcosReporterManager.java */
+

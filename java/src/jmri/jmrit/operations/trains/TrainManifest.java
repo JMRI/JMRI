@@ -1,4 +1,3 @@
-// TrainManifest.java
 package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
@@ -313,7 +312,9 @@ public class TrainManifest extends TrainCommon {
     }
 
     private void newLine(PrintWriter file, String string) {
-        newLine(file, string, IS_MANIFEST);
+        if (!string.isEmpty()) {
+            newLine(file, string, IS_MANIFEST);
+        }
     }
 
 }

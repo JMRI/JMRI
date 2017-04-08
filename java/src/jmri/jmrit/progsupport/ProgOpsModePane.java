@@ -12,6 +12,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
@@ -27,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -36,10 +38,11 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<ProgrammingMode, JRadioButton>();
     JComboBox<AddressedProgrammerManager> progBox;
     ArrayList<JRadioButton> buttonPool = new ArrayList<JRadioButton>();
-
-    JTextField mAddrField = new JTextField(4);
-    String oldAddrText = "";
-
+    // JTextField mAddrField = new JTextField(4);
+    // use JSpinner for CV number input
+    SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10239, 1); // 10239 is highest DCC Long Address documented by NMRA as per 2017
+    JSpinner mAddrField = new JSpinner(model);
+    int oldAddrValue = 3; // Default start value
     JCheckBox mLongAddrCheck = new JCheckBox(Bundle.getMessage("LongAddress"));
     boolean oldLongAddr = false;
     AddressedProgrammer programmer = null;
@@ -47,8 +50,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     /**
      * Get the selected programmer
      */
+    @Override
     public Programmer getProgrammer() {
-        if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getText().equals(oldAddrText)) {
+        if ((mLongAddrCheck.isSelected() == oldLongAddr) && mAddrField.getValue().equals(oldAddrValue)) {
             // hasn't changed
             return programmer;
         }
@@ -56,14 +60,14 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         // here values have changed, try to create a new one
         AddressedProgrammerManager pm = ((AddressedProgrammerManager) progBox.getSelectedItem());
         oldLongAddr = mLongAddrCheck.isSelected();
-        oldAddrText = mAddrField.getText();
+        oldAddrValue = (Integer) mAddrField.getValue();
 
         if (pm != null) {
             int address = 3;
             try {
-                address = Integer.parseInt(mAddrField.getText());
+                address = (Integer) mAddrField.getValue();
             } catch (java.lang.NumberFormatException e) {
-                log.error("loco address \"{}\" not correct", mAddrField.getText());
+                log.error("loco address \"{}\" not correct", mAddrField.getValue());
                 programmer = null;
             }
             boolean longAddr = mLongAddrCheck.isSelected();
@@ -86,6 +90,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      *
      * @return true is any button is selected
      */
+    @Override
     public boolean isSelected() {
         for (JRadioButton button : buttonMap.values()) {
             if (button.isSelected()) {
@@ -96,6 +101,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
+     * Constructor for the Programming settings pane.
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
      */
@@ -104,8 +110,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
+     * Constructor for the Programming settings pane.
      * @param direction controls layout, either BoxLayout.X_AXIS or
      *                  BoxLayout.Y_AXIS
+     * @param group A set of JButtons to display programming modes
      */
     public ProgOpsModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;
@@ -125,6 +133,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
         progBox.setSelectedItem(InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)); // set default
         progBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
                 programmerSelected();
@@ -138,16 +147,18 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         add(panel);
         add(mLongAddrCheck);
 
-        mAddrField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+//        mAddrField.addActionListener(new java.awt.event.ActionListener() {
+//            @Override
+//            public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
-                programmerSelected(); // in case has valid address now
-            }
-        });
+//                programmerSelected(); // in case it has valid address now
+//            }
+//        });
         mLongAddrCheck.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // new programmer selection
-                programmerSelected(); // in case has valid address now
+                programmerSelected(); // in case it has valid address now
             }
         });
 
@@ -156,7 +167,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
-     * reload the interface with the new programmers
+     * Reload the interface with the new programmers.
      */
     void programmerSelected() {
         log.debug("programmerSelected starts with {} buttons", buttonPool.size());
@@ -169,7 +180,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         buttonMap.clear();
 
         // require new programmer if possible
-        oldAddrText = "";
+        oldAddrValue = 0;
 
         // configure buttons
         int index = 0;
@@ -204,8 +215,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
-     * Listen to buttons for mode changes
+     * Listen to buttons for mode changes.
+     * @param e ActionEvent heard
      */
+    @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // find selected button
         log.debug("Selected button: {}", e.getActionCommand());
@@ -220,6 +233,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
     }
 
+    /**
+     * Change the programmer (mode).
+     * @param programmer The type of programmer (i.e. Byte Mode)
+     */
     void setProgrammerFromGui(Programmer programmer) {
         for (ProgrammingMode mode : buttonMap.keySet()) {
             if (buttonMap.get(mode).isSelected()) {
@@ -229,8 +246,10 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     }
 
     /**
-     * Listen to programmer for mode changes
+     * Listen to programmer for mode changes.
+     * @param e ActionEvent heard
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
@@ -240,6 +259,9 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         }
     }
 
+    /**
+     * Change the selected mode in GUI when programmer is changed elsewhere.
+     */
     void setGuiFromProgrammer() {
         if (getProgrammer() == null) {
             // no mode selected
@@ -259,7 +281,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         button.setSelected(true);
     }
 
-    // no longer needed, disconnect if still connected
+    // Free up memory from no longer needed stuff, disconnect if still connected.
+    @Override
     public void dispose() {
     }
 

@@ -1,4 +1,3 @@
-// LnTcpDriverAdapter.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import jmri.jmrix.dccpp.DCCppCommandStation;
@@ -26,7 +25,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
 
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());
-	// TODO: Figure out what these options are, and should be.
+ // TODO: Figure out what these options are, and should be.
         //option2Name = "CommandStation";
         //option3Name = "TurnoutHandle";
         //options.put(option2Name, new Option("Command station type:", commandStationNames, false));
@@ -37,6 +36,7 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
      * set up all of the other objects to operate with a DCC++ connected via
      * this class.
      */
+    @Override
     public void configure() {
 
         //setCommandStationType(getOptionState(option2Name));
@@ -49,12 +49,13 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
         // do the common manager config
 
-	new DCCppInitializationManager(this.getSystemConnectionMemo());
+ new DCCppInitializationManager(this.getSystemConnectionMemo());
 
         // start operation
         packets.startThreads();
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -62,15 +63,18 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     // private control members
     private boolean opened = false;
 
+    @Override
     public void configureOption1(String value) {
         super.configureOption1(value);
         log.debug("configureOption1: " + value);
         setCommandStationType(value);
     }
 
+    @Override
     public void setOutputBufferEmpty(boolean s) {
     }
 
+    @Override
     public boolean okToSend() { return true; }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppTcpDriverAdapter.class.getName());

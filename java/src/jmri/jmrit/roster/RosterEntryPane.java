@@ -32,13 +32,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Display and edit a RosterEntry.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dennis Miller Copyright 2004, 2005
  */
 public class RosterEntryPane extends javax.swing.JPanel {
 
     // Field sizes expanded to 30 from 12 to match comment
-// fields and allow for more text to be displayed
+    // fields and allow for more text to be displayed
     JTextField id = new JTextField(30);
     JTextField roadName = new JTextField(30);
     JTextField maxSpeed = new JTextField(3);

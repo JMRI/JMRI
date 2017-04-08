@@ -69,6 +69,10 @@ public class PortalTest extends TestCase {
         p.removePath(path2);
         Assert.assertEquals("Number of toPaths", 2, p.getToPaths().size());
         Assert.assertEquals("Number of fromPaths", 1, p.getFromPaths().size());
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Path path_1 already in block OB2, cannot be added to block OB1");
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_3\" is duplicate of path \"path_2\" in Portal \"portal_3\" from block OB1.");
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"path_2\" is duplicate name for another path in Portal \"portal_3\" from block OB1.");
     }
 
     // from here down is testing infrastructure
@@ -78,7 +82,7 @@ public class PortalTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OBlockTest.class.getName()};
+        String[] testCaseName = {"-noloading", PortalTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
@@ -88,6 +92,7 @@ public class PortalTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -96,6 +101,7 @@ public class PortalTest extends TestCase {
         _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

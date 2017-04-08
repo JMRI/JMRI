@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
@@ -51,6 +51,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
     /**
      * request an update on status by sending a loconet message
      */
+    @Override
     public void requestUpdateFromLayout() {
         // the only known way to do this from LocoNet is to request the
         // status of _all_ devices, which is here considered too
@@ -65,6 +66,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * should use setOwnState to handle internal sets and bean notifies.
      *
      */
+    @Override
     public void setKnownState(int s) throws jmri.JmriException {
         // send OPC_INPUT_REP with new state to this address
         LocoNetMessage l = new LocoNetMessage(4);
@@ -87,6 +89,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * directly)
      *
      */
+    @Override
     public void message(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
@@ -99,16 +102,16 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
                     boolean state = ((sw2 & 0x10) != 0) ^ _inverted;
                     if (log.isDebugEnabled()) {
                         log.debug("INPUT_REP received with valid address, old state "
-                                + getRawState() + " new packet " + state);
+                                + getRawState() + " new packet " + state); // NOI18N
                     }
                     if (state && getRawState() != Sensor.ACTIVE) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Set ACTIVE");
+                            log.debug("Set ACTIVE"); // NOI18N
                         }
                         setOwnState(Sensor.ACTIVE);
                     } else if ((!state) && getRawState() != Sensor.INACTIVE) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Set INACTIVE");
+                            log.debug("Set INACTIVE"); // NOI18N
                         }
                         setOwnState(Sensor.INACTIVE);
                     }
@@ -121,6 +124,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         // reach here only in error
     }
 
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
         super.dispose();

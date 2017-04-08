@@ -22,6 +22,7 @@ public class LnMessageServerAction extends AbstractAction {
         super("Start LocoNet server");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         try {
             // start server
@@ -32,7 +33,7 @@ public class LnMessageServerAction extends AbstractAction {
             // disable action, as already run
             setEnabled(false);
         } catch (RemoteException ex) {
-            LoggerFactory.getLogger(LnMessageServerAction.class.getName()).warn("LnMessageServerAction Exception: " + ex);
+            LoggerFactory.getLogger(LnMessageServerAction.class.getName()).warn("LnMessageServerAction Exception: " + ex); // NOI18N
         }
     }
 

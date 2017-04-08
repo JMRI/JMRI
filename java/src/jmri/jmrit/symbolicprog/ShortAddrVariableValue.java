@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * overwrite those _after_ writing CV1, so that the DP values are forced to be
  * the correct ones.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -76,6 +76,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
     String[] cvNumbers = new String[maxCVs];
     int[] newValues = new int[maxCVs];
 
+    @Override
     public void writeChanges() {
         if (getReadOnly()) {
             log.error("unexpected writeChanges operation when readOnly is set");
@@ -87,6 +88,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
         _cvMap.get(getCvNum()).write(_status);
     }
 
+    @Override
     public void writeAll() {
         if (getReadOnly()) {
             log.error("unexpected writeAll operation when readOnly is set");
@@ -99,6 +101,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     // clean up connections when done
+    @Override
     public void dispose() {
         super.dispose();
     }

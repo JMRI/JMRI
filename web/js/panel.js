@@ -23,7 +23,7 @@
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
- *  TODO: add support for LayoutSlip
+ *  TODO: add support for LayoutSlip, slipturnouticon (one2beros)
  *  TODO: improve handling of layoutBlock with systemname != username
  *   
  **********************************************************************************************/
@@ -32,7 +32,7 @@
 var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
-var systemNames = {};   // associative array of array of elements indexed by systemName
+var whereUsed = {};   // associative array of array of elements indexed by systemName or userName
 var occupancyNames = {};   // associative array of array of elements indexed by occupancysensor name
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
@@ -244,6 +244,23 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget["systemName"] = $widget.name;
                                 jmri.getSensor($widget["systemName"]);
                                 break;
+                            case "LightIcon" :
+                                $widget['name'] = $widget.light; //normalize name
+                                $widget.jsonType = "light"; // JSON object type
+                                $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+                                $widget['icon2'] = $(this).find('icons').find('on').attr('url');
+                                $widget['icon4'] = $(this).find('icons').find('off').attr('url');
+                                $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+                                $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+                                $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                                $widget['scale'] = $(this).find('unknown').attr('scale');
+                                if ($widget.forcecontroloff != "true") {
+                                    $widget.classes += $widget.jsonType + " clickable ";
+                                }
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
+                                jmri.getLight($widget["systemName"]);
+                                break;
                             case "signalheadicon" :
                                 $widget['name'] = $widget.signalhead; //normalize name
                                 $widget.jsonType = "signalHead"; // JSON object type
@@ -320,10 +337,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
                                         jmri.getSensor($widget["systemName"]);
-                                        if (!($widget.systemName in systemNames)) {  //set where-used for this new sensor
-                                            systemNames[$widget.systemName] = new Array();
+                                        if (!($widget.systemName in whereUsed)) {  //set where-used for this new sensor
+                                            whereUsed[$widget.systemName] = new Array();
                                         }
-                                        systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
+                                        whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
                                         $widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
                                         $widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
                                         $widget['icon4'] = "/web/images/transparent_1x1.png"; //set non-actives to transparent image
@@ -568,11 +585,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                         });
                         break;
                 }
+                //add widgetid to whereused array to support updates
                 if ($widget.systemName) {
-                    if (!($widget.systemName in systemNames)) {
-                        systemNames[$widget.systemName] = new Array();
+                    if (!($widget.systemName in whereUsed)) {
+                        whereUsed[$widget.systemName] = new Array();
                     }
-                    systemNames[$widget.systemName][systemNames[$widget.systemName].length] = $widget.id;
+                    whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
                 }
                 //store occupancy sensor where-used
                 if ($widget.occupancysensor && $gWidgets[$widget.id]) {
@@ -588,7 +606,7 @@ function processPanelXML($returnedData, $success, $xhr) {
     $('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel)').bind(UPEVENT, $handleClick);
 
     //hook up mouseup state change function to multisensor (special handling)
-    $('.clickable.multisensoricon').bind(UPEVENT, $handleMultiClick);
+    $('.clickable.multisensoricon').bind('click', $handleMultiClick);
 
     //hook up mouseup function to linkinglabel (special handling)
     $('.clickable.linkinglabel').bind(UPEVENT, $handleLinkingLabelClick);
@@ -626,16 +644,19 @@ function $handleMultiClick(e) {
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
     var $widget = $gWidgets[this.id];
-    var clickX = e.pageX - $(this).parent().offset().left - this.offsetLeft;  //get click location on widget
-    var clickY = e.pageY - $(this).parent().offset().top - this.offsetTop;
-//find if we want to increment or decrement
+    var clickX = (e.offsetX || e.pageX - $(e.target).offset().left); //get click position on the widget
+    var clickY = (e.offsetY || e.pageY - $(e.target).offset().top );   
+    jmri.log("handleMultiClick X,Y on WxH: " + clickX + "," + clickY + " on " + this.width + "x" + this.height);
+
+    //increment or decrement based on where the click occurred on image
+    var missed = true; //flag if click x,y outside image bounds, indicates we didn't get good values
     var dec = false;
     if ($widget.updown == "true") {
-        if (clickY > this.height / 2)
-            dec = true;
+        if (clickY >= 0 && clickY <= this.height) missed = false;
+        if (clickY > this.height / 2) dec = true;
     } else {
-        if (clickX < this.width / 2)
-            dec = true;
+        if (clickX >= 0 && clickX <= this.width)  missed = false;
+        if (clickX < this.width / 2)  dec = true;
     }
     var displaying = 0;
     for (i in $widget.siblings) {  //determine which is currently active
@@ -643,15 +664,21 @@ function $handleMultiClick(e) {
             displaying = i; //flag the current active sibling
         }
     }
-    var next;  //determine which is the next one which should be set to active
+    var next;  //determine which is the next one to be set active (loop around only if click outside object)
     if (dec) {
-        next = displaying - 1;
-        if (next < 0)
-            next = 0;
+    	next = displaying - 1;
+    	if (next < 0)
+    		if (missed) 
+    			next = i;
+    		else 
+    			next = 0;
     } else {
-        next = displaying * 1 + 1;
-        if (next > i)
-            next = i;
+    	next = displaying * 1 + 1;        
+    	if (next > i)
+    		if (missed) 
+    			next = 0;
+    		else 
+    			next = i;
     }
     for (i in $widget.siblings) {  //loop through siblings and send changes as needed
         if (i == next) {
@@ -1528,6 +1555,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "linkinglabel" :
         case "turnouticon" :
         case "sensoricon" :
+        case "LightIcon" :
         case "multisensoricon" :
         case "signalheadicon" :
         case "signalmasticon" :
@@ -1602,25 +1630,36 @@ var $drawAllIconWidgets = function() {
 };
 
 function updateWidgets(name, state, data) {
-    //if systemName not in systemNames list, replace userName with systemName
-	if (!systemNames[name] && name != data.userName) {
-		jmri.log("replacing userName " + data.userName + " with systemName " + name);    	
-		if (systemNames[data.userName]) {  										  //if found by userName
-			systemNames[name] = systemNames[data.userName];  //copy entry over
-			delete systemNames[data.userName];  							 //delete old one
-		}
-    }
-	//update all widgets based on the element that changed 
-    if (systemNames[name]) {
-        $.each(systemNames[name], function(index, widgetId) {
+	//update all widgets based on the element that changed, using systemname 
+    if (whereUsed[name]) {
+        $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state);
         });
-    } else {
-    	jmri.log("system name " + name + " not found, can't set state to " + state);
+//    } else {
+//    	jmri.log("system name " + name + " not found, can't set state to " + state);
+    }
+	//update all widgets based on the element that changed, using username
+    if (whereUsed[data.userName]) {
+        $.each(whereUsed[data.userName], function(index, widgetId) {
+            $setWidgetState(widgetId, state);
+        });
+//    } else {
+//    	jmri.log("userName " + name + " not found, can't set state to " + state);
     }
 }
 
-function updateOccupancy(occupancyName, state) {
+function updateOccupancy(occupancyName, state, data) {
+	//handle occupancy sensors by systemname
+	if (occupancyNames[occupancyName]) {
+		updateOccupancySub(occupancyName, state);
+	}
+	//handle occupancy sensors by username
+	if (occupancyNames[data.userName]) {
+		updateOccupancySub(data.userName, state);
+	}
+}
+
+function updateOccupancySub(occupancyName, state) {
 	if (occupancyNames[occupancyName]) {
 		jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
 		$.each(occupancyNames[occupancyName], function(index, widgetId) {
@@ -1757,7 +1796,7 @@ $(document).ready(function() {
             },
             sensor: function(name, state, data) {
                 updateWidgets(name, state, data);
-                updateOccupancy(name, state);
+                updateOccupancy(name, state, data);
             },
             signalHead: function(name, state, data) {
                 updateWidgets(name, state, data);

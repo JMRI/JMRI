@@ -18,10 +18,12 @@ public class ProxyLightManager extends AbstractProxyManager
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.LIGHTS;
     }
 
+    @Override
     protected AbstractManager makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getLightManager();
     }
@@ -31,10 +33,12 @@ public class ProxyLightManager extends AbstractProxyManager
      *
      * @return Null if nothing by that name exists
      */
+    @Override
     public Light getLight(String name) {
         return (Light) super.getNamedBean(name);
     }
 
+    @Override
     protected NamedBean makeBean(int i, String systemName, String userName) {
         return ((LightManager) getMgr(i)).newLight(systemName, userName);
     }
@@ -47,6 +51,7 @@ public class ProxyLightManager extends AbstractProxyManager
      *
      * @return Never null under normal circumstances
      */
+    @Override
     public Light provideLight(String name) throws IllegalArgumentException {
         return (Light) super.provideNamedBean(name);
     }
@@ -57,6 +62,7 @@ public class ProxyLightManager extends AbstractProxyManager
      *
      * @return requested Light object or null if none exists
      */
+    @Override
     public Light getBySystemName(String systemName) {
         return (Light) super.getBeanBySystemName(systemName);
     }
@@ -67,6 +73,7 @@ public class ProxyLightManager extends AbstractProxyManager
      *
      * @return requested Turnout object or null if none exists
      */
+    @Override
     public Light getByUserName(String userName) {
         return (Light) super.getBeanByUserName(userName);
     }
@@ -99,6 +106,7 @@ public class ProxyLightManager extends AbstractProxyManager
      *
      * @return requested Light object (never null)
      */
+    @Override
     public Light newLight(String systemName, String userName) {
         return (Light) newNamedBean(systemName, userName);
     }
@@ -108,6 +116,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * a system name. Returns false if no manager exists. If a manager is found,
      * return its determination of validity of system name format
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -122,6 +131,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * exists. If a manager is found, return its determination of validity of
      * system name relative to the hardware configuration
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -135,6 +145,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * system name. Returns "" if no manager exists. If a manager is found,
      * return its determination of a normalized system name
      */
+    @Override
     public String normalizeSystemName(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -148,6 +159,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * LightManager based on a system name. Returns "" if no manager exists. If
      * a manager is found, return its determination of an alternate system name
      */
+    @Override
     public String convertSystemNameToAlternate(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -160,6 +172,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * Activate the control mechanism for each Light controlled by this
      * LightManager. Relay this call to all LightManagers.
      */
+    @Override
     public void activateAllLights() {
         for (int i = 0; i < nMgrs(); i++) {
             ((LightManager) getMgr(i)).activateAllLights();
@@ -171,6 +184,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * Lights. Returns false if no manager exists. If a manager is found, return
      * its determination of support for variable lights.
      */
+    @Override
     public boolean supportsVariableLights(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -185,6 +199,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * range box in the add Light window
      *
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -193,6 +208,7 @@ public class ProxyLightManager extends AbstractProxyManager
         return false;
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }

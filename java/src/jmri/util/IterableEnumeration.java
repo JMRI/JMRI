@@ -1,4 +1,3 @@
-// IterableEnumeration.java
 package jmri.util;
 
 import java.util.Enumeration;
@@ -21,17 +20,21 @@ public class IterableEnumeration<T> implements Iterable<T> {
         this.en = en;
     }
 
+    @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
+            @Override
             public boolean hasNext() {
                 return en.hasMoreElements();
             }
 
+            @Override
             public T next() {
                 return en.nextElement();
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }

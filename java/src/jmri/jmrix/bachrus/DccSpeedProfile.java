@@ -1,4 +1,3 @@
-// DccSpeedProfile.java
 package jmri.jmrix.bachrus;
 
 import java.io.FileOutputStream;
@@ -21,8 +20,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to represent a dimensionless speed profile of a DCC decoder.
  *
- * @author	Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
+ * @author Andrew Crosland Copyright (C) 2010
+ * @author Dennis Miller Copyright (C) 2015
   */
 public class DccSpeedProfile {
 
@@ -103,7 +102,7 @@ public class DccSpeedProfile {
             formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
             today = new Date();
             result = formatter.format(today);
-            // title	
+            // title 
             String annotate = "Bachrus MTS-DCC " + rb.getString("ProfileFor") + " "
                     + address + " " + rb.getString("CreatedOn")
                     + " " + result;

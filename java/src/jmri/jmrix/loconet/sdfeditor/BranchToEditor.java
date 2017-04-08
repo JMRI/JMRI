@@ -7,7 +7,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * Editor panel for the BRANCH_TO macro from the Digitrax sound definition
  * language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 class BranchToEditor extends SdfMacroEditor {
 
@@ -18,6 +18,6 @@ class BranchToEditor extends SdfMacroEditor {
         this.removeAll();
 
         // and set up our own
-        add(new JLabel("No editor defined for this instruction yet."));
+        add(new JLabel("No editor defined for this instruction yet.")); // NOI18N
     }
 }

@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2014
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -51,6 +51,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
      *
      * @param enabled false disables button
      */
+    @Override
     public void setEnabled(boolean enabled) {
         setButton.setEnabled(enabled);
     }
@@ -58,6 +59,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     /**
      * Get the configured programmer
      */
+    @Override
     public Programmer getProgrammer() {
         return servicePane.getProgrammer();
     }
@@ -66,6 +68,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
      *
      * @return true always, as we expect to always be selected
      */
+    @Override
     public boolean isSelected() {
         return true;
     }
@@ -79,6 +82,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
 
         // arrange activation
         setButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // pop the frame
                 setFrame.setVisible(true);
@@ -98,6 +102,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         log.error("This is missing code to listen to the programmer and update the mode display");
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("Mode")) {
             // mode changed in programmer, change GUI here if needed
@@ -112,6 +117,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
     }
 
     // no longer needed, disconnect if still connected
+    @Override
     public void dispose() {
     }
 

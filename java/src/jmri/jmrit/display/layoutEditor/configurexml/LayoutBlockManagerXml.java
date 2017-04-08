@@ -29,6 +29,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * @param o Object to store, of type LayoutBlockManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element layoutblocks = new Element("layoutblocks");
         setStoreElementClass(layoutblocks);
@@ -91,6 +92,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         layoutblocks.setAttribute("class", getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -44,18 +44,7 @@ import org.slf4j.LoggerFactory;
  * to inform users where and how the various elements are used. In particular to
  * identify useless elements ('orphans'). Currently, called only from the Logix
  * JFrame, which is probably not its ultimate UI.
- * <BR>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
+ *
  * @author Pete Cressman Copyright 2009
  */
 public class Maintenance {
@@ -63,7 +52,10 @@ public class Maintenance {
     static final ResourceBundle rbm = ResourceBundle.getBundle("jmri.jmrit.beantable.MaintenanceBundle");
 
     /**
-     * Find references of a System or User name in the various Manager Objects
+     * Find references of a System or User name in the various Manager Objects.
+     *
+     * @param devName name to look for
+     * @param parent Frame calling this method
      */
     public static void deviceReportPressed(String devName, Frame parent) {
         JTextArea text = null;
@@ -77,7 +69,9 @@ public class Maintenance {
     }
 
     /**
-     * Find orphaned elements in the various Manager Objects
+     * Find orphaned elements in the various Manager Objects.
+     *
+     * @param parent Frame to check
      */
     public static void findOrphansPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
@@ -166,6 +160,7 @@ public class Maintenance {
                 this.n = name;
             }
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int index = list.getMaxSelectionIndex();
                 if (index < 0) {
@@ -242,7 +237,9 @@ public class Maintenance {
     }
 
     /**
-     * Find useless conditionals in the various Manager Objects
+     * Find useless Conditionals in the various Manager Objects.
+     *
+     * @param parent Frame to check
      */
     public static void findEmptyPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
@@ -284,6 +281,7 @@ public class Maintenance {
                 this.name = name;
             }
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 int index = list.getMaxSelectionIndex();
                 if (index < 0) {
@@ -329,16 +327,18 @@ public class Maintenance {
     /**
      * Find type of element and its names from a name that may be a user name or
      * a system name. (Maybe this can be done at a generic manager level, but
-     * there seem to be two kinds of implemetation of Managers and I don't know
+     * there seem to be two kinds of implementation of Managers and I don't know
      * which is the preferred kind or why they need to be different.)
+     * <p>
+     * Searches each Manager for a reference to the "name".
      *
-     * Searches each Manager for a reference to the "name"
+     * @param name string (name base) to look for
      * @return 4 element String: {Type, userName, sysName, numListeners}
      */
     static String[] getTypeAndNames(String name) {
-        String userName = name.trim();
+        String userName = name.trim(); // N11N
         String sysName = userName;
-//        String sysName = userName.toUpperCase();
+        // String sysName = userName.toUpperCase();
         boolean found = false;
         if (log.isDebugEnabled()) {
             log.debug("getTypeAndNames for \"" + name + "\"");
@@ -540,8 +540,20 @@ public class Maintenance {
         return (new String[]{"", userName, sysName, "0"});
     }
 
+    /**
+     * Check if a given string is either a user or a system name.
+     *
+     * @param name the string to compare
+     * @param found whether the item has already been found somewhere
+     * @param names array containing system and user name as items 0 and 1
+     * @param line1 message line 1 to use if string is not matched
+     * @param line2 message line 2 to use if string is not matched
+     * @param line message line to use if string is matched
+     * @param tempText body of text to add to, a global variable
+     * @return false if name is null or cannot be matched to the names array
+     */
     static boolean testName(String name, boolean found, String[] names, String line1, String line2,
-            String line, StringBuffer tempText) {
+            String line, StringBuilder tempText) {
         if (name == null) {
             return false;
         }
@@ -562,9 +574,13 @@ public class Maintenance {
         return false;
     }
 
-    //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
+    /**
+     * Search if a given string is used as the name of a NamedBean.
+     *
+     * @param name the string to look for
+     * @param text body of the message to be displayed reporting the result
+     * @return true if name is found at least once as a bean name
+     */
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (log.isDebugEnabled()) {
@@ -582,7 +598,7 @@ public class Maintenance {
         String sysName = names[2];
         String userName = names[1];
         int referenceCount = 0;
-        StringBuffer tempText = new StringBuffer();
+        StringBuilder tempText = new StringBuilder();
         boolean found = false;
         boolean empty = true;
         // search for references among each class known to be listeners
@@ -595,7 +611,7 @@ public class Maintenance {
                 log.error("Error getting Logix  - " + sName);
                 break;
             }
-            tempText = new StringBuffer();
+            tempText = new StringBuilder();
             String uName = x.getUserName();
             String line1 = MessageFormat.format(rbm.getString("ReferenceTitle"),
                     new Object[]{"", Bundle.getMessage("BeanNameLogix"), uName, sName});
@@ -642,7 +658,7 @@ public class Maintenance {
                 }
                 if (text != null && found) {
                     text.append(tempText.toString());
-                    tempText = new StringBuffer();
+                    tempText = new StringBuilder();
                     found = false;
                     empty = false;
                     line1 = null;
@@ -650,20 +666,21 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
         }
         if (text != null) {
             if (empty) {
-                text.append("\t" + MessageFormat.format(rbm.getString("NoReference"), "Logix")); // cannot put escaped tab at start of getString
+                text.append("\t" + MessageFormat.format(rbm.getString("NoReference"), "Logix"));
+                // cannot put escaped tab char at start of getString
             } else {
                 text.append("\n");
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
@@ -685,7 +702,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -698,7 +715,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.RouteManager routeManager = InstanceManager.getDefault(jmri.RouteManager.class);
@@ -752,7 +769,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -765,7 +782,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
@@ -840,7 +857,7 @@ public class Maintenance {
                 }
                 if (text != null && found) {
                     text.append(tempText.toString());
-                    tempText = new StringBuffer();
+                    tempText = new StringBuilder();
                     found = false;
                     empty = false;
                     line1 = null;
@@ -848,7 +865,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -861,10 +878,10 @@ public class Maintenance {
             }
         }
 
-//        if (text != null) {
-//            text.append(rbm.getString("NestMessage"));
-//        }
-        tempText = new StringBuffer();
+        // if (text != null) {
+        //   text.append(rbm.getString("NestMessage"));
+        // }
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
@@ -948,7 +965,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -961,7 +978,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
@@ -1002,7 +1019,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -1015,7 +1032,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -1041,7 +1058,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -1054,7 +1071,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         java.util.Enumeration<BlockBossLogic> enumeration = BlockBossLogic.entries();
@@ -1143,7 +1160,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
             }
@@ -1156,7 +1173,7 @@ public class Maintenance {
             }
         }
 
-        tempText = new StringBuffer();
+        tempText = new StringBuilder();
         found = false;
         empty = true;
         jmri.ConditionalManager conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
@@ -1211,7 +1228,7 @@ public class Maintenance {
             }
             if (text != null && found) {
                 text.append(tempText.toString());
-                tempText = new StringBuffer();
+                tempText = new StringBuilder();
                 found = false;
                 empty = false;
                 line1 = null;
@@ -1330,7 +1347,7 @@ public class Maintenance {
                 }
                 if (text != null && found) {
                     text.append(tempText.toString());
-                    tempText = new StringBuffer();
+                    tempText = new StringBuilder();
                     found = false;
                     empty = false;
                     line1 = null;
@@ -1383,6 +1400,14 @@ public class Maintenance {
         return (referenceCount > 0);
     }
 
+    /**
+     * Build and display a dialog box with an OK button and optional 2nd button.
+     *
+     * @param component Body of message to put in dialog box
+     * @param button optional second button to add to pane
+     * @param parent Frame that asked for this dialog
+     * @param title text do use as title of the dialog box
+     */
     static void makeDialog(Component component, Component button, Frame parent, String title) {
         JDialog dialog = new JDialog(parent, title, true);
         JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
@@ -1394,6 +1419,7 @@ public class Maintenance {
                 _w = w;
             }
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 _w.dispose();
             }

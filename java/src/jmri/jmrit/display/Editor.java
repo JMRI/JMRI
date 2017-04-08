@@ -23,7 +23,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -149,14 +148,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     private boolean _loadFailed = false;
 
-    boolean showCloseInfoMessage = true;	//display info message when closing panel
+    boolean showCloseInfoMessage = true; //display info message when closing panel
 
     protected ArrayList<Positionable> _contents = new ArrayList<Positionable>();
     protected JLayeredPane _targetPanel;
     private JFrame _targetFrame;
     private JScrollPane _panelScrollPane;
 
-    // Option menu items 
+    // Option menu items
     protected int _scrollState = SCROLL_NONE;
     protected boolean _editable = true;
     private boolean _positionable = true;
@@ -803,10 +802,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Control whether target panel items are controlling layout items. Does
-     * this by invoke the {@link Positionable#setControlling} function of each
-     * item on the target panel. This also controls the relevant pop-up menu
-     * items.
+     * Control whether target panel items are controlling layout items.
+     * <p>
+     * Does this by invoking the {@link Positionable#setControlling} function
+     * of each item on the target panel. This also controls the relevant
+     * pop-up menu items.
      *
      * @param state true for controlling.
      */
@@ -1703,7 +1703,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //                log.error("No such Icon Editor \""+name+"\"");
                 return null;
             }
-            // frame added in the above switch 
+            // frame added in the above switch
             frame = _iconEditorFrame.get(name);
 
             if (frame == null) { // addTextEditor does not create a usable frame
@@ -2333,7 +2333,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             log.debug("putIcon: {} url= {}", (icon == null ? "null" : "icon"), url);
         }
         PositionableLabel l = new PositionableLabel(icon, this);
-//        l.setPopupUtility(null);        // no text 
+//        l.setPopupUtility(null);        // no text
         l.setDisplayLevel(ICONS);
         setNextLocation(l);
         putItem(l);
@@ -2441,6 +2441,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             BundleName = "BeanNameLight";
         } else if ("Turnout".equals(name)) {
             BundleName = "BeanNameTurnout"; // called by RightTurnout and LeftTurnout objects in TurnoutIcon.java edit() method
+        } else if ("Block".equals(name)) {
+            BundleName = "BeanNameBlock";
         } else {
             BundleName = name;
         }
@@ -2499,10 +2501,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-                    if (dir != null) {
-                        ea.addDirectoryToCatalog(dir);
-                    }
+                    jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+                    ea.addDirectoryToCatalog();
                 }
 
                 ActionListener init(IconAdder ed) {
@@ -2514,12 +2514,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             findIcon.add(searchItem);
             frame.setJMenuBar(menuBar);
             editor.setParent(frame);
-            // when this window closes, check for saving 
+            // when this window closes, check for saving
             if (add) {
                 frame.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
                         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                         if (log.isDebugEnabled()) {
                             log.debug("windowClosing: HIDE {}", toString());
@@ -2557,7 +2556,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public boolean removeFromContents(Positionable l) {
         removeFromTarget(l);
         //todo check that parent == _targetPanel
-        //Container parent = this.getParent();   
+        //Container parent = this.getParent();
         // force redisplay
         return _contents.remove(l);
     }
@@ -2729,7 +2728,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (getFlag(OPTION_POSITION, p.isPositionable())) {
             int xObj = getItemX(p, deltaX);
             int yObj = getItemY(p, deltaY);
-            // don't allow negative placement, icon can become unreachable 
+            // don't allow negative placement, icon can become unreachable
             if (xObj < 0) {
                 xObj = 0;
             }
@@ -2749,7 +2748,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-//    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case") 
+//    @SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case")
     protected List<Positionable> getSelectedItems(MouseEvent event) {
         double x;
         double y;
@@ -2961,7 +2960,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 if (deg == 0) {
                     p.setOpaque(newUtil.hasBackground());
                 } else {
-                    pos.rotate(deg);                    
+                    pos.rotate(deg);
                 }
             }
         } else if (p instanceof PositionableJPanel) {
@@ -3219,10 +3218,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * set up target panel, frame etc.
      */
     abstract protected void init(String name);
+
     /*
      * Closing of Target frame window.
      */
-
     abstract protected void targetWindowClosingEvent(java.awt.event.WindowEvent e);
 
     /**

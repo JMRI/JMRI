@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a LnHexFileFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class LnHexFileAction extends AbstractAction {
 
@@ -16,6 +16,7 @@ public class LnHexFileAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a LnHexFileFrame
         HexFileFrame f = new HexFileFrame();

@@ -52,16 +52,7 @@ public class StartupPauseModelXml extends AbstractXmlAdapter {
             }
         }
         if (delay != 0) {
-            log.info("Pausing startup actions processing for {} seconds.", delay);
             model.setDelay(delay);
-            try {
-                // delay is in seconds ; sleep takes long, not int
-                Thread.sleep(delay * (long) 1000);
-            } catch (InterruptedException ex) {
-                // warn the user that the pause was not as long as expected
-                log.warn("Pause in startup actions interrupted.");
-            }
-            result = true;
         }
 
         // store the model

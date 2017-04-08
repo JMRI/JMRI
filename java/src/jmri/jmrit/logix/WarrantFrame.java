@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -62,6 +64,8 @@ public class WarrantFrame extends WarrantRoute {
 
     private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
     private long _startTime;
+    private long _TTP = 0;
+    private boolean _forward = true;
     LearnThrottleFrame _learnThrottle = null;       // need access for JUnit test
     static Color myGreen = new Color(0, 100, 0);
 
@@ -69,19 +73,23 @@ public class WarrantFrame extends WarrantRoute {
     JTextField _userNameBox;
     JButton _calculateButton;
     JButton _stopButton;
-    JButton _startButton;
 
     JTabbedPane _tabbedPane;
     JPanel _routePanel;
     JPanel _commandPanel;
+    JRadioButton _isSCWarrant = new JRadioButton(Bundle.getMessage("SmallLayoutTrainAutomater"), false);
+    JRadioButton _isWarrant = new JRadioButton(Bundle.getMessage("NormalWarrant"), true);
+    JCheckBox    _runForward = new JCheckBox(Bundle.getMessage("Forward"));
+    JFormattedTextField _TTPtextField = new JFormattedTextField();
     JCheckBox    _noRampBox = new JCheckBox();
+    JCheckBox    _shareRouteBox = new JCheckBox();
     JCheckBox    _runETOnlyBox = new JCheckBox();
     JRadioButton _eStop = new JRadioButton(Bundle.getMessage("EStop"), false);
     JRadioButton _halt = new JRadioButton(Bundle.getMessage("Halt"), false);
     JRadioButton _resume = new JRadioButton(Bundle.getMessage("Resume"), false);
     JRadioButton _abort = new JRadioButton(Bundle.getMessage("Abort"), false);
     JRadioButton _invisible = new JRadioButton();
-    JTextField _statusBox = new JTextField(90);
+    JTextField   _statusBox = new JTextField(90);
 
     JTextField _searchStatus = new JTextField();
 
@@ -133,10 +141,18 @@ public class WarrantFrame extends WarrantRoute {
         setOrders(orders);      // makes copy
 
         List<ThrottleSetting> tList = warrant.getThrottleCommands();
-        for (int i = 0; i < tList.size(); i++) {
-            ThrottleSetting ts = new ThrottleSetting(tList.get(i));
-            _throttleCommands.add(ts);
+        if (warrant instanceof SCWarrant) {
+            _TTP = ((SCWarrant)warrant).getTimeToPlatform();
+            _forward = ((SCWarrant)warrant).getForward();
         }
+        if (tList!=null) {
+            for (int i = 0; i < tList.size(); i++) {
+                ThrottleSetting ts = new ThrottleSetting(tList.get(i));
+                _throttleCommands.add(ts);
+            }                
+        }
+       _shareRouteBox.setSelected(warrant.getShareRoute());
+        _warrant.setShareRoute(warrant.getShareRoute());
         _noRampBox.setSelected(warrant.getNoRamp());
         _warrant.setNoRamp(warrant.getNoRamp());
         _runETOnlyBox.setSelected(warrant.getRunBlind());
@@ -144,7 +160,7 @@ public class WarrantFrame extends WarrantRoute {
         setTrainName(warrant.getTrainName());
         setTrainInfo(warrant.getTrainId());
         _warrant.setTrainName(warrant.getTrainName());
-//        _warrant.setTrainId(warrant.getTrainId());
+        _warrant.setTrainId(warrant.getTrainId());
     }
 
     private void init() {
@@ -228,6 +244,7 @@ public class WarrantFrame extends WarrantRoute {
         _calculateButton = new JButton(Bundle.getMessage("Calculate"));
         _calculateButton.setMaximumSize(_calculateButton.getPreferredSize());
         _calculateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 calculate();
             }
@@ -248,6 +265,7 @@ public class WarrantFrame extends WarrantRoute {
         _stopButton = new JButton(Bundle.getMessage("Stop"));
         _stopButton.setMaximumSize(_stopButton.getPreferredSize());
         _stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 stopRouteFinder();
             }
@@ -310,6 +328,10 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(makeBorderedTrainPanel());
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(makeTypePanel());
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(makeSCParamPanel());
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(makeRecordPanel());
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(makeRunParmsPanel());
@@ -317,7 +339,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(makePlaybackPanel());
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         tab2.add(panel);
-
+ 
         panel = new JPanel();
         String status = getIdleMessage();
 
@@ -349,6 +371,20 @@ public class WarrantFrame extends WarrantRoute {
         return Bundle.getMessage("Idle");
     }
 
+    private void setPanelEnabled(JPanel panel, Boolean isEnabled) {
+        panel.setEnabled(isEnabled);
+
+        Component[] components = panel.getComponents();
+
+        for(int i = 0; i < components.length; i++) {
+            if(components[i].getClass().getName() == "javax.swing.JPanel") {
+                setPanelEnabled((JPanel) components[i], isEnabled);
+            }
+
+            components[i].setEnabled(isEnabled);
+        }
+    }
+    
     private JPanel makeBorderedTrainPanel() {
         JPanel trainPanel = makeTrainIdPanel(null);
 
@@ -361,6 +397,78 @@ public class WarrantFrame extends WarrantRoute {
         return edge;
     }
 
+    private JPanel makeTypePanel() {
+        JPanel typePanel = new JPanel();
+        typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.LINE_AXIS));
+        typePanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        
+        JPanel wTypePanel = new JPanel();
+        wTypePanel.setLayout(new BoxLayout(wTypePanel, BoxLayout.PAGE_AXIS));
+        wTypePanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        ButtonGroup group = new ButtonGroup();
+        group.add(_isSCWarrant);
+        group.add(_isWarrant);
+        _isSCWarrant.setToolTipText(Bundle.getMessage("SCW_Tooltip"));
+        _isWarrant.setToolTipText(Bundle.getMessage("W_Tooltip"));
+        wTypePanel.add(_isSCWarrant);
+        wTypePanel.add(_isWarrant);
+        typePanel.add(wTypePanel);
+        _isSCWarrant.setSelected(_saveWarrant instanceof SCWarrant);
+                
+        JPanel edge = new JPanel();
+        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("SelectType"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        edge.add(typePanel);
+        return edge;
+    }
+    
+    private JPanel makeSCParamPanel() {
+        JPanel scParamPanel = new JPanel();
+        scParamPanel.setLayout(new BoxLayout(scParamPanel, BoxLayout.PAGE_AXIS));
+        scParamPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        
+        scParamPanel.add(_runForward);
+        _runForward.setSelected(_forward);
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        JLabel l = new JLabel(Bundle.getMessage(Bundle.getMessage("TTP")));
+        _TTPtextField.setValue(new Long(_TTP));
+        _TTPtextField.setColumns(6);
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        _TTPtextField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(l);
+        panel.add(_TTPtextField);
+        panel.setToolTipText(Bundle.getMessage("TTPtoolTip"));
+        scParamPanel.add(panel);
+
+        if (_isWarrant.isSelected()) {
+            setPanelEnabled(scParamPanel,false);
+        }
+        
+        _isSCWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(scParamPanel,true);
+            }
+        });
+        _isWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(scParamPanel,false);
+            }
+        });
+        
+        JPanel edge = new JPanel();
+        edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                Bundle.getMessage("SetSCParameters"),
+                javax.swing.border.TitledBorder.CENTER,
+                javax.swing.border.TitledBorder.TOP));
+        edge.add(scParamPanel);
+        return edge;
+    }
+    
     private JPanel makeRecordPanel() {
         JPanel learnPanel = new JPanel();
         learnPanel.setLayout(new BoxLayout(learnPanel, BoxLayout.LINE_AXIS));
@@ -372,6 +480,7 @@ public class WarrantFrame extends WarrantRoute {
         startStopPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JButton startButton = new JButton(Bundle.getMessage("Start"));
         startButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showCommands(true);
                 runLearnModeTrain();
@@ -379,6 +488,7 @@ public class WarrantFrame extends WarrantRoute {
         });
         JButton stopButton = new JButton(Bundle.getMessage("Stop"));
         stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 stopRunTrain();
             }
@@ -390,6 +500,21 @@ public class WarrantFrame extends WarrantRoute {
         startStopPanel.add(stopButton);
         startStopPanel.add(Box.createRigidArea(new Dimension(30 + stopButton.getPreferredSize().width, 10)));
         learnPanel.add(startStopPanel);
+        
+        if (_isSCWarrant.isSelected()) {
+            setPanelEnabled(learnPanel,false);
+        }
+        
+        _isSCWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(learnPanel,false);
+            }
+        });
+        _isWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(learnPanel,true);
+            }
+        });
 
         JPanel edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
@@ -408,11 +533,27 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeTextBoxPanel(_shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
         panel.add(makeTextBoxPanel(_noRampBox, "NoRamping", "ToolTipNoRamping"));
         panel.add(makeTextBoxPanel(_runETOnlyBox, "RunETOnly", "ToolTipRunETOnly"));
                 
         paramsPanel.add(panel);
         
+        if (_isSCWarrant.isSelected()) {
+            setPanelEnabled(panel,false);
+        }
+        
+        _isSCWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(panel,false);
+            }
+        });
+        _isWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(panel,true);
+            }
+        });
+
         JPanel edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
                 Bundle.getMessage("RunParameters"),
@@ -434,6 +575,7 @@ public class WarrantFrame extends WarrantRoute {
         bPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JButton runButton = new JButton(Bundle.getMessage("ARun"));
         runButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 runTrain();
             }
@@ -457,26 +599,49 @@ public class WarrantFrame extends WarrantRoute {
         runPanel.add(panel);
 
         _halt.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.HALT);
             }
         });
         _resume.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.RESUME);
             }
         });
         _eStop.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.ESTOP);
             }
         });
         _abort.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 doControlCommand(Warrant.ABORT);
             }
         });
         runPanel.add(panel);
+
+        if (_isSCWarrant.isSelected()) {
+            setPanelEnabled(panel,false);
+            setPanelEnabled(bPanel,false);
+        }
+        
+        _isSCWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(runPanel,false);
+                setPanelEnabled(bPanel,false);
+            }
+        });
+        _isWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(runPanel,true);
+                setPanelEnabled(bPanel,true);
+            }
+        });
+
         JPanel edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
                 Bundle.getMessage("RunTrain"),
@@ -508,15 +673,36 @@ public class WarrantFrame extends WarrantRoute {
         buttonPanel.add(showRoute);
         buttonPanel.add(showScript);
         showRoute.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showCommands(false);
             }
         });
         showScript.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 showCommands(true);
             }
         });
+
+        if (_saveWarrant instanceof SCWarrant) {
+            showRoute.setSelected(true);
+            showCommands(false);
+            setPanelEnabled(buttonPanel,false);
+        }
+        _isSCWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showRoute.setSelected(true);
+                showCommands(false);
+                setPanelEnabled(buttonPanel,false);
+            }
+        });
+        _isWarrant.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setPanelEnabled(buttonPanel,true);
+            }
+        });
+
         midPanel.add(buttonPanel);
         midPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         midPanel.add(tablePanel);
@@ -549,6 +735,7 @@ public class WarrantFrame extends WarrantRoute {
 
         JButton insertButton = new JButton(Bundle.getMessage("buttonInsertRow"));
         insertButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 insertRow();
             }
@@ -558,6 +745,7 @@ public class WarrantFrame extends WarrantRoute {
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeleteRow"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteRow();
             }
@@ -628,6 +816,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (save()) {
                     close();                   
@@ -643,6 +832,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton copyButton = new JButton(Bundle.getMessage("ButtonCopy"));
         copyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 copy();
             }
@@ -656,6 +846,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 close();
             }
@@ -803,7 +994,7 @@ public class WarrantFrame extends WarrantRoute {
     private void runTrain() {
         String msg = checkTrainId();
         if (msg == null) {
-            if (_throttleCommands == null || _throttleCommands.size() == 0) {
+            if (_throttleCommands.size() <= getOrders().size()) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
             }
         }
@@ -814,6 +1005,7 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         _warrant.setTrainName(getTrainName());
+        _warrant.setShareRoute(_shareRouteBox.isSelected());
         _warrant.setNoRamp(_noRampBox.isSelected());
         if (!_warrant.hasRouteSet() && _runETOnlyBox.isSelected()) {
             msg = Bundle.getMessage("BlindRouteNotSet", _warrant.getDisplayName());
@@ -852,7 +1044,9 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     protected void stopRunTrain() {
-        List<BlockOrder> orders = getOrders();
+        if (_saveWarrant != null && _saveWarrant.getRunMode() != Warrant.MODE_NONE) {
+          return;
+        }
         if (_learnThrottle != null) {
             // if last block is dark and previous block has not been exited, we must assume train
             // has entered the last block now that the user is terminating the recording.
@@ -863,7 +1057,9 @@ public class WarrantFrame extends WarrantRoute {
             _learnThrottle.dispose();
             _learnThrottle = null;
         }
-        if (_warrant != null) {
+
+        if (_warrant.getRunMode() == Warrant.MODE_LEARN) {
+            List<BlockOrder> orders = getOrders();
             if (orders.size()>0) {
                 BlockOrder bo = _warrant.getCurrentBlockOrder();
                 if (bo!=null) {
@@ -883,9 +1079,9 @@ public class WarrantFrame extends WarrantRoute {
                         setStatusText(Bundle.getMessage("LearningStop"), myGreen);                
                     }                                    
                 }
-            }
-            clearWarrant();
-        }        
+            }            
+        }
+        clearWarrant();            
     }
     private void clearWarrant() {
         if (_warrant != null) {
@@ -1084,10 +1280,10 @@ public class WarrantFrame extends WarrantRoute {
         JScrollBar bar = _throttlePane.getVerticalScrollBar();
         bar.setValue(row * ROW_HEIGHT);
 //        bar.setValue(bar.getMaximum());
-    }    
-
+    }
+    
     private boolean save() {
-        if (_warrant.getRunMode()!=Warrant.MODE_NONE) {
+        if (_saveWarrant != null && _saveWarrant.getRunMode() != Warrant.MODE_NONE) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("CannotEdit", _warrant.getDisplayName()),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
@@ -1100,8 +1296,9 @@ public class WarrantFrame extends WarrantRoute {
             return false;
         }
         msg = checkLocoAddress();
-        if (msg==null) {
-            if (_throttleCommands.size()==0) {
+        if (msg==null && !_isSCWarrant.isSelected()) {
+            if (_throttleCommands.size() <= getOrders().size() || 
+                    !_throttleCommands.get(_throttleCommands.size()-1).getBlockName().equals(getOrders().get( getOrders().size()-1).getBlock().getDisplayName())) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
             } else {
                 for (int i=0; i<_throttleCommands.size(); i++) {
@@ -1124,12 +1321,25 @@ public class WarrantFrame extends WarrantRoute {
 
         if (_saveWarrant != null) {
             _warrant = _saveWarrant;
+            if ((_saveWarrant instanceof SCWarrant && !_isSCWarrant.isSelected()) ||
+                    (!(_saveWarrant instanceof SCWarrant) && _isSCWarrant.isSelected())) {
+                // _saveWarrant already registered, but is not the correct class.
+                InstanceManager.getDefault(WarrantManager.class).deregister(_saveWarrant);                
+                _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                        _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());            
+            }
         } else {
-            _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(_sysNameBox.getText(), _userNameBox.getText());            
+            _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                    _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());            
+        }
+
+        if (_isSCWarrant.isSelected()) {
+            ((SCWarrant)_warrant).setForward(_runForward.isSelected());
         }
         _warrant.setDccAddress(getTrainId());
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
+        _warrant.setShareRoute(_shareRouteBox.isSelected());
         _warrant.setNoRamp(_noRampBox.isSelected());
         _warrant.setUserName(_userNameBox.getText());
 
@@ -1184,10 +1394,12 @@ public class WarrantFrame extends WarrantRoute {
             super();
         }
 
+        @Override
         public int getColumnCount() {
             return NUMCOLS;
         }
 
+        @Override
         public int getRowCount() {
             return _throttleCommands.size();
         }
@@ -1238,6 +1450,7 @@ public class WarrantFrame extends WarrantRoute {
             return new JTextField(12).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _throttleCommands.size()) {

@@ -36,8 +36,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -58,6 +58,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     JTextField _nameField;
     JList<String> _sensorGroupList;
 
+    @Override
     public void initComponents() {
         addHelpMenu("package.jmri.jmrit.sensorgroup.SensorGroupFrame", true);
 
@@ -120,6 +121,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         JPanel p4 = new JPanel();
         JButton viewButton = new JButton(" View ");
         viewButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 viewPressed();
             }
@@ -127,6 +129,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p4.add(viewButton);
         JButton addButton = new JButton("Make Group");
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addPressed();
             }
@@ -134,6 +137,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p4.add(addButton);
         JButton undoButton = new JButton("Undo Group");
         undoButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 undoGroupPressed();
             }
@@ -184,6 +188,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p5.add(Box.createHorizontalStrut(10));
         JButton doneButton = new JButton(" Done ");
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 donePressed(e);
             }

@@ -1,4 +1,3 @@
-// MarklinComponentFactory.java
 package jmri.jmrix.marklin.swing;
 
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
@@ -19,6 +18,7 @@ public class MarklinComponentFactory extends jmri.jmrix.swing.ComponentFactory {
      * Provide a menu with all items attached to this system connection
      */
     //JMenu currentMenu;
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;

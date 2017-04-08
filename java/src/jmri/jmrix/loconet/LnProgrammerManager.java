@@ -10,7 +10,7 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet
  *
  * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
   */
 public class LnProgrammerManager extends DefaultProgrammerManager {
 
@@ -29,14 +29,17 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new LnOpsModeProgrammer(mSlotManager, memo, pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }

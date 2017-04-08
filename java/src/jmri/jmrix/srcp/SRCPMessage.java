@@ -33,130 +33,70 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // diagnose format
+    /**
+     *  Detrmine if the message turns off track power
+     *  @return true if the messages is a track power off message,false otherwise 
+     */
     public boolean isKillMain() {
         String s = toString();
         return s.contains("POWER OFF") && s.contains("SET");
     }
 
+    /**
+     *  Detrmine if the message turns on track power
+     *  @return true if the messages is a track power on message,false otherwise 
+     */
     public boolean isEnableMain() {
         String s = toString();
         return s.contains("POWER ON") && s.contains("SET");
     }
 
     // static methods to return a formatted message
+
+    /**
+     * @return an SRCPMessage to turn the track power on
+     */
     static public SRCPMessage getEnableMain() {
         SRCPMessage m = new SRCPMessage("SET 1 POWER ON\n");
         m.setBinary(false);
         return m;
     }
 
+    /**
+     * @return an SRCPMessage to turn the track power off
+     */
     static public SRCPMessage getKillMain() {
         SRCPMessage m = new SRCPMessage("SET 1 POWER OFF\n");
         m.setBinary(false);
         return m;
     }
 
-    /* 
-     * get a static message to add a locomotive to a Standard Consist 
-     * in the normal direction
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
-     * locomotive to add
-     * @return an SRCPMessage of the form GN cc llll 
-     */
-    static public SRCPMessage getAddConsistNormal(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
-        SRCPMessage m = new SRCPMessage(10);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1, 'N');
-        m.setElement(2, ' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5, ' ');
-        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
-        return m;
-    }
 
-    /* 
-     * get a static message to add a locomotive to a standard consist in 
-     * the reverse direction
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
-     * locomotive to add
-     * @return an SRCPMessage of the form GS cc llll 
+    /**
+     * @param bus - a bus number
+     * @return an SRCPMessage to initialize programming on the given bus.
      */
-    static public SRCPMessage getAddConsistReverse(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
-        SRCPMessage m = new SRCPMessage(10);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1, 'R');
-        m.setElement(2, ' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5, ' ');
-        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
-        return m;
-    }
-
-    /* 
-     * get a static message to subtract a locomotive from a Standard Consist
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @param LocoAddress - a jmri.DccLocoAddress object representing the 
-     * locomotive to remove
-     * @return an SRCPMessage of the form GS cc llll 
-     */
-    static public SRCPMessage getSubtractConsist(int ConsistAddress, jmri.DccLocoAddress LocoAddress) {
-        SRCPMessage m = new SRCPMessage(10);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1, 'S');
-        m.setElement(2, ' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        m.setElement(5, ' ');
-        m.addIntAsFourHex(LocoAddress.getNumber(), 6);
-        return m;
-    }
-
-    /* 
-     * get a static message to delete a standard consist
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @return an SRCPMessage of the form GK cc 
-     */
-    static public SRCPMessage getKillConsist(int ConsistAddress) {
-        SRCPMessage m = new SRCPMessage(5);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1, 'K');
-        m.setElement(2, ' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        return m;
-    }
-
-    /* 
-     * get a static message to display a standard consist
-     * @param ConsistAddress - a consist address in the range 1-255
-     * @return an SRCPMessage of the form GD cc 
-     */
-    static public SRCPMessage getDisplayConsist(int ConsistAddress) {
-        SRCPMessage m = new SRCPMessage(5);
-        m.setBinary(false);
-        m.setOpCode('G');
-        m.setElement(1, 'D');
-        m.setElement(2, ' ');
-        m.addIntAsTwoHex(ConsistAddress, 3);
-        return m;
-    }
-
     static public SRCPMessage getProgMode(int bus) {
         String msg = "INIT " + bus + " SM NMRA\n";
         SRCPMessage m = new SRCPMessage(msg);
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @return an SRCPMessage to terminate programming on the given bus.
+     */
     static public SRCPMessage getExitProgMode(int bus) {
-        String msg = "TERM " + bus + "  SM\n";
+        String msg = "TERM " + bus + " SM\n";
         SRCPMessage m = new SRCPMessage(msg);
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @param cv - the CV to read.
+     * @return an SRCPMessage to read the given CV in direct mode the given bus.
+     */
     static public SRCPMessage getReadDirectCV(int bus, int cv) {
         String msg = "GET " + bus + " SM 0 CV " + cv + "\n";
         SRCPMessage m = new SRCPMessage(msg);
@@ -164,6 +104,12 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @param cv - the CV to read.
+     * @param val - a value for the CV.
+     * @return an SRCPMessage to check the given cv has the given val using the given bus.
+     */
     static public SRCPMessage getConfirmDirectCV(int bus, int cv, int val) {
         String msg = "VERIFY " + bus + " SM 0 CV " + cv + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
@@ -172,6 +118,12 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     }
 
+    /**
+     * @param bus - a bus number
+     * @param cv - the CV to write.
+     * @param val - a value for the CV.
+     * @return an SRCPMessage to write the given value to the provided cv using the given bus.
+     */
     static public SRCPMessage getWriteDirectCV(int bus, int cv, int val) {
         String msg = "SET " + bus + " SM 0 CV " + cv + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
@@ -179,6 +131,12 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @param cv - the CV to read.
+     * @param bit - the bit to read.
+     * @return an SRCPMessage to read the given bit of the given CV uisng the provided bus.
+     */
     static public SRCPMessage getReadDirectBitCV(int bus, int cv, int bit) {
         String msg = "GET " + bus + " SM 0 CVBIT " + cv + " " + bit + "\n";
         SRCPMessage m = new SRCPMessage(msg);
@@ -186,24 +144,44 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @param cv - the CV to read.
+     * @param bit - the bit to read.
+     * @param val - the value to check
+     * @return an SRCPMessage to verify the given bit of the given CV has the given val uisng the provided bus.
+     */
     static public SRCPMessage getConfirmDirectBitCV(int bus, int cv, int bit, int val) {
-        String msg = "VERIFY " + bus + " SM 0 CV " + cv + " " + bit + " " + val + "\n";
+        String msg = "VERIFY " + bus + " SM 0 CVBIT " + cv + " " + bit + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
 
     }
 
+    /**
+     * @param bus - a bus number
+     * @param cv - the CV to write.
+     * @param bit - the bit to write
+     * @param val - the value to write
+     * @return an SRCPMessage to write the given value to the given bit of the given CV uisng the provided bus.
+     */
     static public SRCPMessage getWriteDirectBitCV(int bus, int cv, int bit, int val) {
-        String msg = "SET " + bus + " SM 0 CV " + cv + " " + bit + " " + val + "\n";
+        String msg = "SET " + bus + " SM 0 CVBIT " + cv + " " + bit + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @param reg - a register to read.  Restricted to valuse less than 8.
+     * @return an SRCPMessage to read the provided register using the given bus.
+     * @throws IllegalArgumentException if the register value is out of range.
+     */
     static public SRCPMessage getReadRegister(int bus, int reg) {
         if (reg > 8) {
-            log.error("register number too large: " + reg);
+            throw new IllegalArgumentException("register number too large: " + reg);
         }
         String msg = "GET " + bus + " SM 0 REG " + reg + "\n";
         SRCPMessage m = new SRCPMessage(msg);
@@ -211,9 +189,16 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @param reg - a register to read.  Restricted to valuse less than 8.
+     * @param val - a value for the register
+     * @return an SRCPMessage to verify the provided register has the expected val using the given bus.
+     * @throws IllegalArgumentException if the register value is out of range.
+     */
     static public SRCPMessage getConfirmRegister(int bus, int reg, int val) {
         if (reg > 8) {
-            log.error("register number too large: " + reg);
+            throw new IllegalArgumentException("register number too large: " + reg);
         }
         String msg = "VERIFY " + bus + " SM 0 REG " + reg + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
@@ -221,9 +206,16 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * @param bus - a bus number
+     * @param reg - a register to write.  Restricted to valuse less than 8.
+     * @param val - a value for the register
+     * @return an SRCPMessage to write the given value to the provided register using the given bus.
+     * @throws IllegalArgumentException if the register value is out of range.
+     */
     static public SRCPMessage getWriteRegister(int bus, int reg, int val) {
         if (reg > 8) {
-            log.error("register number too large: " + reg);
+            throw new IllegalArgumentException("register number too large: " + reg);
         }
         String msg = "SET " + bus + " SM 0 REG " + reg + " " + val + "\n";
         SRCPMessage m = new SRCPMessage(msg);
@@ -237,4 +229,4 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)SRCPMessage.java */
+

@@ -69,7 +69,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.11 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.11/openlcb-0.7.11.jar or the maven central repository.
+- 0.7.12 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.12/openlcb-0.7.12.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -105,7 +105,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - JSON processing library com.fasterxml.jackson
 - version 2.0.6
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
+- Javadoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
 
 bluecove-2.1.1-SNAPSHOT.jar
 lib/bluecove-bluez-2.1.1-SNAPSHOT.jar
@@ -273,6 +273,9 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### rscbundlecheck.jar
 - check for duplicated properties
+
+##### system-rules-1.16.0.jar
+- Handle rules for testing calls to java.System methods
 
 ##### AppleJavaExtensions.jar
 - version 1.5

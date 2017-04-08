@@ -20,21 +20,30 @@ import org.slf4j.LoggerFactory;
  * Provides for delayed initializatio of Section when loading panel files, so
  * that this is not dependent on order of items in the panel file.
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class TransitSection {
 
     /**
-     * Main constructor method
+     * Create a TransitSection. This calls the alternate constructor with false
+     * for the alt value.
+     *
+     * @param s         the section to add to the transit
+     * @param seq       the sequence number of the section in the transit
+     * @param direction the direction of travel within the transit
      */
     public TransitSection(jmri.Section s, int seq, int direction) {
-        mSection = s;
-        mSequence = seq;
-        mDirection = direction;
+        this(s, seq, direction, false);
     }
 
     /**
-     * Convenience constructor
+     * Create an alternate or primary TransitSection.
+     *
+     * @param s         the section to add to the transit
+     * @param seq       the sequence number of the section in the transit
+     * @param direction the direction of travel within the transit
+     * @param alt       true if the section is an alternate; false if section is
+     *                  primary or has no alternates
      */
     public TransitSection(jmri.Section s, int seq, int direction, boolean alt) {
         mSection = s;
@@ -44,7 +53,14 @@ public class TransitSection {
     }
 
     /**
-     * Special constructor to delay Section initialization
+     * Create an alternate or primary TransitSection with a delayed
+     * initialization.
+     *
+     * @param secName   the name of the section to add to the transit
+     * @param seq       the sequence number of the section in the transit
+     * @param direction the direction of travel within the transit
+     * @param alt       true if the section is an alternate; false if section is
+     *                  primary or has no alternates
      */
     public TransitSection(String secName, int seq, int direction, boolean alt) {
         tSectionName = secName;
@@ -58,7 +74,7 @@ public class TransitSection {
     private Section mSection = null;
     private int mSequence = 0;
     private int mDirection = 0;
-    private ArrayList<TransitSectionAction> mTransitSectionActionList = new ArrayList<TransitSectionAction>();
+    private final ArrayList<TransitSectionAction> mTransitSectionActionList = new ArrayList<>();
     private boolean mAlternate = false;
 
     // temporary variables and method for delayed initialization of Section
@@ -88,7 +104,10 @@ public class TransitSection {
     }
 
     /**
-     * Access methods
+     * Get the associated section.
+     *
+     * @return the section or null if no section is associated with this
+     *         TransitSection
      */
     public Section getSection() {
         if (needsInitialization) {
@@ -131,14 +150,12 @@ public class TransitSection {
     }
 
     /**
-     * Get a copy of this TransitSection's TransitSectionAction list
+     * Get a list of the actions for this TransitSection
+     *
+     * @return a list of actions or an empty list if there are no actions
      */
     public ArrayList<TransitSectionAction> getTransitSectionActionList() {
-        ArrayList<TransitSectionAction> list = new ArrayList<TransitSectionAction>();
-        for (int i = 0; i < mTransitSectionActionList.size(); i++) {
-            list.add(mTransitSectionActionList.get(i));
-        }
-        return list;
+        return new ArrayList<>(mTransitSectionActionList);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());

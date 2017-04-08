@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet
  * port.
  *
- * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 adapter by
+ * @author Giorgio Terdina Copyright (C) 2008-2011, based on LI100 adapter by
  * Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
  * GT - May 2008 - Added possibility of manually
  * defining the IP address and the TCP port number GT - May 2008 - Added
@@ -39,17 +39,17 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     static final int DEFAULT_UDP_PORT = 61234;
     static final int DEFAULT_TCP_PORT = 61235;
     static final String DEFAULT_IP_ADDRESS = "10.1.0.1";
-    static final int UDP_LENGTH = 18;			// Length of UDP packet
+    static final int UDP_LENGTH = 18;   // Length of UDP packet
     static final int BROADCAST_TIMEOUT = 1000;
     static final int READ_TIMEOUT = 8000;
     // Increasing MAX_PENDING_PACKETS makes output to CS faster, but may delay reception of unexpected notifications from CS
-    static final int MAX_PENDING_PACKETS = 15;	// Allow a buffer of up to 128 bytes to be sent before waiting for acknowledgment
+    static final int MAX_PENDING_PACKETS = 15; // Allow a buffer of up to 128 bytes to be sent before waiting for acknowledgment
 
-    private Vector<String> hostNameVector = null;		// Contains the list of interfaces found on the LAN
-    private Vector<HostAddress> HostAddressVector = null;	// Contains their IP and port numbers
+    private Vector<String> hostNameVector = null;  // Contains the list of interfaces found on the LAN
+    private Vector<HostAddress> HostAddressVector = null; // Contains their IP and port numbers
     private InputStream inTcpStream = null;
     private OutputTcpStream outTcpStream = null;
-    private int pendingPackets = 0;			// Number of packets sent and not yet acknowledged
+    private int pendingPackets = 0;   // Number of packets sent and not yet acknowledged
     private String outName = "Manual";  // Interface name, used for possible error messages (can be either the netBios name or the IP address)
 
     public XnTcpAdapter() {
@@ -271,6 +271,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
     /**
      * set up all of the other objects to operate with a XnTcp interface
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
@@ -333,6 +334,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             count = -1; // First byte should contain packet's length
         }
 
+        @Override
         public void write(int b) throws java.io.IOException {
             // Make sure that we don't interleave bytes, if called
             // at the same time by different threads
@@ -356,6 +358,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             }
         }
 
+        @Override
         public void write(byte[] b, int off, int len) throws java.io.IOException {
             // Make sure that we don't mix bytes of different packets, 
             // if called at the same time by different threads

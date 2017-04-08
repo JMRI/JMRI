@@ -112,7 +112,7 @@ import org.slf4j.LoggerFactory;
  * in millimeter units. A length of 0.0 indicates no entry of length by the
  * user.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
  * @author Dave Duchamp Copywright (C) 2009
  */
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
@@ -134,6 +134,30 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     static final public int GRADUAL = 0x01;
     static final public int TIGHT = 0x02;
     static final public int SEVERE = 0x04;
+
+    // this should only be used for debugging…
+    public String toString() {
+        String result = getFullyFormattedDisplayName() + " ";
+        switch (getState()) {
+            case UNDETECTED: {
+                    result += "UNDETECTED";
+                break;
+            }
+            case UNOCCUPIED: {
+                    result += "UNOCCUPIED";
+                break;
+            }
+            case OCCUPIED: {
+                    result += "OCCUPIED";
+                break;
+            }
+            default: {
+                    result += "unknown " + getState();
+                break;
+            }
+        }
+        return result;
+    }
 
     /*
      * return true if a Sensor is set
@@ -606,15 +630,15 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             }
         }
     }
-    
+
     public void goingUnknown() {
         setValue(null);
-        setState(UNKNOWN);       
+        setState(UNKNOWN);
     }
-    
+
     public void goingInconsistent() {
         setValue(null);
-        setState(INCONSISTENT);        
+        setState(INCONSISTENT);
     }
 
     /**
@@ -837,7 +861,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /*
-     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an 
+     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an
      * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
      * trigger a propertyChangeEvent.
      */

@@ -29,13 +29,13 @@
     <div id="mainContent">
       <h1>JMRI: Signal Mast Logic</h1>
 
-      <p class="subtitle">Information on Signal Mast Logic</p>
+      <h2>Introduction to SML</h2>
 
       <div class="para">
-        JMRI Signal Mast Logic allows you to build up a set of
-        criteria for a Signal Mast as to what Aspect it should be
-        displaying for a specific route through to a destination
-        Signal Mast.
+        JMRI Signal Mast Logic (in short: SML) allows you to build
+        up a set of criteria for a Signal Mast as to what Aspect
+        it should be displaying for a specific route through to a
+        destination Signal Mast.
 
         <p>Each Signal Mast Logic is built from a source and
         destination Signal Mast pair, along with a series of
@@ -43,12 +43,12 @@
         and the state that they must be in for the source Signal
         Mast to be released from a "Danger" or "Stop" Aspect.</p>
 
-        <p><img src="images/logic1.png" width="437" height=
-        "92"><br>
-        Example 1</p>
+        <h3>Example 1</h3>
+        <img src="images/logic1.png" width="437" height=
+        "92" align="right">
 
-        <p>In the example above, you have a source Signal Mast
-        SM20, there are then two destination Signal Masts: SM22 and
+        <p>In this first example, you have a source Signal Mast
+        SM20, and two destination Signal Masts: SM22 and
         SM23.<br>
         The logic behind signaling pair SM20 to SM23 is that Blocks
         2 &amp; 3 must be unoccupied, and Turnout IT1 must be set
@@ -63,15 +63,14 @@
         the other, without any other other Signal Mast in-between
         in the same direction.</p>
 
-        <p><img src="images/logic2.png" width="511" height=
-        "93"><br>
-        Example 2</p>
+        <h3>Example 2</h3>
+        <img src="images/logic2.png" width="511" height=
+        "93" align="right">
 
-        <p>In the example above, a Signal Mast Logic from SM20 to
+        <p>In this second example, a Signal Mast Logic from SM20 to
         SM24 would be invalid as SM23 is in between the two. You
         would have to create two separate Signal Mast Logics, one
-        as above for SM20 to SM23, the second for SM23 to SM24.</p>
-        <hr>
+        as in example 1 for SM20 to SM23, the second for SM23 to SM24.</p>
 
         <p>Which Aspect our source Signal Mast displays after being
         released from "Danger" is firstly determined by the Aspect
@@ -85,7 +84,6 @@
 
         <ul>
           <li>Diverging route
-
             <ul>
               <li>If there are Aspects for a Diverging route and
               any of the Turnouts on the path are set to Thrown
@@ -99,7 +97,6 @@
           </li>
 
           <li>Block/Signal Speed
-
             <ul>
               <li>If the Diverging route is not available on the
               signal Aspects, or it does not return a single
@@ -130,13 +127,13 @@
         protecting the crossover should be part of each others
         criteria.</p>
 
-        <h2>Manual and Auto Generated Logic Information</h2>The
-        Signal Mast Logic window holds two areas showing Block and
-        Turnout information: the first is user generated, the
+        <h2>Manual and Auto Generated Logic Information</h2>
+        <p>The Signal Mast Logic window holds two areas showing Block
+        and Turnout information: the first is user generated, the
         second is where a tool such as used with the Layout Editor
         (<a href="#autologic">see below</a>) has automatically
         built up a set of Blocks or Turnouts from the panel layout
-        as signaling criteria.
+          as signaling criteria.</p>
 
         <p>Both sets of information are used by JMRI to determine
         if a Signal Mast can be released or not, however the
@@ -155,23 +152,12 @@
         information is not done on the "fly" when a Layout Editor
         panel is changed and saved without exiting JMRI.</p>
 
-        <h2>Logic to Un-Signaled Areas or Buffer Stops</h2>The
-        Signal Mast Logic works only between a source and
-        destination Signal Mast, so if you have a valid route to an
-        End Bumper/Buffer Stop/Dark Area, then there is no specific
-        destination Signal Mast. In this situation you would create
-        a "dummy" Signal Mast of type Virtual in de Signal Mast
-        Table to act as your destination Signal Mast. It doesn't
-        have to represent a signal on the layout or have Signal
-        Heads associated. All that this Virtual Signal Mast has to
-        do is display a "Danger" aspect.
-
-        <h2>Using the Layout Editor for Signal Mast Logic</h2>By
-        using the Layout Block Editor, it is possible to have the
+        <h2>Using the Layout Editor for Signal Mast Logic</h2>
+        <p>By using the Layout Block Editor, it is possible to have the
         Signal Mast Logic determine the signaling pairs, along with
         the Blocks and Turnouts that make up the criteria. This can
         be done across all the Signal Masts on the Layout Editor or
-        on a source Signal Mast basis.
+          on a source Signal Mast basis.</p>
 
         <p>It has the advantage that if the Layout Editor panel is
         changed, JMRI will discover this change when the panel is
@@ -181,18 +167,19 @@
         Signal Logic pairs, it will simply update the information
         between existing pairs.</p>
 
-        <h3>Placing Signal Masts</h3>Signal Masts can be placed at
+        <h3>Placing Signal Masts</h3>
+        <p>Signal Masts can be placed at
         Turnouts, anchor points and level crossings, but only where
-        there is a boundary between two different layout blocks.
+          there is a boundary between two different layout blocks.</p>
 
         <p>To add a Signal Mast using a Layout Editor Panel, right
         click on the Turnout, level crossing or anchor point and if
         a block boundary exists you will be given the option to
         "Set Signal Mast..."</p>
 
-        <p><img src="images/popup.png" height="316" width=
-        "300"><br>
-        Example 3</p>
+        <h3>Example 3</h3>
+        <img src="images/popup.png" height="316" width=
+        "300" align="right">
 
         <p>You will then be presented with a fresh window that
         allows you to enter in the name of the Signal Mast that
@@ -214,11 +201,12 @@
         in the Signal Logic Table for every possible
         connection.<br>
         Manually add Signal Icons to your panel by right-clicking
-        and choosing "Add icon". <a name="autologic" id=
-        "autologic"></a></p>
+        and choosing "Add icon".</p>
 
-        <h3>Generate Signal Mast Logic</h3>Signal Mast Logic can
-        automatically be generated in three different ways:
+        <h2><a name="autologic" id=
+                "autologic">Create Signal Mast Logic</a></h2>
+        <p>Signal Mast Logic can automatically be generated in three
+          different ways:</p>
 
         <ul>
           <li>The first method is to build it on a Signal Mast by
@@ -226,56 +214,83 @@
           Mast Logic" from the pop up menu for the Signal Mast icon
           on the panel. After click on the "Discover" button, the
           system will go and find all potential destination Signal
-          Masts that are valid from the selected Signal Mast.
+          Masts that are valid from the selected Signal Mast.<br>
           <img src="images/discover.png" width="502" height=
           "209"></li>
 
-          <li>The second method is from the <b>Tools &gt; Auto
+          <li><img src="images/pairs.png" width="308"
+                   height="125" align="right">
+          The second method is from the <b>Tools &gt; Auto
           generate Signaling Pairs</b> menu in the Signal Mast
           Logic Table. This will generate Signal Mast Logic based
           upon all the Signal Masts on the Layout Editor panel. If
-          necessary, this will give you the option to activate
-          Block Routing. <img src="images/pairs.png" width="308"
-          height="125"><br>
+          not yet active, it will give you the option to activate
+          Layout Block Routing.<br>
           Please be aware that on large layouts with a large number
           of signal masts configured, this can take some time.</li>
 
           <li>It is even easier if you use hardware like <a href=
-          "http://www.rr-cirkits.com">RR-Circuits Signalman</a>, or
-          the even easier to use pre-configured <a href=
+          "http://www.rr-cirkits.com">RR-Circuits Signalman</a>, and
+          the easiest using pre-configured <a href=
           "http://signalist.co.uk">Signalist SC1</a> that support
           the NMRA signal aspect commands. You can skip the Signal
           Head and Layout Editor steps and go right to creating the
           Signal Mast as a single entry and the hardware handles
           all of the LED/lamp lighting, etc.</li>
-        </ul><!-- JMRI groups message -->
-        Access to configuring Signal Mast Logic can be done from
-        three different locations:
+        </ul>
+
+        <p>You manually add new Signal Mast Logic pairs by clicking
+        either
+        <ul>
+          <li>the
+          "Add..." button at the bottom of the Signal Mast Logic
+          table or</li>
+          <li>the "Add Logic" button at the bottom of the Signal
+          Mast Logic Pairs pane.</li>
+        </ul>
+        Both will take you to the
+        <a href=
+                   "../../../package/jmri/jmrit/beantable/AddEditSignalingLogic.shtml">
+          "Add Edit Signal Mast Logic" pane</a>.</p>
+
+
+        <h3>Changing Signal Mast Logic</h3>
+        <!-- JMRI groups message -->
+        Configuration of an existing Signal Mast Logic can be accessed
+        from three different locations:
 
         <ul>
           <li>In the <a href=
           "../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">
           Signal Mast Logic Table</a> there is an Edit button for
-          each Signal Mast Logic pair</li>
+          each Signal Mast Logic pair.</li>
 
-          <li>From the <a href=
+          <li>In the <a href=
           "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
-          Signal Mast Table</a>, there is an Edit Logic button for
-          each Signal Mast, wich opens a window from which you can
-          select one of the Signalling Pairs set for this Signal
+          Signal Mast Table</a>, there is an "Edit Logic" button for
+          each Signal Mast, which opens a pane from which you can
+          select one of the Signalling Pairs set for this source Signal
           Mast.</li>
 
-          <li>From the pop-up menu that appears when you
+          <li>In the pop-up menu that appears when you
           right-click on a Signal Mast Icon on a Layout Editor
-          panel, there is a menu item for Signal Mast Logic</li>
-        </ul>You manually add new Signal Mast Logic pairs with the
-        "Add..." button at the bottom of each of the subsequent
-        tables, which takes you to the <a href=
-        "../../../package/jmri/jmrit/beantable/AddEditSignalingLogic.shtml">
-        "Add Edit Signal Mast Logic" window</a>.
+          Panel, using the Signal Mast Logic menu item.</li>
+        </ul>
+
+        <h2>Logic to Un-Signaled Areas or Buffer Stops</h2>
+        <p>The Signal Mast Logic works only between a source and
+          destination Signal Mast, so if you have a valid route to an
+          End Bumper/Buffer Stop/Dark Area, then there is no specific
+          destination Signal Mast. In this situation you would create
+          a "dummy" Signal Mast of type Virtual in de Signal Mast
+          Table to act as your destination Signal Mast. It doesn't
+          have to represent a signal on the layout or have Signal
+          Heads associated. All that this Virtual Signal Mast has to
+          do is display a "Danger" aspect.</p>
 
         <p>Back to the <a href="index.shtml#tools">Signaling main
-        help page</a>. <!--#include virtual="/Footer" --></p>
+        help page</a>.</p>
+        <!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div>

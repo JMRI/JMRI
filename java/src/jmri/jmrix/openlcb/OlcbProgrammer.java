@@ -11,8 +11,8 @@ import jmri.ProgrammingMode;
  * <P>
  * Programmers come in multiple types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously "Service Mode" or on a programming track
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main"
  * </UL>
  * Different equipment may also require different programmers:
  * <ul>
@@ -25,7 +25,7 @@ import jmri.ProgrammingMode;
  * Depending on which type you have, only certain modes can be set. Valid modes
  * are specified by the class static constants.
  * <P>
- * You get a Programmer object from a {@link jmri.ProgrammerManager}, which in turn
+ * You get a Programmer object from a {@link jmri.AddressedProgrammer}, which in turn
  * can be located from the {@link jmri.InstanceManager}.
  * <p>
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
@@ -41,9 +41,8 @@ import jmri.ProgrammingMode;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @see jmri.ProgrammerManager
- * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @see jmri.AddressedProgrammer
+ * @author Bob Jacobsen Copyright (C) 2015
  * @since 4.1.1
  */
 public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmri.AddressedProgrammer  {
@@ -80,10 +79,13 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
     }
     
+    @Override
     public boolean getLongAddress() { return false;}
 
+    @Override
     public int getAddressNumber() {return 0;}
 
+    @Override
     public String getAddress() { return "";}
 
 }

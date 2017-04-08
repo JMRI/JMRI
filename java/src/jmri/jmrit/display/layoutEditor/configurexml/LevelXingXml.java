@@ -27,6 +27,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
      * @param o Object to store, of type LevelXing
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LevelXing p = (LevelXing) o;
@@ -119,6 +120,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;

@@ -1,4 +1,3 @@
-// NceLightManagerXml.java
 package jmri.jmrix.nce.configurexml;
 
 import org.jdom2.Element;
@@ -19,10 +18,12 @@ public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLight
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.nce.configurexml.NceLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

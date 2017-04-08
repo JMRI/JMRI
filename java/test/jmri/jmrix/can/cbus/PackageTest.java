@@ -37,6 +37,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.cbus.configurexml.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.can.cbus.swing.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CbusReporterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusConstantsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusEventFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CbusOpCodesTest.class));
         return suite;
     }
 

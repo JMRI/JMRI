@@ -4471,34 +4471,34 @@
       </label>
       <row>
         <column>
-          <display item="Output 1 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 1 Type" tooltip="Configures the output for specific use"/>
           <label>
             <text> </text>
           </label>
-          <display item="Output 2 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 2 Type" tooltip="Configures the output for specific use"/>
           <label>
             <text> </text>
           </label>
-          <display item="Output 3 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 3 Type" tooltip="Configures the output for specific use"/>
           <label>
             <text> </text>
           </label>
-          <display item="Output 4 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 4 Type" tooltip="Configures the output for specific use"/>
         </column>
         <column>
-          <display item="Output 5 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 5 Type" tooltip="Configures the output for specific use"/>
           <label>
             <text> </text>
           </label>
-          <display item="Output 6 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 6 Type" tooltip="Configures the output for specific use"/>
           <label>
             <text> </text>
           </label>
-          <display item="Output 7 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 7 Type" tooltip="Configures the output for specific use"/>
           <label>
             <text> </text>
           </label>
-          <display item="Output 8 Type" tooltip="Configures the output for specfic use"/>
+          <display item="Output 8 Type" tooltip="Configures the output for specific use"/>
         </column>
       </row>
       <label>
@@ -4506,7 +4506,7 @@
       </label>
       <display item="On Time CV value" tooltip="Range 1-127"/>
       <label>
-        <text>              Sets the pulse lenght for outputs configurated as Pulse</text>
+        <text>              Sets the pulse length for outputs configured as Pulse</text>
       </label>
       <label>
         <text>              Duration in seconds = CV value times .256</text>

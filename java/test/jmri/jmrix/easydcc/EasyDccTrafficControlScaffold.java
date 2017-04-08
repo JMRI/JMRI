@@ -19,6 +19,7 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
     }
 
     // override some EasyDccTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -28,6 +29,7 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
      */
     public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendEasyDccMessage [" + m + "]");
@@ -48,6 +50,12 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
             log.debug("sendTestMessage    [" + m + "]");
         }
         notifyMessage(m, l);
+        return;
+    }
+
+    protected void sendTestReply(EasyDccReply m) {
+        // forward a test message to Listeners
+        notifyReply(m, null);
         return;
     }
 

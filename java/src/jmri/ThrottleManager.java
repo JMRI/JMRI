@@ -1,10 +1,12 @@
 package jmri;
 
+import java.beans.PropertyChangeListener;
+
 /**
  * Interface for allocating {@link Throttle} objects.
  * <P>
  * "Address" is interpreted in the context of the DCC implementation. Different
- * systems will distinquish between short and long addresses in different ways.
+ * systems will distinguish between short and long addresses in different ways.
  * <P>
  * When the allocated Throttle is no longer needed, it is told that it's
  * released. If a specific ThrottleManager and/or Throttle implementation needs
@@ -21,21 +23,21 @@ package jmri;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Glen Oberhauser
- * @author	Bob Jacobsen Copyright 2006
+ * @author Glen Oberhauser
+ * @author Bob Jacobsen Copyright 2006
  */
 public interface ThrottleManager {
 
     /**
-     * Request a throttle from a given Roster Entry. When the decoder address is
+     * Request a throttle from a given RosterEntry. When the decoder address is
      * located, the ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
      *
-     * @param re The Roster Entry desired.
-     * @param l  The ThrottleListener awaiting notification of a found throttle.
-     * @return True if the request will continue, false if the request will not
-     *         be made. False may be returned if a the throttle is already in
-     *         use.
+     * @param re desired RosterEntry
+     * @param l  ThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
      */
     public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l);
 
@@ -47,29 +49,26 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
-     * @param address The decoder address desired.
-     * @param l       The ThrottleListener awaiting notification of a found
-     *                throttle.
-     * @return True if the request will continue, false if the request will not
-     *         be made. False may be returned if a the throttle is already in
-     *         use.
+     * @param address desired decoder address
+     * @param l       ThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
      */
     public boolean requestThrottle(int address, ThrottleListener l);
 
     /**
-     * Request a throttle, given a decoder address {@literal &} whether it is a
-     * long or short DCC address. When the decoder address is located, the
+     * Request a throttle, given a decoder address and whether it is a long or
+     * short DCC address. When the decoder address is located, the
      * ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
      *
-     * @param address The decoder address desired.
-     * @param isLong  True if this is a request for a DCC long (extended)
-     *                address.
-     * @param l       The ThrottleListener awaiting notification of a found
-     *                throttle.
-     * @return True if the request will continue, false if the request will not
-     *         be made. False may be returned if a the throttle is already in
-     *         use.
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l       ThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
      */
     public boolean requestThrottle(int address, boolean isLong, ThrottleListener l);
 
@@ -81,12 +80,11 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
-     * @param address The decoder address desired.
-     * @param l       The ThrottleListener awaiting notification of a found
-     *                throttle.
-     * @return True if the request will continue, false if the request will not
-     *         be made. False may be returned if a the throttle is already in
-     *         use.
+     * @param address desired decoder address
+     * @param l       ThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
      */
     public boolean requestThrottle(DccLocoAddress address, ThrottleListener l);
 
@@ -98,13 +96,12 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
-     * @param address The decoder address desired.
-     * @param re      The RosterEntry desired.
-     * @param l       The ThrottleListener awaiting notification of a found
-     *                throttle.
-     * @return True if the request will continue, false if the request will not
-     *         be made. False may be returned if a the throttle is already in
-     *         use.
+     * @param address desired decoder address
+     * @param re      desired RosterEntry
+     * @param l       ThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
      */
     public boolean requestThrottle(DccLocoAddress address, BasicRosterEntry re, ThrottleListener l);
 
@@ -114,8 +111,8 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
-     * @param re The Roster Entry desired.
-     * @param l  The ThrottleListener cancelling request for a throttle.
+     * @param re desired Roster Entry
+     * @param l  ThrottleListener canceling the request for a throttle
      */
     public void cancelThrottleRequest(BasicRosterEntry re, ThrottleListener l);
 
@@ -125,98 +122,113 @@ public interface ThrottleManager {
      * This is a convenience version of the call, which uses system-specific
      * logic to tell whether the address is a short or long form.
      *
-     * @param address The decoder address desired.
-     * @param l       The ThrottleListener cancelling request for a throttle.
+     * @param address desired decoder address
+     * @param l       ThrottleListener canceling request for a throttle
      */
     public void cancelThrottleRequest(int address, ThrottleListener l);
 
     /**
      * Cancel a request for a throttle.
      *
-     * @param address The decoder address desired.
-     * @param isLong  True if this is a request for a DCC long (extended)
-     *                address.
-     * @param l       The ThrottleListener cancelling request for a throttle.
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l       ThrottleListener canceling request for a throttle
      */
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l);
 
     /**
-     * Check to see if the Dispatch Button should be enabled or not
+     * Test if the Dispatch Button should be enabled or not.
      *
+     * @return true if dispatch is possible; false otherwise
      */
     public boolean hasDispatchFunction();
 
     /**
-     * Check to see if a specific number is a valid long address on this system
+     * Test if a specific number is a valid long address on this system.
      *
+     * @param address address number to test
+     * @return true if address can be long; false otherwise
      */
     public boolean canBeLongAddress(int address);
 
     /**
-     * Check to see if a specific number is a valid short address on this system
+     * Test if a specific number is a valid short address on this system.
      *
+     * @param address address number to test
+     * @return true if address can be short; false otherwise
      */
     public boolean canBeShortAddress(int address);
 
     /**
-     * Are there not any ambiguous addresses (short vs long) on this system?
-     * This is also used to indicate systems that support multi-protocol
-     * decoders
+     * Test if ambiguous addresses (short vs long) are not allowed on this
+     * system. Also indicates support for multi-protocol decoders.
+     *
+     * @return true if ambiguous addresses are not allowed; false otherwise
      */
     public boolean addressTypeUnique();
 
     /**
      * This returns a list of the different protocols that are supported by the
-     * system, to include short vs long or DCC vs Selectrix vs Motorola
+     * system, to include short vs long or DCC vs Selectrix vs Motorola.
+     *
+     * @return the list of supported address protocols
      */
     public String[] getAddressTypes();
 
     /**
-     * return a string value for a given int protocol value
+     * Get a string value for a given protocol value.
+     *
+     * @param prot the protocol
+     * @return a human-readable, possibly localized, description of the protocol
      */
     public String getAddressTypeString(LocoAddress.Protocol prot);
 
     /**
-     * returns an Integer list of different protocols that are supported by
-     * system, to include short vs long or DCC vs Selectrix vs Motorola
+     * Get a list of different protocols supported by the system, to include
+     * short vs long or DCC vs Selectrix vs Motorola.
+     *
+     * @return a list of supported address protocols
      */
     public LocoAddress.Protocol[] getAddressProtocolTypes();
 
     /**
-     * Get the integer value representing a protocol
+     * Get a protocol given a description.
      *
-     * @param selection specific protocol string, see the specific throttle
-     *                  manager for values
-     * @return the integer value of the protocol
+     * @param selection human-readable, possibly localized, description of the
+     *                  protocol
+     * @return the protocol
      */
     public LocoAddress.Protocol getProtocolFromString(String selection);
 
     /**
-     * Get the object representing a particular address
+     * Get the object representing a particular address.
      *
-     * @param value    String in format specific to the protocol
+     * @param value    address in protocol-specific format
      * @param protocol specific protocol string, see the specific throttle
      *                 manager for values
-     * @return probably of a subtype
+     * @return the address, possibly as a protocol-specific subclass
      */
     public LocoAddress getAddress(String value, String protocol);
 
+    /**
+     * Get the object representing a particular address.
+     *
+     * @param value    address in protocol-specific format
+     * @param protocol the control protocol
+     * @return the address, possibly as a protocol-specific subclass
+     */
     public LocoAddress getAddress(String value, LocoAddress.Protocol protocol);
 
     /**
-     * The string provided in the getAddressTypes of a protocol for a given
-     * address
-     */
-    // public int getMode(int address);
-    /**
-     * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed in the throttle interface
+     * Get the supported speed modes.
+     *
+     * @return an XOR of the possible modes specified in the throttle interface
      */
     public int supportedSpeedModes();
 
     /**
      * Provides a Proxy method to return the SpeedSetting, Direction, Function
-     * Settings, of a throttle, where the requesting code has used the
+     * Settings, of a throttle, where the requesting code has used
      * {@link #attachListener(DccLocoAddress, java.beans.PropertyChangeListener) attachListener}
      * to only be notified of changes in the throttle and not control it.
      * <P>
@@ -225,7 +237,7 @@ public interface ThrottleManager {
      * <P>
      * @param la   DccLocoAddress that we wish interrogate
      * @param item A string of the item we wish to know the value of.
-     * @return the value as an objet, if the loco address has not been assigned
+     * @return the value as an object, if the loco address has not been assigned
      *         to a throttle or the item value is not valid, null is returned.
      */
     public Object getThrottleInfo(DccLocoAddress la, String item);
@@ -238,7 +250,7 @@ public interface ThrottleManager {
      * <P>
      * After releasing the throttle, the manager will perform further checks to
      * see if it is in use by any other listeners or if there are any
-     * propertychangelisteners attached. If there are no other uses of the
+     * PropertyChangeListeners attached. If there are no other uses of the
      * throttle then it is disposed of.
      * <P>
      * Normally, release ends with a call to dispose.
@@ -287,13 +299,13 @@ public interface ThrottleManager {
      * loco address is not in the active in the list, then a new throttle will
      * be created by the manager and the listener attached.
      * <P>
-     * The propertyChangeListener will be notified if it has been attached to a
-     * loco address or not, via a propertyChange notification.
+     * The PropertyChangeListener will be notified if it has been attached to a
+     * loco address or not, via a PropertyChange notification.
      * <p>
      * @param la - DccLocoAddress of the loco we wish to monitor
      * @param p  - PropertyChangeListener to attach to the throttle
      */
-    public void attachListener(DccLocoAddress la, java.beans.PropertyChangeListener p);
+    public void attachListener(DccLocoAddress la, PropertyChangeListener p);
 
     /**
      * Remove a PropertyChangeListener to a specific loco address, where the
@@ -301,18 +313,18 @@ public interface ThrottleManager {
      * {@link #attachListener(DccLocoAddress, java.beans.PropertyChangeListener) attachListener}
      * to get notification of changes in a throttle.
      * <P>
-     * The propertyChangeListener will be notified if it has been removed via a
-     * propertyChange notification.
-     * <P>
+     * The PropertyChangeListener will be notified if it has been removed via a
+     * PropertyChange notification.
+     *
      * @param la - DccLocoAddress of the loco we wish to monitor
-     * @param p  - PropertyChangeListener to attachremove from the throttle
+     * @param p  - PropertyChangeListener to remove from the throttle
      */
-    public void removeListener(DccLocoAddress la, java.beans.PropertyChangeListener p);
+    public void removeListener(DccLocoAddress la, PropertyChangeListener p);
 
-    //public void addressNoLongerRequired(DccLocoAddress la);
     /**
-     * A method to get the Name of the system that the programmer is associated
-     * with.
+     * Get the user name of the system that the programmer is associated with.
+     *
+     * @return the user name for the system
      */
     public String getUserName();
 

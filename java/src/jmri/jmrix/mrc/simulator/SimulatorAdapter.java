@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 /**
  * MRC simulator
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @author	Paul Bender, Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  */
 public class SimulatorAdapter extends MrcPortController implements
@@ -39,6 +39,7 @@ public class SimulatorAdapter extends MrcPortController implements
         super(new MrcSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -58,6 +59,7 @@ public class SimulatorAdapter extends MrcPortController implements
      * set up all of the other objects to simulate operation with an MRC command
      * station.
      */
+    @Override
     public void configure() {
         MrcPacketizer tc = new MrcPacketizer();
         tc.connectPort(this);
@@ -77,6 +79,7 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     // base class methods for the MrcPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");//IN18N
@@ -84,6 +87,7 @@ public class SimulatorAdapter extends MrcPortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");//IN18N
@@ -91,6 +95,7 @@ public class SimulatorAdapter extends MrcPortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -98,15 +103,18 @@ public class SimulatorAdapter extends MrcPortController implements
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");//IN18N
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe.  This is the heart
@@ -222,26 +230,26 @@ public class SimulatorAdapter extends MrcPortController implements
             return reply;
         }
         switch (command) {
-            case MrcPackets.SETCLOCKRATIOCMD:		// set fast clock ratio
-//			reply.setElement(0, 0x06);
-//			reply.setElement(1, 0x02);
-//			reply.setElement(2, 0x01);
+            case MrcPackets.SETCLOCKRATIOCMD:  // set fast clock ratio
+//   reply.setElement(0, 0x06);
+//   reply.setElement(1, 0x02);
+//   reply.setElement(2, 0x01);
                 break;
-            case MrcPackets.SETCLOCKTIMECMD:	// Set clock
+            case MrcPackets.SETCLOCKTIMECMD: // Set clock
                 break;
-            case MrcPackets.SETCLOCKAMPMCMD:	// Set clock mode
+            case MrcPackets.SETCLOCKAMPMCMD: // Set clock mode
                 break;
-            case MrcPackets.THROTTLEPACKETCMD:	// Set clock mode
+            case MrcPackets.THROTTLEPACKETCMD: // Set clock mode
                 reply.setElement(0, MrcPackets.LOCOSOLECONTROLCODE);
                 reply.setElement(1, 0x00);
                 reply.setElement(2, MrcPackets.LOCOSOLECONTROLCODE);
                 reply.setElement(3, 0x00);
                 break;
-//		case MrcMessage.READ_REG_CMD:
-//			reply.setElement(0, 0xff);			// dummy data
-//			//reply.setElement(1,MRC_DATA_OUT_OF_RANGE);  // forces fail
-//			reply.setElement(1,MRC_OKAY);  // forces succeed
-//			break;
+//  case MrcMessage.READ_REG_CMD:
+//   reply.setElement(0, 0xff);   // dummy data
+//   //reply.setElement(1,MRC_DATA_OUT_OF_RANGE);  // forces fail
+//   reply.setElement(1,MRC_OKAY);  // forces succeed
+//   break;
             case MrcPackets.FUNCTIONGROUP2PACKETCMD:
                 // Use this to simulate a missed poll
                 reply = new MrcMessage(6);
@@ -279,117 +287,117 @@ public class SimulatorAdapter extends MrcPortController implements
         }
     }
 
-//	private byte[] turnoutMemory = new byte[256];
-//	private byte[] macroMemory = new byte[256*20+16];	// and a little padding
-//	private byte[] consistMemory = new byte[256*6+16];	// and a little padding
-//	/* Read MRC memory.  This implementation simulates reading the MRC
-//	 * command station memory.  There are three memory blocks that are
-//	 * supported, turnout status, macros, and consists.  The turnout status
-//	 * memory is 256 bytes and starts at memory address 0xEC00. The macro memory
-//	 * is 256*20 or 5120 bytes and starts at memory address 0xC800. The consist
-//	 * memory is 256*6 or 1536 bytes and starts at memory address 0xF500.
-//	 * 
-//	 */
-//	private MrcReply readMemory (MrcMessage m, MrcReply reply, int num){
-//		if (num>16){
-//			log.error("Mrc read memory command was greater than 16");
-//			return null;
-//		}
-//		int mrcMemoryAddress = getMrcAddress(m);
-//		if (mrcMemoryAddress >= MrcTurnoutMonitor.CS_ACCY_MEMORY && mrcMemoryAddress < MrcTurnoutMonitor.CS_ACCY_MEMORY+256){
-//			log.debug("Reading turnout memory: "+Integer.toHexString(mrcMemoryAddress));
-//			int offset = m.getElement(2);
-//			for (int i=0; i<num; i++)
-//				reply.setElement(i, turnoutMemory[offset+i]);
-//			return reply;
-//		}
-//		if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM+256*6){
-//			log.debug("Reading consist memory: "+Integer.toHexString(mrcMemoryAddress));
-//			int offset = mrcMemoryAddress - MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
-//			for (int i=0; i<num; i++)
-//				reply.setElement(i, consistMemory[offset+i]);
-//			return reply;
-//		}
-//		if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM+256*20){
-//			log.debug("Reading macro memory: "+Integer.toHexString(mrcMemoryAddress));
-//			int offset = mrcMemoryAddress-MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
-//			log.debug("offset:"+offset);
-//			for (int i=0; i<num; i++)
-//				reply.setElement(i, macroMemory[offset+i]);
-//			return reply;
-//		}
-//		for (int i=0; i<num; i++)
-//			reply.setElement(i, 0x00);			// default fixed data
-//		return reply;
-//	}
-//	private MrcReply writeMemory (MrcMessage m, MrcReply reply, int num, boolean skipbyte){
-//		if (num>16){
-//			log.error("Mrc write memory command was greater than 16");
-//			return null;
-//		}
-//		int mrcMemoryAddress = getMrcAddress(m);
-//		int byteDataBegins = 3;
-//		if (skipbyte)
-//			byteDataBegins++;
-//		if (mrcMemoryAddress >= MrcTurnoutMonitor.CS_ACCY_MEMORY && mrcMemoryAddress < MrcTurnoutMonitor.CS_ACCY_MEMORY+256){
-//			log.debug("Writing turnout memory: "+Integer.toHexString(mrcMemoryAddress));
-//			int offset = m.getElement(2);
-//			for (int i=0; i<num; i++)
-//				turnoutMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
-//		}
-//		if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM+256*6){
-//			log.debug("Writing consist memory: "+Integer.toHexString(mrcMemoryAddress));
-//			int offset = mrcMemoryAddress-MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
-//			for (int i=0; i<num; i++)
-//				consistMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
-//		}
-//		if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM+256*20){
-//			log.debug("Writing macro memory: "+Integer.toHexString(mrcMemoryAddress));
-//			int offset = mrcMemoryAddress-MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
-//			log.debug("offset:"+offset);
-//			for (int i=0; i<num; i++)
-//				macroMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
-//		}
-//		reply.setElement(0, MRC_OKAY); 		// Mrc okay reply!
-//		return reply;
-//	}
-//	private int getMrcAddress(MrcMessage m){
-//		int addr = m.getElement(1);
-//		addr = addr * 256;
-//		addr = addr + m.getElement(2);
-//		return addr;
-//	}
-//	
-//	private MrcReply accessoryCommand(MrcMessage m, MrcReply reply){
-//		if (m.getElement(3) == 0x03 || m.getElement(3) == 0x04){		// 0x03 = close, 0x04 = throw
-//			String operation = "close";
-//			if (m.getElement(3) == 0x04)
-//				operation = "throw";
-//			int mrcAccessoryAddress = getMrcAddress(m);
-//			log.debug("Accessory command "+operation+" NT"+mrcAccessoryAddress);
-//			if (mrcAccessoryAddress > 2044){
-//				log.error("Turnout address greater than 2044, address: "+mrcAccessoryAddress );
-//				return null;
-//			}
-//			int bit = (mrcAccessoryAddress-1) & 0x07;
-//			int setMask = 0x01;
-//			for (int i=0; i<bit; i++){
-//				setMask = setMask<<1;
-//			}
-//			int clearMask = 0x0FFF - setMask;
-//			//log.debug("setMask:"+Integer.toHexString(setMask)+" clearMask:"+Integer.toHexString(clearMask));
-//			int offset = (mrcAccessoryAddress-1)>>3;
-//			int read = turnoutMemory[offset];
-//			byte write = (byte)(read & clearMask & 0xFF);
+// private byte[] turnoutMemory = new byte[256];
+// private byte[] macroMemory = new byte[256*20+16]; // and a little padding
+// private byte[] consistMemory = new byte[256*6+16]; // and a little padding
+// /* Read MRC memory.  This implementation simulates reading the MRC
+//  * command station memory.  There are three memory blocks that are
+//  * supported, turnout status, macros, and consists.  The turnout status
+//  * memory is 256 bytes and starts at memory address 0xEC00. The macro memory
+//  * is 256*20 or 5120 bytes and starts at memory address 0xC800. The consist
+//  * memory is 256*6 or 1536 bytes and starts at memory address 0xF500.
+//  * 
+//  */
+// private MrcReply readMemory (MrcMessage m, MrcReply reply, int num){
+//  if (num>16){
+//   log.error("Mrc read memory command was greater than 16");
+//   return null;
+//  }
+//  int mrcMemoryAddress = getMrcAddress(m);
+//  if (mrcMemoryAddress >= MrcTurnoutMonitor.CS_ACCY_MEMORY && mrcMemoryAddress < MrcTurnoutMonitor.CS_ACCY_MEMORY+256){
+//   log.debug("Reading turnout memory: "+Integer.toHexString(mrcMemoryAddress));
+//   int offset = m.getElement(2);
+//   for (int i=0; i<num; i++)
+//    reply.setElement(i, turnoutMemory[offset+i]);
+//   return reply;
+//  }
+//  if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM+256*6){
+//   log.debug("Reading consist memory: "+Integer.toHexString(mrcMemoryAddress));
+//   int offset = mrcMemoryAddress - MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+//   for (int i=0; i<num; i++)
+//    reply.setElement(i, consistMemory[offset+i]);
+//   return reply;
+//  }
+//  if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM+256*20){
+//   log.debug("Reading macro memory: "+Integer.toHexString(mrcMemoryAddress));
+//   int offset = mrcMemoryAddress-MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
+//   log.debug("offset:"+offset);
+//   for (int i=0; i<num; i++)
+//    reply.setElement(i, macroMemory[offset+i]);
+//   return reply;
+//  }
+//  for (int i=0; i<num; i++)
+//   reply.setElement(i, 0x00);   // default fixed data
+//  return reply;
+// }
+// private MrcReply writeMemory (MrcMessage m, MrcReply reply, int num, boolean skipbyte){
+//  if (num>16){
+//   log.error("Mrc write memory command was greater than 16");
+//   return null;
+//  }
+//  int mrcMemoryAddress = getMrcAddress(m);
+//  int byteDataBegins = 3;
+//  if (skipbyte)
+//   byteDataBegins++;
+//  if (mrcMemoryAddress >= MrcTurnoutMonitor.CS_ACCY_MEMORY && mrcMemoryAddress < MrcTurnoutMonitor.CS_ACCY_MEMORY+256){
+//   log.debug("Writing turnout memory: "+Integer.toHexString(mrcMemoryAddress));
+//   int offset = m.getElement(2);
+//   for (int i=0; i<num; i++)
+//    turnoutMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
+//  }
+//  if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM+256*6){
+//   log.debug("Writing consist memory: "+Integer.toHexString(mrcMemoryAddress));
+//   int offset = mrcMemoryAddress-MrcCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+//   for (int i=0; i<num; i++)
+//    consistMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
+//  }
+//  if (mrcMemoryAddress >= MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && mrcMemoryAddress < MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM+256*20){
+//   log.debug("Writing macro memory: "+Integer.toHexString(mrcMemoryAddress));
+//   int offset = mrcMemoryAddress-MrcCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
+//   log.debug("offset:"+offset);
+//   for (int i=0; i<num; i++)
+//    macroMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
+//  }
+//  reply.setElement(0, MRC_OKAY);   // Mrc okay reply!
+//  return reply;
+// }
+// private int getMrcAddress(MrcMessage m){
+//  int addr = m.getElement(1);
+//  addr = addr * 256;
+//  addr = addr + m.getElement(2);
+//  return addr;
+// }
+// 
+// private MrcReply accessoryCommand(MrcMessage m, MrcReply reply){
+//  if (m.getElement(3) == 0x03 || m.getElement(3) == 0x04){  // 0x03 = close, 0x04 = throw
+//   String operation = "close";
+//   if (m.getElement(3) == 0x04)
+//    operation = "throw";
+//   int mrcAccessoryAddress = getMrcAddress(m);
+//   log.debug("Accessory command "+operation+" NT"+mrcAccessoryAddress);
+//   if (mrcAccessoryAddress > 2044){
+//    log.error("Turnout address greater than 2044, address: "+mrcAccessoryAddress );
+//    return null;
+//   }
+//   int bit = (mrcAccessoryAddress-1) & 0x07;
+//   int setMask = 0x01;
+//   for (int i=0; i<bit; i++){
+//    setMask = setMask<<1;
+//   }
+//   int clearMask = 0x0FFF - setMask;
+//   //log.debug("setMask:"+Integer.toHexString(setMask)+" clearMask:"+Integer.toHexString(clearMask));
+//   int offset = (mrcAccessoryAddress-1)>>3;
+//   int read = turnoutMemory[offset];
+//   byte write = (byte)(read & clearMask & 0xFF);
 //
-//			if (operation.equals("close"))
-//				write = (byte)(write + setMask);	// set bit if closed
-//			turnoutMemory[offset] = write;
-//			//log.debug("wrote:"+Integer.toHexString(write)); 
-//		}
-//		reply.setElement(0, MRC_OKAY); 		// Mrc okay reply!
-//		return reply;
-//	}
+//   if (operation.equals("close"))
+//    write = (byte)(write + setMask); // set bit if closed
+//   turnoutMemory[offset] = write;
+//   //log.debug("wrote:"+Integer.toHexString(write)); 
+//  }
+//  reply.setElement(0, MRC_OKAY);   // Mrc okay reply!
+//  return reply;
+// }
     private final static Logger log = LoggerFactory
             .getLogger(SimulatorAdapter.class.getName());
 

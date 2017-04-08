@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialMessage;
@@ -49,15 +48,18 @@ public class SpecificMessage extends SerialMessage {
 
     boolean interlocked = false;
 
+    @Override
     public void setInterlocked(boolean v) {
         interlocked = v;
     }
 
+    @Override
     public boolean getInterlocked() {
         return interlocked;
     }
 
     @SuppressWarnings("fallthrough")
+    @Override
     public String toMonitorString() {
         // check for valid length
         int len = getNumDataElements();
@@ -75,7 +77,7 @@ public class SpecificMessage extends SerialMessage {
             case Constants.TIMER_DOWNLOAD:
                 text.append("Set CM11 time");
                 break;
-            case Constants.EXT_CMD_HEADER:	// extended command
+            case Constants.EXT_CMD_HEADER: // extended command
                 text.append("Extended Cmd");
                 if (len == 5) {
                     text.append(" house ");
@@ -94,20 +96,20 @@ public class SpecificMessage extends SerialMessage {
                                 text.append(" data: 0x");
                                 text.append(StringUtil.twoHexFromInt(d));
                             }
-//            			switch ((d >> 6) & 0x03) {
-//            			case 0:
-//            				text.append(" 3.7 Sec");
-//            				break;
-//            			case 1:
-//            				text.append(" 30 Sec");
-//            				break;
-//            			case 2:
-//            				text.append(" 1 Min");
-//            				break;
-//            			case 3:
-//            				text.append(" 5 Min");
-//            				break;
-//            			}
+//               switch ((d >> 6) & 0x03) {
+//               case 0:
+//                text.append(" 3.7 Sec");
+//                break;
+//               case 1:
+//                text.append(" 30 Sec");
+//                break;
+//               case 2:
+//                text.append(" 1 Min");
+//                break;
+//               case 3:
+//                text.append(" 5 Min");
+//                break;
+//               }
                             break;
                         default:
                             text.append(" cmd: 0x");
@@ -152,6 +154,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l lenght of expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);
@@ -159,23 +162,28 @@ public class SpecificMessage extends SerialMessage {
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
 
+    @Override
     public void setResponseLength(int l) {
         responseLength = l;
     }
 
+    @Override
     public int getResponseLength() {
         return responseLength;
     }
 
     // static methods to recognize a message
+    @Override
     public boolean isPoll() {
         return getElement(1) == 48;
     }
 
+    @Override
     public boolean isXmt() {
         return getElement(1) == 17;
     }
 
+    @Override
     public int getAddr() {
         return getElement(0);
     }
@@ -254,4 +262,4 @@ public class SpecificMessage extends SerialMessage {
     }
 }
 
-/* @(#)SpecificMessage.java */
+

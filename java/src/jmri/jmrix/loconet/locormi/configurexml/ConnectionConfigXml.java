@@ -25,30 +25,32 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         log.error("unexpected call to getInstance");
         new Exception().printStackTrace();
     }
 
+    @Override
     public Element store(Object o) {
         jmri.jmrix.loconet.locormi.ConnectionConfig c = (jmri.jmrix.loconet.locormi.ConnectionConfig) o;
-        Element e = new Element("connection");
-        e.setAttribute("manufacturer", c.getManufacturer());
-        e.setAttribute("port", c.host.getText());
+        Element e = new Element("connection"); // NOI18N
+        e.setAttribute("manufacturer", c.getManufacturer()); // NOI18N
+        e.setAttribute("port", c.host.getText()); // NOI18N
 
         if (c.getLnMessageClient() != null) {
             if (c.getLnMessageClient().getAdapterMemo() != null) {
-                e.setAttribute("userName", c.getLnMessageClient().getAdapterMemo().getUserName());
-                e.setAttribute("systemPrefix", c.getLnMessageClient().getAdapterMemo().getSystemPrefix());
+                e.setAttribute("userName", c.getLnMessageClient().getAdapterMemo().getUserName()); // NOI18N
+                e.setAttribute("systemPrefix", c.getLnMessageClient().getAdapterMemo().getSystemPrefix()); // NOI18N
             }
             if (c.getDisabled()) {
-                e.setAttribute("disabled", "yes");
+                e.setAttribute("disabled", "yes"); // NOI18N
             } else {
-                e.setAttribute("disabled", "no");
+                e.setAttribute("disabled", "no"); // NOI18N
             }
         }
 
-        e.setAttribute("class", this.getClass().getName());
+        e.setAttribute("class", this.getClass().getName()); // NOI18N
 
         return e;
     }
@@ -63,11 +65,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // configure port name
-        String hostName = shared.getAttribute("port").getValue();
+        String hostName = shared.getAttribute("port").getValue(); // NOI18N
         String manufacturer = null;
 
         try {
-            manufacturer = shared.getAttribute("manufacturer").getValue();
+            manufacturer = shared.getAttribute("manufacturer").getValue(); // NOI18N
         } catch (NullPointerException ex) { //Considered normal if not present
         }
 
@@ -75,24 +77,24 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         jmri.jmrix.loconet.locormi.LnMessageClient client = new jmri.jmrix.loconet.locormi.LnMessageClient();
         cc.setLnMessageClient(client);
 
-        if (shared.getAttribute("disabled") != null) {
+        if (shared.getAttribute("disabled") != null) { // NOI18N // NOI18N
             String yesno = shared.getAttribute("disabled").getValue();
             if ((yesno != null) && (!yesno.equals(""))) {
-                if (yesno.equals("no")) {
+                if (yesno.equals("no")) { // NOI18N
                     cc.setDisabled(false);
-                } else if (yesno.equals("yes")) {
+                } else if (yesno.equals("yes")) { // NOI18N
                     cc.setDisabled(true);
                 }
             }
         }
 
         if (client.getAdapterMemo() != null) {
-            if (shared.getAttribute("userName") != null) {
-                client.getAdapterMemo().setUserName(shared.getAttribute("userName").getValue());
+            if (shared.getAttribute("userName") != null) { // NOI18N
+                client.getAdapterMemo().setUserName(shared.getAttribute("userName").getValue()); // NOI18N
             }
 
-            if (shared.getAttribute("systemPrefix") != null) {
-                client.getAdapterMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
+            if (shared.getAttribute("systemPrefix") != null) { // NOI18N
+                client.getAdapterMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue()); // NOI18N
             }
         }
 
@@ -110,7 +112,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 client.configureRemoteConnection(hostName, 500);
                 connected = true;   // exception during connect skips this
             } catch (jmri.jmrix.loconet.LocoNetException ex) {
-                log.error("Error opening connection to " + hostName + " was: " + ex);
+                log.error("Error opening connection to " + hostName + " was: " + ex); // NOI18N
                 f.setTitle("Server connection failed");
                 f.getContentPane().removeAll();
                 f.getContentPane().add(new JLabel("failed, error was " + ex));
@@ -136,8 +138,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     boolean connected = false;
 
+    @Override
     protected void register() {
-        log.error("unexpected call to register()");
+        log.error("unexpected call to register()"); // NOI18N
         new Exception().printStackTrace();
     }
 

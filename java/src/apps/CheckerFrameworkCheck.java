@@ -51,10 +51,10 @@ public class CheckerFrameworkCheck {
 
     // Test Nonnull
     
-    @javax.annotation.Nonnull public CheckerFrameworkCheck jaNonnullReturn() {
+    Nonnull public CheckerFrameworkCheck jaNonnullReturn() {
         return null;                                // error: [return.type.incompatible] incompatible types in return. required: @Initialized @NonNull CheckerFrameworkCheck
     }
-    public void jaNonNullParm(@javax.annotation.Nonnull CheckerFrameworkCheck p) {
+    public void jaNonNullParm(Nonnull CheckerFrameworkCheck p) {
         p.test();
     }
     public void jaTestNonnull() {
@@ -71,10 +71,10 @@ public class CheckerFrameworkCheck {
 
     // Test Nullable
     
-    @javax.annotation.Nullable public CheckerFrameworkCheck jaNullableReturn() {
+    Nullable public CheckerFrameworkCheck jaNullableReturn() {
         return null;
     }
-    public void jaNullableParm(@javax.annotation.Nullable CheckerFrameworkCheck p) {
+    public void jaNullableParm(Nullable CheckerFrameworkCheck p) {
         p.test();                                   // error: [dereference.of.nullable] dereference of possibly-null reference p
     }
     public void jaTestNullable() {
@@ -91,10 +91,10 @@ public class CheckerFrameworkCheck {
 
     // Test CheckForNull
 
-    @javax.annotation.CheckForNull public CheckerFrameworkCheck jaCheckForNullReturn() {
+    CheckForNull public CheckerFrameworkCheck jaCheckForNullReturn() {
         return null;
     }
-    public void jaCheckForNullParm(@javax.annotation.CheckForNull CheckerFrameworkCheck p) {
+    public void jaCheckForNullParm(CheckForNull CheckerFrameworkCheck p) {
         p.test();                                   // error: [dereference.of.nullable] dereference of possibly-null reference p
     }
     public void jaTestCheckForNull() {

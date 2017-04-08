@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialMessage;
@@ -50,6 +49,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l length of expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);
@@ -57,6 +57,7 @@ public class SpecificMessage extends SerialMessage {
 
     /**
      * Find 1st byte that's not 0xFF, or -1 if none
+     * @return -1 or index of first valid byte
      */
     int startIndex() {
         int len = getNumDataElements();
@@ -71,102 +72,108 @@ public class SpecificMessage extends SerialMessage {
     /**
      * Translate packet to text
      */
+    @Override
     public String toMonitorString() {
         String test = Constants.toMonitorString(this);
 //        // check for valid length
-//    	String val = "???";
-//    	int len = getNumDataElements();
-//    	boolean goodSync = true;
-//    	boolean goodCheckSum = true;
-//    	int sum = 0;
-//    	String cmd;
-//    	String stat;
-//    	String hCode;
-//    	String bCode;
-//    	String dev;
+//     String val = "???";
+//     int len = getNumDataElements();
+//     boolean goodSync = true;
+//     boolean goodCheckSum = true;
+//     int sum = 0;
+//     String cmd;
+//     String stat;
+//     String hCode;
+//     String bCode;
+//     String dev;
 //        switch (len) {
 //        case 7:
-//        	for (int i = 0; i < 6; i++) {
-//        		if ((getElement(i) & 0xFF) != 0xFF) {
-//        			goodSync = false;
-//        		}
-//        	}
-//        	val = Constants.statusToText(getElement(6));
-//        	break;
+//         for (int i = 0; i < 6; i++) {
+//          if ((getElement(i) & 0xFF) != 0xFF) {
+//           goodSync = false;
+//          }
+//         }
+//         val = Constants.statusToText(getElement(6));
+//         break;
 //        case 12:
-//        	for (int i = 0; i < 6; i++) {
-//        		if ((getElement(i) & 0xFF) != 0xFF) {
-//        			goodSync = false;
-//        		}
-//        	}
-//        	for (int i = 7; i < 12; i++) {
-//        		sum = (sum + (getElement(i) &0xFF)) & 0xFF;
-//        	}
-//        	stat = Constants.statusToText(getElement(6));
-//        	cmd = Constants.commandToText(getElement(7) & 0x0F, -1);
-//        	hCode = Constants.houseCodeToText((getElement(7) >> 4) & 0x0F);
-//        	dev = Constants.deviceToText(getElement(8), getElement(9));
-//        	bCode = Constants.houseCodeToText((getElement(10) >> 4) & 0x0F);
-//        	if (sum != (getElement(12) & 0xFF)) {
-//        		goodCheckSum = false;
-//        	}
-//        	val = "Cmd Echo: " + cmd + " stat: " + stat + " House: " + hCode + " Device:" + dev + " base: " + bCode;
-//        	if (!goodSync) {
-//        		val = val + " BAD SYNC";
-//        	}
-//        	if (!goodCheckSum) {
-//        		val = val + " BAD CHECKSUM: " + (getElement(11) & 0xFF) + " vs " + sum;
-//        	}
-//        	break;
+//         for (int i = 0; i < 6; i++) {
+//          if ((getElement(i) & 0xFF) != 0xFF) {
+//           goodSync = false;
+//          }
+//         }
+//         for (int i = 7; i < 12; i++) {
+//          sum = (sum + (getElement(i) &0xFF)) & 0xFF;
+//         }
+//         stat = Constants.statusToText(getElement(6));
+//         cmd = Constants.commandToText(getElement(7) & 0x0F, -1);
+//         hCode = Constants.houseCodeToText((getElement(7) >> 4) & 0x0F);
+//         dev = Constants.deviceToText(getElement(8), getElement(9));
+//         bCode = Constants.houseCodeToText((getElement(10) >> 4) & 0x0F);
+//         if (sum != (getElement(12) & 0xFF)) {
+//          goodCheckSum = false;
+//         }
+//         val = "Cmd Echo: " + cmd + " stat: " + stat + " House: " + hCode + " Device:" + dev + " base: " + bCode;
+//         if (!goodSync) {
+//          val = val + " BAD SYNC";
+//         }
+//         if (!goodCheckSum) {
+//          val = val + " BAD CHECKSUM: " + (getElement(11) & 0xFF) + " vs " + sum;
+//         }
+//         break;
 //        case 22:
-//        	for (int i = 0; i < 16; i++) {
-//        		if ((getElement(i) & 0xFF) != 0xFF) {
-//        			goodSync = false;
-//        		}
-//        	}
-//        	for (int i = 17; i < 21; i++) {
-//        		sum = (sum + (getElement(i) &0xFF)) & 0xFF;
-//        	}
-//        	cmd = Constants.commandToText((getElement(17) & 0x0F), ((getElement(17) & 0xF0) >> 4));
-//        	hCode = Constants.houseCodeToText((getElement(18) >> 4) & 0x0F);
-//        	dev = Constants.deviceToText(getElement(19), getElement(20));
-//        	if (sum != (getElement(21) & 0xFF)) {
-//        		goodCheckSum = false;
-//        	}
-//        	val = cmd + " House: " + hCode + " Device:" + dev;
-//        	if (!goodSync) {
-//        		val = val + " BAD SYNC";
-//        	}
-//        	if (!goodCheckSum) {
-//        		val = val + " BAD CHECKSUM: " + (getElement(21) & 0xFF) + " vs " + sum;
-//        	}
-//        	break;
+//         for (int i = 0; i < 16; i++) {
+//          if ((getElement(i) & 0xFF) != 0xFF) {
+//           goodSync = false;
+//          }
+//         }
+//         for (int i = 17; i < 21; i++) {
+//          sum = (sum + (getElement(i) &0xFF)) & 0xFF;
+//         }
+//         cmd = Constants.commandToText((getElement(17) & 0x0F), ((getElement(17) & 0xF0) >> 4));
+//         hCode = Constants.houseCodeToText((getElement(18) >> 4) & 0x0F);
+//         dev = Constants.deviceToText(getElement(19), getElement(20));
+//         if (sum != (getElement(21) & 0xFF)) {
+//          goodCheckSum = false;
+//         }
+//         val = cmd + " House: " + hCode + " Device:" + dev;
+//         if (!goodSync) {
+//          val = val + " BAD SYNC";
+//         }
+//         if (!goodCheckSum) {
+//          val = val + " BAD CHECKSUM: " + (getElement(21) & 0xFF) + " vs " + sum;
+//         }
+//         break;
 //        default:
-//        	val = "UNK " + toString();
-//        	break;
+//         val = "UNK " + toString();
+//         break;
 //        }
         return "Send[" + getNumDataElements() + "]: " + test + "\n";
     }
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
 
+    @Override
     public void setResponseLength(int l) {
         responseLength = l;
     }
 
+    @Override
     public int getResponseLength() {
         return responseLength;
     }
 
     // static methods to recognize a message
+    @Override
     public boolean isPoll() {
         return getElement(1) == 48;
     }
 
+    @Override
     public boolean isXmt() {
         return getElement(1) == 17;
     }
 
+    @Override
     public int getAddr() {
         return getElement(0);
     }
@@ -222,4 +229,4 @@ public class SpecificMessage extends SerialMessage {
     }
 }
 
-/* @(#)SpecificMessage.java */
+

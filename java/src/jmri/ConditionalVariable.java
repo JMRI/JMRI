@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariable {
@@ -61,7 +61,7 @@ public class ConditionalVariable {
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
-    private int _state = Conditional.UNKNOWN;        // tri-state
+    private int _state = NamedBean.UNKNOWN;        // tri-state
 
     public ConditionalVariable() {
     }
@@ -297,12 +297,9 @@ public class ConditionalVariable {
     public void setDataString(String data) {
         _dataString = data;
         if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
-            try {
-                NamedBean bean = InstanceManager.memoryManagerInstance().provideMemory(data);
+            NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
+            if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
-            } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide memory \"{}\" in setDataString", data);
-                _namedBeanData = null;
             }
         }
     }
@@ -622,6 +619,20 @@ public class ConditionalVariable {
         return (result);
     }
 
+    /**
+     * Compare two values using the comparator set using the comparison
+     * instructions in {@link #setNum1(int)}.
+     *
+     * <strong>Note:</strong> {@link #getNum1()} must be one of {@link #LESS_THAN},
+     * {@link #LESS_THAN_OR_EQUAL}, {@link #EQUAL},
+     * {@link #GREATER_THAN_OR_EQUAL}, or {@link #GREATER_THAN}.
+     *
+     * @param value1          left side of the comparison
+     * @param value2          right side of the comparison
+     * @param caseInsensitive true if comparison should be case insensitive;
+     *                        false otherwise
+     * @return true if values compare per getNum1(); false otherwise
+     */
     boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {
             return value2 == null;
@@ -751,7 +762,7 @@ public class ConditionalVariable {
      * @param t the state
      * @return the localized description
      */
-    public static String getStateString(int t) {
+    public static String describeState(int t) {
         switch (t) {
             case Conditional.TYPE_NONE:
                 return ""; // NOI18N
@@ -760,9 +771,9 @@ public class ConditionalVariable {
             case Conditional.TYPE_SENSOR_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
             case Conditional.TYPE_TURNOUT_THROWN:
-                return rbx.getString("TurnoutThrown"); // NOI18N
+                return Bundle.getMessage("TurnoutStateThrown"); // NOI18N
             case Conditional.TYPE_TURNOUT_CLOSED:
-                return rbx.getString("TurnoutClosed"); // NOI18N
+                return Bundle.getMessage("TurnoutStateClosed"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_TRUE:
                 return rbx.getString("True"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_FALSE:
@@ -778,27 +789,27 @@ public class ConditionalVariable {
             case Conditional.TYPE_FAST_CLOCK_RANGE:
                 return ""; // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_RED:
-                return rbx.getString("StateSignalHeadRed"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateRed"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                return rbx.getString("StateSignalHeadYellow"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateYellow"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                return rbx.getString("StateSignalHeadGreen"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                return rbx.getString("StateSignalHeadDark"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateDark"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                return rbx.getString("StateSignalHeadFlashRed"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingRed"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                return rbx.getString("StateSignalHeadFlashYellow"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingYellow"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                return rbx.getString("StateSignalHeadFlashGreen"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                return rbx.getString("StateSignalHeadLit"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                return rbx.getString("TypeSignalHeadHeld"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateHeld"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
-                return rbx.getString("StateSignalHeadLunar"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateLunar"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
-                return rbx.getString("StateSignalHeadFlashLunar"); // NOI18N
+                return Bundle.getMessage("SignalHeadStateFlashingLunar"); // NOI18N
+            case Conditional.TYPE_SIGNAL_HEAD_LIT:
+                return rbx.getString("TypeSignalHeadLit"); // NOI18N
             case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
                 return rbx.getString("StateMemoryEqualsInsensitive"); // NOI18N
             case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
@@ -826,7 +837,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
         }
-        return "";
+        return "<none>";
     }
 
     /**
@@ -910,7 +921,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return rbx.getString("TypeEntryExitInactive"); // NOI18N
         }
-        return "None";
+        return Bundle.getMessage("NONE");
     }
 
     public static String getCompareOperationString(int index) {

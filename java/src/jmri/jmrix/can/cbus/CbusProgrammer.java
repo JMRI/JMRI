@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener, AddressedProgrammer {
 
@@ -51,9 +51,9 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
     boolean programmerReadOperation = false;  // true reading, false if writing
-    int operationValue;	 // remember the value being read/written for confirmative reply
+    int operationValue;  // remember the value being read/written for confirmative reply
     int operationVariableNumber; // remember the variable number being read/written
 
     // programming interface
@@ -120,10 +120,12 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    @Override
     public void message(CanMessage m) {
         log.debug("message received and ignored: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(jmri.jmrix.can.CanReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -157,6 +159,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -170,14 +173,17 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    @Override
     public boolean getLongAddress() {
         return false;
     }
 
+    @Override
     public int getAddressNumber() {
         return nodenumber;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }

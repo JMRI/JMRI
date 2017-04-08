@@ -88,8 +88,8 @@ import org.slf4j.LoggerFactory;
  * </dd>
  * </dl>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Dave Heap Copyright (C) 2016
  */
 public class FnMapPanelESU extends JPanel {
 
@@ -259,6 +259,7 @@ public class FnMapPanelESU extends JPanel {
                 rowButton[iRow].setActionCommand(String.valueOf(iRow));
                 rowButton[iRow].setToolTipText(Bundle.getMessage("FnMapESURowSelect"));
                 rowButton[iRow].addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         selectedRow = Integer.parseInt(e.getActionCommand());
                     }
@@ -438,6 +439,7 @@ public class FnMapPanelESU extends JPanel {
                             }
                             if (cvObject != null) {
                                 cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                                    @Override
                                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                                         updateAllSummaryLines();
                                     }
@@ -483,6 +485,7 @@ public class FnMapPanelESU extends JPanel {
                 JButton button = new JButton("Change");
                 button.setActionCommand(iRow + "," + outBlockNum);
                 button.addActionListener(new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         String params[] = e.getActionCommand().split(",");
                         JOptionPane.showMessageDialog(
@@ -684,6 +687,7 @@ public class FnMapPanelESU extends JPanel {
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     moveRow(Integer.parseInt(e.getActionCommand()));
                 }
@@ -697,6 +701,7 @@ public class FnMapPanelESU extends JPanel {
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     moveRow(Integer.parseInt(e.getActionCommand()));
                 }
@@ -710,6 +715,7 @@ public class FnMapPanelESU extends JPanel {
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     moveRow(Integer.parseInt(e.getActionCommand()));
                 }
@@ -723,6 +729,7 @@ public class FnMapPanelESU extends JPanel {
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
 //             button.setBorderPainted(false);
             button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     moveRow(Integer.parseInt(e.getActionCommand()));
                 }

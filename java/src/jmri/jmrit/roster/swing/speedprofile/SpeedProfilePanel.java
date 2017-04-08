@@ -154,6 +154,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
         profileButton.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         profile = true;
                         setupProfile();
@@ -161,12 +162,14 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 });
         cancelButton.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         cancelButton();
                     }
                 });
         testButton.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         test = true;
                         testButton();
@@ -174,6 +177,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 });
         viewButton.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         viewProfile();
                     }
@@ -362,6 +366,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     javax.swing.Timer overRunTimer = null;
 
+    @Override
     public void notifyThrottleFound(DccThrottle _throttle) {
         t = _throttle;
         if (t == null) {
@@ -397,6 +402,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             startSensor = middleBlockSensor.getSensor();
             finishSensor = sensorB.getSensor();
             startListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
@@ -409,6 +415,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 }
             };
             finishListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
@@ -429,6 +436,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             }
             startSensor = middleBlockSensor.getSensor();
             startListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
@@ -467,6 +475,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
     }
 
+    @Override
     public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFailThrottleRequest"));
         log.error("Throttle request failed for " + address + " because " + reason);
@@ -542,6 +551,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         // Loco may have been brought to half-speed in stopCurrentSpeedStep, so wait for that to take effect then stop & restart
         javax.swing.Timer stopTimer = new javax.swing.Timer(2500, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 
                 // finally command the stop
@@ -549,6 +559,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
                 // and a second later, restart going the other way
                 javax.swing.Timer restartTimer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         startProfile();
                     }

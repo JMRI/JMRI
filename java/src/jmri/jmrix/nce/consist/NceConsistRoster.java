@@ -128,6 +128,7 @@ public class NceConsistRoster extends XmlFile {
      * <P>
      * This is based on a single model, so it can be updated when the
      * ConsistRoster changes.
+     * @return combo box of whole roster
      *
      */
     public JComboBox<String> fullRosterComboBox() {
@@ -136,6 +137,17 @@ public class NceConsistRoster extends XmlFile {
 
     /**
      * Get a JComboBox representing the choices that match. There's 10 elements.
+     * @param roadName value to match against roster roadname field
+     * @param roadNumber value to match against roster roadnumber field
+     * @param consistNumber value to match against roster consist number field
+     * @param eng1Address value to match against roster 1st engine address field
+     * @param eng2Address value to match against roster 2nd engine address field
+     * @param eng3Address value to match against roster 3rd engine address field
+     * @param eng4Address value to match against roster 4th engine address field
+     * @param eng5Address value to match against roster 5th engine address field
+     * @param eng6Address value to match against roster 6th engine address field
+     * @param id value to match against roster id field
+     * @return combo box of matching roster entries
      */
     public JComboBox<String> matchingComboBox(String roadName, String roadNumber,
             String consistNumber, String eng1Address, String eng2Address,
@@ -164,6 +176,8 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Return RosterEntry from a "title" string, ala selection in
      * matchingComboBox
+     * @param title title to search for in consist roster
+     * @return matching consist roster entry
      */
     public NceConsistRosterEntry entryFromTitle(String title) {
         for (int i = 0; i < numEntries(); i++) {
@@ -183,6 +197,17 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Get a List of entries matching some information. The list may have null
      * contents.
+     * @param roadName value to match against roster roadname field
+     * @param roadNumber value to match against roster roadnumber field
+     * @param consistNumber value to match against roster consist number field
+     * @param eng1Address value to match against roster 1st engine address field
+     * @param eng2Address value to match against roster 2nd engine address field
+     * @param eng3Address value to match against roster 3rd engine address field
+     * @param eng4Address value to match against roster 4th engine address field
+     * @param eng5Address value to match against roster 5th engine address field
+     * @param eng6Address value to match against roster 6th engine address field
+     * @param id value to match against roster id field
+     * @return list of consist roster entries matching request
      */
     public List<NceConsistRosterEntry> matchingList(String roadName, String roadNumber,
             String consistNumber, String eng1Address, String eng2Address,
@@ -202,7 +227,18 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Check if an entry consistent with specific properties. A null String
      * entry always matches. Strings are used for convenience in GUI building.
-     *
+     * @param i index to consist roster entry
+     * @param roadName value to match against roster roadname field
+     * @param roadNumber value to match against roster roadnumber field
+     * @param consistNumber value to match against roster consist number field
+     * @param loco1Address value to match against roster 1st engine address field
+     * @param loco2Address value to match against roster 2nd engine address field
+     * @param loco3Address value to match against roster 3rd engine address field
+     * @param loco4Address value to match against roster 4th engine address field
+     * @param loco5Address value to match against roster 5th engine address field
+     * @param loco6Address value to match against roster 6th engine address field
+     * @param id value to match against roster id field
+     * @return true if values provided matches indexed entry
      */
     public boolean checkEntry(int i, String roadName, String roadNumber,
             String consistNumber, String loco1Address, String loco2Address,
@@ -248,6 +284,8 @@ public class NceConsistRoster extends XmlFile {
      * default location, does a backup and then calls this.
      *
      * @param name Filename for new file, including path info as needed.
+     * @throws java.io.FileNotFoundException when file not found
+     * @throws java.io.IOException when fault accessing file
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
@@ -336,6 +374,9 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Read the contents of a roster XML file into this object. Note that this
      * does not clear any existing entries.
+     * @param name file name for consist roster
+     * @throws org.jdom2.JDOMException other errors
+     * @throws java.io.IOException error accessing file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // find root
@@ -435,6 +476,7 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Return the filename String for the default ConsistRoster file, including
      * location.
+     * @return consist roster file name
      */
     public static String defaultNceConsistRosterFilename() {
         return Roster.getDefault().getRosterLocation() + NceConsistRosterFileName;
@@ -465,6 +507,7 @@ public class NceConsistRoster extends XmlFile {
     /**
      * Notify that the ID of an entry has changed. This doesn't actually change
      * the ConsistRoster per se, but triggers recreation.
+     * @param r consist roster to recreate due to changes
      */
     public void entryIdChanged(NceConsistRosterEntry r) {
         log.debug("EntryIdChanged");

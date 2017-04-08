@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (c) 2003,2016
  * @author	Mark Underwood Copyright (c) 2015
  */
-public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private DCCppInterfaceScaffold xnis = null;
 
@@ -40,6 +40,7 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTest 
     }
 
     @Test
+    @Override
     public void testMisses() {
         // sample turnout object
         Sensor s = l.newSensor("DCCPPS22", "test");

@@ -24,9 +24,11 @@ public class OrderedHashtableTest extends TestCase {
         OrderedHashtable<String, Turnout> oht = new OrderedHashtable<String, Turnout>();
 
         Turnout t1 = new AbstractTurnout("t1") {
+            @Override
             protected void forwardCommandChangeToLayout(int s) {
             }
 
+            @Override
             protected void turnoutPushbuttonLockout(boolean locked) {
             }
         };
@@ -173,9 +175,11 @@ public class OrderedHashtableTest extends TestCase {
             super(s);
         }
 
+        @Override
         protected void forwardCommandChangeToLayout(int s) {
         }
 
+        @Override
         protected void turnoutPushbuttonLockout(boolean locked) {
         }
     }

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * implements a single-slot command station.
  *
  * @see AbstractThrottleManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
@@ -29,6 +29,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     /**
      * PR2 allows only one throttle
      */
+    @Override
     protected boolean singleUse() {
         return true;
     }
@@ -38,6 +39,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
      *
      * This immediately invokes the callback with the a new throttle object.
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         // The PR2 has only one slot, hence
         // doesn't require an interaction with the command
@@ -53,6 +55,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
      * PR2 does not have a Dispatch function
      *
      */
+    @Override
     public boolean hasDispatchFunction() {
         return false;
     }
@@ -61,6 +64,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
      * Address 128 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -69,6 +73,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
      * Address 127 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -76,6 +81,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }

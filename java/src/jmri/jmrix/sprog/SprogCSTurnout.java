@@ -35,6 +35,7 @@ public class SprogCSTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -59,12 +60,14 @@ public class SprogCSTurnout extends AbstractTurnout {
         commandStation = command;
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ST" + _number);
         }
     }
 
+    @Override
     public boolean canInvert() {
         return true;
     }
@@ -74,4 +77,4 @@ public class SprogCSTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(SprogCSTurnout.class.getName());
 }
 
-/* @(#)SprogCSTurnout.java */
+

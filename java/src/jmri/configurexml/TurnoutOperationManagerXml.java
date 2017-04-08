@@ -24,6 +24,7 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
         elem.setAttribute("class", getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -49,6 +50,7 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
         return result;
     }
 
+    @Override
     public Element store(Object o) {
         Element elem = new Element("operations");
         if (o instanceof TurnoutOperationManager) {
@@ -57,7 +59,7 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
             TurnoutOperation[] operations = manager.getTurnoutOperations();
             for (int i = 0; i < operations.length; ++i) {
                 TurnoutOperation op = operations[i];
-                if (!op.isNonce()) {		// nonces are stored with their respective turnouts
+                if (!op.isNonce()) {  // nonces are stored with their respective turnouts
                     TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
                     if (adapter != null) {
                         Element opElem = adapter.store(op);

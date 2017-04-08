@@ -1,4 +1,3 @@
-// SerialConnectionTypeList.java
 package jmri.jmrix.grapevine;
 
 /**

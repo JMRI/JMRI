@@ -1,4 +1,3 @@
-// OlcbConfigurationManager.java
 package jmri.jmrix.openlcb;
 
 import java.net.InetAddress;
@@ -32,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Does configuration for OpenLCB communications implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  *
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
@@ -448,4 +447,4 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class.getName());
 }
 
-/* @(#)OlcbConfigurationManager.java */
+

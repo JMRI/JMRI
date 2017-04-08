@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table model for the pin assignment table.
  *
- * @author	Paul Bender Copyright (C) 2013,2016
+ * @author Paul Bender Copyright (C) 2013,2016
  */
 public class AssignmentTableModel extends AbstractTableModel {
 
@@ -48,10 +47,12 @@ public class AssignmentTableModel extends AbstractTableModel {
       userColumn.setResizable(true);
    }
 
+   @Override
    public String getColumnName(int c) {
       return assignmentTableColumnNames[c];
    }
 
+   @Override
    public Class<?> getColumnClass(int c) {
       if (c == BIT_COLUMN) {
          return Integer.class;
@@ -60,18 +61,22 @@ public class AssignmentTableModel extends AbstractTableModel {
       }
    }
 
+   @Override
    public boolean isCellEditable(int r, int c) {
       return false;
    }
 
+   @Override
    public int getColumnCount() {
       return 3;
    }
 
+   @Override
    public int getRowCount() {
       return 8;
    }
 
+   @Override
    public Object getValueAt(int r, int c) {
       Integer pin = Integer.valueOf(r);
       try {
@@ -105,6 +110,7 @@ public class AssignmentTableModel extends AbstractTableModel {
      }
   }
 
+   @Override
   public void setValueAt(Object type, int r, int c) {
      // nothing is stored here
   }

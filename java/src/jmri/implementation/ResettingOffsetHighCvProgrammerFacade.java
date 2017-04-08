@@ -36,10 +36,12 @@ import org.slf4j.LoggerFactory;
 public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param top      CVs above this use the indirect method
-     * @param addrCV   CV to which the high part of address is to be written
-     * @param cvFactor CV to which the low part of address is to be written
-     * @param modulo   Modulus for determining high/low address parts
+     * @param prog      the programmer this facade is attached to
+     * @param top       CVs above this use the indirect method
+     * @param addrCV    CV to which the high part of address is to be written
+     * @param cvFactor  CV to which the low part of address is to be written
+     * @param modulo    modulus for determining high/low address parts
+     * @param indicator value added to calculation to split high and low parts
      */
     public ResettingOffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo, String indicator) {
         super(prog);
@@ -57,8 +59,8 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     int indicator;
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override
@@ -119,7 +121,6 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
@@ -131,13 +132,26 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
+        if (status != OK ) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+        
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {
@@ -184,18 +198,22 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
     }
 
     // Access to full address space provided by this.
+    @Override
     public boolean getCanRead() {
         return true;
     }
 
+    @Override
     public boolean getCanRead(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }
 
+    @Override
     public boolean getCanWrite() {
         return true;
     }
 
+    @Override
     public boolean getCanWrite(String addr) {
         return Integer.parseInt(addr) <= 1024;
     }

@@ -60,6 +60,7 @@ public class NceSystemConnectionMemoTest extends TestCase {
     }
 
     // The minimal setup is for log4J
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp(); 
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -68,6 +69,7 @@ public class NceSystemConnectionMemoTest extends TestCase {
         memo.setNceTrafficController(new NceTrafficController());
     }
 
+    @Override
     public void tearDown() {        
         apps.tests.Log4JFixture.tearDown();
     }

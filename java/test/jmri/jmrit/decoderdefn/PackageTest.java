@@ -30,6 +30,14 @@ public class PackageTest extends TestCase {
         suite.addTest(DecoderIndexFileTest.suite());
         suite.addTest(DecoderFileTest.suite());
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
+        suite.addTest(new JUnit4TestAdapter(DecoderIndexBuilderTest.class));
+        suite.addTest(new JUnit4TestAdapter(NameCheckActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(DecoderIndexCreateActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(InstallDecoderFileActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(InstallDecoderURLActionTest.class));
+        // Disabled until #2601 is resolved
+        // suite.addTest(new JUnit4TestAdapter(DuplicateTest.class));
+
         return suite;
     }
 

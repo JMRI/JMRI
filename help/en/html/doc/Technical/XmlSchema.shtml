@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -66,7 +65,7 @@
       "#devschema">Developing JMRI Schema</a>".
 
       <p>Every time you change what JMRI writes (and therefore
-      reads) in an XML file, there are things you must do.</p>
+      reads) in an XML file, you must also do the following:</p>
 
       <ol>
         <li>You need to change the code that does the reading and
@@ -117,20 +116,20 @@
 
       <h3 id="versioning">Schema Versioning</h3>"Versioning" schema
       allows us to have different schema for older and newer files.
-      This lets newer versions of JMRI to continue to check and
+      This lets newer versions of JMRI continue to check and
       read files that were written by older versions of JMRI. This
       backward compatibility is an important JMRI feature which we
       don't want to lose.
 
       <p>In practical terms, versioning consists of having
       multiple-but-related versions of the schema definition files
-      which are label by the first JMRI version that can read
+      which are labeled by the first JMRI version that can read
       them.</p>
 
       <p>When do you need to create a new version?</p>
 
       <ul>
-        <li>You <em>do not</em> need to create a new version the
+        <li>You <em>do not</em> need to create a new version of the
         schema if you add or change things such that existing files
         will continue to validate.
 
@@ -139,7 +138,7 @@
           code repository.</p>
         </li>
 
-        <li>You <em>do</em> need to version a schema you make a
+        <li>You <em>do</em> need to version a schema when you make a
         change to the schema such that previous files will no
         longer validate with the current schema.
 
@@ -170,6 +169,18 @@
             line and change it to your new version number
             suffix.</li>
 
+            <li>Run "ant headlesstest" and when tests fail, fix them.
+                If a LoadAndStoreTest flags a compare inLine/outLine
+                error, update the schema version in the header of the
+                reference file. For example in
+                <code>java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml</code>
+                point to the most recent layout.xsd version in line 3:<br>
+                <code>&lt;layout-config
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-7-2.xsd"&gt;
+                </code>
+            </li>
+
             <li>If there's an associated XML stylesheet(s), its
             name has to be changed in a coordinated way. (You
             should also update the stylesheet to show your new XML
@@ -195,7 +206,7 @@
       tool</a> is a very good tool for checking that changes to the
       JMRI schema are still technically correct. You should check
       your changes with it before commiting them to the repository.
-      Unfortunately, it doesn't seem to to check compliance with
+      Unfortunately, it doesn't seem to check compliance with
       nested schema elements, e.g. from DocBook (see below) or JMRI
       schema, but it's still a very useful check.
 
@@ -352,7 +363,7 @@ browser. For an example of that, click on this link to the
       <p>Lots of classes descend from jmri.configurexml.XmAdapter:
       (<a href=
       "http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see
-      JavaDoc</a>)</p>
+      Javadoc</a>)</p>
 
       <p>By convention, provide
       &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing

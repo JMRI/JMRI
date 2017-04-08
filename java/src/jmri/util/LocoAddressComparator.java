@@ -15,6 +15,7 @@ public class LocoAddressComparator implements Comparator<LocoAddress>, java.io.S
     public LocoAddressComparator() {
     }
 
+    @Override
     public int compare(LocoAddress l1, LocoAddress l2) {
          if( l1.getProtocol() == l2.getProtocol() ){
              // protocol is the same, compare the number fields

@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TestTrafficController;
 import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -169,10 +168,12 @@ public class OlcbSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

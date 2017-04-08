@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2008
  *
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_CANNOT_BE_FINAL")
+@SuppressFBWarnings(value = "MS_CANNOT_BE_FINAL")
 public class Control {
 
     // debug flags
@@ -38,7 +39,7 @@ public class Control {
     public static final int panelHeight100 = 100;
 
     /*
-     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	
+     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
      // Maximum panel height
      public static final int panelMaxHeight = screenSize.height;
      */
@@ -47,13 +48,13 @@ public class Control {
     public static final int panelY = 0;
 
     // Train build parameters
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
     public static boolean fullTrainOnly = false;
 
-    // Car and Engine attribute maximum string length	
+    // Car and Engine attribute maximum string length 
     public static int max_len_string_attibute = 12;
 
-    // Car and Engine number maximum string length	
+    // Car and Engine number maximum string length 
     public static int max_len_string_road_number = 10;
     
     // Car and Engine number maximum string length when printing  

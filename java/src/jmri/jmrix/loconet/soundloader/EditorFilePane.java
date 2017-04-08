@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for editing Digitrax SPJ files
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2010
  */
 public class EditorFilePane extends javax.swing.JPanel {
 

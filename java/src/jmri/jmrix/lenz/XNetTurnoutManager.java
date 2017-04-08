@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
@@ -27,12 +27,14 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
     protected String prefix = null;
 
     // XNet-specific methods
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
         Turnout t = new XNetTurnout(prefix, addr, tc);
@@ -41,6 +43,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     // listen for turnouts, creating them as needed
+    @Override
     public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -100,6 +103,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * Allows text other than "CLOSED" to be use with certain hardware system to
      * represent the Turnout.CLOSED state.
      */
+    @Override
     public String getClosedText() {
         return rbt.getString("TurnoutStateClosed");
     }
@@ -109,15 +113,18 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * Allows text other than "THROWN" to be use with certain hardware system to
      * represent the Turnout.THROWN state.
      */
+    @Override
     public String getThrownText() {
         return rbt.getString("TurnoutStateThrown");
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

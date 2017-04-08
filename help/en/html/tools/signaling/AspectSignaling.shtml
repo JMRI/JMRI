@@ -61,8 +61,8 @@
         the layout communication needed to make the signal on the
         layout display the right colors.<br>
         <a href=
-        "../../../package/jmri/jmrit/beantable/SignalMasts.png"><img src="../../../package/jmri/jmrit/beantable/SignalMasts.png"
-        width="338" height="86" align="right"></a> Signal Masts are
+        "../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"><img src="../../../package/jmri/jmrit/beantable/images/SignalMasts-num.png"
+        width="309" height="83" align="right"></a> Signal Masts are
         configured through the <a href=
         "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">
         Signal Mast Table</a>. You add new ones with the "Add..."
@@ -132,7 +132,8 @@
 
       <p>In short, a set of files for the selected Signaling System
       contains the basic code to determine which combinations are
-      available in the Signal Mast Logic tool.<br>
+      available in the <a href="SignalMastLogic.shtml">Signal Mast
+      Logic</a> tool.<br>
       In the xml/signals directory located in the JMRI program
       directory, there is a directory for every Signaling System
       that has been defined, with one "aspects.xml" file which

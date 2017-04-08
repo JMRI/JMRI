@@ -227,10 +227,12 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         return false; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.srcp.SrcpActionListBundle");
     }
 
+    @Override
     public void dispose() {
         et = null;
         InstanceManager.deregister(this, SRCPBusConnectionMemo.class);
@@ -241,12 +243,15 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     }
 
     // functions for the SRCP Listener interface.
+    @Override
     public void message(SRCPMessage m) {
     }
 
+    @Override
     public void reply(SRCPReply m) {
     }
 
+    @Override
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         log.debug("SimpleNode Reply called with " + n.toString());
         reply(new SRCPReply(n));
@@ -300,4 +305,4 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
 }
 
 
-/* @(#)SRCPBusConnectionMemo.java */
+

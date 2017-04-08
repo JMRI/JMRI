@@ -1,7 +1,9 @@
 package jmri.jmrit.roster;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import jmri.Block;
 import jmri.DccThrottle;
@@ -106,15 +108,19 @@ public class RosterSpeedProfile {
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
         
-        while (speeds.higherKey(highStep) != null && higher<=0.0f) {
-            highStep = speeds.higherKey(highStep);
-            higher = speeds.get(highStep).getForwardSpeed();
+        Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
+        while (entry != null && higher<=0.0f) {
+            highStep = entry.getKey();
+            higher = entry.getValue().getForwardSpeed();
+            entry = speeds.higherEntry(highStep);
         }
         boolean nothingHigher = (higher<=0.0f);
         
-        while (speeds.lowerKey(lowStep) != null && lower<=0.0f) {
-            lowStep = speeds.lowerKey(lowStep);
-            lower = speeds.get(lowStep).getForwardSpeed();
+        entry = speeds.lowerEntry(lowStep);
+        while (entry != null && lower<=0.0f) {
+            lowStep = entry.getKey();;
+            lower = entry.getValue().getForwardSpeed();
+            entry = speeds.lowerEntry(lowStep);
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
@@ -154,15 +160,19 @@ public class RosterSpeedProfile {
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
         
-        while (speeds.higherKey(highStep) != null && higher<=0.0f) {
-            highStep = speeds.higherKey(highStep);
-            higher = speeds.get(highStep).getReverseSpeed();
+        Entry<Integer, SpeedStep> entry = speeds.higherEntry(highStep);
+        while (entry != null && higher<=0.0f) {
+            highStep = entry.getKey();
+            higher = entry.getValue().getReverseSpeed();
+            entry = speeds.higherEntry(highStep);
         }
         boolean nothingHigher = (higher<=0.0f);
         
-        while (speeds.lowerKey(lowStep) != null && lower<=0.0f) {
-            lowStep = speeds.lowerKey(lowStep);
-            lower = speeds.get(lowStep).getReverseSpeed();
+        entry = speeds.higherEntry(lowStep);
+        while (entry != null && lower<=0.0f) {
+            lowStep = entry.getKey();
+            lower = entry.getValue().getReverseSpeed();
+            entry = speeds.higherEntry(highStep);
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
@@ -255,7 +265,7 @@ public class RosterSpeedProfile {
      * Set speed of a throttle to a speeed set by a float, using the block for
      * the length details
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed) {
         // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (blk == referenced && speed == desiredSpeedStep) {
@@ -280,7 +290,7 @@ public class RosterSpeedProfile {
      * the length details
      */
     //@TODO if a section contains multiple blocks then we could calibrate the change of speed based upon the block status change.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
     public void changeLocoSpeed(DccThrottle t, Section sec, float speed) {
         // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (sec == referenced && speed == desiredSpeedStep) {
@@ -306,7 +316,7 @@ public class RosterSpeedProfile {
     /**
      * Set speed by float increment of a speed step.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is specifically 'Unchanged' here")
     public void changeLocoSpeed(DccThrottle t, float distance, float speed) {
         if (log.isDebugEnabled()) {
             log.debug("Call to change speed over specific distance float " + speed + " distance " + distance);
@@ -597,6 +607,7 @@ public class RosterSpeedProfile {
         stepQueue.removeFirst();
         _throttle.setSpeedSetting(ss.getSpeedStep());
         stopTimer = new javax.swing.Timer(ss.getDuration(), new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setNextStep();
             }
@@ -707,6 +718,54 @@ public class RosterSpeedProfile {
     public TreeMap<Integer, SpeedStep> getProfileSpeeds() {
         return speeds;
     }
+    
+    /**
+     * Get the throttle setting to achieve a track speed
+     * @param speed desired track speed
+     * @param isForward direction
+     * @return throttle setting
+     */
+    public float getThrottleSetting(float speed, boolean isForward) {
+        int key = 0;
+        float slower = 0;
+        Entry<Integer, SpeedStep> entry = speeds.higherEntry(key);
+        while (entry != null && slower >= speed) {
+            key = entry.getKey();
+            if (isForward) {
+                slower = entry.getValue().getForwardSpeed();
+            } else {
+                slower = entry.getValue().getReverseSpeed();
+            }
+            entry = speeds.higherEntry(key);
+        }
+        int lowKey = key;
+        
+        float faster = slower;
+        entry = speeds.higherEntry(key);
+        while (entry != null && faster >= speed) {
+            key = entry.getKey();
+            if (isForward) {
+                faster = entry.getValue().getForwardSpeed();
+            } else {
+                faster = entry.getValue().getReverseSpeed();
+            }
+            entry = speeds.higherEntry(key);
+        }
+        if (faster <= slower) {
+            return key / 1000;
+        }
+        
+        float ratio = (speed - slower) / (faster - slower);
+        float setting = lowKey + (key - lowKey) * ratio / 1000;      
+        return setting;
+    }
+        
+    /**
+     * Get track speed in millimeters per second from throttle setting
+     * @param speedStep - throttle setting
+     * @param isForward - direction
+     * @return track speed
+     */
     public float getSpeed(float speedStep, boolean isForward) {
         if (speedStep<0.00001f) {
             return 0.0f;

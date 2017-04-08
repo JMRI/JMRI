@@ -1,4 +1,3 @@
-// DCCppListener.java
 package jmri.jmrix.dccpp;
 
 /**
@@ -11,9 +10,9 @@ package jmri.jmrix.dccpp;
  * simplification of client code. We've not done that yet because we're not sure
  * that deadlocks can be avoided in that case.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Mark Underwood Copyright (C) 2015
   *
  * Based on XNetListener by Bob Jacobsen
  */
@@ -46,4 +45,4 @@ public interface DCCppListener extends jmri.jmrix.AbstractMRListener {
     public void notifyTimeout(DCCppMessage msg);
 
 }
-/* @(#)DCCppListener.java */
+

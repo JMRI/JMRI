@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * This is a variable length reply, which can grow as needed. The length is
  * given by the largest index written so far.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
@@ -46,6 +46,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     // keep track of length
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = (char) v;
         _nDataChars = Math.max(_nDataChars, n + 1);
@@ -93,6 +94,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     // display format
+    @Override
     public String toString() {
         String s = "";
         for (int i = 0; i < _nDataChars; i++) {

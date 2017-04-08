@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
  */
 public class NceAIUChecker implements NceListener {
 
-    private static final int MEM_AIU = 0xDC15; 	// NCE CS AIU memory address 
-    private static final int REPLY_LEN = 1; 	// number of bytes read
-    private boolean EXPECT_REPLY = false; 		// flag 
+    private static final int MEM_AIU = 0xDC15;  // NCE CS AIU memory address 
+    private static final int REPLY_LEN = 1;  // number of bytes read
+    private boolean EXPECT_REPLY = false;   // flag 
 
     private NceTrafficController tc = null;
 
@@ -48,12 +48,14 @@ public class NceAIUChecker implements NceListener {
 
     }
 
+    @Override
     public void message(NceMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("unexpected message");
         }
     }
 
+    @Override
     public void reply(NceReply r) {
         if (!EXPECT_REPLY && log.isDebugEnabled()) {
             log.debug("Unexpected reply in AIU broadcast checker");
@@ -89,4 +91,4 @@ public class NceAIUChecker implements NceListener {
             .getLogger(NceAIUChecker.class.getName());
 
 }
-/* @(#)NceAIUChecker.java */
+

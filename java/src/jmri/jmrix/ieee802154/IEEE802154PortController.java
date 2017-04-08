@@ -1,10 +1,9 @@
-// IEEE802154PortController.java
 package jmri.jmrix.ieee802154;
 
 /**
  * Abstract base for classes representing a communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
@@ -23,14 +22,17 @@ public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerial
     }
 
     // returns the InputStream from the port
+    @Override
     public abstract java.io.DataInputStream getInputStream();
 
     // returns the outputStream to the port
+    @Override
     public abstract java.io.DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
+    @Override
     public abstract boolean status();
 }
 
 
-/* @(#)IEEE802154PortController.java */
+

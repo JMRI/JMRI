@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.secsi;
 
 /**
@@ -85,4 +84,4 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)SerialMessage.java */
+

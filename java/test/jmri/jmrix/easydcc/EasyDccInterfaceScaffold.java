@@ -15,10 +15,12 @@ class EasyDccInterfaceScaffold implements EasyDccListener {
         rcvdMsg = null;
     }
 
+    @Override
     public void message(EasyDccMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void reply(EasyDccReply r) {
         rcvdReply = r;
     }

@@ -1,13 +1,14 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Calendar;
 
 /**
  * Common utility class for handling the "spurious wakeup from wait()" problem
- * described in the {@link java.lang.Object#wait(long)} JavaDocs
+ * documented in {@link java.lang.Object#wait(long)}.
  *
  * Generally, when waiting for a notify() operation, you need to provide a test
- * that a valid notify had happened due to e.g. a state change, etc.
+ * that a valid notify had happened due to a state change or other .
  * <pre><code>
  * new WaitHandler(this, 120) {
  * protected boolean wasSpurious() {
@@ -57,7 +58,7 @@ public class WaitHandler {
      *
      * @param self waiting Object
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
     public WaitHandler(Object self) {
         // loop until interrupted, or non-spurious wake
         while (true) {

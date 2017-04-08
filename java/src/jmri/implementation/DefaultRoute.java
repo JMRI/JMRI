@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class providing the basic logic of the Route interface.
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
@@ -42,7 +42,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
 
     /**
-     * Persistant instance variables (saved between runs)
+     * Persistant instance variables (saved between runs).
      */
     protected String mControlTurnout = "";
     protected NamedBeanHandle<Turnout> mControlNamedTurnout = null;
@@ -62,7 +62,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     /**
-     * Operational instance variables (not saved between runs)
+     * Operational instance variables (not saved between runs).
      */
     ArrayList<OutputSensor> _outputSensorList = new ArrayList<>();
 
@@ -115,6 +115,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             super(name);
         }
 
+        @Override
         boolean setState(int state) {
             if (_sensor == null) {
                 return false;
@@ -135,6 +136,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState")) {
                 int now = ((Integer) e.getNewValue()).intValue();
@@ -202,6 +204,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("KnownState")
                     || e.getPropertyName().equals("CommandedState")) {
@@ -876,15 +879,19 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
 
     /**
-     * Handle sensor update event to see if that will set the route.
-     * <P>
+     * Handle sensor update event to see if it will set the route.
+     * <p>
      * Called when a "KnownState" event is received, it assumes that only one
      * sensor is changing right now, so can use state calls for everything other
      * than this sensor.
-     * <P>
-     * This will fire the route if the conditions are correct
-     * <P>
-     * Returns noting explicitly, but has the side effect of firing route
+     * <p>
+     * This will fire the Route if the conditions are correct.
+     * <p>
+     * Returns nothing explicitly, but has the side effect of firing route.
+     *
+     * @param newState new state of control sensor
+     * @param oldState former state
+     * @param sensor   Sensor used as Route control sensor
      */
     protected void checkSensor(int newState, int oldState, Sensor sensor) {
         // check for veto of change
@@ -923,8 +930,13 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
 
     /**
-     * Turnout has changed, check to see if this fires. Will fire route if
-     * appropriate
+     * Turnout has changed, check to see if this fires.
+     * <p>
+     * Will fire Route if appropriate.
+     *
+     * @param newState new state of control turnout
+     * @param oldState former state
+     * @param t        Turnout used as Route control turnout
      */
     void checkTurnout(int newState, int oldState, Turnout t) {
         if (isVetoed()) {
@@ -953,7 +965,11 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
 
     /**
-     * Turnout has changed, check to see if this will lock or unlock route
+     * Turnout has changed, check to see if this will lock or unlock route.
+     *
+     * @param newState  new state of lock turnout
+     * @param oldState  former turnout state
+     * @param t         Turnout used for locking the Route
      */
     void checkLockTurnout(int newState, int oldState, Turnout t) {
         switch (mLockControlTurnoutState) {
@@ -1299,12 +1315,14 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
 
     /**
-     * Class providing a thread to set route turnouts
+     * Class providing a thread to set route turnouts.
      */
     static class SetRouteThread extends Thread {
 
         /**
-         * Constructs the thread
+         * Constructs the thread.
+         *
+         * @param aRoute DefaultRoute to set
          */
         public SetRouteThread(DefaultRoute aRoute) {
             r = aRoute;
@@ -1317,7 +1335,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
          * <li>Play Sound (runs in parallel)
          * <li>Set Turnouts
          * <li>Set Sensors
-         * </UL>
+         * </ul>
          */
         @Override
         public void run() {

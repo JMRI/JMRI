@@ -2,6 +2,9 @@ package jmri.jmrix.openlcb.swing.downloader;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -9,20 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import org.openlcb.Connection;
+import org.openlcb.LoaderClient;
+import org.openlcb.LoaderClient.LoaderStatusReporter;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
-import org.openlcb.NodeID;
-import org.openlcb.LoaderClient;
-import org.openlcb.LoaderClient.LoaderStatusReporter;
-import org.openlcb.Connection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * support firmware updates according to the Firmware Upgrade Protocol.
  *<p>
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B. Milhaupt Copyright (C) 2013, 2014)
+ * @author Bob Jacobsen Copyright (C) 2005, 2015 (from the LocoNet version by B. Milhaupt Copyright (C) 2013, 2014)
  *          David R Harris (C) 2016
  *          Balazs Racz (C) 2016
  */
@@ -52,6 +50,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     public String getTitle(String menuTitle) { return Bundle.getMessage("TitleLoader"); }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
         this.connection = memo.get(Connection.class);
@@ -133,9 +132,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         Integer ispace = Integer.valueOf(spaceField.getText());
         long addr = 0;
         loaderClient.doLoad(nid,destNodeID(),ispace,addr,fdata, new LoaderStatusReporter() {
+            @Override
             public void onProgress(float percent) {
                 updateGUI(Math.round(percent));
             }
+            @Override
             public void onDone(int errorCode, String errorString) {
                 if(errorCode==0) {
                     updateGUI(100); //draw bar to 100%
@@ -171,6 +172,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * Get NodeID from the GUI
+     * @return selected node id
      */
     NodeID destNodeID() {
         return (NodeID) nodeSelector.getSelectedItem();

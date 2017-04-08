@@ -23,14 +23,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
-        return "LocoNet LocoBuffer-II";
+        return "LocoNet LocoBuffer-II"; // NOI18N
     }
 
     public boolean isOptList2Advanced() {
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LocoBufferIIAdapter();

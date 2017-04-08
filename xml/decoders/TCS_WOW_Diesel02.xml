@@ -13,10 +13,12 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20150730"/>
+	<!-- new file, based on Wow diesel sound set 1 -->
 	<version author="Michael Mosher" version="2" lastUpdated="20150814"/>
 	<version author="Michael Mosher" version="3" lastUpdated="20160216"/>
-	<!-- new file, based on Wow diesel sound set 1 -->
 	<!-- V3 fix version ID for 501 model -->
+	<version author="Michael Mosher" version="4" lastUpdated="20170317"/>
+	<!-- update factory resets -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 2" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS2" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -1668,7 +1670,11 @@
 			</variable>
 		</variables>
 		<resets>
-			<factReset label="Entire decoder (All motor, light, and sound settings)" CV="T2CV.5.0" default="2"/>
+			<mode>PAGEMODE</mode>
+			<mode>DIRECTMODE</mode>
+			<mode>OPSBYTEMODE</mode>
+			<factReset label="Entire decoder (except speed table)" CV="8" default="2"/>
+			<factReset label="Entire decoder (except address and speed table)" CV="T2CV.5.0" default="2"/>
 			<factReset label="All sound settings" CV="T2CV.5.0" default="3"/>
 			<factReset label="Sound Function mappings" CV="T2CV.5.0" default="4"/>
 			<factReset label="Sound CV's" CV="T2CV.5.0" default="6"/>
@@ -1676,6 +1682,9 @@
 			<factReset label="User Preset 1" CV="T2CV.5.0" default="8"/>
 			<factReset label="User Preset 2" CV="T2CV.5.0" default="9"/>
 			<factReset label="User Preset 3" CV="T2CV.5.0" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Ditch Lights" CV="8" default="10"/>
+			<factReset label="Quick Lighting Preset: Standard Trolley" CV="8" default="11"/>
+			<factReset label="Quick Lighting Preset: Modified Trilley" CV="8" default="12"/>
 		</resets>
 	</decoder>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>

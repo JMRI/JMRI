@@ -1,6 +1,8 @@
 package apps.startup;
 
 import apps.tests.Log4JFixture;
+import javax.swing.Action;
+import jmri.JmriException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -75,6 +77,11 @@ public class AbstractActionModelTest {
     }
 
     public class AbstractActionModelImpl extends AbstractActionModel {
+
+        @Override
+        protected void performAction(Action action) throws JmriException {
+            // empty method not tested as abstract in class being tested
+        }
     }
     
 }

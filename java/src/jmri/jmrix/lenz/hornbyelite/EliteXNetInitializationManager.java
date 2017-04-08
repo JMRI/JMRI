@@ -1,4 +1,3 @@
-// EliteXNetInitializationManager.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.AbstractXNetInitializationManager;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Elite. It adds the appropriate Managers via the Initialization Manager based
  * on the Command Station Type.
  *
- * @author	Paul Bender Copyright (C) 2003,2008
+ * @author Paul Bender Copyright (C) 2003,2008
   */
 public class EliteXNetInitializationManager extends AbstractXNetInitializationManager {
 
@@ -19,6 +18,7 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

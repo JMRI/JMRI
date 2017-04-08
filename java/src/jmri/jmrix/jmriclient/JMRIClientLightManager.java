@@ -1,4 +1,3 @@
-// JMRIClientLightManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Light;
@@ -9,14 +8,10 @@ import jmri.Light;
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the light number without padding.
  *
- * @author	Paul Bender Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010
   */
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6247705424672589496L;
     private JMRIClientSystemConnectionMemo memo = null;
     private String prefix = null;
 
@@ -25,10 +20,12 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
         this.prefix = memo.getSystemPrefix();
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Light createNewLight(String systemName, String userName) {
         Light t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
@@ -41,6 +38,7 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * Public method to validate system name format returns 'true' if system
      * name has a valid format, else returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return ((systemName.startsWith(prefix + "l")
                 || systemName.startsWith(prefix + "L"))
@@ -53,10 +51,11 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * 'false' for now, this method always returns 'true'; it is needed for the
      * Abstract Light class
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }
 
 }
 
-/* @(#)JMRIClientLightManager.java */
+

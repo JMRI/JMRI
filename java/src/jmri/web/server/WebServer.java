@@ -366,7 +366,7 @@ public final class WebServer extends AbstractLifeCycle implements LifeCycle.List
 
     @Override
     public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
-        log.warn("Web Server failed", thrwbl);
+        log.error("Web Server failed", thrwbl);
     }
 
     @Override

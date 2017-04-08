@@ -1,4 +1,3 @@
-// RaspberryPiTurnoutManager.java
 
 package jmri.jmrix.pi;
 
@@ -9,7 +8,7 @@ import jmri.Turnout;
  * <P>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
- * @author			Paul Bender Copyright (C) 2015 
+ * @author   Paul Bender Copyright (C) 2015 
  * 
  */
 public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutManager {
@@ -37,4 +36,4 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
 
 }
 
-/* @(#)RaspberryPiTurnoutManager.java */
+

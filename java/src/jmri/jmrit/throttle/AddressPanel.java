@@ -164,6 +164,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      *
      * @param t An instantiation of the DccThrottle with the address requested.
      */
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         log.info("Asked for " + currentAddress.getNumber() + " got " + t.getLocoAddress());
         if (consistAddress != null
@@ -228,6 +229,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
     }
 
+    @Override
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
         javax.swing.JOptionPane.showMessageDialog(null, reason, Bundle.getMessage("FailedSetupRequestTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
     }
@@ -323,6 +325,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         mainPanel.add(setButton, constraints);
 
         setButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 consistAddress = null;
                 changeOfAddress();
@@ -354,6 +357,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             conRosterBox.setSelectedIndex(0);
             conRosterBox.setToolTipText(Bundle.getMessage("SelectConsistFromRosterTT"));
             conRosterBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     consistRosterSelected();
                 }
@@ -372,6 +376,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         buttonPanel.add(dispatchButton);
         dispatchButton.setEnabled(false);
         dispatchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 dispatchAddress();
             }
@@ -381,6 +386,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         buttonPanel.add(releaseButton);
         releaseButton.setEnabled(false);
         releaseButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 releaseAddress();
             }
@@ -390,6 +396,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         buttonPanel.add(progButton);
         progButton.setEnabled(false);
         progButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 openProgrammer();
             }
@@ -454,8 +461,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     private void changeOfAddress() {
         currentAddress = addrSelector.getAddress();
         if (currentAddress == null) {
-            return;	// no address
-        }		// send notification of new address
+            return; // no address
+        }  // send notification of new address
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {
@@ -473,8 +480,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     private void changeOfConsistAddress() {
         if (consistAddress == null) {
-            return;	// no address
-        }		// send notification of new address
+            return; // no address
+        }  // send notification of new address
         for (int i = 0; i < listeners.size(); i++) {
             AddressListener l = listeners.get(i);
             if (log.isDebugEnabled()) {
@@ -652,6 +659,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     private final static Logger log = LoggerFactory.getLogger(AddressPanel.class.getName());
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt == null) {
             return;

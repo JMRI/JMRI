@@ -29,6 +29,15 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoFileTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DispatcherActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OptionsFileTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainInfoFileTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainInfoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ActivateTrainFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoTrainsFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoAllocateTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AutoTurnoutsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OptionsMenuTest.class));
         return suite;
     }
 

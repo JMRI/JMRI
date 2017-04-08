@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp.swing.mon;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +12,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTest {
+public class DCCppMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 

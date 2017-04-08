@@ -1,9 +1,8 @@
-// EcosPortController.java
 package jmri.jmrix.ecos;
 
 /*
  * Identifying class representing a ECOS communications port
- * @author			Bob Jacobsen    Copyright (C) 2001, 2008
+ * @author   Bob Jacobsen    Copyright (C) 2001, 2008
  */
 public abstract class EcosPortController extends jmri.jmrix.AbstractNetworkPortController {
 
@@ -20,4 +19,4 @@ public abstract class EcosPortController extends jmri.jmrix.AbstractNetworkPortC
 }
 
 
-/* @(#)EcosPortController.java */
+

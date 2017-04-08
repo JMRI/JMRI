@@ -1,4 +1,3 @@
-// InputBits.java
 package jmri.jmrix.maple;
 
 import jmri.JmriException;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * input (1-1000) and output (1001-9000), so input bits are read starting from
  * HMI address 1, and output bits are written starting at HMI address 1001.
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2009
+ * @author Dave Duchamp, Copyright (C) 2009
  */
 public class InputBits {
 
@@ -43,7 +42,7 @@ public class InputBits {
     // operational variables
     private static int mNumInputBits = 48;     // number of Sensors that are configured
     private static int mTimeoutTime = 2000;    // timeout time when polling nodes (milliseconds)
-    private int lastUsedSensor = -1;	// number of Sensors that are in use - 1 (less than above)
+    private int lastUsedSensor = -1; // number of Sensors that are in use - 1 (less than above)
     protected Sensor[] sensorArray = new Sensor[MAXSENSORS + 1];
     protected int[] sensorLastSetting = new int[MAXSENSORS + 1];
     protected int[] sensorTempSetting = new int[MAXSENSORS + 1];
@@ -183,10 +182,6 @@ public class InputBits {
             sensorLastSetting[i] = Sensor.UNKNOWN;
             sensorTempSetting[i] = Sensor.UNKNOWN;
             sensorORedSetting[i] = false;
-        } else {
-            // multiple registration of the same sensor
-            log.warn("multiple registration of same sensor: KS"
-                    + Integer.toString(i + 1));
         }
     }
 
@@ -200,5 +195,3 @@ public class InputBits {
 
     private final static Logger log = LoggerFactory.getLogger(InputBits.class.getName());
 }
-
-/* @(#)InputBits.java */

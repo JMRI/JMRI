@@ -24,6 +24,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         QuadOutputSignalHead p = (QuadOutputSignalHead) o;
 

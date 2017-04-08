@@ -16,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This module handles configuration for the Entry Exit pairs unsed in
- * interlocking on a layouteditor
+ * This module handles configuration for the Entry Exit pairs used in
+ * interlocking on a Layout Editor Panel.
  *
  * @author Kevin Dickerson Copyright (c) 2007
  */
@@ -27,11 +27,12 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a PositionablePoint
+     * Default implementation for storing the contents of a PositionablePoint.
      *
      * @param o Object to store, of type PositionablePoint
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         EntryExitPairs p = (EntryExitPairs) o;
@@ -120,25 +121,32 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     source.addContent(dest);
                 }
                 panelElem.addContent(source);
-                element.addContent(panelElem);
             }
+            element.addContent(panelElem);
         }
         return element;
     }
 
+    /**
+     * Define attribute for an element that is to be stored.
+     *
+     * @param messages Storage element
+     */
     public void setStoreElementClass(Element messages) {
         messages.setAttribute("class", "jmri.jmrit.signalling.configurexml.EntryExitPairsXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
     /**
-     * Load, starting with the layoutblock element, then all the value-icon
-     * pairs
+     * Load, starting with the layoutBlock element, then all the value-icon
+     * pairs.
      *
-     * @param shared Top level Element to unpack.
+     * @param shared Top level Element to unpack
+     * @param perNode ignored in this application
      */
     @Override
     public boolean load(Element shared, Element perNode) {
@@ -149,7 +157,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             String clearoption = shared.getChild("cleardown").getText();
             eep.setClearDownOption(Integer.parseInt(clearoption));
         } catch (java.lang.NullPointerException e) {
-            //Considered normal if it doesn't exists
+            //Considered normal if it doesn't exist
         }
         // get attributes
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -249,6 +257,12 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return true;
     }
 
+    /**
+     * Get a descriptive name for a given color value.
+     *
+     * @param color Integer value of a color to display on screen
+     * @return lower case color name in English; None if color entered is null
+     */
     public static String colorToString(Color color) {
         if (color == Color.black) {
             return "black";
@@ -283,6 +297,12 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return "black";
     }
 
+    /**
+     * Get a color value for a color name.
+     *
+     * @param string String describing a color
+     * @return integer representing a screen color
+     */
     public static Color stringToColor(String string) {
         if (string.equals("black")) {
             return Color.black;
@@ -317,6 +337,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return Color.black;
     }
 
+    @Override
     public int loadOrder() {
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.signalling.EntryExitPairs.class) == null) {
             jmri.InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);

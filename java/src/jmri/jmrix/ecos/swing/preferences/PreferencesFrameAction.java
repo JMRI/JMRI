@@ -1,4 +1,3 @@
-// PreferencesFrameAction.java
 package jmri.jmrix.ecos.swing.preferences;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a PreferencesFrame object
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
   */
 public class PreferencesFrameAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4657764227318850416L;
 
     public PreferencesFrameAction(String s, EcosSystemConnectionMemo memo) {
         super(s);
@@ -26,6 +20,7 @@ public class PreferencesFrameAction extends AbstractAction {
 
     EcosSystemConnectionMemo adaptermemo;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PreferencesFrame f = new PreferencesFrame();
         try {
@@ -38,6 +33,3 @@ public class PreferencesFrameAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(PreferencesFrameAction.class.getName());
 }
-
-
-/* @(#)PreferencesFrameAction.java */

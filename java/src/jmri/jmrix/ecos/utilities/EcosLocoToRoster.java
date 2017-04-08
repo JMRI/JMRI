@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -99,6 +98,7 @@ public class EcosLocoToRoster implements EcosListener {
         suppressFurtherAdditions = false;
         inProcess = true;
         Runnable run = new Runnable() {
+            @Override
             public void run() {
                 while (locoList.size() != 0) {
                     final EcosLocoAddress tmploco = locoList.get(0);
@@ -115,6 +115,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 ecosObject = o;
                             }
 
+                            @Override
                             public void run() {
                                 final JDialog dialog = new JDialog();
                                 dialog.setTitle("Add Roster Entry From JMRI?");
@@ -146,6 +147,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 container.add(button);
 
                                 noButton.addActionListener(new ActionListener() {
+                                    @Override
                                     public void actionPerformed(ActionEvent e) {
                                         ecosObject.doNotAddToRoster();
                                         waitingForComplete = true;
@@ -158,6 +160,7 @@ public class EcosLocoToRoster implements EcosListener {
                                 });
 
                                 yesButton.addActionListener(new ActionListener() {
+                                    @Override
                                     public void actionPerformed(ActionEvent e) {
                                         if (remember.isSelected()) {
                                             p.setAddLocoToJMRI(EcosPreferences.YES);
@@ -195,6 +198,7 @@ public class EcosLocoToRoster implements EcosListener {
                         waitingForComplete = true;
                     }
                     Runnable r = new Runnable() {
+                        @Override
                         public void run() {
                             try {
                                 while (!waitingForComplete) {
@@ -259,6 +263,7 @@ public class EcosLocoToRoster implements EcosListener {
                 WindowMaker() {
                 }
 
+                @Override
                 public void run() {
                     comboPanel();
                 }
@@ -269,6 +274,7 @@ public class EcosLocoToRoster implements EcosListener {
         }
     }
 
+    @Override
     public void reply(EcosReply m) {
         int startval;
         int endval;
@@ -436,6 +442,7 @@ public class EcosLocoToRoster implements EcosListener {
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
 
     }
@@ -505,6 +512,7 @@ public class EcosLocoToRoster implements EcosListener {
         });
 
         ActionListener okayButtonAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 okayButton();
             }
@@ -547,17 +555,18 @@ public class EcosLocoToRoster implements EcosListener {
         re.setDecoderComment("");
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
         re.ensureFilenameExists();
-        if (pDecoderFile.getSupportedProtocols().length > 0) {
-            List<jmri.LocoAddress.Protocol> protocols = new ArrayList<jmri.LocoAddress.Protocol>(Arrays.asList(pDecoderFile.getSupportedProtocols()));
-            if ((ecosLoco.getECOSProtocol().startsWith("DCC")) && protocols.contains(jmri.LocoAddress.Protocol.DCC)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.DCC);
-            } else if (ecosLoco.getECOSProtocol().equals("MMFKT") && protocols.contains(jmri.LocoAddress.Protocol.MFX)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.MFX);
-            } else if (ecosLoco.getECOSProtocol().startsWith("MM") && protocols.contains(jmri.LocoAddress.Protocol.MOTOROLA)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.MOTOROLA);
-            } else if (ecosLoco.getECOSProtocol().equals("SX32") && protocols.contains(jmri.LocoAddress.Protocol.SELECTRIX)) {
-                re.setProtocol(jmri.LocoAddress.Protocol.SELECTRIX);
+        if ((ecosLoco.getECOSProtocol().startsWith("DCC"))) {
+            if (ecosLoco.getNumber() <= 127) {
+                re.setProtocol(jmri.LocoAddress.Protocol.DCC_SHORT);
+            } else {
+                re.setProtocol(jmri.LocoAddress.Protocol.DCC_LONG);
             }
+        } else if (ecosLoco.getECOSProtocol().equals("MMFKT") || ecosLoco.getECOSProtocol().equals("MFX")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.MFX);
+        } else if (ecosLoco.getECOSProtocol().startsWith("MM")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.MOTOROLA);
+        } else if (ecosLoco.getECOSProtocol().equals("SX32")) {
+            re.setProtocol(jmri.LocoAddress.Protocol.SELECTRIX);
         }
 
         mProgrammer = null;
@@ -613,10 +622,6 @@ public class EcosLocoToRoster implements EcosListener {
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
         dTree = new JTree(dModel) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3197427124986523211L;
 
             @Override
             public String getToolTipText(MouseEvent evt) {
@@ -715,6 +720,7 @@ public class EcosLocoToRoster implements EcosListener {
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         // tree listener
         dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
+            @Override
             public void valueChanged(TreeSelectionEvent e) {
                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null
                         && // can't be just a mfg, has to be at least a family
@@ -759,10 +765,6 @@ public class EcosLocoToRoster implements EcosListener {
     // from http://www.codeguru.com/java/articles/143.shtml
     static class DecoderTreeNode extends DefaultMutableTreeNode {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5606230191141397789L;
         private String toolTipText;
         private String title;
 

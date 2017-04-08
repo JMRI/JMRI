@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * System names are "USnnn:yy", where nnn is the Ecos Object Number for a given
  * s88 Bus Module and yy is the port on that module.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         implements EcosListener {
@@ -38,10 +38,12 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     private Hashtable<Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         //int ports = Integer.valueOf(systemName.substring(2)).intValue();
         Sensor s = new EcosSensor(systemName, userName);
@@ -51,6 +53,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     // to listen for status changes from Ecos system
+    @Override
     public void reply(EcosReply m) {
         // is this a list of sensors?
         EcosSensor es;
@@ -172,6 +175,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }
@@ -212,4 +216,4 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class.getName());
 }
 
-/* @(#)EcosSensorManager.java */
+

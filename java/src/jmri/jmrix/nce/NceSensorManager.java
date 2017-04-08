@@ -1,4 +1,3 @@
-// NceSensorManager.java
 package jmri.jmrix.nce;
 
 import jmri.JmriException;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * This class is responsible for generating polling messages for the
  * NceTrafficController, see nextAiuPoll()
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
   */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
@@ -28,9 +27,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             aiuArray[i] = null;
         }
         listener = new NceListener() {
+            @Override
             public void message(NceMessage m) {
             }
 
+            @Override
             public void reply(NceReply r) {
                 if (r.isSensorMessage()) {
                     mInstance.handleSensorMessage(r);
@@ -45,17 +46,20 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
     private NceSensorManager mInstance = null;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
-        stopPolling = true;		// tell polling thread to go away
+        stopPolling = true;  // tell polling thread to go away
         tc.removeNceListener(listener);
         super.dispose();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         int number = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
 
@@ -76,11 +80,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     NceAIU[] aiuArray = new NceAIU[MAXAIU + 1];  // element 0 isn't used
-    int[] activeAIUs = new int[MAXAIU];		// keep track of those worth polling
-    int activeAIUMax = 0;							// last+1 element used of activeAIUs
+    int[] activeAIUs = new int[MAXAIU];  // keep track of those worth polling
+    int activeAIUMax = 0;       // last+1 element used of activeAIUs
     private static final int MINAIU = 1;
     private static final int MAXAIU = 63;
-    private static final int MAXPIN = 14;				// only pins 1 - 14 used on NCE AIU
+    private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
     Thread pollThread;
     boolean stopPolling = false;
@@ -88,11 +92,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
     // polling parameters and variables
     private final int shortCycleInterval = 200;
-    private final int longCycleInterval = 10000;		// when we know async messages are flowing
-    private final long maxSilentInterval = 30000;		// max slow poll time without hearing an async message
-    private final int pollTimeout = 20000;				// in case of lost response
+    private final int longCycleInterval = 10000;  // when we know async messages are flowing
+    private final long maxSilentInterval = 30000;  // max slow poll time without hearing an async message
+    private final int pollTimeout = 20000;    // in case of lost response
     private int aiuCycleCount;
-    private long lastMessageReceived;					// time of last async message
+    private long lastMessageReceived;     // time of last async message
     private NceAIU currentAIU;
     private boolean awaitingReply = false;
     private boolean awaitingDelay = false;
@@ -135,11 +139,12 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 activeAIUs[activeAIUMax++] = a;
             }
         }
-        aiuCycleCount = 0;				// force another polling cycle
+        aiuCycleCount = 0;    // force another polling cycle
         lastMessageReceived = Long.MIN_VALUE;
         if (activeAIUMax > 0) {
             if (pollThread == null) {
                 pollThread = new Thread(new Runnable() {
+                    @Override
                     public void run() {
                         pollManager();
                     }
@@ -148,7 +153,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 pollThread.start();
             } else {
                 synchronized (this) {
-                    if (awaitingDelay) {		// interrupt long between-poll wait
+                    if (awaitingDelay) {  // interrupt long between-poll wait
                         notify();
                     }
                 }
@@ -168,8 +173,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * construct a binary-formatted AIU poll message
      *
-     * @param aiuNo	number of AIU to poll
-     * @return	message to be queued
+     * @param aiuNo number of AIU to poll
+     * @return message to be queued
      */
     private NceMessage makeAIUPoll4ByteReply(int aiuNo) {
         NceMessage m = new NceMessage(2);
@@ -184,8 +189,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * construct a binary-formatted AIU poll message
      *
-     * @param aiuNo	number of AIU to poll
-     * @return	message to be queued
+     * @param aiuNo number of AIU to poll
+     * @return message to be queued
      */
     private NceMessage makeAIUPoll2ByteReply(int aiuNo) {
         NceMessage m = new NceMessage(2);
@@ -209,7 +214,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             for (int a = 0; a < activeAIUMax; ++a) {
                 int aiuNo = activeAIUs[a];
                 currentAIU = aiuArray[aiuNo];
-                if (currentAIU != null) {				// in case it has gone away
+                if (currentAIU != null) {    // in case it has gone away
                     NceMessage m = makeAIUPoll(aiuNo);
                     synchronized (this) {
                         if (log.isDebugEnabled()) {
@@ -250,6 +255,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    @Override
     public void message(NceMessage r) {
         log.warn("unexpected message");
     }
@@ -257,6 +263,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Process single received reply from sensor poll
      */
+    @Override
     public void reply(NceReply r) {
         if (!r.isUnsolicited()) {
             int bits;
@@ -278,7 +285,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Handle an unsolicited sensor (AIU) state message
      *
-     * @param r	sensor message
+     * @param r sensor message
      */
     public void handleSensorMessage(AbstractMRReply r) {
         int index = r.getElement(1) - 0x30;
@@ -325,10 +332,12 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             //Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
@@ -373,6 +382,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     int pin = 0;
     int iName = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -409,4 +419,4 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private final static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());
 }
 
-/* @(#)NceSensorManager.java */
+

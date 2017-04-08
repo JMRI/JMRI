@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import org.jdom2.Element;
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @see jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -31,6 +32,7 @@ public class ProgCheckAction extends AbstractAction {
 
     JPanel _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
@@ -82,7 +84,7 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     static String checkMissingNames(File file) {
@@ -152,7 +154,7 @@ public class ProgCheckAction extends AbstractAction {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     static String checkIncompleteComprehensive(File file) {

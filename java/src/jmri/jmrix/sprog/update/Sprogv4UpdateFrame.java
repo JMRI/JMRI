@@ -1,4 +1,3 @@
-// Sprogv4UpdateFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
@@ -26,6 +25,7 @@ public class Sprogv4UpdateFrame
     /**
      * Set the help item
      */
+    @Override
     public void initComponents() throws Exception {
         super.initComponents();
 
@@ -38,6 +38,7 @@ public class Sprogv4UpdateFrame
         _memo.getSprogVersionQuery().requestVersion(this);
     }
 
+    @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         if (sv.sprogType.isSprog() == false) {
@@ -67,6 +68,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateSetBootSent() {
         // Only old SPROG v4 reach this state
         if (log.isDebugEnabled()) {
@@ -90,6 +92,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateBootVerReqSent() {
         stopTimer();
         if (log.isDebugEnabled()) {
@@ -116,6 +119,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateWriteSent() {
         stopTimer();
         if (log.isDebugEnabled()) {
@@ -138,6 +142,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateEofSent() {
         // v4 end of file sent
         stopTimer();
@@ -155,6 +160,7 @@ public class Sprogv4UpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
+    @Override
     synchronized protected void stateV4Reset() {
         // v4 should have auto reset
         stopTimer();
@@ -173,6 +179,7 @@ public class Sprogv4UpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
+    @Override
     synchronized protected void requestBoot() {
         // Look for SPROG in boot mode by sending an extended address command
         // which should be echoed
@@ -187,6 +194,7 @@ public class Sprogv4UpdateFrame
         startLongTimer();
     }
 
+    @Override
     synchronized protected void sendWrite() {
         if (hexFile.getAddress() < 2 * 0x700) {
             //
@@ -215,6 +223,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void doneWriting() {
         // Finished
         if (log.isDebugEnabled()) {
@@ -240,6 +249,7 @@ public class Sprogv4UpdateFrame
         // *** Check for reset
     }
 
+    @Override
     public synchronized void programButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (hexFile != null) {
             openFileChooserButton.setEnabled(false);

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base class for Frames displaying communications monitor information
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2014
  */
 public abstract class AbstractMonFrame extends JmriJFrame {
 
@@ -88,6 +88,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         self = this;
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -308,6 +309,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         // if not frozen, display it in the Swing thread
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     synchronized (self) {
                         monTextPane.append(linesBuffer.toString());

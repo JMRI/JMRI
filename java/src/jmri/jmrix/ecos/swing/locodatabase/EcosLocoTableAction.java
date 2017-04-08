@@ -47,11 +47,6 @@ import org.slf4j.LoggerFactory;
 public class EcosLocoTableAction extends AbstractTableAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -2219906814091945412L;
-
-    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -118,11 +113,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
     @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5684158970230450044L;
 
             //We have to set a manager first off, but this gets replaced.
             @Override
@@ -606,7 +596,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
     /**
      * Create a JButton to edit a turnout operation.
      *
-     * @return	the JButton
+     * @return the JButton
      */
     protected JButton stopButton() {
         JButton stopButton = new JButton("STOP");
@@ -664,11 +654,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
     static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7946142069235701497L;
-
         public RosterBoxRenderer(RosterEntry re) {
             super();
             setNonSelectedItem(" ");
@@ -699,11 +684,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
     }
 
     static class RosterComboBoxEditor extends DefaultCellEditor {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -90878307599435295L;
 
         public RosterComboBoxEditor(GlobalRosterEntryComboBox cb) {
             super(cb);

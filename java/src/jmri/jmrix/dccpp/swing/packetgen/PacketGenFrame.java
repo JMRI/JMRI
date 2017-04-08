@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.dccpp.swing.packetgen;
 
 import jmri.jmrix.dccpp.DCCppMessage;
@@ -9,13 +8,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user input of XpressNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2002
+ * @author Bob Jacobsen Copyright (C) 2001,2002
  * @author      Mark Underwood Copyright (C) 2015
   */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.dccpp.swing.DCCppSwingBundle");
 
+    @Override
     public void initComponents() throws Exception {
         super.initComponents();
 
@@ -27,6 +27,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         pack();
     }
 
+    @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendDCCppMessage(createPacket(packetTextField.getSelectedItem().toString()), null);
     }

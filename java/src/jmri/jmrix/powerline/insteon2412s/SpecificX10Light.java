@@ -1,4 +1,3 @@
-// SpecificX10Light.java
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -31,14 +30,11 @@ import org.slf4j.LoggerFactory;
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 8709986243133819987L;
-
-    /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName text for systemName of light
+     * @param tc         tc for connection
      */
     public SpecificX10Light(String systemName, SerialTrafficController tc) {
         super(systemName, tc);
@@ -51,6 +47,9 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName text for systemName of light
+     * @param tc         tc for connection
+     * @param userName   text for userName of light
      */
     public SpecificX10Light(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, tc, userName);
@@ -67,6 +66,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      * <p>
      * This sends "Extended Cmd Dim" commands.
      */
+    @Override
     protected void sendIntensity(double intensity) {
         if (log.isDebugEnabled()) {
             log.debug("sendIntensity(" + intensity + ")" + " lastOutputStep: " + lastOutputStep + " maxDimStep: " + maxDimStep);
@@ -106,4 +106,4 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
     private final static Logger log = LoggerFactory.getLogger(SpecificX10Light.class.getName());
 }
 
-/* @(#)SpecificX10Light.java */
+

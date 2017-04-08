@@ -1,4 +1,3 @@
-// JMRIClientMessage.java
 package jmri.jmrix.jmriclient;
 
 
@@ -8,7 +7,7 @@ package jmri.jmrix.jmriclient;
  * <P>
  * The {@link JMRIClientReply} class handles the response from the server.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  * @author Paul Bender Copyright (C) 2010
   */
 public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
@@ -68,4 +67,4 @@ public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
 
 }
 
-/* @(#)JMRIClientMessage.java */
+

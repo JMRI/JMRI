@@ -1,4 +1,3 @@
-// InitialAlgorithm.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -64,6 +63,7 @@ public class InitialAlgorithm implements Calculator {
 
     double vsound;
 
+    @Override
     public Measurement convert(Reading r) {
         ngps = r.getNValues();
         ri = r.getValue(1) * vsound;
@@ -84,6 +84,7 @@ public class InitialAlgorithm implements Calculator {
     /**
      * Seed the conversion using an estimated position
      */
+    @Override
     public Measurement convert(Reading r, Point3d guess) {
         this.x = guess.x;
         this.y = guess.y;
@@ -95,6 +96,7 @@ public class InitialAlgorithm implements Calculator {
     /**
      * Seed the conversion using a last measurement
      */
+    @Override
     public Measurement convert(Reading r, Measurement last) {
         if (last != null) {
             this.x = last.getX();
@@ -357,4 +359,4 @@ public class InitialAlgorithm implements Calculator {
 
 }
 
-/* @(#)InitialAlgorithm.java */
+

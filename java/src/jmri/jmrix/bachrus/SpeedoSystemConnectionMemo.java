@@ -1,4 +1,3 @@
-// SpeedoSystemConnectionMemo.java
 package jmri.jmrix.bachrus;
 
 import java.util.ResourceBundle;
@@ -11,7 +10,7 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -55,11 +54,13 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         //None to configure
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No Actions at start up to return
         return null;
     }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, SpeedoSystemConnectionMemo.class);
@@ -71,4 +72,4 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 }
 
 
-/* @(#)InternalSystemConnectionMemo.java */
+

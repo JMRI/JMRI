@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Tabbed Preferences Action for dealing with all the preferences in a single
  * view with a list option to the left hand side.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -80,6 +80,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         if (f == null) {
             f = new TabbedPreferencesFrame() {};
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     try {
                         setWait(true);
@@ -129,6 +130,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

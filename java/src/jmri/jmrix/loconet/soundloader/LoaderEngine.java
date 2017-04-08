@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Controls the actual LocoNet transfers to download sounds into a Digitrax SFX
  * decoder.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class LoaderEngine {
 
@@ -160,7 +160,7 @@ public class LoaderEngine {
             }            // wait a while, and then try again
             protectedWait(10);
         }
-        throw new DelayException("Ran out of time after sending " + m.toString());
+        throw new DelayException("Ran out of time after sending " + m.toString()); // NOI18N
     }
 
     static class DelayException extends Exception {

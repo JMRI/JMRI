@@ -16,7 +16,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -26,7 +25,11 @@ import org.junit.Test;
  * / to the end of a portable directory name, and tests could fail if they
  * expect a file or non-existent filename and a directory exists at that path.
  *
- * @author	Bob Jacobsen Copyright 2003, 2009
+ * These tests should return the same results as
+ * {@link jmri.util.FileUtilSupportTest}.
+ *
+ * @author Bob Jacobsen Copyright 2003, 2009
+ * @author Randall Wood Copyright 2016, 2017
  */
 public class FileUtilTest {
 
@@ -327,21 +330,14 @@ public class FileUtilTest {
         Assert.assertNull(FileUtil.findExternalFilename(FileUtil.PROGRAM + this.preferencesTestFile.getName()));
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-        new File(FileUtil.getProfilePath()).mkdir();
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
-        this.preferencesTestFile = new File(FileUtil.getProfilePath() + UUID.randomUUID().toString());
+        File profile = new File(FileUtil.getProfilePath());
+        profile.mkdir();
+        this.preferencesTestFile = new File(profile, UUID.randomUUID().toString());
         this.preferencesTestFile.createNewFile();
     }
 

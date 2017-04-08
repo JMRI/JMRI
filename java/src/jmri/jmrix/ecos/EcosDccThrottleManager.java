@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on early NCE code.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2005
+ * @author Bob Jacobsen Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener {
@@ -34,14 +34,17 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         return mInstance;
     }
 
+    @Override
     public void reply(EcosReply m) {
         //We are not sending commands from here yet!
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         /*Here we do not set notifythrottle, we simply create a new ecos throttle.
          The ecos throttle in turn will notify the throttle manager of a successful or
@@ -59,6 +62,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      * Address 100 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -67,6 +71,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      * Address 99 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -74,10 +79,12 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
+    @Override
     public String[] getAddressTypes() {
         return new String[]{
             LocoAddress.Protocol.DCC.getPeopleName(),
@@ -86,6 +93,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
             LocoAddress.Protocol.LGB.getPeopleName()};
     }
 
+    @Override
     public LocoAddress.Protocol[] getAddressProtocolTypes() {
         return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC,
             LocoAddress.Protocol.MOTOROLA,
@@ -118,6 +126,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         }
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             EcosDccThrottle lnt = (EcosDccThrottle) t;

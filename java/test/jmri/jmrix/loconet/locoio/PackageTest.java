@@ -29,14 +29,18 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(LocoIOPanelTest.suite());
         suite.addTest(LocoIOTableModelTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOModeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoIOTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

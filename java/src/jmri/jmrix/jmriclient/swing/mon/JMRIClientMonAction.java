@@ -1,4 +1,3 @@
-// JMRIClientMonAction.java
 package jmri.jmrix.jmriclient.swing.mon;
 
 import java.awt.event.ActionEvent;
@@ -13,10 +12,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JMRIClientMonAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3199061276329508557L;
     private jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo;
 
     public JMRIClientMonAction(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
@@ -28,6 +23,7 @@ public class JMRIClientMonAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a JMRIClientMonFrame
         JMRIClientMonFrame f = new JMRIClientMonFrame(_memo);
@@ -42,6 +38,3 @@ public class JMRIClientMonAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(JMRIClientMonAction.class.getName());
 
 }
-
-
-/* @(#)SRCPMonAction.java */

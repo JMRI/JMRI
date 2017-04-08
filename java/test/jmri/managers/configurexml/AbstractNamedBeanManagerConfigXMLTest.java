@@ -22,13 +22,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
 
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -44,13 +47,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -70,13 +76,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -89,13 +98,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -116,13 +128,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -138,13 +153,16 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
+            @Override
             public int getState() {
                 return 0;
             }
 
+            @Override
             public void setState(int i) {
             }
 
+            @Override
             public String getBeanType() {
                 return "";
             }
@@ -176,10 +194,12 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   * @see jmri.jmrix.nce.NceMessage
  *
  */
@@ -84,7 +84,7 @@ public class LocoNetMessage implements Serializable {
      * Get a String representation of the op code in hex
      */
     public String getOpCodeHex() {
-        return "0x" + Integer.toHexString(getOpCode());
+        return "0x" + Integer.toHexString(getOpCode()); // NOI18N
     }
 
     /**
@@ -96,18 +96,18 @@ public class LocoNetMessage implements Serializable {
 
     public int getElement(int n) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n
-                    + " in message of " + _dataBytes.length
-                    + " elements: " + this.toString());
+            log.error("reference element " + n // NOI18N
+                    + " in message of " + _dataBytes.length // NOI18N
+                    + " elements: " + this.toString()); // NOI18N
         }
         return _dataBytes[n] & 0xFF;
     }
 
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n
-                    + " in message of " + _dataBytes.length
-                    + " elements: " + this.toString());
+            log.error("reference element " + n // NOI18N
+                    + " in message of " + _dataBytes.length // NOI18N
+                    + " elements: " + this.toString()); // NOI18N
         }
         _dataBytes[n] = v;
     }
@@ -115,6 +115,7 @@ public class LocoNetMessage implements Serializable {
     /**
      * Get a String representation of the entire message in hex
      */
+    @Override
     public String toString() {
         int val;
         StringBuffer sb = new StringBuffer();
@@ -244,6 +245,7 @@ public class LocoNetMessage implements Serializable {
      *
      * @return true if objects contain the same message contents
      */
+    @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;
@@ -263,6 +265,7 @@ public class LocoNetMessage implements Serializable {
         return true;
     }
 
+    @Override
     public int hashCode() {
         int r = _nDataBytes;
         if (_nDataBytes > 0) {
@@ -380,7 +383,7 @@ public class LocoNetMessage implements Serializable {
     public int sensorAddr() {
         int sw1 = getElement(1);
         int sw2 = getElement(2);
-        int as = sw2 & 0x20;		// should be a LocoNet constant?
+        int as = sw2 & 0x20;  // should be a LocoNet constant?
         int high = sw2 & 0x0F;
         int low = sw1 & 0x7F;
         return high * 256 + low * 2 + (as != 0 ? 1 : 0);

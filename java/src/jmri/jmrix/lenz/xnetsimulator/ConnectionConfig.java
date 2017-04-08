@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.lenz.xnetsimulator;
 
 /**
@@ -29,20 +28,24 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
         return "XPressNet Simulator";
     }
 
     String manufacturerName = "Lenz";
 
+    @Override
     public String getManufacturer() {
         return manufacturerName;
     }
 
+    @Override
     public void setManufacturer(String manu) {
         manufacturerName = manu;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new XNetSimulatorAdapter();

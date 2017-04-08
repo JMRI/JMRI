@@ -1,12 +1,8 @@
 package jmri.jmrix.can.adapters.lawicell;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
@@ -15,7 +11,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTest {
+public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
     @Before

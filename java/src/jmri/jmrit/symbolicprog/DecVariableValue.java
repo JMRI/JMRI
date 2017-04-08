@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Decimal representation of a value.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class DecVariableValue extends VariableValue
         implements ActionListener, PropertyChangeListener, FocusListener {
@@ -43,6 +43,7 @@ public class DecVariableValue extends VariableValue
         cv.setState(CvValue.FROMFILE);
     }
 
+    @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
@@ -58,10 +59,12 @@ public class DecVariableValue extends VariableValue
         return (int) Math.ceil(Math.log10(_maxVal)) + 1;
     }
 
+    @Override
     public CvValue[] usesCVs() {
         return new CvValue[]{_cvMap.get(getCvNum())};
     }
 
+    @Override
     public Object rangeVal() {
         return "Decimal: " + _minVal + " - " + _maxVal;
     }
@@ -111,6 +114,7 @@ public class DecVariableValue extends VariableValue
      * the invoker, who may or may not know what the old value was. Can be
      * overridden in subclasses that want to display the value differently.
      */
+    @Override
     void updatedTextField() {
         if (log.isDebugEnabled()) {
             log.debug("updatedTextField");
@@ -134,6 +138,7 @@ public class DecVariableValue extends VariableValue
     /**
      * ActionListener implementations
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("actionPerformed");
@@ -150,6 +155,7 @@ public class DecVariableValue extends VariableValue
     /**
      * FocusListener implementations
      */
+    @Override
     public void focusGained(FocusEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("focusGained");
@@ -157,6 +163,7 @@ public class DecVariableValue extends VariableValue
         enterField();
     }
 
+    @Override
     public void focusLost(FocusEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("focusLost");
@@ -166,22 +173,27 @@ public class DecVariableValue extends VariableValue
 
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
+    @Override
     public String getValueString() {
         return _value.getText();
     }
 
+    @Override
     public void setIntValue(int i) {
         setValue(i);
     }
 
+    @Override
     public int getIntValue() {
         return textToValue(_value.getText());
     }
 
+    @Override
     public Object getValueObject() {
         return Integer.valueOf(_value.getText());
     }
 
+    @Override
     public Component getCommonRep() {
         if (getReadOnly()) {
             JLabel r = new JLabel(_value.getText());
@@ -193,6 +205,7 @@ public class DecVariableValue extends VariableValue
         }
     }
 
+    @Override
     public void setAvailable(boolean a) {
         _value.setVisible(a);
         for (Component c : reps) {
@@ -203,6 +216,7 @@ public class DecVariableValue extends VariableValue
 
     java.util.List<Component> reps = new java.util.ArrayList<Component>();
 
+    @Override
     public Component getNewRep(String format) {
         if (format.equals("vslider")) {
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
@@ -296,6 +310,7 @@ public class DecVariableValue extends VariableValue
         return _value.getBackground();
     }
 
+    @Override
     void setColor(Color c) {
         if (c != null) {
             _value.setBackground(c);
@@ -309,10 +324,12 @@ public class DecVariableValue extends VariableValue
      * Notify the connected CVs of a state change from above
      *
      */
+    @Override
     public void setCvState(int state) {
         _cvMap.get(getCvNum()).setState(state);
     }
 
+    @Override
     public boolean isChanged() {
         CvValue cv = _cvMap.get(getCvNum());
         if (log.isDebugEnabled()) {
@@ -321,18 +338,21 @@ public class DecVariableValue extends VariableValue
         return considerChanged(cv);
     }
 
+    @Override
     public void readChanges() {
         if (isChanged()) {
             readAll();
         }
     }
 
+    @Override
     public void writeChanges() {
         if (isChanged()) {
             writeAll();
         }
     }
 
+    @Override
     public void readAll() {
         setToRead(false);
         setBusy(true);  // will be reset when value changes
@@ -340,6 +360,7 @@ public class DecVariableValue extends VariableValue
         _cvMap.get(getCvNum()).read(_status);
     }
 
+    @Override
     public void writeAll() {
         setToWrite(false);
         if (getReadOnly()) {
@@ -350,6 +371,7 @@ public class DecVariableValue extends VariableValue
     }
 
     // handle incoming parameter notification
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
         if (log.isDebugEnabled()) {
@@ -384,7 +406,7 @@ public class DecVariableValue extends VariableValue
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable
      *
-     * @author			Bob Jacobsen   Copyright (C) 2001
+     * @author   Bob Jacobsen   Copyright (C) 2001
      */
     public class VarTextField extends JTextField {
 
@@ -395,11 +417,13 @@ public class DecVariableValue extends VariableValue
             setBackground(_var._value.getBackground());
             // listen for changes to ourself
             addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     thisActionPerformed(e);
                 }
             });
             addFocusListener(new java.awt.event.FocusListener() {
+                @Override
                 public void focusGained(FocusEvent e) {
                     if (log.isDebugEnabled()) {
                         log.debug("focusGained");
@@ -407,6 +431,7 @@ public class DecVariableValue extends VariableValue
                     enterField();
                 }
 
+                @Override
                 public void focusLost(FocusEvent e) {
                     if (log.isDebugEnabled()) {
                         log.debug("focusLost");
@@ -416,6 +441,7 @@ public class DecVariableValue extends VariableValue
             });
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     originalPropertyChanged(e);
                 }
@@ -439,6 +465,7 @@ public class DecVariableValue extends VariableValue
     }
 
     // clean up connections when done
+    @Override
     public void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");

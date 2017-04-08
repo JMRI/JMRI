@@ -1,6 +1,7 @@
 //OperationsFrame.java
 package jmri.jmrit.operations;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -26,7 +27,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "cast is consistent OperationsPanel")
+@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "cast is consistent OperationsPanel")
 public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     public static final String NEW_LINE = "\n"; // NOI18N
@@ -199,7 +200,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
     protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
 
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel();	// kludge fix for horizontal scrollbar
+        pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
         panel.add(pad);
 

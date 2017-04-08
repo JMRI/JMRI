@@ -1,4 +1,3 @@
-// LI101Frame.java
 package jmri.jmrix.lenz.swing.li101;
 
 import java.awt.FlowLayout;
@@ -23,14 +22,9 @@ import org.slf4j.LoggerFactory;
  * This is a configuration utility for the LI101. It allows the user to set the
  * XPressNet Address and the port speed used to communicate with the LI101.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
   */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -338386258040843147L;
 
     protected XNetTrafficController tc = null;
 
@@ -82,6 +76,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         // install read settings, write settings button handlers
         readSettingsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 readLI101Settings();
             }
@@ -89,6 +84,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         );
 
         writeSettingsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 writeLI101Settings();
             }
@@ -97,6 +93,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -106,6 +103,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
         // install reset button handler
         resetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 resetLI101Settings();
 
@@ -176,6 +174,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
     }
 
     // listen for responces from the LI101
+    @Override
     public void message(XNetReply l) {
         // Check to see if this is an LI101 info request messgage, if it
         //is, determine if it's the baud rate setting, or the address
@@ -194,10 +193,12 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
     }
 
     // listen for the messages to the LI101
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -214,6 +215,7 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         speedBox.setSelectedIndex(0);
     }
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

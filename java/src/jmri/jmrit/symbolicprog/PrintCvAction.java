@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen Copyright (C) 2003; D Miller Copyright 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003; D Miller Copyright 2003, 2005
  */
 public class PrintCvAction extends AbstractAction {
 
@@ -65,6 +65,7 @@ public class PrintCvAction extends AbstractAction {
         w.setFontStyle(Font.PLAIN);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
@@ -110,16 +111,20 @@ public class PrintCvAction extends AbstractAction {
             writer.write(tableBottomRow, tableLeft, tableBottomRow, tableRight);
 
             writer.setFontStyle(1);  //set font to Bold
-            // print a simple heading
-            s = "                 Value                   Value                   Value\n";
+            // print a simple heading with I18N
+            s = String.format("%1$21s%1$24s%1$24s", Bundle.getMessage("Value")); // pad with spaces to column width, 3 x insert Value as var %1
             writer.write(s, 0, s.length());
+            s = "\n";
+            writer.write(s, 0, s.length());
+            // NOI18N
             s = "            CV  Dec Hex             CV  Dec Hex             CV  Dec Hex\n";
             writer.write(s, 0, s.length());
             writer.setFontStyle(0); //set font back to Normal
 
-            //create an array to hold CV/Value strings to allow reformatting and sorting
-            //Same size as the table drawn above (4 columns*tableHeight; heading rows
-            //not included
+            /* Create array to hold CV/Value strings to allow reformatting and sorting.
+             * Same size as the table drawn above (4 columns*tableHeight; heading rows
+             * not included
+             */
             String[] cvStrings = new String[TABLE_COLS * tableHeight];
 
             //blank the array

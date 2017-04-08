@@ -36,7 +36,7 @@ public class BackupDialog extends JDialog {
     private JLabel infoLabel1;
     private JLabel infoLabel2;
     private JButton backupButton;
-    //	private JButton helpButton;
+    // private JButton helpButton;
 
     private DefaultBackup backup;
 
@@ -144,7 +144,7 @@ public class BackupDialog extends JDialog {
                 getRootPane().setDefaultButton(backupButton);
             }
             {
-                JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
+                JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
                 cancelButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
@@ -155,16 +155,16 @@ public class BackupDialog extends JDialog {
                 buttonPane.add(cancelButton);
             }
             // Help button isn't used yet
-            //			{
-            //				helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
-            //				helpButton.addActionListener(new ActionListener() {
-            //					public void actionPerformed(ActionEvent e) {
-            //						do_helpButton_actionPerformed(e);
-            //					}
-            //				});
-            //				helpButton.setEnabled(false);
-            //				buttonPane.add(helpButton);
-            //			}
+            //   {
+            //    helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
+            //    helpButton.addActionListener(new ActionListener() {
+            //     public void actionPerformed(ActionEvent e) {
+            //      do_helpButton_actionPerformed(e);
+            //     }
+            //    });
+            //    helpButton.setEnabled(false);
+            //    buttonPane.add(helpButton);
+            //   }
         }
     }
 

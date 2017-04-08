@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NceThrottle extends AbstractThrottle {
 
@@ -26,6 +27,8 @@ public class NceThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param memo system connection memo to use
+     * @param address DCC loco address
      */
     public NceThrottle(NceSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
@@ -75,6 +78,7 @@ public class NceThrottle extends AbstractThrottle {
 
     DccLocoAddress address;
 
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
@@ -82,6 +86,7 @@ public class NceThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
+    @Override
     protected void sendFunctionGroup1() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
@@ -118,6 +123,7 @@ public class NceThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
@@ -153,6 +159,7 @@ public class NceThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F9, F10, F11, F12.
      */
+    @Override
     protected void sendFunctionGroup3() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
@@ -189,6 +196,7 @@ public class NceThrottle extends AbstractThrottle {
      * Send the message to set the state of functions F13, F14, F15, F16, F17,
      * F18, F19, F20
      */
+    @Override
     protected void sendFunctionGroup4() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
@@ -228,6 +236,7 @@ public class NceThrottle extends AbstractThrottle {
      * Send the message to set the state of functions F21, F22, F23, F24, F25,
      * F26, F27, F28
      */
+    @Override
     protected void sendFunctionGroup5() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
@@ -269,7 +278,8 @@ public class NceThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -288,7 +298,7 @@ public class NceThrottle extends AbstractThrottle {
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
             if (value > 126) {
                 value = 126;    // max possible speed, 127 can crash PowerCab! 
-            }			// emergency stop?
+            }   // emergency stop?
             if (value < 0) {
 
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
@@ -343,11 +353,11 @@ public class NceThrottle extends AbstractThrottle {
                  *
                  * Suggested correct code is
                  *   value = (int) ((31-3) * speed); // -3 for rescale to avoid stop and estop x2
-                 * 		if (value > 0) value = value + 3; // skip stop and estop x2
-                 * 		if (value > 31) value = 31; // max possible speed
-                 * 		if (value < 0)	value = 2; // emergency stop
-                 * 		bl = jmri.NmraPacket.speedStep28Packet(true, address.getNumber(),
-                 * 				address.isLongAddress(), value, isForward);
+                 *   if (value > 0) value = value + 3; // skip stop and estop x2
+                 *   if (value > 31) value = 31; // max possible speed
+                 *   if (value < 0) value = 2; // emergency stop
+                 *   bl = jmri.NmraPacket.speedStep28Packet(true, address.getNumber(),
+                 *     address.isLongAddress(), value, isForward);
                  */
                 value = (int) ((28) * speed); // -1 for rescale to avoid estop
                 if (value > 0) {
@@ -372,6 +382,7 @@ public class NceThrottle extends AbstractThrottle {
         record(speed);
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -384,6 +395,7 @@ public class NceThrottle extends AbstractThrottle {
         }
     }
 
+    @Override
     protected void throttleDispose() {
         finishRecord();
     }

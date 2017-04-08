@@ -3,7 +3,7 @@ package jmri.jmrix.loconet.sdf;
 /**
  * Implement generic two-byte macros from the Digitrax sound definition language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class TwoByteMacro extends SdfMacro {
 
@@ -12,12 +12,14 @@ public class TwoByteMacro extends SdfMacro {
         bytes[1] = (byte) (byte2 & 0xFF);
     }
 
+    @Override
     public String name() {
-        return "Two Byte Macro";
+        return "Two Byte Macro"; // NOI18N
     }
 
     byte[] bytes = new byte[2];
 
+    @Override
     public int length() {
         return 2;
     }
@@ -30,6 +32,7 @@ public class TwoByteMacro extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(bytes[0]);
@@ -39,14 +42,17 @@ public class TwoByteMacro extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return name() + ' ' + jmri.util.StringUtil.hexStringFromBytes(bytes) + '\n';
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + ' ' + jmri.util.StringUtil.hexStringFromBytes(bytes) + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }

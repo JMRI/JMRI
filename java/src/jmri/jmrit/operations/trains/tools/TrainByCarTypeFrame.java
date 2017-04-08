@@ -1,6 +1,6 @@
-// TrainByCarTypeFrame.java
 package jmri.jmrit.operations.trains.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -393,7 +393,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         CarTypes.instance().updateComboBox(typeComboBox);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "CarManager only provides Car Objects")
     private void updateCarsComboBox() {
         log.debug("update car combobox");
@@ -408,7 +408,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
             justification = "CarManager only provides Car Objects")
     private void adjustCarsComboBoxSize() {
         List<RollingStock> cars = CarManager.instance().getList();
