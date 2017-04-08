@@ -22,5 +22,5 @@ public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
         echo = true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(LnPr2Packetizer.class.getName());
 }

@@ -20,6 +20,8 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection memo
+     * @param mgr config manager
      */
     public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
         super(memo);

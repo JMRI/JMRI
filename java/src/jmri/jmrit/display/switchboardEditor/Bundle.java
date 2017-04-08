@@ -1,4 +1,4 @@
-package jmri.jmrix.loconet.locostats;
+package jmri.jmrit.display.switchboardEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,9 +21,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.loconet.Bundle {
+public class Bundle extends jmri.jmrit.display.controlPanelEditor.Bundle {
 
-    private final static String name = "jmri.jmrix.loconet.locostats.LocoStatsBundle"; // NOI18N
+    private final static String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

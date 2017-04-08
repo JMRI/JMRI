@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -26,8 +26,9 @@ import org.slf4j.LoggerFactory;
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
  * <P>
- * It does include, with AbstractNamedBean, the implementation of the 
- * normalized user name.  
+ * It does include, with AbstractNamedBean, the implementation of the normalized
+ * user name.
+ *
  * @see jmri.NamedBean#normalizeUserName
  *
  * @author Bob Jacobsen Copyright (C) 2003
@@ -187,35 +188,43 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this, "", "Manager");
     }
-    
+
     /**
-     * Invoked by {@link #register(NamedBean)} to register 
-     * the user name of the bean
+     * Invoked by {@link #register(NamedBean)} to register the user name of the
+     * bean.
+     *
+     * @param s the bean to register
      */
     protected void registerUserName(NamedBean s) {
         String userName = s.getUserName();
-        if (userName == null) return;
-        
+        if (userName == null) {
+            return;
+        }
+
         handleUserNameUniqueness(s);
         // since we've handled uniqueness,
         // store the new bean under the name
-        _tuser.put(userName, s);        
+        _tuser.put(userName, s);
     }
-    
+
     /**
-     * Invoked by {@link #registerUserName(NamedBean)} to 
-     * ensure uniqueness of the NamedBean during registration
+     * Invoked by {@link #registerUserName(NamedBean)} to ensure uniqueness of
+     * the NamedBean during registration.
+     *
+     * @param s the bean to register
      */
     protected void handleUserNameUniqueness(NamedBean s) {
-        String userName = s.getUserName();        
+        String userName = s.getUserName();
         if (userName != null) {
             // enforce uniqueness of user names
             // by setting username to null in any existing bean with the same name
             // Note that this is not a "move" operation for the user name
-            if (_tuser.get(userName)!=null && _tuser.get(userName)!=s ) _tuser.get(userName).setUserName(null);
+            if (_tuser.get(userName) != null && _tuser.get(userName) != s) {
+                _tuser.get(userName).setUserName(null);
+            }
         }
     }
-    
+
     /**
      * Forget a NamedBean Object created outside the manager.
      * <P>
@@ -261,7 +270,7 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
                     // If so, clear. Note that this is not a "move" operation
                     _tuser.get(now).setUserName(null);
                 }
-                
+
                 _tuser.put(now, t); // put new name for this bean
             }
 
@@ -424,15 +433,17 @@ abstract public class AbstractManager implements Manager, PropertyChangeListener
     }
 
     /**
-     * Enforces, and as a user convenience converts to, the standard form for a system name
-     * for the NamedBeans handled by this manager.
+     * Enforces, and as a user convenience converts to, the standard form for a
+     * system name for the NamedBeans handled by this manager.
      *
      * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form 
+     * @throws NamedBean.BadSystemNameException If the inputName can't be
+     *                                          converted to normalized form
+     * @return A system name in standard normalized form
      */
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName;
     }
 

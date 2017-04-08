@@ -1,4 +1,4 @@
-package jmri.jmrix.loconet.locostats;
+package jmri.jmrix.loconet.locostats.swing;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,12 +8,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.locostats.LocoNetInterfaceStatsListener;
+import jmri.jmrix.loconet.locostats.LocoBufferIIStatus;
+import jmri.jmrix.loconet.locostats.LocoStatsFunc;
+import jmri.jmrix.loconet.locostats.PR2Status;
+import jmri.jmrix.loconet.locostats.RawStatus;
+import jmri.jmrix.loconet.locostats.PR3MS100ModeStatus;
 import jmri.jmrix.loconet.swing.LnPanel;
-import jmri.util.StringUtil;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,12 +40,15 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2008, 2010
   * @since 2.1.5
  */
-public class LocoStatsPanel extends LnPanel implements LocoNetListener {
+public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsListener {
 
     JPanel lb2Panel;
     JPanel rawPanel;
     JPanel pr2Panel;
     JPanel ms100Panel;
+    boolean updateRequestPending = false;
+    
+    LocoStatsFunc stats;
 
     @Override
     public String getHelpTarget() {
@@ -51,14 +57,14 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
     @Override
     public String getTitle() {
-        return getTitle(Bundle.getMessage("MenuItemLocoStats"));
+        return getTitle("MenuItemLocoStats");
     }
 
     public LocoStatsPanel() {
         super();
     }
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle");
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.swing.LocoStatsBundle");
 
     @Override
     public void initComponents() {
@@ -76,7 +82,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         rawPanel.add(r6);
         rawPanel.add(r7);
         rawPanel.add(r8);
-
+        
         lb2Panel = new JPanel();
         lb2Panel.setLayout(new BoxLayout(lb2Panel, BoxLayout.X_AXIS));
         lb2Panel.add(new JLabel(rb.getString("LabelVersion")));
@@ -121,13 +127,9 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         add(panel);
 
         // install "update" button handler
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                requestUpdate();
-            }
-        }
-        );
+        updateButton.addActionListener((ActionEvent a) -> {
+            requestUpdate();
+        });
 
         // and prep for display
         lb2Panel.setVisible(false);
@@ -142,121 +144,21 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-
-        // listen for LocoNet messages
-        if (memo.getLnTrafficController() != null) {
-            memo.getLnTrafficController().addLocoNetListener(~0, this);
-        } else {
-            report("No LocoNet connection available, can't function");
-        }
+        
+        stats = new LocoStatsFunc(memo);
+        stats.addLocoNetInterfaceStatsListener(this);
 
         // request data
-        requestUpdate();
+        stats.getInterfaceStatus();
     }
 
     void report(String msg) {
         log.error(msg);
     }
 
-    @Override
-    public void message(LocoNetMessage msg) {
-        if (updatePending
-                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
-                && (msg.getElement(1) == 0x10)
-                && (msg.getElement(2) == 0x50)
-                && (msg.getElement(3) == 0x50)
-                && (msg.getElement(4) == 0x01)
-                && ((msg.getElement(5) & 0xF0) == 0x0)
-                && ((msg.getElement(10) & 0xF0) == 0x0)) {
-            // LocoBuffer II form
-            int[] data = msg.getPeerXfrData();
-
-            version.setText(StringUtil.twoHexFromInt(data[0]) + StringUtil.twoHexFromInt(data[4]));
-            breaks.setText(Integer.toString((data[5] << 16) + (data[6] << 8) + data[7]));
-            errors.setText(Integer.toString((data[1] << 16) + (data[2] << 8) + data[3]));
-
-            lb2Panel.setVisible(true);
-            rawPanel.setVisible(false);
-            pr2Panel.setVisible(false);
-            ms100Panel.setVisible(false);
-            revalidate();
-
-            updatePending = false;
-
-        } else if (updatePending
-                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)
-                && (msg.getElement(1) == 0x10)
-                && (msg.getElement(2) == 0x22)
-                && (msg.getElement(3) == 0x22)
-                && (msg.getElement(4) == 0x01)) {  // Digitrax form, check PR2/PR3 or MS100/PR3 mode
-
-            if ((msg.getElement(8) & 0x20) == 0) {
-                // PR2 format
-                int[] data = msg.getPeerXfrData();
-                serial.setText(Integer.toString(data[1] * 256 + data[0]));
-                status.setText(StringUtil.twoHexFromInt(data[2]));
-                current.setText(Integer.toString(data[3]));
-                hardware.setText(Integer.toString(data[4]));
-                software.setText(Integer.toString(data[5]));
-
-                pr2Panel.setVisible(true);
-            } else {
-                // MS100 format
-                int[] data = msg.getPeerXfrData();
-                goodMsgCnt.setText(Integer.toString(data[1] * 256 + data[0]));
-                badMsgCnt.setText(Integer.toString(data[5] * 256 + data[4]));
-                ms100status.setText(StringUtil.twoHexFromInt(data[2]));
-
-                ms100Panel.setVisible(true);
-            }
-            lb2Panel.setVisible(false);
-            rawPanel.setVisible(false);
-
-            revalidate();
-            updatePending = false;
-
-        } else if (updatePending
-                && (msg.getOpCode() == LnConstants.OPC_PEER_XFER)) {
-            try {
-                int[] data = msg.getPeerXfrData();
-                r1.setText(StringUtil.twoHexFromInt(data[0]));
-                r2.setText(StringUtil.twoHexFromInt(data[1]));
-                r3.setText(StringUtil.twoHexFromInt(data[2]));
-                r4.setText(StringUtil.twoHexFromInt(data[3]));
-                r5.setText(StringUtil.twoHexFromInt(data[4]));
-                r6.setText(StringUtil.twoHexFromInt(data[5]));
-                r7.setText(StringUtil.twoHexFromInt(data[6]));
-                r8.setText(StringUtil.twoHexFromInt(data[7]));
-
-                lb2Panel.setVisible(false);
-                rawPanel.setVisible(true);
-                pr2Panel.setVisible(false);
-                ms100Panel.setVisible(false);
-                revalidate();
-
-                updatePending = false;
-            } catch (Exception e) {
-                log.error("Error parsing update: " + msg);
-            }
-        } else if (!updatePending && (msg.getOpCode() == LnConstants.OPC_GPBUSY)) {
-            updatePending = true;
-        }
-    }
-
     public void requestUpdate() {
-        LocoNetMessage msg = new LocoNetMessage(2);
-        msg.setOpCode(LnConstants.OPC_GPBUSY);
-        updatePending = true;
-        memo.getLnTrafficController().sendLocoNetMessage(msg);
-    }
-
-    @Override
-    public void dispose() {
-        // disconnect from the LnTrafficController
-        memo.getLnTrafficController().removeLocoNetListener(~0, this);
-
-        // take apart the JFrame
-        super.dispose();
+        stats.sendLocoNetInterfaceStatusQueryMessage();
+        updateRequestPending = true;
     }
 
     JTextField r1 = new JTextField(5);
@@ -282,7 +184,6 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
     JTextField breaks = new JTextField(6);
     JTextField errors = new JTextField(6);
 
-    boolean updatePending = false;
 
     JButton updateButton = new JButton("Update");
 
@@ -296,6 +197,72 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LocoStatsPanel.class.getName(),
                     jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
+        }
+    }
+
+    /**
+     * Listener for LocoNet Interface Status changes
+     * 
+     * @param o a LocoNetStatus object
+     */
+    @Override
+    public void notifyChangedInterfaceStatus(Object o) {
+        log.debug("Update is being handled:" +o.toString());
+        if (!updateRequestPending) {
+            return;
+        }
+        
+        if (o.getClass() == LocoBufferIIStatus.class) {
+            LocoBufferIIStatus s = (LocoBufferIIStatus) o;
+            version.setText((Integer.toString(s.version)));
+            breaks.setText((Integer.toString(s.breaks)));
+            errors.setText((Integer.toString(s.errors)));
+            lb2Panel.setVisible(true);
+            rawPanel.setVisible(false);
+            ms100Panel.setVisible(false);
+            pr2Panel.setVisible(false);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
+        } else if (o.getClass() == PR2Status.class) {
+            PR2Status s = (PR2Status) o;
+            serial.setText(Integer.toString(s.serial));
+            status.setText(Integer.toString(s.status));
+            current.setText(Integer.toString(s.current));
+            hardware.setText(Integer.toString(s.hardware));
+            software.setText(Integer.toString(s.software));
+            lb2Panel.setVisible(false);
+            rawPanel.setVisible(false);
+            ms100Panel.setVisible(true);
+            pr2Panel.setVisible(true);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
+        } else if (o.getClass() == PR3MS100ModeStatus.class) {
+            PR3MS100ModeStatus s = (PR3MS100ModeStatus) o;
+            goodMsgCnt.setText(Integer.toString(s.goodMsgCnt));
+            badMsgCnt.setText(Integer.toString(s.badMsgCnt));
+            ms100status.setText(Integer.toString(s.ms100status));
+            lb2Panel.setVisible(false);
+            rawPanel.setVisible(false);
+            ms100Panel.setVisible(true);
+            pr2Panel.setVisible(true);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
+        } else if (o.getClass() == RawStatus.class) {
+            RawStatus s = (RawStatus)o;
+            r1.setText(Integer.toString(s.raw[0]));
+            r2.setText(Integer.toString(s.raw[1]));
+            r3.setText(Integer.toString(s.raw[2]));
+            r4.setText(Integer.toString(s.raw[3]));
+            r5.setText(Integer.toString(s.raw[4]));
+            r6.setText(Integer.toString(s.raw[5]));
+            r7.setText(Integer.toString(s.raw[6]));
+            r8.setText(Integer.toString(s.raw[7]));
+            lb2Panel.setVisible(false);
+            rawPanel.setVisible(true);
+            ms100Panel.setVisible(false);
+            pr2Panel.setVisible(false);
+            ((JmriJFrame) getRootPane().getParent()).setPreferredSize(null);
+            ((JmriJFrame) getRootPane().getParent()).pack();
         }
     }
 

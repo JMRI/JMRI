@@ -91,7 +91,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.xml.PackageTest.class));
 
         // deliberately at end
-        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
 
         return suite;
     }

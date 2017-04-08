@@ -25,6 +25,9 @@ public class NceTurnout extends AbstractTurnout {
     /**
      * NCE turnouts use the NMRA number (0-2044) as their numerical
      * identification.
+     * @param tc traffic controller for connection
+     * @param p system connection prefix
+     * @param i NMRA turnout number
      */
     public NceTurnout(NceTrafficController tc, String p, int i) {
         super(p + "T" + i);

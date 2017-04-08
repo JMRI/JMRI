@@ -27,6 +27,8 @@ public class NceThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param memo system connection memo to use
+     * @param address DCC loco address
      */
     public NceThrottle(NceSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
