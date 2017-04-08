@@ -44,7 +44,7 @@
                 </action>
                 <action name="run">
                     <script>${ant.script}</script>
-                    <target>decoderpro</target>
+                    <target>panelpro</target>
                 </action>
                 <action name="profile">
                     <script>${ant.script}</script>
@@ -185,6 +185,16 @@
                         <script>${ant.script}</script>
                         <label>Make Jar File</label>
                         <target>jar</target>
+                    </action>
+                    <action>
+                        <script>${ant.script}</script>
+                        <label>Run PanelPro</label>
+                        <target>panelpro</target>
+                    </action>
+                    <action>
+                        <script>${ant.script}</script>
+                        <label>Run DecoderPro</label>
+                        <target>decoderpro</target>
                     </action>
                 </context-menu>
             </view>
