@@ -47,6 +47,7 @@
     
       <h2>Code Structure</h2>
       
+      <a href="images/JmrixPackageStructure.png"><img src="images/JmrixPackageStructure.png" align="right" height="50%" width="50%" /></a>
       The code for a general type, like "LocoNet connections"
       or "NCE connections", should be gathered in a specific 
       package right under 
