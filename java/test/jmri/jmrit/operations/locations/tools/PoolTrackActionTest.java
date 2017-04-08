@@ -1,22 +1,27 @@
-package jmri.jmrix.loconet.locostats;
+package jmri.jmrit.operations.locations.tools;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.locations.TrackEditFrame;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LocoStatsPanelTest {
+public class PoolTrackActionTest {
 
     @Test
     public void testCTor() {
-        LocoStatsPanel t = new LocoStatsPanel();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrackEditFrame tf = new TrackEditFrame();
+        PoolTrackAction t = new PoolTrackAction(tf);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +38,6 @@ public class LocoStatsPanelTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoStatsPanelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PoolTrackActionTest.class.getName());
 
 }

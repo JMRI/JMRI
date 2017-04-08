@@ -171,6 +171,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #OPTION_1_65}
      * <LI>{@link #OPTION_FORCE_BINARY}
      * </UL>
+     * @param val command station options
      *
      */
     public void setCommandOptions(int val) {
@@ -197,6 +198,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #OPTION_1_65}
      * <LI>{@link #OPTION_FORCE_BINARY}
      * </UL>
+     * @return command station options value
      *
      */
     public int getCommandOptions() {
@@ -247,6 +249,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
+     * @param val usb command station options
      *
      */
     public void setUsbSystem(int val) {
@@ -268,6 +271,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
+     * @return usb command station options
      *
      */
     public int getUsbSystem() {
@@ -341,6 +345,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_NOT_USB}
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
+     * @param val command group supported options
      *
      */
     public void setCmdGroups(long val) {
@@ -366,6 +371,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_NOT_USB}
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
+     * @return command group supported options
      *
      */
     public long getCmdGroups() {

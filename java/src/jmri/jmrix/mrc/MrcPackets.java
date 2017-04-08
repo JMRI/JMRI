@@ -441,6 +441,8 @@ public class MrcPackets {
 
     /**
      * Adds the description of the clock's mode to a message being built
+     * @param m clock info message
+     * @param txt build description of clock info onto this
      */
     @SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
     static void appendClockMessage(MrcMessage m, StringBuilder txt) {

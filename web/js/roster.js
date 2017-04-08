@@ -21,6 +21,8 @@ function getRosterTable(group) {
                 }
                 $("#roster").removeClass("show").addClass("hidden");
             } else {
+                $("#warning-roster-no-entries").removeClass("show").addClass("hidden");
+                $("#warning-group-no-entries").removeClass("show").addClass("hidden");
                 $("#roster").removeClass("hidden").addClass("show");
                 $("#roster > tbody").empty();
                 $("#roster > tbody").append(data);

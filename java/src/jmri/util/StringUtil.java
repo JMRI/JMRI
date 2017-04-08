@@ -236,21 +236,6 @@ public class StringUtil {
         Arrays.sort(values);
     }
 
-    static void bubblesortUpper(@Nonnull Object[] values) {
-        for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
-            for (int j = values.length - 2; j >= i; j--) {
-                // check that the jth value is smaller than j+1th,
-                // else swap
-                if (0 < (values[j].toString().toUpperCase()).compareTo(values[j + 1].toString().toUpperCase())) {
-                    // swap
-                    Object temp = values[j];
-                    values[j] = values[j + 1];
-                    values[j + 1] = temp;
-                }
-            }
-        }
-    }
-
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
@@ -258,8 +243,7 @@ public class StringUtil {
      * @param values the Objects to sort
      */
     static public void sortUpperCase(@Nonnull Object[] values) {
-        // no Java sort, so ugly bubble sort
-        bubblesortUpper(values);
+        Arrays.sort(values, (Object o1, Object o2) -> o1.toString().compareToIgnoreCase(o2.toString()));
     }
 
     /**
