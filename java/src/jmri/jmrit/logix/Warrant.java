@@ -155,11 +155,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return list of block orders
      */
     public List<BlockOrder> getBlockOrders() {
-        ArrayList<BlockOrder> orders = new ArrayList<BlockOrder>();        
-        for (int i = 0; i < _savedOrders.size(); i++) {
-            orders.add(new BlockOrder(_savedOrders.get(i)));
-        }
-        return orders;
+        return new ArrayList<BlockOrder>(_savedOrders);
     }
     
     public List<BlockOrder> getSavedOrders() {
@@ -347,12 +343,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return OBlock.UNKNOWN;
     }
 
+    /**
+     * Get a copy of the throttle commands script
+     * @return copy
+     */
     public List<ThrottleSetting> getThrottleCommands() {
-        ArrayList<ThrottleSetting> list = new ArrayList<ThrottleSetting>();
-        for (int i = 0; i < _throttleCommands.size(); i++) {
-            list.add(new ThrottleSetting(_throttleCommands.get(i)));
-        }
-        return list;
+        return  new ArrayList<ThrottleSetting>(_throttleCommands);
     }
 
     public void setThrottleCommands(List<ThrottleSetting> list) {
@@ -565,6 +561,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             case MODE_MANUAL:
                 modeDesc = Bundle.getMessage("ManualRun");
                 break;
+            default:
         }
         return Bundle.getMessage("WarrantInUse", modeDesc, getDisplayName());
 
@@ -863,6 +860,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         stopWarrant(true);
                         ret = true;
                     }
+                    break;
+                default:
             }
             return ret;
         } 
@@ -1505,7 +1504,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     _engineer.setRunOnET(false);                                    
                 }
             }
-            String msg = allocateFromIndex(_idxCurrentOrder + 1);
+            allocateFromIndex(_idxCurrentOrder + 1);
             BlockOrder bo = getBlockOrderAt(_idxCurrentOrder + 1);
             bo.setPath(this);
         }
@@ -1790,7 +1789,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if(log.isDebugEnabled()) log.debug("CommandDelay: will wait {}ms, then Ramp to {}", startWait, speedType);
         }
         
-        void quit(){
+        synchronized void quit(){
             quit = true;
         }
 

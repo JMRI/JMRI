@@ -13,8 +13,8 @@ public class ThrottleSetting {
     private long _time;
     private String _command;
     private String _value;
-    @SuppressWarnings("rawtypes") // _namedHandle may be of 3 different types
-    private NamedBeanHandle _namedHandle = null;
+    // _namedHandle may be of 3 different types
+    private NamedBeanHandle <? extends NamedBean> _namedHandle = null;
 
     public ThrottleSetting() {
     }
@@ -89,13 +89,13 @@ public class ThrottleSetting {
         }
     }
   
-    @SuppressWarnings("unchecked") // _namedHandle may be of 3 different types
+    // _namedHandle may be of 3 different types
     public <T extends NamedBean> void setNamedBeanHandle(NamedBeanHandle <T> bh) {
         _namedHandle = bh;
     }
     
-    @SuppressWarnings("unchecked") // _namedHandle may be of 3 different types
-    public <T extends NamedBean> NamedBeanHandle <T> getNamedBeanHandle() {
+    // _namedHandle may be of 3 different types
+    public NamedBeanHandle <? extends NamedBean> getNamedBeanHandle() {
         return _namedHandle;
     }
 
@@ -107,12 +107,24 @@ public class ThrottleSetting {
     }
 
     public String getBeanSystemName() {
+        if (_namedHandle==null) {
+            return null;
+        }
         return _namedHandle.getBean().getSystemName();
     }
 
     @Override
     public String toString() {
-        return "ThrottleSetting: wait " + _time + "ms then do " + _command + " = " + _value + " for bean " + getBeanDisplayName();
+        StringBuilder sb = new StringBuilder("ThrottleSetting: wait ");
+        sb.append(_time);
+        sb.append("ms then do ");
+        sb.append(_command);
+        sb.append(" = ");
+        sb.append(_value);
+        sb.append(" for bean \"");
+        sb.append( getBeanDisplayName());
+        sb.append("\"");
+        return sb.toString();
     }
     
     private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());

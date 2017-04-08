@@ -56,8 +56,7 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantFrame extends WarrantRoute {
 
-    static int ROW_HEIGHT;
-
+    int _rowHeight;
     private Warrant _warrant;
     private Warrant _saveWarrant;
     private ThrottleTableModel _commandModel;
@@ -379,7 +378,7 @@ public class WarrantFrame extends WarrantRoute {
         Component[] components = panel.getComponents();
 
         for(int i = 0; i < components.length; i++) {
-            if(components[i].getClass().getName() == "javax.swing.JPanel") {
+            if("javax.swing.JPanel".equals(components[i].getClass().getName()))  {
                 setPanelEnabled((JPanel) components[i], isEnabled);
             }
 
@@ -437,7 +436,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         JLabel l = new JLabel(Bundle.getMessage(Bundle.getMessage("TTP")));
-        _TTPtextField.setValue(new Long(_TTP));
+        _TTPtextField.setValue(Long.valueOf(_TTP));
         _TTPtextField.setColumns(6);
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         _TTPtextField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
@@ -726,9 +725,9 @@ public class WarrantFrame extends WarrantRoute {
             _commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _throttlePane = new JScrollPane(_commandTable);
-        ROW_HEIGHT = _commandTable.getRowHeight();
+        _rowHeight = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
-        dim.height = ROW_HEIGHT * 8;
+        dim.height = _rowHeight * 8;
         _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel buttonPanel = new JPanel();
@@ -864,7 +863,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private void doControlCommand(int cmd) {
         if (log.isDebugEnabled()) {
-            log.debug("actionPerformed on doControlCommand  cmd= " + cmd);
+            log.debug("actionPerformed on doControlCommand  cmd= {}", cmd);
         }
         int runMode = _warrant.getRunMode();
         if (runMode == Warrant.MODE_NONE) {
@@ -1112,9 +1111,9 @@ public class WarrantFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
-                                            "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
-                                            " source= "+e.getSource().getClass().getName());
+        if (log.isDebugEnabled()) 
+            log.debug("propertyChange \"{}\" old= {} new= {} source= ",
+                    property, e.getOldValue(), e.getNewValue(), e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
             doAction(e.getSource());
         } else if (e.getSource() instanceof Warrant && _warrant.equals(e.getSource())) {
@@ -1250,6 +1249,7 @@ public class WarrantFrame extends WarrantRoute {
                         color = Color.red;
                     }
                     break;
+                default:
             }
             setStatusText(msg, color);
         }
@@ -1280,7 +1280,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private void scrollCommandTable(int row) {
         JScrollBar bar = _throttlePane.getVerticalScrollBar();
-        bar.setValue(row * ROW_HEIGHT);
+        bar.setValue(row * _rowHeight);
 //        bar.setValue(bar.getMaximum());
     }
     
@@ -1350,7 +1350,8 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
         
-        if (log.isDebugEnabled()) log.debug("warrant saved _train "+getTrainId()+", name= "+getTrainName());
+        if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= ",
+                _warrant.getDisplayName(), getTrainId(), getTrainName());
         WarrantTableAction.updateWarrantMenu();
         WarrantTableFrame.getInstance().getModel().fireTableDataChanged();
         return true;
@@ -1369,7 +1370,7 @@ public class WarrantFrame extends WarrantRoute {
             f.initComponents();
             f.concatenate(_saveWarrant, null);
         } catch (Exception ex) {
-            log.error("error making CreateWarrantFrame", ex);
+            log.error("error making CreateWarrantFrame {}", ex);
         }
         dispose();
     }
@@ -1521,7 +1522,7 @@ public class WarrantFrame extends WarrantRoute {
                             } else {
                                 ts.setCommand(cmd);
                             }
-                        } catch (Exception e) {
+                        } catch (NumberFormatException e) {
                             msg = Bundle.getMessage("badFunctionNum");
                         }
                     } else if (cmd.startsWith("LOCKF")) {
@@ -1532,7 +1533,7 @@ public class WarrantFrame extends WarrantRoute {
                             } else {
                                 ts.setCommand(cmd);
                             }
-                        } catch (Exception e) {
+                        } catch (Exception NumberFormatException) {
                             msg = Bundle.getMessage("badLockFNum");
                         }
                     } else if ("NOOP".equals(cmd)) {
@@ -1683,6 +1684,7 @@ public class WarrantFrame extends WarrantRoute {
                         }
                     }
                     break;
+                default:
             }
             if (msg != null) {
                 showWarning(msg);
@@ -1691,9 +1693,9 @@ public class WarrantFrame extends WarrantRoute {
             }
         }
 
-        private <T extends NamedBean> NamedBeanHandle <T> getPreviousBlockHandle(int row) {
+        private NamedBeanHandle <? extends NamedBean> getPreviousBlockHandle(int row) {
             for (int i = row; i > 0; i--) {
-                NamedBeanHandle <T> bh = _throttleCommands.get(i - 1).getNamedBeanHandle();
+                NamedBeanHandle <? extends NamedBean> bh = _throttleCommands.get(i - 1).getNamedBeanHandle();
                 if (bh != null && (bh.getBean() instanceof OBlock)) {
                     return bh;
                 }
