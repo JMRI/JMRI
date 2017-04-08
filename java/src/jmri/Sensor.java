@@ -18,7 +18,7 @@ import javax.annotation.CheckForNull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface Sensor extends NamedBean {
 
@@ -34,9 +34,12 @@ public interface Sensor extends NamedBean {
     public int getKnownState();
 
     /**
-     * Potentially allow the user to set the known state on the layout. This
-     * might not always be available, depending on the limits of the underlying
-     * system and implementation.
+     * Set the known state on the layout. This might not always be available, or
+     * effective, depending on the limits of the underlying system and
+     * implementation.
+     *
+     * @param newState the state to set
+     * @throws jmri.JmriException if unable to set the state
      */
     public void setKnownState(int newState) throws jmri.JmriException;
 
@@ -48,76 +51,90 @@ public interface Sensor extends NamedBean {
 
     /**
      * Control whether the actual sensor input is considered to be inverted,
-     * e.g. the normal electrical signal that results in an ACTIVE state now
-     * results in an INACTIVE state.
+     * such that the normal electrical signal that normally results in an ACTIVE
+     * state now results in an INACTIVE state.
      * <p>
      * Changing this changes the state from ACTIVE to INACTIVE and vice-versa,
      * with notifications; UNKNOWN and INCONSISTENT are left unchanged.
+     *
+     * @param inverted true if the sensor should be inverted; false otherwise
      */
     public void setInverted(boolean inverted);
 
     /**
-     * Get the inverted state. If true, the electrical signal that results in an
-     * ACTIVE state now results in an INACTIVE state.
+     * Get the inverted state.
+     *
+     * @return true if the electrical signal that normally results in an ACTIVE
+     *         state now results in an INACTIVE state; false otherwise
      */
     public boolean getInverted();
 
     /**
-     * Request a call-back when the bound KnownState property changes.
+     * Determine if sensor can be inverted. When a turnout is inverted the
+     * {@link #ACTIVE} and {@link #INACTIVE} states are inverted on the layout.
+     *
+     * @return true if can be inverted; false otherwise
      */
-    public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
-
-    /**
-     * Remove a request for a call-back when a bound property changes.
-     */
-    public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
+    public boolean canInvert();
 
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();  // remove _all_ connections!
 
     /**
      * Used to return the Raw state of a sensor prior to the known state of a
-     * sensor being set. The raw state value can be different when the sensor
-     * debounce option is used.
+     * sensor being set. The raw state value can be different from the known
+     * state when the sensor debounce option is used.
      *
      * @return raw state value
      */
     public int getRawState();
 
     /**
-     * Set the Active debounce delay in milliSeconds. If a zero value is entered
-     * then debounce delay is de-activated.
+     * Set the active debounce delay.
+     *
+     * @param timer delay in milliseconds; set to zero to de-activate debounce
      */
     public void setSensorDebounceGoingActiveTimer(long timer);
 
     /**
-     * Get the Active debounce delay in milliSeconds.
+     * Get the active debounce delay.
+     *
+     * @return delay in milliseconds
      */
     public long getSensorDebounceGoingActiveTimer();
 
     /**
-     * Set the InActive debounce delay in milliSeconds. If a zero value is
-     * entered then debounce delay is de-activated.
+     * Set the inactive debounce delay.
+     *
+     * @param timer delay in milliseconds; set to zero to de-activate debounce
      */
     public void setSensorDebounceGoingInActiveTimer(long timer);
 
     /**
-     * Get the InActive debounce delay in milliSeconds.
+     * Get the inactive debounce delay.
+     *
+     * @return delay in milliseconds
      */
     public long getSensorDebounceGoingInActiveTimer();
 
     /**
-     * Use the timers specified in the Sensor manager for the debounce delay
-     * @param flag set to current defaults if true now and not previously true
+     * Use the timers specified in the {@link jmri.SensorManager} for the
+     * debounce delay.
+     *
+     * @param flag true to set to current defaults if not previously true
      */
     public void useDefaultTimerSettings(boolean flag);
 
     /**
-     * Does this sensor use the default timers values?
-     * (A remarkably unfortunate name given the one above)
+     * Does this sensor use the default timers values? (A remarkably unfortunate
+     * name given the one above)
+     *
+     * @return true if using default debounce values from the
+     *         {@link jmri.SensorManager}
      */
     public boolean useDefaultTimerSettings();
 
@@ -126,13 +143,82 @@ public interface Sensor extends NamedBean {
      * train identities via such methods as RailCom. The setting and creation of
      * the reporter against the sensor should be done when the sensor is
      * created. This information is not saved.
+     *
+     * @param re the reporter to associate with the sensor
      */
     public void setReporter(@CheckForNull Reporter re);
 
     /**
      * Retrieve the reporter associated with this sensor if there is one.
-     * <p>
-     * returns null if there is no direct reporter.
+     *
+     * @return the reporter or null if there is no associated reporter
      */
-    public @CheckForNull Reporter getReporter();
+    @CheckForNull
+    public Reporter getReporter();
+
+    /*
+     * Some sensor types allow us to configure a pull up and/or pull down 
+     * resistor at runtime.  The PullResistance enum provides valid values
+     * for the pull resistance.  The short name is used in xml files.
+     */
+    public enum PullResistance {
+        PULL_UP("up","PullResistanceUp"), // NOI18N
+        PULL_DOWN("down","PullResistanceDown"), // NOI18N
+        PULL_OFF("off","PullResistanceOff"); // NOI18N
+
+        PullResistance(String shName, String peopleKey) {
+           this.shortName = shName;
+           this.peopleName = Bundle.getMessage(peopleKey);
+        }
+
+        String shortName;
+        String peopleName;
+
+        public String getShortName() {
+           return shortName;
+        }
+
+        public String getPeopleName() {
+           return peopleName;
+        }
+
+        static public PullResistance getByShortName(String shName) {
+            for (PullResistance p : PullResistance.values()) {
+                if (p.shortName.equals(shName)) {
+                    return p;
+                }
+            }
+            throw new java.lang.IllegalArgumentException("argument value " + shName + " not valid");
+        }
+
+        static public PullResistance getByPeopleName(String pName) {
+            for (PullResistance p : PullResistance.values()) {
+                if (p.peopleName.equals(pName)) {
+                    return p;
+                }
+            }
+            throw new java.lang.IllegalArgumentException("argument value " + pName + " not valid");
+        }
+ 
+       @Override
+       public String toString(){
+          return( peopleName );
+       }
+
+    }
+
+    /**
+     * Set the pull resistance
+     *
+     * @param r PullResistance value to use.
+     */
+    public void setPullResistance(PullResistance r);
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.
+     */
+    public PullResistance getPullResistance();
+
 }

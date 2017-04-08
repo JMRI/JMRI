@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * This is for launching after the system is initialized, so it does none of
  * that.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -250,21 +250,14 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     protected void helpMenu(JMenuBar menuBar, WindowInterface wi, AppsLaunchPane containedPane) {
-        try {
+        // create menu and standard items
+        JMenu helpMenu = HelpUtil.makeHelpMenu(containedPane.windowHelpID(), true);
 
-            // create menu and standard items
-            JMenu helpMenu = HelpUtil.makeHelpMenu(containedPane.windowHelpID(), true);
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-            // use as main help menu 
-            menuBar.add(helpMenu);
-
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help.", e3);
-        }
-
+        // use as main help menu 
+        menuBar.add(helpMenu);
     }
 
     /**

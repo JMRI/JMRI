@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionEvent;
@@ -78,34 +78,41 @@ public class ButtonTrigger extends Trigger implements PropertyChangeListener, Ac
     }
 
     // PropertyChangeListener functions
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         // Button triggers respond to the button methods above, not to
         // property change events.  Do nothing.
     }
 
     // ActionListener function(s)
+    @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("ButtonTrigger.actionPerformed() " + this.getName());
         this.click(((AbstractButton) e.getSource()).isSelected());
     }
 
     // MouseListener functions
+    @Override
     public void mousePressed(MouseEvent e) {
         log.debug("MouseListener.mousePressed() " + this.getName());
         this.mouseDown();
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         log.debug("MouseListener.mouseReleased() " + this.getName());
         this.mouseUp();
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
     }
 

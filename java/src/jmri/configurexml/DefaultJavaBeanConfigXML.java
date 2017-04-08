@@ -27,6 +27,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
         return true;
     }
 
+    @Override
     public void load(Element e, Object o) throws Exception {
     }
 
@@ -75,6 +76,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
         return o;
     }
 
+    @Override
     public Element store(Object o) {
         Element e = new Element("javabean");
         e.setAttribute("class", this.getClass().getName());
@@ -109,13 +111,13 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                 p.addContent(v);
                 e.addContent(p);
             }
-         } catch (java.beans.IntrospectionException ex) {
-             log.error("Partial store due to IntrospectionException: " + ex);
-         } catch (java.lang.reflect.InvocationTargetException ex) {
-             log.error("Partial store due to InvocationTargetException: " + ex);
-         } catch (IllegalAccessException ex) {
-             log.error("Partial store due to IllegalAccessException: " + ex);
-         }
+        } catch (java.beans.IntrospectionException ex) {
+            log.error("Partial store due to IntrospectionException: " + ex);
+        } catch (java.lang.reflect.InvocationTargetException ex) {
+            log.error("Partial store due to InvocationTargetException: " + ex);
+        } catch (IllegalAccessException ex) {
+            log.error("Partial store due to IllegalAccessException: " + ex);
+        }
 
         return e;
     }
@@ -125,6 +127,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
      *
      * @param elem The existing Element
      * @param name name of desired Attribute
+     * @return the attribute string or null if name is not an attribute of elem
      */
     String getAttributeString(Element elem, String name) {
         Attribute a = elem.getAttribute(name);
@@ -141,6 +144,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
      * @param elem The existing Element
      * @param name Name of desired Attribute
      * @param def  Default value for attribute
+     * @return value of name or def if name is not an attribute of elem
      */
     boolean getAttributeBool(Element elem, String name, boolean def) {
         String v = getAttributeString(elem, name);

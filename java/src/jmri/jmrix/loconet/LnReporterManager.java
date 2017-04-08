@@ -1,4 +1,3 @@
-// LnReporterManager.java
 package jmri.jmrix.loconet;
 
 import jmri.Reporter;
@@ -16,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * Description:	Implement Reporter manager for loconet
+ * Description: Implement Reporter manager for loconet
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
@@ -36,10 +35,12 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     LnTrafficController tc;
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public void dispose() {
         if (tc != null) {
             tc.removeLocoNetListener(~0, this);
@@ -47,6 +48,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         super.dispose();
     }
 
+    @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
         int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
@@ -58,6 +60,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     // listen for transponder messages, creating Reporters as needed
+    @Override
     public void message(LocoNetMessage l) {
         // check message type
         if (l.getOpCode() != 0xD0) {
@@ -70,11 +73,9 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         // message type OK, check address
         int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
 
-        LnReporter r = (LnReporter) provideReporter("LR" + addr);
-        r.message(l);	// make sure it got the message
+        LnReporter r = (LnReporter) provideReporter("LR" + addr); // NOI18N
+        r.message(l); // make sure it got the message
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class.getName());
 }
-
-/* @(#)LnReporterManager.java */

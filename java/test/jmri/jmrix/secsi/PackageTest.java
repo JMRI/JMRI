@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.secsi.SerialTest");
-        suite.addTest(SerialTurnoutTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialSensorManagerTest.class));
         suite.addTest(SerialNodeTest.suite());
@@ -46,6 +46,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.secsi.serialmon.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialPortControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SecsiSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SecsiMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialLightManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialReplyTest.class));
         return suite;
     }
 

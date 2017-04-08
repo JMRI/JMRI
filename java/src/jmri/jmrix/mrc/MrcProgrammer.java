@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * This has two states: NOTPROGRAMMING, and COMMANDSENT. The transitions to and
  * from programming mode are now handled in the TrafficController code.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  */
 public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListener {
@@ -37,11 +36,12 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
-        return ret;
+        List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
+        retval.add(AUTOMATICMODE);
+        return retval;
     }
+
+    static final ProgrammingMode AUTOMATICMODE = new ProgrammingMode("Automatic", Bundle.getMessage("MrcAutomaticMode"));
 
     @Override
     public boolean getCanRead() {
@@ -67,14 +67,15 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int READCOMMANDSENT = 2; 	// read command sent, waiting reply
+    static final int READCOMMANDSENT = 2;  // read command sent, waiting reply
     static final int WRITECOMMANDSENT = 4; // POM write command sent 
-    static final int POMCOMMANDSENT = 6;	// ops programming mode, send msg twice
+    static final int POMCOMMANDSENT = 6; // ops programming mode, send msg twice
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
+    @Override
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("writeCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
@@ -101,6 +102,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         readCV(CV, p);
     }
 
+    @Override
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("readCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
@@ -156,9 +158,11 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         return m;
     }
 
+    @Override
     public synchronized void notifyXmit(Date timestamp, MrcMessage m) {
     }
 
+    @Override
     public synchronized void notifyFailedXmit(Date timestamp, MrcMessage m) {
         if (progState == NOTPROGRAMMING && m.getMessageClass() != MrcInterface.PROGRAMMING) {
             return;
@@ -166,6 +170,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         timeout();
     }
 
+    @Override
     public synchronized void notifyRcv(Date timestamp, MrcMessage m) {
         //public synchronized void message(MrcMessage m) {
         if (progState == NOTPROGRAMMING) {
@@ -200,6 +205,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     protected synchronized void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

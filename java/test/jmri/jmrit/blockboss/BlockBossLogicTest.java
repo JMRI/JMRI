@@ -247,6 +247,7 @@ public class BlockBossLogicTest extends TestCase {
      * creates a set of turnouts, sensors and signals as common background for
      * testing
      */
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
 
@@ -307,6 +308,7 @@ public class BlockBossLogicTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
         stopLogic();
         // reset InstanceManager

@@ -532,6 +532,7 @@ public class CbusThrottle extends AbstractThrottle {
     // CBUS command station expect DSPD every 4s
     protected void startRefresh() {
         mRefreshTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 keepAlive();
             }

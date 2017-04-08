@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
-
-<!-- $Id$ -->
+<!-- Schema for JMRI I/O support. Not for use before JMRI 2.9.1             -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -52,7 +50,7 @@
                     <xs:complexType>
                       <xs:simpleContent>
                         <xs:extension base="xs:string">
-                          <xs:attribute name="class" type="classType" use="required" />
+                          <xs:attribute name="class" type="classType" use="optional" />
                         </xs:extension>
                       </xs:simpleContent>
                     </xs:complexType>
@@ -239,12 +237,14 @@
     <xs:annotation>
         <xs:documentation>
           Only valid URLs for resource access. 
-          Checks for a valid prefix, then a pathname of a-z, A-Z, 0-9 and / - _ or .
+          Checks for a valid prefix, then a pathname without an invalid filename character.
           A: through Z: accepted for Windows.
+          Any HTTP(S) URL should be accepted.
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
-      <xs:pattern value="(program:|preference:|settings:|home:|profile:|resource:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*"/>
+        <!-- accepts, but should not, the greater than and less than characters in file names -->
+      <xs:pattern value="((program:|preference:|settings:|home:|profile:|file:|[a-zA-Z]:|\/)(\/|\\|[^/?*:;{}\\]+)+|https?:\/\/.+\/?.*)"/>
     </xs:restriction>
   </xs:simpleType>
 

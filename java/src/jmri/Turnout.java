@@ -1,5 +1,6 @@
 package jmri;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -47,7 +48,7 @@ import javax.annotation.Nullable;
  * Each Turnout object has a two names. The "user" name is entirely free form,
  * and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
- * control system (e.g. LocoNet, NCE, etc) and address within that system.
+ * control system (for example LocoNet or NCE) and address within that system.
  * <p>
  * Turnouts exhibit some complex behaviors. At the same time, they are sometimes
  * used as generic binary outputs where those get in the way. Eventually, we
@@ -67,7 +68,7 @@ import javax.annotation.Nullable;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.TurnoutManager
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -87,35 +88,6 @@ public interface Turnout extends NamedBean {
      * the same time on some systems, which should be called INCONSISTENT
      */
     public static final int THROWN = 0x04;
-
-    /**
-     * Query the known state. This is a bound parameter, so you can also
-     * register a listener to be informed of changes. A result is always
-     * returned; if no other feedback method is available, the commanded state
-     * will be used.
-     */
-    public int getKnownState();
-
-    /**
-     * Change the commanded state, which results in the relevant command(s)
-     * being sent to the hardware. The exception is thrown if there are problems
-     * communicating with the layout hardware.
-     */
-    public void setCommandedState(int s);
-
-    /**
-     * Query the commanded state. This is a bound parameter, so you can also
-     * register a listener to be informed of changes.
-     */
-    public int getCommandedState();
-
-    /**
-     * Show whether state is one you can safely run trains over
-     *
-     * @return	true iff state is a valid one and the known state is the same as
-     *         commanded
-     */
-    public boolean isConsistentState();
 
     /**
      * Constant representing "direct feedback method". In this case, the
@@ -165,181 +137,6 @@ public interface Turnout extends NamedBean {
     public static final int SIGNAL = 64;
 
     /**
-     * Get a representation of the feedback type. This is the OR of possible
-     * values: DIRECT, EXACT, etc. The valid combinations depend on the
-     * implemented system.
-     */
-    public int getValidFeedbackTypes();
-
-    /**
-     * Get a human readable representation of the feedback type. The values
-     * depend on the implemented system.
-     */
-    public @Nonnull String[] getValidFeedbackNames();
-
-    /**
-     * Set the feedback mode from a human readable name. This must be one of the
-     * names defined in a previous {@link #getValidFeedbackNames} call.
-     */
-    public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException;
-
-    /**
-     * Set the feedback mode from a integer. This must be one of the bit values
-     * defined in a previous {@link #getValidFeedbackTypes} call. Having more
-     * than one bit set is an error.
-     */
-    public void setFeedbackMode(int mode) throws IllegalArgumentException;
-
-    /**
-     * Get the feedback mode in human readable form. This will be one of the
-     * names defined in a {@link #getValidFeedbackNames} call.
-     */
-    public @Nonnull String getFeedbackModeName();
-
-    /**
-     * Get the feedback mode in machine readable form. This will be one of the
-     * bits defined in a {@link #getValidFeedbackTypes} call.
-     */
-    public int getFeedbackMode();
-
-    /**
-     * Get the indicator for whether automatic operation (retry) has been
-     * inhibited for this turnout
-     */
-    public boolean getInhibitOperation();
-
-    /**
-     * Change the value of the inhibit operation indicator
-     *
-     * @param io true to inhibit automatic operation
-     */
-    public void setInhibitOperation(boolean io);
-
-    /**
-     * @return current operation automation class
-     */
-    public @Nullable TurnoutOperation getTurnoutOperation();
-
-    /**
-     * set current automation class
-     *
-     * @param toper TurnoutOperation subclass instance
-     */
-    public void setTurnoutOperation(@Nullable TurnoutOperation toper);
-
-    /**
-     * Provide Sensor objects needed for some feedback types.
-     *
-     * Since we defined two feeedback methods that require monitoring, we
-     * provide these methods to define those sensors to the Turnout.
-     * <P>
-     * The second sensor can be null if needed.
-     * <P>
-     * Sensor-based feedback will not function until these sensors have been
-     * provided.
-     */
-     public void provideFirstFeedbackSensor(@Nullable String pName) throws JmriException;
-
-    public void provideSecondFeedbackSensor(@Nullable String pName) throws JmriException;
-
-    /**
-     * Get the first sensor, if defined.
-     * <P>
-     * Returns null if no Sensor recorded.
-     */
-    public @Nullable Sensor getFirstSensor();
-
-    /**
-     * Get the first sensor, if defined.
-     * <P>
-     * Returns null if no Sensor recorded.
-     */
-    public @Nullable NamedBeanHandle<Sensor> getFirstNamedSensor();
-
-    /**
-     * Get the Second sensor, if defined.
-     * <P>
-     * Returns null if no Sensor recorded.
-     */
-    public @Nullable Sensor getSecondSensor();
-
-    /**
-     * Get the first sensor, if defined.
-     * <P>
-     * Returns null if no Sensor recorded.
-     */
-    public @Nullable NamedBeanHandle<Sensor> getSecondNamedSensor();
-
-    /**
-     * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback
-     * information, if appropriate.
-     * <P>
-     * This method is designed to be called only when Turnouts are loaded and
-     * when a new Turnout is defined in the Turnout table.
-     * <P>
-     * No change to known state is made if feedback information is not
-     * available. If feedback information is inconsistent, or if sensor
-     * definition is missing in ONESENSOR and TWOSENSOR feedback, turnout state
-     * is set to UNKNOWN.
-     */
-    public void setInitialKnownStateFromFeedback();
-
-    /**
-     * Get number of output bits.
-     * <P>
-     * Currently must be one or two.
-     */
-    public int getNumberOutputBits();
-
-    /**
-     * Set number of output bits.
-     * <P>
-     * Currently must be one or two.
-     */
-    public void setNumberOutputBits(int num);
-
-    /**
-     * Get control type.
-     * <P>
-     * Currently must be either 0 for steady state, or n for pulse for n time
-     * units.
-     */
-    public int getControlType();
-
-    /**
-     * Set control type.
-     * <P>
-     * Currently must be either 0 for steady state, or n for pulse for n time
-     * units.
-     */
-    public void setControlType(int num);
-
-    /**
-     * Get turnout inverted
-     * <P>
-     * If true commands are reversed to layout
-     */
-    public boolean getInverted();
-
-    /**
-     * Set turnout inverted
-     * <P>
-     * If true commands are reversed to layout.
-     * <p>
-     * Changing this changes the known state from CLOSED to THROWN and
-     * vice-versa, with notifications; UNKNOWN and INCONSISTENT are left
-     * unchanged, as is the commanded state.
-     */
-    public void setInverted(boolean inverted);
-
-    /**
-     * Determine if turnout can be inverted
-     * <P>
-     * If true turnouts can be inverted
-     */
-    public boolean canInvert();
-
-    /**
      * Constant representing turnout lockout cab commands
      */
     public static final int CABLOCKOUT = 1;
@@ -360,65 +157,323 @@ public interface Turnout extends NamedBean {
     public static final int LOCKED = 1;
 
     /**
-     * Get turnout locked
+     * Query the known state. This is a bound parameter, so you can also
+     * register a listener to be informed of changes. A result is always
+     * returned; if no other feedback method is available, the commanded state
+     * will be used.
+     *
+     * @return the known state
+     */
+    public int getKnownState();
+
+    /**
+     * Change the commanded state, which results in the relevant command(s)
+     * being sent to the hardware. The exception is thrown if there are problems
+     * communicating with the layout hardware.
+     *
+     * @param s the desired state
+     */
+    public void setCommandedState(int s);
+
+    /**
+     * Query the commanded state. This is a bound parameter, so you can also
+     * register a listener to be informed of changes.
+     *
+     * @return the commanded state
+     */
+    public int getCommandedState();
+
+    /**
+     * Show whether state is one you can safely run trains over
+     *
+     * @return true iff state is valid and the known state is the same as
+     *         commanded
+     */
+    public boolean isConsistentState();
+
+    /**
+     * Get a representation of the feedback type. This is the OR of possible
+     * values: DIRECT, EXACT, etc. The valid combinations depend on the
+     * implemented system.
+     *
+     * @return the ORed combination of feedback types
+     */
+    public int getValidFeedbackTypes();
+
+    /**
+     * Get a human readable representation of the feedback type. The values
+     * depend on the implemented system.
+     *
+     * @return the names of the feedback types or an empty list if no feedback
+     *         is available
+     */
+    @Nonnull
+    public String[] getValidFeedbackNames();
+
+    /**
+     * Set the feedback mode from a human readable name. This must be one of the
+     * names defined in a previous {@link #getValidFeedbackNames} call.
+     *
+     * @param mode the feedback type name
+     * @throws IllegalArgumentException if mode is not valid
+     */
+    public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException;
+
+    /**
+     * Set the feedback mode from a integer. This must be one of the bit values
+     * defined in a previous {@link #getValidFeedbackTypes} call. Having more
+     * than one bit set is an error.
+     *
+     * @param mode the feedback type to set
+     * @throws IllegalArgumentException if mode is not valid
+     */
+    public void setFeedbackMode(int mode) throws IllegalArgumentException;
+
+    /**
+     * Get the feedback mode in human readable form. This will be one of the
+     * names defined in a {@link #getValidFeedbackNames} call.
+     *
+     * @return the feedback type
+     */
+    @Nonnull
+    public String getFeedbackModeName();
+
+    /**
+     * Get the feedback mode in machine readable form. This will be one of the
+     * bits defined in a {@link #getValidFeedbackTypes} call.
+     *
+     * @return the feedback type
+     */
+    public int getFeedbackMode();
+
+    /**
+     * Get if automatically retrying an operation is blocked for this turnout.
+     *
+     * @return true if retrying is disabled; false otherwise
+     */
+    public boolean getInhibitOperation();
+
+    /**
+     * Set if automatically retrying an operation is blocked for this turnout.
+     *
+     * @param io true if retrying is to be disabled; false otherwise
+     */
+    public void setInhibitOperation(boolean io);
+
+    /**
+     * @return current operation automation class
+     */
+    @CheckForNull
+    public TurnoutOperation getTurnoutOperation();
+
+    /**
+     * set current automation class
+     *
+     * @param toper TurnoutOperation subclass instance
+     */
+    public void setTurnoutOperation(@Nullable TurnoutOperation toper);
+
+    /**
+     * Provide Sensor objects needed for some feedback types.
+     *
+     * Since we defined two feedback methods that require monitoring, we provide
+     * these methods to define those sensors to the Turnout.
      * <P>
-     * If true turnout is locked, must specify which type of lock, will return
-     * true if both tested and either type is locked.
+     * The second sensor can be null if needed.
+     * <P>
+     * Sensor-based feedback will not function until these sensors have been
+     * provided.
+     *
+     * @param pName the user or system name of the sensor
+     * @throws jmri.JmriException if unable to assign the feedback sensor
+     */
+    public void provideFirstFeedbackSensor(@Nullable String pName) throws JmriException;
+
+    public void provideSecondFeedbackSensor(@Nullable String pName) throws JmriException;
+
+    /**
+     * Get the first feedback sensor.
+     *
+     * @return the sensor or null if no Sensor set
+     */
+    @CheckForNull
+    public Sensor getFirstSensor();
+
+    /**
+     * Get the handle for the first feedback sensor.
+     *
+     * @return the sensor handle or null if no Sensor set
+     */
+    @CheckForNull
+    public NamedBeanHandle<Sensor> getFirstNamedSensor();
+
+    /**
+     * Get the second feedback sensor.
+     *
+     * @return the sensor or null if no Sensor set
+     */
+    @CheckForNull
+    public Sensor getSecondSensor();
+
+    /**
+     * Get the second feedback sensor handle.
+     *
+     * @return the sensor handle or null if no Sensor set
+     */
+    @CheckForNull
+    public NamedBeanHandle<Sensor> getSecondNamedSensor();
+
+    /**
+     * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback
+     * information, if appropriate.
+     * <P>
+     * This method is designed to be called only when Turnouts are loaded and
+     * when a new Turnout is defined in the Turnout table.
+     * <P>
+     * No change to known state is made if feedback information is not
+     * available. If feedback information is inconsistent, or if sensor
+     * definition is missing in ONESENSOR and TWOSENSOR feedback, turnout state
+     * is set to UNKNOWN.
+     */
+    public void setInitialKnownStateFromFeedback();
+
+    /**
+     * Get number of output bits.
+     *
+     * @return the size of the output, currently 1 or 2
+     */
+    public int getNumberOutputBits();
+
+    /**
+     * Set number of output bits.
+     *
+     * @param num the size of the output, currently 1 or 2
+     */
+    public void setNumberOutputBits(int num);
+
+    /**
+     * Get control type.
+     *
+     * @return 0 for steady state or the number of time units the control pulses
+     */
+    public int getControlType();
+
+    /**
+     * Set control type.
+     *
+     * @param num 0 for steady state or the number of time units the control
+     *            pulses
+     */
+    public void setControlType(int num);
+
+    /**
+     * Get turnout inverted. When a turnout is inverted the {@link #CLOSED} and
+     * {@link #THROWN} states are reversed on the layout.
+     *
+     * @return true if inverted; false otherwise
+     */
+    public boolean getInverted();
+
+    /**
+     * Get turnout inverted. When a turnout is inverted the {@link #CLOSED} and
+     * {@link #THROWN} states are reversed on the layout.
+     *
+     * @param inverted true if inverted; false otherwise
+     */
+    public void setInverted(boolean inverted);
+
+    /**
+     * Determine if turnout can be inverted. When a turnout is inverted the
+     * {@link #CLOSED} and {@link #THROWN} states are inverted on the layout.
+     *
+     * @return true if can be inverted; false otherwise
+     */
+    public boolean canInvert();
+
+    /**
+     * Get the locked state of the turnout. A turnout can be locked to prevent
+     * it being thrown from a cab or push button on the layout if supported by
+     * the protocol.
+     *
+     * @param turnoutLockout the type of lock
+     * @return true if turnout is locked using specified lock method
      */
     public boolean getLocked(int turnoutLockout);
 
     /**
-     * Enable turnout lock operators.
-     * <P>
-     * If true the type of lock specified is enabled.
+     * Enable turnout lock operators. A turnout can be locked to prevent it
+     * being thrown from a cab or push button on the layout if supported by the
+     * protocol.
+     *
+     * @param turnoutLockout the type of lock
+     * @param locked         true if locking is enabled for the given type;
+     *                       false otherwise
      */
     public void enableLockOperation(int turnoutLockout, boolean locked);
 
     /**
-     * Determine if turnout can be locked. Must specify the type of lock.
-     * <P>
-     * If true turnouts can be locked.
+     * Determine if turnout can be locked. A turnout can be locked to prevent it
+     * being thrown from a cab or push button on the layout if supported by the
+     * protocol.
+     *
+     * @param turnoutLockout the type of lock
+     * @return true if turnout is locked using specified lock method; false
+     *         otherwise
      */
     public boolean canLock(int turnoutLockout);
 
     /**
-     * Lock a turnout. Must specify the type of lock.
-     * <P>
-     * If true turnout is to be locked.
+     * Lock a turnout. A turnout can be locked to prevent it being thrown from a
+     * cab or push button on the layout if supported by the protocol.
+     *
+     * @param turnoutLockout the type of lock
+     * @param locked         true if turnout is locked using specified lock
+     *                       method; false otherwise
      */
     public void setLocked(int turnoutLockout, boolean locked);
 
     /**
-     * Determine if we should send a message to console when we detect that a
-     * turnout that is locked has been accessed by a cab on the layout. If true,
-     * report cab attempt to change turnout.
+     * Get reporting of use of locked turnout by a cab or throttle.
+     *
+     * @return true to report; false otherwise
      */
     public boolean getReportLocked();
 
     /**
-     * Set turnout report
-     * <P>
-     * If true report any attempts by a cab to modify turnout state
+     * Set reporting of use of locked turnout by a cab or throttle.
+     *
+     * @param reportLocked true to report; false otherwise
      */
     public void setReportLocked(boolean reportLocked);
 
     /**
      * Get a human readable representation of the decoder types.
+     *
+     * @return a list of known stationary decoders
      */
-    public @Nonnull String[] getValidDecoderNames();
+    @Nonnull
+    public String[] getValidDecoderNames();
 
     /**
      * Get a human readable representation of the decoder type for this turnout.
+     *
+     * @return the name of the decoder type
      */
-    public @Nullable  String getDecoderName();
+    @CheckForNull
+    public String getDecoderName();
 
     /**
      * Set a human readable representation of the decoder type for this turnout.
+     *
+     * @param decoderName the name of the decoder type
      */
     public void setDecoderName(@Nullable String decoderName);
 
     /**
-     * Turn this object into just a binary output.
+     * Use a binary output for sending commands. This appears to expose a
+     * LocoNet-specific feature.
+     *
+     * @param state true if the outputs are binary; false otherwise
      */
     public void setBinaryOutput(boolean state);
 

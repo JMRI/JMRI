@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Provide an action to allow Logixs to be loaded disabled when panel file is
  * loaded
  *
- * @author	Dave Duchamp Copyright (C) 2007
+ * @author Dave Duchamp Copyright (C) 2007
  */
 public class LogixLoadAction extends AbstractAction {
 
@@ -23,6 +23,7 @@ public class LogixLoadAction extends AbstractAction {
 
     JPanel _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // Set option to force Logixs to be loaded disabled
 

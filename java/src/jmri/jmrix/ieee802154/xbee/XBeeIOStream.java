@@ -3,9 +3,6 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.TimeoutException;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.utils.HexUtils;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -59,15 +56,18 @@ final public class XBeeIOStream extends AbstractPortController {
 
         // start the transmit thread
         sourceThread = new Thread(new TransmitThread(remoteXBee, tc, inpipe));
+        sourceThread.setName("xbee.XBeeIOStream Transmit thread");
         sourceThread.start();
 
         // start the receive thread
         sinkThread = new Thread(new ReceiveThread(remoteXBee, tc, outpipe));
+        sourceThread.setName("xbee.XBeeIOStream Receive thread");
         sinkThread.start();
 
     }
 
     // routines defined as abstract in AbstractPortController
+    @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -75,6 +75,7 @@ final public class XBeeIOStream extends AbstractPortController {
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -82,16 +83,20 @@ final public class XBeeIOStream extends AbstractPortController {
         return pout;
     }
 
+    @Override
     public void connect() {
     }
 
+    @Override
     public void configure() {
     }
 
+    @Override
     public boolean status() {
         return (pout != null && pin != null);
     }
 
+    @Override
     public String getCurrentPortName() {
         return "NONE";
     }
@@ -101,6 +106,7 @@ final public class XBeeIOStream extends AbstractPortController {
         return false;
     }
 
+    @Override
     public void setDisabled(boolean disabled) {
     }
 
@@ -111,6 +117,7 @@ final public class XBeeIOStream extends AbstractPortController {
         super.dispose();
     }
 
+    @Override
     public void recover() {
     }
 
@@ -126,6 +133,7 @@ final public class XBeeIOStream extends AbstractPortController {
             pipe = input;
         }
 
+        @Override
         public void run() { // start a new thread
             // this thread has one task.  It repeatedly reads from the input pipe
             // and sends data to the XBee.
@@ -179,6 +187,7 @@ final public class XBeeIOStream extends AbstractPortController {
             pipe = output;
         }
 
+        @Override
         public void run() { // start a new thread
             // this thread has one task.  It repeatedly reads from the XBee 
             // and writes data to the output pipe

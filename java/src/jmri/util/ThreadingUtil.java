@@ -1,14 +1,17 @@
 package jmri.util;
 
+import java.lang.reflect.InvocationTargetException;
+import javax.swing.SwingUtilities;
+
 /**
- * Utilities for handling JMRI's threading conventions
+ * Utilities for handling JMRI's threading conventions.
  * <p>
  * For background, see
  * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">http://jmri.org/help/en/html/doc/Technical/Threads.shtml</a>
  * <p>
- * Note this distinguishes "on layout", e.g. Setting a sensor, from "on GUI",
- * e.g. manipulating the Swing GUI. That may not be an important distinction
- * now, but it might be later, so we build it into the calls.
+ * Note this distinguishes "on layout", for example, Setting a sensor, from "on
+ * GUI", for example, manipulating the Swing GUI. That may not be an important
+ * distinction now, but it might be later, so we build it into the calls.
  *
  * @author Bob Jacobsen Copyright 2015
  */
@@ -19,6 +22,7 @@ public class ThreadingUtil {
         /**
          * Must handle its own exceptions
          */
+        @Override
         public void run();
     }
 
@@ -77,12 +81,12 @@ public class ThreadingUtil {
         } else {
             // dispatch to Swing
             try {
-                javax.swing.SwingUtilities.invokeAndWait(ta);
+                SwingUtilities.invokeAndWait(ta);
             } catch (InterruptedException e) {
                 log.warn("While on GUI thread", e);
                 // we just continue from InterruptedException for now
-            } catch (java.lang.reflect.InvocationTargetException e) {
-                log.error("Error while on GUI thread", e);
+            } catch (InvocationTargetException e) {
+                log.error("Error while on GUI thread", e.getCause());
                 // should have been handled inside the ThreadAction
             }
         }
@@ -102,7 +106,7 @@ public class ThreadingUtil {
      */
     static public void runOnGUIEventually(ThreadAction ta) {
         // dispatch to Swing
-        javax.swing.SwingUtilities.invokeLater(ta);
+        SwingUtilities.invokeLater(ta);
     }
 
     /**
@@ -111,7 +115,7 @@ public class ThreadingUtil {
      * @return true if on the event dispatch thread
      */
     static public boolean isGUIThread() {
-        return javax.swing.SwingUtilities.isEventDispatchThread();
+        return SwingUtilities.isEventDispatchThread();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class.getName());

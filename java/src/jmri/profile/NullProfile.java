@@ -22,18 +22,27 @@ import javax.annotation.Nonnull;
  */
 public class NullProfile extends Profile {
 
-    private String name;
-    private String id;
-
     /**
      * Create a NullProfile object given just a path to it. The Profile must
-     * exist in storage on the computer.
+     * exist in storage on the computer. Uses a random identity for the Profile.
      *
      * @param path The Profile's directory
      * @throws java.io.IOException If path is not readable
      */
     public NullProfile(@Nonnull File path) throws IOException {
         super(path, false);
+    }
+
+    /**
+     * Create a NullProfile object given just a path to it. The Profile must
+     * exist in storage on the computer.
+     *
+     * @param path The Profile's directory
+     * @param id   The Profile's id
+     * @throws java.io.IOException If path is not readable
+     */
+    public NullProfile(@Nonnull File path, @Nonnull String id) throws IOException {
+        super(path, id, false);
     }
 
     /**
@@ -52,35 +61,8 @@ public class NullProfile extends Profile {
      * @throws java.io.IOException If path is not readable.
      */
     public NullProfile(String name, String id, @Nonnull File path) throws IOException, IllegalArgumentException {
-        this(path);
-        this.name = name;
-        if (null != id) {
-            this.id = id;
-        } else {
-            this.id = ProfileManager.createUniqueId();
-        }
-    }
-
-    /**
-     * @return the name
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the id
-     */
-    @Override
-    public @Nonnull
-    String getId() {
-        return id;
+        this(path, (null != id) ? id : ProfileManager.createUniqueId());
+        this.setNameInConstructor(name);
     }
 
     @Override
@@ -91,7 +73,7 @@ public class NullProfile extends Profile {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 71 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
         return hash;
     }
 
@@ -104,7 +86,7 @@ public class NullProfile extends Profile {
             return false;
         }
         final NullProfile other = (NullProfile) obj;
-        return !((this.id == null) ? (other.id != null) : !this.id.equals(other.id));
+        return !((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId()));
     }
 
     /**
@@ -124,6 +106,6 @@ public class NullProfile extends Profile {
      */
     @Override
     public String getUniqueId() {
-        return this.id; // NOI18N
+        return this.getId(); // NOI18N
     }
 }

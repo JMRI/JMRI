@@ -5,7 +5,7 @@ package jmri.jmrix;
  * upon work by Bob Jacobsen from SerialPortAdapter
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @see jmri.jmrix.NetworkConfigException
  */
 public interface NetworkPortAdapter extends PortAdapter {
@@ -18,12 +18,14 @@ public interface NetworkPortAdapter extends PortAdapter {
     /**
      * Configure all of the other jmrix widgets needed to work with this adapter
      */
+    @Override
     public void configure();
 
     /**
      * Query the status of this connection. If all OK, at least as far as is
      * known, return true
      */
+    @Override
     public boolean status();
 
     /**
@@ -36,6 +38,7 @@ public interface NetworkPortAdapter extends PortAdapter {
 
     public int getPort();
 
+    @Override
     public String getCurrentPortName();
 
     public void setHostName(String hostname);

@@ -1,5 +1,6 @@
 package jmri.jmrix.can;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * CAN messages and the message format of the CAN adapter that connects to the
  * layout.
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 abstract public class AbstractCanTrafficController
         extends AbstractMRTrafficController
@@ -34,10 +35,12 @@ abstract public class AbstractCanTrafficController
     }
 
     // The methods to implement the CAN Interface
+    @Override
     public synchronized void addCanListener(CanListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeCanListener(CanListener l) {
         this.removeListener(l);
     }
@@ -48,6 +51,7 @@ abstract public class AbstractCanTrafficController
      * Overridden to include translation to the correct CAN hardware message
      * format
      */
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
 //        if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
         log.debug("forwardToPort message: [" + m + "]");//warn
@@ -135,10 +139,12 @@ abstract public class AbstractCanTrafficController
      * Default implementations of some of the abstract classes to save having
      * to implement them in every sub class
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -154,10 +160,12 @@ abstract public class AbstractCanTrafficController
      * return the system to normal mode.  
      * 
      */
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -177,8 +185,9 @@ abstract public class AbstractCanTrafficController
      * Overridden to include translation form the CAN hardware format
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // Ignore false positive that msg is never used
+    @Override
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen

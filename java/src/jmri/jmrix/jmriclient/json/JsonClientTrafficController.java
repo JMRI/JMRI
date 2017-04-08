@@ -39,7 +39,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
 
     protected final ObjectMapper mapper;
     protected Timer heartbeat = null;
-    final private static Logger log = LoggerFactory.getLogger(JsonClientTrafficController.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonClientTrafficController.class);
 
     public JsonClientTrafficController() {
         super();

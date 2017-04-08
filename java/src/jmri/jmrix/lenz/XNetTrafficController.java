@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2004-2010
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2004-2010
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -67,13 +67,27 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
+
+
+    /**
+     * Make connection to existing PortController object.
+     */
+    @Override
+    public void connectPort(jmri.jmrix.AbstractPortController p) {
+       super.connectPort(p);
+       if(p instanceof XNetPortController ){
+          this.addXNetListener(XNetInterface.COMMINFO,new XNetTimeSlotListener((XNetPortController)p));
+       }
+    }
 
     /**
      * Forward a preformatted XNetMessage to a specific listener interface.
      *
      * @param m Message to send;
      */
+    @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
         if(!(reply instanceof XNetListener) || !(m instanceof XNetMessage)){
            throw new IllegalArgumentException("");
@@ -88,6 +102,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * @param m Message to send # @param client is the client getting the
      *          message
      */
+    @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         if(!(client instanceof XNetListener) || !(m instanceof XNetReply)){
            throw new IllegalArgumentException("");
@@ -160,6 +175,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         }
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         try {
             if (HighPriorityQueue.peek() == null) {
@@ -173,6 +189,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         try {
             if (HighPriorityListeners.peek() == null) {
@@ -186,6 +203,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
+    @Override
     public synchronized void addXNetListener(int mask, XNetListener l) {
         addListener(l);
         // This is adds all the mask information.  A better way to do
@@ -193,6 +211,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         mListenerMasks.put(l, Integer.valueOf(mask));
     }
 
+    @Override
     public synchronized void removeXNetListener(int mask, XNetListener l) {
         removeListener(l);
         // This is removes all the mask information.  A better way to do 

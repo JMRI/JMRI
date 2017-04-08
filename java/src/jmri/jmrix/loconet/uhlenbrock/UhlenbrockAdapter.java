@@ -1,7 +1,7 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 import gnu.io.SerialPort;
+import java.util.Arrays;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Since this is by definition connected to an Intellibox II or IB-COM, the
  * command station prompt is suppressed.
  *
- * @author	Alex Shepherd Copyright (C) 2004
+ * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
  */
 public class UhlenbrockAdapter extends LocoBufferAdapter {
@@ -38,6 +38,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
      * Set up all of the other objects to operate with a LocoBuffer connected to
      * this port.
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -57,22 +58,21 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Get an array of valid baud rates as integers.
+     * @return list of value baud rates
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public int[] validBaudNumber() {
-        return validSpeedValues;
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
+    @Override
     public boolean okToSend() {
         return true;
     }
@@ -80,6 +80,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
     /**
      * Local method to do specific configuration, overridden in class
      */
+    @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);

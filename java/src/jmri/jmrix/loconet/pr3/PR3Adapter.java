@@ -1,4 +1,3 @@
-// PR3Adapter.java
 package jmri.jmrix.loconet.pr3;
 
 import gnu.io.SerialPort;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
  * switch settings on the new Digitrax PR3
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
   */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -27,6 +26,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Always use flow control, not considered a user-settable option
      */
+    @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
@@ -39,8 +39,8 @@ public class PR3Adapter extends LocoBufferAdapter {
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in Mac DIN8; on main connector, this is DTR
 
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
@@ -48,9 +48,9 @@ public class PR3Adapter extends LocoBufferAdapter {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
         activeSerialPort.setFlowControlMode(flow);
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
+                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
     }
 
     /**
@@ -59,6 +59,7 @@ public class PR3Adapter extends LocoBufferAdapter {
      * duplicate much of the functionality there, so the code is basically
      * copied.
      */
+    @Override
     public void configure() {
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
@@ -126,14 +127,16 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
-        return new String[]{"57,600 baud"};
+        return new String[]{"57,600 baud"}; // NOI18N
     }
 
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
      */
+    @Override
     public int[] validBaudNumber() {
         return new int[]{57600};
     }

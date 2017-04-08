@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -291,13 +291,13 @@ public class VSDecoder implements PropertyChangeListener {
             return;
         }
 
-        log.warn("VSDecoderPane throttle property change: " + eventName);
+        log.debug("VSDecoderPane throttle property change: " + eventName);
 
         if (oldValue != null) {
-            log.warn("Old: " + oldValue.toString());
+            log.debug("Old: " + oldValue.toString());
         }
         if (newValue != null) {
-            log.warn("New: " + newValue.toString());
+            log.debug("New: " + newValue.toString());
         }
 
         // Iterate through the list of sound events, forwarding the propertyChange event.
@@ -335,6 +335,7 @@ public class VSDecoder implements PropertyChangeListener {
         // DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
         jmri.InstanceManager.throttleManagerInstance().attachListener(config.getDccAddress(),
                 new PropertyChangeListener() {
+                    @Override
                     public void propertyChange(PropertyChangeEvent event) {
                         log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue()
                                 + " new " + event.getNewValue());
@@ -450,6 +451,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @param evt (PropertyChangeEvent) event to respond to
      */
     @SuppressWarnings("cast")
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String property = evt.getPropertyName();
         // Respond to events from the new GUI.
@@ -799,6 +801,11 @@ public class VSDecoder implements PropertyChangeListener {
             } else if (el.getAttributeValue("type").equals("steam")) {
                 // Handle a Diesel Engine sound
                 SteamSound es = new SteamSound(prefix + el.getAttributeValue("name"));
+                es.setXml(el, vf);
+                sound_list.put(el.getAttributeValue("name"), es);
+            } else if (el.getAttributeValue("type").equals("steam1")) {
+                // Handle a Steam Engine sound
+                Steam1Sound es = new Steam1Sound(prefix + el.getAttributeValue("name"));
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
             } else {

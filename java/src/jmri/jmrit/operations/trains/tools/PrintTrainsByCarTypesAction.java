@@ -1,4 +1,3 @@
-// PrintTrainsByCarTypesAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Component;
@@ -21,13 +20,13 @@ import org.slf4j.LoggerFactory;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2010
  */
 public class PrintTrainsByCarTypesAction extends AbstractAction {
 
-    static final String NEW_LINE = "\n";	// NOI18N
+    static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
     TrainManager trainManager = TrainManager.instance();
 

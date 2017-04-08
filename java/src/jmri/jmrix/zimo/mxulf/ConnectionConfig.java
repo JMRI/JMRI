@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.zimo.mxulf;
 
 import java.util.ResourceBundle;
@@ -11,27 +10,29 @@ import org.slf4j.LoggerFactory;
  * object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * 
+ *
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection with a known serial port.
+     *
+     * @param p the serial port
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Create a connection without a known serial port.
      */
     public ConnectionConfig() {
         super();
     }
 
+    @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
             log.debug("init called for " + name());
@@ -48,16 +49,19 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.zimo.ZimoActionListBundle");
     }
 
+    @Override
     public String name() {
         return "MXULF";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();
         }
     }
 
+    @Override
     protected String[] getPortFriendlyNames() {
         if (SystemType.isWindows()) {
             return new String[]{"MX31ZL", "ZIMO"};

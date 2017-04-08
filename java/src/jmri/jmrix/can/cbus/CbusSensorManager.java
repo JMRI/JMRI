@@ -14,15 +14,17 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
         super.dispose();
@@ -37,6 +39,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     CanSystemConnectionMemo memo;
 
     // CBUS-specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
@@ -53,6 +56,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         return s;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
         try {
             validateSystemNameFormat(curAddress);
@@ -82,11 +86,13 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // listen for sensors, creating them as needed
+    @Override
     public void reply(CanReply l) {
         // doesn't do anything, because for now 
         // we want you to create manually
     }
 
+    @Override
     public void message(CanMessage l) {
         // doesn't do anything, because 
         // messages come from us
@@ -96,6 +102,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
      * No mechanism currently exists to request status updates from all layout
      * sensors.
      */
+    @Override
     public void updateAll() {
     }
 

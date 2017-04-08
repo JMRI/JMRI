@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.easydcc.networkdriver;
 
 import java.net.Socket;
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * This connects an EasyDcc command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
   */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
@@ -27,6 +26,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
      * set up all of the other objects to operate with an EasyDcc command
      * station connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         EasyDccTrafficController control = EasyDccTrafficController.instance();
@@ -37,6 +37,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

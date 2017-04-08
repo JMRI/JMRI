@@ -1,4 +1,3 @@
-// GridConnectDoubledMessage.java
 package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
 import jmri.jmrix.can.CanMessage;
@@ -55,22 +54,27 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars * 2;
     }
 
+    @Override
     public void setNumDataElements(int n) {
         _nDataChars = (n <= 28) ? n : 28;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n / 2];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
 
+    @Override
     public void setData(int[] d) {
         int len = (d.length <= 24) ? d.length : 24;
         for (int i = 0; i < len; i++) {
@@ -78,6 +82,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
+    @Override
     public void setExtended(boolean extended) {
         // Standard or extended frame
         this.extended = extended;
@@ -90,6 +95,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
 
     boolean extended;
 
+    @Override
     public boolean isExtended() {
         return extended;
     }
@@ -99,6 +105,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
      *
      * @param header A valid CAN header value
      */
+    @Override
     public void setHeader(int header) {
         if (isExtended()) {
             setHexDigit((header >> 28) & 0xF, 2);
@@ -116,6 +123,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
+    @Override
     public void setRtr(boolean rtr) {
         int offset = isExtended() ? 10 : 5;
         setElement(offset, rtr ? 'R' : 'N');
@@ -130,6 +138,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
      * @param val the value to set
      * @param n   the index of the byte to be set
      */
+    @Override
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {
             int index = n * 2 + (isExtended() ? 11 : 6);
@@ -139,6 +148,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     }
 
     // Set a hex digit at offset n in _dataChars
+    @Override
     protected void setHexDigit(int val, int n) {
         if ((val >= 0) && (val <= 15)) {
             if (val < 10) {
@@ -154,4 +164,4 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     private final static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class.getName());
 }
 
-/* @(#)GridConnectDoubledMessage.java */
+

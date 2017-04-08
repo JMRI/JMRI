@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.powerline;
 
 import jmri.Turnout;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */
@@ -24,14 +23,17 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         this.tc = tc;
     }
 
+    @Override
     public String getSystemPrefix() {
         return tc.getAdapterMemo().getSystemPrefix();
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         //If the hardware address past does not already exist then this can
@@ -71,6 +73,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
@@ -99,4 +102,4 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
 }
 
-/* @(#)SerialTurnoutManager.java */
+

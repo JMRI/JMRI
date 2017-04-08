@@ -141,6 +141,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * </p>
      * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to check.
      */
+    @Override
     public boolean contains(DccLocoAddress address) {
         if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
             return (ConsistList.contains(address));
@@ -160,6 +161,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
 .
      * @return true means forward, false means backwards.
      */
+    @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (ConsistType == ADVANCED_CONSIST || ConsistType == CS_CONSIST) {
             Boolean Direction = ConsistDir.get(address);
@@ -451,6 +453,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     }
 
     // Listeners for messages from the command station
+    @Override
     public synchronized void message(XNetReply l) {
         if (_state != IDLESTATE) {
             // we're waiting for a reply, so examine what we recieved
@@ -544,10 +547,12 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         }
     }
 
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

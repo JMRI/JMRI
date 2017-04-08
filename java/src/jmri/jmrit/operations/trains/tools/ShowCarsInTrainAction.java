@@ -1,4 +1,3 @@
-// ShowCarsInTrainAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -31,9 +30,9 @@ public class ShowCarsInTrainAction extends AbstractAction {
             f.initComponents(_train);
         } else {
             f.setExtendedState(Frame.NORMAL);
-            f.setVisible(true);	// this also brings the frame into focus
+            f.setVisible(true); // this also brings the frame into focus
         }
     }
 }
 
-/* @(#)ShowCarsInTrainAction.java */
+

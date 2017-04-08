@@ -62,46 +62,46 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.consist.NceConsistBundle");
 
-    private static final int CONSIST_MIN = 1; 			// NCE doesn't use consist 0
+    private static final int CONSIST_MIN = 1;    // NCE doesn't use consist 0
     private static final int CONSIST_MAX = 127;
-    private static final int LOC_ADR_MIN = 0; 			// loco address range
+    private static final int LOC_ADR_MIN = 0;    // loco address range
     private static final int LOC_ADR_MAX = 10239;
-    private static final int LOC_ADR_REPLACE = 0x3FFF; 	// dummy loco address 
+    private static final int LOC_ADR_REPLACE = 0x3FFF;  // dummy loco address 
 
-    private int consistNum = 0; 				// consist being worked
-    private boolean newConsist = true; 			// new consist is displayed
+    private int consistNum = 0;     // consist being worked
+    private boolean newConsist = true;    // new consist is displayed
 
-    private int locoNum = LEAD; 				// which loco, 0 = lead, 1 = rear, 2 = mid
+    private int locoNum = LEAD;     // which loco, 0 = lead, 1 = rear, 2 = mid
     private static final int LEAD = 0;
     private static final int REAR = 1;
     private static final int MID = 2;
 
     // Verify that loco isn't already a lead or rear loco
-    private int consistNumVerify; 				// which consist number we're checking
-    private int[] locoVerifyList = new int[6];	// list of locos to verify
-    private int verifyType; 					// type of verification
+    private int consistNumVerify;     // which consist number we're checking
+    private int[] locoVerifyList = new int[6]; // list of locos to verify
+    private int verifyType;      // type of verification
     private static final int VERIFY_DONE = 0;
-    private static final int VERIFY_LEAD_REAR = 1; 	// lead or rear loco  
-    private static final int VERIFY_MID_FWD = 2; 	// mid loco foward 
-    private static final int VERIFY_MID_REV = 4; 	// mid loco reverse 
-    private static final int VERIFY_ALL = 8;		// verify all locos
+    private static final int VERIFY_LEAD_REAR = 1;  // lead or rear loco  
+    private static final int VERIFY_MID_FWD = 2;  // mid loco foward 
+    private static final int VERIFY_MID_REV = 4;  // mid loco reverse 
+    private static final int VERIFY_ALL = 8;  // verify all locos
 
-    private int replyLen = 0; 					// expected byte length
-    private int waiting = 0; 					// to catch responses not intended for this module
+    private int replyLen = 0;      // expected byte length
+    private int waiting = 0;      // to catch responses not intended for this module
 
     // the 16 byte reply states
-    private boolean consistSearchNext = false; 		// next search
-    private boolean consistSearchPrevious = false; 	// previous search
-    private boolean locoSearch = false; 			// when true searching for lead or rear loco in consist
+    private boolean consistSearchNext = false;   // next search
+    private boolean consistSearchPrevious = false;  // previous search
+    private boolean locoSearch = false;    // when true searching for lead or rear loco in consist
 
-    private boolean emptyConsistSearch = false; 	// when true searching for an empty consist
-    private boolean verifyRosterMatch = false; 		// when true verify that roster matches consist in NCE CS
+    private boolean emptyConsistSearch = false;  // when true searching for an empty consist
+    private boolean verifyRosterMatch = false;   // when true verify that roster matches consist in NCE CS
 
-    private int emptyConsistSearchStart = CONSIST_MAX;	// where to begin search for empty consist
+    private int emptyConsistSearchStart = CONSIST_MAX; // where to begin search for empty consist
 
-    private int consistCount = 0; 					// search count not to exceed CONSIST_MAX
+    private int consistCount = 0;      // search count not to exceed CONSIST_MAX
 
-    private boolean refresh = false; 				// when true, refresh loco info from CS
+    private boolean refresh = false;     // when true, refresh loco info from CS
 
     // member declarations
     JLabel textConsist = new JLabel();
@@ -205,6 +205,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         super();
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -215,10 +216,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.consist.NceConsistEditFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -231,6 +234,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         return x.toString();
     }
 
+    @Override
     public List<JMenu> getMenus() {
         // build menu
         JMenu toolMenu = new JMenu("Tools");
@@ -240,6 +244,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         return l;
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
         this.memo = m;
         this.tc = m.getNceTrafficController();
@@ -440,11 +445,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             consistNum = validConsist(consistTextField.getText());
             jmri.jmrit.throttle.ThrottleFrame tf
                     = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-            tf.getAddressPanel().setAddress(consistNum, false);	// use consist address
+            tf.getAddressPanel().setAddress(consistNum, false); // use consist address
             if (JOptionPane.showConfirmDialog(null,
                     rb.getString("DIALOG_Funct2Lead"), rb.getString("DIALOG_NceThrottle"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                tf.getAddressPanel().setAddress(locoAddr, isLong); 	// use lead loco address
+                tf.getAddressPanel().setAddress(locoAddr, isLong);  // use lead loco address
             }
             tf.toFront();
             return;
@@ -787,7 +792,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
 
         if (consistSearchNext) {
-            readConsistMemory(cN - 1, LEAD);	// decrement consist number
+            readConsistMemory(cN - 1, LEAD); // decrement consist number
         } else {
             readConsistMemory(cN, LEAD);
         }
@@ -1325,12 +1330,14 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         sendNceMessage(bl, NceMessage.REPLY_1);
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
     // NCE CS response from add, delete, save, get, next, previous, etc
     // A single byte response is expected from commands
     // A 16 byte response is expected when loading a consist or searching
+    @Override
     public void reply(NceReply r) {
         if (waiting <= 0) {
             log.error("unexpected response");
@@ -1464,7 +1471,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                             return;
                         }
                     } else if (rC != 0 && consistCount > 0) {
-                        // found a consist!	
+                        // found a consist! 
                         consistSearchNext = false;
                         readConsistMemory(consistNum, LEAD);
                         return;
@@ -1477,7 +1484,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                             emptyConsistSearch = false;
                             queueError(ERROR_NO_EMPTY_CONSIST);
                         }
-                        return;		// don't update panel
+                        return;  // don't update panel
                     }
                     // look for next consist
                     consistNum--;
@@ -1517,7 +1524,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                     if (++consistCount > CONSIST_MAX) {
                         consistStatus.setText(rb.getString("EditStateNONE"));
                         consistSearchPrevious = false;
-                        return;		// don't update the panel
+                        return;  // don't update the panel
                     }
                     consistNum++;
                     if (consistNum > CONSIST_MAX) {
@@ -1916,7 +1923,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         verifyType = VERIFY_LEAD_REAR;
         if (checkBoxVerify.isSelected()) {
             locoVerifyList[0] = locoAddr;
-            locoVerifyList[1] = 0;		// end of list
+            locoVerifyList[1] = 0;  // end of list
             locoSearch = true;
             consistNumVerify = 0;
         }
@@ -1977,6 +1984,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
     private void addButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionPerformed(e);
             }
@@ -1985,6 +1993,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
     private void addCheckBoxAction(JCheckBox cb) {
         cb.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkBoxActionPerformed(e);
             }
@@ -2044,6 +2053,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         adrButton.setEnabled(false);
         adrButton.setToolTipText("Press to change address type");
         adrButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionAdrPerformed(e);
             }
@@ -2053,6 +2063,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         locoRosterBox.setEnabled(false);
         locoRosterBox.setToolTipText("Select loco from roster");
         locoRosterBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 locoSelected(e);
             }
@@ -2063,6 +2074,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         dirButton.setEnabled(false);
         dirButton.setToolTipText("Press to change loco direction");
         dirButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionDirPerformed(e);
             }
@@ -2073,6 +2085,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         cmdButton.setEnabled(false);
         cmdButton.setToolTipText(rb.getString("ToolTipAdd"));
         cmdButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionCmdPerformed(e);
             }
@@ -2095,6 +2108,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         conRosterBox.setEnabled(false);
         conRosterBox.setToolTipText("Select consist from roster");
         conRosterBox.addActionListener(consistRosterListener = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 consistRosterSelected(e);
             }
@@ -2105,7 +2119,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private static final int ERROR_NO_EMPTY_CONSIST = 2;
     private static final int ERROR_CONSIST_DOESNT_MATCH = 3;
     private static final int WARN_CONSIST_ALREADY_LOADED = 4;
-    private int locoNumInUse; 						// report loco alreay in use
+    private int locoNumInUse;       // report loco alreay in use
     private int errorCode = 0;
 
     private void queueError(int errorCode) {
@@ -2118,6 +2132,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         // Bad to stop receive thread with JOptionPane error message
         // so start up a new thread to report error
         Thread errorThread = new Thread(new Runnable() {
+            @Override
             public void run() {
                 reportError();
             }

@@ -26,7 +26,6 @@ import javax.swing.table.TableModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialAddress;
 import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for running CMRI assignment list.
  *
- * @author	Dave Duchamp Copyright (C) 2006
+ * @author Dave Duchamp Copyright (C) 2006
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -84,6 +83,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         // set the frame's initial state
@@ -97,11 +97,13 @@ public class ListFrame extends jmri.util.JmriJFrame {
         nodeSelBox.setEditable(false);
         if (numConfigNodes > 0) {
             nodeSelBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     displayNodeInfo((String) nodeSelBox.getSelectedItem());
                 }
             });
             inputBits.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     if (inputSelected == false) {
                         inputSelected = true;
@@ -110,6 +112,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 }
             });
             outputBits.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     if (inputSelected == true) {
                         inputSelected = false;
@@ -185,6 +188,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         printButton.setToolTipText(rb.getString("PrintButtonTip"));
         if (numConfigNodes > 0) {
             printButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     printButtonActionPerformed(e);
                 }
@@ -329,26 +333,32 @@ public class ListFrame extends jmri.util.JmriJFrame {
         private int curRow = -1;
         private String curRowSysName = "";
 
+        @Override
         public String getColumnName(int c) {
             return assignmentTableColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return false;
         }
 
+        @Override
         public int getColumnCount() {
             return 4;
         }
 
+        @Override
         public int getRowCount() {
             return numBits;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 return Integer.toString(r + 1);
@@ -394,6 +404,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             // nothing is stored here
         }
@@ -468,18 +479,15 @@ public class ListFrame extends jmri.util.JmriJFrame {
             w.close();
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-        // Only used occasionally, so inefficient String processing not really a problem
-        // though it would be good to fix it if you're working in this area
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
-            String lineString = "";
-            String[] spaces = new String[4];
+            StringBuilder lineString = new StringBuilder();
+            StringBuilder[] spaces = new StringBuilder[4];
             // create base strings the width of each of the columns
             for (int k = 0; k < 4; k++) {
-                spaces[k] = "";
+                spaces[k] = new StringBuilder();
                 for (int i = 0; i < columnSize[k]; i++) {
-                    spaces[k] = spaces[k] + " ";
+                    spaces[k].append(" ");
                 }
             }
             // loop through each column
@@ -516,10 +524,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
                         columnString = columnStrings[i] + spaces[i].substring(columnStrings[i].length());
                         columnStrings[i] = "";
                     }
-                    lineString = lineString + columnString + " ";
+                    lineString.append(columnString).append(" ");
                 }
                 try {
-                    w.write(lineString);
+                    w.write(lineString.toString());
                     //write vertical dividing lines
                     int iLine = w.getCurrentLineNumber();
                     for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {
@@ -530,9 +538,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
                             i = w.getCharactersPerLine();
                         }
                     }
-                    lineString = "\n";
-                    w.write(lineString);
-                    lineString = "";
+                    w.write("\n");
+                    lineString = new StringBuilder();
                 } catch (IOException e) {
                     log.warn("error during printing: " + e);
                 }

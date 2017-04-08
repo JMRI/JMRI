@@ -1,8 +1,6 @@
 package jmri;
 
 import java.util.List;
-
-import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -18,7 +16,7 @@ import javax.annotation.Nonnull;
  * Each Reporter has a two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * (for example LocoNet or NCE) and address within that system.
  * <P>
  * Much of the book-keeping is implemented in the AbstractReporterManager class,
  * which can form the basis for a system-specific implementation.
@@ -35,7 +33,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
@@ -52,10 +50,11 @@ public interface ReporterManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Reporter doesn't already exist and
      *                                  the manager cannot create the Reporter
-     *                                  due to e.g. an illegal name or name that
+     *                                  due to an illegal name or name that
      *                                  can't be parsed.
      */
-    public @Nonnull Reporter provideReporter(@Nonnull String name);
+    @Nonnull public
+    Reporter provideReporter(@Nonnull String name);
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -64,31 +63,38 @@ public interface ReporterManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull Reporter getReporter(@Nonnull String name);
+    @CheckForNull public
+    Reporter getReporter(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
      * already exists.
      *
+     * @param systemName the system name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull Reporter getBySystemName(@Nonnull String systemName);
+    @CheckForNull public
+    Reporter getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
      * already exists.
      *
+     * @param userName the user name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull Reporter getByUserName(@Nonnull String userName);
+    @CheckForNull public
+    Reporter getByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a user name, or if that fails, by system
      * name. Returns null if no instance already exists.
      *
+     * @param userName the name to locate
      * @return requested Reporter object or null if none exists
      */
-    public @CheckForNull Reporter getByDisplayName(@Nonnull String userName);
+    @CheckForNull public
+    Reporter getByDisplayName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -112,23 +118,32 @@ public interface ReporterManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Reporters when you should be looking them up.
      *
+     * @param systemName the system name
+     * @param userName   the user name
      * @return requested Reporter object (never null)
      * @throws IllegalArgumentException if cannot create the Reporter due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Reporter newReporter(@Nonnull String systemName, String userName);
+    @Nonnull public
+    Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
-     * Get a list of all Reporter's system names.
-     */
-    public @Nonnull List<String> getSystemNameList();
-
-    /**
-     * A method that determines if it is possible to add a range of turnouts in
-     * numerical order eg 10 to 30 will return true. where as if the address
-     * format is 1b23 this will return false.
+     * Get a list of all Reporter system names.
      *
+     * @return a list of reporter system names or an empty list if there are no
+     *         reporters
+     */
+    @Nonnull public
+    @Override
+    List<String> getSystemNameList();
+
+    /**
+     * Determine if it is possible to add a range of reporters in numerical
+     * order.
+     *
+     * @param systemName the system name
+     * @return true if multiple reporters can be added
      */
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
@@ -137,9 +152,9 @@ public interface ReporterManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param prefix     - The System Prefix used to make up the systemName
-     * @param curAddress - The hardware address of the turnout we which to
-     *                   check.
+     * @param prefix     system prefix used to make up the systemName
+     * @param curAddress hardware address of the turnout to check
+     * @return the next available address
      */
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
 

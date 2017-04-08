@@ -24,6 +24,7 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      * Returns the system letter for SECSI
      */
+    @Override
     public String getSystemPrefix() {
         return "V";
     }
@@ -35,6 +36,7 @@ public class SerialLightManager extends AbstractLightManager {
      * method has checked that a Light with this system name does not already
      * exist
      */
+    @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
@@ -54,6 +56,7 @@ public class SerialLightManager extends AbstractLightManager {
      * Public method to validate system name format returns 'true' if system
      * name has a valid format, else returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'L'));
     }
@@ -63,6 +66,7 @@ public class SerialLightManager extends AbstractLightManager {
      * system name has a valid meaning in current configuration, else returns
      * 'false'
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (SerialAddress.validSystemNameConfig(systemName, 'L'));
     }
@@ -73,6 +77,7 @@ public class SerialLightManager extends AbstractLightManager {
      * Returns a normalized system name if system name has a valid format, else
      * returns "".
      */
+    @Override
     public String normalizeSystemName(String systemName) {
         return (SerialAddress.normalizeSystemName(systemName));
     }
@@ -83,6 +88,7 @@ public class SerialLightManager extends AbstractLightManager {
      * Returns a normalized system name if system name is valid and has a valid
      * alternate representation, else return "".
      */
+    @Override
     public String convertSystemNameToAlternate(String systemName) {
         return (SerialAddress.convertSystemNameToAlternate(systemName));
     }

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on SerialLightManager.java
  *
- * @author	Dave Duchamp Copyright (C) 2010
+ * @author Dave Duchamp Copyright (C) 2010
  */
 public class NceLightManager extends AbstractLightManager {
 
@@ -28,6 +28,7 @@ public class NceLightManager extends AbstractLightManager {
     /**
      * Returns the system prefix for this NCE
      */
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -37,6 +38,7 @@ public class NceLightManager extends AbstractLightManager {
      * system name is not in a valid format Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
+    @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
@@ -53,6 +55,8 @@ public class NceLightManager extends AbstractLightManager {
 
     /**
      * Get the bit address from the system name
+     * @param systemName systemName for light
+     * @return index value for light
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -87,6 +91,7 @@ public class NceLightManager extends AbstractLightManager {
      * range box in the add Light window
      *
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
@@ -95,6 +100,7 @@ public class NceLightManager extends AbstractLightManager {
      * Public method to validate system name format returns 'true' if system
      * name has a valid format, else returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0);
     }
@@ -105,6 +111,7 @@ public class NceLightManager extends AbstractLightManager {
      * 'false' for now, this method always returns 'true'; it is needed for the
      * Abstract Light class
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }

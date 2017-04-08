@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
-<!-- This schema is part of JMRI. Copyright 2009.                           -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
-
+<!-- This schema is part of JMRI. Copyright 2009, 2017                           -->
 
 <!-- Need annotations                                                 -->
 <!-- Attributes need to get types right esp. for enumerated           -->
@@ -58,24 +45,67 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
-        <xs:element name="appearance" minOccurs="0" maxOccurs="1" >
+        <xs:element name="appearance" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
-            <xs:attribute name="valid" type="xs:string"/>
+            <xs:attribute name="valid" type="xs:string" use="required" >
+              <xs:annotation>
+                <xs:documentation>Deprecated 4.7.2 in favor of aspect (properly named) element</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
-        <xs:element name="signalHead" minOccurs="0" maxOccurs="1">
+        <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
+            <xs:attribute name="valid" type="xs:string" use="required" >
+              <xs:annotation>
+                <xs:documentation>aspect for which heads are defined. set minOccurs to 1 in 4.8</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="signalHead" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="name" type="xs:string" use="required"/>
+                      <xs:attribute name="state" type="xs:string" use="required">
+                        <xs:annotation>
+                          <xs:documentation>Specifies Turnout used as conditional with state for Closed/True</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="name" type="xs:string" use="required"/>
+                      <xs:attribute name="state" type="xs:string" use="required">
+                        <xs:annotation>
+                          <xs:documentation>Specifies Sensor used as conditional with state for Active/True</xs:documentation>
+                        </xs:annotation>
+                      </xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
             <xs:attribute name="name" type="xs:string"/>
             <xs:attribute name="onAppearance" type="xs:string"/>
             <xs:attribute name="offAppearance" type="xs:string"/>
             <xs:attribute name="sensorTurnoutLogic" type="xs:string"/>
           </xs:complexType>
         </xs:element>
-
       </xs:sequence>
       <xs:attribute name="systemName" type="systemNameType">
         <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>

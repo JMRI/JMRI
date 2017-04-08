@@ -33,6 +33,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         super(s);
     }
 
+    @Override
     protected void createModel() {
         dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
@@ -40,10 +41,10 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         if (getManager() instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager();
             List<jmri.Manager> managerList = proxy.getManagerList();
-            tabbedTableArray.add(new TabbedTableItem("All", true, getManager(), getNewTableAction("All")));
+            tabbedTableArray.add(new TabbedTableItem(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
             for (int x = 0; x < managerList.size(); x++) {
                 String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, managerList.get(x), getNewTableAction(manuName));
+                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, managerList.get(x), getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
         } else {
@@ -56,6 +57,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
             dataTabs.addTab(tabbedTableArray.get(x).getItemString(), null, tabbedTableArray.get(x).getPanel(), null);
         }
         dataTabs.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent evt) {
                 setMenuBar(f);
             }
@@ -78,16 +80,20 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
 
     protected ArrayList<TabbedTableItem> tabbedTableArray = new ArrayList<TabbedTableItem>();
 
+    @Override
     protected void setTitle() {
         //atf.setTitle("multiple sensors");
     }
 
+    @Override
     abstract protected String helpTarget();
 
+    @Override
     protected void addPressed(ActionEvent e) {
         log.warn("This should not have happened");
     }
 
+    @Override
     public void addToFrame(BeanTableFrame f) {
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().addToFrame(f);
@@ -96,6 +102,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
 
+    @Override
     public void setMenuBar(BeanTableFrame f) {
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
@@ -112,6 +119,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
 
+    @Override
     public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat) {
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getDataTable().print(mode, headerFormat, footerFormat);
@@ -122,6 +130,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
 
+    @Override
     public void dispose() {
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             tabbedTableArray.get(x).dispose();
@@ -140,7 +149,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         Boolean AddToFrameRan = false;
         Manager manager;
 
-        int bottomBoxIndex;	// index to insert extra stuff
+        int bottomBoxIndex; // index to insert extra stuff
         static final int bottomStrutWidth = 20;
 
         boolean standardModel = true;

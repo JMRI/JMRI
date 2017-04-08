@@ -1,9 +1,8 @@
 package jmri.jmrix.jmriclient;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
+
 
 /**
  * JMRIClientPowerManagerTest.java
@@ -11,38 +10,65 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientPowerManager class
  *
  * @author	Bob Jacobsen
+ * @author  Paul Bender Copyright (C) 2017
  */
-public class JMRIClientPowerManagerTest extends TestCase {
+public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
-    public void testCtor() {
-        JMRIClientPowerManager m = new JMRIClientPowerManager(new JMRIClientSystemConnectionMemo());
-        Assert.assertNotNull(m);
+    private JMRIClientTrafficControlScaffold stc = null;
+
+    // service routines to simulate recieving on, off from interface
+    @Override
+    protected void hearOn() {
+      stc.sendTestReply(new JMRIClientReply("POWER ON\n\r"));
     }
 
-    // from here down is testing infrastructure
-    public JMRIClientPowerManagerTest(String s) {
-        super(s);
+    @Override
+    protected void sendOnReply() {
+       stc.sendTestReply(new JMRIClientReply("POWER ON\n\r"));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientPowerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    protected void sendOffReply() {
+       stc.sendTestReply(new JMRIClientReply("POWER OFF\n\r"));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientPowerManagerTest.class);
-        return suite;
+    @Override
+    protected void hearOff() {
+       stc.sendTestReply(new JMRIClientReply("POWER OFF\n\r"));
+    }
+    @Override
+    protected int numListeners() {
+        return stc.numListeners();
+    }
+
+    @Override
+    protected int outboundSize() {
+        return stc.outbound.size();
+    }
+
+    @Override
+    protected boolean outboundOnOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("POWER ON\n");
+    }
+
+    @Override
+    protected boolean outboundOffOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("POWER OFF\n");
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        stc = new JMRIClientTrafficControlScaffold();
+        p = new JMRIClientPowerManager(new JMRIClientSystemConnectionMemo(stc));
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
+
 
 }

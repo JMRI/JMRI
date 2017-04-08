@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<!DOCTYPE layout-config SYSTEM "layout-config-2-7-7.dtd">
+
+<!-- This is the original version of the LoadFileTest277.xml file, with the original -->
+<!-- format and class names. Please do not update/migrate to newer, as it tests old load -->
+
+<layout-config>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <turnout systemName="IT1" userName="User 1" feedback="DIRECT" inverted="false" automate="Default">
+      <comment>Comment on Turnout 1</comment>
+    </turnout>
+    <turnout systemName="IT101" feedback="DIRECT" inverted="false" automate="Default">
+      <comment>Input for IR1, don't change</comment>
+    </turnout>
+    <turnout systemName="IT2" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT21" userName="For Signal IH2 R" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT22" userName="For Signal IH2 Y" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT23" userName="For Signal IH2 G" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT3" userName="User 3" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT4" feedback="DIRECT" inverted="false" automate="Default" />
+  </turnouts>
+  <lights class="jmri.managers.configurexml.InternalLightManagerXml">
+    <light systemName="IL1" userName="User 1" controlType="0" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0" />
+  </lights>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="IS1" inverted="false" userName="User 1" />
+    <sensor systemName="IS100" inverted="false">
+      <comment>Input for IR1, don't change</comment>
+    </sensor>
+    <sensor systemName="IS101" inverted="false">
+      <comment>Input for IR1, don't change</comment>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false" />
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM1" userName="Memory 1" value="Value 1">
+      <comment>Has value</comment>
+    </memory>
+    <memory systemName="IM2" userName="Memory 2" value="0.89">
+      <comment>null value</comment>
+    </memory>
+    <memory systemName="IM3" userName="Memory 3" />
+    <memory systemName="IMCURRENTTIME" value="12:01 PM" />
+    <memory systemName="IMDUMMY" />
+  </memories>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 05 23:42:04 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <logixs class="jmri.configurexml.DefaultLogixManagerXml">
+    <logix systemName="IX1" userName="Test logix" enabled="yes">
+      <logixConditional systemName="IX1C1" order="0" />
+    </logix>
+  </logixs>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <block systemName="IB1" />
+    <block systemName="IB1" userName="Block 1" length="25.4" curve="0">
+      <comment>Length 1</comment>
+    </block>
+  </blocks>
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH1" userName="Virtual 1">
+      <comment>Virtual</comment>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="IH2" userName="Signal 2">
+      <comment>Triple head</comment>
+      <turnoutname defines="green">For Signal IH2 G</turnoutname>
+      <turnoutname defines="yellow">For Signal IH2 Y</turnoutname>
+      <turnoutname defines="red">For Signal IH2 R</turnoutname>
+    </signalhead>
+  </signalheads>
+  <routes class="jmri.configurexml.DefaultRouteManagerXml">
+    <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
+      <routeOutputTurnout systemName="IT1" state="THROWN" />
+      <routeOutputTurnout systemName="IT2" state="CLOSED" />
+      <routeOutputTurnout systemName="IT3" state="TOGGLE" />
+      <routeOutputSensor systemName="ISCLOCKRUNNING" state="ACTIVE" />
+      <routeOutputSensor systemName="IS1" state="INACTIVE" />
+      <routeSensor systemName="IS100" mode="onActive" />
+      <routeSensor systemName="IS101" mode="onInactive" />
+    </route>
+  </routes>
+  <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX1C1" userName="" antecedent="R1 and R2" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="User 1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
+    </conditional>
+  </conditionals>
+  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTest277.xml,v 1.2 2009-10-16 07:16:24 jacobsen Exp $-->
+</layout-config>
+

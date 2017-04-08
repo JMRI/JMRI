@@ -1,4 +1,3 @@
-// PrintTrainManifestAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;

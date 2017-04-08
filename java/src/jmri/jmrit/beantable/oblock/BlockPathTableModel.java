@@ -17,7 +17,7 @@ package jmri.jmrit.beantable.oblock;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -103,10 +103,12 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         }
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
+    @Override
     public int getRowCount() {
         return _block.getPaths().size() + 1;
     }
@@ -128,6 +130,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         return "";
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         OPath path = null;
         if (rowIndex < _block.getPaths().size()) {
@@ -438,6 +441,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         return 5;
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (_block.equals(e.getSource())) {
             String property = e.getPropertyName();

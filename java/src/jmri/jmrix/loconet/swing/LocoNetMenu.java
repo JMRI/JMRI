@@ -1,4 +1,3 @@
-// LocoNetMenu.java
 package jmri.jmrix.loconet.swing;
 
 import javax.swing.JMenu;
@@ -7,14 +6,9 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 /**
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2010
+ * @author Bob Jacobsen Copyright 2003, 2010
  */
 public class LocoNetMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5699192434035288187L;
 
     /**
      * Create a LocoNet menu. Preloads the TrafficController to certain actions.
@@ -45,29 +39,29 @@ public class LocoNetMenu extends JMenu {
     }
 
     Item[] panelItems = new Item[]{
-        new Item("MenuItemLocoNetMonitor", "jmri.jmrix.loconet.locomon.LocoMonPane"),
-        new Item("MenuItemSlotMonitor", "jmri.jmrix.loconet.slotmon.SlotMonPane"),
-        new Item("MenuItemClockMon", "jmri.jmrix.loconet.clockmon.ClockMonPane"),
-        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.LocoStatsPanel"),
+        new Item("MenuItemLocoNetMonitor", "jmri.jmrix.loconet.locomon.LocoMonPane"), // NOI18N
+        new Item("MenuItemSlotMonitor", "jmri.jmrix.loconet.slotmon.SlotMonPane"), // NOI18N
+        new Item("MenuItemClockMon", "jmri.jmrix.loconet.clockmon.ClockMonPane"), // NOI18N
+        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.swing.LocoStatsPanel"), // NOI18N
         null,
-        new Item("MenuItemBDL16Programmer", "jmri.jmrix.loconet.bdl16.BDL16Panel"),
-        new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel"),
-        new Item("MenuItemPM4Programmer", "jmri.jmrix.loconet.pm4.PM4Panel"),
-        new Item("MenuItemSE8cProgrammer", "jmri.jmrix.loconet.se8.SE8Panel"),
-        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.DS64Panel"),
-        new Item("MenuItemCmdStnConfig", "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"),
-        new Item("MenuItemSetID", "jmri.jmrix.loconet.locoid.LocoIdPanel"),
-        new Item("MenuItemDuplex", "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel"),
-        //new Item("MenuItemStartLocoNetServer",  "jmri.jmrix.loconet.locormi.LnMessageServerPanel"),
-        //new Item("MenuItemLocoNetOverTCPServer","jmri.jmrix.loconet.loconetovertcp.ServerPanel"),
+        new Item("MenuItemBDL16Programmer", "jmri.jmrix.loconet.bdl16.BDL16Panel"), // NOI18N
+        new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel"), // NOI18N
+        new Item("MenuItemPM4Programmer", "jmri.jmrix.loconet.pm4.PM4Panel"), // NOI18N
+        new Item("MenuItemSE8cProgrammer", "jmri.jmrix.loconet.se8.SE8Panel"), // NOI18N
+        new Item("MenuItemDS64Programmer", "jmri.jmrix.loconet.ds64.Ds64TabbedPanel"), // NOI18N
+        new Item("MenuItemCmdStnConfig", "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"), // NOI18N
+        new Item("MenuItemSetID", "jmri.jmrix.loconet.locoid.LocoIdPanel"), // NOI18N
+        new Item("MenuItemDuplex", "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel"), // NOI18N
+        //new Item("MenuItemStartLocoNetServer",  "jmri.jmrix.loconet.locormi.LnMessageServerPanel"), // NOI18N
+        //new Item("MenuItemLocoNetOverTCPServer","jmri.jmrix.loconet.loconetovertcp.ServerPanel"), // NOI18N
         null,
-        new Item("MenuItemThrottleMessages", "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel"),
-        new Item("MenuItemSendPacket", "jmri.jmrix.loconet.locogen.LocoGenPanel"),
-        new Item("MenuItemPr3ModeSelect", "jmri.jmrix.loconet.pr3.swing.Pr3SelectPane"),
+        new Item("MenuItemThrottleMessages", "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel"), // NOI18N
+        new Item("MenuItemSendPacket", "jmri.jmrix.loconet.locogen.LocoGenPanel"), // NOI18N
+        new Item("MenuItemPr3ModeSelect", "jmri.jmrix.loconet.pr3.swing.Pr3SelectPane"), // NOI18N
         null,
-        new Item("MenuItemDownload", "jmri.jmrix.loconet.downloader.LoaderPane"),
-        new Item("MenuItemSoundload", "jmri.jmrix.loconet.soundloader.LoaderPane"),
-        new Item("MenuItemSoundEditor", "jmri.jmrix.loconet.soundloader.EditorPane")
+        new Item("MenuItemDownload", "jmri.jmrix.loconet.downloader.LoaderPane"), // NOI18N
+        new Item("MenuItemSoundload", "jmri.jmrix.loconet.soundloader.LoaderPane"), // NOI18N
+        new Item("MenuItemSoundEditor", "jmri.jmrix.loconet.soundloader.EditorPane") // NOI18N
     };
 
     static class Item {

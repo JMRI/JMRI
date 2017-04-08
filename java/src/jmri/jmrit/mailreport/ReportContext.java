@@ -128,6 +128,10 @@ public class ReportContext {
         addProperty("user.language");
         addProperty("user.timezone");
         addProperty("jmri.log.path");
+        
+        addString("FileSystemView#getDefaultDirectory(): "+javax.swing.filechooser.FileSystemView.getFileSystemView().getDefaultDirectory().getPath() );
+        addString("FileSystemView#getHomeDirectory(): "+javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getPath() );
+        addString("Default JFileChooser(): "+(new javax.swing.JFileChooser()).getCurrentDirectory().getPath() );
 
         addScreenSize();
 
@@ -211,7 +215,7 @@ public class ReportContext {
             Insets jmriInsets = JmriInsets.getInsets();
             addString("JmriInsets t:" + jmriInsets.top + ", b:" + jmriInsets.bottom
                     + "; l:" + jmriInsets.left + ", r:" + jmriInsets.right);
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             addString("Exception getting JmriInsets" + ex.getMessage());
         }
     }
@@ -309,4 +313,4 @@ public class ReportContext {
 
 }
 
-/* @(#)ReportContext.java */
+

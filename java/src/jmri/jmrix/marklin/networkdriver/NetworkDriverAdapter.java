@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
  * This connects an Marklin command station via a UDP connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class NetworkDriverAdapter extends MarklinPortController implements jmri.jmrix.NetworkPortAdapter {
 
@@ -40,6 +40,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     public void setPort(String p) {
     }
 
+    @Override
     public void connect() throws Exception {
         opened = false;
 
@@ -69,6 +70,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         }
     }
 
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -89,6 +91,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         }
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -113,6 +116,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
      * set up all of the other objects to operate with an ECOS command station
      * connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         MarklinTrafficController control = new MarklinTrafficController();

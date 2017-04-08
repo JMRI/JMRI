@@ -1,4 +1,3 @@
-// AcelaNode.java
 package jmri.jmrix.acela;
 
 import jmri.JmriException;
@@ -23,10 +22,10 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Same applies to the outputs (Dash-8s and Signalmen)
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
   *
- * @author	Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
+ * @author Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
  * example, modified to establish Acela support.
  */
 public class AcelaNode extends AbstractNode {
@@ -40,17 +39,17 @@ public class AcelaNode extends AbstractNode {
     private static int MAXDELAY = 65535;
 
     // class constants
-    public static final byte AC = 0x00;	// Acela Interface module (no inputs, no outputs)
+    public static final byte AC = 0x00; // Acela Interface module (no inputs, no outputs)
     // Does not really return a code of 0x00
-    public static final byte TB = 0x01;	// TrainBrain (4 output bits and 4 input bits)
-    public static final byte D8 = 0x02;	// Dash-8 (8 output bits)
-    public static final byte WM = 0x03;	// Watchman (8 input bits)
-    public static final byte SM = 0x04;	// SignalMan (16 output bits)
-    public static final byte SC = 0x05;	// SmartCab (1 output bits. no input bits)
-    public static final byte SW = 0x06;	// SwitchMan (16 output bits. no input bits)
-    public static final byte YM = 0x07;	// YardMaster (16 output bits. no input bits)
-    public static final byte SY = 0x08;	// Sentry (no output bits. 16 input bits)
-    public static final byte UN = 0x09;	// Unidentified module -- should be FF
+    public static final byte TB = 0x01; // TrainBrain (4 output bits and 4 input bits)
+    public static final byte D8 = 0x02; // Dash-8 (8 output bits)
+    public static final byte WM = 0x03; // Watchman (8 input bits)
+    public static final byte SM = 0x04; // SignalMan (16 output bits)
+    public static final byte SC = 0x05; // SmartCab (1 output bits. no input bits)
+    public static final byte SW = 0x06; // SwitchMan (16 output bits. no input bits)
+    public static final byte YM = 0x07; // YardMaster (16 output bits. no input bits)
+    public static final byte SY = 0x08; // Sentry (no output bits. 16 input bits)
+    public static final byte UN = 0x09; // Unidentified module -- should be FF
     public static final String moduleTypes = "ACTBD8WMSMSCSWYMSYUN";
 
     static final String[] nodeNames = new String[]{"0", "1", "2", "3", "4",
@@ -347,6 +346,7 @@ public class AcelaNode extends AbstractNode {
      * Public method to return state of Sensors. Note: returns 'true' if at
      * least one sensor is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         return hasActiveSensors;
     }
@@ -597,6 +597,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Public method to set the node address.
      */
+    @Override
     public boolean checkNodeAddress(int address) {
         return ((address >= 0) && (address < MAXNODE));
     }
@@ -638,6 +639,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Create an initialization packet if needed
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         return null;
     }
@@ -645,6 +647,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         //  Set up variables that will be used at the end to send the msg.
         int cmdlen = 3;         // Message length == 3, 4, or 5
@@ -1217,6 +1220,7 @@ public class AcelaNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         if (log.isDebugEnabled()) {
@@ -1225,6 +1229,7 @@ public class AcelaNode extends AbstractNode {
         return false;   // tells caller to NOT force init
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");
@@ -1233,5 +1238,3 @@ public class AcelaNode extends AbstractNode {
     }
     private final static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
 }
-
-/* @(#)AcelaNode.java */

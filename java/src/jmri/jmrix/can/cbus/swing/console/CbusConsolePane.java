@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.swing.console;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -45,7 +46,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Cbus Console
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
@@ -942,7 +943,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         return new String(linesBuffer[CBUS]);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "separately interlocked")
     PrintStream logStream = null;
 
     // to get a time string

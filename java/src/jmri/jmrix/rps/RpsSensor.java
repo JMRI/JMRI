@@ -32,6 +32,7 @@ public class RpsSensor extends AbstractSensor
         Model.instance().addRegion(region);
     }
 
+    @Override
     public void notify(Measurement r) {
         Point3d p = new Point3d(r.getX(), r.getY(), r.getZ());
         Integer id = Integer.valueOf(r.getReading().getID());
@@ -62,6 +63,7 @@ public class RpsSensor extends AbstractSensor
     }
 
     // if somebody outside sets state to INACTIVE, clear list
+    @Override
     public void setOwnState(int state) {
         if (state == Sensor.INACTIVE) {
             if (contents.size() > 0) {
@@ -114,10 +116,12 @@ public class RpsSensor extends AbstractSensor
         firePropertyChange("Arriving", null, id);
     }
 
+    @Override
     public void dispose() {
         Model.instance().removeRegion(region);
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 
@@ -125,4 +129,4 @@ public class RpsSensor extends AbstractSensor
 
 }
 
-/* @(#)RpsSensor.java */
+

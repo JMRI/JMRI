@@ -38,7 +38,7 @@ public class DCCppReplyTest extends TestCase {
         DCCppReply r = DCCppReply.parseDCCppReply("r 1234|87|23 12");
         Assert.assertTrue(r.isProgramReply());
         r = DCCppReply.parseDCCppReply("r 1234|66|23 4 1");
-        Assert.assertTrue(r.isProgramReply());
+        Assert.assertTrue(r.isProgramBitReply());
         r = DCCppReply.parseDCCppReply("r 1234|82|23 4");
         Assert.assertTrue(r.isProgramReply());
     }
@@ -49,6 +49,22 @@ public class DCCppReplyTest extends TestCase {
 
     // check get service mode CV Value response code.
     public void testGetServiceModeCVValue() {
+    }
+    
+    // Test Comm Type Reply
+    public void testCommTypeReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("N0: SERIAL");
+        Assert.assertTrue(l.isCommTypeReply());
+        Assert.assertEquals('N', l.getOpCodeChar());
+        Assert.assertEquals(0, l.getCommTypeInt());
+        Assert.assertEquals("SERIAL", l.getCommTypeValueString());
+        
+        l = DCCppReply.parseDCCppReply("N1: 192.168.0.1");
+        Assert.assertTrue(l.isCommTypeReply());
+        Assert.assertEquals('N', l.getOpCodeChar());
+        Assert.assertEquals(1, l.getCommTypeInt());
+        Assert.assertEquals("192.168.0.1", l.getCommTypeValueString());
+        
     }
 
     // from here down is testing infrastructure
@@ -69,10 +85,12 @@ public class DCCppReplyTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

@@ -1,4 +1,3 @@
-// ConstrainedBean.java
 package jmri.beans;
 
 import java.beans.IndexedPropertyChangeEvent;

@@ -1,4 +1,3 @@
-// TreePane.java
 package jmri.jmrix.jinput.treecontrol;
 
 import java.awt.BorderLayout;
@@ -39,14 +38,9 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
   */
 public class TreePanel extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8786948522926033006L;
 
     public TreePanel() {
 

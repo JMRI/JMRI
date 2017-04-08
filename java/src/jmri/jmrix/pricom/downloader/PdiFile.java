@@ -1,4 +1,3 @@
-// PdiFile.java
 package jmri.jmrix.pricom.downloader;
 
 import java.io.BufferedInputStream;

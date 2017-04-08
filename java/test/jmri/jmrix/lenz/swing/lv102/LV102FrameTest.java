@@ -28,6 +28,18 @@ public class LV102FrameTest {
         Assert.assertNotNull(f);
     }
 
+    @Test
+    public void testCloseButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // an LV102 Internal Frame
+        LV102Frame f = new LV102Frame(Bundle.getMessage("LV102Config"));
+        f.setVisible(true);
+        LV102FrameScaffold operator = new LV102FrameScaffold();
+        operator.pushCloseButton();
+    }
+
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

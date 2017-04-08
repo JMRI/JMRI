@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based on early NCE code.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2005
+ * @author Bob Jacobsen Copyright (C) 2001, 2005
  * @author Modified by Kelly Loyd
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
@@ -24,6 +24,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
         super(memo);
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         // KSL 20040409 - EasyDcc does not require feedback afaik
         // don't quite know if the EasyDcc requires feedback.
@@ -39,6 +40,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     }
 
     // KSL 20040409 - EasyDcc does not have a 'dispatch' function.
+    @Override
     public boolean hasDispatchFunction() {
         return false;
     }
@@ -47,6 +49,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
      * Address 100 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -55,6 +58,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
      * Address 99 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -62,6 +66,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }
@@ -73,10 +78,12 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
         return (num >= 100);
     }
 
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             int value = 0;

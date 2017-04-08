@@ -1,4 +1,3 @@
-// LocoMonPane.java
 package jmri.jmrix.loconet.locomon;
 
 import jmri.InstanceManager;
@@ -15,14 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * LocoNet Monitor pane displaying (and logging) LocoNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6661496696289363944L;
 
     public LocoMonPane() {
         super();
@@ -35,7 +29,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
+        return "package.jmri.jmrix.loconet.locomon.LocoMonFrame"; // NOI18N
     }
 
     @Override
@@ -43,7 +37,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         String uName = "";
         if (memo != null) {
             uName = memo.getUserName();
-            if (!"LocoNet".equals(uName)) {
+            if (!"LocoNet".equals(uName)) { // NOI18N
                 uName = uName + ": ";
             } else {
                 uName = "";
@@ -124,11 +118,6 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3893647635865243864L;
 
         public Default() {
             super(Bundle.getMessage("MenuItemLocoNetMonitor"),

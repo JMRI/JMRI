@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * be the only object that is sending messages for this turnout; more than one
  * Turnout object pointing to a single device is not allowed.
  *
- * Description:	extend jmri.AbstractTurnout for DCC-only layouts
+ * Description: extend jmri.AbstractTurnout for DCC-only layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 public class DccTurnout extends AbstractTurnout {
 
@@ -42,6 +42,7 @@ public class DccTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -60,6 +61,7 @@ public class DccTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton BT" + _number);

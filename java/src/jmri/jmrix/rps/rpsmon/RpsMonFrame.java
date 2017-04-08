@@ -20,10 +20,12 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         Distributor.instance().addMeasurementListener(this);
     }
 
+    @Override
     protected String title() {
         return "RPS Monitor";
     }
 
+    @Override
     public void dispose() {
         // remove from notification
         Distributor.instance().removeReadingListener(this);
@@ -32,9 +34,11 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         super.dispose();
     }
 
+    @Override
     protected void init() {
     }
 
+    @Override
     public void notify(Reading r) {
         String raw = "";
         if (r.getRawData() != null) {
@@ -43,6 +47,7 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         nextLine(r.toString() + "\n", raw);
     }
 
+    @Override
     public void notify(Measurement m) {
         String raw = "";
         if (m.getReading() != null) {

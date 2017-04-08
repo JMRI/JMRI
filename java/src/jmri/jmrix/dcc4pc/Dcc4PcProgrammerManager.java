@@ -10,7 +10,7 @@ import jmri.managers.DefaultProgrammerManager;
  * DefaultProgrammerManager to provide ops mode programmers on XPressNet
  *
  * @see jmri.ProgrammerManager
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
@@ -22,6 +22,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         defaultManager = dpm;
     }
 
+    @Override
     public Programmer getGlobalProgrammer() {
         if (defaultManager == null) {
             return null;
@@ -29,6 +30,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         return defaultManager.getGlobalProgrammer();
     }
 
+    @Override
     public String getUserName() {
         return defaultManager.getUserName();
     }
@@ -38,6 +40,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
      * return false based on what command station we're using but for now, we'll
      * return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         if (defaultManager == null) {
             return false;
@@ -45,6 +48,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         return defaultManager.isAddressedModePossible();
     }
 
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         if (defaultManager == null) {
             return false;
@@ -52,6 +56,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         return defaultManager.isGlobalProgrammerAvailable();
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if (defaultManager == null) {
             return null;
@@ -59,6 +64,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         return new Dcc4PcOpsModeProgrammer(pLongAddress, pAddress, defaultManager);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if (defaultManager == null) {
             return null;
@@ -66,6 +72,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         return defaultManager.reserveAddressedProgrammer(pLongAddress, pAddress);
     }
 
+    @Override
     public void releaseAddressedProgrammer(AddressedProgrammer p) {
         if (defaultManager == null) {
             return;
@@ -73,6 +80,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         defaultManager.releaseAddressedProgrammer(p);
     }
 
+    @Override
     public Programmer reserveGlobalProgrammer() {
         if (defaultManager == null) {
             return null;
@@ -80,6 +88,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
         return defaultManager.reserveGlobalProgrammer();
     }
 
+    @Override
     public void releaseGlobalProgrammer(Programmer p) {
         if (defaultManager == null) {
             return;

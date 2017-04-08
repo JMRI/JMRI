@@ -25,6 +25,7 @@ public abstract class MonitorAction extends AbstractAction {
         putValue(javax.swing.Action.NAME, rb.getString("ActionMonitor"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         MonitorFrame f = new MonitorFrame();
         try {

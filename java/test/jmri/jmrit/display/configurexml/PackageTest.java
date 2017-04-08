@@ -1,8 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * PackageTest.java
@@ -11,47 +10,35 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2009, 2014
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.display.configurexml");   // no tests in this class itself
-        suite.addTest(SchemaTest.suite());
-        suite.addTest(LoadAndStoreTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(AnalogClock2DisplayXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockContentsIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(IndicatorTrackIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LayoutBlockManagerXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LayoutTurnoutXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LayoutTurntableXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LightIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryComboIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemoryInputIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MemorySpinnerIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(MultiSensorIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(PositionableLabelXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(PositionablePointXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(ReporterIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(RpsPositionIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SensorIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SignalHeadIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SignalMastIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SlipTurnoutIconXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackSegmentXmlTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(TurnoutIconXmlTest.class));
-        return suite;
-    }
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    SchemaTest.class,
+    LoadAndStoreTest.class,
+    AnalogClock2DisplayXmlTest.class,
+    BlockContentsIconXmlTest.class,
+    IndicatorTrackIconXmlTest.class,
+    LayoutBlockManagerXmlTest.class,
+    LayoutTurnoutXmlTest.class,
+    LayoutTurntableXmlTest.class,
+    LightIconXmlTest.class,
+    MemoryComboIconXmlTest.class,
+    MemoryIconXmlTest.class,
+    MemoryInputIconXmlTest.class,
+    MemorySpinnerIconXmlTest.class,
+    MultiSensorIconXmlTest.class,
+    PositionableLabelXmlTest.class,
+    PositionablePointXmlTest.class,
+    ReporterIconXmlTest.class,
+    RpsPositionIconXmlTest.class,
+    SensorIconXmlTest.class,
+    SignalHeadIconXmlTest.class,
+    SignalMastIconXmlTest.class,
+    SlipTurnoutIconXmlTest.class,
+    TrackSegmentXmlTest.class,
+    TurnoutIconXmlTest.class,
+    IndicatorTurnoutIconXmlTest.class,
+    LinkingLabelXmlTest.class,
+    LocoIconXmlTest.class
+})
+public class PackageTest {
 }

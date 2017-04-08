@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ServiceLoader;
 import javax.annotation.Nonnull;
 import javax.servlet.annotation.WebServlet;
@@ -110,21 +109,17 @@ public final class WebServer implements LifeCycle.Listener {
             server.setConnectors(new Connector[]{connector});
             server.setHandler(new ContextHandlerCollection());
 
-            ContextHandlerCollection contexts = new ContextHandlerCollection();
             // Load all path handlers
             ServiceLoader.load(WebServerConfiguration.class).forEach((configuration) -> {
-                Map<String, String> filePaths = configuration.getFilePaths();
-                for (String key : filePaths.keySet()) {
-                    this.registerResource(key, filePaths.get(key));
-                }
-                Map<String, String> redirections = configuration.getRedirectedPaths();
-                for (String key : redirections.keySet()) {
-                    this.registerRedirection(key, redirections.get(key));
-                }
-                List<String> denials = configuration.getForbiddenPaths();
-                for (String key : denials) {
-                    this.registerDenial(key);
-                }
+                configuration.getFilePaths().entrySet().forEach((resource) -> {
+                    this.registerResource(resource.getKey(), resource.getValue());
+                });
+                configuration.getRedirectedPaths().entrySet().forEach((redirection) -> {
+                    this.registerRedirection(redirection.getKey(), redirection.getValue());
+                });
+                configuration.getForbiddenPaths().forEach((denial) -> {
+                    this.registerDenial(denial);
+                });
             });
             // Load all classes that provide the HttpServlet service.
             ServiceLoader.load(HttpServlet.class).forEach((servlet) -> {
@@ -368,7 +363,7 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
-        log.warn("Web Server failed", thrwbl);
+        log.error("Web Server failed", thrwbl);
     }
 
     @Override

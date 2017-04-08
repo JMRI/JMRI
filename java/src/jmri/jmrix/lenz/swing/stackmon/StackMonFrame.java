@@ -1,6 +1,6 @@
-// StackMonFrame.java
 package jmri.jmrix.lenz.swing.stackmon;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -27,14 +27,10 @@ import org.slf4j.LoggerFactory;
  * will include the ability to set the status of function buttons
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2005-2010
+ * @author Paul Bender Copyright (C) 2005-2010
   */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2129153656311593566L;
     JButton nextButton = new JButton("Next Entry");
     JButton previousButton = new JButton("Previous Entry");
     JButton deleteButton = new JButton("Delete Entry");
@@ -61,6 +57,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to retrieve the next entry
         nextButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getNextEntry();
             }
@@ -75,6 +72,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to retrieve the previous entry
         previousButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getPreviousEntry();
             }
@@ -97,6 +95,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to remove the current entry
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteEntry();
             }
@@ -107,6 +106,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to retrieve the next entry
         refreshButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getAllEntries();
             }
@@ -149,7 +149,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(CurrentStatus);
-	//getContentPane().add(pane3);
+ //getContentPane().add(pane3);
 
         // Set up the jtable in a Scroll Pane..
         JScrollPane stackPane = new JScrollPane(stackTable);
@@ -166,6 +166,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         tc.addXNetListener(~0, this);
     }
 
+    @Override
     public void addNotify() {
         super.addNotify();
 
@@ -236,7 +237,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * Request the status of the current address
      */
     @SuppressWarnings("unused")
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
+@SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {
@@ -251,7 +252,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      * current address.
      */
     @SuppressWarnings("unused")
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
+@SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestFunctionStatus() {
         int address = 0;
         if (!adrTextField.getText().equals("")) {
@@ -263,6 +264,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     // The XNet Listener Interface
     // We need to be able to recieve information from the command station
+    @Override
     public void message(XNetReply r) {
         if (r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
             int address = r.getThrottleMsgAddr();
@@ -330,10 +332,12 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     // We need to be able to receive information sent by the computer to 
     // the command station
+    @Override
     public void message(XNetMessage m) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

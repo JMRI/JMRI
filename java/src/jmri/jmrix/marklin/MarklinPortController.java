@@ -1,9 +1,8 @@
-// MarklinPortController.java
 package jmri.jmrix.marklin;
 
 /*
  * Identifying class representing a Marklin communications port
- * @author			Kevin Dickerson    Copyright (C) 2001, 2008
+ * @author   Kevin Dickerson    Copyright (C) 2001, 2008
  */
 public abstract class MarklinPortController extends jmri.jmrix.AbstractNetworkPortController {
 
@@ -20,4 +19,4 @@ public abstract class MarklinPortController extends jmri.jmrix.AbstractNetworkPo
 }
 
 
-/* @(#)MarklinPortController.java */
+

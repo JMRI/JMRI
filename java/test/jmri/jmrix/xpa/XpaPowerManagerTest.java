@@ -1,48 +1,81 @@
 package jmri.jmrix.xpa;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class
  * <P>
  * @author	Paul Bender
  */
-public class XpaPowerManagerTest extends TestCase {
+public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
-    private XpaTrafficController tc = null;
+    private XpaTrafficControlScaffold tc = null;
 
-    public void testCtor() {
-        XpaPowerManager t = new XpaPowerManager(tc);
-        Assert.assertNotNull(t);
+    // service routines to simulate recieving on, off from interface
+    @Override
+    protected void hearOn() {
     }
 
-    // from here down is testing infrastructure
-    public XpaPowerManagerTest(String s) {
-        super(s);
+    @Override
+    protected void sendOnReply() {
+        ((XpaPowerManager) p).reply(new XpaMessage("ATDT0;"));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XpaPowerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    protected void sendOffReply() {
+        ((XpaPowerManager) p).reply(new XpaMessage("ATDT0;"));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XpaPowerManagerTest.class);
-        return suite;
+    @Override
+    protected void hearOff() {
+    }
+
+    @Override
+    protected int numListeners() {
+        return tc.numListeners();
+    }
+
+    @Override
+    protected int outboundSize() {
+        return tc.outbound.size();
+    }
+
+    @Override
+    protected boolean outboundOnOK(int index) {
+        return ((tc.outbound.get(index))).toString().equals("ATDT0;");
+    }
+
+    @Override
+    protected boolean outboundOffOK(int index) {
+        return ((tc.outbound.get(index))).toString().equals("ATDT0;");
+    }
+
+    @Test
+    @Override
+    @Ignore("unsolicited state changes are currently ignored")
+    public void testStateOn() {
+    }
+
+    @Test
+    @Override
+    @Ignore("unsolicited state changes are currently ignored")
+    public void testStateOff() {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new XpaTrafficController();
+        tc = new XpaTrafficControlScaffold();
+        p = new XpaPowerManager(tc);
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
         tc = null;
     }

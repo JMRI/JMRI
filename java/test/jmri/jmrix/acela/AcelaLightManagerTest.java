@@ -3,10 +3,8 @@ package jmri.jmrix.acela;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import jmri.Light;
-import jmri.LightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +13,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Coleman Copyright 2008
  */
-public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     private AcelaSystemConnectionMemo _memo = null;
     private AcelaTrafficControlScaffold tcis = null;
 
+    @Override
     public String getSystemName(int i) {
         return "AL" + i;
     }
@@ -54,6 +53,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();

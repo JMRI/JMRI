@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.maple;
 
 import jmri.JmriException;
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
   */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
@@ -42,6 +41,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Return the system letter
      */
+    @Override
     public String getSystemPrefix() {
         return "K";
     }
@@ -50,6 +50,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Create a new sensor if all checks are passed System name is normalized to
      * ensure uniqueness.
      */
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
@@ -93,6 +94,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Dummy routine
      */
+    @Override
     public void message(SerialMessage r) {
         log.warn("unexpected message");
     }
@@ -100,6 +102,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Process a reply to a poll of Sensors of one panel node
      */
+    @Override
     public void reply(SerialReply r) {
         InputBits.instance().markChanges(r);
     }
@@ -142,10 +145,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     static SerialSensorManager _instance = null;
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             //Address format passed is in the form of sysNode:address or T:turnout address
@@ -174,6 +179,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     int address = 0;
     int iName = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -205,4 +211,4 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
 
-/* @(#)SerialSensorManager.java */
+

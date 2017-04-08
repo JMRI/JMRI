@@ -27,7 +27,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
             return;
         }
         // get the right packet
-        XNetMessage msg = Z21XNetMessage.getSetTurnoutRequestMessage(mNumber,
+        XNetMessage msg = Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (s & _mThrown) != 0,
                 true, false ); // for now always active and not queued.
         if (getFeedbackMode() == SIGNAL) {
@@ -53,7 +53,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
     public void requestUpdateFromLayout() {
         // On the z21, we send a LAN_X_GET_TURNOUT_INFO message 
         // (see section 5.1 of the protocol documenation ).
-        XNetMessage msg = Z21XNetMessage.getTurnoutInfoRequestMessage(mNumber);
+        XNetMessage msg = Z21XNetMessage.getZ21TurnoutInfoRequestMessage(mNumber);
         synchronized (this) {
             internalState = STATUSREQUESTSENT;
         }
@@ -88,6 +88,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         internalState = oldState;
     }
 
+    @Override
     synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
@@ -130,8 +131,9 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         }
     }
 
+    @Override
     protected XNetMessage getOffMessage() {
-        return( Z21XNetMessage.getSetTurnoutRequestMessage(mNumber,
+        return( Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (getCommandedState() ==  _mThrown),
                 false, false ) );// for now always not active and not queued.
     }

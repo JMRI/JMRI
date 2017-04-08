@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.GridLayout;
@@ -45,10 +45,12 @@ public class VSDSoundsPanel extends JmriPanel {
     public void init() {
     }
 
+    @Override
     public void initContext(Object context) {
         initComponents();
     }
 
+    @Override
     public void initComponents() {
 
         this.setLayout(new GridLayout(0, 3));

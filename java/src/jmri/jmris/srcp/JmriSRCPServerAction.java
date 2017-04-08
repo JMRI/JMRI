@@ -1,4 +1,3 @@
-// JmriSRCPServerAction.java
 package jmri.jmris.srcp;
 
 import java.awt.event.ActionEvent;
@@ -11,11 +10,6 @@ import javax.swing.AbstractAction;
  */
 public class JmriSRCPServerAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3322670049459400936L;
-
     public JmriSRCPServerAction(String s) {
         super(s);
     }
@@ -24,6 +18,7 @@ public class JmriSRCPServerAction extends AbstractAction {
         this("Start SRCP Jmri Server");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         //JmriSRCPServerFrame f = new JmriSRCPServerFrame();
@@ -33,4 +28,4 @@ public class JmriSRCPServerAction extends AbstractAction {
 }
 
 
-/* @(#)JmriSRCPServerAction.java */
+

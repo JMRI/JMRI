@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * EasyDcc implementation of the CommandStation interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class EasyDccCommandStation implements CommandStation {
 
@@ -22,6 +22,7 @@ public class EasyDccCommandStation implements CommandStation {
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission, capped at 9
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (repeats > 9) {
@@ -57,6 +58,7 @@ public class EasyDccCommandStation implements CommandStation {
 
     EasyDccSystemConnectionMemo memo = null;
 
+    @Override
     public String getUserName() {
         if (memo == null) {
             return "EasyDCC";
@@ -64,6 +66,7 @@ public class EasyDccCommandStation implements CommandStation {
         return memo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (memo == null) {
             return "E";

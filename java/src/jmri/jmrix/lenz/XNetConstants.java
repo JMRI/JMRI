@@ -3,9 +3,9 @@ package jmri.jmrix.lenz;
 /**
  * XNetConstants.java
  *
- * Description:	Constants to represent values seen in XpressNet traffic
+ * Description: Constants to represent values seen in XpressNet traffic
  *
- * @author	Paul Bender Copyright (C) 2003-2009
+ * @author Paul Bender Copyright (C) 2003-2009
  *
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
@@ -376,4 +376,4 @@ public final class XNetConstants {
 }
 
 
-/* @(#)XNetConstants.java */
+

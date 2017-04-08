@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 public class PathTurnoutTableModel extends AbstractTableModel {
 
@@ -64,14 +64,17 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
+    @Override
     public int getRowCount() {
         return _path.getSettings().size() + 1;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case TURNOUT_NAME_COL:
@@ -82,6 +85,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         return "";
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (_path.getSettings().size() == rowIndex) {
             return tempRow[columnIndex];
@@ -116,6 +120,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         return "";
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (_path.getSettings().size() == row) {
             switch (col) {
@@ -203,10 +208,12 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         return true;
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL) {
             return JButton.class;

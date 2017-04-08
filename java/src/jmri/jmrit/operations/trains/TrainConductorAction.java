@@ -1,4 +1,3 @@
-// TrainConductorAction.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Frame;
@@ -29,8 +28,8 @@ public class TrainConductorAction extends AbstractAction {
         } else {
             f.setExtendedState(Frame.NORMAL);
         }
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)TrainConductorAction.java */
+

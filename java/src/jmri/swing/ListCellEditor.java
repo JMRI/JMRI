@@ -18,5 +18,6 @@ public interface ListCellEditor<E> extends CellEditor {
             boolean isSelected,
             int index);
 
+    @Override
     public E getCellEditorValue();
 }

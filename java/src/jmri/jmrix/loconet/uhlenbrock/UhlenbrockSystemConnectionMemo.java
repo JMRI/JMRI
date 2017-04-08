@@ -1,4 +1,3 @@
-// UhlenbrockSystemConnectionMemo.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.InstanceManager;
@@ -11,7 +10,7 @@ import jmri.jmrix.loconet.SlotManager;
  * Lightweight class to denote that an Uhlenbrock IB-COM or Intellibox II is
  * active
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
@@ -32,16 +31,16 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
         return super.getProgrammerManager();
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, UhlenbrockSystemConnectionMemo.class);
         super.dispose();
     }
 
+    @Override
     public void configureManagers() {
         super.configureManagers();
         getTurnoutManager().setUhlenbrockMonitoring();
 }
 
 }
-
-/* @(#)UhlenbrockSystemConnectionMemo.java */

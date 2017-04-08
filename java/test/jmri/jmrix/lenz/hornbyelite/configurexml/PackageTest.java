@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
+   ConnectionConfigXmlTest.class,
+   EliteXNetTurnoutManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.lenz.hornbyelite.configurexml package.

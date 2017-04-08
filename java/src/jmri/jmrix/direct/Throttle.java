@@ -1,5 +1,6 @@
 package jmri.jmrix.direct;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * considered long addresses.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class Throttle extends AbstractThrottle {
 
@@ -49,6 +50,7 @@ public class Throttle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
+    @Override
     protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address >= 100),
                 getF0(), getF1(), getF2(), getF3(), getF4());
@@ -59,6 +61,7 @@ public class Throttle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address >= 100),
@@ -70,6 +73,7 @@ public class Throttle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F9, F10, F11, F12.
      */
+    @Override
     protected void sendFunctionGroup3() {
 
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 100),
@@ -85,7 +89,8 @@ public class Throttle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -119,6 +124,7 @@ public class Throttle extends AbstractThrottle {
         // TrafficController.instance().sendMessage(m, null);
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -128,11 +134,13 @@ public class Throttle extends AbstractThrottle {
         }
     }
 
+    @Override
     public LocoAddress getLocoAddress() {
         log.error("getLocoAddress not fully implemented yet");
         return new DccLocoAddress(address, address > 100);   // always short address if <100
     }
 
+    @Override
     protected void throttleDispose() {
         finishRecord();
     }

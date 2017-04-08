@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
  * MRC implementation of a ThrottleManager.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * 
+ *
  */
 public class Mx1ThrottleManager extends AbstractThrottleManager {
 
     /**
-     * Constructor.
+     * Create a new manager.
+     *
+     * @param memo the system connection this manager is associated with
      */
     public Mx1ThrottleManager(Mx1SystemConnectionMemo memo) {
         super(memo);
@@ -27,6 +29,7 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
     Mx1TrafficController tc = null;
     String prefix = "";
 
+    @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         //We do interact
         DccLocoAddress address = (DccLocoAddress) a;
@@ -38,6 +41,7 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
      * Addresses 0-10239 can be long
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return ((address >= 0) && (address <= 10239));
     }
@@ -46,6 +50,7 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
      * The short addresses 1-127 are available
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return ((address >= 1) && (address <= 127));
     }
@@ -53,14 +58,17 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
+    @Override
     public int supportedSpeedModes() {
         return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             Mx1Throttle nct = (Mx1Throttle) t;

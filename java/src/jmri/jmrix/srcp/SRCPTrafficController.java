@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Vector;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -42,10 +43,12 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     }
 
     // The methods to implement the SRCPInterface
+    @Override
     public synchronized void addSRCPListener(SRCPListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeSRCPListener(SRCPListener l) {
         this.removeListener(l);
     }
@@ -193,6 +196,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     /**
      * Forward a SRCPMessage to all registered SRCPInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SRCPListener) client).message((SRCPMessage) m);
     }
@@ -200,6 +204,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     /**
      * Forward a SRCPReply to all registered SRCPInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((SRCPListener) client).reply((SRCPReply) m);
     }
@@ -214,10 +219,12 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     public void setSensorManager(jmri.SensorManager m) {
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -225,15 +232,18 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
         sendMessage(m, reply);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         // we need to find the right bus number!
         return SRCPMessage.getProgMode(1);
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         // we need to find the right bus number!
         return SRCPMessage.getExitProgMode(1);
@@ -259,17 +269,19 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     static volatile protected SRCPTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     @Override
     protected void setInstance() {
         self = this;
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new SRCPReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         int index = msg.getNumDataElements() - 1;
         if (msg.getElement(index) == 0x0D) {
@@ -376,6 +388,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
             mTC = (SRCPTrafficController) pTC;
         }
 
+        @Override
         public void run() {
             log.debug("Delayed rcv notify starts");
             mTC.notifyReply(e, mDest);
@@ -386,4 +399,4 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 }
 
 
-/* @(#)SRCPTrafficController.java */
+

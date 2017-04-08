@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.bluetooth;
 
 import java.io.IOException;

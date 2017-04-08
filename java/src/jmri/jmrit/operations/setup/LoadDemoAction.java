@@ -1,4 +1,3 @@
-// LoadDemoAction.java
 package jmri.jmrit.operations.setup;
 
 import apps.Apps;
@@ -67,4 +66,4 @@ public class LoadDemoAction extends AbstractAction {
     }
 }
 
-/* @(#)LoadDemoAction.java */
+

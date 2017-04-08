@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.PackageTest");  // no tests in this class itself
         suite.addTest(jmri.jmrix.loconet.LocoNetThrottledTransmitterTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.locostats.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.locostats.swing.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.sdf.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.sdfeditor.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
@@ -42,8 +42,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(LnPacketizerTest.class));
         suite.addTest(new TestSuite(LocoNetThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetConsistTest.class));
-        suite.addTest(LnPowerManagerTest.suite());
-        suite.addTest(LnTurnoutTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LnPowerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnTurnoutTest.class));
         suite.addTest(new JUnit4TestAdapter(LnTurnoutManagerTest.class));
         suite.addTest(LnReporterTest.suite());
         suite.addTest(LnSensorTest.suite());
@@ -84,6 +84,8 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LnPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetMessageExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConstantsTest.class));
         return suite;
     }
 

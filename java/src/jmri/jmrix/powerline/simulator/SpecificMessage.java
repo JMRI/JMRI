@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.powerline.simulator;
 
 import jmri.jmrix.powerline.SerialMessage;
@@ -17,8 +16,8 @@ import jmri.util.StringUtil;
  * make sure that the messages remain atomic)
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
- * @author	Ken Cameron Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
+ * @author Ken Cameron Copyright (C) 2010
   */
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
@@ -50,14 +49,17 @@ public class SpecificMessage extends SerialMessage {
 
     boolean interlocked = false;
 
+    @Override
     public void setInterlocked(boolean v) {
         interlocked = v;
     }
 
+    @Override
     public boolean getInterlocked() {
         return interlocked;
     }
 
+    @Override
     public String toMonitorString() {
         // check for valid length
         int len = getNumDataElements();
@@ -106,22 +108,22 @@ public class SpecificMessage extends SerialMessage {
                     }
                     break;
                 // i wrote this then figured the POLL are replies
-//	            case Constants.POLL_REQ_BUTTON :
-//	            	text.append("Poll Button ");
-//	            	int button = ((getElement(2) & Constants.BUTTON_BITS_ID) >> 4) + 1;
-//	            	text.append(button);
-//	            	int op = getElement(2) & Constants.BUTTON_BITS_OP;
-//	            	if (op == Constants.BUTTON_HELD) {
-//		            	text.append(" HELD");
-//	            	} else if (op == Constants.BUTTON_REL) {
-//		            	text.append(" RELEASED");
-//	            	} else if (op == Constants.BUTTON_TAP) {
-//		            	text.append(" TAP");
-//	            	}
-//	            	break;
-//	            case Constants.POLL_REQ_BUTTON_RESET :
-//	            	text.append("Reset by Button at Power Cycle");
-//	            	break;
+//             case Constants.POLL_REQ_BUTTON :
+//              text.append("Poll Button ");
+//              int button = ((getElement(2) & Constants.BUTTON_BITS_ID) >> 4) + 1;
+//              text.append(button);
+//              int op = getElement(2) & Constants.BUTTON_BITS_OP;
+//              if (op == Constants.BUTTON_HELD) {
+//               text.append(" HELD");
+//              } else if (op == Constants.BUTTON_REL) {
+//               text.append(" RELEASED");
+//              } else if (op == Constants.BUTTON_TAP) {
+//               text.append(" TAP");
+//              }
+//              break;
+//             case Constants.POLL_REQ_BUTTON_RESET :
+//              text.append("Reset by Button at Power Cycle");
+//              break;
                 case Constants.FUNCTION_REQ_X10:
                     text.append("Send Cmd X10 ");
                     if ((getElement(3) & Constants.FLAG_BIT_X10_CMDUNIT) == Constants.FLAG_X10_RECV_CMD) {
@@ -130,14 +132,14 @@ public class SpecificMessage extends SerialMessage {
                         text.append(X10Sequence.formatAddressByte(getElement(2) & 0xFF));
                     }
                     break;
-//	            case Constants.POLL_REQ_X10 :
-//	            	text.append("Poll Cmd X10 ");
+//             case Constants.POLL_REQ_X10 :
+//              text.append("Poll Cmd X10 ");
 //                    if ((getElement(3)& Constants.FLAG_BIT_X10_CMDUNIT) == Constants.FLAG_X10_RECV_CMD) {
-//                    	text.append(X10Sequence.formatCommandByte(getElement(2) & 0xFF));
+//                     text.append(X10Sequence.formatCommandByte(getElement(2) & 0xFF));
 //                    } else {
-//                    	text.append(X10Sequence.formatAddressByte(getElement(2)& 0xFF));
+//                     text.append(X10Sequence.formatAddressByte(getElement(2)& 0xFF));
 //                    }
-//	            	break;
+//              break;
                 default: {
                     text.append(" Unknown command: " + StringUtil.twoHexFromInt(getElement(1) & 0xFF));
                     text.append(" len: " + len);
@@ -151,6 +153,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l length expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);
@@ -158,10 +161,12 @@ public class SpecificMessage extends SerialMessage {
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
 
+    @Override
     public void setResponseLength(int l) {
         responseLength = l;
     }
 
+    @Override
     public int getResponseLength() {
         return responseLength;
     }
@@ -178,8 +183,10 @@ public class SpecificMessage extends SerialMessage {
 
     /**
      * create an Insteon message with the X10 address
+     * @param housecode  value of the housecode of X10 address
+     * @param devicecode value of the devicecode of X10 address
      *
-     * @return message
+     * @return message   formated message with parameters
      */
     static public SpecificMessage getX10Address(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(4);
@@ -194,7 +201,11 @@ public class SpecificMessage extends SerialMessage {
     /**
      * create an Insteon message with the X10 address and dim steps
      *
-     * @return message
+     * @param housecode  value of the housecode of X10 address
+     * @param devicecode value of the devicecode of X10 address
+     * @param dimcode    value of how dim to set the light
+     *
+     * @return message   formated message with parameters
      */
     static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(4);
@@ -277,4 +288,4 @@ public class SpecificMessage extends SerialMessage {
 
 }
 
-/* @(#)SpecificMessage.java */
+

@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class.getName());
 
-        suite.addTest(SchemaTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
         suite.addTest(LayoutBlockTest.suite());
         suite.addTest(LayoutBlockManagerTest.suite());
         suite.addTest(BlockValueFileTest.suite());
@@ -58,6 +58,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TransitCreationToolTest.class));
         suite.addTest(LayoutEditorWindowTest.suite());
         suite.addTest(LEConnectivityTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LayoutEditorFindItemsTest.class));
         return suite;
     }
 }

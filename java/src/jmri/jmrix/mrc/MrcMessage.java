@@ -1,4 +1,3 @@
-// MrcMessage.java
 package jmri.jmrix.mrc;
 
 import org.slf4j.Logger;
@@ -13,9 +12,9 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact MRC Inc
  * for separate permission.
  * <p>
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
  * @author Kevin Dickerson Copyright (C) 2014
- * @author	kcameron Copyright (C) 2014
+ * @author kcameron Copyright (C) 2014
   */
 public class MrcMessage {
 
@@ -118,6 +117,7 @@ public class MrcMessage {
         return i;
     }
 
+    @Override
     public String toString() {
         return MrcPackets.toString(this);
     }
@@ -339,8 +339,9 @@ public class MrcMessage {
 
     /**
      * set the fast clock ratio ratio is integer and max of 60 and min of 1
+     * @param ratio value to set new clock speed
      *
-     * @return MrcMessage
+     * @return new message to set the clock speed ratio
      */
     static public MrcMessage setClockRatio(int ratio) {
         if (ratio < 0 || ratio > 60) {
@@ -359,8 +360,10 @@ public class MrcMessage {
 
     /**
      * set the fast time clock
+     * @param hour hour value for fast clock
+     * @param minute minute value for fast clock
      *
-     * @return MrcMessage
+     * @return new message to set the hour/minutes of the fast clock
      */
     static public MrcMessage setClockTime(int hour, int minute) {
         if (hour < 0 || hour > 23) {
@@ -423,6 +426,9 @@ public class MrcMessage {
     /**
      * Get a message for a "Switch Position Normal" command to a specific
      * accessory decoder on the layout.
+     * @param address address of turnout
+     * @param closed position for the turnout
+     * @return new message for getting switch posistion
      */
     static MrcMessage getSwitchMsg(int address, boolean closed) {
         MrcMessage m = new MrcMessage(MrcPackets.getAccessoryPacketLength());
@@ -513,4 +519,4 @@ public class MrcMessage {
 }
 
 
-/* @(#)MrcMessage.java */
+

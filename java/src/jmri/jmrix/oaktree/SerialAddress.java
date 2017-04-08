@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.oaktree;
 
 import org.slf4j.Logger;
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * bit number of the input or output bit (1-2048) examples: CT0B2 (node address
  * 0, bit 2), CS1B3 (node address 1, bit 3), CL11B234 (node address 11, bit234)
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2004
+ * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006
  */
 public class SerialAddress {
@@ -332,4 +331,4 @@ public class SerialAddress {
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
 
-/* @(#)SerialAddress.java */
+

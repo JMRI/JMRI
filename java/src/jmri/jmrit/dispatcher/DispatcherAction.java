@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a DispatcherFrame
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class DispatcherAction extends AbstractAction {
 
@@ -24,6 +24,7 @@ public class DispatcherAction extends AbstractAction {
 
     DispatcherFrame f = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // check that Transits have been defined and are available
         if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() <= 0) {

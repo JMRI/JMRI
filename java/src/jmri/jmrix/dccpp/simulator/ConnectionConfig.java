@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.dccpp.simulator;
 
 /**
@@ -32,20 +31,24 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
         return "DCC++ Simulator";
     }
 
     String manufacturerName = "DCC++";
 
+    @Override
     public String getManufacturer() {
         return manufacturerName;
     }
 
+    @Override
     public void setManufacturer(String manu) {
         manufacturerName = manu;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppSimulatorAdapter();

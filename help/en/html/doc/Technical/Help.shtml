@@ -123,7 +123,8 @@ confuses JavaHelp.
         web browser.</li>
       </ul><a name="web" id="web"></a>
 
-      <h2>Web access to help</h2>It's inconvenient to have to
+      <h2>Web access to help</h2>
+      It's inconvenient to have to
       maintain two separate web pages for the main web site and the
       help system. To reduce the need for that, we use a particular
       form for the web pages in the help system.
@@ -142,7 +143,8 @@ confuses JavaHelp.
         matter in place to get the page properly displayed.</li>
       </ul><a name="code" id="code"></a>
 
-      <h2>Access in the code</h2>Within the JMRI code, access the
+      <h2>Access in the code</h2>
+      Within the JMRI code, access the
       help system comes via the jmri.util.HelpUtil class. (For
       historical reasons, there's a little bit of code in
       apps.Apps, but you should ignore that).
@@ -160,12 +162,14 @@ confuses JavaHelp.
   addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
 </pre>The help file is then located at
 <code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
-
+      <p>You should add the new page to the JHelpDev index to have JMRI
+      accept it as a Help target (see next the heading).</p>
       <p>A number of help files have been put in place without any
       contents; hopefully some users will edit them and contribute
       them back. <a name="jhelpdev" id="jhelpdev"></a></p>
 
-      <h2>Creating the control files with JHelpDev</h2>JavaHelp
+      <h2>Creating the control files with JHelpDev</h2>
+      JavaHelp
       uses various XML files to control how the table of contents
       and index are displayed. We create those with <a href=
       "http://jhelpdev.sourceforge.net/">JHelpDev</a>. Please don't
@@ -178,6 +182,16 @@ confuses JavaHelp.
         <li>Make sure you've updated to the most recent version in
         the code repository before getting started.</li>
 
+        <li>You can run in batch mode by running <code>ant</code>
+        from the command line in the <code>help/en/</code>
+        directory. It'll still pop windows, but should run 
+        to completion by itself.  It might take a minute or so.</li>
+        
+        <li>If you'd like to operate it manually, please 
+        follow the rest of these bullets.
+        (Or if using Eclipse, right-click on the
+        help/en/build.xml file and select Run As Ant Build.)<li>
+        
         <li>Start the tool by clicking on the jhelpdev.jar file.
         (If that doesn't work, try running either JHelpDev.csh or
         JHelpDev.bat, depending on what kind of computer you
@@ -209,9 +223,8 @@ confuses JavaHelp.
         Index, etc.</li>
 
         <li>Then, back on the command line and in the help/en
-        directory, invoke "ant" to create the web index and table
-        of contents pages. (Or if using Eclipse, right-click on the
-        help/en/build.xml file and select Run As Ant Build.)</li>
+        directory, invoke "ant index TOC" to create the web index and table
+        of contents pages. </li>
       </ol>
 
       <p>The various control files that JavaHelp uses are stored in
@@ -256,7 +269,7 @@ confuses JavaHelp.
       JMRI.org site after a short while. There's a <a href=
       "http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">
       Jenkins job</a> that handles periodic updates for the static
-      (from repository, unlike e.g. JavaDoc) pages. 
+      (from repository, unlike e.g. Javadoc) pages. 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

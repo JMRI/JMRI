@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.GridLayout;
@@ -53,10 +53,12 @@ public class VSDOptionPanel extends JmriPanel {
     public void init() {
     }
 
+    @Override
     public void initContext(Object context) {
         initComponents();
     }
 
+    @Override
     public void initComponents() {
 
         // Below is mostly just "filler" stuff until we implement the real thing
@@ -68,6 +70,7 @@ public class VSDOptionPanel extends JmriPanel {
         opsTrainComboBox = TrainManager.instance().getTrainComboBox();
         this.add(opsTrainComboBox);
         opsTrainComboBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 opsTrainSelectAction(e);
             }

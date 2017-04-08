@@ -1,4 +1,3 @@
-// LZV100Action.java
 package jmri.jmrix.lenz.swing.lzv100;
 
 import java.awt.event.ActionEvent;
@@ -11,7 +10,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
  * The {@link LZV100Frame} is a configuration tool for the LZV100 command
  * Station.
  *
- * @author	Paul Bender Copyright (C) 2003
+ * @author Paul Bender Copyright (C) 2003
  */
 public class LZV100Action extends AbstractXPressNetAction {
 
@@ -23,6 +22,7 @@ public class LZV100Action extends AbstractXPressNetAction {
         this("LZV100 Configuration Manager", memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create an LZV100Frame
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.swing.lzv100.LZV100Bundle");

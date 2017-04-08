@@ -1,7 +1,6 @@
 package jmri.jmrit.speedometer;
 
 import apps.tests.Log4JFixture;
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Set;
 import javax.swing.SortOrder;
+import jmri.managers.DefaultUserMessagePreferences;
 import jmri.util.com.sun.TableSorter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -32,8 +33,9 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      *          comes from the DefaultUserMessagePreferences
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
-        jmri.UserPreferencesManager p = (jmri.UserPreferencesManager) o;
+        DefaultUserMessagePreferences p = (DefaultUserMessagePreferences) o;
 
         Element messages = new Element("UserMessagePreferences");
         setStoreElementClass(messages);
@@ -214,6 +216,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         messages.setAttribute("class", "jmri.managers.configurexml.DefaultUserMessagePreferencesXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -1,4 +1,3 @@
-// Mx1SystemConnectionMemo.javaf
 package jmri.jmrix.zimo;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,7 @@ import jmri.ProgrammerManager;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  * @author	Bob Jacobsen Copyright (C) 2010
- * 
+ *
  */
 public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -57,6 +56,8 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
+     * @return the associated traffic controller
      */
     public Mx1TrafficController getMx1TrafficController() {
         return st;
@@ -202,10 +203,12 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return throttleManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.zimo.ZimoActionListBundle");
     }
 
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, Mx1SystemConnectionMemo.class);
@@ -218,6 +221,3 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 }
-
-
-/* @(#)Mx1SystemConnectionMemo.java */

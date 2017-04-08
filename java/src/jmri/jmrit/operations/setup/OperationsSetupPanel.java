@@ -1,6 +1,6 @@
-// OperationsSetupPanel.java
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
@@ -42,48 +42,48 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class.getName());
 
     // labels
-    JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
-    JLabel textIconSouth = new JLabel(Bundle.getMessage("IconSouth"));
-    JLabel textIconEast = new JLabel(Bundle.getMessage("IconEast"));
-    JLabel textIconWest = new JLabel(Bundle.getMessage("IconWest"));
-    JLabel textIconLocal = new JLabel(Bundle.getMessage("IconLocal"));
-    JLabel textIconTerminate = new JLabel(Bundle.getMessage("IconTerminate"));
-    // JLabel textComment = new JLabel(Bundle.getMessage("Comment"));
+    private JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
+    private JLabel textIconSouth = new JLabel(Bundle.getMessage("IconSouth"));
+    private JLabel textIconEast = new JLabel(Bundle.getMessage("IconEast"));
+    private JLabel textIconWest = new JLabel(Bundle.getMessage("IconWest"));
+    private JLabel textIconLocal = new JLabel(Bundle.getMessage("IconLocal"));
+    private JLabel textIconTerminate = new JLabel(Bundle.getMessage("IconTerminate"));
+    // private JLabel textComment = new JLabel(Bundle.getMessage("Comment"));
 
     // major buttons
-    JButton backupButton = new JButton(Bundle.getMessage("Backup"));
-    JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
-    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+    private JButton backupButton = new JButton(Bundle.getMessage("Backup"));
+    private JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
+    private JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
-    JRadioButton scaleZ = new JRadioButton("Z"); // NOI18N
-    JRadioButton scaleN = new JRadioButton("N"); // NOI18N
-    JRadioButton scaleTT = new JRadioButton("TT"); // NOI18N
-    JRadioButton scaleHOn3 = new JRadioButton("HOn3"); // NOI18N
-    JRadioButton scaleOO = new JRadioButton("OO"); // NOI18N
-    JRadioButton scaleHO = new JRadioButton("HO"); // NOI18N
-    JRadioButton scaleSn3 = new JRadioButton("Sn3"); // NOI18N
-    JRadioButton scaleS = new JRadioButton("S"); // NOI18N
-    JRadioButton scaleOn3 = new JRadioButton("On3"); // NOI18N
-    JRadioButton scaleO = new JRadioButton("O"); // NOI18N
-    JRadioButton scaleG = new JRadioButton("G"); // NOI18N
+    private JRadioButton scaleZ = new JRadioButton("Z"); // NOI18N
+    private JRadioButton scaleN = new JRadioButton("N"); // NOI18N
+    private JRadioButton scaleTT = new JRadioButton("TT"); // NOI18N
+    private JRadioButton scaleHOn3 = new JRadioButton("HOn3"); // NOI18N
+    private JRadioButton scaleOO = new JRadioButton("OO"); // NOI18N
+    private JRadioButton scaleHO = new JRadioButton("HO"); // NOI18N
+    private JRadioButton scaleSn3 = new JRadioButton("Sn3"); // NOI18N
+    private JRadioButton scaleS = new JRadioButton("S"); // NOI18N
+    private JRadioButton scaleOn3 = new JRadioButton("On3"); // NOI18N
+    private JRadioButton scaleO = new JRadioButton("O"); // NOI18N
+    private JRadioButton scaleG = new JRadioButton("G"); // NOI18N
 
-    JRadioButton typeDesc = new JRadioButton(Bundle.getMessage("Descriptive"));
-    JRadioButton typeAAR = new JRadioButton(Bundle.getMessage("AAR"));
+    private JRadioButton typeDesc = new JRadioButton(Bundle.getMessage("Descriptive"));
+    private JRadioButton typeAAR = new JRadioButton(Bundle.getMessage("AAR"));
 
-    JRadioButton feetUnit = new JRadioButton(Bundle.getMessage("Feet"));
-    JRadioButton meterUnit = new JRadioButton(Bundle.getMessage("Meter"));
+    private JRadioButton feetUnit = new JRadioButton(Bundle.getMessage("Feet"));
+    private JRadioButton meterUnit = new JRadioButton(Bundle.getMessage("Meter"));
 
     // check boxes
-    JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
-    JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
-    JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getMessage("MainMenu"));
-    JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getMessage("CloseOnSave"));
-    JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getMessage("AutoSave"));
-    JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getMessage("AutoBackup"));
-    JCheckBox iconCheckBox = new JCheckBox(Bundle.getMessage("trainIcon"));
-    JCheckBox appendCheckBox = new JCheckBox(Bundle.getMessage("trainIconAppend"));
-    // JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
+    private JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
+    private JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
+    private JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getMessage("MainMenu"));
+    private JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getMessage("CloseOnSave"));
+    private JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getMessage("AutoSave"));
+    private JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getMessage("AutoBackup"));
+    private JCheckBox iconCheckBox = new JCheckBox(Bundle.getMessage("trainIcon"));
+    private JCheckBox appendCheckBox = new JCheckBox(Bundle.getMessage("trainIconAppend"));
+    // private JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
 
     // text field
     // JTextField ownerTextField = new JTextField(10);
@@ -97,15 +97,15 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     JTextField yearTextField = new JTextField(4);
 
     // combo boxes
-    JComboBox<String> northComboBox = new JComboBox<>();
-    JComboBox<String> southComboBox = new JComboBox<>();
-    JComboBox<String> eastComboBox = new JComboBox<>();
-    JComboBox<String> westComboBox = new JComboBox<>();
-    JComboBox<String> localComboBox = new JComboBox<>();
-    JComboBox<String> terminateComboBox = new JComboBox<>();
+    private JComboBox<String> northComboBox = new JComboBox<>();
+    private JComboBox<String> southComboBox = new JComboBox<>();
+    private JComboBox<String> eastComboBox = new JComboBox<>();
+    private JComboBox<String> westComboBox = new JComboBox<>();
+    private JComboBox<String> localComboBox = new JComboBox<>();
+    private JComboBox<String> terminateComboBox = new JComboBox<>();
 
     // text area
-    JTextArea commentTextArea = new JTextArea(2, 80);
+    private JTextArea commentTextArea = new JTextArea(2, 80);
 
     public OperationsSetupPanel() {
         super();
@@ -314,16 +314,22 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         pIconColors.setLayout(new GridBagLayout());
         pIconColors.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutIconColors")));
 
+        textIconNorth.setLabelFor(northComboBox);
         addItem(pIconColors, textIconNorth, 0, 4);
         addItemLeft(pIconColors, northComboBox, 1, 4);
+        textIconSouth.setLabelFor(southComboBox);
         addItem(pIconColors, textIconSouth, 0, 5);
         addItemLeft(pIconColors, southComboBox, 1, 5);
+        textIconEast.setLabelFor(eastComboBox);
         addItem(pIconColors, textIconEast, 0, 8);
         addItemLeft(pIconColors, eastComboBox, 1, 8);
+        textIconWest.setLabelFor(westComboBox);
         addItem(pIconColors, textIconWest, 0, 9);
         addItemLeft(pIconColors, westComboBox, 1, 9);
+        textIconLocal.setLabelFor(localComboBox);
         addItem(pIconColors, textIconLocal, 0, 10);
         addItemLeft(pIconColors, localComboBox, 1, 10);
+        textIconTerminate.setLabelFor(terminateComboBox);
         addItem(pIconColors, textIconTerminate, 0, 11);
         addItemLeft(pIconColors, terminateComboBox, 1, 11);
 
@@ -405,7 +411,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of OperationsSetupFrame")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of OperationsSetupFrame")
     private void save() {
         // check input fields
         int maxTrainLength;

@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.event.ActionListener;
@@ -31,8 +31,6 @@ abstract public class VSDSound {
     public final static String BufUserNamePrefix = "IVSDB_";
 
     public final static float default_gain = 0.8f;
-
-    protected String vsd_file_base = "resource:resources/sounds/vsd/";
 
     javax.swing.Timer t;
 

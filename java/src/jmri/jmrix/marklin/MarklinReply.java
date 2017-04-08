@@ -1,4 +1,3 @@
-// MarklinReply.java
 package jmri.jmrix.marklin;
 
 
@@ -36,15 +35,18 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
     }
 
     //Maximum size of a reply packet is 13 bytes.
+    @Override
     public int maxSize() {
         return 13;
     }
 
     // no need to do anything
+    @Override
     protected int skipPrefix(int index) {
         return index;
     }
 
+    @Override
     public int value() {
         if (isBinary()) {
             return getElement(0);
@@ -62,6 +64,7 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
     int endAtElement = -1;
 
     //An event message is Unsolicited
+    @Override
     public boolean isUnsolicited() {
         return !isResponse();
     }
@@ -133,4 +136,4 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
 }
 
 
-/* @(#)MarklinReply.java */
+

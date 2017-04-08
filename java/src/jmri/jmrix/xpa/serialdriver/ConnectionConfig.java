@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.xpa.serialdriver;
 
 /**
@@ -6,31 +5,34 @@ package jmri.jmrix.xpa.serialdriver;
  * XPA+Modem SerialDriverAdapter object.
  *
  * @author Paul Bender Copyright (C) 2004
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection with an existing adapter.
+     *
+     * @param p the serial port adapter
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Create a connection configuration with no preexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
+    @Override
     public String name() {
         return "XPA-MODEM";
     }
 
+    @Override
     protected void setInstance() {
-        if(adapter == null) {
-           adapter = new SerialDriverAdapter();
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
         }
     }
 }

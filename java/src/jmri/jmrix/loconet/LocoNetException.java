@@ -1,4 +1,3 @@
-// LocoNetException.java
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
@@ -6,20 +5,12 @@ import jmri.JmriException;
 /**
  * LocoNet-specific exception
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class LocoNetException extends JmriException {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7412254026659440390L;
 
     public LocoNetException(String m) {
         super(m);
     }
 
 }
-
-
-/* @(#)LocoNetException.java */

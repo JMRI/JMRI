@@ -15,7 +15,7 @@ package jmri.jmrit.beantable.oblock;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
@@ -190,14 +190,14 @@ public class SignalTableModel extends AbstractTableModel {
             if (pToBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pFromBlk);
-                    /*    			} else if (!fromBlock.equals(pFromBlk)) {
+                    /*       } else if (!fromBlock.equals(pFromBlk)) {
                      msg = Bundle.getMessage("PortalBlockConflict", portal.getName(), 
                      fromBlock.getDisplayName());    */
                 }
             } else if (pFromBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pToBlk);
-                    /*    			} else if (!toBlock.equals(pToBlk)) {
+                    /*       } else if (!toBlock.equals(pToBlk)) {
                      msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
                      toBlock.getDisplayName()); */
                 }
@@ -297,10 +297,12 @@ public class SignalTableModel extends AbstractTableModel {
 
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
+    @Override
     public int getRowCount() {
         return _signalList.size() + 1;
     }
@@ -324,6 +326,7 @@ public class SignalTableModel extends AbstractTableModel {
         return "";
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         //if (log.isDebugEnabled()) log.debug("getValueAt rowIndex= "+rowIndex+" _lastIdx= "+_lastIdx);
         if (_signalList.size() == rowIndex) {
@@ -491,7 +494,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                 }
             }
-        } else {	// Editing existing signal configurations
+        } else { // Editing existing signal configurations
             SignalRow signalRow = _signalList.get(row);
             OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
             switch (col) {
@@ -499,7 +502,7 @@ public class SignalTableModel extends AbstractTableModel {
                     NamedBean signal = Portal.getSignal((String) value);
                     if (signal == null) {
                         msg = Bundle.getMessage("NoSuchSignal", (String) value);
-//                        signalRow.setSignal(null);                            		
+//                        signalRow.setSignal(null);                              
                         break;
                     }
                     Portal portal = signalRow.getPortal();

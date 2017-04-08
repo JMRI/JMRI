@@ -1,4 +1,3 @@
-// NcePanelInterface.java
 package jmri.jmrix.nce.swing;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -18,6 +17,8 @@ public interface NcePanelInterface {
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo system connection memo
+     * @throws Exception when invalid connection details found
      */
     public void initComponents(NceSystemConnectionMemo memo) throws Exception;
 

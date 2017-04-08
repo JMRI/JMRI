@@ -1,4 +1,3 @@
-// NodeConfigAction.java
 package jmri.jmrix.acela.nodeconfig;
 
 import java.awt.event.ActionEvent;
@@ -9,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a NodeConfigFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class NodeConfigAction extends AbstractAction {
 
@@ -24,6 +23,7 @@ public class NodeConfigAction extends AbstractAction {
         this("Configure Acela Nodes",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {
@@ -36,6 +36,3 @@ public class NodeConfigAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
-
-
-/* @(#)NodeConfigAction.java */

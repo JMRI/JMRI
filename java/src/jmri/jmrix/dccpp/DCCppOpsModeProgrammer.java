@@ -50,6 +50,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     /**
      * Send an ops-mode write request to the DC++.
      */
+    @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
@@ -79,6 +80,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         progListener.programmingOpReply(value, jmri.ProgListener.OK);
     }
 
+    @Override
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         //DCCppMessage msg = DCCppMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         //tc.sendDCCppMessage(msg, this);
@@ -103,7 +105,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(DefaultProgrammerManager.OPSBYTEMODE);
-	ret.add(DefaultProgrammerManager.OPSBITMODE);
+ ret.add(DefaultProgrammerManager.OPSBITMODE);
         return ret;
     }
 
@@ -122,14 +124,15 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     // We have no way of determining if the required external 
     // hardware is present, so we return true for all command 
     // stations on which the Operations Mode Programmer is enabled.
+    @Override
     synchronized public void message(DCCppReply l) {
-	progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);	    
+ progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);     
         if (progState == DCCppProgrammer.NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
             return;
         } else if (progState == DCCppProgrammer.REQUESTSENT) {
-	    
+     
             if (l.isProgramReply()) {
                 // Before we set the programmer state to not programming, 
                 // delay for a short time to give the decoder a chance to 
@@ -143,35 +146,41 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                 stopTimer();
                 progListener.programmingOpReply(value, jmri.ProgListener.OK);
             } else {
-		// This is a message we can (and/or should) ignore.
-		return;
+  // This is a message we can (and/or should) ignore.
+  return;
             }
         }
     }
 
+    @Override
     public boolean getLongAddress() {
         return true;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public synchronized void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     synchronized protected void timeout() {
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();

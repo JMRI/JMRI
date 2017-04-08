@@ -24,16 +24,18 @@ import javax.annotation.Nonnull;
 public interface RailComManager extends IdTagManager {
 
     /**
-     * 
-     * @throws IllegalArgumentException if requested object doesn't already exist and 
-     *                                  the manager cannot create it due to
-     *                                  e.g. an illegal name or name that can't
-     *                                  be parsed.
+     *
+     * @throws IllegalArgumentException if requested object does not already
+     *                                  exist and the manager cannot create it
+     *                                  due to an illegal name or name that can
+     *                                  not be parsed.
      */
     @Override
-    public @Nonnull RailCom provideIdTag(@Nonnull String name) throws IllegalArgumentException;
+    @Nonnull
+    public RailCom provideIdTag(@Nonnull String name) throws IllegalArgumentException;
 
     @Override
-    public @CheckForNull RailCom getIdTag(@Nonnull String name);
+    @CheckForNull
+    public RailCom getIdTag(@Nonnull String name);
 
 }

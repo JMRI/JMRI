@@ -80,6 +80,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
        setSensorManager(new RaspberryPiSensorManager(getSystemPrefix()));
     }
     
+   @Override
     public boolean provides(Class<?> type) {
         if (getDisabled())
             return false;
@@ -93,6 +94,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
     }
 
      @SuppressWarnings("unchecked")
+   @Override
      public <T> T get(Class<?> T) {
          if (getDisabled())
              return null;
@@ -105,10 +107,12 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
          return null; // nothing, by default
      }
 
+   @Override
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.pi.RaspberryPiActionListBundle");
     }
 
+   @Override
     public void dispose() {
         InstanceManager.deregister(this, RaspberryPiSystemConnectionMemo.class);
         super.dispose();
@@ -118,4 +122,4 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
 
 
 }
-/* @(#)XNetSystemConnectionMemo.java */
+

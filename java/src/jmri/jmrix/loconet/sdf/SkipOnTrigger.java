@@ -1,11 +1,10 @@
-// SkipOnTrigger.java
 package jmri.jmrix.loconet.sdf;
 
 /**
  * Implement the SKIP_ON_TRIGGER macro from the Digitrax sound definition
  * language
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 public class SkipOnTrigger extends SdfMacro {
 
@@ -16,8 +15,9 @@ public class SkipOnTrigger extends SdfMacro {
         this.trigger = byte2;
     }
 
+    @Override
     public String name() {
-        return "SKIP_ON_TRIGGER";
+        return "SKIP_ON_TRIGGER"; // NOI18N
     }
 
     int byte1, byte2;
@@ -25,6 +25,7 @@ public class SkipOnTrigger extends SdfMacro {
     int logic;
     int trigger;
 
+    @Override
     public int length() {
         return 2;
     }
@@ -38,7 +39,7 @@ public class SkipOnTrigger extends SdfMacro {
         if (trigName != null) {
             return trigName;
         }
-        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")";
+        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")"; // NOI18N
     }
 
     static public SdfMacro match(SdfBuffer buff) {
@@ -53,6 +54,7 @@ public class SkipOnTrigger extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte1);
@@ -62,17 +64,18 @@ public class SkipOnTrigger extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
-        return "Skip on Trigger\n";
+        return "Skip on Trigger\n"; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
-        return name() + ' ' + logicVal() + ", " + triggerVal() + '\n';
+        return name() + ' ' + logicVal() + ", " + triggerVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)SkipOnTrigger.java */

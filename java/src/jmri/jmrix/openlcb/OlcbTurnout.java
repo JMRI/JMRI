@@ -1,26 +1,37 @@
 package jmri.jmrix.openlcb;
 
-import org.openlcb.EventID;
+import jmri.Turnout;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.Turnout;
-import jmri.jmrix.can.CanMessage;
-
 /**
  * Turnout for OpenLCB connections.
+ * <p>
+ * State Diagram for read and write operations  (click to magnify):
+ * <a href="doc-files/OlcbTurnout-State-Diagram.png"><img src="doc-files/OlcbTurnout-State-Diagram.png" alt="UML State diagram" height="50%" width="50%"></a>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010, 2011
  */
+ 
+ /*
+ * @startuml jmri/jmrix/openlcb/doc-files/OlcbTurnout-State-Diagram.png
+ * CLOSED --> CLOSED: Event 1
+ * THROWN --> CLOSED: Event 1
+ * THROWN --> THROWN: Event 0
+ * CLOSED --> THROWN: Event 0
+ * [*] --> UNKNOWN 
+ * UNKNOWN --> CLOSED: Event 1\nEvent 1 Produced msg with valid set\nEvent 1 Consumed msg with valid set
+ * UNKNOWN --> THROWN: Event 0\nEvent 1 Produced msg with valid set\nEvent 0 Consumed msg with valid set
+ * state INCONSISTENT
+ * @enduml
+*/
+
+
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2709042631708878196L;
     OlcbAddress addrThrown;   // go to thrown state
     OlcbAddress addrClosed;   // go to closed state
     final OlcbInterface iface;
@@ -121,26 +132,38 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      *
      * @param s new state value
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
-        CanMessage m;
+        System.out.println("forward to layout "+s);
         if (s == Turnout.THROWN) {
-            turnoutListener.setFromOwner(true);
+            turnoutListener.setFromOwnerWithForceNotify(true);
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(THROWN);
             }
         } else if (s == Turnout.CLOSED) {
-            turnoutListener.setFromOwner(false);
+            turnoutListener.setFromOwnerWithForceNotify(false);
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(CLOSED);
             }
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
         // TODO: maybe we could get another pair of events in the address and use that event pair
         // to perform a lockout change on the turnout decoder itself.
     }
 
+    /*
+     * since the events that drive a turnout can be whichever state a user
+     * wants, the order of the event pair determines what is the 'closed' state
+     */
+    @Override
+    public boolean canInvert() {
+        return false;
+    }
+
+    @Override
     public void dispose() {
         if (turnoutListener != null) turnoutListener.release();
         if (pc != null) pc.release();

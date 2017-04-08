@@ -21,21 +21,22 @@ public class LocationManagerXml extends OperationsXml {
     }
 
     /**
-     * record the single instance *
+     * record the single instance 
+     * @return instance
      */
-    private static LocationManagerXml _instance = null;
-
     public static synchronized LocationManagerXml instance() {
-        if (_instance == null) {
+        LocationManagerXml instance = jmri.InstanceManager.getNullableDefault(LocationManagerXml.class);
+        if (instance == null) {
             log.debug("LocationManagerXml creating instance");
             // create and load
-            _instance = new LocationManagerXml();
-            _instance.load();
+            instance = new LocationManagerXml();
+            jmri.InstanceManager.setDefault(LocationManagerXml.class,instance);
+            instance.load();
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("LocationManagerXml returns instance {}", _instance);
+            log.debug("LocationManagerXml returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     @Override
@@ -103,10 +104,7 @@ public class LocationManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "For testing")
     public void dispose() {
-        _instance = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());

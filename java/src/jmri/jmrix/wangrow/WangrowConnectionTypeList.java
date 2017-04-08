@@ -1,4 +1,3 @@
-// WangrowConnectionTypeList.java
 package jmri.jmrix.wangrow;
 
 /**

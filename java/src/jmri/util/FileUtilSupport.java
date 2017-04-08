@@ -1,11 +1,9 @@
 package jmri.util;
 
-import static jmri.util.FileUtil.FILE;
 import static jmri.util.FileUtil.HOME;
 import static jmri.util.FileUtil.PREFERENCES;
 import static jmri.util.FileUtil.PROFILE;
 import static jmri.util.FileUtil.PROGRAM;
-import static jmri.util.FileUtil.RESOURCE;
 import static jmri.util.FileUtil.SCRIPTS;
 import static jmri.util.FileUtil.SEPARATOR;
 import static jmri.util.FileUtil.SETTINGS;
@@ -354,9 +352,7 @@ public class FileUtilSupport extends Bean {
                 || filename.startsWith(PREFERENCES)
                 || filename.startsWith(SCRIPTS)
                 || filename.startsWith(PROFILE)
-                || filename.startsWith(SETTINGS)
-                || filename.startsWith(FILE)
-                || filename.startsWith(RESOURCE));
+                || filename.startsWith(SETTINGS));
     }
 
     /**
@@ -496,8 +492,8 @@ public class FileUtilSupport extends Bean {
     /**
      * Set the JMRI program directory.
      *
-     * Convenience method that calls
-     * {@link #setProgramPath(java.io.File)} with the passed in path.
+     * Convenience method that calls {@link #setProgramPath(java.io.File)} with
+     * the passed in path.
      *
      * @param path the path to the JMRI installation
      */
@@ -600,10 +596,8 @@ public class FileUtilSupport extends Bean {
             log.debug("Finding {} and {}", location, path);
             switch (location) {
                 case FileUtil.PROGRAM:
-                case FileUtil.RESOURCE:
                     return this.findURI(path, FileUtil.Location.INSTALLED);
                 case FileUtil.PREFERENCES:
-                case FileUtil.FILE:
                     return this.findURI(path, FileUtil.Location.USER);
                 case FileUtil.PROFILE:
                 case FileUtil.SETTINGS:
@@ -756,15 +750,20 @@ public class FileUtilSupport extends Bean {
      * {@link java.net.URI} for that file.
      * <p>
      * Search order is:
-     * <ol><li>For any provided searchPaths, iterate over the searchPaths by
+     * <ol>
+     * <li>For any provided searchPaths, iterate over the searchPaths by
      * prepending each searchPath to the path and following the following search
-     * order:
-     * <ol><li>As a {@link java.io.File} in the user preferences directory</li>
+     * order:<ol>
+     * <li>As a {@link java.io.File} in the user preferences directory</li>
      * <li>As a File in the current working directory (usually, but not always
-     * the JMRI distribution directory)</li> <li>As a File in the JMRI
-     * distribution directory</li> <li>As a resource in jmri.jar</li></ol></li>
+     * the JMRI distribution directory)</li>
+     * <li>As a File in the JMRI distribution directory</li>
+     * <li>As a resource in jmri.jar</li>
+     * </ol></li>
      * <li>If the file or resource has not been found in the searchPaths, search
-     * in the four locations listed without prepending any path</li></ol>
+     * in the four locations listed without prepending any path</li>
+     * <li>As a File with an absolute path</li>
+     * </ol>
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
@@ -837,7 +836,14 @@ public class FileUtilSupport extends Bean {
                 resource = (url != null) ? url.toURI() : null;
             } catch (URISyntaxException ex) {
                 log.warn("Unable to get URI for {}", path, ex);
-                return null;
+            }
+        }
+        // if a resource has not been found and path is absolute and exists
+        // return it
+        if (resource == null) {
+            file = new File(path);
+            if (file.isAbsolute() && file.exists()) {
+                return file.toURI();
             }
         }
         return resource;
@@ -979,28 +985,39 @@ public class FileUtilSupport extends Bean {
     /**
      * Get the JMRI distribution jar file.
      *
-     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     * @return the JAR file containing the JMRI library or null if not running
+     *         from a JAR file
      */
     public JarFile getJmriJarFile() {
         if (jarPath == null) {
             CodeSource sc = FileUtilSupport.class.getProtectionDomain().getCodeSource();
             if (sc != null) {
                 jarPath = sc.getLocation().toString();
-                // 9 = length of jar:file:
-                jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                if (jarPath.startsWith("jar:file:")) {
+                    // 9 = length of jar:file:
+                    jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                } else {
+                    log.info("Running from classes not in jar file.");
+                    jarPath = ""; // set to empty String to bypass search
+                    return null;
+                }
                 log.debug("jmri.jar path is {}", jarPath);
             }
             if (jarPath == null) {
                 log.error("Unable to locate jmri.jar");
+                jarPath = ""; // set to empty String to bypass search
                 return null;
             }
         }
-        try {
-            return new JarFile(jarPath);
-        } catch (IOException ex) {
-            log.error("Unable to open jmri.jar", ex);
-            return null;
+        if (!jarPath.isEmpty()) {
+            try {
+                return new JarFile(jarPath);
+            } catch (IOException ex) {
+                log.error("Unable to open jmri.jar", ex);
+                return null;
+            }
         }
+        return null;
     }
 
     /**
@@ -1214,6 +1231,16 @@ public class FileUtilSupport extends Bean {
         this.copy(file, new File(dir, name + "." + i + extension));
     }
 
+    /**
+     * Get the default instance of a FileUtilSupport object.
+     *
+     * Unlike most implementations of getDefault(), this does not return an
+     * object held by {@link jmri.InstanceManager} due to the need for this
+     * default instance to be available prior to the creation of an
+     * InstanceManager.
+     *
+     * @return the default FileUtilSupport instance, creating it if necessary
+     */
     public static FileUtilSupport getDefault() {
         if (FileUtilSupport.defaultInstance == null) {
             FileUtilSupport.defaultInstance = new FileUtilSupport();
@@ -1290,18 +1317,6 @@ public class FileUtilSupport extends Bean {
                 path = path.substring(HOME.length());
             } else {
                 path = path.replaceFirst(HOME, Matcher.quoteReplacement(this.getHomePath()));
-            }
-        } else if (path.startsWith(RESOURCE)) {
-            if (new File(path.substring(RESOURCE.length())).isAbsolute()) {
-                path = path.substring(RESOURCE.length());
-            } else {
-                path = path.replaceFirst(RESOURCE, Matcher.quoteReplacement(this.getProgramPath()));
-            }
-        } else if (path.startsWith(FILE)) {
-            if (new File(path.substring(FILE.length())).isAbsolute()) {
-                path = path.substring(FILE.length());
-            } else {
-                path = path.replaceFirst(FILE, Matcher.quoteReplacement(this.getUserFilesPath() + "resources" + File.separator));
             }
         } else if (!new File(path).isAbsolute()) {
             return null;

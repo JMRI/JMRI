@@ -1,4 +1,3 @@
-// NcePowerManager.java
 package jmri.jmrix.nce;
 
 import jmri.JmriException;
@@ -7,7 +6,7 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class NcePowerManager implements PowerManager, NceListener {
 
@@ -25,6 +24,7 @@ public class NcePowerManager implements PowerManager, NceListener {
 
     String userName = "NCE";
 
+    @Override
     public String getUserName() {
         return userName;
     }
@@ -34,6 +34,7 @@ public class NcePowerManager implements PowerManager, NceListener {
     boolean waiting = false;
     int onReply = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -56,11 +57,13 @@ public class NcePowerManager implements PowerManager, NceListener {
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeNceListener(this);
         tc = null;
@@ -75,6 +78,7 @@ public class NcePowerManager implements PowerManager, NceListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -83,6 +87,7 @@ public class NcePowerManager implements PowerManager, NceListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -91,6 +96,7 @@ public class NcePowerManager implements PowerManager, NceListener {
     String prefix = "";
 
     // to listen for status changes from NCE system
+    @Override
     public void reply(NceReply m) {
         if (waiting) {
             power = onReply;
@@ -99,6 +105,7 @@ public class NcePowerManager implements PowerManager, NceListener {
         waiting = false;
     }
 
+    @Override
     public void message(NceMessage m) {
         if (m.isKillMain()) {
             // configure to wait for reply
@@ -114,4 +121,4 @@ public class NcePowerManager implements PowerManager, NceListener {
 }
 
 
-/* @(#)NcePowerManager.java */
+

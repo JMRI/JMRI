@@ -11,7 +11,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.TurnoutManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
@@ -33,15 +32,15 @@ import org.junit.Assert;
 public class NXFrameTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
-    PortalManager _portalMgr;
+//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-    TurnoutManager _turnoutMgr;
+//    TurnoutManager _turnoutMgr;
 
     public void testGetDefault() {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = NXFrame.getInstance();
         Assert.assertNotNull("NXFrame", nxFrame);
     }
 
@@ -65,7 +64,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = NXFrame.getDefault();
+        NXFrame nxFrame = NXFrame.getInstance();
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame.setThrottleIncrement(0.075f);
@@ -79,7 +78,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // after cancel, try again
-        nxFrame = NXFrame.getDefault();
+        nxFrame = NXFrame.getInstance();
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame._maxSpeedBox.setText("0.30");
@@ -108,7 +107,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, list.get(1)));
         pressButton(pickDia, Bundle.getMessage("ButtonReview"));
 
-        nxFrame.setRampIncrement(0.05f);
+        nxFrame.setThrottleIncrement(0.05f);
         pressButton(pickDia, Bundle.getMessage("ButtonSelect"));
         flushAWT();     //pause for NXFrame to make commands
         
@@ -236,14 +235,14 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             JUnitUtil.waitFor(() -> {
                 int state = blk.getState();
                 return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
-                        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.DARK);
+                        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" of "+route.length);
             flushAWT();
             jmri.util.JUnitUtil.releaseThread(this);
 
             block = _OBlockMgr.getOBlock(route[i]);
             Sensor nextSensor;
-            boolean dark = (block.getState() & OBlock.DARK) != 0;
+            boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
             if (!dark) {
                 nextSensor = block.getSensor();
                 jmri.util.ThreadingUtil.runOnLayout(() -> {

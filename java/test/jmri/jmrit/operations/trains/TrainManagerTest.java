@@ -34,6 +34,23 @@ public class TrainManagerTest extends OperationsTestCase {
 
     }
 
+    /**
+     * Make sure we can retrieve a train from the manager by name.
+     */
+    public void testGetTrainByName() {
+        TrainManager manager = TrainManager.instance();
+        Assert.assertNotNull("Retrieve Train",manager.getTrainByName("STF"));
+    }
+
+    /**
+     * Make sure we can retrieve a train from the manager by name.
+     */
+    public void testGetTrainById() {
+        TrainManager manager = TrainManager.instance();
+        Assert.assertNotNull("Retrieve Train",manager.getTrainById("1"));
+    }
+    
+
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
@@ -44,6 +61,7 @@ public class TrainManagerTest extends OperationsTestCase {
         Setup.setTrainIntoStagingCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        jmri.util.JUnitOperationsUtil.initOperationsData();
     }
 
     public TrainManagerTest(String s) {

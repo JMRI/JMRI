@@ -1,4 +1,3 @@
-// SerialLightManager.java
 package jmri.jmrix.maple;
 
 import jmri.Light;
@@ -14,14 +13,9 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnoutManager.java
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @author	Dave Duchamp Copyright (C) 2004, 2010
+ * @author Dave Duchamp Copyright (C) 2004, 2010
   */
 public class SerialLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5795326330803482284L;
 
     public SerialLightManager() {
 
@@ -30,6 +24,7 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      * Returns the system letter
      */
+    @Override
     public String getSystemPrefix() {
         return "K";
     }
@@ -40,6 +35,7 @@ public class SerialLightManager extends AbstractLightManager {
      * correspond to a configured digital output bit Assumes calling method has
      * checked that a Light with this system name does not already exist
      */
+    @Override
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
@@ -88,6 +84,7 @@ public class SerialLightManager extends AbstractLightManager {
      * Public method to validate system name format returns 'true' if system
      * name has a valid format, else returns 'false'
      */
+    @Override
     public boolean validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'L'));
     }
@@ -97,6 +94,7 @@ public class SerialLightManager extends AbstractLightManager {
      * system name has a valid meaning in current configuration, else returns
      * 'false'
      */
+    @Override
     public boolean validSystemNameConfig(String systemName) {
         return (SerialAddress.validSystemNameConfig(systemName, 'L'));
     }
@@ -107,6 +105,7 @@ public class SerialLightManager extends AbstractLightManager {
      * Returns a normalized system name if system name has a valid format, else
      * returns "".
      */
+    @Override
     public String normalizeSystemName(String systemName) {
         return (SerialAddress.normalizeSystemName(systemName));
     }
@@ -125,5 +124,3 @@ public class SerialLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
-
-/* @(#)SerialLighttManager.java */

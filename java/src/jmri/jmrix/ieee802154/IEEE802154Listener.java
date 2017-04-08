@@ -1,10 +1,9 @@
-// IEEE802154Listener.java
 package jmri.jmrix.ieee802154;
 
 /**
  * Listener interface to be notified about serial traffic
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
   */
 abstract public interface IEEE802154Listener extends jmri.jmrix.AbstractMRListener {
 
@@ -13,4 +12,4 @@ abstract public interface IEEE802154Listener extends jmri.jmrix.AbstractMRListen
     public void reply(IEEE802154Reply m);
 }
 
-/* @(#)IEEE802154Listener.java */
+

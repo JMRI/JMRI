@@ -21,11 +21,6 @@ import jmri.util.JmriJFrame;
 public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -305516951581213990L;
-
-    /**
      * Constructor types with multiple families and multiple icon families
      */
     public PortalItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
@@ -38,6 +33,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
      * because they are referenced in initIconFamiliesPanel(). Subclasses will
      * insert other panels
      */
+    @Override
     public void init() {
         if (!_initialized) {
             super.init();
@@ -51,6 +47,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
         panel.setLayout(new FlowLayout());
         JButton setDefaultsButton = new JButton(Bundle.getMessage("setDefaultIcons"));
         setDefaultsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setDefaults();
             }
@@ -65,6 +62,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
         ((ControlPanelEditor) _editor).setDefaultPortalIcons(jmri.jmrit.display.PositionableIcon.cloneMap(map, null));
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
     }
 }

@@ -21,7 +21,7 @@ package jmri.jmrit.vsdecoder.swing;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.Dimension;
@@ -114,6 +114,7 @@ public class VSDManagerFrame extends JmriJFrame {
         initGUI();
     }
 
+    @Override
     public void initComponents() {
         //this.initGUI();
     }
@@ -144,6 +145,7 @@ public class VSDManagerFrame extends JmriJFrame {
         volume.setPreferredSize(new Dimension(200, 20));
         volume.setToolTipText(Bundle.getMessage("MgrVolumeToolTip"));
         volume.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 volumeChange(e);
             }
@@ -154,6 +156,7 @@ public class VSDManagerFrame extends JmriJFrame {
         muteButton.setToolTipText(Bundle.getMessage("MgrMuteToolTip"));
         muteButton.setMnemonic(Mnemonics.get("MuteButton"));
         muteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 muteButtonPressed(e);
             }
@@ -162,6 +165,7 @@ public class VSDManagerFrame extends JmriJFrame {
         addButton.setToolTipText(Bundle.getMessage("MgrAddButtonToolTip"));
         addButton.setMnemonic(Mnemonics.get("AddButton"));
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addButtonPressed(e);
             }
@@ -170,6 +174,7 @@ public class VSDManagerFrame extends JmriJFrame {
         closeButton.setToolTipText(Bundle.getMessage("MgrCloseButtonToolTip"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton"));
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 closeButtonPressed(e);
             }
@@ -211,6 +216,7 @@ public class VSDManagerFrame extends JmriJFrame {
         // Do something here.  Create a new VSDecoder and add it to the window.
         VSDConfigDialog d = new VSDConfigDialog(decoderPane, Bundle.getMessage("NewDecoderConfigPaneTitle"), config);
         d.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent event) {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 addButtonPropertyChange(event);
@@ -239,6 +245,7 @@ public class VSDManagerFrame extends JmriJFrame {
         this.addPropertyChangeListener(newDecoder);
         // Set US to listen to PropertyChanges from the control (mainly for DELETE)
         newControl.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent event) {
                 log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
                 vsdControlPropertyChange(event);
@@ -339,6 +346,7 @@ public class VSDManagerFrame extends JmriJFrame {
      *
      * WARNING: BORROWED FROM JmriJFrame.
      */
+    @Override
     public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
         JMenuBar bar = getJMenuBar();
@@ -355,6 +363,7 @@ public class VSDManagerFrame extends JmriJFrame {
     /**
      * Handle window close event
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         // Call the superclass function
         //super.windowClosing(e);
@@ -369,6 +378,7 @@ public class VSDManagerFrame extends JmriJFrame {
     /**
      * Add a listener for this Pane's property change events
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
         if (!l.contains(listener)) {
@@ -379,6 +389,7 @@ public class VSDManagerFrame extends JmriJFrame {
     /**
      * Remove a listener
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         if (listener == null) {
             log.warn("No listener!");

@@ -1,6 +1,6 @@
-// NceMacrobackup.java
 package jmri.jmrix.nce.macro;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
  *
  * Macro data byte:
  *
- * bit	15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 _ _ _ _ 1 0 A A A A A A 1 A A A C D
- * D D addr bit 7 6 5 4 3 2 10 9 8 1 0 turnout	T
+ * bit 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 _ _ _ _ 1 0 A A A A A A 1 A A A C D
+ * D D addr bit 7 6 5 4 3 2 10 9 8 1 0 turnout T
  *
  * By convention, MSB address bits 10 - 8 are one's complement. NCE macros
  * always set the C bit to 1. The LSB "D" (0) determines if the accessory is to
@@ -58,14 +58,14 @@ import org.slf4j.LoggerFactory;
  */
 public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_MACRO_MEM = 0xC800;	// start of NCE CS Macro memory
-    private static final int NUM_MACRO = 256;		// there are 256 possible macros
-    private static final int MACRO_LNTH = 20;		// 20 bytes per macro
-    private static final int REPLY_16 = 16;			// reply length of 16 byte expected
-    private static int replyLen = 0;				// expected byte length
-    private int waiting = 0;						// to catch responses not intended for this module
-    private boolean secondRead = false;				// when true, another 16 byte read expected
-    private boolean fileValid = false;				// used to flag backup status messages
+    private static final int CS_MACRO_MEM = 0xC800; // start of NCE CS Macro memory
+    private static final int NUM_MACRO = 256;  // there are 256 possible macros
+    private static final int MACRO_LNTH = 20;  // 20 bytes per macro
+    private static final int REPLY_16 = 16;   // reply length of 16 byte expected
+    private static int replyLen = 0;    // expected byte length
+    private int waiting = 0;      // to catch responses not intended for this module
+    private boolean secondRead = false;    // when true, another 16 byte read expected
+    private boolean fileValid = false;    // used to flag backup status messages
 
     private static byte[] nceMacroData = new byte[MACRO_LNTH];
 
@@ -79,6 +79,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
         this.tc = t;
     }
 
+    @Override
     public void run() {
 
         // get file to write to
@@ -143,8 +144,8 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
         macroNumber.setVisible(true);
 
         // now read NCE CS macro memory and write to file
-        waiting = 0;			// reset in case there was a previous error
-        fileValid = true;		// assume we're going to succeed
+        waiting = 0;   // reset in case there was a previous error
+        fileValid = true;  // assume we're going to succeed
 
         for (int macroNum = 0; macroNum < NUM_MACRO; macroNum++) {
 
@@ -232,23 +233,25 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 
     // Reads 16 bytes of NCE macro memory, and adjusts for second read 
     private NceMessage readMacroMemory(int macroNum, boolean second) {
-        secondRead = second; 		// set flag for receive
+        secondRead = second;   // set flag for receive
         int nceMacroAddr = (macroNum * MACRO_LNTH) + CS_MACRO_MEM;
         if (second) {
-            nceMacroAddr += REPLY_16; 	// adjust for second memory read
+            nceMacroAddr += REPLY_16;  // adjust for second memory read
         }
-        replyLen = REPLY_16; 			// Expect 16 byte response
+        replyLen = REPLY_16;    // Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceMacroAddr);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
         return m;
     }
 
+    @Override
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     // this reply always expects two consecutive reads
+    @Override
     public void reply(NceReply r) {
 
         if (waiting <= 0) {
@@ -281,6 +284,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 
     private static class textFilter extends javax.swing.filechooser.FileFilter {
 
+        @Override
         public boolean accept(File f) {
             if (f.isDirectory()) {
                 return true;
@@ -293,6 +297,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
             }
         }
 
+        @Override
         public String getDescription() {
             return "Text Documents (*.txt)";
         }

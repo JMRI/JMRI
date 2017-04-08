@@ -1,12 +1,8 @@
 package jmri.jmrix.easydcc;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the EasyDccPortController class
@@ -14,7 +10,7 @@ import org.junit.Test;
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTest {
+public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
     @Before

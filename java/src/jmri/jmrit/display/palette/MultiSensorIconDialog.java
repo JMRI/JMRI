@@ -1,4 +1,3 @@
-// MultiSensorIconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
@@ -19,11 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2010
  */
 public class MultiSensorIconDialog extends IconDialog {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3597269148845925544L;
 
     /**
      * Constructor for existing family to change icons, add/delete icons, or to
@@ -47,6 +41,7 @@ public class MultiSensorIconDialog extends IconDialog {
         panel2.setLayout(new FlowLayout());
         JButton addSensor = new JButton(Bundle.getMessage("addIcon"));
         addSensor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (addNewIcon(getIconName())) {
                     ImageIndexEditor.indexChanged(true);
@@ -63,6 +58,7 @@ public class MultiSensorIconDialog extends IconDialog {
 
         JButton deleteSensor = new JButton(Bundle.getMessage("deleteIcon"));
         deleteSensor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (deleteIcon()) {
                     ImageIndexEditor.indexChanged(true);

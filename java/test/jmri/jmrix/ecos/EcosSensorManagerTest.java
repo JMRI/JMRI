@@ -1,11 +1,7 @@
 package jmri.jmrix.ecos;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import jmri.Sensor;
 
 /**
  * EcosSensorManagerTest.java
@@ -14,7 +10,7 @@ import jmri.Sensor;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     @Override
     public String getSystemName(int i) {

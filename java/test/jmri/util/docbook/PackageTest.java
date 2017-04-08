@@ -32,14 +32,17 @@ public class PackageTest extends TestCase {
 
         suite.addTest(RevHistoryTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.docbook.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RevisionTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

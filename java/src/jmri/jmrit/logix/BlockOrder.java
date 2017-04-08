@@ -9,7 +9,7 @@ package jmri.jmrit.logix;
  * <P>
  *
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class BlockOrder {
 
@@ -175,6 +175,7 @@ public class BlockOrder {
         return _block.getDisplayName() + _pathName + _entryName + _exitName;
     }
 
+    @Override
     public String toString() {
         return ("BlockOrder: Block \"" + _block.getDisplayName() + "\" has Path \"" + _pathName
                 + "\" with Portals \"" + _entryName + "\" and \"" + _exitName + "\"");

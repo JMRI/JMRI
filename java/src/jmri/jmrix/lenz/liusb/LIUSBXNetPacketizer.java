@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * In particular, LIUSBXNetPacketizer adds functions to add and remove the 0xFF
  * 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
  *
  */
 public class LIUSBXNetPacketizer extends XNetPacketizer {
@@ -30,6 +30,7 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    @Override
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("Appending 0xFF 0xFE to start of outgoing message");
@@ -46,6 +47,7 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
      * @param m The message to be sent
      * @return Number of bytes
      */
+    @Override
     protected int lengthOfByteStream(jmri.jmrix.AbstractMRMessage m) {
         int len = m.getNumDataElements() + 2;
         int cr = 0;
@@ -102,4 +104,4 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
     private final static Logger log = LoggerFactory.getLogger(LIUSBXNetPacketizer.class.getName());
 }
 
-/* @(#)LIUSBXNetPacketizer.java */
+

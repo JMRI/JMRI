@@ -1,10 +1,10 @@
 /**
  * PacketGenAction.java
  *
- * Description:	Swing action to create and register a XpressNet PacketGenFrame
+ * Description: Swing action to create and register a XpressNet PacketGenFrame
  * object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author      Mark Underwood Copyright (C) 2015
   */
 package jmri.jmrix.dccpp.swing.packetgen;
@@ -27,6 +27,7 @@ public class PacketGenAction extends AbstractAction {
         this("Generate DCC++ message", memo);
     }
 
+       @Override
     public void actionPerformed(ActionEvent e) {
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame();
@@ -44,4 +45,4 @@ public class PacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)LocoGenAction.java */
+

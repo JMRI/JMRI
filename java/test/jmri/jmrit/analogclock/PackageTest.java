@@ -27,15 +27,19 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.analogclock.PackageTest");   // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AnalogClockActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AnalogClockFrameTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

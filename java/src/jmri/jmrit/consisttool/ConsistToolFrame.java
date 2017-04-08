@@ -3,6 +3,8 @@ package jmri.jmrit.consisttool;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -181,6 +183,22 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         locoSelector.setToolTipText(Bundle.getMessage("LocoSelectorToolTip"));
         locoSelector.setVisible(true);
+
+        locoSelector.addKeyListener(new KeyListener(){
+            @Override
+            public void keyPressed(KeyEvent e){
+               // if we start typing, set the selected index of the locoRosterbox to nothing.
+               locoRosterBox.setSelectedIndex(0);
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
         locoRosterBox = new GlobalRosterEntryComboBox();
         locoRosterBox.setNonSelectedItem("");
@@ -542,7 +560,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     }
 
     // Check to see if a consist address is selected, and if it
-    //	is, dissable the "add button" if the maximum consist size is reached
+    // is, dissable the "add button" if the maximum consist size is reached
     public void canAdd() {
         // If a consist address is selected, dissable the "add button"
         // if the maximum size is reached
@@ -637,8 +655,12 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("AddressAlreadyInConsistError"));
             } else {
-                ConsistMan.getConsist(address).add(locoaddress,
-                        locoDirectionNormal.isSelected());
+                Consist tempConsist = ConsistMan.getConsist(address);
+                tempConsist.add(locoaddress,locoDirectionNormal.isSelected());
+                if(locoRosterBox.getSelectedRosterEntries().length == 1) {
+                   tempConsist.setRosterId(locoaddress,locoRosterBox.getSelectedRosterEntries()[0].titleString());
+                }
+                
             }
             if (consistAdrBox.getSelectedItem() != adrSelector.getAddress()) {
                 initializeConsistBox();
@@ -666,7 +688,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         _status.setText(ConsistMan.decodeErrorCode(status));
         // For some status codes, we want to trigger specific actions
         //if((status & jmri.ConsistListener.CONSIST_FULL)!=0) {
-        //	canAdd();
+        // canAdd();
         //} else {
         canAdd();
         //}
@@ -678,6 +700,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
         // de-register to be notified if the consist list changes.
@@ -691,6 +714,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     private boolean _readConsistFile = true;
 
     // ConsistListListener interface
+    @Override
     public void notifyConsistListChanged() {
         if (_readConsistFile) {
             // read the consist file after the consist manager has

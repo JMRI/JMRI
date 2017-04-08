@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -244,7 +244,7 @@ public class VSDecoderManager implements PropertyChangeListener {
      return getVSDecoderByAddress(da);
      }
      return(null);
-	
+ 
      }
      */
     public void setDefaultVSDecoder(VSDecoder d) {
@@ -440,11 +440,11 @@ public class VSDecoderManager implements PropertyChangeListener {
     private void setupReporterManagerListener() {
         // Register ourselves as a listener for changes to the Reporter list.  For now, we won't do this. Just force a
         // save and reboot after reporters are added.  We'll fix this later.
-        //	jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(new PropertyChangeListener() {
-        //	public void propertyChange(PropertyChangeEvent event) {
-        //		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
-        //	    reporterManagerPropertyChange(event);
-        //	}
+        // jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(new PropertyChangeListener() {
+        // public void propertyChange(PropertyChangeEvent event) {
+        //      log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+        //     reporterManagerPropertyChange(event);
+        // }
         //   });
         jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(this);
 
@@ -486,6 +486,7 @@ public class VSDecoderManager implements PropertyChangeListener {
          */
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         log.debug("property change type " + evt.getSource().getClass().getName()
                 + " name " + evt.getPropertyName() + " old " + evt.getOldValue()
@@ -640,8 +641,8 @@ public class VSDecoderManager implements PropertyChangeListener {
             }
         }
 
-	// debug
-	/*
+ // debug
+ /*
          for (String s : new_entries) {
          log.debug("New entry: " + s);
          }

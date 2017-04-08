@@ -1,10 +1,10 @@
 /**
  * DCCppMessageException.java
  *
- * Description:		<describe the JmriException class here>
+ * Description:  <describe the JmriException class here>
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Mark Underwood Copyright (C) 2015
   */
 package jmri.jmrix.dccpp;
 
@@ -21,4 +21,4 @@ public class DCCppMessageException extends JmriException {
 }
 
 
-/* @(#)DCCppMessageException.java */
+

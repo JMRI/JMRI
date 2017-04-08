@@ -41,12 +41,12 @@ public class PositionableShape extends PositionableJComponent
     private int _degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
-    private int _saveLevel = 5;			// default level set in popup
+    private int _saveLevel = 5;   // default level set in popup
     private int _changeLevel = 5;
-    private boolean _doHide;		// whether sensor controls show/hide or change level
+    private boolean _doHide;  // whether sensor controls show/hide or change level
     // GUI resizing params
     private Rectangle[] _handles;
-    protected int _hitIndex = -1;	// dual use! also is index of polygon's vertices
+    protected int _hitIndex = -1; // dual use! also is index of polygon's vertices
     protected int _lastX;
     protected int _lastY;
     // params for shape's bounding box
@@ -205,7 +205,7 @@ public class PositionableShape extends PositionableJComponent
             r.width += _lineWidth;
             r.height += _lineWidth;
             g2d.draw(r);
-//       		g2d.fill(r);
+//         g2d.fill(r);
             for (int i = 0; i < _handles.length; i++) {
                 if (_handles[i] != null) {
                     g2d.setColor(Color.RED);
@@ -231,7 +231,7 @@ public class PositionableShape extends PositionableJComponent
         pos.setWidth(_width);
         pos.setHeight(_height);
         pos.makeShape();
-        pos.repaint();
+        pos.rotate(getDegrees());       // must be after makeShape due to updateSize call
         return super.finishClone(pos);
     }
     
@@ -290,6 +290,7 @@ public class PositionableShape extends PositionableJComponent
         return _degrees;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: \"{}\"= {} for {}", 
@@ -315,6 +316,11 @@ public class PositionableShape extends PositionableJComponent
                     super.setDisplayLevel(_saveLevel);
                     setVisible(true);
                 }
+                ((ControlPanelEditor)_editor).mouseMoved(new MouseEvent(this, 
+                        MouseEvent.MOUSE_MOVED, System.currentTimeMillis(), 
+                        0, getX(), getY(), 0, false));
+                repaint();
+                _editor.getTargetPanel().revalidate();
             }
         } else {
             super.setDisplayLevel(_saveLevel);
@@ -339,6 +345,7 @@ public class PositionableShape extends PositionableJComponent
      * @param pName Used as a system/user name to lookup the sensor object
      * @param hide true if sensor should be hidden
      * @param level level at which sensor is placed
+     * @return error message, if any
      */
     public String setControlSensor(String pName, boolean hide, int level) {
         String msg = null;
@@ -431,6 +438,7 @@ public class PositionableShape extends PositionableJComponent
 
     protected void setEditParams() {
         _editFrame.setDisplayParams(this);
+        _editFrame.makeCopy(this);
         drawHandles();
     }
 
@@ -468,6 +476,7 @@ public class PositionableShape extends PositionableJComponent
         return new Point(x, y);
     }
 
+    @Override
     public void doMousePressed(MouseEvent event) {
         _hitIndex = -1;
         if (!_editor.isEditable()) {

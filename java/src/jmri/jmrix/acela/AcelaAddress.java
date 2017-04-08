@@ -1,4 +1,3 @@
-// AcelaAddress.java
 package jmri.jmrix.acela;
 
 import org.slf4j.Logger;
@@ -12,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * input or output bit (0-1023) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
  * (bit134)
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2004 - 2006
+ * @author Dave Duchamp, Copyright (C) 2004 - 2006
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
+ * @author Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
  * example, modified to establish Acela support.
  */
 public class AcelaAddress {
@@ -348,5 +347,3 @@ public class AcelaAddress {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaAddress.class.getName());
 }
-
-/* @(#)AcelaAddress.java */

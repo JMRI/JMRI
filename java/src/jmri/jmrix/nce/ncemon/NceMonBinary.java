@@ -1,4 +1,3 @@
-// NceMonBinary.java
 package jmri.jmrix.nce.ncemon;
 
 import java.text.MessageFormat;
@@ -13,7 +12,7 @@ import jmri.util.StringUtil;
  * human-readable text. The text for the display comes from NCE's Bincmds.txt
  * published November 2007 and is used with NCE's permission.
  *
- * @author	Daniel Boudreau Copyright (C) 2012
+ * @author Daniel Boudreau Copyright (C) 2012
  * 
  */
 public class NceMonBinary {
@@ -35,7 +34,7 @@ public class NceMonBinary {
     private static final int REPLY_TWO = 2;
     private static final int REPLY_THREE = 3;
     private static final int REPLY_FOUR = 4;
-    private static final int REPLY_OK = 0x21;		// !
+    private static final int REPLY_OK = 0x21;  // !
 
     public String displayMessage(NceMessage m) {
         return parseMessage(m) + NEW_LINE;
@@ -81,7 +80,7 @@ public class NceMonBinary {
                 return rb.getString("ENABLE_MAIN_CMD");
             case (NceMessage.KILL_MAIN_CMD):
                 return rb.getString("KILL_MAIN_CMD");
-            case (NceBinaryCommand.WRITEn_CMD): {
+            case (NceBinaryCommand.WRITE_N_CMD): {
                 if (m.getNumDataElements() == 20) {
                     return MessageFormat.format(rb.getString("WRITEn_CMD"),
                             new Object[]{m.getElement(3), getAddress(m), getDataBytes(m, 4, 16)});

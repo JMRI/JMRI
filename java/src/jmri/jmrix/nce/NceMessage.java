@@ -1,7 +1,8 @@
-// NceMessage.java
 package jmri.jmrix.nce;
 
 import java.util.Arrays;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,41 +28,41 @@ import org.slf4j.LoggerFactory;
  * enter program mode has been generated, and presumably sent, when using the
  * later EPROMS.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
  * @author kcameron Copyright (C) 2014
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
-    public static final int NOP_CMD = 0x80;				//NCE NOP command
-    public static final int ENTER_PROG_CMD = 0x9E;		//NCE enter programming track mode command
-    public static final int EXIT_PROG_CMD = 0x9F;		//NCE exit programming track mode command
-    public static final int WRITE_PAGED_CV_CMD = 0xA0;	//NCE write CV paged command
-    public static final int READ_PAGED_CV_CMD = 0xA1;	//NCE read CV paged command
-    public static final int WRITE_REG_CMD = 0xA6;		//NCE write register command
-    public static final int READ_REG_CMD = 0xA7;		//NCE read register command
-    public static final int WRITE_DIR_CV_CMD = 0xA8;	//NCE write CV direct command
-    public static final int READ_DIR_CV_CMD = 0xA9;		//NCE read CV direct command
-    public static final int SEND_ACC_SIG_MACRO_CMD = 0xAD;	// NCE send NMRA aspect command
+    public static final int NOP_CMD = 0x80;    //NCE NOP command
+    public static final int ENTER_PROG_CMD = 0x9E;  //NCE enter programming track mode command
+    public static final int EXIT_PROG_CMD = 0x9F;  //NCE exit programming track mode command
+    public static final int WRITE_PAGED_CV_CMD = 0xA0; //NCE write CV paged command
+    public static final int READ_PAGED_CV_CMD = 0xA1; //NCE read CV paged command
+    public static final int WRITE_REG_CMD = 0xA6;  //NCE write register command
+    public static final int READ_REG_CMD = 0xA7;  //NCE read register command
+    public static final int WRITE_DIR_CV_CMD = 0xA8; //NCE write CV direct command
+    public static final int READ_DIR_CV_CMD = 0xA9;  //NCE read CV direct command
+    public static final int SEND_ACC_SIG_MACRO_CMD = 0xAD; // NCE send NMRA aspect command
 
     // The following commands are not supported by the NCE USB  
-    public static final int ENABLE_MAIN_CMD = 0x89;		//NCE enable main track, kill programming command
-    public static final int KILL_MAIN_CMD = 0x8B;		//NCE kill main track, enable programming command
-    public static final int SENDn_BYTES_CMD = 0x90;		//NCE send 3 to 6 bytes (0x9n, n = 3-6) command
-    public static final int QUEUEn_BYTES_CMD = 0xA0;	//NCE queue 3 to 6 bytes (0xAn, n = 3-6) command
+    public static final int ENABLE_MAIN_CMD = 0x89;  //NCE enable main track, kill programming command
+    public static final int KILL_MAIN_CMD = 0x8B;  //NCE kill main track, enable programming command
+    public static final int SENDn_BYTES_CMD = 0x90;  //NCE send 3 to 6 bytes (0x9n, n = 3-6) command
+    public static final int QUEUEn_BYTES_CMD = 0xA0; //NCE queue 3 to 6 bytes (0xAn, n = 3-6) command
 
     // The following command are only NCE USB commands
-    public static final int WRITE_ACC_SIG_OP_CV_CMD = 0xAF;	//NCE USB write accessory CV
+    public static final int WRITE_ACC_SIG_OP_CV_CMD = 0xAF; //NCE USB write accessory CV
 
     // some constants
     protected static final int NCE_PAGED_CV_TIMEOUT = 20000;
     protected static final int NCE_DIRECT_CV_TIMEOUT = 10000;
-    protected static final int SHORT_TIMEOUT = 10000;				// worst case is when loading the first panel
+    protected static final int SHORT_TIMEOUT = 10000;    // worst case is when loading the first panel
 
-    public static final int REPLY_1 = 1;			// reply length of 1 byte
-    public static final int REPLY_2 = 2;			// reply length of 2 byte
-    public static final int REPLY_4 = 4;			// reply length of 4 byte
-    public static final int REPLY_16 = 16;			// reply length of 16 bytes	
+    public static final int REPLY_1 = 1;   // reply length of 1 byte
+    public static final int REPLY_2 = 2;   // reply length of 2 byte
+    public static final int REPLY_4 = 4;   // reply length of 4 byte
+    public static final int REPLY_16 = 16;   // reply length of 16 bytes 
 
     public NceMessage() {
         super();
@@ -73,13 +74,13 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // copy one
-    public NceMessage(NceMessage m) {
+    public NceMessage(@Nonnull NceMessage m) {
         super(m);
         replyLen = m.replyLen;
     }
 
     // from String
-    public NceMessage(String m) {
+    public NceMessage(@Nonnull String m) {
         super(m);
     }
 
@@ -89,6 +90,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Set the number of characters expected back from the command station. Used
      * in binary mode, where there's no end-of-reply string to look for.
+     * @param len length of expected reply
      */
     public void setReplyLen(int len) {
         replyLen = len;
@@ -155,13 +157,16 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * enter programming track mode
      *
+     * @param tc controller for the associated connection
+     * @return a new message to enter programming track mode
      */
-    public static NceMessage getProgMode(NceTrafficController tc) {
+    @Nonnull
+    public static NceMessage getProgMode(@Nonnull NceTrafficController tc) {
         // test if supported on current connection
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
             log.error("attempt to send unsupported binary command ENTER_PROG_CMD to NCE USB");
-//			return null;
+//   return null;
         }
         NceMessage m = new NceMessage(1);
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
@@ -183,9 +188,13 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      * station if the EPROM was built before 2006. This method uses a state flag
      * ({@link NceTrafficController#getNceProgMode}) to detect whether a command
      * to enter program mode has been generated, and presumably sent, when using
-     * the later EPROMS. *
+     * the later EPROMS.
+     *
+     * @param tc controller for the associated connection
+     * @return a new message to exit programming track mode
      */
-    public static NceMessage getExitProgMode(NceTrafficController tc) {
+    @CheckForNull
+    public static NceMessage getExitProgMode(@Nonnull NceTrafficController tc) {
         NceMessage m = new NceMessage(1);
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             // Sending exit programming mode binary can crash pre 2006 EPROMs
@@ -200,7 +209,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
                     || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
                     || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
                 log.error("attempt to send unsupported binary command EXIT_PROG_CMD to NCE USB");
-//    			return null;
+//       return null;
             }
             tc.setNceProgMode(false);
             m.setBinary(true);
@@ -216,15 +225,19 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Read Paged mode CV on programming track
+     * Read Paged mode CV on programming track.
      *
+     * @param tc controller for the associated connection
+     * @param cv the CV to read
+     * @return a new message to read a CV
      */
-    public static NceMessage getReadPagedCV(NceTrafficController tc, int cv) {
+    @Nonnull
+    public static NceMessage getReadPagedCV(@Nonnull NceTrafficController tc, int cv) {
         // test if supported on current connection
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
             log.error("attempt to send unsupported binary command READ_PAGED_CV_CMD to NCE USB");
-//			return null;
+//   return null;
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(3);
@@ -248,15 +261,20 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * write paged mode CV to programming track
+     * Write paged mode CV to programming track.
      *
+     * @param tc  controller for the associated connection
+     * @param cv  CV to write
+     * @param val value to write to cv
+     * @return a new message to write a CV
      */
-    public static NceMessage getWritePagedCV(NceTrafficController tc, int cv, int val) {
+    @Nonnull
+    public static NceMessage getWritePagedCV(@Nonnull NceTrafficController tc, int cv, int val) {
         // test if supported on current connection
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
             log.error("attempt to send unsupported binary command WRITE_PAGED_CV_CMD to NCE USB");
-//			return null;
+//   return null;
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(4);
@@ -282,7 +300,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
-    public static NceMessage getReadRegister(NceTrafficController tc, int reg) {
+    @CheckForNull
+    public static NceMessage getReadRegister(@Nonnull NceTrafficController tc, int reg) {
         // not supported by USB connected to SB3 or PH
         if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
                 || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
@@ -537,7 +556,20 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    public static NceMessage createAccDecoderPktOpsMode(NceTrafficController tc, int accyAddr, int cvAddr, int cvData) {
+        NceMessage m = new NceMessage(6);
+        m.setBinary(true);
+        m.setReplyLen(1);
+        m.setTimeout(SHORT_TIMEOUT);
+        byte[] mess = NceBinaryCommand.usbOpsModeAccy(accyAddr, cvAddr, cvData);
+        m.setOpCode(mess[0]);
+        m.setElement(1, mess[1]);
+        m.setElement(2, mess[2]);
+        m.setElement(3, mess[3]);
+        m.setElement(4, mess[4]);
+        m.setElement(5, mess[5]);
+        return m;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NceMessage.class.getName());
 }
-
-/* @(#)NceMessage.java */

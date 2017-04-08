@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of Cbus events
  *
- * @author	Andrew Crosland (C) 2009
+ * @author Andrew Crosland (C) 2009
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
@@ -57,14 +57,17 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
      * Returns the number of rows to be displayed.
      */
+    @Override
     public int getRowCount() {
         return _rowCount;
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -103,6 +106,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case IDCOLUMN:
@@ -118,6 +122,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case NAMECOLUMN:
@@ -131,6 +136,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static final Boolean True = Boolean.valueOf("true");
     static final Boolean False = Boolean.valueOf("false");
 
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case IDCOLUMN:
@@ -176,6 +182,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     // Capture new comments or node names
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == NAMECOLUMN) {
             _name[row] = (String) value;
@@ -224,6 +231,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
      * *** Capture node and event and add to table
      */
+    @Override
     public void message(CanMessage m) {
         log.debug("Received new message event: " + m);
         _id[_rowCount] = CbusMessage.getId(m);
@@ -236,6 +244,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
      * *** Capture node and event and add to table
      */
+    @Override
     public void reply(CanReply m) {
         log.debug("Received new reply event: " + m);
         _id[_rowCount] = CbusMessage.getId(m);
@@ -267,6 +276,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             _model = model;
         }
 
+        @Override
         public void run() {
             // notify that row is added
             log.debug("Table added row: " + _row);

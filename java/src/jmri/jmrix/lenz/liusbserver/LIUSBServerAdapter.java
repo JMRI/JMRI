@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * of inactivity on the port. The LIUSB Server disconnects port 5550 if another
  * device puts the system into service mode.
  *
- * @author	Paul Bender (C) 2009-2010
+ * @author Paul Bender (C) 2009-2010
  */
 public class LIUSBServerAdapter extends XNetNetworkPortController {
 
@@ -78,17 +78,20 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: " + e.toString());
             ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
             throw e; // re-throw so this can be seen externally.
         } catch (Exception ex) {
             log.error("init (connect): Exception: " + ex.toString());
             ConnectionStatus.instance().setConnectionState(
+                        this.getSystemConnectionMemo().getUserName(),
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
             throw ex; // re-throw so this can be seen externally.
         }
         keepAliveTimer();
         if (opened) {
             ConnectionStatus.instance().setConnectionState(
+                    this.getSystemConnectionMemo().getUserName(),
                     m_HostName, ConnectionStatus.CONNECTION_UP);
         }
 
@@ -98,11 +101,13 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      * Can the port accept additional characters? return true if the port is
      * opened.
      */
+    @Override
     public boolean okToSend() {
-        return status();
+        return (super.okToSend() && status());
     }
 
     // base class methods for the XNetNetworkPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -110,6 +115,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -117,6 +123,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         return pout;
     }
 
+    @Override
     public boolean status() {
         return (pout != null && pin != null);
     }
@@ -124,6 +131,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     /**
      * set up all of the other objects to operate with a LIUSB Server interface
      */
+    @Override
     public void configure() {
         if (log.isDebugEnabled()) {
             log.debug("configure called");
@@ -148,6 +156,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      */
     private void startCommThread() {
         commThread = new Thread(new Runnable() {
+            @Override
             public void run() { // start a new thread
                 // this thread has one task.  It repeatedly reads from the two 
                 // incomming network connections and writes the resulting 
@@ -189,6 +198,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      */
     private void startBCastThread() {
         bcastThread = new Thread(new Runnable() {
+            @Override
             public void run() { // start a new thread
                 // this thread has one task.  It repeatedly reads from the two 
                 // incomming network connections and writes the resulting 
@@ -312,6 +322,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             setPort(BROADCAST_TCP_PORT);
         }
 
+        @Override
         public void configure() {
         }
 
@@ -351,6 +362,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             setPort(COMMUNICATION_TCP_PORT);
         }
 
+        @Override
         public void configure() {
         }
 
@@ -384,6 +396,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
+                @Override
                 public void run () {
                     /* If the timer times out, just send a character to the
                      *  ports.
