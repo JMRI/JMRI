@@ -178,6 +178,7 @@ public class OBlockTest extends TestCase {
         
         b.removePath(path1);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
+        jmri.util.JUnitAppender.assertWarnMessage("Path path2 already in block OB2, cannot be added to block OB1"); 
     }
 
     public void testAddUserName() {
