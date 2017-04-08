@@ -26,7 +26,7 @@ the [Cockpit Project manifests][4]).
 WebManifest instances loaded by a Java Service Provider provide a pure-Java
 mechanism for a Java servlet run within JMRI to ensure the web application loads
 any Javascript or CSS files needed for the servlet to be used in the web
-application. Refer to the JavaDocs for details.
+application. Refer to the Javadocs for details.
 
 ## manifest.json
 
