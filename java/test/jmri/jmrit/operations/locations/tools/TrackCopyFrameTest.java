@@ -23,6 +23,8 @@ public class TrackCopyFrameTest {
         LocationEditFrame f = new LocationEditFrame(null);
         TrackCopyFrame t = new TrackCopyFrame(f);
         Assert.assertNotNull("exists",t);
+        t.dispose();
+        f.dispose();
     }
 
     // The minimal setup for log4J
