@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -106,7 +107,7 @@ public class JsonServer extends JmriServer {
 
         while (true) {
             try {
-                handler.onMessage(reader.readTree(inStream));
+                handler.onMessage(reader.readTree((InputStream) inStream));
                 // Read the command from the client
             } catch (IOException e) {
                 // attempt to close the connection and throw the exception
