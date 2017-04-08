@@ -15,6 +15,7 @@ public class MrcMenu extends JMenu {
     /**
      * Create a MRC menu. And loads the MrcSystemConnectionMemo to the various
      * actions. Actions will open new windows.
+     * @param memo sytem connection memo
      */
     // Need to Sort out the MRC server menu items;
     public MrcMenu(MrcSystemConnectionMemo memo) {
