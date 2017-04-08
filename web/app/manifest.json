@@ -1,0 +1,29 @@
+{
+  "navigation":[
+    {
+      "path": "help/about",
+      "href": "ng-click:action-app-about()"
+    }
+  ],
+  "scripts":[
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/node_modules/jquery/dist/jquery.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/js/patternfly.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular/angular.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/ui-bootstrap.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular-sanitize/angular-sanitize.min.js",
+    "/app/node_modules/angular-patternfly/dist/angular-patternfly.min.js",
+    "/app/dynamic/about"
+  ],
+  "styles":[
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly.min.css",
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly-additions.min.css",
+    "/app/node_modules/angular-patternfly/dist/styles/angular-patternfly.min.css"
+  ],
+  "dependencies":[
+    "patternfly"
+  ],
+  "routes":[
+
+  ]
+}
