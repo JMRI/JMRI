@@ -150,6 +150,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                     }
                 });
                 pollThread.setName("NCE Sensor Poll");
+                pollThread.setDaemon(true);
                 pollThread.start();
             } else {
                 synchronized (this) {
@@ -234,7 +235,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                         delay = longCycleInterval;
                     }
                     synchronized (this) {
-                        if (awaitingReply) {
+                        if (awaitingReply && !stopPolling) {
                             log.warn("timeout awaiting poll response for AIU " + aiuNo);
                             // slow down the poll since we're not getting responses
                             // this lets NceConnectionStatus to do its thing
