@@ -1113,7 +1113,7 @@ public class WarrantFrame extends WarrantRoute {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) 
-            log.debug("propertyChange \"{}\" old= {} new= {} source= ",
+            log.debug("propertyChange \"{}\" old= {} new= {} source= {}",
                     property, e.getOldValue(), e.getNewValue(), e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
             doAction(e.getSource());
@@ -1351,7 +1351,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
         
-        if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= ",
+        if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
                 _warrant.getDisplayName(), getTrainId(), getTrainName());
         WarrantTableAction.updateWarrantMenu();
         WarrantTableFrame.getInstance().getModel().fireTableDataChanged();
@@ -1458,7 +1458,8 @@ public class WarrantFrame extends WarrantRoute {
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _throttleCommands.size()) {
-                if (log.isDebugEnabled()) log.debug("row is greater than throttle command size");
+                if (log.isDebugEnabled()) log.debug("row {} is greater than throttle command size {}",
+                        row, _throttleCommands.size());
                 return "";
             }
             ThrottleSetting ts = _throttleCommands.get(row);
