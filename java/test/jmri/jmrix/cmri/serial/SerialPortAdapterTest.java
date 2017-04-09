@@ -5,12 +5,12 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the SerialPortController class
+ * JUnit tests for the SerialPortAdapter class
  * <p>
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
+public class SerialPortAdapterTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
     @Before
@@ -23,7 +23,7 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
           }
        };
        jmri.jmrix.cmri.CMRISystemConnectionMemo memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
-       apc = new SerialPortController(memo){
+       apc = new SerialPortAdapter(memo){
             @Override
             public boolean status(){
               return true;

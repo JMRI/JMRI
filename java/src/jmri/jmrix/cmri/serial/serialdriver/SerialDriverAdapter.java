@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialPortController;
+import jmri.jmrix.cmri.serial.SerialPortAdapter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new CMRISystemConnectionMemo());
@@ -192,7 +192,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 
-    // base class methods for the SerialPortController interface
+    // base class methods for the SerialPortAdapter interface
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {

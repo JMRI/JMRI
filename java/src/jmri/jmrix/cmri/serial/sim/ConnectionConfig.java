@@ -31,6 +31,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     @Override
     public void loadDetails(JPanel details) {
+
+        setInstance();
+
         // have to embed the usual one in a new JPanel
 
         JPanel p = new JPanel();
@@ -48,12 +51,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     }
 
-    /*protected Vector<String> getPortNames() {
-     Vector<String> portNameVector = new Vector<>();
-     portNameVector.addElement("(None)");
-     return portNameVector;
-     }*/
-    //public boolean isPortAdvanced() { return true; }
     @Override
     public String name() {
         return "Simulator";

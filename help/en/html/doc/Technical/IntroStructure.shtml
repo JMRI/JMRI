@@ -43,7 +43,7 @@
       items on the layout) are named <a href="Names.shtml">is
       available on a separate page</a>.</p>
 
-      <a href="images/ConnectionStartSequence.png"><img src="images/OverallPackageStructure.png" align="right" height="20%" width="20%" /></a>
+      <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png" align="right" height="20%" width="20%" /></a>
       <p>More specifically:</p>
 
       <dl>
@@ -80,7 +80,7 @@
         could certainly be separated).<br>
         jmrix can depend on jmri and externals, but not jmrit.</dd>
 
-        <a href="images/ConnectionStartSequence.png"><img src="images/OverallImplementationStructure.png" align="right" height="20%" width="20%" /></a>
+        <a href="images/OverallImplementationStructure.png"><img src="images/OverallImplementationStructure.png" align="right" height="20%" width="20%" /></a>
 
         <dt>util</dt>
 
