@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "jmri.jmirx.ieee802154.xbee.swing.packetgen.Bundle"; // NOI18N
+    private final static String name = "jmri.jmrix.ieee802154.xbee.swing.packetgen.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
