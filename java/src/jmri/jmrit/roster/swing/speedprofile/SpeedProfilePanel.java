@@ -61,7 +61,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     JButton testButton = new JButton(Bundle.getMessage("ButtonTest"));
     JButton viewButton = new JButton(Bundle.getMessage("ButtonView"));
     JTextField lengthField = new JTextField(10);
-    JTextField SensorDelay = new JTextField(5);
+    JTextField sensorDelay = new JTextField(5);
     JTextField speedStepTest = new JTextField(5);
     JTextField speedStepFrom = new JTextField(5);
     JTextField speedStepTo = new JTextField(5);
@@ -102,7 +102,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         JLabel label = new JLabel(Bundle.getMessage("LabelLengthOfBlock"));
         addRow(main, gb, c, 0, label, lengthField);
         label = new JLabel(Bundle.getMessage("LabelSensorDelay"));
-        addRow(main, gb, c, 1, label, SensorDelay);
+        addRow(main, gb, c, 1, label, sensorDelay);
         label = new JLabel(Bundle.getMessage("LabelStartSensor"));
         addRow(main, gb, c, 2, label, sensorAPanel);
         label = new JLabel(Bundle.getMessage("LabelBlockSensor"));
@@ -145,7 +145,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         
        c.fill = GridBagConstraints.HORIZONTAL;
        c.gridx = 0;
-       c.gridy = 8;
+       c.gridy = 9;
        c.gridwidth = 2;
 //       sourceLabel = new JTextField(10);
        sourceLabel = new JLabel("   ");
@@ -242,10 +242,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorLengthInvalid"));
             return;
         }
-        text = SensorDelay.getText();
+        text = sensorDelay.getText();
         if (text!=null && text.trim().length()>0) {
             try {
-                profileSensorDelay = Float.parseFloat(SensorDelay.getText());
+                profileSensorDelay = Float.parseFloat(sensorDelay.getText());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorDelayInvalid"));
                 return;
@@ -471,6 +471,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             int startstep = Integer.parseInt(speedStepTest.getText());
             isForward = true;
             t.setIsForward(isForward);
+            try {
+                Thread.sleep(250);
+            }
+            catch (Exception ex) {}
             profileSpeed = profileIncrement * startstep;
             t.setSpeedSetting(profileSpeed);
         }
@@ -524,25 +528,19 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         startSensor.addPropertyChangeListener(startListener);
         finishSensor.addPropertyChangeListener(finishListener);
         t.setIsForward(!isForward);
+        // this switching back a forward helps if the throttle was stolen.
+        // the sleeps are needed as some systems dont like a speed setting right after a direction setting.
+        //If we had guarenteed access to the dispatcher frame we could use 
+        //         Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval() * 2)
         try {
                 Thread.sleep(250);
-        } catch (Exception ex) {
-        
-        }
+        } catch (Exception ex) {}
         t.setIsForward(isForward);
         try {
                 Thread.sleep(250);
-        } catch (Exception ex) {
-            
-        }
+        } catch (Exception ex) {}
         log.debug("Set speed to [" + profileSpeed + "] isForward [" + isForward + "] Increment [" + profileIncrement + "] Step [" + profileStep + "] SpeedStepMode [" + profileSpeedStepMode + "]");
         t.setSpeedSetting(profileSpeed);
-        //t.setSpeedSetting(speed);
-        try {
-            Thread.sleep(250);
-        } catch (Exception ex) {
-        
-        }
         sourceLabel.setText(Bundle.getMessage("StatusLabelBlockToGoActive"));
     }
 
@@ -584,12 +582,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
         if (profileStep > finishSpeedStep) {
             t.setSpeedSetting(0.0f);
-            try {
-                Thread.sleep(250);
-            } catch (Exception ex) {
-            
-            }
-
             updateSpeedProfileWithResults();
             setButtonStates(true);
             return;
@@ -601,12 +593,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
                 // finally command the stop
                 t.setSpeedSetting(0.0f);
-                try {
-                    Thread.sleep(250);
-                } catch (Exception ex) {
-                
-                }
-
                 // and a second later, restart going the other way
                 javax.swing.Timer restartTimer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
                     @Override
@@ -624,7 +610,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     void calculateSpeed() {
         float duration = (((float) (finishTime - startTime)) / 1000000000); //Now in seconds
-        duration = duration - ( profileSensorDelay * 1000); // allow for time differences between sensor delays
+        duration = duration - ( profileSensorDelay / 1000); // allow for time differences between sensor delays
         float speed = profileBlockLength / duration;
         if (log.isDebugEnabled()) {
             log.debug("Step:" + profileStep + " duration:" + duration + " length:" + profileBlockLength + " speed:" + speed);
@@ -659,19 +645,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         re.updateFile();
         Roster.getDefault().writeRoster();
         save = false;
-        FileOutputStream saveFile;
-        try {
-        saveFile = new FileOutputStream("saveFile.sav");
-        }
-        catch (Exception ex) {
-            log.info("Ops");
-            return;
-        }
-        ObjectOutputStream save = ObjectOutputStream(saveFile);
-        try { save.writeObject(this); } catch (Exception ex) {}
-        try {save.close(); } catch (Exception ex) {}
-        
-
     }
     
     private ObjectOutputStream ObjectOutputStream(FileOutputStream saveFile) {
