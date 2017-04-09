@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.Bundle {
 
-    private final static String name = null;  // No local bundle
+    private final static String name = "jmri.jmrit.log.Bundle";  // No local bundle
 
     //
     // below here is boilerplate to be copied exactly

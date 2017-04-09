@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @net.jcip.annotations.Immutable
 public class Bundle extends jmri.jmrit.Bundle {
 
-    private final static String name = null; // NOI18N
+    private final static String name = "jmri.jmrit.picker.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

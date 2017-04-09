@@ -142,14 +142,10 @@ public class Bundle {
      * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(Locale locale, String key) {
-        if (bundleName() != null) {
-            ResourceBundle rb = ResourceBundle.getBundle(bundleName(), locale);
-            if (rb.containsKey(key)) {
-                return rb.getString(key);
-            } else {
-                return retry(locale,key);
-            }
-        } else {  // case of no local bundle
+        ResourceBundle rb = ResourceBundle.getBundle(bundleName(), locale);
+        if (rb.containsKey(key)) {
+            return rb.getString(key);
+        } else {
             return retry(locale,key);
         }
     }

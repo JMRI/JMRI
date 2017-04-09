@@ -1,10 +1,10 @@
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import javax.annotation.CheckReturnValue;
-import java.util.Locale;
-import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Locale;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -23,7 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public class Bundle extends jmri.jmrix.Bundle {
 
-    private final static String name = null; // NOI18N
+    private final static String name = "jmri.jmrix.can.cbus.swing.eventtable.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

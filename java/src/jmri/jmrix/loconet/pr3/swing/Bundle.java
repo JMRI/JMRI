@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.loconet.pr3.Bundle {
 
-    private final static String name = null; //NOI18N
+    private final static String name = "jmri.jmrix.loconet.pr3.swing.Bundle"; //NOI18N
 
     //
     // below here is boilerplate to be copied exactly

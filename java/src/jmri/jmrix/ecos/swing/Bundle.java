@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.ecos.Bundle {
 
-    private final static String name = null; // NOI18N
+    private final static String name = "jmri.jmrix.ecos.swing.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

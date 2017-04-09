@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.display.layoutEditor.Bundle {
 
-    private final static String name = null; // no local resources
+    private final static String name = "jmri.jmrit.display.layoutEditor.blockRoutingTable.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

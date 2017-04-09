@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.display.Bundle {
 
     @Nullable
-    private final static String name = null; // no local Bundle
+    private final static String name = "jmri.jmrit.display.panelEditor.Bundle"; // no local Bundle
 
     //
     // below here is boilerplate to be copied exactly
