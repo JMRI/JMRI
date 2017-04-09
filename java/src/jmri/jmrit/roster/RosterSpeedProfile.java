@@ -729,6 +729,8 @@ public class RosterSpeedProfile {
         int key = 0;
         float slower = 0;
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(key);
+        // search through table until end or the entry is greater than
+        // what we are looking for. This leaves the previous lower value in key. and slower
         while (entry != null && slower <= speed) {
             key = entry.getKey();
             if (isForward) {
@@ -753,7 +755,11 @@ public class RosterSpeedProfile {
             } else {
                 faster = entry.getValue().getReverseSpeed();
             }
-            log.info("faster [" + faster + "]speed[" + speed + "]");
+            log.debug("faster [" + faster + "]speed[" + speed + "]");
+            // serach starting from were we left off until entry is greater than the required speed
+            // in fact this is totally unnessary as the previous search
+            // left the entry in situ... but the code was already here so I fixed it
+            // it may help if the table is wonky
             while (entry != null && faster <= speed) {
                 key = entry.getKey();
                 if (isForward) {
@@ -767,7 +773,7 @@ public class RosterSpeedProfile {
         if (faster <= slower) {
             return key / 1000;
         }
-      
+        // interpolate
         float ratio = (speed - slower) / (faster - slower);
         float setting = lowKey + (key - lowKey) * ratio / 1000;      
         log.debug("Ratio[" + ratio + "]setting[" + setting + "] lowkey ["+ lowKey + "]key[" + key + "]");
