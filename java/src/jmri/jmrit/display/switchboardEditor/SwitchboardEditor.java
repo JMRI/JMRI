@@ -209,7 +209,7 @@ public class SwitchboardEditor extends Editor {
     @Override
     protected void init(String name) {
         //setVisible(false);
-        Container contentPane = this.getContentPane(); // Editor
+        Container contentPane = getContentPane(); // Editor
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // make menus
