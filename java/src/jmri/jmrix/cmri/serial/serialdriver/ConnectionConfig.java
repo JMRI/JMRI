@@ -27,19 +27,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
-        // there has to be a connection memo via a serial adapter
-        super(new SerialDriverAdapter());
-        // and it has to have a TC
-        ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).setTrafficController(new SerialTrafficController());
+        super();
     }
 
-    JButton b = new JButton("Configure C/MRI nodes");
+    JButton b;
 
     @Override
     public void loadDetails(JPanel details) {
 
         setInstance();
-
+        b = new JButton("Configure C/MRI nodes");
         b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);

@@ -6,7 +6,16 @@ import java.io.DataOutputStream;
 /**
  * Enables basic setup of a interface for a jmrix implementation.
  * <P>
- * This has no connection type (network, serial, etc) specific information.
+ * This is the basic interface. Subclasses provide extensions for specific
+ * connection types (network, serial, etc).
+ * <p>
+ * For historical reasons, this provides both four specific options (option1 to option4)
+ * plus a more flexible interface based on a String array.  The more flexible 
+ * interface is the preferred one for new work, but the 1-4 form hasn't been 
+ * deprecated yet.
+ * <p>
+ * General design documentation is available on the 
+ * <a href="http://jmri.org/help/en/html/doc/Technical/SystemStructure.shtml">Structure of External System Connections page</a>.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
  * @see jmri.jmrix.SerialConfigException
@@ -115,7 +124,7 @@ public interface PortAdapter {
     /**
      * Sets whether the connection is disabled.
      *
-     * @param disabled
+     * @param disabled When true, disables operation
      */
     public void setDisabled(boolean disabled);
 

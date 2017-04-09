@@ -27,6 +27,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a Turnout object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
+     * @param systemName system name
+     * @param tc traffic controller
+     * @param userName user name
      */
     public SerialTurnout(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, userName);

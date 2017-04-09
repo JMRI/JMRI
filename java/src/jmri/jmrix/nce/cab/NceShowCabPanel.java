@@ -1815,6 +1815,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
         /**
          * Return cabId for row number
+         * @param row row for cab information
+         * @return cab id
          */
         protected int getCabIdForRow(int row) {
             int activeRows = -1;

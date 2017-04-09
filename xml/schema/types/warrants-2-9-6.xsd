@@ -125,6 +125,7 @@
             <xs:attribute name="userName" type="userNameType"></xs:attribute>
             <xs:attribute name="wtype" type="xs:string"></xs:attribute>
             <xs:attribute name="timeToPlatform" type="xs:string"></xs:attribute>
+            <xs:attribute name="forward" type="trueFalseType"></xs:attribute>
           </xs:complexType>
         </xs:element>
             

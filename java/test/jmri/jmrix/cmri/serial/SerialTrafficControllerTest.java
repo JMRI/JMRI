@@ -93,8 +93,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     SerialReply rcvdReply;
     SerialMessage rcvdMsg;
 
-    // internal class to simulate a PortController
-    class SerialPortControllerScaffold extends SerialPortController {
+    // internal class to simulate a PortAdapter
+    class SerialPortAdapterScaffold extends SerialPortAdapter {
 
         @Override
         public Vector<String> getPortNames() {
@@ -115,7 +115,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             return null;
         }
 
-        protected SerialPortControllerScaffold() throws Exception {
+        protected SerialPortAdapterScaffold() throws Exception {
             super(null);
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();

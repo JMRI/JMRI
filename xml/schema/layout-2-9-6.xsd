@@ -74,6 +74,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/editors.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/switchboardeditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/entryexitpair.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
 
@@ -350,6 +351,7 @@ signals - obsolete, EMPTY, never used
         <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="switchboardeditor" type="SwitchboardEditorType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" >
             <xs:key name="layoutEditorElementIdent">
               <xs:annotation><xs:documentation>Insist that each element ident attribute value in LayoutEditor is unique</xs:documentation></xs:annotation>

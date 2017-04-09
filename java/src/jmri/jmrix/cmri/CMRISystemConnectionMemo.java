@@ -51,14 +51,18 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * @param s jmri.jmrix.cmri.serial.SerialTrafficController object to use.
      */
     public void setTrafficController(SerialTrafficController s){
-       tc = s;
+        tc = s;
     }
 
     /*
      * Get the traffic controller instance associated with this connection memo.
      */
     public SerialTrafficController  getTrafficController(){
-       return tc;
+        if (tc == null) {
+            setTrafficController(new SerialTrafficController());
+            log.warn("Needed auto load of SerialTrafficController");
+        }
+        return tc;
     }
 
     /*
@@ -158,5 +162,5 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     }
 
-
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class.getName());
 }

@@ -376,7 +376,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     public static PickListModel signalHeadPickModelInstance() {
-        Integer num = _listMap.get("sensor");
+        Integer num = _listMap.get("signalhead");
         if (num != null) {
             _listMap.put("signalhead", Integer.valueOf(num.intValue() + 1));
         } else {

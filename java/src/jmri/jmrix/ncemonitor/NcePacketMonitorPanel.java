@@ -447,6 +447,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e open button event
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
