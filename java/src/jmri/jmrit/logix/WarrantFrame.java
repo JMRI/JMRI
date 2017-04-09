@@ -592,6 +592,7 @@ public class WarrantFrame extends WarrantRoute {
         group.add(_halt);
         group.add(_resume);
         group.add(_eStop);
+        group.add(_abort);
         group.add(_invisible);
         panel.add(_halt);
         panel.add(_resume);
