@@ -204,14 +204,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
-    /**
-     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
-
     //Turnout format is more than a simple format.
     @Override
     public boolean allowMultipleAdditions(String systemName) {
