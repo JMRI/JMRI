@@ -56,11 +56,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener l) {
             }
-
-            // and make this the instance
-            {
-                self = this;
-            }
         };
 
         // connect to the traffic controller

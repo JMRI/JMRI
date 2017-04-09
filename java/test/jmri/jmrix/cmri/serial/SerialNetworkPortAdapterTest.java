@@ -5,12 +5,12 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the SerialNetworkPortController class
+ * JUnit tests for the SerialNetworkPortAdapter class
  * <p>
  *
  * @author      Paul Bender Copyright (C) 2016
  */
-public class SerialNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
+public class SerialNetworkPortAdapterTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
     @Override
     @Before
@@ -18,7 +18,7 @@ public class SerialNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkP
        apps.tests.Log4JFixture.setUp();
        JUnitUtil.resetInstanceManager();
        jmri.jmrix.cmri.CMRISystemConnectionMemo memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
-       apc = new SerialNetworkPortController(memo){
+       apc = new SerialNetworkPortAdapter(memo){
             @Override
             public void configure(){
             }
