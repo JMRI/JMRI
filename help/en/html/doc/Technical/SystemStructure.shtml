@@ -289,20 +289,26 @@
 
             </ul>
         <li>Later, jmri.jmrix.ActiveSystemsMenu and/or
-        jmri.jmrix.SystemsMenu wants to create user menus, and
-        finds the LocoNetSystemConnectionMemo object in the
-        InstanceManager<ul>
-
-            <li>The menu code asks that specific SystemConnectionMemo
-            object to create and return the menu. It does so, in the
-            process connecting each Action to itself so that the
-            individual tools will be able to connect to the proper e.g.
-            TrafficController, SlotMonitor, etc.</li>
+        jmri.jmrix.SystemsMenu will create the main menu bar
+        menus for the individual systems:
+            <ul>
+            <li>Ask the InstanceManager for all the ComponentFactory
+                instances. These were created, in most cases,
+                in the constructor of the SystemConnectionMemo, 
+                and live in the .swing subproject (e.g.
+                loconet.swing.LnComponentFactory )
+            <li>For each of those, ask it for the menu object (e.g. LocoNetMenu)
+                and post that to the GUI.
+            <li>In the process of creating the menu, the ComponentFactory
+                connects each Action to itself so that the
+                individual tools will be able to connect to the proper e.g.
+                TrafficController, SlotMonitor, etc.</li>
 
             <li>When an Action is fired later on, the invoked class(es)
-            enquire of the LocoNetSystemConnectionMemo when they need a
-            resource, instead of referring to an instance() method in
-            the resource's class.</li>
+                enquire of the LocoNetSystemConnectionMemo when they need a
+                resource, instead of referring to an instance() method in
+                the resource's class.</li>
+            </ul>
       </ul>
     </ul>
     
