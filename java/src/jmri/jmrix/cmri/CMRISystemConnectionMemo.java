@@ -45,7 +45,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public SerialTrafficController  getTrafficController(){
         if (tc == null) {
             setTrafficController(new SerialTrafficController());
-            log.warn("Needed auto load of SerialTrafficController");
+            log.debug("Auto create of SerialTrafficController for initial configuration");
         }
         return tc;
     }
