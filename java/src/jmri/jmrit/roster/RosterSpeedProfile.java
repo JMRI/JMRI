@@ -729,7 +729,7 @@ public class RosterSpeedProfile {
         int key = 0;
         float slower = 0;
         Entry<Integer, SpeedStep> entry = speeds.higherEntry(key);
-        while (entry != null && slower >= speed) {
+        while (entry != null && slower <= speed) {
             key = entry.getKey();
             if (isForward) {
                 slower = entry.getValue().getForwardSpeed();
@@ -740,24 +740,38 @@ public class RosterSpeedProfile {
         }
         int lowKey = key;
         
-        float faster = slower;
+        float faster;
         entry = speeds.higherEntry(key);
-        while (entry != null && faster >= speed) {
+        // If the entry is null, then we are asking faster than fastest.
+        // and we do not search for higher just set as slower 
+        if ( entry == null ) {
+            faster = slower;
+        } else {
             key = entry.getKey();
             if (isForward) {
                 faster = entry.getValue().getForwardSpeed();
             } else {
                 faster = entry.getValue().getReverseSpeed();
             }
-            entry = speeds.higherEntry(key);
+            log.info("faster [" + faster + "]speed[" + speed + "]");
+            while (entry != null && faster <= speed) {
+                key = entry.getKey();
+                if (isForward) {
+                    faster = entry.getValue().getForwardSpeed();
+                } else {
+                    faster = entry.getValue().getReverseSpeed();
+                }
+                entry = speeds.higherEntry(key);
+            }
         }
         if (faster <= slower) {
             return key / 1000;
         }
-        
+      
         float ratio = (speed - slower) / (faster - slower);
         float setting = lowKey + (key - lowKey) * ratio / 1000;      
-        return setting;
+        log.debug("Ratio[" + ratio + "]setting[" + setting + "] lowkey ["+ lowKey + "]key[" + key + "]");
+        return setting/1000;
     }
         
     /**
