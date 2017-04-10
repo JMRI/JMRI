@@ -5,9 +5,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
-//import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.server.json.JSON;
+import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Randall Wood (C) 2016
- * @author Egbert Broerse (C) 2017
+ * @author Egbert Broerse (C) 2017 -- based on ControlPanelServlet.java by rhwood
  */
 @WebServlet(name = "SwitchboardServlet",
         urlPatterns = {"/panel/Switchboard"})
@@ -46,16 +45,30 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             panel.setAttribute("width", Integer.toString(frame.getContentPane().getWidth()));
             panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
             panel.setAttribute("panelwidth", Integer.toString(editor.getTargetPanel().getWidth()));
-            // add more properties (check configurexml)
+            // add more properties
             panel.setAttribute("showtooltips", (editor.showTooltip()) ? "yes" : "no");
             panel.setAttribute("controlling", (editor.allControlling()) ? "yes" : "no");
-            if (editor.getBackgroundColor() != null) {
-                Element color = new Element("backgroundColor");
+
+            panel.setAttribute("hideunconnected", (editor.hideUnconnected()) ? "yes" : "no");
+            panel.setAttribute("rangemin", Integer.toString(editor.getPanelMenuRangeMin()));
+            panel.setAttribute("rangemax", Integer.toString(editor.getPanelMenuRangeMax()));
+            panel.setAttribute("type", editor.getSwitchType());
+            panel.setAttribute("connection", editor.getSwitchManu());
+            panel.setAttribute("shape", editor.getSwitchShape());
+            panel.setAttribute("columns", Integer.toString(editor.getColumns()));
+            panel.setAttribute("defaulttextcolor", editor.getDefaultTextColor());
+            log.debug("webserver Switchboard attribs ready");
+            Element color = new Element("backgroundColor");
+            if (editor.getBackgroundColor() == null) { // set to light grey
+                color.setAttribute("red", Integer.toString(192));
+                color.setAttribute("green", Integer.toString(192));
+                color.setAttribute("blue", Integer.toString(192));
+            } else {
                 color.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));
                 color.setAttribute("green", Integer.toString(editor.getBackgroundColor().getGreen()));
                 color.setAttribute("blue", Integer.toString(editor.getBackgroundColor().getBlue()));
-                panel.addContent(color);
             }
+            panel.addContent(color);
 
             // include switches
 //            List<BeanSwitch> contents = editor.getSwitches(); // TODO add method to swbEditor
@@ -65,7 +78,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
 //                    try {
 //                        Element e = ConfigXmlManager.elementFromObject(sub);
 //                        if (e != null) {
-//                            if ("signalmasticon".equals(e.getName())) {  //insert icon details into signalmast
+//                            if ("button".equals(e.getName())) {  //insert slider details into switch
 //                                //e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
 //                            }
 //                            try {
@@ -95,7 +108,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             return out.outputString(doc);
         } catch (NullPointerException ex) {
             log.warn("Requested Switchboard [" + name + "] does not exist.");
-            return "ERROR Requested panel [" + name + "] does not exist.";
+            return "ERROR Requested Switchboard [" + name + "] does not exist.";
         }
     }
 

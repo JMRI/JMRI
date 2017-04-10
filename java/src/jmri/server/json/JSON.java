@@ -239,6 +239,10 @@ public final class JSON {
      */
     public static final String LAYOUT_PANEL = "Layout"; // NOI18N
     /**
+     * {@value #SWITCHBOARD_PANEL}
+     */
+    public static final String SWITCHBOARD_PANEL = "Switchboard"; // NOI18N
+    /**
      * {@value #PANEL_PANEL}
      */
     public static final String PANEL_PANEL = "Panel"; // NOI18N
