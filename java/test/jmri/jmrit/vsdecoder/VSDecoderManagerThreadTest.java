@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
 public class VSDecoderManagerThreadTest {
 
     @Test
-    public void testCTor() {
-        VSDecoderManagerThread t = new VSDecoderManagerThread();
+    public void testInstance() {
+        VSDecoderManagerThread t = VSDecoderManagerThread.instance();
         Assert.assertNotNull("exists",t);
-        // the constructor starts a thread, make sure it goes away.
+        // the instance method starts a thread, make sure it goes away.
         t.kill();
     }
 
