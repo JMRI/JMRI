@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,11 @@ public class ThrottleSettingTest {
     public void testCTor() {
         ThrottleSetting t = new ThrottleSetting();
         Assert.assertNotNull("exists",t);
+    }
+    
+    public void testCtor2() {
+        ThrottleSetting ts = new ThrottleSetting(1000, "NoOp", "Enter Block", "OB1");
+        Assert.assertNotNull("exists",ts);        
     }
 
     // The minimal setup for log4J
