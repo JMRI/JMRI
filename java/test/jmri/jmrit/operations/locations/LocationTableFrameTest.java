@@ -66,11 +66,6 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
         // create edit location frame
         f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
 
-        // create add location frame by clicking add button
-        //f.addButton.doClick();
-        // the following fails on 13" laptops
-        enterClickAndLeave(f.addButton);
-
         // confirm location edit frame creation
         JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("Edit Location")!=null;}, "lef not null");
         JmriJFrame lef = JmriJFrame.getFrame("Edit Location");
@@ -112,7 +107,6 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
         jfof.close();
 
         Assert.assertNull(JmriJFrame.getFrame("Add Location"));
-
     }
 
 
