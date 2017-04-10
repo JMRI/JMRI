@@ -185,6 +185,10 @@ public final class JSON {
     /**
      * {@value #UNIQUE_ID}
      */
+    public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
     public static final String UNIQUE_ID = "uniqueId"; // NOI18N
     /**
      * {@value #IS_ACTIVE_PROFILE}
