@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.web.Bundle {
 
-    private final static String name = "jmri.web.servlet.Bundle"; // no local resources
+    private final static String name = "jmri.web.servlet.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

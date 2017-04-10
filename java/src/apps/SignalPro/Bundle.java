@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends apps.Bundle {
 
-    private final static String name = null; // no local resources
+    private final static String name = "apps.SignalPro.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

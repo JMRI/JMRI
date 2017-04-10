@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = null; // No local resources
+    private final static String name = "jmri.configurexml.SaveMenuBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

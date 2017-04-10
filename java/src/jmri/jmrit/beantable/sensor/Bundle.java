@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.beantable.Bundle {
 
-    private final static String name = null;
+    private final static String name = "jmri.jmrit.beantable.sensor.Bundle";
 
     //
     // below here is boilerplate to be copied exactly
