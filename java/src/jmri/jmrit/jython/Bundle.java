@@ -22,7 +22,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "jmri.jmrit.jython.JythonBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrit.jython.JythonBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

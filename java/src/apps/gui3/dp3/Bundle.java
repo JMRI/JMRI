@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends apps.gui3.Bundle {
 
-    private final static String name = "apps.gui3.dp3.Bundle";
+    @Nullable
+    private static final String name = "apps.gui3.dp3.Bundle";
 
     //
     // below here is boilerplate to be copied exactly
