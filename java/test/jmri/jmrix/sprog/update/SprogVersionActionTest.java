@@ -18,7 +18,7 @@ public class SprogVersionActionTest {
     @Test
     public void testCTor() {
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
-        SprogVersionAction t = new SprogVersionAction(m);
+        SprogVersionAction t = new SprogVersionAction("test",m);
         Assert.assertNotNull("exists",t);
     }
 
