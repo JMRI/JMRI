@@ -213,8 +213,8 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     public JsonNode getRosterGroup(Locale locale, String name) throws JsonException {
-        int size = Roster.getDefault().getEntriesInGroup(name).size();
-        if (size != 0 || name == null || name.isEmpty() || name.equals(Roster.ALLENTRIES)) {
+        if (Roster.getDefault().getRosterGroupList().contains(name)) {
+            int size = Roster.getDefault().getEntriesInGroup(name).size();
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, JsonRoster.ROSTER_GROUP);
             ObjectNode data = root.putObject(DATA);
