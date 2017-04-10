@@ -19,7 +19,7 @@ public class SetTrainIconRouteFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame();
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame("Test");
         Assert.assertNotNull("exists",t);
     }
 
