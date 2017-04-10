@@ -6,6 +6,11 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   SprogIIUpdateActionTest.class,
+   SprogIIUpdateFrameTest.class,
+   SprogVersionActionTest.class,
+   SprogVersionFrameTest.class,
+   SprogTypeTest.class,
 })
 /**
  * Tests for the jmri.jmrix.sprog.update package
