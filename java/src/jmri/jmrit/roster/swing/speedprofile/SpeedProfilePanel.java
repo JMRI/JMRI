@@ -474,7 +474,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             try {
                 Thread.sleep(250);
             }
-            catch (Exception ex) {}
+            catch (InterruptedException e) {
+                // Nthing I can do.      
+            }
             profileSpeed = profileIncrement * startstep;
             t.setSpeedSetting(profileSpeed);
         }
@@ -533,12 +535,18 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         //If we had guarenteed access to the dispatcher frame we could use 
         //         Thread.sleep(DispatcherFrame.instance().getMinThrottleInterval() * 2)
         try {
-                Thread.sleep(250);
-        } catch (Exception ex) {}
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            // Nothing I can do.      
+        }
+
         t.setIsForward(isForward);
         try {
-                Thread.sleep(250);
-        } catch (Exception ex) {}
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            // Nothing I can do.      
+        }
+
         log.debug("Set speed to [" + profileSpeed + "] isForward [" + isForward + "] Increment [" + profileIncrement + "] Step [" + profileStep + "] SpeedStepMode [" + profileSpeedStepMode + "]");
         t.setSpeedSetting(profileSpeed);
         sourceLabel.setText(Bundle.getMessage("StatusLabelBlockToGoActive"));
@@ -679,9 +687,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             t.setSpeedSetting(0.0f);
             try {
                 Thread.sleep(250);
-            } catch (Exception ex) {
-            
+            } catch (InterruptedException e) {
+                // Nothing I can do.      
             }
+
 
             InstanceManager.throttleManagerInstance().releaseThrottle(t, this);
             t = null;
