@@ -2038,7 +2038,7 @@
               failonerror="true">
             <arg value="-t 1200"/>
             <arg value="-O signing-wget.log"/>
-            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI-${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
         </exec>
         <chmod perm="go-w" dir="${dist.release}"/>
     </target>
