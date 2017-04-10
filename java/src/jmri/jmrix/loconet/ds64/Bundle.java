@@ -35,7 +35,8 @@ import java.util.Locale;
  */
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
-    private final static String name = "jmri.jmrix.loconet.ds64.Bundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrix.loconet.ds64.Bundle"; // NOI18N
     private final static Bundle b = new Bundle();
     //
     // below here is boilerplate to be copied exactly
