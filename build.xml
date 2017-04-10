@@ -352,7 +352,6 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
-
     <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
               dir="${basedir}"
@@ -372,6 +371,17 @@
             </not>
           </condition>
         </fail>
+        <!-- create a URL-encoded version -->
+        <loadresource property="release.version-encoded-string">
+          <propertyresource name="release.version-string"/>
+          <filterchain>
+            <tokenfilter>
+              <filetokenizer/>
+              <replaceregex flags="g" pattern="\+" replace="%2B" />
+            </tokenfilter>
+          </filterchain>
+        </loadresource>
+        <echo message="${release.version-encoded-string}" />
     </target>
 
     <target name="realclean"
@@ -2027,7 +2037,7 @@
               failonerror="true">
             <arg value="-t 1200"/>
             <arg value="-O signing-wget.log"/>
-            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI-${release.version-string}+unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI.${release.version-string}.dmg"/>
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI-${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
         </exec>
         <chmod perm="go-w" dir="${dist.release}"/>
     </target>
