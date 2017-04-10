@@ -38,6 +38,12 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(RoutesTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainIconPositionFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RoutesCopyActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainIconPositionActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteLocationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainRouteIconActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainRouteIconFrameTest.class));
         return suite;
     }
 
