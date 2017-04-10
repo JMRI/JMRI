@@ -1,5 +1,7 @@
 package jmri.jmrix.nce;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,6 +162,7 @@ public class NceBinaryCommand {
     public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10; // Delete loco from consist
     public static final byte LOCO_CMD_KILL_CONSIST = 0x11;        // Kill consist
 
+    @Nullable
     public static byte[] accDecoder(int number, boolean closed) {
 
         if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
@@ -196,6 +199,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accMemoryRead(int address) {
 
         int addr_h = address / 256;
@@ -216,6 +220,7 @@ public class NceBinaryCommand {
      * @param address address to read from
      * @return binary command to read one byte
      */
+    @Nonnull
     public static byte[] accMemoryRead1(int address) {
 
         int addr_h = address / 256;
@@ -230,6 +235,7 @@ public class NceBinaryCommand {
 
     }
 
+    @Nonnull
     public static byte[] accMemoryWriteN(int address, int num) {
 
         int addr_h = address / 256;
@@ -245,6 +251,7 @@ public class NceBinaryCommand {
 
     }
 
+    @Nonnull
     public static byte[] accMemoryWrite8(int address) {
 
         int addr_h = address / 256;
@@ -259,6 +266,7 @@ public class NceBinaryCommand {
 
     }
 
+    @Nonnull
     public static byte[] accMemoryWrite4(int address) {
 
         int addr_h = address / 256;
@@ -272,6 +280,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accMemoryWrite2(int address) {
 
         int addr_h = address / 256;
@@ -285,6 +294,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accMemoryWrite1(int address) {
 
         int addr_h = address / 256;
@@ -298,6 +308,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accAiu2Read(int cabId) {
 
         byte[] retVal = new byte[1 + 1];
@@ -307,6 +318,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] usbSetCabId(int cab) {
 
         byte[] retVal = new byte[2];
@@ -316,6 +328,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] usbMemoryWrite1(byte data) {
 
         byte[] retVal = new byte[2];
@@ -325,6 +338,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] usbMemoryRead(int num) {
 
         byte[] retVal = new byte[2];
@@ -334,6 +348,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] usbMemoryPointer(int cab, int loc) {
 
         byte[] retVal = new byte[3];
@@ -344,6 +359,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accStopClock() {
 
         byte[] retVal = new byte[1];
@@ -352,6 +368,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accStartClock() {
 
         byte[] retVal = new byte[1];
@@ -360,6 +377,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accSetClock(int hours, int minutes) {
 
         byte[] retVal = new byte[3];
@@ -370,6 +388,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accSetClock1224(boolean flag) {
 
         int bit = 0;
@@ -383,6 +402,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nonnull
     public static byte[] accSetClockRatio(int ratio) {
 
         byte[] retVal = new byte[2];
@@ -392,6 +412,7 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @Nullable
     public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
         if (locoSubCmd < 1 || locoSubCmd > 0x17) {
             log.error("invalid NCE loco command " + locoSubCmd);
@@ -417,6 +438,7 @@ public class NceBinaryCommand {
      *
      * @return the revision message
      */
+    @Nonnull
     public static byte[] getNceEpromRev() {
         byte[] retVal = new byte[1];
         retVal[0] = (byte) (SW_REV_CMD);
@@ -432,6 +454,7 @@ public class NceBinaryCommand {
      * @param cvData   value to set CV to
      * @return ops mode message
      */
+    @Nonnull
     public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
 
         byte[] retVal = new byte[6];
@@ -458,6 +481,7 @@ public class NceBinaryCommand {
      * @param cvData   value to set CV to
      * @return ops mode message
      */
+    @Nonnull
     public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
 
         byte[] retVal = new byte[6];
