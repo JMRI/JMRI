@@ -33,7 +33,9 @@ import org.junit.runners.Suite;
     VSDecoderCreationActionTest.class,
     VSDecoderFrameTest.class,
     VSDecoderManagerTest.class,
-    VSDecoderPreferencesTest.class
+    VSDecoderPreferencesTest.class,
+    VSDecoderManagerThreadTest.class,
+    VSDecoderTest.class
 })
 
 /**
