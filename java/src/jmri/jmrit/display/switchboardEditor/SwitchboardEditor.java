@@ -98,10 +98,8 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
-    //protected JMenu _zoomMenu;
     private ArrayList<Positionable> _secondSelectionGroup;
     private ItemPalette _itemPalette;
-    //private boolean _disableShapeSelection;
     private boolean panelChanged = false;
 
     // Switchboard items
@@ -216,7 +214,6 @@ public class SwitchboardEditor extends Editor {
         setGlobalSetsLocalFlag(false);
         setUseGlobalFlag(false);
         _menuBar = new JMenuBar();
-        //makeZoomMenu();
         makeOptionMenu();
         //makeEditMenu();
         makeFileMenu();
@@ -1316,34 +1313,6 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(textColorMenu);
     }
 
-//    protected void makeZoomMenu() {
-//        _zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-//        _menuBar.add(_zoomMenu, 0);
-//        JMenuItem addItem = new JMenuItem(Bundle.getMessage("NoZoom"));
-//        _zoomMenu.add(addItem);
-//        addItem.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                zoomRestore();
-//            }
-//        });
-//
-//        addItem = new JMenuItem(Bundle.getMessage("Zoom", "..."));
-//        _zoomMenu.add(addItem);
-//        PositionableJComponent z = new PositionableJComponent(this);
-//        z.setScale(getPaintScale());
-//        addItem.addActionListener(CoordinateEdit.getZoomEditAction(z));
-//
-//        addItem = new JMenuItem(Bundle.getMessage("ZoomFit"));
-//        _zoomMenu.add(addItem);
-//        addItem.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                zoomToFit();
-//            }
-//        });
-//    }
-
     private void makeFileMenu() {
         _fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         _menuBar.add(_fileMenu, 0);
@@ -1365,25 +1334,8 @@ public class SwitchboardEditor extends Editor {
         editItem.addActionListener(CoordinateEdit.getNameEditAction(z));
         _fileMenu.add(editItem);
 
-//        editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
-//        _fileMenu.add(editItem);
-//        editItem.addActionListener(new ActionListener() {
-//            SwitchboardEditor panelEd;
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                ImageIndexEditor ii = ImageIndexEditor.instance(panelEd);
-//                ii.pack();
-//                ii.setVisible(true);
-//            }
-//
-//            ActionListener init(SwitchboardEditor pe) {
-//                panelEd = pe;
-//                return this;
-//            }
-//        }.init(this));
-
         _fileMenu.addSeparator();
+
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener(new ActionListener() {
@@ -1401,6 +1353,7 @@ public class SwitchboardEditor extends Editor {
             @Override
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(false);
+                setVisible(false); // hide Editor pane
             }
         });
     }
@@ -1526,78 +1479,6 @@ public class SwitchboardEditor extends Editor {
         setOptionMenuBackgroundColor();
     }
 
-//    private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
-//        JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
-//        button.addActionListener(new ActionListener() {
-//            String cName;
-//
-//            ActionListener init(String name) {
-//                cName = name;
-//                return this;
-//            }
-//
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                selectType(cName);
-//            }
-//        }.init(className));
-//        return button;
-//    }
-//
-//    private void selectType(String name) {
-//        try {
-//            Class<?> cl = Class.forName(name);
-//            _selectionGroup = new ArrayList<Positionable>();
-//            Iterator<Positionable> it = _contents.iterator();
-//            while (it.hasNext()) {
-//                Positionable pos = it.next();
-//                if (cl.isInstance(pos)) {
-//                    _selectionGroup.add(pos);
-//                }
-//            }
-//        } catch (ClassNotFoundException cnfe) {
-//            log.error("selectType Menu " + cnfe.toString());
-//        }
-//        _targetPanel.repaint();
-//    }
-
-//    private JMenu makeSelectLevelMenu() {
-//        JMenu menu = new JMenu(Bundle.getMessage("SelectLevel"));
-//        ButtonGroup levelGroup = new ButtonGroup();
-//        JRadioButtonMenuItem button = null;
-//        for (int i = 0; i < 11; i++) {
-//            button = new JRadioButtonMenuItem(Bundle.getMessage("selectLevel", "" + i));
-//            levelGroup.add(button);
-//            menu.add(button);
-//            button.addActionListener(new ActionListener() {
-//                int j;
-//
-//                ActionListener init(int k) {
-//                    j = k;
-//                    return this;
-//                }
-//
-//                @Override
-//                public void actionPerformed(ActionEvent event) {
-//                    selectLevel(j);
-//                }
-//            }.init(i));
-//        }
-//        return menu;
-//    }
-
-//    private void selectLevel(int i) {
-//        _selectionGroup = new ArrayList<Positionable>();
-//        Iterator<Positionable> it = _contents.iterator();
-//        while (it.hasNext()) {
-//            Positionable pos = it.next();
-//            if (pos.getDisplayLevel() == i) {
-//                _selectionGroup.add(pos);
-//            }
-//        }
-//        _targetPanel.repaint();
-//    }
-
     // *********************** end Menus ************************
 
     @Override
@@ -1610,11 +1491,6 @@ public class SwitchboardEditor extends Editor {
 //                makeIconMenu();
 //            } else {
 //                _menuBar.add(_iconMenu, 0);
-//            }
-//            if (_zoomMenu == null) {
-//                makeZoomMenu();
-//            } else {
-//                _menuBar.add(_zoomMenu, 0);
 //            }
             if (_optionMenu == null) {
                 makeOptionMenu();
@@ -2413,12 +2289,12 @@ public class SwitchboardEditor extends Editor {
         return null;
     }
 
-//    public List<BeanSwitch> getSwitches() {
-//        for (int i = 0; i < switchlist.size(); i++) {
-//            _switches.add(switchboardLayeredPane.getComponent(i));
-//        }
-//        return _switches;
-//    }
+    public List<BeanSwitch> getSwitches() {
+        for (int i = 0; i < switchlist.size(); i++) {
+            _switches.add((BeanSwitch) switchboardLayeredPane.getComponent(i));
+        }
+        return _switches;
+    }
 
     /**
      * Set up item(s) to be copied by paste.

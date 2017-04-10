@@ -117,6 +117,9 @@ function processPanelXML($returnedData, $success, $xhr) {
 
         //set background color from panel attribute
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
+
+        //set short notice
+        $("#panel-area").append("<div id=info>Hallo" + $gPanel.text + "</div>");
     }
 
     //process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
@@ -462,6 +465,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
+                                break;
+                            case "switch" : // Switchboard BeanSwitch of shape "button"
+                                $widget['name'] = $widget.label; //normalize name
+                                $widget.jsonType = "switch"; // JSON object type
+                                $widget['text'] = $widget.label; //use name for initial text
+                                $widget['state'] = 0; //use 0 for initial state
+                                $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
+                                jmri.getTurnout($widget["systemName"]);
+                                $("#panel-area>#" + $widget.id).css(
+                                {position: 'relative', float: 'left'});
+                                $widget.classes += "button ";
                                 break;
                         }
                         $widget['safeName'] = $safeName($widget.name);
@@ -1234,7 +1250,7 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    if (typeof $widget !== "undefined") {  //don't bother if widget not found
+    if (typeof $widget !== "undefined" && $widget.widgetType !== "switch") {  //don't bother if widget not found or BeanSwitch
     	
     	var $height = 0;
     	var $width  = 0;
@@ -1557,6 +1573,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "fastclock" :
         case "BlockContentsIcon" :
 //	case "reportericon" :
+        case "switch" :
             return "text";
             break;
         case "positionablelabel" :

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
+import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
 import jmri.util.ColorUtil;
 import org.jdom2.Document;
@@ -58,46 +59,54 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             panel.setAttribute("columns", Integer.toString(editor.getColumns()));
             panel.setAttribute("defaulttextcolor", editor.getDefaultTextColor());
             log.debug("webserver Switchboard attribs ready");
-            Element color = new Element("backgroundColor");
-            if (editor.getBackgroundColor() == null) { // set to light grey
-                color.setAttribute("red", Integer.toString(192));
-                color.setAttribute("green", Integer.toString(192));
-                color.setAttribute("blue", Integer.toString(192));
-            } else {
-                color.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));
-                color.setAttribute("green", Integer.toString(editor.getBackgroundColor().getGreen()));
-                color.setAttribute("blue", Integer.toString(editor.getBackgroundColor().getBlue()));
-            }
-            panel.addContent(color);
 
-            // include switches
-//            List<BeanSwitch> contents = editor.getSwitches(); // TODO add method to swbEditor
-//            log.debug("N elements: {}", contents.size());
-//            for (Positionable sub : contents) {
-//                if (sub != null) {
-//                    try {
-//                        Element e = ConfigXmlManager.elementFromObject(sub);
-//                        if (e != null) {
-//                            if ("button".equals(e.getName())) {  //insert slider details into switch
-//                                //e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+            Element bgColor = new Element("backgroundColor");
+            if (editor.getBackgroundColor() == null) { // set to light grey
+                bgColor.setAttribute("red", Integer.toString(192));
+                bgColor.setAttribute("green", Integer.toString(192));
+                bgColor.setAttribute("blue", Integer.toString(192));
+            } else {
+                bgColor.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));
+                bgColor.setAttribute("green", Integer.toString(editor.getBackgroundColor().getGreen()));
+                bgColor.setAttribute("blue", Integer.toString(editor.getBackgroundColor().getBlue()));
+            }
+            panel.addContent(bgColor);
+
+            Element text = new Element("text");
+            text.setAttribute("color", editor.getDefaultTextColor());
+            text.setAttribute("content", "Switchboards are not yet operational in JMRI WebServer.");
+            panel.addContent(text);
+
+            // include switches, how to delete the old ones?
+            List<BeanSwitch> _switches = editor.getSwitches(); // call method in SwitchboardEditor
+            log.debug("N _switches: {}", _switches.size());
+            for (BeanSwitch sub : _switches) {
+                if (sub != null) {
+                    try {
+                        Element e = ConfigXmlManager.elementFromObject(sub);
+                        if (e != null) {
+                            log.debug("element name: {}", e.getName());
+//                            if ("button".equals(e.getName())) {  //insert details into switch
+                                //e.addContent(getSwitchIconsElement(e.getAttributeValue("signalmast")));
 //                            }
-//                            try {
-//                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-//                            } catch (NullPointerException ex) {
-//                                if (sub.getNamedBean() == null) {
-//                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-//                                } else {
-//                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
-//                                }
-//                            }
-//                            parsePortableURIs(e);
-//                            panel.addContent(e);
-//                        }
-//                    } catch (Exception ex) {
-//                        log.error("Error storing panel element: " + ex, ex);
-//                    }
-//                }
-//            }
+                            try {
+                                e.setAttribute("label", sub.getNameString());
+                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+                            } catch (NullPointerException ex) {
+                                //if (sub.getNamedBean() == null) {
+                                //    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                                //} else {
+                                //    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                                //}
+                            }
+                            parsePortableURIs(e);
+                            panel.addContent(e);
+                        }
+                    } catch (Exception ex) {
+                        log.error("Error reading xml panel element: " + ex, ex);
+                    }
+                }
+            }
 
             Document doc = new Document(panel);
             XMLOutputter out = new XMLOutputter();
