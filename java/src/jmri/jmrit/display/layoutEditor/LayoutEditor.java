@@ -22,9 +22,6 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
@@ -46,7 +43,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -74,7 +70,6 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import javax.swing.text.JTextComponent;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -185,7 +180,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private JRadioButton layoutSingleSlipButton = new JRadioButton(rb.getString("LayoutSingleSlip"));
     private JRadioButton layoutDoubleSlipButton = new JRadioButton(rb.getString("LayoutDoubleSlip"));
 
-    //Default flow layout definiitons for JPanels
+    //Default flow layout definitions for JPanels
     private FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
     private FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
     private FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
@@ -650,27 +645,27 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //setup group for radio buttons selecting items to add and line style
         itemGroup = new ButtonGroup();
-        itemGroup.  add(turnoutRHButton);
-        itemGroup.  add(turnoutLHButton);
-        itemGroup.  add(turnoutWYEButton);
-        itemGroup.  add(doubleXoverButton);
-        itemGroup.  add(rhXoverButton);
-        itemGroup.  add(lhXoverButton);
-        itemGroup.  add(levelXingButton);
-        itemGroup.  add(layoutSingleSlipButton);
-        itemGroup.  add(layoutDoubleSlipButton);
-        itemGroup.  add(endBumperButton);
-        itemGroup.  add(anchorButton);
-        itemGroup.  add(edgeButton);
-        itemGroup.  add(trackButton);
-        itemGroup.  add(multiSensorButton);
-        itemGroup.  add(sensorButton);
-        itemGroup.  add(signalButton);
-        itemGroup.  add(signalMastButton);
-        itemGroup.  add(textLabelButton);
-        itemGroup.  add(memoryButton);
-        itemGroup.  add(blockContentsButton);
-        itemGroup.  add(iconLabelButton);
+        itemGroup.add(turnoutRHButton);
+        itemGroup.add(turnoutLHButton);
+        itemGroup.add(turnoutWYEButton);
+        itemGroup.add(doubleXoverButton);
+        itemGroup.add(rhXoverButton);
+        itemGroup.add(lhXoverButton);
+        itemGroup.add(levelXingButton);
+        itemGroup.add(layoutSingleSlipButton);
+        itemGroup.add(layoutDoubleSlipButton);
+        itemGroup.add(endBumperButton);
+        itemGroup.add(anchorButton);
+        itemGroup.add(edgeButton);
+        itemGroup.add(trackButton);
+        itemGroup.add(multiSensorButton);
+        itemGroup.add(sensorButton);
+        itemGroup.add(signalButton);
+        itemGroup.add(signalMastButton);
+        itemGroup.add(textLabelButton);
+        itemGroup.add(memoryButton);
+        itemGroup.add(blockContentsButton);
+        itemGroup.add(iconLabelButton);
 
         //This is used to enable/disable property controls depending on which (radio) button is selected
         ActionListener selectionListAction = (ActionEvent a) -> {
@@ -808,8 +803,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //this is enabled/disabled via selectionListAction above
         JLabel extraTurnoutLabel = new JLabel(rb.getString("SecondName"));
         extraTurnoutLabel.setEnabled(false);
-        extraTurnoutPanel.  add(extraTurnoutLabel);
-        extraTurnoutPanel.  add(extraTurnoutNameComboBox);
+        extraTurnoutPanel.add(extraTurnoutLabel);
+        extraTurnoutPanel.add(extraTurnoutNameComboBox);
         extraTurnoutPanel.setEnabled(false);
 
         String[] angleStrings = {"-180", "-135", "-90", "-45", "0", "+45", "+90", "+135", "+180"};
@@ -819,11 +814,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rotationComboBox.setToolTipText(rb.getString("RotationToolTip"));
 
         JLabel rotationLabel = new JLabel(rb.getString("Rotation"));
-        rotationPanel.  add(rotationLabel);
-        rotationPanel.  add(rotationComboBox);
+        rotationPanel.add(rotationLabel);
+        rotationPanel.add(rotationComboBox);
 
-        zoomPanel.  add(new JLabel(rb.getString("ZoomLabel") + ":"));
-        zoomPanel.  add(zoomLabel);
+        zoomPanel.add(new JLabel(rb.getString("ZoomLabel") + ":"));
+        zoomPanel.add(zoomLabel);
 
         Dimension coordSize = xLabel.getPreferredSize();
         coordSize.width *= 2;
@@ -831,12 +826,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         yLabel.setPreferredSize(coordSize);
 
 //locationPanel.add(new JLabel("    " + rb.getString("Location") + ":"));
-        locationPanel.  add(new JLabel(rb.getString("Location") + ":"));
-        locationPanel.  add(new JLabel("{x:"));
-        locationPanel.  add(xLabel);
-        locationPanel.  add(new JLabel(", y:"));
-        locationPanel.  add(yLabel);
-        locationPanel.  add(new JLabel("}    "));
+        locationPanel.add(new JLabel(rb.getString("Location") + ":"));
+        locationPanel.add(new JLabel("{x:"));
+        locationPanel.add(xLabel);
+        locationPanel.add(new JLabel(", y:"));
+        locationPanel.add(yLabel);
+        locationPanel.add(new JLabel("}    "));
 
         //second row of edit tool bar items
         levelXingButton.setToolTipText(rb.getString("LevelCrossingToolTip"));
@@ -864,7 +859,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (highlightSelectedBlockFlag) {
                 highlightBlockInComboBox(blockIDComboBox);
             }
-            String newName = getUserNameForComboBox(blockIDComboBox);
+            String newName = blockIDComboBox.getUserName();
             LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
 
             if (b != null) {
@@ -1216,25 +1211,25 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         floatEditTurnout.setLayout(new BoxLayout(floatEditTurnout, BoxLayout.Y_AXIS));
 
         JPanel turnoutGroup1 = new JPanel(floatContentLayout);
-        turnoutGroup1.  add(turnoutRHButton);
-        turnoutGroup1.  add(turnoutLHButton);
-        turnoutGroup1.  add(turnoutWYEButton);
+        turnoutGroup1.add(turnoutRHButton);
+        turnoutGroup1.add(turnoutLHButton);
+        turnoutGroup1.add(turnoutWYEButton);
         floatEditTurnout.add(turnoutGroup1);
 
         JPanel turnoutGroup2 = new JPanel(floatContentLayout);
-        turnoutGroup2.  add(doubleXoverButton);
-        turnoutGroup2.  add(rhXoverButton);
-        turnoutGroup2.  add(lhXoverButton);
+        turnoutGroup2.add(doubleXoverButton);
+        turnoutGroup2.add(rhXoverButton);
+        turnoutGroup2.add(lhXoverButton);
         floatEditTurnout.add(turnoutGroup2);
 
         JPanel turnoutGroup3 = new JPanel(floatContentLayout);
-        turnoutGroup3.  add(layoutSingleSlipButton);
-        turnoutGroup3.  add(layoutDoubleSlipButton);
+        turnoutGroup3.add(layoutSingleSlipButton);
+        turnoutGroup3.add(layoutDoubleSlipButton);
         floatEditTurnout.add(turnoutGroup3);
 
         JPanel turnoutGroup4 = new JPanel(floatContentLayout);
-        turnoutGroup4.  add(turnoutNamePanel);
-        turnoutGroup4.  add(extraTurnoutPanel);
+        turnoutGroup4.add(turnoutNamePanel);
+        turnoutGroup4.add(extraTurnoutPanel);
         floatEditTurnout.add(turnoutGroup4);
 
         JPanel turnoutGroup5 = new JPanel(floatContentLayout);
@@ -1658,14 +1653,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (!useBorders) {
                 hTop1Left.add(turnoutLabel);
             }
-            hTop1Left.  add(turnoutRHButton);
-            hTop1Left.  add(turnoutLHButton);
-            hTop1Left.  add(turnoutWYEButton);
-            hTop1Left.  add(doubleXoverButton);
-            hTop1Left.  add(rhXoverButton);
-            hTop1Left.  add(lhXoverButton);
-            hTop1Left.  add(layoutSingleSlipButton);
-            hTop1Left.  add(layoutDoubleSlipButton);
+            hTop1Left.add(turnoutRHButton);
+            hTop1Left.add(turnoutLHButton);
+            hTop1Left.add(turnoutWYEButton);
+            hTop1Left.add(doubleXoverButton);
+            hTop1Left.add(rhXoverButton);
+            hTop1Left.add(lhXoverButton);
+            hTop1Left.add(layoutSingleSlipButton);
+            hTop1Left.add(layoutDoubleSlipButton);
             hTop1Panel.add(hTop1Left);
 
             if (toolBarIsWide) {
@@ -1709,9 +1704,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (!useBorders) {
                 hTop3Left.add(trackLabel);
             }
-            hTop3Left.  add(levelXingButton);
-            hTop3Left.  add(trackButton);
-            hTop3Left.  add(trackSegmentPropertiesPanel);
+            hTop3Left.add(levelXingButton);
+            hTop3Left.add(trackButton);
+            hTop3Left.add(trackSegmentPropertiesPanel);
 
             hTop3Panel. add(hTop3Left);
             hTop3Panel. add(Box.createHorizontalGlue());
@@ -1747,10 +1742,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //Row 4 : Left Components
             JPanel hTop4Left = new JPanel(leftRowLayout);
             nodesLabel = new JLabel(rb.getString("Nodes") + ":  ");
-            hTop4Left.  add(nodesLabel);
-            hTop4Left.  add(endBumperButton);
-            hTop4Left.  add(anchorButton);
-            hTop4Left.  add(edgeButton);
+            hTop4Left.add(nodesLabel);
+            hTop4Left.add(endBumperButton);
+            hTop4Left.add(anchorButton);
+            hTop4Left.add(edgeButton);
             hTop4Panel. add(hTop4Left);
             hTop4Panel. add(Box.createHorizontalGlue());
 
@@ -1782,14 +1777,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 editToolBarPanel.add(hTop4Panel);
 
                 JPanel hTop5Left = new JPanel(leftRowLayout);
-                hTop5Left.  add(labelsLabel);
-                hTop5Left.  add(textLabelButton);
-                hTop5Left.  add(textLabelTextField);
-                hTop5Left.  add(memoryButton);
-                hTop5Left.  add(textMemoryComboBox);
-                hTop5Left.  add(blockContentsButton);
-                hTop5Left.  add(blockContentsComboBox);
-                hTop5Left.  add(Box.createHorizontalGlue());
+                hTop5Left.add(labelsLabel);
+                hTop5Left.add(textLabelButton);
+                hTop5Left.add(textLabelTextField);
+                hTop5Left.add(memoryButton);
+                hTop5Left.add(textMemoryComboBox);
+                hTop5Left.add(blockContentsButton);
+                hTop5Left.add(blockContentsComboBox);
+                hTop5Left.add(Box.createHorizontalGlue());
                 editToolBarPanel.add(hTop5Left);
             }
 
@@ -1800,16 +1795,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //Row 6 : Left Components
             //JPanel hTop6Left = new JPanel(centerRowLayout);
             JPanel hTop6Left = new JPanel(leftRowLayout);
-            hTop6Left.  add(multiSensorButton);
-            hTop6Left.  add(changeIconsButton);
-            hTop6Left.  add(sensorButton);
-            hTop6Left.  add(sensorComboBox);
-            hTop6Left.  add(signalMastButton);
-            hTop6Left.  add(signalMastComboBox);
-            hTop6Left.  add(signalButton);
-            hTop6Left.  add(signalHeadComboBox);
-            hTop6Left.  add(new JLabel("      "));
-            hTop6Left.  add(iconLabelButton);
+            hTop6Left.add(multiSensorButton);
+            hTop6Left.add(changeIconsButton);
+            hTop6Left.add(sensorButton);
+            hTop6Left.add(sensorComboBox);
+            hTop6Left.add(signalMastButton);
+            hTop6Left.add(signalMastComboBox);
+            hTop6Left.add(signalButton);
+            hTop6Left.add(signalHeadComboBox);
+            hTop6Left.add(new JLabel("      "));
+            hTop6Left.add(iconLabelButton);
 
             hTop6Panel.add(hTop6Left);
             editToolBarPanel.add(hTop6Panel);
@@ -2010,138 +2005,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //setup editable JmriBeanComboBoxes
     //
-    //note: inValidateMode if true valid == green, invalid == red background
-    //if false valid == green, invalid == yellow background
+    //note: inValidateMode if true valid text == green, invalid == red background
+    //if false valid text == green, invalid == yellow background
     //
     public void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
         inComboBox.setEditable(true);
         inComboBox.getEditor().setItem("");
         inComboBox.setSelectedIndex(-1);
         inComboBox.setEnabled(inEnable);
-
-        //fires when drop down list item is selected
-        inComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent event) {
-                if (event.getStateChange() == ItemEvent.SELECTED) {
-                    JmriBeanComboBox cb = (JmriBeanComboBox) event.getSource();
-                    validateComboBox(cb, inValidateMode);
-                }
-            }
-        });
-
-        //fires when key is released while typing in combox editor
-        inComboBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent event) {
-                JTextComponent c = (JTextComponent) event.getSource();
-                JmriBeanComboBox cb = (JmriBeanComboBox) c.getParent();
-                validateComboBox(cb, inValidateMode);
-            }
-        });
+        inComboBox.setValidateMode(inValidateMode);
     }   //setupComboBox
-
-    //
-    //
-    //
-    private void validateComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode) {
-        ComboBoxEditor cbe = inComboBox.getEditor();
-        JTextComponent c = (JTextComponent) cbe.getEditorComponent();
-        String comboBoxText = cbe.getItem().toString();
-
-        if (!comboBoxText.isEmpty()) {
-            if (validateComboBoxEntry(inComboBox)) {
-                c.setBackground(new Color(0xBDECB6));   //pastel green
-            } else {
-                if (inValidateMode) {
-                    c.setBackground(new Color(0xFFC0C0));   //pastel red
-                } else {
-                    c.setBackground(new Color(0xFDFD96));   //pastel yellow
-                }
-            }
-        } else {
-            c.setBackground(new Color(0xFFFFFF));   //white
-        }
-    }   //validateComboBox
-
-    //
-    //
-    //
-    private NamedBean getBeanForComboBox(JmriBeanComboBox inComboBox) {
-        NamedBean result = null;
-
-        jmri.Manager uDaManager = inComboBox.getManager();
-
-        String comboBoxText = inComboBox.getEditor().getItem().toString();
-        comboBoxText = (null != comboBoxText) ? comboBoxText.trim() : "";
-
-        //try user name
-        result = uDaManager.getBeanByUserName(comboBoxText);
-
-        if (null == result) {
-            //try system name
-            //note: don't use getBeanBySystemName here
-            //throws an IllegalArgumentException if text is invalid
-            result = uDaManager.getNamedBean(comboBoxText);
-        }
-
-        if (null == result) {
-            //quick search to see if text matches anything in the drop down list
-            String[] displayList = inComboBox.getDisplayList();
-            boolean found = false;  //assume failure (pessimist!)
-
-            for (String item : displayList) {
-                if (item.equals(comboBoxText)) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (found) {    //if we found it there then…
-                //walk the namedBeanList…
-                List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
-
-                for (NamedBean namedBean : namedBeanList) {
-                    //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
-                    String uname = namedBean.getUserName();
-                    String sname = namedBean.getSystemName();
-
-                    if ((null != uname) && (null != sname)) {
-                        String usname = uname + " - " + sname;
-                        String suname = sname + " - " + uname;
-
-                        if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
-                            result = namedBean;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }   //getBeanForComboBox
-
-    //
-    //is the combo box text valid?
-    //
-    private boolean validateComboBoxEntry(JmriBeanComboBox inComboBox) {
-        return null != getBeanForComboBox(inComboBox);
-    }
-
-    //
-    //return the user name for this combobox
-    //
-    private String getUserNameForComboBox(JmriBeanComboBox inComboBox) {
-        String result = inComboBox.getEditor().getItem().toString();
-        result = (null != result) ? result.trim() : "";
-
-        NamedBean b = getBeanForComboBox(inComboBox);
-
-        if (null != b) {
-            result = b.getUserName();
-        }
-        return result;
-    }   //getUserNameForComboBox
 
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
@@ -2537,7 +2410,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
-    ///TODO: update menu item based on focused combobox (if any)
+                ///TODO: update menu item based on focused combobox (if any)
                 log.debug("update menu item based on focused combobox");
             }
 
@@ -2804,7 +2677,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             setDirty(true);
 
             if (toolBarSide.equals(eToolBarSide.eFLOAT) && isEditable()) {
-            	// Rebuild the toolbox after a name change.
+             // Rebuild the toolbox after a name change.
                 deleteFloatingEditToolBox();
                 createFloatingEditToolBox();
             }
@@ -2824,7 +2697,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //background color menu item
         //
-        JMenu backgroundColorMenu = new JMenu(rb.getString("SetBackgroundColor"));
+        JMenu backgroundColorMenu = new JMenu(Bundle.getMessage("SetBackgroundColor"));
         backgroundColorButtonGroup = new ButtonGroup();
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Black"),     Color.black);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("DarkGray"),  Color.darkGray);
@@ -2839,7 +2712,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Blue"),      Color.blue);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Magenta"),   Color.magenta);
         addBackgroundColorMenuEntry(backgroundColorMenu,    Bundle.getMessage("Cyan"),      Color.cyan);
-        optionMenu. add(backgroundColorMenu);
+        optionMenu.add(backgroundColorMenu);
 
         //
         //add fast clock menu item
@@ -2956,7 +2829,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //
         //add text color menu item
         //
-        JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
+        JMenu textColorMenu = new JMenu(Bundle.getMessage("DefaultTextColor"));
         textColorButtonGroup = new ButtonGroup();
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Black"),     Color.black);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("DarkGray"),  Color.darkGray);
@@ -2971,7 +2844,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Blue"),      Color.blue);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Magenta"),   Color.magenta);
         addTextColorMenuEntry(textColorMenu,  Bundle.getMessage("Cyan"),      Color.cyan);
-        optionMenu. add(textColorMenu);
+        optionMenu.add(textColorMenu);
 
         //
         //add turnout options submenu
@@ -3141,7 +3014,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
 
                     //now try to get a preference specific to this combobox
-
                     JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
                     if (inComponent instanceof JTextField) {
                         jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(jbcb);
@@ -3213,7 +3085,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (null != floatingEditToolBox) {
                     deleteFloatingEditToolBox();
                 }
-				floatingEditContent = null;  // The switch to toolbar will move the toolbox content to the new toolbar
+                floatingEditContent = null;  // The switch to toolbar will move the toolbox content to the new toolbar
                 editToolBarContainer.setVisible(isEditable());
             }
             toolBarSideTopButton.setSelected(toolBarSide.equals(eToolBarSide.eTOP));
@@ -8535,7 +8407,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setLink(newTrack,   LayoutTrack.TRACK,  foundObject,    foundPointType);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -8543,7 +8415,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             auxTools.setBlockConnectivityChanged();
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8586,7 +8458,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -8594,7 +8466,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             o.setLayoutBlockBD(b);
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8653,14 +8525,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8671,7 +8543,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        String turnoutName = getUserNameForComboBox(turnoutNameComboBox);
+        String turnoutName = turnoutNameComboBox.getUserName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8685,7 +8557,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.getEditor().setItem("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
-        turnoutName = getUserNameForComboBox(extraTurnoutNameComboBox);
+        turnoutName = extraTurnoutNameComboBox.getUserName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8746,14 +8618,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
 
         //check on layout block
-        String newName = getUserNameForComboBox(blockIDComboBox);
+        String newName = blockIDComboBox.getUserName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = getUserNameForComboBox(blockSensorComboBox);
+            String sensorName = blockSensorComboBox.getUserName();
 
             if (sensorName.length() > 0) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -8768,7 +8640,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         o.setContinuingSense(Turnout.CLOSED);
 
         //check on a physical turnout
-        String turnoutName = getUserNameForComboBox(turnoutNameComboBox);
+        String turnoutName = turnoutNameComboBox.getUserName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -9933,7 +9805,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-        String newName = getUserNameForComboBox(sensorComboBox);
+        String newName = sensorComboBox.getUserName();
 
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error10"),
@@ -9983,7 +9855,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      */
     void addSignalHead() {
         //check for valid signal head entry
-        String newName = getUserNameForComboBox(signalHeadComboBox);
+        String newName = signalHeadComboBox.getUserName();
         SignalHead mHead = null;
 
         if (!newName.equals("")) {
@@ -10078,7 +9950,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     void addSignalMast() {
         //check for valid signal head entry
-        String newName = getUserNameForComboBox(signalMastComboBox);
+        String newName = signalMastComboBox.getUserName();
         SignalMast mMast = null;
 
         if (!newName.equals("")) {
@@ -10187,7 +10059,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-        String memoryName = getUserNameForComboBox(textMemoryComboBox);
+        String memoryName = textMemoryComboBox.getUserName();
 
         if (memoryName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11a"),
@@ -10216,7 +10088,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //addMemory
 
     void addBlockContents() {
-        String newName = getUserNameForComboBox(blockContentsComboBox);
+        String newName = blockContentsComboBox.getUserName();
 
         if (newName.length() <= 0) {
             JOptionPane.showMessageDialog(this, rb.getString("Error11b"),
@@ -10410,7 +10282,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //deletePanel
 
     /**
-     * Control whether target panel items are editable. Does this by invoke the
+     * Control whether target panel items are editable. Does this by invoking the
      * {@link Editor#setAllEditable} function of the parent class. This also
      * controls the relevant pop-up menu items (which are the primary way that
      * items are edited).
@@ -10452,7 +10324,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         awaitingIconChange = false;
         editModeItem.setSelected(editable);
         repaint();
-    }   //setAllEditable
+    }
 
     /**
      * Control whether panel items are positionable. Markers are always
@@ -10804,7 +10676,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         boolean result = false;
 
         if (null != inComboBox) {
-            jmri.Block b = (jmri.Block)getBeanForComboBox(inComboBox);
+            jmri.Block b = (jmri.Block) inComboBox.getNamedBean();
             result = highlightBlock(b);
         }
         return result;

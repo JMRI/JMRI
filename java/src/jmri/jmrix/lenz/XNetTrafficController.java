@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * This provides just the basic interface, plus the "" static method for
  * locating the local implementation.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2004-2010
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2004-2010
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {

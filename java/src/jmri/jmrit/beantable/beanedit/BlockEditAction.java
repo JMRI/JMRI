@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides an edit panel for a block object
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class BlockEditAction extends BeanEditAction {
 

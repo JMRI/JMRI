@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
  * This connects an Marklin command station via a UDP connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class NetworkDriverAdapter extends MarklinPortController implements jmri.jmrix.NetworkPortAdapter {
 

@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
  * Provide access to Powerline devices via a serial comm port. Derived from the
  * oaktree code.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
+ * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
@@ -229,6 +229,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
 
     /**
      * Local method to do specific port configuration
+     * @throws gnu.io.UnsupportedCommOperationException for invalid options
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -238,8 +239,8 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default

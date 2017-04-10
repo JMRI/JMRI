@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
@@ -150,19 +150,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             }
         }
     }
-
-    /**
-     * static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
-    }
-
 
     @Override
     public boolean allowMultipleAdditions(String systemName) {

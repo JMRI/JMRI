@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * <LI>selectedDecoderName
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * This is a configuration utility for the LIUSB. It allows the user to set the
  * XPressNet Address and the port speed used to communicate with the LIUSB.
  *
- * @author	Paul Bender Copyright (C) 2009-2010
+ * @author Paul Bender Copyright (C) 2009-2010
   */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 

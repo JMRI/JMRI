@@ -158,7 +158,7 @@ public class TransitManager extends AbstractManager
      * @param z the transit to remove
      */
     public void deleteTransit(Transit z) {
-        // delete the Transit				
+        // delete the Transit    
         deregister(z);
         z.dispose();
     }

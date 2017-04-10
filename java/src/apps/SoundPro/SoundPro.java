@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2007
+ * @author Bob Jacobsen Copyright 2003, 2004, 2007
  * @author Matthew Harris copyright (c) 2009
  */
 public class SoundPro extends Apps {

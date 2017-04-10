@@ -11,8 +11,8 @@ import jmri.jmrix.can.TrafficController;
 /**
  * PowerManager implementation for controlling CBUS layout power.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew CRosland Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew CRosland Copyright (C) 2009
  */
 public class CbusPowerManager implements PowerManager, CanListener {
 

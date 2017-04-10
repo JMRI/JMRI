@@ -7,7 +7,7 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
 /**
  * Create a menu containing the JMRI OpenLCB-specific tools
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class OpenLcbMenu extends JMenu {
 

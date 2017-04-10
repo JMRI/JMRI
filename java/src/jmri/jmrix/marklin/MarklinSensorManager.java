@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * System names are "USnnn:yy", where nnn is the Marklin Object Number for a
  * given s88 Bus Module and yy is the port on that module.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         implements MarklinListener {

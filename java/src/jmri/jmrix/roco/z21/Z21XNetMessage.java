@@ -24,6 +24,14 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         super(len);
     }
 
+    // construct from a Z21Message
+    public Z21XNetMessage(Z21Message m) {
+        super(m.getLength()-4);
+        for(int i = 4; i< m.getLength() ; i++ ){
+           this.setElement(i-4,m.getElement(i));
+        }
+    }
+
     // create messages of a particular form
     public static XNetMessage getZ21ReadDirectCVMsg(int cv) {
         XNetMessage m = new XNetMessage(5);

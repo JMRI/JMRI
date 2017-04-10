@@ -367,7 +367,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
             try {
                 switch (inPackage.charAt(0)) {
-                    case 'V':	//	Velocity
+                    case 'V': // Velocity
                         setSpeed(Integer.parseInt(inPackage.substring(1)));
 
                         break;
@@ -377,37 +377,37 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
                         break;
 
-                    case 'F':	//	Function
+                    case 'F': // Function
 
                         handleFunction(inPackage);
 
                         break;
 
-                    case 'f':	//v>=2.0	Force function
+                    case 'f': //v>=2.0 Force function
 
                         forceFunction(inPackage.substring(1));
 
                         break;
 
-                    case 'R':	//	Direction
+                    case 'R': // Direction
                         setDirection(!inPackage.endsWith("0")); // 0 sets to reverse, all others forward
                         break;
 
-                    case 'r':	//	Release
+                    case 'r': // Release
                         addressRelease();
                         break;
 
-                    case 'd':	//	Dispatch
+                    case 'd': // Dispatch
                         addressDispatch();
                         break;
 
-                    case 'L':	//	Set a Long address.
+                    case 'L': // Set a Long address.
                         addressRelease();
                         int addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, true);
                         break;
 
-                    case 'S':	//	Set a Short address.
+                    case 'S': // Set a Short address.
                         addressRelease();
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
@@ -453,12 +453,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             }
         } else {  //  Address not set
             switch (inPackage.charAt(0)) {
-                case 'L':	//	Set a Long address.
+                case 'L': // Set a Long address.
                     int addr = Integer.parseInt(inPackage.substring(1));
                     setAddress(addr, true);
                     break;
 
-                case 'S':	//	Set a Short address.
+                case 'S': // Set a Short address.
                     addr = Integer.parseInt(inPackage.substring(1));
                     setAddress(addr, false);
                     break;
@@ -480,7 +480,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                     break;
             }
         }
-        if (inPackage.charAt(0) == 'Q') {//	If device has Quit.
+        if (inPackage.charAt(0) == 'Q') {// If device has Quit.
             shutdownThrottle();
             return false;
         }
@@ -644,17 +644,17 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         }
     }
 
-//	Function methods
+// Function methods
     protected void handleFunction(String inPackage) {
-        //	get the function # sent from device
+        // get the function # sent from device
         String receivedFunction = inPackage.substring(2);
         Boolean state = false;
 
-        if (inPackage.charAt(1) == '1') {	//	Function Button down
+        if (inPackage.charAt(1) == '1') { // Function Button down
             if (log.isDebugEnabled()) {
                 log.debug("Trying to set function " + receivedFunction);
             }
-            //	Toggle button state:
+            // Toggle button state:
             try {
                 Method getF = functionThrottle.getClass().getMethod("getF" + receivedFunction, (Class[]) null);
 
@@ -678,7 +678,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 log.warn(ec.getLocalizedMessage(), ec);
             }
 
-        } else {	//	Function Button up
+        } else { // Function Button up
 
             //  F2 is momentary for horn, unless prefs are set to follow roster entry
             if ((isMomF2) && (receivedFunction.equals("2"))) {
@@ -686,7 +686,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 return;
             }
 
-            //	Do nothing if lockable, turn off if momentary
+            // Do nothing if lockable, turn off if momentary
             try {
                 Method getFMom = functionThrottle.getClass().getMethod("getF" + receivedFunction + "Momentary", (Class[]) null);
 
@@ -718,7 +718,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         String receivedFunction = inPackage.substring(1);
         Object data[] = new Object[1];
 
-        if (inPackage.charAt(0) == '1') {	//	Set function on
+        if (inPackage.charAt(0) == '1') { // Set function on
             data[0] = Boolean.valueOf(true);
             if (log.isDebugEnabled()) {
                 log.debug("Trying to set function " + receivedFunction + "to ON");
@@ -753,7 +753,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         String receivedFunction = inPackage.substring(1);
         Object data[] = new Object[1];
 
-        if (inPackage.charAt(0) == '1') {	//	Set Momentary TRUE
+        if (inPackage.charAt(0) == '1') { // Set Momentary TRUE
             data[0] = Boolean.valueOf(true);
             if (log.isDebugEnabled()) {
                 log.debug("Trying to set function " + receivedFunction + " to Momentary");

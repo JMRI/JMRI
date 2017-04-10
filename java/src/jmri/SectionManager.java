@@ -130,7 +130,7 @@ public class SectionManager extends AbstractManager implements PropertyChangeLis
      * @param y the section to remove
      */
     public void deleteSection(Section y) {
-        // delete the Section				
+        // delete the Section    
         deregister(y);
         y.dispose();
     }

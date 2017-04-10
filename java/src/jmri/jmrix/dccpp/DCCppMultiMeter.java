@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to current meter from the DCC++ Base Station
  *
- * @author	Mark Underwood (C) 2015
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppMultiMeter extends Bean implements MultiMeter, DCCppListener {
 

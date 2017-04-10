@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Four-byte quantities in SPJ files are little-endian.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2009
+ * @author Bob Jacobsen Copyright (C) 2006, 2009
  */
 public class SpjFile {
 

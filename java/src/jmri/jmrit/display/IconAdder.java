@@ -93,7 +93,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     CatalogPanel _catalog;
     JFrame _parent;
     boolean _allowDeletes;
-    boolean _update;				// updating existing icon from popup
+    boolean _update;    // updating existing icon from popup
 
     public IconAdder() {
         _userDefaults = false;
@@ -710,7 +710,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, default icon tree
         CatalogTree tree = manager.getBySystemName("NXDI");
-        if (tree == null) {	// build a new Default Icons tree
+        if (tree == null) { // build a new Default Icons tree
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
         CatalogTreeNode root = tree.getRoot();

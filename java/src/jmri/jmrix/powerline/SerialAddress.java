@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
  * Insteon: Pthh.hh.hh where: t is the type code, 'S' for sensors, and 'L' for
  * lights aa is two hexadecimal digits examples: PLA2.43.CB
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2004
+ * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
- * @author	Ken Cameron, Copyright (C) 2008, 2009, 2010
+ * @author Ken Cameron, Copyright (C) 2008, 2009, 2010
  */
 public class SerialAddress {
 
@@ -38,6 +38,7 @@ public class SerialAddress {
 
     /**
      * Public static method to validate system name format
+     * @param systemName name to test
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      * @param type Letter indicating device type expected
@@ -97,6 +98,9 @@ public class SerialAddress {
      * Public static method to validate system name for configuration returns
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
+     * @param systemName name to test
+     * @param type       type to test
+     * @return  true for valid names
      */
     public boolean validSystemNameConfig(String systemName, char type) {
         if (!validSystemNameFormat(systemName, type)) {
@@ -111,6 +115,7 @@ public class SerialAddress {
     /**
      * Public static method determines whether a systemName names an Insteon
      * device.
+     * @param systemName name to test
      *
      * @return true if system name corresponds to Insteon device
      */
@@ -140,6 +145,10 @@ public class SerialAddress {
      * to one bit, by removing extra zeros inserted by the user.
      * <P>
      * If the supplied system name does not have a valid format, an empty string
+     * is returned. Otherwise a normalized name is returned in the same format
+     * as the input name.
+     * @param systemName name to process
+     * @return If the supplied system name does not have a valid format, an empty string
      * is returned. Otherwise a normalized name is returned in the same format
      * as the input name.
      */
@@ -180,6 +189,8 @@ public class SerialAddress {
      * <P>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
+     * @param systemName system name
+     * @return house code letter
      */
     public String houseCodeFromSystemName(String systemName) {
         String hCode = "";
@@ -203,8 +214,10 @@ public class SerialAddress {
     /**
      * Extract devicecode from system name, as a string 1-16
      * <P>
-     * If the supplied system name does not have a valid format, an empty string
-     * is returned.
+     * 
+     * @param systemName name
+     * @return If the supplied system name does not have a valid format, an empty string
+     * is returned. X10 type device code
      */
     public String deviceCodeFromSystemName(String systemName) {
         String dCode = "";
@@ -239,6 +252,8 @@ public class SerialAddress {
      * <P>
      * If the supplied system name does not have a valid format, an -1 is
      * returned.
+     * @param systemName name
+     * @return valid 1-16, invalid, return -1
      */
     public int houseCodeAsValueFromSystemName(String systemName) {
         int hCode = -1;
@@ -264,6 +279,8 @@ public class SerialAddress {
      * <P>
      * If the supplied system name does not have a valid format, an -1 is
      * returned.
+     * @param systemName name
+     * @return value of X10 device code, -1 if invalid
      */
     public int deviceCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
@@ -289,6 +306,8 @@ public class SerialAddress {
      * <P>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
+     * @param systemName name
+     * @return Insteon high byte value
      */
     public int idHighCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
@@ -314,6 +333,8 @@ public class SerialAddress {
      * <P>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
+     * @param systemName name
+     * @return Insteon middle id value, -1 if invalid
      */
     public int idMiddleCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;
@@ -339,6 +360,8 @@ public class SerialAddress {
      * <P>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
+     * @param systemName name
+     * @return Insteon low value id, -1 if invalid
      */
     public int idLowCodeAsValueFromSystemName(String systemName) {
         int dCode = -1;

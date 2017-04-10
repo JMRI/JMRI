@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * Name for the node Path is info needed for leafs.
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  *
  */
 public class CatalogTreeNode extends DefaultMutableTreeNode {

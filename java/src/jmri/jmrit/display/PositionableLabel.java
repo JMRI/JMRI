@@ -262,7 +262,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (_namedIcon != null) {
             pos._namedIcon = cloneIcon(_namedIcon, pos);
             pos.setIcon(pos._namedIcon);
-            pos.rotate(_degrees);		//this will change text in icon with a new _namedIcon.
+            pos.rotate(_degrees);  //this will change text in icon with a new _namedIcon.
         }
         pos.updateSize();
         return pos;
@@ -936,7 +936,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _text = (text != null && text.length() > 0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
         if (/*_rotateText &&*/!isIcon() && _namedIcon != null) {
             log.debug("setText calls rotate({})", _degrees);
-            rotate(_degrees);		//this will change text label as a icon with a new _namedIcon.
+            rotate(_degrees);  //this will change text label as a icon with a new _namedIcon.
         } else {
             log.debug("setText calls super.setText()");
             super.setText(text);

@@ -5,7 +5,7 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 /**
  * Provide access to Swing components for the Powerline subsystem.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 coverted to multiple connection
+ * @author Bob Jacobsen Copyright (C) 2010 coverted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class PowerlineComponentFactory extends jmri.jmrix.swing.ComponentFactory {

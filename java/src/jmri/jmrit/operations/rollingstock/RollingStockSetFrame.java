@@ -258,8 +258,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         textType.setText(_rs.getTypeName());
         locationUnknownCheckBox.setSelected(_rs.isLocationUnknown());
         outOfServiceCheckBox.setSelected(_rs.isOutOfService());
-        updateComboBoxes();		// load the location, destination, and final destination combo boxes
-        updateTrainComboBox();	// load the train combo box
+        updateComboBoxes();  // load the location, destination, and final destination combo boxes
+        updateTrainComboBox(); // load the train combo box
         enableComponents(!locationUnknownCheckBox.isSelected());
         // has the program generated a pick up and set out for this rolling stock?
         if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {

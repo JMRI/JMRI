@@ -61,10 +61,10 @@ public class LayoutConnectivity {
 
     // defined constants for crossover block boundary types.
     final public static int NONE = 0;
-    final public static int XOVER_BOUNDARY_AB = 1;		// continuing
-    final public static int XOVER_BOUNDARY_CD = 2;		// continuing
-    final public static int XOVER_BOUNDARY_AC = 3;		// xed over
-    final public static int XOVER_BOUNDARY_BD = 4;		// xed over
+    final public static int XOVER_BOUNDARY_AB = 1;  // continuing
+    final public static int XOVER_BOUNDARY_CD = 2;  // continuing
+    final public static int XOVER_BOUNDARY_AC = 3;  // xed over
+    final public static int XOVER_BOUNDARY_BD = 4;  // xed over
 
     // instance variables
     LayoutBlock block1 = null;

@@ -1442,9 +1442,9 @@ public class LayoutEditorTools {
 
     /*
      * Initializes a BlockBossLogic for creation of a signal logic for the signal
-     *		head named in "signalHeadName".
+     *  head named in "signalHeadName".
      * Should not be called until enough informmation has been gathered to allow
-     *		configuration of the Simple Signal Logic.
+     *  configuration of the Simple Signal Logic.
      */
 
     public boolean initializeBlockBossLogic(String signalHeadName) {
@@ -1471,18 +1471,18 @@ public class LayoutEditorTools {
 
     /*
      * Returns the signal head at the end of the block "track" is assigned to.
-     *		"track" is the Track Segment leaving "object".
-     *		"object" must be either an anchor point or one of the connecting
-     *			points of a turnout or level crossing.
+     *  "track" is the Track Segment leaving "object".
+     *  "object" must be either an anchor point or one of the connecting
+     *   points of a turnout or level crossing.
      * Note: returns 'null' is signal is not present where it is expected, or
-     *		if an End Bumper is reached. To test for end bumper, use the
+     *  if an End Bumper is reached. To test for end bumper, use the
      *      associated routine "reachedEndBumper()". Reaching a turntable ray
-     *		track connection is considered reaching an end bumper.
+     *  track connection is considered reaching an end bumper.
      * Note: Normally this routine requires a signal at any turnout it finds.
-     *		However, if 'skipIncludedTurnout' is true, this routine will skip
-     *		over an absent signal at an included turnout, that is a turnout
-     *		with its throat track segment and its continuing track segment in
-     *		the same block. When this happens, the user is warned.
+     *  However, if 'skipIncludedTurnout' is true, this routine will skip
+     *  over an absent signal at an included turnout, that is a turnout
+     *  with its throat track segment and its continuing track segment in
+     *  the same block. When this happens, the user is warned.
      */
     public SignalHead getNextSignalFromObject(TrackSegment track, Object object,
             String headName, JmriJFrame frame) {
@@ -1839,9 +1839,9 @@ public class LayoutEditorTools {
 
     /*
      * Returns 'true' if an end bumper was reached during the last call to
-     *		GetNextSignalFromObject. Also used in the odd case of reaching a
-     *		turntable ray track connection, which is treated as an end
-     *		bumper here.
+     *  GetNextSignalFromObject. Also used in the odd case of reaching a
+     *  turntable ray track connection, which is treated as an end
+     *  bumper here.
      */
 
     public boolean reachedEndBumper() {
@@ -1850,9 +1850,9 @@ public class LayoutEditorTools {
 
     /*
      * Returns 'true' if "track" enters a block boundary at the west(north) end of
-     *		"point". Returns "false" otherwise. If track is neither horizontal or
+     *  "point". Returns "false" otherwise. If track is neither horizontal or
      *      vertical, assumes horizontal, as done when setting signals at block boundary.
-     *	"track" is a TrackSegment connected to "point".
+     * "track" is a TrackSegment connected to "point".
      *  "point" is an anchor point serving as a block boundary.
      */
 
@@ -1918,7 +1918,7 @@ public class LayoutEditorTools {
             }
         }
         // track is not vertical or horizontal, assume horizontal
-//		log.error ("Track is not vertical or horizontal at anchor");
+//  log.error ("Track is not vertical or horizontal at anchor");
         if (delX > 0.0) {
             return false;
         }
@@ -2342,11 +2342,11 @@ public class LayoutEditorTools {
         if (Math.abs(delY) > 2.0 * Math.abs(delX)) {
             trackVertical = true;
             if (delY > 0.0) {
-                eastTrack = track1;		// south
-                westTrack = track2;		// north
+                eastTrack = track1;  // south
+                westTrack = track2;  // north
             } else {
-                eastTrack = track2;		// south
-                westTrack = track1;		// north
+                eastTrack = track2;  // south
+                westTrack = track1;  // north
             }
         }
         if (eastTrack == null) {
@@ -6010,10 +6010,10 @@ public class LayoutEditorTools {
      * Sets up a Logix to set a sensor active if a turnout is set against
      *      a track.  This routine creates an internal sensor for the purpose.
      * Note: The sensor and logix are named IS or IX followed by TTT_X_HHH where
-     *		TTT is the system name of the turnout, X is either C or T depending
+     *  TTT is the system name of the turnout, X is either C or T depending
      *      on "continuing", and HHH is the system name of the signal head.
      * Note: If there is any problem, a string of "" is returned, and a warning
-     *		message is issued.
+     *  message is issued.
      */
 
     private String setupNearLogix(LayoutTurnout nearTurnout, boolean continuing,
@@ -6060,7 +6060,7 @@ public class LayoutEditorTools {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
                     Conditional.ACTION_SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
-            c.setAction(actionList);										// string data
+            c.setAction(actionList);          // string data
             x.addConditional(cName, -1);
             x.activateLogix();
         }
@@ -6069,7 +6069,7 @@ public class LayoutEditorTools {
 
     /*
      * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-     *		provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+     *  provided there is an open slot. If 'name' is null or empty, returns without doing anything.
      */
 
     private void addNearSensorToLogic(String name) {
@@ -9366,7 +9366,7 @@ public class LayoutEditorTools {
             signalMastsJmriFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
-//					setSignalMastsCancelPressed(null);
+//     setSignalMastsCancelPressed(null);
                 }
             });
             if (turnoutFromMenu) {
@@ -13558,7 +13558,7 @@ public class LayoutEditorTools {
 
     /*
      * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and
-     *		provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+     *  provided there is an open slot. If 'name' is null or empty, returns without doing anything.
      */
 
     private void addNearSensorToSlipLogic(String name) {

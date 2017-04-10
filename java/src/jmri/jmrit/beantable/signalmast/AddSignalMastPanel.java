@@ -2081,7 +2081,7 @@ public class AddSignalMastPanel extends JPanel {
      * JPanel to define properties of an Aspect for a Matrix Signal Mast.
      * <p>
      * Invoked from the AddSignalMastPanel class when a Matrix Signal Mast is selected.
-     * @author	Egbert Broerse
+     * @author Egbert Broerse
      */
     class MatrixAspectPanel {
 

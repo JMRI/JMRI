@@ -91,10 +91,10 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
         return null;
 
         /*         if (log.isDebugEnabled()) log.debug("Decoding from hardware: '"+m+"'\n"); */
-        /* 	    CanReply gc = (CanReply)m; */
+        /*      CanReply gc = (CanReply)m; */
         /*         CanReply ret = new CanReply(); */
         /*  */
-        /* 	    // Get the ID */
+        /*      // Get the ID */
         /*         ret.setId(gc.getID()); */
         /*          */
         /*         // Get the data */
