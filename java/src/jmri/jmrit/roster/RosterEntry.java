@@ -537,10 +537,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             // parse using ISO 8601 date format(s)
             this.setDateModified(new ISO8601DateFormat().parse(date));
-        } catch (IllegalArgumentException | ParseException ex) {
-            // IllegalArgumentException for Jackson 2.0.6
-            // ParseException for Jackson 2.8.5
-            // evaluating Jackson upgrade under separate branch
+        } catch (ParseException ex) {
             // parse using defaults since thats how it was saved if saved
             // by earlier versions of JMRI
             this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
