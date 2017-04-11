@@ -1,0 +1,4 @@
+<span>
+    <div pf-c3-chart id={{lineChartId}} ng-if="chartData.dataAvailable !== false" config="chartConfig"></div>
+    <div pf-empty-chart ng-if="chartData.dataAvailable === false" chart-height="chartConfig.size.height"></div>
+</span>
