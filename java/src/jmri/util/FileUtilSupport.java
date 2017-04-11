@@ -38,6 +38,7 @@ import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.Version;
 import jmri.beans.Bean;
 import jmri.util.FileUtil.Location;
 import org.slf4j.Logger;
@@ -575,6 +576,57 @@ public class FileUtilSupport extends Bean {
         // uncomment below to print OS default to console
         // System.out.println("preferencesPath defined as \"" + result + "\" based on os.name=\"" + SystemType.getOSName() + "\"");
         return result;
+    }
+
+    /**
+     * Get the JMRI cache location, ensuring its existence.
+     *
+     * This is <strong>not</strong> part of the {@link jmri.util.FileUtil} API
+     * since it should generally be accessed using
+     * {@link jmri.profile.ProfileUtils#getCacheDirectory(jmri.profile.Profile, java.lang.Class)}.
+     *
+     * Uses the following locations:
+     * <dl>
+     * <dt>System Property (if set)</dt><dd>jmri_default_cachedir</dd>
+     * <dt>macOS</dt><dd>~/Library/Caches/JMRI/[version]</dd>
+     * <dt>Windows</dt><dd>%Local AppData%/JMRI/[version]</dd>
+     * <dt>UNIX/Linux/POSIX</dt><dd>$XDG_CACHE_HOME/JMRI/[version] or
+     * $HOME/.cache/JMRI/[version]</dd>
+     * <dt>Fallback</dt><dd>JMRI portable path setting:cache/[version]</dd>
+     * </dl>
+     *
+     * @return the cache directory for this version of JMRI
+     */
+    public File getCacheDirectory() {
+        File cache;
+        String property = System.getProperty("jmri_default_cachedir");
+        if (property != null) {
+            cache = new File(property);
+        } else {
+            switch (SystemType.getType()) {
+                case SystemType.MACOSX:
+                    cache = new File(new File(this.getHomePath(), "Library/Caches/JMRI"), Version.getCanonicalVersion());
+                    break;
+                case SystemType.LINUX:
+                case SystemType.UNIX:
+                    property = System.getenv("XDG_CACHE_HOME");
+                    if (property != null) {
+                        cache = new File(property);
+                    } else {
+                    cache = new File(new File(this.getHomePath(), ".cache/JMRI"), Version.getCanonicalVersion());
+                    }
+                    break;
+                case SystemType.WINDOWS:
+                    cache = new File(new File(this.getPreferencesPath(), "cache"), Version.getCanonicalVersion());
+                    break;
+                default:
+                    // fallback
+                    cache = new File(new File(this.getPreferencesPath(), "cache"), Version.getCanonicalVersion());
+                    break;
+            }
+        }
+        this.createDirectory(cache);
+        return cache;
     }
 
     /**
