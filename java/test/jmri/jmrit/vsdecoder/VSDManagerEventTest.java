@@ -1,25 +1,23 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.vsdecoder;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SetTrainIconPositionFrameTest {
+public class VSDManagerEventTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconPositionFrame t = new SetTrainIconPositionFrame();
+        VSDecoderManager vsdm = new VSDecoderManager();
+        VSDManagerEvent t = new VSDManagerEvent(vsdm);
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +34,6 @@ public class SetTrainIconPositionFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDManagerEventTest.class.getName());
 
 }

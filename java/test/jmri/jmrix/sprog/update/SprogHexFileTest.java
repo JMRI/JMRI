@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrix.sprog.update;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,12 +14,12 @@ import java.awt.GraphicsEnvironment;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SetTrainIconPositionFrameTest {
+public class SprogHexFileTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconPositionFrame t = new SetTrainIconPositionFrame();
+        SprogHexFile t = new SprogHexFile("test"); // the parameter is a file name.
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +36,6 @@ public class SetTrainIconPositionFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogHexFileTest.class.getName());
 
 }
