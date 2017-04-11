@@ -14,7 +14,7 @@ public class WebAppConfiguration extends AbstractWebServerConfiguration {
     @Override
     public Map<String, String> getFilePaths() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("/app", "program:web/app"); // NOI18N
+        map.put("/app/node_modules", "program:web/app/node_modules"); // NOI18N
         return map;
     }
 }

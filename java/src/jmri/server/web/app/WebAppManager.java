@@ -1,7 +1,7 @@
 package jmri.server.web.app;
 
 import java.beans.PropertyChangeEvent;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -11,6 +11,7 @@ import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.Map;
 import jmri.profile.Profile;
+import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -53,7 +54,7 @@ public class WebAppManager extends AbstractPreferencesManager {
         WebServer.getDefault().addLifeCycleListener(new LifeCycle.Listener() {
             @Override
             public void lifeCycleStarting(LifeCycle lc) {
-                // if no cached data, build it
+                File cache = ProfileUtils.getCacheDirectory(profile, this.getClass());
                 WebAppManager.this.savePreferences(profile);
             }
 
@@ -94,16 +95,7 @@ public class WebAppManager extends AbstractPreferencesManager {
 
     @Override
     public void savePreferences(Profile profile) {
-        try {
-            FileUtil.delete(FileUtil.getFile("settings:web/app"));
-        } catch (FileNotFoundException ex) {
-            // silently ignore - the directory to delete does not exist
-        }
-        FileUtil.createDirectory(FileUtil.getAbsoluteFilename("settings:web/app"));
-        try {
-            String template = FileUtil.readFile(FileUtil.getFile("program:web/app/index.html"));
-        } catch (IOException ex) {
-            log.error("Unable to get template for web app.", ex);
-        }
+        File cache = ProfileUtils.getCacheDirectory(profile, this.getClass());
+        FileUtil.delete(cache);
     }
 }
