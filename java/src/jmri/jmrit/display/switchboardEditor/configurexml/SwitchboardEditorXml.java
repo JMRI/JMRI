@@ -71,25 +71,25 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("blueBackground", "" + p.getBackgroundColor().getBlue());
         }
 
-        // include contents
-        List<Positionable> contents = p.getContents();
-        if (log.isDebugEnabled()) {
-            log.debug("N elements: " + contents.size());
-        }
-        for (int i = 0; i < contents.size(); i++) {
-            Positionable sub = contents.get(i);
-            if (sub != null && sub.storeItem()) {
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing switchboard panel element: " + e);
-                    e.printStackTrace();
-                }
-            }
-        }
+        // include contents (not used for Switchboards; all config is stored at Panel level)
+//        List<Positionable> contents = p.getContents();
+//        if (log.isDebugEnabled()) {
+//            log.debug("N elements: " + contents.size());
+//        }
+//        for (int i = 0; i < contents.size(); i++) {
+//            Positionable sub = contents.get(i);
+//            if (sub != null && sub.storeItem()) {
+//                try {
+//                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+//                    if (e != null) {
+//                        panel.addContent(e);
+//                    }
+//                } catch (Exception e) {
+//                    log.error("Error storing switchboard panel element: " + e);
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
 
         return panel;
     }

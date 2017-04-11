@@ -79,26 +79,38 @@ public class SwitchboardServlet extends AbstractPanelServlet {
 
             // include switches, how to delete the old ones?
             List<BeanSwitch> _switches = editor.getSwitches(); // call method in SwitchboardEditor
-            log.debug("N _switches: {}", _switches.size());
+            log.debug("N switches: {}", _switches.size());
             for (BeanSwitch sub : _switches) {
                 if (sub != null) {
                     try {
                         Element e = ConfigXmlManager.elementFromObject(sub);
                         if (e != null) {
                             log.debug("element name: {}", e.getName());
-//                            if ("button".equals(e.getName())) {  //insert details into switch
+//                            if ("icon".equals(e.getName())) {  //insert details into beanswitch
                                 //e.addContent(getSwitchIconsElement(e.getAttributeValue("signalmast")));
 //                            }
                             try {
                                 e.setAttribute("label", sub.getNameString());
                                 e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+                                if (sub.getNamedBean() == null) {
+                                    e.setAttribute("connected", "false");
+                                } else {
+                                    e.setAttribute("connected", "true"); // activate click action via class
+                                }
                             } catch (NullPointerException ex) {
-                                //if (sub.getNamedBean() == null) {
-                                //    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-                                //} else {
-                                //    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
-                                //}
+                                if (sub.getNamedBean() == null) {
+                                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                                } else {
+                                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                                }
                             }
+                            // read shared attribs
+                            e.setAttribute("textcolor", editor.getDefaultTextColor());
+                            e.setAttribute("type", editor.getSwitchType());
+                            e.setAttribute("connection", editor.getSwitchManu());
+                            e.setAttribute("shape", editor.getSwitchShape());
+                            e.setAttribute("columns", Integer.toString(editor.getColumns()));
+                            // process and add
                             parsePortableURIs(e);
                             panel.addContent(e);
                         }

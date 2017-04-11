@@ -111,15 +111,15 @@ function processPanelXML($returnedData, $success, $xhr) {
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
     }
 
-    //insert the canvas layer and set up context used by switchboardeditor "switch" objects, set some defaults
+    //insert the canvas layer and set up context used by switchboardeditor "beanswitch" objects, set some defaults
     if ($gPanel.paneltype === "Switchboard") {
         // TODO add contents
-
+        //$("#panel-area").prepend("<canvas id='panelCanvas' width=95% height=95% style='position:absolute;z-index:2;'>");
         //set background color from panel attribute
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
 
         //set short notice
-        $("#panel-area").append("<div id=info>Hallo" + $gPanel.text + "</div>");
+        $("#panel-area").append("<div id=info class=show>Hello " + $gPanel.text + "</div>");
     }
 
     //process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
@@ -466,18 +466,34 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
                                 break;
-                            case "switch" : // Switchboard BeanSwitch of shape "button"
-                                $widget['name'] = $widget.label; //normalize name
-                                $widget.jsonType = "switch"; // JSON object type
-                                $widget['text'] = $widget.label; //use name for initial text
-                                $widget['state'] = 0; //use 0 for initial state
+                            case "beanswitch" : // Switchboard BeanSwitch of shape "button"
+                                $widget['name'] = $widget.label; // normalize name
+                                $widget['text'] = $widget.label; // use name for initial text
+                                switch  ($widget["type"]) {
+                                    case "T" :
+                                        $widget.jsonType = "turnout"; // JSON object type
+                                        break;
+                                    case "S" :
+                                        $widget.jsonType = "sensor"; // JSON object type
+                                        break;
+                                    default :
+                                        $widget.jsonType = "light"; // JSON object type
+                                        break;
+                                }
+                                $widget['state'] = 0; // use 0 for initial state
                                 $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
+                                $widget.styles['border-radius'] = "8px" // mimick JButtons
+                                $widget.styles['color'] = $widget.textcolor; // use jmri color
+                                $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
-                                jmri.getTurnout($widget["systemName"]);
                                 $("#panel-area>#" + $widget.id).css(
                                 {position: 'relative', float: 'left'});
                                 $widget.classes += "button ";
+                                if ($widget.connected = "true") {
+                                    $widget.classes += $widget.jsonType + " clickable ";
+                                    //jmri.getSwitch($widget["id"]);
+                                }
                                 break;
                         }
                         $widget['safeName'] = $safeName($widget.name);
@@ -1250,7 +1266,7 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    if (typeof $widget !== "undefined" && $widget.widgetType !== "switch") {  //don't bother if widget not found or BeanSwitch
+    if (typeof $widget !== "undefined" && $widget.widgetType !== "beanswitch") {  //don't bother if widget not found or BeanSwitch
     	
     	var $height = 0;
     	var $width  = 0;
@@ -1573,7 +1589,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "fastclock" :
         case "BlockContentsIcon" :
 //	case "reportericon" :
-        case "switch" :
+        case "beanswitch" :
             return "text";
             break;
         case "positionablelabel" :

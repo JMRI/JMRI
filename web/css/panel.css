@@ -41,7 +41,7 @@ body {
 .positionablelabel.text.hidden,
 .sensoricon.hidden,
 .signalheadicon.hidden,
-.switch.hidden {
+.beanswitch.hidden {
     display: none;
 }
 
@@ -56,14 +56,16 @@ body {
     line-height: 20px;
 }
 
-.switch.text {
+.beanswitch.text {
     position: static;
     float: left;
     padding: 4px;
-    border: 5px;
-    color: white;
-    background: grey;
+    /* border: 5px; */
+    /* color: white; */
+    /* background: grey; */
     margin: 6px;
+    text-align: center;
+    /* width: 20%; /* later changed by beanswitch using column count */
     /* add more BeanSwitch stuff */
 }
 

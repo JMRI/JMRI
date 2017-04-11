@@ -20,7 +20,8 @@ public class SwitchboardEditor$BeanSwitchXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a BeanSwitch
+     * Default implementation for storing the contents of a BeanSwitch.
+     * Used the display Switchboard switches in JMRI web server.
      *
      * @param o Object to store, of type BeanSwitch
      * @return Element containing the complete info
@@ -30,19 +31,23 @@ public class SwitchboardEditor$BeanSwitchXml extends AbstractXmlAdapter {
 
         SwitchboardEditor.BeanSwitch bs = (SwitchboardEditor.BeanSwitch) o;
 
-        Element element = new Element("switch");
+        Element element = new Element("beanswitch");
 
         // include attributes
         element.setAttribute("label", bs.getNameString());
-        //storeCommonAttributes(bs, element);
-//        String txt = bs.getTooltip().getText();
-//        if (txt != null) {
-//            Element elem = new Element("tooltip").addContent(txt);
-//            element.addContent(elem);
-//        }
-        //storeTextInfo(bs, element);
-
+        if (bs.getNamedBean() != null) {
+            element.setAttribute("connected", "true");
+        } else {
+            element.setAttribute("connected", "false");
+        }
         element.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditor$BeanSwitchXml");
+
+        String txt = bs.getTooltip();
+        if (txt != null) {
+            Element elem = new Element("tooltip").addContent(txt);
+            element.addContent(elem);
+        }
+
         return element;
     }
 
@@ -56,51 +61,10 @@ public class SwitchboardEditor$BeanSwitchXml extends AbstractXmlAdapter {
      */
     @Override
     public void load(Element element, Object o) {
-        // create the objects
-        SwitchboardEditor p = (SwitchboardEditor) o;
 
-//        int nCol = 2;
-//        try {
-//            nCol = element.getAttribute("colWidth").getIntValue();
-//        } catch (org.jdom2.DataConversionException e) {
-//            log.error("failed to convert colWidth attribute");
-//        }
-//
-//        MemoryInputIcon l = new MemoryInputIcon(nCol, p);
-//
-//        loadTextInfo(l, element);
-//        String name;
-//        Attribute attr = element.getAttribute("memory");
-//        if (attr == null) {
-//            log.error("incorrect information for a memory location; must use memory name");
-//            p.loadFailed();
-//            return;
-//        } else {
-//            name = attr.getValue();
-//        }
-//
-//        Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
-//
-//        if (m != null) {
-//            l.setMemory(name);
-//        } else {
-//            log.error("Memory named '" + attr.getValue() + "' not found.");
-//            p.loadFailed();
-//            return;
-//        }
-//
-//        p.putItem(l);
-//        // load individual item's option settings after editor has set its global settings
-//        loadCommonAttributes(l, Editor.MEMORIES, element);
-//
-//        javax.swing.JComponent textField = l.getTextComponent();
-//        jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
-//        if (util.hasBackground()) {
-//            textField.setBackground(util.getBackground());
-//        } else {
-//            textField.setBackground(null);
-//            textField.setOpaque(false);
-//        }
+        // create the objects
+        SwitchboardEditor.BeanSwitch bs = (SwitchboardEditor.BeanSwitch) o;
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanSwitchXml.class.getName());

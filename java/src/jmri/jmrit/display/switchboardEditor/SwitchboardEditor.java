@@ -717,6 +717,10 @@ public class SwitchboardEditor extends Editor {
             return _shape;
         }
 
+        public String getTooltip() {
+            return switchTooltip;
+        }
+
         // ******************* Display ***************************
 
         @Override
