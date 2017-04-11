@@ -3,6 +3,7 @@ package jmri.server.json.util;
 import static jmri.server.json.JSON.CONTROL_PANEL;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LAYOUT_PANEL;
+import static jmri.server.json.JSON.SWITCHBOARD_PANEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PANEL;
 import static jmri.server.json.JSON.TYPE;
@@ -25,6 +26,7 @@ import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -242,6 +244,9 @@ public class JsonUtilHttpService extends JsonHttpService {
                 } else if (editor instanceof LayoutEditor) {
                     type = LAYOUT_PANEL;
                     name = "Layout";
+                } else if (editor instanceof SwitchboardEditor) {
+                    type = SWITCHBOARD_PANEL;
+                    name = "Switchboard";
                 }
                 ObjectNode root = this.mapper.createObjectNode();
                 root.put(TYPE, PANEL);
@@ -258,7 +263,7 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     public JsonNode getPanels(Locale locale, String format) {
         ArrayNode root = mapper.createArrayNode();
-        // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
+        // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor, SwitchboardEditor)
         // list ControlPanelEditors
         Editor.getEditors(ControlPanelEditor.class).stream()
                 .map((editor) -> this.getPanel(locale, editor, format))
@@ -267,6 +272,12 @@ public class JsonUtilHttpService extends JsonHttpService {
         });
         // list LayoutEditors and PanelEditors
         Editor.getEditors(PanelEditor.class).stream()
+                .map((editor) -> this.getPanel(locale, editor, format))
+                .filter((panel) -> (panel != null)).forEach((panel) -> {
+            root.add(panel);
+        });
+        // list SwitchboardEditors
+        Editor.getEditors(SwitchboardEditor.class).stream()
                 .map((editor) -> this.getPanel(locale, editor, format))
                 .filter((panel) -> (panel != null)).forEach((panel) -> {
             root.add(panel);
@@ -351,7 +362,7 @@ public class JsonUtilHttpService extends JsonHttpService {
        for (Profile p : ProfileManager.getDefault().getProfiles()) {
            boolean isActiveProfile = (p == ProfileManager.getDefault().getActiveProfile());
            boolean isAutoStart = (isActiveProfile && ProfileManager.getDefault().isAutoStartActiveProfile()); // only true for activeprofile 
-           ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILES);
+           ObjectNode connection = mapper.createObjectNode().put(JSON.TYPE, JSON.CONFIG_PROFILE);
            ObjectNode data = connection.putObject(JSON.DATA);
            data.put(JSON.NAME, p.getName());
            data.put(JSON.UNIQUE_ID, p.getUniqueId());

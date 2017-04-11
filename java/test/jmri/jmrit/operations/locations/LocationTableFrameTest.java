@@ -6,8 +6,11 @@ import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
+
 
 /**
  * Tests for the Operations Locations GUI class
@@ -17,12 +20,19 @@ import org.junit.Test;
 public class LocationTableFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
+
+    @Test
+    public void testCtorFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LocationsTableFrame f = new LocationsTableFrame();
+        Assert.assertNotNull("exists",f);
+        // close windows
+        JFrameOperator jfof = new JFrameOperator(f);
+    }
     
     @Test
-    public void testLocationsTableFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+    public void testTableCreationFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LocationsTableFrame f = new LocationsTableFrame();
 
@@ -41,6 +51,41 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("3rd loc length", 1003, f.locationsModel.getValueAt(2, LocationsTableModel.LENGTHCOLUMN));
         Assert.assertEquals("4th loc length", 1002, f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
         Assert.assertEquals("5th loc length", 1001, f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
+  
+        // close windows
+        JFrameOperator jfof = new JFrameOperator(f);
+        jfof.close();
+    }
+
+    @Test
+    public void testLocationsEditFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        LocationsTableFrame f = new LocationsTableFrame();
+
+        // create edit location frame
+        f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
+
+        // confirm location edit frame creation
+        JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("Edit Location")!=null;}, "lef not null");
+        JmriJFrame lef = JmriJFrame.getFrame("Edit Location");
+        Assert.assertNotNull(lef);
+
+        // close windows
+        JFrameOperator jfolef = new JFrameOperator(lef);
+        jfolef.close();
+        JFrameOperator jfof = new JFrameOperator(f);
+        jfof.close();
+
+        Assert.assertNull(JmriJFrame.getFrame("Edit Location"));
+
+    }
+
+    @Test
+    public void testLocationsAddFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        LocationsTableFrame f = new LocationsTableFrame();
 
         // create edit location frame
         f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
@@ -55,19 +100,15 @@ public class LocationTableFrameTest extends OperationsSwingTestCase {
         JmriJFrame lef = JmriJFrame.getFrame("Add Location");
         Assert.assertNotNull(lef);
 
-        // confirm location edit frame creation
-        JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("Edit Location")!=null;}, "lef2 not null");
-        JmriJFrame lef2 = JmriJFrame.getFrame("Edit Location");
-        Assert.assertNotNull(lef2);
-
         // close windows
-        lef.dispose();
-        f.dispose();
+        JFrameOperator jfolef = new JFrameOperator(lef);
+        jfolef.close();
+        JFrameOperator jfof = new JFrameOperator(f);
+        jfof.close();
 
         Assert.assertNull(JmriJFrame.getFrame("Add Location"));
-        Assert.assertNull(JmriJFrame.getFrame("Edit Location"));
-
     }
+
 
     private void loadLocations() {
         // create 5 locations

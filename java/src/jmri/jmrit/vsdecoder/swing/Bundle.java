@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.vsdecoder.Bundle {
 
-    private final static String name = "jmri.jmrit.vsdecoder.swing.VSDSwingBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrit.vsdecoder.swing.VSDSwingBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

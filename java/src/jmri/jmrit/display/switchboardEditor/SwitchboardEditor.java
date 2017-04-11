@@ -124,9 +124,9 @@ public class SwitchboardEditor extends Editor {
     JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
     private TargetPane switchboardLayeredPane; // JLayeredPane
     private JCheckBox hideUnconnected;
-    static final String _light = Bundle.getMessage("BeanNameLight");
-    static final String _sensor = Bundle.getMessage("BeanNameSensor");
     static final String _turnout = Bundle.getMessage("BeanNameTurnout");
+    static final String _sensor = Bundle.getMessage("BeanNameSensor");
+    static final String _light = Bundle.getMessage("BeanNameLight");
     private String[] beanTypeStrings = {_turnout, _sensor, _light};
     private JComboBox beanTypeList;
     private char beanTypeChar;
@@ -183,6 +183,7 @@ public class SwitchboardEditor extends Editor {
     private static String SWITCHTYPE_COMMAND = "switchshape";
 
     private List<String> switchlist = new ArrayList<String>();
+    protected ArrayList<BeanSwitch> _switches = new ArrayList<BeanSwitch>();
 
     /**
      * Ctor
@@ -208,7 +209,7 @@ public class SwitchboardEditor extends Editor {
     @Override
     protected void init(String name) {
         //setVisible(false);
-        Container contentPane = this.getContentPane(); // Editor
+        Container contentPane = getContentPane(); // Editor
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // make menus
@@ -247,8 +248,10 @@ public class SwitchboardEditor extends Editor {
         beanTypeList.setActionCommand(LAYER_COMMAND);
         beanTypeList.addActionListener(this);
         beanSetupPane.add(beanTypeList);
+
         //Add connection selection comboBox
-        beanTypeChar = beanTypeList.getSelectedItem().toString().charAt(0);
+        beanTypeChar = getSwitchType().charAt(0); // translate from selectedIndex to char
+        log.debug("beanTypeChar set to [{}]", beanTypeChar);
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
         beanManuNames = new JComboBox();
@@ -275,9 +278,9 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.add(beanManuNames);
         add(beanSetupPane);
 
+        // add shape combobox
         JPanel switchShapePane = new JPanel();
         switchShapePane.setLayout(new FlowLayout(FlowLayout.TRAILING));
-        // add shape combobox
         JLabel switchShapeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SwitchShape")));
         switchShapePane.add(switchShapeTitle);
         switchShapeList = new JComboBox(switchShapeStrings);
@@ -411,7 +414,7 @@ public class SwitchboardEditor extends Editor {
         int _currentState;
         String _manu = manuPrefix; // cannot use All group as in Tables
         String _insert = "";
-        if (_manu.equals("M")) { _insert = "+"; }; // create CANbus.MERG On event
+        if (_manu.startsWith("M")) { _insert = "+"; }; // create CANbus.MERG On event
         for (int i = rangeMin; i <= rangeMax; i++) {
             switch (beanType) {
                 case 0:
@@ -478,8 +481,8 @@ public class SwitchboardEditor extends Editor {
         private IconSwitch beanIcon;
         private IconSwitch beanKey;
         private IconSwitch beanSymbol;
+        private String beanManuPrefix;
         private char beanTypeChar;
-        private char beanManuChar;
         private float opac = 0.5f;
 
         /**
@@ -510,14 +513,22 @@ public class SwitchboardEditor extends Editor {
             } else {
                 _shape = 0;
             }
-            beanManuChar = _label.charAt(0); // connection/manufacturer i.e. M for MERG
-            beanTypeChar = _label.charAt(1); // bean type, i.e. L
+            beanManuPrefix = getSwitchManu(); // connection/manufacturer i.e. M for MERG
+            beanTypeChar = _label.charAt(beanManuPrefix.length()); // bean type, i.e. L, usually at char(1)
+            // check for space char which might be caused by connection name > 2 chars and/or space in name
+            if (beanTypeChar != 'T' && beanTypeChar != 'S' && beanTypeChar != 'L') { // add if more bean types are supported
+                log.error("invalid char in Switchboard Button \"" + _label + "\". Check connection name.");
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSwitchAddFailed"),
+                        Bundle.getMessage("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             beanIcon = new IconSwitch(iconOffPath, iconOnPath);
             beanKey = new IconSwitch(keyOffPath, keyOnPath);
             beanSymbol = new IconSwitch(rootPath + beanTypeChar + "-off-s.png", rootPath + beanTypeChar + "-on-s.png");
 
             // look for bean to connect to by name
-            log.debug("beanconnect = {}, beantype = {}", beanManuChar, beanTypeChar);
+            log.debug("beanconnect = {}, beantype = {}", beanManuPrefix, beanTypeChar);
             try {
                 if (bean != null) {
                     namedBean = nbhm.getNamedBeanHandle(switchName, bean);
@@ -1049,8 +1060,7 @@ public class SwitchboardEditor extends Editor {
          * Change state of either turnout, light or sensor.
          */
         void alternateOnClick() {
-            char beanTypeLetter = _label.charAt(1);
-            switch (beanTypeLetter) {
+            switch (beanTypeChar) {
             case 'T':
                 log.debug("T clicked");
                 if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) // if clear known state, set to opposite
@@ -1084,6 +1094,8 @@ public class SwitchboardEditor extends Editor {
                     log.warn("Exception flipping sensor: " + reason);
                 }
                 break;
+            default:
+                log.error("invalid char in Switchboard Button \"" + _label + "\". State not set.");
             }
         }
 
@@ -2002,8 +2014,10 @@ public class SwitchboardEditor extends Editor {
             case 'S':
                 return InstanceManager.sensorManagerInstance();
             case 'L': // Light
-            default:
                 return InstanceManager.lightManagerInstance();
+            default:
+                log.error("Unexpected bean type character \"{}\" found.", typeChar);
+                return null;
         }
     }
 
@@ -2013,7 +2027,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Create new bean and connect it to this switch.
-     * Use 2nd letter from switch label (S, T or L).
+     * Use type letter from switch label (S, T or L).
      */
     protected void connectNew(String systemName) {
         log.debug("Request new bean");
@@ -2048,6 +2062,7 @@ public class SwitchboardEditor extends Editor {
 
     protected void okAddPressed(ActionEvent e) {
         NamedBean nb = null;
+        String manuPrefix = getSwitchManu();
         String user = userName.getText().trim();
         if (user.equals("")) {
             user = null;
@@ -2058,7 +2073,7 @@ public class SwitchboardEditor extends Editor {
         addFrame.dispose();
         addFrame = null;
 
-        switch (sName.charAt(1)) {
+        switch (sName.charAt(manuPrefix.length())) {
             case 'T':
                 Turnout t;
                 try {
@@ -2099,7 +2114,7 @@ public class SwitchboardEditor extends Editor {
                 nb = jmri.InstanceManager.lightManagerInstance().getLight(sName);
                 break;
             default:
-                log.error("connectNew: cannot parse bean name. sName = {}", sName);
+                log.error("connectNew - OKpressed: cannot parse bean name. sName = {}", sName);
                 return;
         }
         if (nb == null) {
@@ -2135,7 +2150,9 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * ********* KeyListener of Editor ********
+     * KeyListener of Editor.
+     *
+     * @param e the key event heard
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -2395,6 +2412,13 @@ public class SwitchboardEditor extends Editor {
         }
         return null;
     }
+
+//    public List<BeanSwitch> getSwitches() {
+//        for (int i = 0; i < switchlist.size(); i++) {
+//            _switches.add(switchboardLayeredPane.getComponent(i));
+//        }
+//        return _switches;
+//    }
 
     /**
      * Set up item(s) to be copied by paste.

@@ -236,7 +236,7 @@ public class WarrantTableAction extends AbstractAction {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getBlockOrders();
+            List<BlockOrder> orders = w.getSavedOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
                 BlockOrder bo = it.next();
@@ -256,7 +256,7 @@ public class WarrantTableAction extends AbstractAction {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getBlockOrders();
+            List<BlockOrder> orders = w.getSavedOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
                 BlockOrder bo = it.next();

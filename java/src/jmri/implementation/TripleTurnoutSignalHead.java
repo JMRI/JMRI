@@ -116,5 +116,11 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
         return false;
     }
 
+    /**
+     * Disables the feedback mechanism of the DoubleTurnoutSignalHead.
+     */
+    @Override
+    void readOutput() { }
+
     private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHead.class.getName());
 }

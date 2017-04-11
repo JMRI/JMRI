@@ -134,7 +134,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
-        System.out.println("forward to layout "+s);
         if (s == Turnout.THROWN) {
             turnoutListener.setFromOwnerWithForceNotify(true);
             if (_activeFeedbackType == MONITORING) {
