@@ -180,6 +180,8 @@
           <td>car array</td>
         </tr>
 
+        <tr><td>configProfiles</td><td>*</td><td></td><td></td><td>configProfile array</td></tr>
+
         <tr>
           <td>consists</td>
 
@@ -253,18 +255,6 @@
         </tr>
 
         <tr>
-          <td>panels</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>panel array</td>
-        </tr>
-
-        <tr>
           <td>memories</td>
 
           <td>*</td>
@@ -310,6 +300,18 @@
           <td></td>
 
           <td>node message</td>
+        </tr>
+
+        <tr>
+          <td>panels</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>panel array</td>
         </tr>
 
         <tr>
@@ -372,44 +374,6 @@
           <td>route array</td>
         </tr>
 
-        <tr><td>configProfiles</td><td>*</td><td></td><td></td><td>configProfile array</td></tr>
-
-        <tr>
-          <td>systemConnections</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>systemConnection array</td>
-        </tr>
-
-        <tr>
-          <td>time</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>n/a</td>
-        </tr>
-
-        <tr>
-          <td>trains</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>train array</td>
-        </tr>
-
         <tr>
           <td>reporters</td>
 
@@ -456,6 +420,42 @@
           <td></td>
 
           <td>sensor array</td>
+        </tr>
+
+        <tr>
+          <td>systemConnections</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>systemConnection array</td>
+        </tr>
+
+        <tr>
+          <td>time</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>n/a</td>
+        </tr>
+
+        <tr>
+          <td>trains</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>train array</td>
         </tr>
 
         <tr>

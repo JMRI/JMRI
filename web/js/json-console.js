@@ -128,7 +128,8 @@ $(document).ready(function() {
         $('#modal-websocket-reconnecting').addClass('hide').removeClass('show');
     });
     $('input#clearConsole').click(function() {
-        $('div#console').empty(); //clear the console
+        $("#error-alert").addClass("hidden").removeClass("show");
+        $('div#console pre').empty(); //clear the console
         return false;
     });
     $('input#disconnect').click(function() {
