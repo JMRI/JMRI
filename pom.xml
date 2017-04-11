@@ -796,18 +796,18 @@
             <artifactId>xbee-java-library</artifactId>
             <version>1.2.0</version>
             <exclusions>
-               <exclusion> 
-                  <groupId>org.slf4j</groupId>
-                  <artifactId>slf4j-jdk14</artifactId>
-               </exclusion>
-               <exclusion>
-                  <groupId>com.digi</groupId>
-                  <artifactId>android-sdk</artifactId>
-               </exclusion>
-               <exclusion>
-                  <groupId>com.digi</groupId>
-                  <artifactId>android-sdk-addon</artifactId>
-               </exclusion>
+                <exclusion> 
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.digi</groupId>
+                    <artifactId>android-sdk</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.digi</groupId>
+                    <artifactId>android-sdk-addon</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
