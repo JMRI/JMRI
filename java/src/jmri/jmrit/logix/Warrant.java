@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.DccLocoAddress;
@@ -908,6 +909,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     _engineer.setStop(true);    // E-stop
                     ret = true;
                     break;
+                default:
             }
         }
         if (ret) {
@@ -1794,6 +1796,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
 
         @Override
+        @SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification = "notify never called on this thread")
         public void run() {
             synchronized(this) {
                 if (_startWait>0.0) {
@@ -1804,7 +1807,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         quit = true;
                     }
                 }
-                if (!quit) {
+                if (!quit && _engineer != null) {
                     if(log.isDebugEnabled()) log.debug("CommandDelay: after wait of {}ms, start Ramp to {}", 
                             _startWait, nextSpeedType);
                     jmri.util.ThreadingUtil.runOnLayout(() ->{ // move to layout-handling thread
@@ -1886,6 +1889,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_delayCommand!=null) {
             _delayCommand.interrupt();
             _delayCommand.quit();
+            _delayCommand = null;
         }
         _engineer.cancelRamp();
         

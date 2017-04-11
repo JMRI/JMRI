@@ -280,6 +280,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             case DccThrottle.SpeedStepMode28Mot:
                 stepMode = DccThrottle.SpeedStepMode28Mot;
                 break;
+            default:
         }
         _throttle.setSpeedStepMode(stepMode);
     }
@@ -318,7 +319,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _waitForClear);            
     }
     
-    private void clearWaitForClear() {
+     synchronized private void clearWaitForClear() {
         if (_atClear) {
             notifyAll();   // if wait is cleared, this sets _waitForClear= false                
         }        
@@ -404,7 +405,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return throttleSpeed;
         }
         float signalSpeed = _speedMap.getSpeed(sType);
-        if (log.isTraceEnabled()) log.trace("modifySpeed signalSpeed= {}", signalSpeed);
 
         switch (_speedMap.getInterpretation()) {
             case SignalSpeedMap.PERCENT_NORMAL:
@@ -438,12 +438,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 log.error("Unknown speed interpretation {}", _speedMap.getInterpretation());
                 throw new java.lang.IllegalArgumentException("Unknown speed interpretation " + _speedMap.getInterpretation());
         }
-        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, speedtype= {} using interpretation {}",
-                tSpeed, throttleSpeed, sType, _speedMap.getInterpretation());
+        if (log.isTraceEnabled()) log.trace("modifySpeed: from {}, to {}, signalSpeed= {} using interpretation {}",
+                tSpeed, throttleSpeed, signalSpeed, _speedMap.getInterpretation());
         return throttleSpeed;
     }
 
-    protected void setSpeed(float s) {
+    synchronized protected void setSpeed(float s) {
         if (log.isTraceEnabled()) log.trace("setSpeed({})", s);
         float speed = s;
         _throttle.setSpeedSetting(speed);

@@ -105,7 +105,7 @@ public class OPath extends jmri.Path {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OBlock extends Block")
     public void setName(String name) {
         if (log.isDebugEnabled()) {
             log.debug("OPath \"{}\" setName to \"{}\"", _name, name);

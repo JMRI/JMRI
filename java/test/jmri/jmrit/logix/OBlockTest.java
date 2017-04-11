@@ -67,8 +67,10 @@ public class OBlockTest extends TestCase {
         Assert.assertTrue("setSensor none", b.setSensor("  "));
         Assert.assertNull("getSensor none", b.getSensor());
         Assert.assertEquals("none state dark", OBlock.UNDETECTED, b.getState());
-        
+
+        Assert.assertTrue("Not Free", b.isFree());
         b.setState(b.getState() | OBlock.ALLOCATED|OBlock.RUNNING);
+        Assert.assertFalse("Is Free", b.isFree());
         s1.setState(Sensor.ACTIVE);
         Assert.assertTrue("setSensor sensor1", b.setSensor("sensor1"));
         Assert.assertEquals("state allocated&running", OBlock.OCCUPIED|OBlock.ALLOCATED|OBlock.RUNNING, b.getState());
@@ -104,6 +106,13 @@ public class OBlockTest extends TestCase {
         Assert.assertNull("Allocate w1", b.allocate(w1));
         Assert.assertEquals("state allocated & dark", OBlock.ALLOCATED|OBlock.UNDETECTED, b.getState());
         Assert.assertEquals("Allocate w2", Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName()), b.allocate(w2));
+        
+        Assert.assertEquals("path not set", Bundle.getMessage("PathNotFound", "PathName", b.getDisplayName()), b.setPath("PathName", w1));
+        OPath path1 = new OPath(b, "path1");
+        b.addPath(path1);
+        Assert.assertNull("path set", b.setPath("path1", w1));
+        Assert.assertFalse("Allocated to w2", b.isAllocatedTo(w2));
+        Assert.assertTrue("Allocated to w1", b.isAllocatedTo(w1));
         Assert.assertNull("DeAllocate w1", b.deAllocate(null));
 
         b.setOutOfService(true);
@@ -156,6 +165,10 @@ public class OBlockTest extends TestCase {
         Assert.assertEquals("Two portals", 2, b.getPortals().size());
 
         Assert.assertEquals("Same Portal", p, b.getPortalByName("barp"));
+        p = b.getPortalByName("foop");
+        Assert.assertNotNull("Get Portal", p);
+        b.removePortal(p);
+        Assert.assertEquals("One portals", 1, b.getPortals().size());
         
         jmri.util.JUnitAppender.assertWarnMessage("Portal \"foop\" from block \"null\" to block \"null\" not in block OB0"); 
         jmri.util.JUnitAppender.assertWarnMessage("Portal \"barp\" from block \"null\" to block \"null\" not in block OB0"); 
@@ -170,13 +183,20 @@ public class OBlockTest extends TestCase {
         OPath path2 = new OPath(bb, "path2");
         Assert.assertFalse("path2 not in block", b.addPath(path2));
         Assert.assertEquals("path2 not in block", 1, b.getPaths().size());
+        
         Assert.assertFalse("path1 already in block", b.addPath(path1));
         Assert.assertEquals("path1 already in block", 1, b.getPaths().size());
         OPath path11 = new OPath(b, "path1");
         Assert.assertFalse("path with name \"path1\" already in block", b.addPath(path11));
         Assert.assertEquals("path with name \"path1\" already in block", 1, b.getPaths().size());
         
+        path2 = new OPath(b, "path2");
+        Assert.assertNotNull("path2", path2);
+//        Assert.assertTrue("path2 in block", b.addPath(path2));
+        Assert.assertEquals("get \"path1\"", path1, b.getPathByName("path1"));
+        
         b.removePath(path1);
+        b.removePath(path2);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
         jmri.util.JUnitAppender.assertWarnMessage("Path path2 already in block OB2, cannot be added to block OB1"); 
     }
