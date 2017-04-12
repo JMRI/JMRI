@@ -46,9 +46,11 @@ public class WebAppServlet extends HttpServlet {
         if (request.getContextPath().equals("/app") && request.getPathTranslated() == null) {
             response.setContentType("text/html;charset=UTF-8");
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            File cache = ProfileUtils.getCacheDirectory(profile, this.getClass());
+            File cache = new File(ProfileUtils.getCacheDirectory(profile, this.getClass()), request.getLocale().toString());
+            FileUtil.createDirectory(cache);
             File index = new File(cache, "index.html");
             if (!index.exists()) {
+                String inComments = "-->%s\n<!--";
                 WebAppManager manager = InstanceManager.getNullableDefault(WebAppManager.class);
                 if (manager == null) {
                     log.error("No WebAppManager available.");
@@ -57,8 +59,8 @@ public class WebAppServlet extends HttpServlet {
                 }
                 // Format elements for index.html
                 // 1 = railroad name
-                // 2 = scripts
-                // 3 = stylesheets
+                // 2 = scripts (in comments)
+                // 3 = stylesheets (in comments)
                 // 4 = body content (divs)
                 // 5 = help menu title
                 // 6 = help menu contents (in comments)
@@ -67,8 +69,8 @@ public class WebAppServlet extends HttpServlet {
                 FileUtil.appendTextToFile(index, String.format(request.getLocale(),
                         FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
                         ServletUtil.getInstance().getRailroadName(false), // railroad name
-                        manager.getScriptTags(profile), // scripts
-                        manager.getStyleTags(profile), // stylesheets
+                        String.format(inComments, manager.getScriptTags(profile)), // scripts (in comments)
+                        String.format(inComments, manager.getStyleTags(profile)), // stylesheets (in comments)
                         "<!-- -->", // body content (divs)
                         Bundle.getMessage(request.getLocale(), "help"), // help menu title
                         "--> <!--", // help menu contents (in comments)
