@@ -339,6 +339,18 @@
         </tr>
 
         <tr>
+          <td>reporters</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>reporter array</td>
+        </tr>
+
+        <tr>
           <td>roster</td>
 
           <td>*</td>
@@ -372,18 +384,6 @@
           <td></td>
 
           <td>route array</td>
-        </tr>
-
-        <tr>
-          <td>reporters</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>reporter array</td>
         </tr>
 
         <tr>

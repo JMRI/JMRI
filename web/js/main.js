@@ -293,7 +293,7 @@ $(document).ready(function () {
             nbJmri.getPower();
         },
     	hello: function(data) {
-    		nbJmri.socket._send('{"list":"rosterGroups"}') // request updates to the rosterGroups via websocket 
+    		nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket 
         },
         rosterGroups: function (name, data) {
             getRosterGroups(); // refresh the roster groups in menu
