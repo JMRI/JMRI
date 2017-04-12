@@ -774,7 +774,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         OBlock pathBlock = (OBlock)path.getBlock();
         if (pathBlock!=null && !this.equals(pathBlock)) {
-            log.warn("Path {} already in block {}, cannot be added to block {}", pName, pathBlock.getDisplayName(), getDisplayName());
+            log.warn("Path \"{}\" already in block {}, cannot be added to block {}", pName, pathBlock.getDisplayName(), getDisplayName());
             return false;
         }
         path.setBlock(this);

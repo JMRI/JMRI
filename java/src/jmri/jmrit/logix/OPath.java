@@ -317,10 +317,10 @@ public class OPath extends jmri.Path {
         if (getBlock() != path.getBlock()) {
             return false;
         }
-        if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal())) {
+        if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal()) && !_fromPortal.equals(path.getToPortal())) {
             return false;
         }
-        if (_toPortal != null && !_toPortal.equals(path.getToPortal())) {
+        if (_toPortal != null && !_toPortal.equals(path.getToPortal()) && !_toPortal.equals(path.getFromPortal())) {
             return false;
         }
         Iterator<BeanSetting> iter = path.getSettings().iterator();

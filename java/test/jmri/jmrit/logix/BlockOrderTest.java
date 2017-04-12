@@ -2,12 +2,10 @@ package jmri.jmrit.logix;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,16 +13,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class BlockOrderTest extends TestCase {
+public class BlockOrderTest {
 
     OBlockManager _blkMgr;
 
+    @Test
     public void testCTor() {
         BlockOrder t = new BlockOrder(new OBlock("OB1", "Test"));
         Assert.assertNotNull("exists",t);
     }
 
     /* for the sake of code coverage */
+    @Test
     public void testGettersAndSetters() {
         OBlock b = _blkMgr.provideOBlock("OB1");
         BlockOrder bo = new BlockOrder(b, "foo", "foo", "foo");
@@ -43,6 +43,7 @@ public class BlockOrderTest extends TestCase {
     /* tests OBlocks more than BlockOrders,
      *  but adds to coverage if tested here.
      */
+    @Test
     public void testBlockMembers() {
         OBlock block = _blkMgr.provideOBlock("OB1");
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
@@ -62,22 +63,6 @@ public class BlockOrderTest extends TestCase {
         Assert.assertEquals("signal", sh, bo.getSignal());
         Assert.assertEquals("Entrance speedType", "Medium", bo.getPermissibleEntranceSpeed());
         Assert.assertEquals(20, bo.getEntranceSpace(), 0);
-    }
-
-    // from here down is testing infrastructure
-    public BlockOrderTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", BlockOrderTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        return new TestSuite(BlockOrderTest.class);
     }
 
     // The minimal setup for log4J
