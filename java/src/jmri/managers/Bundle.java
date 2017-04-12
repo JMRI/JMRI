@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "jmri.managers.ManagersBundle";
+    @Nullable
+    private static final String name = "jmri.managers.ManagersBundle";
 
     //
     // below here is boilerplate to be copied exactly

@@ -1,25 +1,20 @@
 package jmri.jmrix.openlcb.swing;
 
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.Timer;
+import jmri.util.JmriJFrame;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 import org.openlcb.cdi.swing.CdiPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.Timer;
-
-import jmri.util.JmriJFrame;
 
 /**
  * Shared code for creating UI elements from different places in the application.
@@ -46,7 +41,8 @@ public class ClientActions {
 
         CdiPanel m = new CdiPanel();
         f.add(m);
-
+        m.setEventTable(iface.getNodeStore().getSimpleNodeIdent(destNode).getUserName(),
+                iface.getEventTable());
         // create an object to add "New Sensor" buttons
         CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory() {
             private boolean haveButtons = false;

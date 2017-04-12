@@ -1,4 +1,3 @@
-
 package jmri.jmrit.audio.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -15,52 +14,48 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Provides standard access for resource bundles in a package.
- * 
- * Convention is to provide a subclass of this name
- * in each package, working off the local resource bundle name.
  *
- * @author      Bob Jacobsen  Copyright (C) 2012
- * @since       3.7.2
+ * Convention is to provide a subclass of this name in each package, working off
+ * the local resource bundle name.
+ *
+ * @author Bob Jacobsen Copyright (C) 2012
+ * @since 3.7.2
  */
 public class Bundle extends jmri.jmrit.audio.Bundle {
 
+    @Nullable
     private static final String name = "jmri.jmrit.audio.swing.AudioTableBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
     //
-    
     /**
-     * Provides a translated string for a given 
-     * key from the package resource bundle or 
-     * parent.
-     *<p>
-     * Note that this is intentionally package-local
-     * access.
-     * 
+     * Provides a translated string for a given key from the package resource
+     * bundle or parent.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
     static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
+
     /**
-     * Merges user data with a translated string for a given 
-     * key from the package resource bundle or 
-     * parent.
-     *<p>
-     * Uses the transformation conventions of 
-     * the Java MessageFormat utility.
-     *<p>
-     * Note that this is intentionally package-local
-     * access.
+     * Merges user data with a translated string for a given key from the
+     * package resource bundle or parent.
+     * <p>
+     * Uses the transformation conventions of the Java MessageFormat utility.
+     * <p>
+     * Note that this is intentionally package-local access.
      *
      * @see java.text.MessageFormat
-     * @param key Bundle key to be translated
+     * @param key  Bundle key to be translated
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
-    static String getMessage(String key, Object ... subs) {
+    static String getMessage(String key, Object... subs) {
         return b.handleGetMessage(key, subs);
     }
 
@@ -81,13 +76,23 @@ public class Bundle extends jmri.jmrit.audio.Bundle {
     static String getMessage(Locale locale, String key, Object... subs) {
         return b.handleGetMessage(locale, key, subs);
     }
-   
+
     private final static Bundle b = new Bundle();
-    @Override @Nullable protected String bundleName() {return name; }
-    @Override protected jmri.Bundle getBundle() { return b; }
-    @Override 
-    protected String retry(Locale locale,String key) { 
-        return super.getBundle().handleGetMessage(locale,key); 
+
+    @Override
+    @Nullable
+    protected String bundleName() {
+        return name;
+    }
+
+    @Override
+    protected jmri.Bundle getBundle() {
+        return b;
+    }
+
+    @Override
+    protected String retry(Locale locale, String key) {
+        return super.getBundle().handleGetMessage(locale, key);
     }
 
 }

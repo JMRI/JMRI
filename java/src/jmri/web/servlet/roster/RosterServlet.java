@@ -32,7 +32,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import javax.imageio.ImageIO;
@@ -122,46 +121,42 @@ public class RosterServlet extends HttpServlet {
     }
 
     /**
-     * Handle any POST request as an upload of a roster file from client  
+     * Handle any POST request as an upload of a roster file from client.
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws java.io.IOException if communications is cut with client
+     * @throws javax.servlet.ServletException if unable to process uploads
+     * @throws java.io.IOException            if communications is cut with
+     *                                        client
      */
-    /*****************************************************************
-     * URL: /roster
-     * doPost(): receive and save uploaded roster and image file
-     *****************************************************************/
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
- 
-        // this will temporarily store uploaded files until they can be verified and saved to the roster
-        List<FileMeta> files = new LinkedList<FileMeta>();
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
         OutputStream out = null;
         InputStream fileContent = null;
-        String rosterFolderName = Roster.getDefault().getRosterLocation() + "roster" + File.separator; 
+        String rosterFolderName = Roster.getDefault().getRosterLocation() + "roster" + File.separator;
         String tempFolderName = System.getProperty("java.io.tmpdir");
         if (!tempFolderName.endsWith(File.separator)) {  //make sure path ends with a separator
-            tempFolderName += File.separator; 
+            tempFolderName += File.separator;
         }
         Locale rl = request.getLocale();
-        
-        //get the uploaded file(s)
-        files = MultipartRequestHandler.uploadByJavaServletAPI(request);                       
 
-        List<String> msgList = new ArrayList<String>();
+        //get the uploaded file(s)
+        List<FileMeta> files = MultipartRequestHandler.uploadByJavaServletAPI(request);
+
+        List<String> msgList = new ArrayList<>();
 
         //loop thru files returned and validate and (if ok) save each
         for (FileMeta fm : files) {
-            log.debug("processing uploaded '{}' file '{}' ({}), group='{}', roster='{}', temp='{}'", fm.getFileType(), fm.getFileName(), 
+            log.debug("processing uploaded '{}' file '{}' ({}), group='{}', roster='{}', temp='{}'", fm.getFileType(), fm.getFileName(),
                     fm.getFileSize(), fm.getRosterGroup(), rosterFolderName, tempFolderName);
-            
+
             //only allow xml files or image files
-            if (!fm.getFileType().equals("text/xml") &&
-                    !fm.getFileType().startsWith("image")) {
-                String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidFileType"), fm.getFileName(), fm.getFileType()); 
+            if (!fm.getFileType().equals("text/xml")
+                    && !fm.getFileType().startsWith("image")) {
+                String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidFileType"), fm.getFileName(), fm.getFileType());
                 log.error(m);
-                msgList.add(m);                
+                msgList.add(m);
                 break; //stop processing this one
             }
             //save received file to temporary folder
@@ -176,9 +171,9 @@ public class RosterServlet extends HttpServlet {
                 }
                 log.debug("file '{}' of type '{}' temp saved to {}", fm.getFileType(), fm.getFileName(), tempFolderName);
             } catch (IOException e) {
-                String m = String.format(rl, Bundle.getMessage(rl, "ErrorSavingFile"), fm.getFileName()); 
+                String m = String.format(rl, Bundle.getMessage(rl, "ErrorSavingFile"), fm.getFileName());
                 log.error(m);
-                msgList.add(m);               
+                msgList.add(m);
                 break; //stop processing this one
             } finally {
                 if (out != null) {
@@ -191,37 +186,37 @@ public class RosterServlet extends HttpServlet {
 
             //reference to target file name and location
             File fileNew = new File(rosterFolderName + fm.getFileName());
-            
+
             //save image file, replacing if parm is set that way. return appropriate message
             if (fm.getFileType().startsWith("image")) {
-                if (fileNew.exists()) { 
+                if (fileNew.exists()) {
                     if (!fm.getFileReplace()) {
-                        String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName()); 
+                        String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
                         log.error(m);
-                        msgList.add(m);                
+                        msgList.add(m);
                         fileTemp.delete(); //get rid of temp file 
                     } else {
                         fileNew.delete(); //delete the old file
                         if (fileTemp.renameTo(fileNew)) {
-                            String m = String.format(rl, Bundle.getMessage(rl, "FileReplaced"), fm.getFileName()); 
+                            String m = String.format(rl, Bundle.getMessage(rl, "FileReplaced"), fm.getFileName());
                             log.debug(m);
-                            msgList.add(m);                
+                            msgList.add(m);
                         } else {
-                            String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName()); 
+                            String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
                             log.error(m);
-                            msgList.add(m);                
+                            msgList.add(m);
                             fileTemp.delete(); //get rid of temp file 
                         }
                     }
                 } else {
                     if (fileTemp.renameTo(fileNew)) {
-                        String m = String.format(rl, Bundle.getMessage(rl, "FileAdded"), fm.getFileName()); 
+                        String m = String.format(rl, Bundle.getMessage(rl, "FileAdded"), fm.getFileName());
                         log.debug(m);
-                        msgList.add(m);                
+                        msgList.add(m);
                     } else {
-                        String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName()); 
+                        String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
                         log.error(m);
-                        msgList.add(m);                
+                        msgList.add(m);
                         fileTemp.delete(); //get rid of temp file 
                     }
 
@@ -231,36 +226,36 @@ public class RosterServlet extends HttpServlet {
                 try {
                     reTemp = RosterEntry.fromFile(new File(tempFolderName + fm.getFileName()));
                 } catch (JDOMException e) { //handle XML failures
-                    String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidXML"), fm.getFileName(), e.getMessage()); 
+                    String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidXML"), fm.getFileName(), e.getMessage());
                     log.error(m);
-                    msgList.add(m);                
+                    msgList.add(m);
                     fileTemp.delete(); //get rid of temp file 
                     break;
                 }
                 RosterEntry reOld = Roster.getDefault().getEntryForId(reTemp.getId()); //get existing entry if found
-                if (reOld != null) { 
+                if (reOld != null) {
                     if (!fm.getFileReplace()) {
-                        String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName()); 
+                        String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
                         log.error(m);
-                        msgList.add(m);                
+                        msgList.add(m);
                         fileTemp.delete(); //get rid of temp file 
                     } else { //replace specified
                         Roster.getDefault().removeEntry(reOld); //remove the old entry from roster
                         reTemp.updateFile(); //saves XML file to roster folder and makes backup
                         Roster.getDefault().addEntry(reTemp); //add the new entry to roster
                         Roster.getDefault().writeRoster(); //save modified roster.xml file
-                        String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryReplaced"), fm.getFileName(), reTemp.getDisplayName()); 
+                        String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryReplaced"), fm.getFileName(), reTemp.getDisplayName());
                         log.debug(m);
-                        msgList.add(m);                
+                        msgList.add(m);
                         fileTemp.delete(); //get rid of temp file 
                     }
                 } else {
                     fileTemp.renameTo(fileNew); //move the file to proper location
                     Roster.getDefault().addEntry(reTemp);
                     Roster.getDefault().writeRoster();
-                    String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryAdded"), fm.getFileName(), reTemp.getId()); 
+                    String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryAdded"), fm.getFileName(), reTemp.getId());
                     log.debug(m);
-                    msgList.add(m);                    
+                    msgList.add(m);
                 }
 
             }

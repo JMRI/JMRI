@@ -31,6 +31,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return current traffic controller for this connection
      */
     public MrcTrafficController getMrcTrafficController() {
         return mrcTrafficController;

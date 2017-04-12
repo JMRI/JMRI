@@ -179,12 +179,13 @@
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
+        <pathelement location="${libdir}/jna-4.4.0.jar"/>
+        <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.2.1.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.8.5.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.8.5.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.8.5.jar"/>
         <pathelement location="${libdir}/jetty-http-9.3.9.v20160517.jar"/>
         <pathelement location="${libdir}/jetty-security-9.3.9.v20160517.jar"/>
         <pathelement location="${libdir}/jetty-server-9.3.9.v20160517.jar"/>
@@ -352,7 +353,6 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
-
     <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
               dir="${basedir}"
@@ -372,6 +372,17 @@
             </not>
           </condition>
         </fail>
+        <!-- create a URL-encoded version -->
+        <loadresource property="release.version-encoded-string">
+          <propertyresource name="release.version-string"/>
+          <filterchain>
+            <tokenfilter>
+              <filetokenizer/>
+              <replaceregex flags="g" pattern="\+" replace="%2B" />
+            </tokenfilter>
+          </filterchain>
+        </loadresource>
+        <echo message="${release.version-encoded-string}" />
     </target>
 
     <target name="realclean"
@@ -1560,7 +1571,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="3000"/><!-- change from default 100 warnings -->
+            <arg value="2750"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1627,7 +1638,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="3000"/><!-- change from default 100 warnings -->
+            <arg value="2750"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1661,11 +1672,11 @@
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
+            <link href="http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
-            <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
+            <link href="http://http://www.javadoc.io/doc/org.openlcb/openlcb/0.7.11"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
     </target>
@@ -1742,7 +1753,7 @@
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
-            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
+            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.8.5"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
@@ -2027,7 +2038,7 @@
               failonerror="true">
             <arg value="-t 1200"/>
             <arg value="-O signing-wget.log"/>
-            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI-${release.version-string}+unsigned.dmg&amp;rel=${release.version-string}&amp;put=${dist.release}/JMRI.${release.version-string}.dmg"/>
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
         </exec>
         <chmod perm="go-w" dir="${dist.release}"/>
     </target>

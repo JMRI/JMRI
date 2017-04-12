@@ -14,11 +14,16 @@ import org.junit.Test;
  */
 public class AcelaSystemConnectionMemoTest {
      
-    AcelaSystemConnectionMemo memo = null;
+    private AcelaSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor(){
        Assert.assertNotNull("exists",memo);
+    }
+
+    @Test
+    public void testDefaultCtor(){
+       Assert.assertNotNull("exists",new AcelaSystemConnectionMemo());
     }
 
     @Before
@@ -26,7 +31,7 @@ public class AcelaSystemConnectionMemoTest {
        apps.tests.Log4JFixture.setUp();
        JUnitUtil.resetInstanceManager();
        AcelaTrafficController tc = new AcelaTrafficControlScaffold();
-       memo = new AcelaSystemConnectionMemo();
+       memo = new AcelaSystemConnectionMemo(tc);
     }
 
     @After

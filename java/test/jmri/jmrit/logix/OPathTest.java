@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import java.util.ArrayList;
+import jmri.BeanSetting;
 import jmri.Block;
 import jmri.Turnout;
 import junit.framework.Test;
@@ -82,7 +84,8 @@ public class OPathTest extends TestCase {
         Portal entryP = _portalMgr.providePortal("entryP");
         Portal exitP = _portalMgr.providePortal("exitP");
         OBlock blk = _blkMgr.provideOBlock("OB0");
-        OPath path = new OPath("path", blk, entryP, exitP, null);
+        ArrayList<BeanSetting> ats = new ArrayList<BeanSetting>();
+        OPath path = new OPath("path", blk, entryP, exitP, ats);
         Assert.assertEquals("Get entry portal", entryP, path.getFromPortal());
         Assert.assertEquals("Get exit portal", exitP, path.getToPortal());
     }
