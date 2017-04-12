@@ -164,7 +164,7 @@ public class WebAppManager extends AbstractPreferencesManager {
             });
         });
         styles.forEach((style) -> {
-            tags.append("<link rel=\"stylesheet\" href=\"").append(style).append("\">\n");
+            tags.append("<link rel=\"stylesheet\" href=\"").append(style).append("\" type=\"text/css\">\n");
         });
         return tags.toString();
     }
