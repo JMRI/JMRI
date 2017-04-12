@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-//import jmri.jmrit.display.Editor;
 import jmri.server.json.JSON;
 import org.jdom2.Document;
 import org.jdom2.Element;
