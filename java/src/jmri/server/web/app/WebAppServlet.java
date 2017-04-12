@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
@@ -43,13 +45,20 @@ public class WebAppServlet extends HttpServlet {
         log.error("App contextPath: {}, pathInfo: {}, pathTranslated: {}", request.getContextPath(), request.getPathInfo(), request.getPathTranslated());
         if (request.getContextPath().equals("/app") && request.getPathTranslated() == null) {
             response.setContentType("text/html;charset=UTF-8");
-            File cache = ProfileUtils.getCacheDirectory(ProfileManager.getDefault().getActiveProfile(), this.getClass());
+            Profile profile = ProfileManager.getDefault().getActiveProfile();
+            File cache = ProfileUtils.getCacheDirectory(profile, this.getClass());
             File index = new File(cache, "index.html");
             if (!index.exists()) {
+                WebAppManager manager = InstanceManager.getNullableDefault(WebAppManager.class);
+                if (manager == null) {
+                    log.error("No WebAppManager available.");
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    return;
+                }
                 // Format elements for index.html
                 // 1 = railroad name
-                // 2 = scripts (in comments)
-                // 3 = stylesheets (in comments)
+                // 2 = scripts
+                // 3 = stylesheets
                 // 4 = body content (divs)
                 // 5 = help menu title
                 // 6 = help menu contents (in comments)
@@ -58,8 +67,8 @@ public class WebAppServlet extends HttpServlet {
                 FileUtil.appendTextToFile(index, String.format(request.getLocale(),
                         FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
                         ServletUtil.getInstance().getRailroadName(false), // railroad name
-                        "--> <!--", // scripts (in comments)
-                        "--> <!--", // stylesheets (in comments)
+                        manager.getScriptTags(profile), // scripts
+                        "", // stylesheets
                         "<!-- -->", // body content (divs)
                         Bundle.getMessage(request.getLocale(), "help"), // help menu title
                         "--> <!--", // help menu contents (in comments)
