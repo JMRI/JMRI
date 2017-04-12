@@ -368,8 +368,9 @@ public class SwitchboardEditor extends Editor {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
         }
-                switchlist.clear(); // reset list
-                switchboardLayeredPane.setSize(300,300);
+        switchlist.clear(); // reset list
+        log.debug("switchlist cleared, size is now: {}", "" + switchlist.size());
+        switchboardLayeredPane.setSize(300,300);
         // update selected address range
         _range =(Integer)minSpinner.getValue()-(Integer)maxSpinner.getValue();
                 switchboardLayeredPane.setLayout(new GridLayout(_range %((Integer) Columns.getValue()),
@@ -715,6 +716,24 @@ public class SwitchboardEditor extends Editor {
 
         public int getType() {
             return _shape;
+        }
+
+        public String getInactiveText() {
+            return _label + ": -";
+            // TODO in this and the next 3 methods:
+            // use an extra switch(beanTypeChar) to create bean specific ebbreviations (and fetch those from DisplayBundle)
+        }
+
+        public String getActiveText() {
+            return _label + ": +";
+        }
+
+        public String getUnknownText() {
+            return _label + ": ?";
+        }
+
+        public String getInconsistentText() {
+            return _label + ": x";
         }
 
         public String getTooltip() {
@@ -2294,6 +2313,8 @@ public class SwitchboardEditor extends Editor {
     }
 
     public List<BeanSwitch> getSwitches() {
+        _switches.clear(); // reset list
+        log.debug("N = {}", switchlist.size());
         for (int i = 0; i < switchlist.size(); i++) {
             _switches.add((BeanSwitch) switchboardLayeredPane.getComponent(i));
         }

@@ -40,13 +40,40 @@ public class SwitchboardEditor$BeanSwitchXml extends AbstractXmlAdapter {
         } else {
             element.setAttribute("connected", "false");
         }
-        element.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditor$BeanSwitchXml");
+
+        // get state textual info (only used for shape 'button'
+        // includes beanswitch label to operate like SensorIcon
+        Element textElement = new Element("activeText");
+        if (bs.getActiveText() != null) {
+            textElement.setAttribute("text", bs.getActiveText());
+        }
+        element.addContent(textElement);
+
+        textElement = new Element("inactiveText");
+        if (bs.getInactiveText() != null) {
+            textElement.setAttribute("text", bs.getInactiveText());
+        }
+        element.addContent(textElement);
+
+        textElement = new Element("unknownText");
+        if (bs.getUnknownText() != null) {
+            textElement.setAttribute("text", bs.getUnknownText());
+        }
+        element.addContent(textElement);
+
+        textElement = new Element("inconsistentText");
+        if (bs.getInconsistentText() != null) {
+            textElement.setAttribute("text", bs.getInconsistentText());
+        }
+        element.addContent(textElement);
 
         String txt = bs.getTooltip();
         if (txt != null) {
             Element elem = new Element("tooltip").addContent(txt);
             element.addContent(elem);
         }
+
+        element.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditor$BeanSwitchXml");
 
         return element;
     }

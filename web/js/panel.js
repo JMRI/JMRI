@@ -480,6 +480,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $widget.jsonType = "light"; // JSON object type
                                         break;
                                 }
+                                // set each state's text (this is only applied when shape is button)
+                                $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
+                                $widget['text2'] = $(this).find('activeText').attr('text');
+                                $widget['text4'] = $(this).find('inactiveText').attr('text');
+                                $widget['text8'] = $(this).find('inconsistentText').attr('text');
                                 $widget['state'] = 0; // use 0 for initial state
                                 $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
                                 $widget.styles['border-radius'] = "8px" // mimick JButtons
@@ -487,12 +492,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
+                                // CSS properties
                                 $("#panel-area>#" + $widget.id).css(
                                 {position: 'relative', float: 'left'});
                                 $widget.classes += "button ";
-                                if ($widget.connected = "true") {
+                                if ($widget.connected == "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
-                                    //jmri.getSwitch($widget["id"]);
+                                    $widget.styles['background-color'] = "rgb(220,220,220)" // very light grey to mark connected buttons
                                 }
                                 break;
                         }
@@ -1357,7 +1363,7 @@ var $reDrawIcon = function($widget) {
     }
 };
 
-//set new value for widget, showing proper icon, return widgets changed
+// set new value for widget, showing proper icon, return widgets changed
 var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
     if ($widget.state !== $newState) {  //don't bother if already this value

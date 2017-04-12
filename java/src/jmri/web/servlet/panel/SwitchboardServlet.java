@@ -4,7 +4,6 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
@@ -74,26 +73,27 @@ public class SwitchboardServlet extends AbstractPanelServlet {
 
             Element text = new Element("text");
             text.setAttribute("color", editor.getDefaultTextColor());
-            text.setAttribute("content", "Switchboards are not yet operational in JMRI WebServer.");
+            text.setAttribute("content", "For now, Switchboards only present buttons in JMRI WebServer.");
             panel.addContent(text);
 
-            // include switches, how to delete the old ones?
+            // include switches, Bug: how to delete the old ones?
             List<BeanSwitch> _switches = editor.getSwitches(); // call method in SwitchboardEditor
-            log.debug("N switches: {}", _switches.size());
+            log.debug("SwbServlet N switches: {}", _switches.size());
             for (BeanSwitch sub : _switches) {
                 if (sub != null) {
                     try {
                         Element e = ConfigXmlManager.elementFromObject(sub);
                         if (e != null) {
                             log.debug("element name: {}", e.getName());
-//                            if ("icon".equals(e.getName())) {  //insert details into beanswitch
-                                //e.addContent(getSwitchIconsElement(e.getAttributeValue("signalmast")));
-//                            }
+                            // if (!"button".equals(e.getShape())) { //insert icon details into beanswitch
+                            // do sth;
+                            // }
                             try {
                                 e.setAttribute("label", sub.getNameString());
                                 e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
                                 if (sub.getNamedBean() == null) {
                                     e.setAttribute("connected", "false");
+                                    log.debug("switch {} NOT connected", sub.getNameString());
                                 } else {
                                     e.setAttribute("connected", "true"); // activate click action via class
                                 }
