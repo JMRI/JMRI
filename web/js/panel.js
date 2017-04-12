@@ -111,7 +111,7 @@ function processPanelXML($returnedData, $success, $xhr) {
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
     }
 
-    //insert the canvas layer and set up context used by switchboardeditor "beanswitch" objects, set some defaults
+    //set up context used by switchboardeditor "beanswitch" objects, set some defaults
     if ($gPanel.paneltype === "Switchboard") {
         // TODO add contents
         //$("#panel-area").prepend("<canvas id='panelCanvas' width=95% height=95% style='position:absolute;z-index:2;'>");
@@ -468,7 +468,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 break;
                             case "beanswitch" : // Switchboard BeanSwitch of shape "button"
                                 $widget['name'] = $widget.label; // normalize name
-                                $widget['text'] = $widget.label; // use name for initial text
+                                $widget['text'] = $widget.label; // use label as initial button text
                                 switch  ($widget["type"]) {
                                     case "T" :
                                         $widget.jsonType = "turnout"; // JSON object type
@@ -497,8 +497,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 {position: 'relative', float: 'left'});
                                 $widget.classes += "button ";
                                 if ($widget.connected == "true") {
+                                    $widget['text'] = $widget['text0']; // add UNKNOWN state to label of connected switches
                                     $widget.classes += $widget.jsonType + " clickable ";
-                                    $widget.styles['background-color'] = "rgb(220,220,220)" // very light grey to mark connected buttons
+                                    $widget.styles['background-color'] = "rgb(240,240,240)" // very light grey to mark connected buttons
                                 }
                                 break;
                         }

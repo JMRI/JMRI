@@ -41,30 +41,23 @@ public class SwitchboardEditor$BeanSwitchXml extends AbstractXmlAdapter {
             element.setAttribute("connected", "false");
         }
 
-        // get state textual info (only used for shape 'button'
+        // get state textual info (only used for shape 'button')
         // includes beanswitch label to operate like SensorIcon
+        // never null
         Element textElement = new Element("activeText");
-        if (bs.getActiveText() != null) {
-            textElement.setAttribute("text", bs.getActiveText());
-        }
+        textElement.setAttribute("text", bs.getActiveText());
         element.addContent(textElement);
 
         textElement = new Element("inactiveText");
-        if (bs.getInactiveText() != null) {
-            textElement.setAttribute("text", bs.getInactiveText());
-        }
+        textElement.setAttribute("text", bs.getInactiveText());
         element.addContent(textElement);
 
         textElement = new Element("unknownText");
-        if (bs.getUnknownText() != null) {
-            textElement.setAttribute("text", bs.getUnknownText());
-        }
+        textElement.setAttribute("text", bs.getUnknownText());
         element.addContent(textElement);
 
         textElement = new Element("inconsistentText");
-        if (bs.getInconsistentText() != null) {
-            textElement.setAttribute("text", bs.getInconsistentText());
-        }
+        textElement.setAttribute("text", bs.getInconsistentText());
         element.addContent(textElement);
 
         String txt = bs.getTooltip();
@@ -90,9 +83,10 @@ public class SwitchboardEditor$BeanSwitchXml extends AbstractXmlAdapter {
     public void load(Element element, Object o) {
 
         // create the objects
-        SwitchboardEditor.BeanSwitch bs = (SwitchboardEditor.BeanSwitch) o;
+        //SwitchboardEditor.BeanSwitch bs = (SwitchboardEditor.BeanSwitch) o;
 
+        log.debug("load xml called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanSwitchXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor$BeanSwitchXml.class.getName());
 }
