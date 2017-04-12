@@ -214,9 +214,24 @@ public class FileUtilSupport extends Bean {
             files.addAll(this.findFiles(name, new File(this.findURI(PROGRAM + root, Location.NONE))));
         }
         if (location == Location.USER || location == Location.ALL) {
-            files.addAll(this.findFiles(name, new File(this.findURI(PREFERENCES + root, Location.NONE))));
-            files.addAll(this.findFiles(name, new File(this.findURI(PROFILE + root, Location.NONE))));
-            files.addAll(this.findFiles(name, new File(this.findURI(SETTINGS + root, Location.NONE))));
+            try {
+                files.addAll(this.findFiles(name, new File(this.findURI(PREFERENCES + root, Location.NONE))));
+            } catch (NullPointerException ex) {
+                // expected if path PREFERENCES + root does not exist
+                log.trace("{} does not exist in {}", root, PREFERENCES);
+            }
+            try {
+                files.addAll(this.findFiles(name, new File(this.findURI(PROFILE + root, Location.NONE))));
+            } catch (NullPointerException ex) {
+                // expected if path PROFILE + root does not exist
+                log.trace("{} does not exist in {}", root, PROFILE);
+            }
+            try {
+                files.addAll(this.findFiles(name, new File(this.findURI(SETTINGS + root, Location.NONE))));
+            } catch (NullPointerException ex) {
+                // expected if path SETTINGS + root does not exist
+                log.trace("{} does not exist in {}", root, SETTINGS);
+            }
         }
         return files;
     }
