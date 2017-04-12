@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
+import jmri.jmrix.acela.AcelaTrafficController;
+import jmri.jmrix.acela.AcelaTrafficControlScaffold;
 
 /**
  *
