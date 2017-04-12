@@ -2,24 +2,21 @@ package jmri.jmrit.operations.routes;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SetTrainIconPositionFrameTest {
+public class SetTrainIconRouteActionTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconPositionFrame t = new SetTrainIconPositionFrame();
+        SetTrainIconRouteAction t = new SetTrainIconRouteAction("Test");
         Assert.assertNotNull("exists",t);
     }
 
@@ -36,6 +33,6 @@ public class SetTrainIconPositionFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteActionTest.class.getName());
 
 }

@@ -405,7 +405,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return true;
     }
     
-    protected RosterEntry getRosterEntry() {
+    public RosterEntry getRosterEntry() {
         return _train;
     }
 

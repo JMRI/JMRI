@@ -249,7 +249,7 @@ public class SCWarrant extends Warrant {
             log.debug(_trainName+" ensureRouteConsecutivity for loop #"+i);
             BlockOrder bo = getBlockOrderAt(i);
             OBlock block = bo.getBlock();
-            if (!block.isAllocatedTo(this) || (block.getState() & OBlock.OCCUPIED) != 0) {
+            if (!block.isAllocatedTo(this) && (block.getState() & OBlock.OCCUPIED) != 0) {
                 deAllocateRestOfRoute = true;
             }
             if (deAllocateRestOfRoute) {
@@ -504,6 +504,7 @@ public class SCWarrant extends Warrant {
                     long remaining;
                     while ((remaining = timeWhenDone - System.currentTimeMillis()) > 0) {
                         try {
+                            log.debug(_warrant._trainName+" running slowly to platform for "+remaining+" miliseconds");
                             _warrant.wait(remaining);
                         } catch (InterruptedException e) {
                             log.debug(_warrant._trainName+" InterruptedException "+e);

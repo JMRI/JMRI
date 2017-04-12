@@ -1,26 +1,25 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.vsdecoder;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SetTrainIconPositionFrameTest {
+public class VSDecoderManagerThreadTest {
 
     @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconPositionFrame t = new SetTrainIconPositionFrame();
+    public void testInstance() {
+        VSDecoderManagerThread t = VSDecoderManagerThread.instance();
         Assert.assertNotNull("exists",t);
+        // the instance method starts a thread, make sure it goes away.
+        t.kill();
     }
 
     // The minimal setup for log4J
@@ -36,6 +35,6 @@ public class SetTrainIconPositionFrameTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderManagerThreadTest.class.getName());
 
 }

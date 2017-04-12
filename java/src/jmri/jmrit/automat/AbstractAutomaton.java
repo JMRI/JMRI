@@ -625,17 +625,17 @@ public class AbstractAutomaton implements Runnable {
                     blockChanged = true;
                     blockName = ((OBlock) e.getNewValue()).getDisplayName();
                 }
+                if (e.getPropertyName().equals("runMode") && e.getNewValue() != (Integer) Warrant.MODE_RUN) {
+                    blockChanged = true;
+                    blockName = null;
+                }
                 log.debug("notify waitWarrantBlockChange of property change");
                 self.notifyAll(); // should be only one thread waiting, but just in case
             }
         });
 
-        while (!blockChanged && warrant.getRunMode() == Warrant.MODE_RUN) {
+        while (!blockChanged) {
             wait(-1);
-        }
-
-        if (warrant.getRunMode() != Warrant.MODE_RUN) {
-            blockName = null;
         }
 
         // remove the listener
