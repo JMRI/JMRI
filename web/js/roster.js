@@ -147,8 +147,7 @@ $(document).ready(function() {
     jmri = $.JMRI({
     	//wait for the hello message
     	hello: function(data) {
-    		jmri.socket._send('{"list":"roster"}') // request updates to the roster via websocket 
-//    		jmri.getRoster();
+    		jmri.getList("roster"); // request updates to the roster via websocket 
     	},
     	//roster "add" and "remove" messages
     	roster: function(data) {

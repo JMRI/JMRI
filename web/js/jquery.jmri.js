@@ -12,25 +12,51 @@
  * didReconnect()
  * hello(data)
  * goodbye(data)
- * light(name, state, data)
- * memory(name, value, data)
  * block(name, value, data)
+ * blocks(data array)
+ * car(name, data)
+ * cars(data array)
+ * configProfile(name, data)
+ * configProfiles(data array)
+ * consist(name, data)
+ * consists(data array)
+ * engine(name, data)
+ * engines(data array)
  * layoutBlock(name, value, data)
+ * layoutBlocks(data array)
+ * light(name, state, data)
+ * lights(data array)
+ * location(name, data)
+ * locations(data array)
+ * memory(name, value, data)
+ * memories(data array)
+ * metadata(data array)
+ * networkService(name, data)
+ * networkServices(data array)
  * power(state)
  * railroad(name)
  * reporter(name, value, data)
+ * reporters(data array)
  * roster(data array)
- * rosterGroups(data array)
- * rosterGroup(id, data)
  * rosterEntry(id, data)
+ * rosterGroup(id, data)
+ * rosterGroups(data array)
  * route(name, state, data)
+ * routes(data array)
  * sensor(name, state, data)
+ * sensors(data array)
  * signalHead(name, state, data)
+ * signalHeads(data array)
  * signalMast(name, state, data)
+ * signalMasts(data array)
+ * systemConnection(name, data)
+ * systemConnections(data array)
  * throttle(id, data)
  * time(time, data)
  * train(id, data)
+ * trains(data array)
  * turnout(name, state, data)
+ * turnouts(data array)
  * version(version)
  * as demonstrated in the power.html demonstration web app
  * 
@@ -270,6 +296,15 @@
                     });
                 }
             };
+            /**
+             * Request a json list of the specified list type.
+             *   will also set up listeners for changes to this type
+             * @param {String} type of list (e.g. "sensors")
+             */
+            jmri.getList = function(name) {
+            	jmri.socket._send(JSON.stringify({list: name}));
+            };
+
             jmri.getObject = function(type, name) {
                 switch (type) {
                     case "light":
@@ -374,9 +409,6 @@
                     });
                 }
             };
-            jmri.getRoster = function() {
-            	jmri.socket._send('{"list":"roster"}');
-            };
             jmri.getRosterGroup = function(id) {
                 if (jmri.socket) {
                     jmri.socket.send("rosterGroup", {name: id});
@@ -385,9 +417,6 @@
                         jmri.rosterGroup(json.data.name, json.data);
                     });
                 }
-            };
-            jmri.getRosterGroups = function() {
-            	jmri.socket._send('{"list":"rosterGroups"}');
             };
             jmri.getRosterEntry = function(id) {
                 if (jmri.socket) {
