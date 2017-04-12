@@ -4,8 +4,8 @@ package jmri.jmrit.logix;
 //import jmri.Path;
 //import jmri.SignalHead;
 /**
- * An BlockOrder is a row in the warrant. It contains the directives the
- * Engineer must do when in a block
+ * An BlockOrder is a row in the warrant's route.  It names the entry
+ * and exit Portals and the OPath that connects them.
  * <P>
  *
  *
@@ -25,6 +25,7 @@ public class BlockOrder {
     /**
      * Create BlockOrder.
      *
+     * @param block of this order
      * @param path  MUST be a path in the blocK
      * @param entry MUST be a name of a Portal to the path
      * @param exit  MUST be a name of a Portal to the path
@@ -88,6 +89,7 @@ public class BlockOrder {
     /**
      * Set Path. Note that the Path's 'fromPortal' and 'toPortal' have no
      * bearing on the BlockOrder's entryPortal and exitPortal.
+     * @param path - Name of the OPath connecting the entry and exit Portals
      */
     protected void setPathName(String path) {
         _pathName = path;

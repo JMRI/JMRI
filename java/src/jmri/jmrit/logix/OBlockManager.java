@@ -1,8 +1,7 @@
 package jmri.jmrit.logix;
 
-import jmri.managers.AbstractManager;
-
 import javax.annotation.Nonnull;
+import jmri.managers.AbstractManager;
 
 /**
  * Basic Implementation of a OBlockManager.
@@ -67,7 +66,7 @@ public class OBlockManager extends AbstractManager
         }
         String sName = systemName.toUpperCase();
         if (!sName.startsWith("OB")) {
-            sName = "OB" + sName;
+            return null;
         }
         if (sName.length() < 3) {
             return null;

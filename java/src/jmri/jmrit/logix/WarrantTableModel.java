@@ -433,9 +433,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (log.isDebugEnabled())
-            log.debug("setValueAt: row= " + row + ", column= " + col
-                    + ", value= " + (value==null ? value : (value.toString()==null ? value.getClass().getName() :value.toString())));
+//        if (log.isDebugEnabled())
+//            log.debug("setValueAt: row= " + row + ", column= " + col
+//                    + ", value= " + (value==null ? value : (value.toString()==null ? value.getClass().getName() :value.toString())));
         Warrant w = getWarrantAt(row);
         if (w == null) {
             log.warn("setValueAt row= " + row + " Warrant is null!");

@@ -54,15 +54,15 @@ public class JsonRosterSocketServiceTest {
         });
         // add the first time
         instance.listen();
-        Assert.assertEquals(1, Roster.getDefault().getPropertyChangeListeners().length);
+        Assert.assertEquals(2, Roster.getDefault().getPropertyChangeListeners().length);
         Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((entry) -> {
-            Assert.assertEquals(2, entry.getPropertyChangeListeners().length);
+            Assert.assertEquals(3, entry.getPropertyChangeListeners().length);
         });
         // don't add the second time
         instance.listen();
-        Assert.assertEquals(1, Roster.getDefault().getPropertyChangeListeners().length);
+        Assert.assertEquals(2, Roster.getDefault().getPropertyChangeListeners().length);
         Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((entry) -> {
-            Assert.assertEquals(2, entry.getPropertyChangeListeners().length);
+            Assert.assertEquals(3, entry.getPropertyChangeListeners().length);
         });
     }
 
@@ -153,9 +153,9 @@ public class JsonRosterSocketServiceTest {
         instance.onMessage(JsonRoster.ROSTER, data, locale);
         Assert.assertEquals(Roster.getDefault().numEntries(), this.connection.getMessage().size());
         // assert we are listening
-        Assert.assertEquals(1, Roster.getDefault().getPropertyChangeListeners().length);
+        Assert.assertEquals(2, Roster.getDefault().getPropertyChangeListeners().length);
         Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((entry) -> {
-            Assert.assertEquals(2, entry.getPropertyChangeListeners().length);
+            Assert.assertEquals(3, entry.getPropertyChangeListeners().length);
         });
     }
 
@@ -204,9 +204,9 @@ public class JsonRosterSocketServiceTest {
         Assert.assertNotNull(this.connection.getMessage());
         Assert.assertEquals(Roster.getDefault().numEntries(), this.connection.getMessage().size());
         // assert we are listening
-        Assert.assertEquals(1, Roster.getDefault().getPropertyChangeListeners().length);
+        Assert.assertEquals(2, Roster.getDefault().getPropertyChangeListeners().length);
         Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((entry) -> {
-            Assert.assertEquals(2, entry.getPropertyChangeListeners().length);
+            Assert.assertEquals(3, entry.getPropertyChangeListeners().length);
         });
     }
 
@@ -219,9 +219,9 @@ public class JsonRosterSocketServiceTest {
         // listen to the roster, since onClose stops listening to the roster
         instance.listen();
         // assert we are listening
-        Assert.assertEquals(1, Roster.getDefault().getPropertyChangeListeners().length);
+        Assert.assertEquals(2, Roster.getDefault().getPropertyChangeListeners().length);
         Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((entry) -> {
-            Assert.assertEquals(2, entry.getPropertyChangeListeners().length);
+            Assert.assertEquals(3, entry.getPropertyChangeListeners().length);
         });
         // the connection is closing, stop listening
         instance.onClose();

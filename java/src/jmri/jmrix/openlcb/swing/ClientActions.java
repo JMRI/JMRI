@@ -41,7 +41,8 @@ public class ClientActions {
 
         CdiPanel m = new CdiPanel();
         f.add(m);
-
+        m.setEventTable(iface.getNodeStore().getSimpleNodeIdent(destNode).getUserName(),
+                iface.getEventTable());
         // create an object to add "New Sensor" buttons
         CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory() {
             private boolean haveButtons = false;
