@@ -85,15 +85,21 @@
       template: '<div id=""></div>',
       replace: true,
       link: function (scope, element, attrs) {
+        // store the chart object
+        var chart = undefined;
         scope.$watch('config', function () {
           $timeout(function () {
-            // store the chart object
-            var chart;
             //generate c3 chart data
             var chartData = scope.config;
             if (chartData) {
               chartData.bindto = '#' + attrs.id;
-              chart = c3.generate(chartData);
+              //checks if the chart is created
+              if (!chart) {
+                chart = c3.generate(chartData);
+              }else {
+                //if it is created, then, we only need to load changes
+                chart.load(scope.config.data);
+              }
               if (scope.getChartCallback) {
                 scope.getChartCallback(chart);
               }

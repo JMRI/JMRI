@@ -2,7 +2,7 @@
   'use strict';
 
   var patternfly = {
-    version: "3.23.1",
+    version: "3.23.2",
   };
 
   // Util: PatternFly Palette colors
@@ -1102,7 +1102,7 @@
       if (parent) {
         // Calculate indentation depth
         i = parent.find('.treegrid-node > span.indent').length + 1;
-        for (i; i > 0; i -= 1) {
+        for (; i > 0; i -= 1) {
           node.children('.treegrid-node').prepend('<span class="indent"/>');
         }
         // Render expand/collapse icons
