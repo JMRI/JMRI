@@ -142,7 +142,7 @@ public class WebAppManager extends AbstractPreferencesManager {
     }
 
     public String getScriptTags(Profile profile) {
-        StringBuilder scriptTags = new StringBuilder();
+        StringBuilder tags = new StringBuilder();
         List<String> scripts = new ArrayList<>();
         this.getManifests(profile).forEach((manifest) -> {
             manifest.getScripts().stream().filter((script) -> (!scripts.contains(script))).forEachOrdered((script) -> {
@@ -150,8 +150,22 @@ public class WebAppManager extends AbstractPreferencesManager {
             });
         });
         scripts.forEach((script) -> {
-            scriptTags.append("<script src=\"").append(script).append("\"></script>\n");
+            tags.append("<script src=\"").append(script).append("\"></script>\n");
         });
-        return scriptTags.toString();
+        return tags.toString();
+    }
+
+    public String getStyleTags(Profile profile) {
+        StringBuilder tags = new StringBuilder();
+        List<String> styles = new ArrayList<>();
+        this.getManifests(profile).forEach((manifest) -> {
+            manifest.getStyles().stream().filter((style) -> (!styles.contains(style))).forEachOrdered((style) -> {
+                styles.add(style);
+            });
+        });
+        styles.forEach((style) -> {
+            tags.append("<link rel=\"stylesheet\" href=\"").append(style).append("\">\n");
+        });
+        return tags.toString();
     }
 }

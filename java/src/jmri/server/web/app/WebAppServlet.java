@@ -68,7 +68,7 @@ public class WebAppServlet extends HttpServlet {
                         FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
                         ServletUtil.getInstance().getRailroadName(false), // railroad name
                         manager.getScriptTags(profile), // scripts
-                        "", // stylesheets
+                        manager.getStyleTags(profile), // stylesheets
                         "<!-- -->", // body content (divs)
                         Bundle.getMessage(request.getLocale(), "help"), // help menu title
                         "--> <!--", // help menu contents (in comments)
