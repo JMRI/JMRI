@@ -111,6 +111,14 @@ function processPanelXML($returnedData, $success, $xhr) {
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
     }
 
+    //insert the canvas layer and set up context used by switchboardeditor "switch" objects, set some defaults
+    if ($gPanel.paneltype === "Switchboard") {
+        // TODO add contents
+
+        //set background color from panel attribute
+        $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
+    }
+
     //process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
     $panel.contents().each(
             function() {

@@ -69,9 +69,9 @@ abstract class AbstractPanelServlet extends HttpServlet {
      * <dt>png</dt>
      * <dd>A PNG image of the panel.</dd>
      * <dt>json</dt>
-     * <dd>A JSON document of the panel (currently imcomplete).</dd>
+     * <dd>A JSON document of the panel (currently incomplete).</dd>
      * <dt>xml</dt>
-     * <dd>A XML document of the panel ready to render within a browser.</dd>
+     * <dd>An XML document of the panel ready to render within a browser.</dd>
      * </dl>
      * If {@code format} is not specified, it is treated as {@code html}. All
      * other formats not listed are treated as {@code xml}.
@@ -216,8 +216,11 @@ abstract class AbstractPanelServlet extends HttpServlet {
         }
     }
 
-    //build and return an "icons" element containing icon urls for all signalmast states,
-    //  element names are cleaned-up aspect names, aspect attribute is actual name of aspect
+    /** build and return an "icons" element containing icon urls for all signalmast states.
+     *  Element names are cleaned-up aspect names, aspect attribute is actual name of aspect.
+     *
+     *  @param name user/system name of the signalMast using the icons
+     */
     Element getSignalMastIconsElement(String name) {
         Element icons = new Element("icons");
         jmri.SignalMast signalMast = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);

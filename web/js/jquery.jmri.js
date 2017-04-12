@@ -19,6 +19,9 @@
  * power(state)
  * railroad(name)
  * reporter(name, value, data)
+ * roster(data array)
+ * rosterGroups(data array)
+ * rosterGroup(id, data)
  * rosterEntry(id, data)
  * route(name, state, data)
  * sensor(name, state, data)
@@ -68,13 +71,47 @@
             };
             jmri.goodbye = function(data) {
             };
+            jmri.block = function(name, value, data) {
+            };
+            jmri.blocks = function(data) {
+            };
+            jmri.car = function(name, data) {
+            };
+            jmri.cars = function(data) {
+            };
+            jmri.configProfile = function(name, data) {
+            };
+            jmri.configProfiles = function(data) {
+            };
+            jmri.consist = function(name, data) {
+            };
+            jmri.consists = function(data) {
+            };
+            jmri.engine = function(name, data) {
+            };
+            jmri.engines = function(data) {
+            };
+            jmri.layoutBlock = function(name, value, data) {
+            };
+            jmri.layoutBlocks = function(data) {
+            };
             jmri.light = function(name, state, data) {
+            };
+            jmri.lights = function(data) {
+            };
+            jmri.location = function(name, data) {
+            };
+            jmri.locations = function(data) {
             };
             jmri.memory = function(name, value, data) {
             };
-            jmri.block = function(name, value, data) {
+            jmri.memories = function(data) {
             };
-            jmri.layoutBlock = function(name, value, data) {
+            jmri.metadata = function(data) {
+            };
+            jmri.networkService = function(name, data) {
+            };
+            jmri.networkServices = function(data) {
             };
             jmri.power = function(state) {
             };
@@ -82,17 +119,31 @@
             };
             jmri.reporter = function(name, value, data) {
             };
-            jmri.roster = function(name, state, data) {
+            jmri.reporters = function(data) {
             };
-            jmri.rosterEntry = function(id, data) {
+            jmri.roster = function(data) {
+            };
+            jmri.rosterGroups = function(data) {
+            };
+            jmri.rosterGroup = function(name, data) {
+            };
+            jmri.rosterEntry = function(name, data) {
             };
             jmri.route = function(name, state, data) {
             };
+            jmri.routes = function(data) {
+            };
             jmri.sensor = function(name, state, data) {
+            };
+            jmri.sensors = function(data) {
             };
             jmri.signalHead = function(name, state, data) {
             };
+            jmri.signalHeads = function(data) {
+            };
             jmri.signalMast = function(name, state, data) {
+            };
+            jmri.signalMasts = function(data) {
             };
             jmri.throttle = function(throttle, data) {
             };
@@ -100,7 +151,11 @@
             };
             jmri.train = function(id, data) {
             };
+            jmri.trains = function(data) {
+            };
             jmri.turnout = function(name, state, data) {
+            };
+            jmri.turnouts = function(data) {
             };
             jmri.version = function(string) {
             };
@@ -232,6 +287,9 @@
                     case "rosterEntry":
                         jmri.getRosterEntry(name);
                         break;
+                    case "rosterGroup":
+                        jmri.getRosterGroup(name);
+                        break;
                     case "route":
                         jmri.getRoute(name);
                         break;
@@ -315,6 +373,21 @@
                         }
                     });
                 }
+            };
+            jmri.getRoster = function() {
+            	jmri.socket._send('{"list":"roster"}');
+            };
+            jmri.getRosterGroup = function(id) {
+                if (jmri.socket) {
+                    jmri.socket.send("rosterGroup", {name: id});
+                } else {
+                    $.getJSON(jmri.url + "rosterGroup/" + id, function(json) {
+                        jmri.rosterGroup(json.data.name, json.data);
+                    });
+                }
+            };
+            jmri.getRosterGroups = function() {
+            	jmri.socket._send('{"list":"rosterGroups"}');
             };
             jmri.getRosterEntry = function(id) {
                 if (jmri.socket) {
@@ -574,7 +647,7 @@
             };
             //set of functions for handling each "type" of json message
             jmri.events = {
-            		// TODO: add consist, programmer, and operations-related events
+            		// TODO: add panel and programmer-related events
             		error: function(e) {
             			jmri.log("Error " + e.data.code + ": " + e.data.message);
             			jmri.error(e.data);
@@ -593,17 +666,71 @@
             			jmri.railroad(e.data.railroad);
             			jmri.hello(e.data);
             		},
-            		light: function(e) {
-            			jmri.light(e.data.name, e.data.state, e.data);
+            		pong: function(e) {
+            			jmri.pong();
             		},
             		block: function(e) {
             			jmri.block(e.data.name, e.data.value, e.data);
             		},
+            		blocks: function(e) {
+            			jmri.blocks(e.data);
+            		},
+            		car: function(e) {
+            			jmri.car(e.data.name, e.data);
+            		},
+            		cars: function(e) {
+            			jmri.cars(e.data);
+            		},
+            		configProfile: function(e) {
+            			jmri.configProfile(e.data.name, e.data);
+            		},
+            		configProfiles: function(e) {
+            			jmri.configProfiles(e.data);
+            		},
+            		consist: function(e) {
+            			jmri.consist(e.data.name, e.data);
+            		},
+            		consists: function(e) {
+            			jmri.consists(e.data);
+            		},
+            		engine: function(e) {
+            			jmri.engine(e.data.name, e.data);
+            		},
+            		engines: function(e) {
+            			jmri.engines(e.data);
+            		},
             		layoutBlock: function(e) {
             			jmri.layoutBlock(e.data.name, e.data.value, e.data);
             		},
+            		layoutBlocks: function(e) {
+            			jmri.layoutBlocks(e.data);
+            		},
+            		light: function(e) {
+            			jmri.light(e.data.name, e.data.state, e.data);
+            		},
+            		lights: function(e) {
+            			jmri.lights(e.data);
+            		},
+            		location: function(e) {
+            			jmri.location(e.data.name, e.data);
+            		},
+            		locations: function(e) {
+            			jmri.locations(e.data);
+            		},
             		memory: function(e) {
             			jmri.memory(e.data.name, e.data.value, e.data);
+            		},
+            		memories: function(e) {
+            			jmri.memories(e.data);
+            		},
+            		metadata: function(e) {
+            			jmri.metadata(e.data);
+            		},
+            		networkService: function(e) {
+            			jmri.networkService(e.data.name, e.data);
+            		},
+            		networkServices: function(e) {
+            			jmri.networkServices(e.data);
             		},
             		power: function(e) {
             			jmri.power(e.data.state);
@@ -611,8 +738,26 @@
             		reporter: function(e) {
             			jmri.reporter(e.data.name, e.data.value, e.data);
             		},
+            		reporters: function(e) {
+            			jmri.reporters(e.data);
+            		},
+            		roster: function(e) {
+            			jmri.roster(e.data);
+            		},
+            		rosterEntry: function(e) {
+            			jmri.rosterEntry(e.data.name, e.data);
+            		},
+            		rosterGroup: function(e) {
+            			jmri.rosterGroup(e.data.name, e.data);
+            		},
+            		rosterGroups: function(e) {
+            			jmri.rosterGroups(e.data);
+            		},
             		route: function(e) {
             			jmri.route(e.data.name, e.data.state, e.data);
+            		},
+            		routes: function(e) {
+            			jmri.routes(e.data);
             		},
             		sensor: function(e) {
             			jmri.sensor(e.data.name, e.data.state, e.data);
@@ -623,6 +768,12 @@
             		signalMast: function(e) {
             			jmri.signalMast(e.data.name, e.data.state, e.data);
             		},
+            		systemConnection: function(e) {
+            			jmri.systemConnection(e.data.name, e.data);
+            		},
+            		systemConnections: function(e) {
+            			jmri.systemConnections(e.data);
+            		},
             		throttle: function(e) {
             			jmri.throttle(e.data.throttle, e.data);
             		},
@@ -632,18 +783,33 @@
             		train: function(e) {
             			jmri.train(e.data.id, e.data);
             		},
+            		trains: function(e) {
+            			jmri.trains(e.data);
+            		},
             		turnout: function(e) {
             			jmri.turnout(e.data.name, e.data.state, e.data);
             		},
-            		roster: function(e) {
-            			jmri.roster(e.data.name, e.data.state, e.data);
-            		},
-            		rosterEntry: function(e) {
-            			jmri.rosterEntry(e.data.name, e.data.state, e.data);
-            		},
-            		pong: function(e) {
-            			jmri.pong();
+            		turnouts: function(e) {
+            			jmri.turnouts(e.data);
             		}
+            }
+
+            /**
+             * get the name (type) used for list from the name used for a single item
+             *
+             * @param {string} name of item
+             * @returns {string} name for a list of that item
+             */
+            jmri.getListType = function(name) {
+            	var lt = name + "s"; //assume simplest case: "sensor" -> "sensors"
+            	if (name == "rosterEntry") {  
+            		lt = "roster";
+            	} else if (name == "memory") {
+            		lt = "memories";
+            	} else if (name == "metadata") { 
+            		lt = "metadata";
+            	}
+            	return lt;
             }
 
             jmri.reconnect = function() {
@@ -665,11 +831,20 @@
                         jmri.console(e.originalEvent.data);
                         //determine message type and call appropriate event handler
                         var m = JSON.parse(e.originalEvent.data);
-                        var h = jmri.events[m.type];
+                       
+                        //if the message is an array, move array to data and add list type
+                        if ($.isArray(m)) { 
+                        	if (m.length == 0) {  //cannot determine type of empty array 
+                        		jmri.log("WARN: empty json array received, could not handle");
+                        		return;
+                        	} else { //use type of first entry to determine list type
+                            	var lt = jmri.getListType(m[0].type);
+                            	m = {type: lt, data: m}; //wrap up the message as data for list type
+                        	}
+                        }
+                        h = jmri.events[m.type];
                         if (h) h.call(this, m);
-                        if ($.isArray(m)) {
-                        	jmri.log("ERROR: message is an array of " + m.length + " elements");
-                        } else if (!m.type) {
+                        if (!m.type) {
                         	jmri.log("ERROR: 'type' element not found in json message:" +
                         			e.originalEvent.data);
                         } else if (!h)
