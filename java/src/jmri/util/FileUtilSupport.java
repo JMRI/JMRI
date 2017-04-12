@@ -8,6 +8,8 @@ import static jmri.util.FileUtil.SCRIPTS;
 import static jmri.util.FileUtil.SEPARATOR;
 import static jmri.util.FileUtil.SETTINGS;
 
+import com.sun.jna.platform.win32.KnownFolders;
+import com.sun.jna.platform.win32.Shell32Util;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
@@ -585,14 +587,17 @@ public class FileUtilSupport extends Bean {
      * since it should generally be accessed using
      * {@link jmri.profile.ProfileUtils#getCacheDirectory(jmri.profile.Profile, java.lang.Class)}.
      *
-     * Uses the following locations:
+     * Uses the following locations (where [version] is from
+     * {@link jmri.Version#getCanonicalVersion()}):
      * <dl>
-     * <dt>System Property (if set)</dt><dd>jmri_default_cachedir</dd>
+     * <dt>System Property (if set)</dt><dd>value of
+     * <em>jmri_default_cachedir</em></dd>
      * <dt>macOS</dt><dd>~/Library/Caches/JMRI/[version]</dd>
      * <dt>Windows</dt><dd>%Local AppData%/JMRI/[version]</dd>
-     * <dt>UNIX/Linux/POSIX</dt><dd>$XDG_CACHE_HOME/JMRI/[version] or
+     * <dt>UNIX/Linux/POSIX</dt><dd>${XDG_CACHE_HOME}/JMRI/[version] or
      * $HOME/.cache/JMRI/[version]</dd>
-     * <dt>Fallback</dt><dd>JMRI portable path setting:cache/[version]</dd>
+     * <dt>Fallback</dt><dd>JMRI portable path
+     * <em>setting:cache/[version]</em></dd>
      * </dl>
      *
      * @return the cache directory for this version of JMRI
@@ -611,13 +616,13 @@ public class FileUtilSupport extends Bean {
                 case SystemType.UNIX:
                     property = System.getenv("XDG_CACHE_HOME");
                     if (property != null) {
-                        cache = new File(property);
+                        cache = new File(new File(property, "JMRI"), Version.getCanonicalVersion());
                     } else {
-                    cache = new File(new File(this.getHomePath(), ".cache/JMRI"), Version.getCanonicalVersion());
+                        cache = new File(new File(this.getHomePath(), ".cache/JMRI"), Version.getCanonicalVersion());
                     }
                     break;
                 case SystemType.WINDOWS:
-                    cache = new File(new File(this.getPreferencesPath(), "cache"), Version.getCanonicalVersion());
+                    cache = new File(new File(Shell32Util.getKnownFolderPath(KnownFolders.FOLDERID_LocalAppData), "JMRI/cache"), Version.getCanonicalVersion());
                     break;
                 default:
                     // fallback
@@ -1239,7 +1244,7 @@ public class FileUtilSupport extends Bean {
      */
     public void createDirectory(File dir) {
         if (!dir.exists()) {
-            log.info("Creating directory: {}", dir);
+            log.debug("Creating directory: {}", dir);
             if (!dir.mkdirs()) {
                 log.error("Failed to create directory: {}", dir);
             }
