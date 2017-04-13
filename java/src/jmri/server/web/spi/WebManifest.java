@@ -1,7 +1,6 @@
 package jmri.server.web.spi;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
@@ -18,12 +17,11 @@ public interface WebManifest {
      * Get the navigation menu items that provide access to the servlet
      * associated with the manifest.
      *
-     * @param locale the client's locale
      * @return a set of menu items; provide an empty set if the item should not
      *         be in the navigation menu
      */
     @Nonnull
-    public Set<WebMenuItem> getNavigationMenuItems(Locale locale);
+    public Set<WebMenuItem> getNavigationMenuItems();
 
     /**
      * Get any scripts the servlet associated with the manifest requires in the

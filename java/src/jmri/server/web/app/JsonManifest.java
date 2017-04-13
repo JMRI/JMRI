@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import jmri.server.web.spi.WebManifest;
@@ -33,7 +32,7 @@ public class JsonManifest implements WebManifest {
     private final static Logger log = LoggerFactory.getLogger(JsonManifest.class);
     
     @Override
-    public Set<WebMenuItem> getNavigationMenuItems(Locale locale) {
+    public Set<WebMenuItem> getNavigationMenuItems() {
         if (!initialized) {
             this.initialize();
         }
@@ -94,8 +93,16 @@ public class JsonManifest implements WebManifest {
                     }
                 });
                 root.path("navigation").forEach((navigation) -> {
-                    if (!this.dependencies.contains(navigation.asText())) {
-                        this.dependencies.add(navigation.asText());
+                    JsonMenuItem menuItem = new JsonMenuItem(navigation);
+                    if (!this.menuItems.contains(menuItem)) {
+                        this.menuItems.add(menuItem);
+                    }
+                });
+                root.path("routes").forEach((route) -> {
+                    String when = route.path("when").asText(); // NOI18N
+                    String template = route.path("template").asText(); // NOI18N
+                    if (when != null && template != null) {
+                        this.routes.put(when, template);
                     }
                 });
             } catch (IOException ex) {
