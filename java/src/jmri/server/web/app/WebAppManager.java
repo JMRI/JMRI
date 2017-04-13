@@ -209,35 +209,20 @@ public class WebAppManager extends AbstractPreferencesManager {
         return mapper.writeValueAsString(navigation);
     }
 
-    public String getHelpMenuItems(Profile profile, Locale locale) throws JsonProcessingException {
-        StringBuilder navigation = new StringBuilder();
-        List<WebMenuItem> items = new ArrayList<>();
-        this.getManifests(profile).forEach((WebManifest manifest) -> {
-            manifest.getNavigationMenuItems().stream().filter((WebMenuItem item)
-                    -> item.getPath().startsWith("help") // NOI18N
-                    && !items.contains(item))
-                    .forEachOrdered((item) -> {
-                        items.add(item);
-                    });
-        });
-        items.sort((WebMenuItem o1, WebMenuItem o2) -> o1.getPath().compareToIgnoreCase(o2.getPath()));
-        // TODO: get order correct
-        items.forEach((item) -> {
-            // TODO: add children
-            // TODO: add badges
-            // TODO: handle separator before
-            // TODO: handle separator after
-            navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", item.getHref(), item.getTitle(locale)));
-        });
-        return navigation.toString();
+    public String getHelpMenuItems(Profile profile, Locale locale) {
+        return this.getMenuItems("help", profile, locale); // NOI18N
     }
 
-    public String getUserMenuItems(Profile profile, Locale locale) throws JsonProcessingException {
+    public String getUserMenuItems(Profile profile, Locale locale) {
+        return this.getMenuItems("user", profile, locale); // NOI18N
+    }
+    
+    private String getMenuItems(String menu, Profile profile, Locale locale) {
         StringBuilder navigation = new StringBuilder();
         List<WebMenuItem> items = new ArrayList<>();
         this.getManifests(profile).forEach((WebManifest manifest) -> {
             manifest.getNavigationMenuItems().stream().filter((WebMenuItem item)
-                    -> item.getPath().startsWith("user") // NOI18N
+                    -> item.getPath().startsWith(menu)
                     && !items.contains(item))
                     .forEachOrdered((item) -> {
                         items.add(item);
@@ -250,7 +235,12 @@ public class WebAppManager extends AbstractPreferencesManager {
             // TODO: add badges
             // TODO: handle separator before
             // TODO: handle separator after
-            navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", item.getHref(), item.getTitle(locale)));
+            String href = item.getHref();
+            if (href != null && href.startsWith("ng-click:")) { // NOI18N
+                navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>", href.substring(href.indexOf(":") + 1, href.length()), item.getTitle(locale))); // NOI18N
+            } else {
+                navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", href, item.getTitle(locale))); // NOI18N
+            }
         });
         return navigation.toString();
     }
