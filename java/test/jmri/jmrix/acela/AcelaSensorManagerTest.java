@@ -1,8 +1,9 @@
-package jmri.jmrit.logix;
+package jmri.jmrix.acela;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,18 +12,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ThrottleSettingTest {
+public class AcelaSensorManagerTest {
+
+    private AcelaSystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        ThrottleSetting t = new ThrottleSetting();
+        AcelaSensorManager t = new AcelaSensorManager(memo);
         Assert.assertNotNull("exists",t);
-    }
-    
-    @Test
-    public void testCtor2() {
-        ThrottleSetting ts = new ThrottleSetting(1000, "NoOp", "Enter Block", "OB1");
-        Assert.assertNotNull("exists",ts);        
     }
 
     // The minimal setup for log4J
@@ -30,6 +27,8 @@ public class ThrottleSettingTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        AcelaTrafficController tc = new AcelaTrafficControlScaffold();
+        memo = new AcelaSystemConnectionMemo(tc);
     }
 
     @After
@@ -38,6 +37,6 @@ public class ThrottleSettingTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleSettingTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManagerTest.class.getName());
 
 }

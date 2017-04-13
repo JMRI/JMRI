@@ -68,7 +68,7 @@ public class ThrottleSetting {
         if (log.isDebugEnabled()) {
             log.debug("setNamedBean({}, {})", cmd, name);
         }
-        if (cmd == null || name == null || name.trim() == "") {
+        if (cmd == null || name == null || name.trim().equals("")) {
             _namedHandle = null;
             return;
         }

@@ -11,7 +11,9 @@ import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
+import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -29,7 +31,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a SwitchboardEditor
+     * Default implementation for storing the contents of a SwitchboardEditor.
+     * Storing of beanswitch properties for use on web panel {@link SwitchboardEditor$BeanSwitchXml}
      *
      * @param o Object to store, of type SwitchboardEditor
      * @return Element containing the complete info
@@ -69,25 +72,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("blueBackground", "" + p.getBackgroundColor().getBlue());
         }
 
-        // include contents
-        List<Positionable> contents = p.getContents();
-        if (log.isDebugEnabled()) {
-            log.debug("N elements: " + contents.size());
-        }
-        for (int i = 0; i < contents.size(); i++) {
-            Positionable sub = contents.get(i);
-            if (sub != null && sub.storeItem()) {
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing switchboard panel element: " + e);
-                    e.printStackTrace();
-                }
-            }
-        }
+        // include contents (not used to store Switchboards on disk as
+        // all config is stored at Panel level.
 
         return panel;
     }

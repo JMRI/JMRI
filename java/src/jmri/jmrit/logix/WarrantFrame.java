@@ -146,12 +146,10 @@ public class WarrantFrame extends WarrantRoute {
             _TTP = ((SCWarrant)warrant).getTimeToPlatform();
             _forward = ((SCWarrant)warrant).getForward();
         }
-        if (tList!=null) {
-            for (int i = 0; i < tList.size(); i++) {
-                ThrottleSetting ts = new ThrottleSetting(tList.get(i));
-                _throttleCommands.add(ts);
-            }                
-        }
+        for (int i = 0; i < tList.size(); i++) {
+            ThrottleSetting ts = new ThrottleSetting(tList.get(i));
+            _throttleCommands.add(ts);
+        }                
        _shareRouteBox.setSelected(warrant.getShareRoute());
         _warrant.setShareRoute(warrant.getShareRoute());
         _noRampBox.setSelected(warrant.getNoRamp());
@@ -1535,7 +1533,7 @@ public class WarrantFrame extends WarrantRoute {
                             } else {
                                 ts.setCommand(cmd);
                             }
-                        } catch (Exception NumberFormatException) {
+                        } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("badLockFNum");
                         }
                     } else if ("NOOP".equals(cmd)) {

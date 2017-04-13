@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
@@ -197,6 +198,7 @@ public class NXFrame extends WarrantRoute {
         return pp;
     }
 
+    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification = "Same code for both cases")
     private JPanel makeAutoRunPanel(int interpretation) {
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
