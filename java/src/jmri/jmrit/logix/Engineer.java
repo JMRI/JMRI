@@ -462,16 +462,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     protected void setSpeedToType(String speedType) {
         if (log.isTraceEnabled()) log.trace("setSpeedToType({})", speedType);
         if (speedType!=null) {
-            if (speedType.equals(Warrant.Stop) || speedType.equals(Warrant.EStop)) {
+            if (speedType.equals(Warrant.EStop)) {
                 _waitForClear = true;                    
-                if (_throttle.getSpeedSetting() <= 0) {
-                    return;
-                }
-                // keep train commands halted until speed is restored
-                if (speedType.equals(Warrant.EStop)) {
-                    setSpeed(-0.1f);
-                    return;
-                }
+                setSpeed(-0.1f);
+                return;
+            } else if (speedType.equals(Warrant.Stop)) {
+                _waitForClear = true;                    
+                setSpeed(0.0f);                    
+                return;
             } else {
                 _speedType = speedType;
                 float speedMod = modifySpeed(1.0f, _speedType);

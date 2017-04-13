@@ -1791,10 +1791,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if(log.isDebugEnabled()) log.debug("CommandDelay: will wait {}ms, then Ramp to {}", startWait, speedType);
         }
         
-        synchronized void quit(){
-            quit = true;
-        }
-
         @Override
         @SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification = "notify never called on this thread")
         public void run() {
@@ -1888,7 +1884,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // Cancel any delayed speed changes currently in progress.
         if (_delayCommand!=null) {
             _delayCommand.interrupt();
-            _delayCommand.quit();
             _delayCommand = null;
         }
         _engineer.cancelRamp();
@@ -1899,8 +1894,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         String currentType = getPermissibleSpeedAt(blkOrder);
         if (currentType==null) {
             currentType = _curSpeedType;
-        } else if (currentType.equals(Stop)) {
-            setStoppingSignal(blkOrder.getSignal());   // Too late.
+        } else if (currentType.equals(Stop)) {   // Too late. train overran stop signal
+            _engineer.setSpeedToType(EStop);
+            setStoppingSignal(blkOrder.getSignal());
             log.error("Train missed Stop signal in block \"{}\"", curBlock.getDisplayName());
         }
         if (!currentType.equals(_curSpeedType)) {
@@ -1910,6 +1906,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _engineer.setSpeedToType(currentType);
                 if (!currentType.equals(Stop) && !currentType.equals(EStop)) {
                     _curSpeedType = currentType;
+                } else {
+                    return true;    // don't do anything else until stopping condition cleared
                 }
             } else {
                 if(log.isDebugEnabled()) log.debug("Increasing speed to \"{}\" from \"{}\" in block \"{}\" warrant= {}",
@@ -2049,7 +2047,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _curSpeedType = speedType;
             }
         } else {
-            CommandDelay _delayCommand = new CommandDelay(speedType, waitTime, blkSpeedInfo.getLastIndex());
+            _delayCommand = new CommandDelay(speedType, waitTime, blkSpeedInfo.getLastIndex());
             _delayCommand.start();            
         }
         return true;
