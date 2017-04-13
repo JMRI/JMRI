@@ -38,6 +38,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.Version;
@@ -1200,8 +1201,7 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Read a text URL into a String. Would be significantly simpler with Java
-     * 7. File is assumed to be encoded using UTF-8
+     * Read a text URL into a String.
      *
      * @param url The text URL.
      * @return The contents of the file.
@@ -1209,16 +1209,10 @@ public class FileUtilSupport extends Bean {
      */
     public String readURL(URL url) throws IOException {
         try {
-            StringBuilder builder;
             try (InputStreamReader in = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
                     BufferedReader reader = new BufferedReader(in)) {
-                builder = new StringBuilder();
-                String aux;
-                while ((aux = reader.readLine()) != null) {
-                    builder.append(aux);
-                }
+                return reader.lines().collect(Collectors.joining("\n")); // NOI18N
             }
-            return builder.toString();
         } catch (NullPointerException ex) {
             return null;
         }
