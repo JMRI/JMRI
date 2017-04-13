@@ -1,5 +1,6 @@
 package jmri.server.web.app;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Locale;
 import jmri.server.web.spi.WebMenuItem;
 
@@ -18,6 +19,27 @@ public class JsonMenuItem implements WebMenuItem {
     public boolean separatedBefore = false;
     public boolean separatedAfter = false;
     public boolean dynamic = false;
+
+    /**
+     * Create a menu item from a JSON object.
+     *
+     * @param node the JSON object containing the menu item
+     * @throws java.lang.IllegalArgumentException if node does not contain a
+     * <em>path</em> node
+     */
+    public JsonMenuItem(JsonNode node) throws IllegalArgumentException {
+        this.path = node.path("path").asText(); // NOI18N
+        if (this.path == null) {
+            throw new IllegalArgumentException("path not specified");
+        }
+        this.href = node.path("href").asText(this.href); // NOI18N
+        this.iconClass = node.path("iconClass").asText(this.iconClass); // NOI18N
+        this.title = node.path("title").asText(this.title); // NOI18N
+        this.position = node.path("position").asInt(this.position); // NOI18N
+        this.separatedBefore = node.path("separatedBefore").asBoolean(this.separatedBefore); // NOI18N
+        this.separatedAfter = node.path("separatedAfter").asBoolean(this.separatedAfter); // NOI18N
+        this.dynamic = node.path("dynamic").asBoolean(this.dynamic); // NOI18N
+    }
 
     @Override
     public String getPath() {
