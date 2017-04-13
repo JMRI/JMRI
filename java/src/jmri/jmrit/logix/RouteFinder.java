@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -108,7 +109,11 @@ public class RouteFinder implements Runnable {
     /**
      * Examines list of nodes at a given level for the destination node and
      * makes a list of nodes of the next level.
+     * @param nodes list of route nodes
+     * @param level level of the nodes
+     * @return list of  route nodes at level
      */
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OBlock extends Block")
     ArrayList<RouteNode> makeLevel(ArrayList<RouteNode> nodes, int level) {
 
         ArrayList<RouteNode> children = new ArrayList<>();
@@ -122,8 +127,8 @@ public class RouteFinder implements Runnable {
                 OBlock nextBlock = exitPortal.getOpposingBlock(pBlock);
                 List<OPath> paths = exitPortal.getPathsFromOpposingBlock(pBlock);
                 if (log.isDebugEnabled()) {
-                    log.debug("makeLevel " + level + " block= " + pBlock.getDisplayName()
-                            + ", path= " + pOrder.getPathName() + " meets " + paths.size() + " portal paths");
+                    log.debug("makeLevel {} block= {}, path= {} meets {} portal paths",
+                            level, pBlock.getDisplayName(), pOrder.getPathName(), paths.size());
                 }
                 if (paths.isEmpty()) {
                     log.error("Portal \"" + pName + "\" " + (exitPortal.getOpposingBlock(pBlock) == null
@@ -160,8 +165,7 @@ public class RouteFinder implements Runnable {
 //                _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
             } else {
                 if (log.isDebugEnabled()) {
-                    log.debug("Dead branch: block= " + pBlock.getDisplayName()
-                            + " has no exit portal");
+                    log.debug("Dead branch: block= \"{}\" has no exit portal", pBlock.getDisplayName());
                 }
             }
             if (_quit) {

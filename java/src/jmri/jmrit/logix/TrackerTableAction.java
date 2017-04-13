@@ -142,8 +142,8 @@ public class TrackerTableAction extends AbstractAction {
             table.setTransferHandler(new jmri.util.DnDTableExportHandler());
             JScrollPane tablePane = new JScrollPane(table);
             Dimension dim = table.getPreferredSize();
-            table.getRowHeight(new JButton("STOPIT").getPreferredSize().height);
-            dim.height = table.getRowHeight() * 2;
+            int height = new JButton("STOPIT").getPreferredSize().height;
+            dim.height = height * 2;
             tablePane.getViewport().setPreferredSize(dim);
 
             JPanel tablePanel = new JPanel();

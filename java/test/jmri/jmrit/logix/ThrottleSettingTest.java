@@ -19,6 +19,7 @@ public class ThrottleSettingTest {
         Assert.assertNotNull("exists",t);
     }
     
+    @Test
     public void testCtor2() {
         ThrottleSetting ts = new ThrottleSetting(1000, "NoOp", "Enter Block", "OB1");
         Assert.assertNotNull("exists",ts);        
