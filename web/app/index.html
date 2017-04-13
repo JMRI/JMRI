@@ -17,9 +17,9 @@
         <!-- scripts %2$s -->
         <!-- style sheets %3$s -->
     </head>
-    <body>
+    <body ng-app="jmri.app">
         %4$s
-        <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout hidden" ng-controller="vertNavController">
+        <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout" ng-controller="vertNavController">
             <div data-pf-vertical-navigation data-items="navigationItems" data-brand-alt="%1$s"
                  data-show-badges="true" data-persistent-secondary="true" 
                  data-navigate-callback="handleNavigateClick">
@@ -33,7 +33,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-help">
-                                <!-- %6$s -->
+                                <!-- help menu items %6$s -->
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -42,7 +42,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-personal">
-                                <!-- %8$s -->
+                                <!-- user menu items %8$s -->
                             </ul>
                         </li>
                     </ul>

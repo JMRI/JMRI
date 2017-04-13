@@ -7,13 +7,17 @@
   ],
   "scripts":[
     "/app/node_modules/angular-patternfly/node_modules/patternfly/node_modules/jquery/dist/jquery.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/patternfly/node_modules/bootstrap/dist/js/bootstrap.min.js",
     "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/js/patternfly.min.js",
-    "/app/node_modules/angular-patternfly/node_modules/angular/angular.js",
+    "/app/node_modules/angular/angular.min.js",
+    "/app/node_modules/angular-resource/angular-resource.min.js",
+    "/app/node_modules/angular-route/angular-route.min.js",
+    "/app/node_modules/angular-patternfly/node_modules/angular-sanitize/angular-sanitize.min.js",
     "/app/node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/ui-bootstrap.min.js",
     "/app/node_modules/angular-patternfly/node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js",
-    "/app/node_modules/angular-patternfly/node_modules/angular-sanitize/angular-sanitize.min.js",
     "/app/node_modules/angular-patternfly/dist/angular-patternfly.min.js",
-    "/app/dynamic/about"
+    "/app/node_modules/angular-patternfly/node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js",
+    "/app/script"
   ],
   "styles":[
     "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly.min.css",
@@ -21,9 +25,20 @@
     "/app/node_modules/angular-patternfly/dist/styles/angular-patternfly.min.css"
   ],
   "dependencies":[
-    "patternfly"
+    "ngResource",
+    "ngRoute",
+    "ui.bootstrap",
+    "patternfly",
+    "dndLists"
   ],
   "routes":[
-
+    {
+      "when": "/",
+      "redirection": "/dashboard"
+    },
+    {
+      "when": "/dashboard",
+      "template": "/app/dashboard"
+    }
   ]
 }

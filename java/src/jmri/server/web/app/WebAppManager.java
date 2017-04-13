@@ -2,6 +2,10 @@ package jmri.server.web.app;
 
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
@@ -13,11 +17,14 @@ import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.StringJoiner;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.server.web.spi.WebManifest;
+import jmri.server.web.spi.WebMenuItem;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
@@ -167,5 +174,111 @@ public class WebAppManager extends AbstractPreferencesManager {
             tags.append("<link rel=\"stylesheet\" href=\"").append(style).append("\" type=\"text/css\">\n");
         });
         return tags.toString();
+    }
+
+    public String getNavigation(Profile profile, Locale locale) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode navigation = mapper.createArrayNode();
+        List<WebMenuItem> items = new ArrayList<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            manifest.getNavigationMenuItems().stream().filter((WebMenuItem item)
+                    -> !item.getPath().startsWith("help") // NOI18N
+                    && !item.getPath().startsWith("user") // NOI18N
+                    && !items.contains(item))
+                    .forEachOrdered((item) -> {
+                        items.add(item);
+                    });
+        });
+        items.sort((WebMenuItem o1, WebMenuItem o2) -> o1.getPath().compareToIgnoreCase(o2.getPath()));
+        // TODO: get order correct
+        items.forEach((item) -> {
+            ObjectNode navItem = mapper.createObjectNode();
+            navItem.put("title", item.getTitle(locale));
+            if (item.getIconClass() != null) {
+                navItem.put("iconClass", item.getIconClass());
+            }
+            if (item.getHref() != null) {
+                navItem.put("href", item.getHref());
+            }
+            // TODO: add children
+            // TODO: add badges
+            // TODO: handle separator before
+            navigation.add(navItem);
+            // TODO: handle separator after
+        });
+        return mapper.writeValueAsString(navigation);
+    }
+
+    public String getHelpMenuItems(Profile profile, Locale locale) throws JsonProcessingException {
+        StringBuilder navigation = new StringBuilder();
+        List<WebMenuItem> items = new ArrayList<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            manifest.getNavigationMenuItems().stream().filter((WebMenuItem item)
+                    -> item.getPath().startsWith("help") // NOI18N
+                    && !items.contains(item))
+                    .forEachOrdered((item) -> {
+                        items.add(item);
+                    });
+        });
+        items.sort((WebMenuItem o1, WebMenuItem o2) -> o1.getPath().compareToIgnoreCase(o2.getPath()));
+        // TODO: get order correct
+        items.forEach((item) -> {
+            // TODO: add children
+            // TODO: add badges
+            // TODO: handle separator before
+            // TODO: handle separator after
+            navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", item.getHref(), item.getTitle(locale)));
+        });
+        return navigation.toString();
+    }
+
+    public String getUserMenuItems(Profile profile, Locale locale) throws JsonProcessingException {
+        StringBuilder navigation = new StringBuilder();
+        List<WebMenuItem> items = new ArrayList<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            manifest.getNavigationMenuItems().stream().filter((WebMenuItem item)
+                    -> item.getPath().startsWith("user") // NOI18N
+                    && !items.contains(item))
+                    .forEachOrdered((item) -> {
+                        items.add(item);
+                    });
+        });
+        items.sort((WebMenuItem o1, WebMenuItem o2) -> o1.getPath().compareToIgnoreCase(o2.getPath()));
+        // TODO: get order correct
+        items.forEach((item) -> {
+            // TODO: add children
+            // TODO: add badges
+            // TODO: handle separator before
+            // TODO: handle separator after
+            navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", item.getHref(), item.getTitle(locale)));
+        });
+        return navigation.toString();
+    }
+
+    public String getAngularDependencies(Profile profile, Locale locale) {
+        StringJoiner dependencies = new StringJoiner("',\n  '", "\n  '", "'");
+        List<String> items = new ArrayList<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            manifest.getAngularDependencies().stream().filter((dependency)
+                    -> (!items.contains(dependency))).forEachOrdered((dependency) -> {
+                items.add(dependency);
+            });
+        });
+        items.forEach((String dependency) -> {
+            dependencies.add(dependency);
+        });
+        return dependencies.toString();
+    }
+
+    public String getAngularRoutes(Profile profile, Locale locale) {
+        StringJoiner routes = new StringJoiner("\n", "\n", "");
+        Map<String, String> items = new HashMap<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            items.putAll(manifest.getAngularRoutes());
+        });
+        items.forEach((String when, String template) -> {
+            routes.add(String.format("      .when('%s', { redirectTo: '%s' })", when, template));
+        });
+        return routes.toString();
     }
 }

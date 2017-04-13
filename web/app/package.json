@@ -9,6 +9,9 @@
   "author": "JMRI Community",
   "license": "GPL-2.0",
   "dependencies": {
-    "angular-patternfly": "3.23.2"
+    "angular": "1.6.4",
+    "angular-patternfly": "3.23.2",
+    "angular-resource": "1.6.4",
+    "angular-route": "1.6.4"
   }
 }

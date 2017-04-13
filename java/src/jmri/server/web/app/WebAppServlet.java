@@ -1,6 +1,6 @@
 package jmri.server.web.app;
 
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JAVASCRIPT;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import java.io.File;
@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "AppDynamicServlet", urlPatterns = {
     "/app",
+    "/app/script",
     "/app/dynamic"
 })
 public class WebAppServlet extends HttpServlet {
@@ -42,49 +43,72 @@ public class WebAppServlet extends HttpServlet {
      * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.error("App contextPath: {}, pathInfo: {}, pathTranslated: {}", request.getContextPath(), request.getPathInfo(), request.getPathTranslated());
-        if (request.getContextPath().equals("/app") && request.getPathTranslated() == null) {
-            response.setContentType("text/html;charset=UTF-8");
-            Profile profile = ProfileManager.getDefault().getActiveProfile();
-            File cache = new File(ProfileUtils.getCacheDirectory(profile, this.getClass()), request.getLocale().toString());
-            FileUtil.createDirectory(cache);
-            File index = new File(cache, "index.html");
-            if (!index.exists()) {
-                String inComments = "-->%s\n<!--";
-                WebAppManager manager = InstanceManager.getNullableDefault(WebAppManager.class);
-                if (manager == null) {
-                    log.error("No WebAppManager available.");
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    return;
-                }
-                // Format elements for index.html
-                // 1 = railroad name
-                // 2 = scripts (in comments)
-                // 3 = stylesheets (in comments)
-                // 4 = body content (divs)
-                // 5 = help menu title
-                // 6 = help menu contents (in comments)
-                // 7 = personal menu title
-                // 8 = personal menu contents (in comments)
-                FileUtil.appendTextToFile(index, String.format(request.getLocale(),
-                        FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
-                        ServletUtil.getInstance().getRailroadName(false), // railroad name
-                        String.format(inComments, manager.getScriptTags(profile)), // scripts (in comments)
-                        String.format(inComments, manager.getStyleTags(profile)), // stylesheets (in comments)
-                        "<!-- -->", // body content (divs)
-                        Bundle.getMessage(request.getLocale(), "help"), // help menu title
-                        "--> <!--", // help menu contents (in comments)
-                        Bundle.getMessage(request.getLocale(), "user"), // personal menu title
-                        "--> <!--" // personal menu contents (in comments)
-                ));
-            }
-            response.setHeader("Connection", "Keep-Alive"); // NOI18N
-            response.setContentType(UTF8_TEXT_HTML);
-            response.getWriter().print(FileUtil.readFile(index));
-        } else {
-            response.setContentType(UTF8_APPLICATION_JSON);
-            // TODO: build dynamic JSON bits that get fed into the app
+        log.debug("App contextPath: {}, pathInfo: {}, pathTranslated: {}", request.getContextPath(), request.getPathInfo(), request.getPathTranslated());
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        switch (request.getContextPath()) {
+            case "/app": // NOI18N
+                this.processApp(request, response);
+                break;
+            case "/app/script": // NOI18N
+                this.processScript(request, response);
+                break;
+            default:
         }
+    }
+
+    private void processApp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType(UTF8_TEXT_HTML);
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        File cache = new File(ProfileUtils.getCacheDirectory(profile, this.getClass()), request.getLocale().toString());
+        FileUtil.createDirectory(cache);
+        File index = new File(cache, "index.html"); // NOI18N
+        if (!index.exists()) {
+            String inComments = "-->%s\n<!--"; // NOI18N
+            WebAppManager manager = getWebAppManager();
+            // Format elements for index.html
+            // 1 = railroad name
+            // 2 = scripts (in comments)
+            // 3 = stylesheets (in comments)
+            // 4 = body content (divs)
+            // 5 = help menu title
+            // 6 = help menu contents (in comments)
+            // 7 = personal menu title
+            // 8 = personal menu contents (in comments)
+            FileUtil.appendTextToFile(index, String.format(request.getLocale(),
+                    FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
+                    ServletUtil.getInstance().getRailroadName(false), // railroad name
+                    String.format(inComments, manager.getScriptTags(profile)), // scripts (in comments)
+                    String.format(inComments, manager.getStyleTags(profile)), // stylesheets (in comments)
+                    "<!-- -->", // body content (divs)
+                    Bundle.getMessage(request.getLocale(), "help"), // help menu title
+                    String.format(inComments, manager.getHelpMenuItems(profile, request.getLocale())), // help menu contents (in comments)
+                    Bundle.getMessage(request.getLocale(), "user"), // personal menu title
+                    String.format(inComments, manager.getUserMenuItems(profile, request.getLocale())) // personal menu contents (in comments)
+            ));
+        }
+        response.getWriter().print(FileUtil.readFile(index));
+    }
+
+    private void processScript(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType(UTF8_APPLICATION_JAVASCRIPT);
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        File cache = new File(ProfileUtils.getCacheDirectory(profile, this.getClass()), request.getLocale().toString());
+        FileUtil.createDirectory(cache);
+        File script = new File(cache, "script.js"); // NOI18N
+        if (!script.exists()) {
+            WebAppManager manager = getWebAppManager();
+            FileUtil.appendTextToFile(script, String.format(request.getLocale(),
+                    FileUtil.readURL(FileUtil.findURL("web/app/script.js")), // NOI18N
+                    manager.getAngularDependencies(profile, request.getLocale()),
+                    manager.getAngularRoutes(profile, request.getLocale()),
+                    String.format("\n$scope.navigationItems = %s;\n", manager.getNavigation(profile, request.getLocale())) // NOI18N
+            ));
+        }
+        response.getWriter().print(FileUtil.readFile(script));
+    }
+
+    private WebAppManager getWebAppManager() throws ServletException {
+        return InstanceManager.getOptionalDefault(WebAppManager.class).orElseThrow(ServletException::new);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
