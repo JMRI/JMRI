@@ -469,16 +469,20 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "beanswitch" : // Switchboard BeanSwitch of shape "button"
                                 $widget['name'] = $widget.label; // normalize name
                                 $widget['text'] = $widget.label; // use label as initial button text
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
                                 switch  ($widget["type"]) {
                                     case "T" :
                                         $widget.jsonType = "turnout"; // JSON object type
+                                        jmri.getTurnout($widget["systemName"]); // have the html button immediately follow the state on the layout
                                         break;
                                     case "S" :
                                         $widget.jsonType = "sensor"; // JSON object type
+                                        jmri.getSensor($widget["systemName"]);
                                         break;
                                     default :
                                         $widget.jsonType = "light"; // JSON object type
-                                        break;
+                                        jmri.getLight($widget["systemName"]);
                                 }
                                 // set each state's text (this is only applied when shape is button)
                                 $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
@@ -490,8 +494,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.styles['border-radius'] = "8px" // mimick JButtons
                                 $widget.styles['color'] = $widget.textcolor; // use jmri color
                                 $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
-                                if (typeof $widget["systemName"] == "undefined")
-                                    $widget["systemName"] = $widget.name;
                                 // CSS properties
                                 $("#panel-area>#" + $widget.id).css(
                                 {position: 'relative', float: 'left'});
