@@ -19,7 +19,7 @@
     </head>
     <body ng-app="jmri.app">
         %4$s
-        <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout" ng-controller="vertNavController">
+        <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout" ng-controller="NavigationCtrl">
             <div data-pf-vertical-navigation data-items="navigationItems" data-brand-alt="%1$s"
                  data-show-badges="true" data-persistent-secondary="true" 
                  data-navigate-callback="handleNavigateClick">
@@ -36,7 +36,7 @@
                                 <!-- help menu items %6$s -->
                             </ul>
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown hidden">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-personal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <span title="%7$s" class="fa pficon-user"></span>
                                 <span class="caret"></span>
@@ -50,6 +50,10 @@
             </div>
             <div id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical example-page-container">
                 <div id="includedContent"></div>
+            </div>
+            <div data-pf-about-modal data-is-open="isAboutModalOpen" data-on-close="onAboutModalClose()"
+                 data-additional-info="additionalInfo" data-product-info="productInfo"
+                 data-title="title" data-copyright="copyright" data-img-alt="imgAlt" data-img-src="imgSrc">
             </div>
         </div>
     </body>

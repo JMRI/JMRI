@@ -1,8 +1,14 @@
 package jmri.server.web.app;
 
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.VALUE;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JAVASCRIPT;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,11 +16,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.Application;
 import jmri.InstanceManager;
+import jmri.Version;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
+import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +38,7 @@ import org.slf4j.LoggerFactory;
 @WebServlet(name = "AppDynamicServlet", urlPatterns = {
     "/app",
     "/app/script",
-    "/app/dynamic"
+    "/app/about"
 })
 public class WebAppServlet extends HttpServlet {
 
@@ -48,6 +59,9 @@ public class WebAppServlet extends HttpServlet {
         switch (request.getContextPath()) {
             case "/app": // NOI18N
                 this.processApp(request, response);
+                break;
+            case "/app/about": // NOI18N
+                this.processAbout(request, response);
                 break;
             case "/app/script": // NOI18N
                 this.processScript(request, response);
@@ -87,6 +101,44 @@ public class WebAppServlet extends HttpServlet {
             ));
         }
         response.getWriter().print(FileUtil.readFile(index));
+    }
+
+    private void processAbout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType(UTF8_APPLICATION_JSON);
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode about = mapper.createObjectNode();
+        about.put("additionalInfo", "TRADEMARKS AND LICENSE GO HERE"); // NOI18N
+        about.put("copyright", Version.getCopyright()); // NOI18N
+        about.put("title", WebServerPreferences.getDefault().getRailRoadName()); // NOI18N
+        about.put("imgAlt", Application.getApplicationName()); // NOI18N
+        // assuming Application.getLogo() is relative to program:
+        about.put("imgSrc", "/" + Application.getLogo()); // NOI18N
+        ArrayNode productInfo = about.putArray("productInfo"); // NOI18N
+        productInfo.add(mapper.createObjectNode().put(NAME, Application.getApplicationName()).put(VALUE, Version.name()));
+        productInfo.add(mapper.createObjectNode().put(NAME, Bundle.getMessage(request.getLocale(), "ActiveProfile")).put(VALUE, profile.getName())); // NOI18N
+        productInfo.add(mapper.createObjectNode()
+                .put(NAME, "Java") // NOI18N
+                .put(VALUE, Bundle.getMessage(request.getLocale(), "JavaVersion",
+                        System.getProperty("java.version", Bundle.getMessage(request.getLocale(), "Unknown")), // NOI18N
+                        System.getProperty("java.vm.name", Bundle.getMessage(request.getLocale(), "Unknown")), // NOI18N
+                        System.getProperty("java.vm.version", ""), // NOI18N
+                        System.getProperty("java.vendor", Bundle.getMessage(request.getLocale(), "Unknown")) // NOI18N
+                )));
+        productInfo.add(mapper.createObjectNode()
+                .put(NAME, Bundle.getMessage(request.getLocale(), "Runtime"))
+                .put(VALUE, Bundle.getMessage(request.getLocale(), "RuntimeVersion",
+                        System.getProperty("java.runtime.name", Bundle.getMessage(request.getLocale(), "Unknown")), // NOI18N
+                        System.getProperty("java.runtime.version", "") // NOI18N
+                )));
+        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!conn.getDisabled()) {
+                productInfo.add(mapper.createObjectNode()
+                        .put(NAME, Bundle.getMessage(request.getLocale(), "ConnectionName", conn.getConnectionName()))
+                        .put(VALUE, Bundle.getMessage(request.getLocale(), "ConnectionValue", conn.name(), conn.getInfo())));
+            }
+        }
+        response.getWriter().print(mapper.writeValueAsString(about));
     }
 
     private void processScript(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

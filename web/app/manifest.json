@@ -2,7 +2,7 @@
   "navigation":[
     {
       "path": "help/about",
-      "href": "ng-click:action-app-about()"
+      "href": "ng-click:openAboutModal()"
     }
   ],
   "scripts":[
