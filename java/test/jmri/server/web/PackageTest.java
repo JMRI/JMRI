@@ -9,10 +9,11 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    jmri.server.web.app.BundleTest.class,
     jmri.server.web.spi.WebServerConfigurationTest.class,
     AbstractWebServerConfigurationTest.class,
     DefaultWebServerConfigurationTest.class
 })
 public class PackageTest {
-    
+
 }
