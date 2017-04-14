@@ -1,5 +1,6 @@
  package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -674,7 +675,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * end spurs.
      * @param portal the portal
      */
-    @SuppressWarnings("unchecked")
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
     public void removePortal(Portal portal) {
         int oldSize = _portals.size();
         int oldPathSize = getPaths().size();
@@ -736,7 +737,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _portals;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
     public OPath getPathByName(String name) {
         Iterator<Path> iter = getPaths().iterator();
         while (iter.hasNext()) {
@@ -773,7 +774,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         OBlock pathBlock = (OBlock)path.getBlock();
         if (pathBlock!=null && !this.equals(pathBlock)) {
-            log.warn("Path {} already in block {}, cannot be added to block {}", pName, pathBlock.getDisplayName(), getDisplayName());
+            log.warn("Path \"{}\" already in block {}, cannot be added to block {}", pName, pathBlock.getDisplayName(), getDisplayName());
             return false;
         }
         path.setBlock(this);
@@ -841,8 +842,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         } else {
             // Sanity check
             String p = warrant.getRoutePathInBlock(this);
-            if (!pathName.equals(p)) {
-                log.error("path \"{}\" for block \"{}\" does not agree with path \"{}\" in route of warrant \"{}\"",
+            if (p!=null && !pathName.equals(p)) {
+                log.warn("path \"{}\" for block \"{}\" does not agree with path \"{}\" in route of warrant \"{}\"",
                        pathName, getDisplayName(), p, warrant.getDisplayName());
             }
             _pathName = pathName;
