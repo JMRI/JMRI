@@ -253,14 +253,18 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (protectedBlock == null) {
             return false;
         }
-        if (_fromBlock.equals(protectedBlock)) {
+        if (_fromBlock!=null && _fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
             _toSignalOffset = length;
+            if (log.isDebugEnabled()) log.debug("setProtectSignal: _toSignal= \"{}\", protectedBlock= {}",
+                    signal.getDisplayName(), protectedBlock.getDisplayName());
             return true;
         }
-        if (_toBlock.equals(protectedBlock)) {
+        if (_toBlock!=null && _toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
             _fromSignalOffset = length;
+            if (log.isDebugEnabled()) log.debug("setProtectSignal: _fromSignal= \"{}\", protectedBlock= {}",
+                    signal.getDisplayName(), protectedBlock.getDisplayName());
             return true;
         }
         return false;
@@ -622,7 +626,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     @Override
     public String toString() {
-        return ("Portal \"" + getUserName() + "\" from block \"" + getFromBlockName() + "\" to block \"" + getToBlockName() + "\"");
+        StringBuilder sb = new StringBuilder("Portal \"");
+        sb.append(getUserName());
+        sb.append("\" from block \"");
+        sb.append(getFromBlockName());
+        sb.append("\" to block \"");
+        sb.append(getToBlockName());
+        sb.append("\"");
+        return sb.toString();
     }
 
     @Override
