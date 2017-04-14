@@ -554,7 +554,7 @@ public class SwitchboardEditor extends Editor {
                             }
                         }
                     });
-                    _text = false;
+                    _text = true; // TODO when web supports graphic switches: replace true by false;
                     _icon = true;
                     beanIcon.setLabel(switchLabel);
                     beanIcon.positionLabel(17, 45); // provide x, y offset, depending on image size and free space
@@ -581,7 +581,7 @@ public class SwitchboardEditor extends Editor {
                             }
                         }
                     });
-                    _text = false;
+                    _text = true; // TODO when web supports graphic switches: replace true by false;
                     _icon = true;
                     beanKey.setLabel(switchLabel);
                     beanKey.positionLabel(14, 60); // provide x, y offset, depending on image size and free space
@@ -608,7 +608,7 @@ public class SwitchboardEditor extends Editor {
                             }
                         }
                     });
-                    _text = false;
+                    _text = true; // TODO when web supports graphic switches: replace true by false;
                     _icon = true;
                     beanSymbol.setLabel(switchLabel);
                     beanSymbol.positionLabel(24, 20); // provide x, y offset, depending on image size and free space
@@ -763,7 +763,7 @@ public class SwitchboardEditor extends Editor {
             } else {
                 // display abbreviated name of state instead of state index
                 log.debug("bean: {} state: {}", _label, state + ""); //getNameString() + " displayState " + _state2nameMap.get(state));
-                if (isText()) {
+                if (isText() && !isIcon()) { // to allow text buttons on web switchboard. TODO add graphic switches on web
                     beanButton.setText(_label + ":" + state); //_state2nameMap.get(state));
                 }
                 if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
