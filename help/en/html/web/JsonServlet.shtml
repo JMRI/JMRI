@@ -180,6 +180,8 @@
           <td>car array</td>
         </tr>
 
+        <tr><td>configProfiles</td><td>*</td><td></td><td></td><td>configProfile array</td></tr>
+
         <tr>
           <td>consists</td>
 
@@ -253,18 +255,6 @@
         </tr>
 
         <tr>
-          <td>panels</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>panel array</td>
-        </tr>
-
-        <tr>
           <td>memories</td>
 
           <td>*</td>
@@ -313,6 +303,18 @@
         </tr>
 
         <tr>
+          <td>panels</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>panel array</td>
+        </tr>
+
+        <tr>
           <td>power</td>
 
           <td>*</td>
@@ -334,6 +336,18 @@
           <td></td>
 
           <td>railroad message</td>
+        </tr>
+
+        <tr>
+          <td>reporters</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>reporter array</td>
         </tr>
 
         <tr>
@@ -372,7 +386,41 @@
           <td>route array</td>
         </tr>
 
-        <tr><td>configProfiles</td><td>*</td><td></td><td></td><td>configProfile array</td></tr>
+        <tr>
+          <td>signalHeads</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>signalHead array</td>
+        </tr>
+
+        <tr>
+          <td>signalMasts</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>signalMast array</td>
+        </tr>
+
+        <tr>
+          <td>sensors</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>sensor array</td>
+        </tr>
 
         <tr>
           <td>systemConnections</td>
@@ -408,54 +456,6 @@
           <td></td>
 
           <td>train array</td>
-        </tr>
-
-        <tr>
-          <td>reporters</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>reporter array</td>
-        </tr>
-
-        <tr>
-          <td>signalHeads</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>signalHead array</td>
-        </tr>
-
-        <tr>
-          <td>signalMasts</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>signalMast array</td>
-        </tr>
-
-        <tr>
-          <td>sensors</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>sensor array</td>
         </tr>
 
         <tr>

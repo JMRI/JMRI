@@ -1,10 +1,10 @@
 package jmri.jmrit.logix;
 
 import jmri.Block;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the OBlockManager class
@@ -12,10 +12,11 @@ import org.junit.Assert;
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
  */
-public class OBlockManagerTest extends TestCase {
+public class OBlockManagerTest {
 
     OBlockManager l;
     
+    @Test
     public void testProvide() {
         // original create with systemname
         OBlock b1 = l.provideOBlock("OB101");
@@ -23,6 +24,7 @@ public class OBlockManagerTest extends TestCase {
         Assert.assertEquals("system name", "OB101", b1.getSystemName());
     }
 
+    @Test
     public void testProvideWorksTwice() {
         Block b1 = l.provideOBlock("OB102");
         Block b2 = l.provideOBlock("OB102");
@@ -31,6 +33,7 @@ public class OBlockManagerTest extends TestCase {
         Assert.assertEquals(b1, b2);
     }
 
+    @Test
     public void testProvideFailure() {
         boolean correct = false;
         try {
@@ -42,39 +45,23 @@ public class OBlockManagerTest extends TestCase {
         Assert.assertTrue("Exception thrown properly", correct);     
     }
     
+    @Test
     public void testCreateNewOBlock() {
         Assert.assertNull("createNewOBlock", l.createNewOBlock("", "user"));
         Assert.assertNull("createNewOBlock", l.createNewOBlock("OB", "user"));
     }
 
-    // from here down is testing infrastructure
-    public OBlockManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {OBlockManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OBlockManagerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         l = new OBlockManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

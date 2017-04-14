@@ -126,15 +126,6 @@ public class OBlockManager extends AbstractManager
         return ob;
     }
 
-    static OBlockManager _instance = null;
-
-    static public OBlockManager instance() {
-        if (_instance == null) {
-            _instance = new OBlockManager();
-        }
-        return (_instance);
-    }
-
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameOBlock");

@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   AcelaComponentFactoryTest.class
 })
 /**
  * Tests for the jmri.jmrix.acela.swing package

@@ -98,10 +98,8 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
-    //protected JMenu _zoomMenu;
     private ArrayList<Positionable> _secondSelectionGroup;
     private ItemPalette _itemPalette;
-    //private boolean _disableShapeSelection;
     private boolean panelChanged = false;
 
     // Switchboard items
@@ -216,7 +214,6 @@ public class SwitchboardEditor extends Editor {
         setGlobalSetsLocalFlag(false);
         setUseGlobalFlag(false);
         _menuBar = new JMenuBar();
-        //makeZoomMenu();
         makeOptionMenu();
         //makeEditMenu();
         makeFileMenu();
@@ -305,7 +302,8 @@ public class SwitchboardEditor extends Editor {
         add(hideUnconnected);
 
         // Next, add the buttons to the layered pane.
-        switchboardLayeredPane.setLayout(new GridLayout(_range % ((Integer) Columns.getValue()), (Integer) Columns.getValue())); // vertical, horizontal
+        switchboardLayeredPane.setLayout(new GridLayout(java.lang.Math.max(2, _range % ((Integer) Columns.getValue())), (Integer) Columns.getValue()));
+        // vertical (at least 2 rows), horizontal
         // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
         addSwitchRange((Integer) minSpinner.getValue(), (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
@@ -371,8 +369,9 @@ public class SwitchboardEditor extends Editor {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
         }
-                switchlist.clear(); // reset list
-                switchboardLayeredPane.setSize(300,300);
+        switchlist.clear(); // reset list
+        log.debug("switchlist cleared, size is now: {}", "" + switchlist.size());
+        switchboardLayeredPane.setSize(300,300);
         // update selected address range
         _range =(Integer)minSpinner.getValue()-(Integer)maxSpinner.getValue();
                 switchboardLayeredPane.setLayout(new GridLayout(_range %((Integer) Columns.getValue()),
@@ -454,6 +453,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Class for a switchboard object.
+     * <p>
      * Contains a JButton or JPanel to control existing turnouts, sensors and lights.
      */
     public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListener, ActionListener {
@@ -463,7 +463,7 @@ public class SwitchboardEditor extends Editor {
         protected HashMap<Integer, String> _state2nameMap;       // state to name
 
         private JButton beanButton;
-        private final boolean connected = false;
+        //private final boolean connected = false;
         private int _shape;
         private String _label;
         private String _uname = "unconnected";
@@ -650,26 +650,24 @@ public class SwitchboardEditor extends Editor {
             if (bean == null) {
                 if(!hideUnconnected()) {
                     switch (_shape) {
-                        case 0:
+                        case 0 :
                             beanButton.setEnabled(false);
                             break;
-                        case 1:
+                        default :
                             beanIcon.setOpacity(opac);
-                            break;
                     }
                 }
             } else {
                 _control = true;
                 switch (beanTypeChar) {
-                    case 'T':
+                    case 'T' :
                         getTurnout().addPropertyChangeListener(this, _label, "Switchboard Editor Turnout Switch");
                         break;
-                    case 'S':
+                    case 'S' :
                         getSensor().addPropertyChangeListener(this, _label, "Switchboard Editor Sensor Switch");
                         break;
-                    case 'L':
+                    default : // light
                         getLight().addPropertyChangeListener(this, _label, "Switchboard Editor Light Switch");
-                        break;
                 }
             }
             // from finishClone
@@ -718,6 +716,28 @@ public class SwitchboardEditor extends Editor {
 
         public int getType() {
             return _shape;
+        }
+
+        public String getInactiveText() {
+            return _label + ": -";
+            // TODO in this and the next 3 methods:
+            // use an extra switch(beanTypeChar) to create bean specific ebbreviations (and fetch those from DisplayBundle)
+        }
+
+        public String getActiveText() {
+            return _label + ": +";
+        }
+
+        public String getUnknownText() {
+            return _label + ": ?";
+        }
+
+        public String getInconsistentText() {
+            return _label + ": x";
+        }
+
+        public String getTooltip() {
+            return switchTooltip;
         }
 
         // ******************* Display ***************************
@@ -1316,34 +1336,6 @@ public class SwitchboardEditor extends Editor {
         _optionMenu.add(textColorMenu);
     }
 
-//    protected void makeZoomMenu() {
-//        _zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-//        _menuBar.add(_zoomMenu, 0);
-//        JMenuItem addItem = new JMenuItem(Bundle.getMessage("NoZoom"));
-//        _zoomMenu.add(addItem);
-//        addItem.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                zoomRestore();
-//            }
-//        });
-//
-//        addItem = new JMenuItem(Bundle.getMessage("Zoom", "..."));
-//        _zoomMenu.add(addItem);
-//        PositionableJComponent z = new PositionableJComponent(this);
-//        z.setScale(getPaintScale());
-//        addItem.addActionListener(CoordinateEdit.getZoomEditAction(z));
-//
-//        addItem = new JMenuItem(Bundle.getMessage("ZoomFit"));
-//        _zoomMenu.add(addItem);
-//        addItem.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                zoomToFit();
-//            }
-//        });
-//    }
-
     private void makeFileMenu() {
         _fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         _menuBar.add(_fileMenu, 0);
@@ -1365,25 +1357,8 @@ public class SwitchboardEditor extends Editor {
         editItem.addActionListener(CoordinateEdit.getNameEditAction(z));
         _fileMenu.add(editItem);
 
-//        editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
-//        _fileMenu.add(editItem);
-//        editItem.addActionListener(new ActionListener() {
-//            SwitchboardEditor panelEd;
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                ImageIndexEditor ii = ImageIndexEditor.instance(panelEd);
-//                ii.pack();
-//                ii.setVisible(true);
-//            }
-//
-//            ActionListener init(SwitchboardEditor pe) {
-//                panelEd = pe;
-//                return this;
-//            }
-//        }.init(this));
-
         _fileMenu.addSeparator();
+
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener(new ActionListener() {
@@ -1401,6 +1376,7 @@ public class SwitchboardEditor extends Editor {
             @Override
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(false);
+                setVisible(false); // hide Editor pane
             }
         });
     }
@@ -1526,78 +1502,6 @@ public class SwitchboardEditor extends Editor {
         setOptionMenuBackgroundColor();
     }
 
-//    private JRadioButtonMenuItem makeSelectTypeButton(String label, String className) {
-//        JRadioButtonMenuItem button = new JRadioButtonMenuItem(Bundle.getMessage(label));
-//        button.addActionListener(new ActionListener() {
-//            String cName;
-//
-//            ActionListener init(String name) {
-//                cName = name;
-//                return this;
-//            }
-//
-//            @Override
-//            public void actionPerformed(ActionEvent event) {
-//                selectType(cName);
-//            }
-//        }.init(className));
-//        return button;
-//    }
-//
-//    private void selectType(String name) {
-//        try {
-//            Class<?> cl = Class.forName(name);
-//            _selectionGroup = new ArrayList<Positionable>();
-//            Iterator<Positionable> it = _contents.iterator();
-//            while (it.hasNext()) {
-//                Positionable pos = it.next();
-//                if (cl.isInstance(pos)) {
-//                    _selectionGroup.add(pos);
-//                }
-//            }
-//        } catch (ClassNotFoundException cnfe) {
-//            log.error("selectType Menu " + cnfe.toString());
-//        }
-//        _targetPanel.repaint();
-//    }
-
-//    private JMenu makeSelectLevelMenu() {
-//        JMenu menu = new JMenu(Bundle.getMessage("SelectLevel"));
-//        ButtonGroup levelGroup = new ButtonGroup();
-//        JRadioButtonMenuItem button = null;
-//        for (int i = 0; i < 11; i++) {
-//            button = new JRadioButtonMenuItem(Bundle.getMessage("selectLevel", "" + i));
-//            levelGroup.add(button);
-//            menu.add(button);
-//            button.addActionListener(new ActionListener() {
-//                int j;
-//
-//                ActionListener init(int k) {
-//                    j = k;
-//                    return this;
-//                }
-//
-//                @Override
-//                public void actionPerformed(ActionEvent event) {
-//                    selectLevel(j);
-//                }
-//            }.init(i));
-//        }
-//        return menu;
-//    }
-
-//    private void selectLevel(int i) {
-//        _selectionGroup = new ArrayList<Positionable>();
-//        Iterator<Positionable> it = _contents.iterator();
-//        while (it.hasNext()) {
-//            Positionable pos = it.next();
-//            if (pos.getDisplayLevel() == i) {
-//                _selectionGroup.add(pos);
-//            }
-//        }
-//        _targetPanel.repaint();
-//    }
-
     // *********************** end Menus ************************
 
     @Override
@@ -1606,16 +1510,6 @@ public class SwitchboardEditor extends Editor {
             if (_editorMenu != null) {
                 _menuBar.remove(_editorMenu);
             }
-//            if (_iconMenu == null) {
-//                makeIconMenu();
-//            } else {
-//                _menuBar.add(_iconMenu, 0);
-//            }
-//            if (_zoomMenu == null) {
-//                makeZoomMenu();
-//            } else {
-//                _menuBar.add(_zoomMenu, 0);
-//            }
             if (_optionMenu == null) {
                 makeOptionMenu();
             } else {
@@ -1634,9 +1528,6 @@ public class SwitchboardEditor extends Editor {
             if (_optionMenu != null) {
                 _menuBar.remove(_optionMenu);
             }
-//            if (_iconMenu != null) {
-//                _menuBar.remove(_iconMenu);
-//            }
             if (_editorMenu == null) {
                 _editorMenu = new JMenu(Bundle.getMessage("MenuEdit"));
                 _editorMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
@@ -1656,85 +1547,8 @@ public class SwitchboardEditor extends Editor {
 
     @Override
     public void setUseGlobalFlag(boolean set) {
-        //positionableBox.setEnabled(set);
         controllingBox.setEnabled(set);
         super.setUseGlobalFlag(set);
-    }
-
-    private void zoomRestore() {
-        List<Positionable> contents = getContents();
-        for (Positionable sw : contents) {
-            sw.setLocation(sw.getX() + _fitX, sw.getY() + _fitY);
-        }
-        setPaintScale(1.0);
-    }
-
-    int _fitX = 0;
-    int _fitY = 0;
-
-    private void zoomToFit() {
-        double minX = 1000.0;
-        double maxX = 0.0;
-        double minY = 1000.0;
-        double maxY = 0.0;
-        List<Positionable> contents = getContents();
-        for (Positionable sw : contents) {
-            minX = Math.min(sw.getX(), minX);
-            minY = Math.min(sw.getY(), minY);
-            maxX = Math.max(sw.getX() + sw.getWidth(), maxX);
-            maxY = Math.max(sw.getY() + sw.getHeight(), maxY);
-        }
-        _fitX = (int) Math.floor(minX);
-        _fitY = (int) Math.floor(minY);
-
-        JFrame frame = getTargetFrame();
-        Container contentPane = getTargetFrame().getContentPane();
-        Dimension dim = contentPane.getSize();
-        Dimension d = getTargetPanel().getSize();
-        getTargetPanel().setSize((int) Math.ceil(maxX - minX), (int) Math.ceil(maxY - minY));
-
-        JScrollPane scrollPane = getPanelScrollPane();
-        scrollPane.getHorizontalScrollBar().setValue(0);
-        scrollPane.getVerticalScrollBar().setValue(0);
-        JViewport viewPort = scrollPane.getViewport();
-        Dimension dv = viewPort.getExtentSize();
-
-        int dX = frame.getWidth() - dv.width;
-        int dY = frame.getHeight() - dv.height;
-        log.debug("zoomToFit: layoutWidth= {}, layoutHeight= {}\n\tframeWidth= {}, frameHeight= {}, viewWidth= {}, viewHeight= {}\n\tconWidth= {}, conHeight= {}, panelWidth= {}, panelHeight= {}",
-                (maxX - minX), (maxY - minY), frame.getWidth(), frame.getHeight(), dv.width, dv.height, dim.width, dim.height, d.width, d.height);
-        double ratioX = dv.width / (maxX - minX);
-        double ratioY = dv.height / (maxY - minY);
-        double ratio = Math.min(ratioX, ratioY);
-        /*
-         if (ratioX<ratioY) {
-         if (ratioX>1.0) {
-         ratio = ratioX;
-         } else {
-         ratio = ratioY;
-         }
-         } else {
-         if (ratioY<1.0) {
-         ratio = ratioX;
-         } else {
-         ratio = ratioY;
-         }
-         } */
-        _fitX = (int) Math.floor(minX);
-        _fitY = (int) Math.floor(minY);
-        for (Positionable sw : contents) {
-            sw.setLocation(sw.getX() - _fitX, sw.getY() - _fitY);
-        }
-        setScroll(SCROLL_BOTH);
-        setPaintScale(ratio);
-        setScroll(SCROLL_NONE);
-        scrollNone.setSelected(true);
-        //getTargetPanel().setSize((int)Math.ceil(maxX), (int)Math.ceil(maxY));
-        frame.setSize((int) Math.ceil((maxX - minX) * ratio) + dX, (int) Math.ceil((maxY - minY) * ratio) + dY);
-        scrollPane.getHorizontalScrollBar().setValue(0);
-        scrollPane.getVerticalScrollBar().setValue(0);
-        log.debug("zoomToFit: ratio= {}, w= {}, h= {}, frameWidth= {}, frameHeight= {}",
-                ratio, (maxX - minX), (maxY - minY), frame.getWidth(), frame.getHeight());
     }
 
     @Override
@@ -1760,7 +1574,7 @@ public class SwitchboardEditor extends Editor {
     public void setHideUnconnected(boolean state) {
         _hideUnconnected = state;
         if (!state) {
-            // hide Help2
+            // TODO hide Help2
         }
     }
 
@@ -2000,9 +1814,8 @@ public class SwitchboardEditor extends Editor {
             case SCROLL_HORIZONTAL:
                 scrollHorizontal.setSelected(true);
                 break;
-            case SCROLL_VERTICAL:
+            default:
                 scrollVertical.setSelected(true);
-                break;
         }
         log.debug("InitView done");
     }
@@ -2413,12 +2226,14 @@ public class SwitchboardEditor extends Editor {
         return null;
     }
 
-//    public List<BeanSwitch> getSwitches() {
-//        for (int i = 0; i < switchlist.size(); i++) {
-//            _switches.add(switchboardLayeredPane.getComponent(i));
-//        }
-//        return _switches;
-//    }
+    public List<BeanSwitch> getSwitches() {
+        _switches.clear(); // reset list
+        log.debug("N = {}", switchlist.size());
+        for (int i = 0; i < switchlist.size(); i++) {
+            _switches.add((BeanSwitch) switchboardLayeredPane.getComponent(i));
+        }
+        return _switches;
+    }
 
     /**
      * Set up item(s) to be copied by paste.

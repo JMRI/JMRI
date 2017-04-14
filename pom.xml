@@ -763,7 +763,7 @@
         <dependency>
             <groupId>org.openlcb</groupId>
             <artifactId>openlcb</artifactId>
-            <version>0.7.12</version>
+            <version>0.7.13</version>
         </dependency>
         <dependency>
             <groupId>ch.ntb</groupId>
