@@ -77,7 +77,7 @@ public class WebAppServlet extends HttpServlet {
         FileUtil.createDirectory(cache);
         File index = new File(cache, "index.html"); // NOI18N
         if (!index.exists()) {
-            String inComments = "-->%s\n<!--"; // NOI18N
+            String inComments = "-->\n%s<!--"; // NOI18N
             WebAppManager manager = getWebAppManager();
             // Format elements for index.html
             // 1 = railroad name
