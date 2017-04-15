@@ -12,6 +12,8 @@
     "angular": "1.6.4",
     "angular-patternfly": "3.23.2",
     "angular-resource": "1.6.4",
-    "angular-route": "1.6.4"
+    "angular-route": "1.6.4",
+    "angular-translate": "2.15.1",
+    "angular-websocket": "2.0.1"
   }
 }

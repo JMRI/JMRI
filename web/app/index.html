@@ -14,7 +14,8 @@
         <title>%1$s</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- scripts %2$s -->
+        <!-- scripts %2$s app/script is loaded *after* all other scripts -->
+        <script type="application/javascript" src="/app/script"></script>
         <!-- style sheets %3$s -->
     </head>
     <body ng-app="jmri.app">
