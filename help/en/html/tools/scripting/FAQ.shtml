@@ -524,7 +524,7 @@ SensndExample().start()
 </pre>
 
         <h2>Is JMRI's support for Python complete?</h2>JMRI
-        scripting uses <a href="">Jython</a>, a Java-implemented
+        scripting uses <a href="http://www.jython.org">Jython</a>, a Java-implemented
         form of the Python language. The basic language is pretty
         complete, but not all of the Python libraries are
         available. Some "import" statements that you might read in
@@ -533,14 +533,27 @@ SensndExample().start()
         <p>Support is improving all the time, though, and you might
         want to try a more modern version of Jython than the one
         that JMRI distributes. To do that, install Jython on you
-        computer, then add a python.properties in your user files
-        location that sets the python configuration variables,
-        e.g.:</p>
-        <pre style="font-family: monospace;">
-python.home = C:\Users\admin\JMRI\systemfiles 
-python.path = c:\jython2.5.3\lib 
+        computer, then add a python.properties file in your 
+        <a href="../../setup/Files.shtml">user files directory</a>
+        or
+        <a href="../../setup/Files.shtml">preferences directory</a>
+        that sets the python configuration variables,
+        e.g. on Windows:</p>
+<pre style="font-family: monospace;">
+python.path = C:\\jython2.7.0\\Lib\\site\-packages
 python.startup = 
-</pre><!--#include virtual="/Footer" -->
+</pre>
+<p>Note that the double-back-slashes are necessary.  They'll appear as single-back-slashes
+in the final value, which you can check with the "Context" item from the main JMRI
+Help menu. On Mac use something like:</p>
+<pre style="font-family: monospace;">
+python.path = /Users/username/jython2.7.0/Lib/site-packages
+python.startup = 
+</pre>
+or where-ever you've installed the new Jython. Linux is similar.
+
+
+<!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
   </div>
