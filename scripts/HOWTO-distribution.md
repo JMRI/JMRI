@@ -59,6 +59,11 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ================================================================================
 ## Update Content
 
+- Update this note by (details in the update-HOWTO.sh comments):
+```
+  ./scripts/update-HOWTO.sh 4.7.3 4.7.4 4.7.5
+```
+
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
 - If it's a new year, update copyright dates (done for 2016):
@@ -423,7 +428,7 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
 
 ```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.3 -n "JMRI.4.7.3-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.2/workspace/dist/release/JMRI.4.7.3-Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.3 -n "JMRI.4.7.3-Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.3/workspace/dist/release/JMRI.4.7.3-Rd144052.dmg 
 github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.3 -n "JMRI.4.7.3-Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.3/workspace/dist/release/JMRI.4.7.3-Rd144052.exe 
 github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.7.3 -n "JMRI.4.7.3-Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.7.3/workspace/dist/release/JMRI.4.7.3-Rd144052.tgz 
 ```
