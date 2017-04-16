@@ -602,7 +602,13 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     public void setClassDescription(String strClass) {
         try {
             Class<?> cl = Class.forName(strClass);
-            Object t = cl.newInstance();
+            Object t;
+            try {
+                t = cl.newInstance();
+            } catch ( IllegalArgumentException | NullPointerException | ExceptionInInitializerError ex) {
+                log.error("setClassDescription({}) failed in newInstance", strClass, ex.toString());
+                return;
+            }
             boolean classDesFound;
             boolean classSetFound;
             String desc = null;
