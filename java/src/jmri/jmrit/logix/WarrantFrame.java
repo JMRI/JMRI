@@ -1571,7 +1571,7 @@ public class WarrantFrame extends WarrantRoute {
                                 break;
                             }
                             msg = Bundle.getMessage("throttlesetting", value);
-                        } catch (Exception e) {
+                        } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("invalidNumber");
                         }
                         ts.setValue(null);

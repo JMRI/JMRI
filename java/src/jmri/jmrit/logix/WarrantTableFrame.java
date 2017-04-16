@@ -59,11 +59,11 @@ import org.slf4j.LoggerFactory;
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener {
 
     static final String halt = Bundle.getMessage("Halt");
-    static final String stop = Bundle.getMessage("Stop");
+    static final String estop = Bundle.getMessage("EStop");
     static final String resume = Bundle.getMessage("Resume");
-    static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {halt, resume, retry, stop, abort};
+    static final String abort = Bundle.getMessage("Abort");
+    static final String[] controls = {halt, estop, resume, retry, abort};
 
     public static int _maxHistorySize = 30;
 
