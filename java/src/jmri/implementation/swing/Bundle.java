@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.implementation.Bundle {
 
-    private final static String name = "jmri.implementation.swing.MessageBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.implementation.swing.MessageBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

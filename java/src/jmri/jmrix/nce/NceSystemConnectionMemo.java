@@ -52,6 +52,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return tc for this connection
      */
     public NceTrafficController getNceTrafficController() {
         return nceTrafficController;
@@ -87,6 +88,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Sets the NCE message option.
+     * @param val command option value
      */
     public void configureCommandStation(int val) {
         getNceTrafficController().setCommandOptions(val);

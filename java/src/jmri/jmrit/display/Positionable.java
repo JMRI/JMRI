@@ -82,19 +82,25 @@ public interface Positionable extends Cloneable {
      * object and immediately pass the object to finishClone() returning the
      * result of finishClone(). i.e. implementation must be:
      * <p>
-     * {@code public Positionable deepClone() { Subtype t = new Subtype(); return finishClone(t); } }
+     * {@code public Positionable deepClone() { Subtype t = new Subtype(); return finishClone(t);
+     * } }
      * <p>
-     * Then finishClone() finishes the deep Copy of a Positional object. Implementation should make
-     * deep copies of the additional members of this sub class and then pass
-     * Positionable p to super.finishClone(). i.e. implementation must terminate
-     * with statement return super.finishClone(p); See IndicatorTurnoutIcon
-     * extends TurnoutIcon extends PositionableLabel for an example of how to
-     * continue deep cloning a chain of subclasses.
+     * Then finishClone() finishes the deep Copy of a Positional object.
+     * Implementation should make deep copies of the additional members of this
+     * sub class and then pass Positionable p to super.finishClone(). i.e.
+     * implementation must terminate with statement return super.finishClone(p);
+     * See IndicatorTurnoutIcon extends TurnoutIcon extends PositionableLabel
+     * for an example of how to continue deep cloning a chain of subclasses.
+     *
+     * @return the copy
      */
     public Positionable deepClone();
 
     /**
-     * Methods to add popup menu items return true if a popup item is set
+     * Get the name of the positional as a String. This is often the display
+     * name of the NamedBean being positioned.
+     *
+     * @return the name to display
      */
     public String getNameString();
 
@@ -127,11 +133,9 @@ public interface Positionable extends Cloneable {
     public void remove();
 
     /**
-     * Store a permanent copy of this Positionable The editorXml will call this
-     * method to find out whether it should store this Positionable item.
+     * Check if a permanent copy of this Positionable should be stored.
      *
-     * @return true if the Editor should store this in the configuration file
-     * @return false if if the Editor should not store this object
+     * @return true if this Positionable should be stored; false otherwise
      */
     public boolean storeItem();
 
@@ -146,6 +150,7 @@ public interface Positionable extends Cloneable {
 
     /**
      * Utility to handle Margins, Borders and other common popup items
+     *
      * @return null if these item do not apply
      */
     public PositionablePopupUtil getPopupUtility();

@@ -26,9 +26,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractStreamConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process Currently uses the
-     * serialportadapter, but this will change to a simulator port adapter in
-     * due course.
+     * Ctor for an object being created during load process.
      */
     public AbstractStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
         adapter = p;

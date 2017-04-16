@@ -111,6 +111,17 @@ function processPanelXML($returnedData, $success, $xhr) {
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
     }
 
+    //set up context used by switchboardeditor "beanswitch" objects, set some defaults
+    if ($gPanel.paneltype === "Switchboard") {
+        // TODO add contents
+        //$("#panel-area").prepend("<canvas id='panelCanvas' width=95% height=95% style='position:absolute;z-index:2;'>");
+        //set background color from panel attribute
+        $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
+
+        //set short notice
+        $("#panel-area").append("<div id=info class=show>Hello " + $gPanel.text + "</div>");
+    }
+
     //process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
     $panel.contents().each(
             function() {
@@ -453,6 +464,44 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['url'] = $url; //just store url value in widget, for use in click handler
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
+                                }
+                                break;
+                            case "beanswitch" : // Switchboard BeanSwitch of shape "button"
+                                $widget['name'] = $widget.label; // normalize name
+                                $widget['text'] = $widget.label; // use label as initial button text
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
+                                switch  ($widget["type"]) {
+                                    case "T" :
+                                        $widget.jsonType = "turnout"; // JSON object type
+                                        jmri.getTurnout($widget["systemName"]); // have the html button immediately follow the state on the layout
+                                        break;
+                                    case "S" :
+                                        $widget.jsonType = "sensor"; // JSON object type
+                                        jmri.getSensor($widget["systemName"]);
+                                        break;
+                                    default :
+                                        $widget.jsonType = "light"; // JSON object type
+                                        jmri.getLight($widget["systemName"]);
+                                }
+                                // set each state's text (this is only applied when shape is button)
+                                $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
+                                $widget['text2'] = $(this).find('activeText').attr('text');
+                                $widget['text4'] = $(this).find('inactiveText').attr('text');
+                                $widget['text8'] = $(this).find('inconsistentText').attr('text');
+                                $widget['state'] = 0; // use 0 for initial state
+                                $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
+                                $widget.styles['border-radius'] = "8px" // mimick JButtons
+                                $widget.styles['color'] = $widget.textcolor; // use jmri color
+                                $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
+                                // CSS properties
+                                $("#panel-area>#" + $widget.id).css(
+                                {position: 'relative', float: 'left'});
+                                $widget.classes += "button ";
+                                if ($widget.connected == "true") {
+                                    $widget['text'] = $widget['text0']; // add UNKNOWN state to label of connected switches
+                                    $widget.classes += $widget.jsonType + " clickable ";
+                                    $widget.styles['background-color'] = "rgb(240,240,240)" // very light grey to mark connected buttons
                                 }
                                 break;
                         }
@@ -1226,7 +1275,7 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    if (typeof $widget !== "undefined") {  //don't bother if widget not found
+    if (typeof $widget !== "undefined" && $widget.widgetType !== "beanswitch") {  //don't bother if widget not found or BeanSwitch
     	
     	var $height = 0;
     	var $width  = 0;
@@ -1317,7 +1366,7 @@ var $reDrawIcon = function($widget) {
     }
 };
 
-//set new value for widget, showing proper icon, return widgets changed
+// set new value for widget, showing proper icon, return widgets changed
 var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
     if ($widget.state !== $newState) {  //don't bother if already this value
@@ -1549,6 +1598,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "fastclock" :
         case "BlockContentsIcon" :
 //	case "reportericon" :
+        case "beanswitch" :
             return "text";
             break;
         case "positionablelabel" :

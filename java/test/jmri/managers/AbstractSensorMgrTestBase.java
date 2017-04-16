@@ -34,7 +34,6 @@ public abstract class AbstractSensorMgrTestBase {
     static protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
-
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
@@ -92,7 +91,7 @@ public abstract class AbstractSensorMgrTestBase {
 
     @Test
     public void testMisses() {
-        // try to get nonexistant lights
+        // try to get nonexistant sensors
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }

@@ -122,15 +122,6 @@ public class SerialLightManager extends AbstractLightManager {
         return (SerialAddress.convertSystemNameToAlternate(systemName));
     }
 
-    /**
-     * Allow access to SerialLightManager
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialLightManager instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
