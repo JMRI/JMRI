@@ -616,11 +616,13 @@
 <ul></ul>
 </li>
 
+ 
 <li>
-    <a href="package/jmri/jmrit/display/SwitchboardEditor.shtml">Switchboard Editor </a>
-    <ul></ul>
+<a href="">Switchboard Editor </a>
+<ul></ul>
 </li>
 
+ 
 <li>
 <a href="html/tools/signaling/ldt/output.shtml">LDT Signals </a>
 <ul></ul>

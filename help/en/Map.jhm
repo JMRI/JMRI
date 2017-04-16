@@ -188,6 +188,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ImportEngines_FromRoster" url="manual/JMRI_OPS_UsersGuide/Ops_ImportEngines_FromRoster.shtml"/>
 
+<mapID target="package.jmri.jmrit.display.SwitchboardEditor" url="package/jmri/jmrit/display/SwitchboardEditor.shtml"/>
+
 <mapID target="package.apps.TabbedPreferences_WebServer" url="package/apps/TabbedPreferences.shtml#WebServer"/>
 
 <mapID target="manual.DecoderPro3.Basic_BasicPane_EnterEditData" url="manual/DecoderPro3/Basic_BasicPane.shtml#EnterEditData"/>
@@ -241,8 +243,6 @@
 <mapID target="html.hardware.mrc.index_documentation" url="html/hardware/mrc/index.shtml#documentation"/>
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_track" url="package/jmri/jmrit/display/LayoutEditor.shtml#track"/>
-
-<mapID target="package.jmri.jmrit.display.SwitchboardEditor" url="package/jmri/jmrit/display/SwitchboardEditor.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_DepartingStagingRoute" url="package/jmri/jmrit/operations/Operations.shtml#DepartingStagingRoute"/>
 
@@ -469,6 +469,8 @@
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame_intro" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml#intro"/>
 
 <mapID target="html.tools.LRoutes" url="html/tools/LRoutes.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.LogixTable_selectMethod" url="package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
 
@@ -897,6 +899,8 @@
 <mapID target="manual.DecoderPro3.Start_Preferences_Display" url="manual/DecoderPro3/Start_Preferences.shtml#Display"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Backup" url="package/jmri/jmrit/operations/Operations.shtml#Backup"/>
+
+<mapID target="html.apps.PanelPro.PanelPro_swb" url="html/apps/PanelPro/PanelPro.shtml#swb"/>
 
 <mapID target="manual.DecoderPro.index_GettingStarted" url="manual/DecoderPro/index.shtml#GettingStarted"/>
 
@@ -1921,8 +1925,6 @@
 <mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.shtml"/>
 
 <mapID target="html.hardware.roco.z21.index_documentation" url="html/hardware/roco/z21/index.shtml#documentation"/>
-
-<mapID target="html.tools.Logix_action" url="html/tools/Logix.shtml#action"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SpurOption" url="package/jmri/jmrit/operations/Operations.shtml#SpurOption"/>
 
