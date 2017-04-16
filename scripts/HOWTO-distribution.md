@@ -63,6 +63,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
   ./scripts/update-HOWTO.sh 4.7.3 4.7.4 4.7.5
 ```
+(and then manually update that line above to be last version, this version, next version)
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
