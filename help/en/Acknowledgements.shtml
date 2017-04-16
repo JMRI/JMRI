@@ -69,6 +69,9 @@
         "http://www.editthis.info/JMRI/index.php/Main_Page">documentation
         Wiki</a>, which lets a lot of people easily contribute to
         building better documentation</li>
+        
+        <li>Chris Atkins helped improve the  
+        <a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#newJython">instructions for using a separate jython install</a></li>
 
         <li>Ron W. Auld, whose llnmon program formed the basis for
         the LocoNet monitoring <a name="B" id="B"></a></li>
