@@ -1,6 +1,7 @@
 package jmri.util;
 
 import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.Win32Exception;
 import com.sun.jna.platform.win32.WinReg;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +92,7 @@ public class PortNameMapper {
                             try {
                                 String pathKey2 = path + regEntry + "\\" + subRegEntries[0] + "\\Device Parameters";
                                 port = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey2, "PortName");
-                            } catch (java.lang.NullPointerException e) {
+                            } catch (Win32Exception || NullPointerException e) {
                                 // ...\\Device Parameters does not exist for some odd-ball Windows 
                                 // serial devices, so cannot get the "PortName" from there.
                                 // Instead, leave port as null and ignore the exception
