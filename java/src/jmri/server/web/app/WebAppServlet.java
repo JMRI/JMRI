@@ -153,7 +153,8 @@ public class WebAppServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL("web/app/script.js")), // NOI18N
                     manager.getAngularDependencies(profile, request.getLocale()),
                     manager.getAngularRoutes(profile, request.getLocale()),
-                    String.format("\n$scope.navigationItems = %s;\n", manager.getNavigation(profile, request.getLocale())) // NOI18N
+                    String.format("\n    $scope.navigationItems = %s;\n", manager.getNavigation(profile, request.getLocale())), // NOI18N
+                    manager.getAngularSources(profile, request.getLocale())
             ));
         }
         response.getWriter().print(FileUtil.readFile(script));

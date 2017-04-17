@@ -14,8 +14,7 @@
         <title>%1$s</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- scripts %2$s app/script is loaded *after* all other scripts -->
-        <script type="application/javascript" src="/app/script"></script>
+        <!-- scripts %2$s -->
         <!-- style sheets %3$s -->
     </head>
     <body ng-app="jmri.app">
@@ -50,7 +49,7 @@
                 </div>
             </div>
             <div id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical example-page-container">
-                <div id="includedContent"></div>
+                <div ng-view id="includedContent"></div>
             </div>
             <div data-pf-about-modal data-is-open="isAboutModalOpen" data-on-close="onAboutModalClose()"
                  data-additional-info="additionalInfo" data-product-info="productInfo"

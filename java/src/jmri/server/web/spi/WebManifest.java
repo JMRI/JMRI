@@ -1,5 +1,6 @@
 package jmri.server.web.spi;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,4 +61,13 @@ public interface WebManifest {
      */
     @Nonnull
     public Map<String, String> getAngularRoutes();
+
+    /**
+     * Get the sources for the Angular module components required by the servlet
+     * associated with the manifest.
+     *
+     * @return a list of sources to include in the web app
+     */
+    @Nonnull
+    public List<URL> getAngularSources();
 }

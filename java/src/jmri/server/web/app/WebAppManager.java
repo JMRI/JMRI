@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardWatchEventKinds;
@@ -48,11 +49,6 @@ public class WebAppManager extends AbstractPreferencesManager {
     private final HashMap<Profile, List<WebManifest>> manifests = new HashMap<>();
 
     public WebAppManager() {
-        try {
-            this.watcher = FileSystems.getDefault().newWatchService();
-        } catch (IOException ex) {
-            log.warn("Unable to watch file system for changes.");
-        }
     }
 
     @Override
@@ -69,6 +65,11 @@ public class WebAppManager extends AbstractPreferencesManager {
         WebServer.getDefault().addLifeCycleListener(new LifeCycle.Listener() {
             @Override
             public void lifeCycleStarting(LifeCycle lc) {
+                try {
+                    watcher = FileSystems.getDefault().newWatchService();
+                } catch (IOException ex) {
+                    log.warn("Unable to watch file system for changes.");
+                }
                 File cache = ProfileUtils.getCacheDirectory(profile, this.getClass());
                 savePreferences(profile);
             }
@@ -124,6 +125,7 @@ public class WebAppManager extends AbstractPreferencesManager {
             @Override
             public void lifeCycleStopped(LifeCycle lc) {
                 // stop watching web/app directories
+                watcher = null;
             }
         });
         this.setInitialized(profile, true);
@@ -133,7 +135,7 @@ public class WebAppManager extends AbstractPreferencesManager {
     public void savePreferences(Profile profile) {
         File cache = ProfileUtils.getCacheDirectory(profile, this.getClass());
         FileUtil.delete(cache);
-        this.manifests.get(profile).clear();
+        this.manifests.getOrDefault(profile, new ArrayList<>()).clear();
     }
 
     private List<WebManifest> getManifests(Profile profile) {
@@ -216,7 +218,7 @@ public class WebAppManager extends AbstractPreferencesManager {
     public String getUserMenuItems(Profile profile, Locale locale) {
         return this.getMenuItems("user", profile, locale); // NOI18N
     }
-    
+
     private String getMenuItems(String menu, Profile profile, Locale locale) {
         StringBuilder navigation = new StringBuilder();
         List<WebMenuItem> items = new ArrayList<>();
@@ -246,7 +248,7 @@ public class WebAppManager extends AbstractPreferencesManager {
     }
 
     public String getAngularDependencies(Profile profile, Locale locale) {
-        StringJoiner dependencies = new StringJoiner("',\n  '", "\n  '", "'");
+        StringJoiner dependencies = new StringJoiner("',\n  '", "\n  '", "'"); // NOI18N
         List<String> items = new ArrayList<>();
         this.getManifests(profile).forEach((WebManifest manifest) -> {
             manifest.getAngularDependencies().stream().filter((dependency)
@@ -261,14 +263,30 @@ public class WebAppManager extends AbstractPreferencesManager {
     }
 
     public String getAngularRoutes(Profile profile, Locale locale) {
-        StringJoiner routes = new StringJoiner("\n", "\n", "");
+        StringJoiner routes = new StringJoiner("\n", "\n", ""); // NOI18N
         Map<String, String> items = new HashMap<>();
         this.getManifests(profile).forEach((WebManifest manifest) -> {
             items.putAll(manifest.getAngularRoutes());
         });
         items.forEach((String when, String template) -> {
-            routes.add(String.format("      .when('%s', { redirectTo: '%s' })", when, template));
+            routes.add(String.format("      .when('%s', { redirectTo: '%s' })", when, template)); // NOI18N
         });
         return routes.toString();
+    }
+
+    public String getAngularSources(Profile profile, Locale locale) {
+        StringJoiner sources = new StringJoiner("\n", "\n\n", "\n"); // NOI18N
+        List<URL> urls = new ArrayList<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            urls.addAll(manifest.getAngularSources());
+        });
+        urls.forEach((URL source) -> {
+            try {
+                sources.add(FileUtil.readURL(source));
+            } catch (IOException ex) {
+                log.error("Unable to read {}", source, ex);
+            }
+        });
+        return sources.toString();
     }
 }

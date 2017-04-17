@@ -18,7 +18,8 @@
     "/app/node_modules/angular-patternfly/dist/angular-patternfly.min.js",
     "/app/node_modules/angular-patternfly/node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js",
     "/app/node_modules/angular-websocket/dist/angular-websocket.min.js",
-    "/app/node_modules/angular-translate/dist/angular-translate.min.js"
+    "/app/node_modules/angular-translate/dist/angular-translate.min.js",
+    "/app/script"
   ],
   "styles":[
     "/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly.min.css",
@@ -43,5 +44,6 @@
       "when": "/dashboard",
       "template": "/app/dashboard"
     }
-  ]
+  ],
+  "providers":[]
 }
