@@ -89,7 +89,6 @@ function initUploads() {
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
 			$('#progress .bar').css('width', progress + '%');
-			jmri.log("progress bar set to " + progress);
 			if (!$('#progress .bar').is(":visible")) {
 				$('#progress .bar').show();
 			}

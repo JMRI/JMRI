@@ -860,7 +860,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /*
      * Control whether target panel items will show their coordinates in their
-     * popup memu.
+     * popup menu.
      *
      * @param state true for show coodinates.
      */
