@@ -855,9 +855,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _waitForSensor = true;
                 while (_waitForSensor) {
                     try {
-/*                        ThreadingUtil.runOnLayout(() -> {
+                        ThreadingUtil.runOnLayoutEventually(() -> {
                             _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
-                        });*/
+                        });
                         wait();
                         clearSensor();
                     } catch (InterruptedException ie) {
@@ -1182,7 +1182,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _speedOverride = false;
                 _lock.unlock();
             }
-            ThreadingUtil.runOnLayout(() -> {
+            ThreadingUtil.runOnLayoutEventually(() -> {
                 _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
             });
             if (log.isDebugEnabled()) log.debug("ThrottleRamp {} for \"{}\" _waitForClear= {} _halt= {} on warrant {}",
