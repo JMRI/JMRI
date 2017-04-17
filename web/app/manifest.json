@@ -45,5 +45,7 @@
       "template": "/app/dashboard"
     }
   ],
-  "providers":[]
+  "sources":[
+    "web/app/scripts/websocket.js"
+  ]
 }
