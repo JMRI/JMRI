@@ -8,6 +8,7 @@
 6 = help menu contents (in comments)
 7 = personal menu title
 8 = personal menu contents (in comments)
+9 = power menu title
 -->
 <html>
     <head>
@@ -26,6 +27,14 @@
                 <div>
                     <ul class="nav navbar-nav navbar-right navbar-iconic">
                         <li class="dropdown">
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-power" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span title="%9$s" class="fa fa-power-off"></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-menu-power">
+                            </ul>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-help" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

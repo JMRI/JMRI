@@ -1,4 +1,4 @@
-angular.module('jmri.app').factory('JmriJsonSocket', function($websocket) {
+angular.module('jmri.app').factory('$jsonSocket', function($websocket, $log) {
   // Open a WebSocket connection
   var parts = document.URL.split('/');
   var socket = $websocket((parts[0] + '//' + parts[2] + '/json/').replace(/^http/, 'ws'));
@@ -6,16 +6,13 @@ angular.module('jmri.app').factory('JmriJsonSocket', function($websocket) {
   var listeners = [];
 
   socket.onMessage(function(message) {
-    var m = JSON.parse(message.data);
-    var l;
-    while(l in listeners) {
-      l.onMessage(m);
-    }
+    $log.info('Received message ' + message.data);
   });
 
   var send = function(type, data, action) {
     var m = {type: type, data: data, action: action};
-    socket.send(JSON.stringify(m));
+//    $log.info('Sending ' + JSON.stringify(m) + '...');
+    socket.send(m);
   };
 
   var heartbeat = function() {
@@ -40,32 +37,43 @@ angular.module('jmri.app').factory('JmriJsonSocket', function($websocket) {
       data.method = 'put';
       send(type, data, 'put');
     },
-    getList: function(type) {
+    list: function(type) {
       var m = {type: 'list', list: type, action: 'get'};
-      socket.send(JSON.stringify(m));  
+      $log.info('Listing ' + type + '...');
+      socket.send(m);  
     },
     register: function(bindings) {
-      var listener = JmriSocketListener(this, bindings);
-      listeners.push(listener);
-      return listener;
+      return JsonSocket(this, bindings);
     }
   };
-    
+
   return methods;
 });
 
-function JmriSocketListener(service, bindings) {
+function JsonSocket(service, bindings) {
   var jsl = new Object();
   jsl.service = service;
   jsl.socket = service.socket;
+  jsl.socket.onMessage(function(message) {
+    jsl.onMessage(JSON.parse(message.data));
+  });
+  jsl.socket.onOpen(function() {
+    jsl.onOpen();
+  });
+  jsl.socket.onClose(function() {
+    jsl.onClose();
+  });
+  jsl.socket.onError(function() {
+    jsl.onError();
+  });
   // Default event handlers that do nothing
   jsl.console = function(data) {
   };
-  jsl.error = function(error) {
+  jsl.onError = function(error) {
   };
-  jsl.open = function() {
+  jsl.onOpen = function() {
   };
-  jsl.close = function(event) {
+  jsl.onClose = function(event) {
   };
   jsl.willReconnect = function(attempts, milliseconds) {
   };
@@ -81,53 +89,53 @@ function JmriSocketListener(service, bindings) {
   };
   jsl.goodbye = function(data) {
   };
-  jsl.block = function(name, value, data) {
+  jsl.block = function(data) {
   };
   jsl.blocks = function(data) {
   };
-  jsl.car = function(name, data) {
+  jsl.car = function(data) {
   };
   jsl.cars = function(data) {
   };
-  jsl.configProfile = function(name, data) {
+  jsl.configProfile = function(data) {
   };
   jsl.configProfiles = function(data) {
   };
-  jsl.consist = function(name, data) {
+  jsl.consist = function(data) {
   };
   jsl.consists = function(data) {
   };
-  jsl.engine = function(name, data) {
+  jsl.engine = function(data) {
   };
   jsl.engines = function(data) {
   };
-  jsl.layoutBlock = function(name, value, data) {
+  jsl.layoutBlock = function(data) {
   };
   jsl.layoutBlocks = function(data) {
   };
-  jsl.light = function(name, state, data) {
+  jsl.light = function(data) {
   };
   jsl.lights = function(data) {
   };
-  jsl.location = function(name, data) {
+  jsl.location = function(data) {
   };
   jsl.locations = function(data) {
   };
-  jsl.memory = function(name, value, data) {
+  jsl.memory = function(data) {
   };
   jsl.memories = function(data) {
   };
   jsl.metadata = function(data) {
   };
-  jsl.networkService = function(name, data) {
+  jsl.networkService = function(data) {
   };
   jsl.networkServices = function(data) {
   };
-  jsl.power = function(state) {
+  jsl.power = function(data) {
   };
   jsl.railroad = function(name) {
   };
-  jsl.reporter = function(name, value, data) {
+  jsl.reporter = function(data) {
   };
   jsl.reporters = function(data) {
   };
@@ -135,35 +143,35 @@ function JmriSocketListener(service, bindings) {
   };
   jsl.rosterGroups = function(data) {
   };
-  jsl.rosterGroup = function(name, data) {
+  jsl.rosterGroup = function(data) {
   };
-  jsl.rosterEntry = function(name, data) {
+  jsl.rosterEntry = function(data) {
   };
-  jsl.route = function(name, state, data) {
+  jsl.route = function(data) {
   };
   jsl.routes = function(data) {
   };
-  jsl.sensor = function(name, state, data) {
+  jsl.sensor = function(data) {
   };
   jsl.sensors = function(data) {
   };
-  jsl.signalHead = function(name, state, data) {
+  jsl.signalHead = function(data) {
   };
   jsl.signalHeads = function(data) {
   };
-  jsl.signalMast = function(name, state, data) {
+  jsl.signalMast = function(data) {
   };
   jsl.signalMasts = function(data) {
   };
-  jsl.throttle = function(throttle, data) {
+  jsl.throttle = function(data) {
   };
-  jsl.time = function(time, data) {
+  jsl.time = function(data) {
   };
-  jsl.train = function(id, data) {
+  jsl.train = function(data) {
   };
   jsl.trains = function(data) {
   };
-  jsl.turnout = function(name, state, data) {
+  jsl.turnout = function(data) {
   };
   jsl.turnouts = function(data) {
   };
@@ -801,6 +809,25 @@ function JmriSocketListener(service, bindings) {
       jsl.turnouts(e.data);
     }
   };
+  jsl.onMessage = function(m) {
+    // if message is an array, call handler for each object in array
+    if ($.isArray(m)) {
+      for (var o in m) {
+        h = Object.keys(this)[m.type];
+        if (h) {
+          h.call(this, m);
+        }
+      }
+      return;
+    }
+    h = Object.keys(this)[m.type];
+    if (h) {
+      h.call(this, m);
+    }
+    if (!m.type) {
+      jsl.log("ERROR: 'type' element not found in json message:" + m);
+    }
+  };
 
   /**
    * get the name (type) used for list from the name used for a single item
@@ -820,49 +847,24 @@ function JmriSocketListener(service, bindings) {
     return lt;
   };
 
-  jsl.reconnect = function() {
-    jsl.socket = $.websocket(jsl.url.replace(/^http/, "ws"), {
-      open: function() {
-        jsl.log("Opened WebSocket");
-        jsl.open();
-      },
-      // stop the heartbeat when the socket closes
-      close: function(e) {
-        jsl.log("Closed WebSocket " + ((e.wasClean) ? "cleanly" : "unexpectedly") + " (" + e.code + "): " + e.reason);
-        clearInterval(jsl.heartbeatInterval);
-        jsl.socket.close();
-        jsl.socket = null;
-        jsl.close(e);
-        jsl.attemptReconnection();
-      },          
-      message: function(e) {
-        jsl.console(e.originalEvent.data);
-        //determine message type and call appropriate event handler
-        var m = JSON.parse(e.originalEvent.data);
-         
-        //if the message is an array, move array to data and add list type
-        if ($.isArray(m)) { 
-          if (m.length === 0) {  //cannot determine type of empty array 
-            jsl.log("WARN: empty json array received, could not handle");
-            return;
-          } else { //use type of first entry to determine list type
-            var lt = jsl.getListType(m[0].type);
-            m = {type: lt, data: m}; //wrap up the message as data for list type
-          }
-        }
-        h = jsl.events[m.type];
-        if (h) {
-          h.call(this, m);
-        }
-        if (!m.type) {
-          jsl.log("ERROR: 'type' element not found in json message:" + e.originalEvent.data);
-        } else if (!h) {
-          jsl.log("ERROR: json type '" + m.type +"' received, but not handled");
-        }
-      }
-    });
-  };
-  jsl.reconnect();
+//  jsl.reconnect = function() {
+//    jsl.socket = $.websocket(jsl.url.replace(/^http/, "ws"), {
+//      open: function() {
+//        jsl.log("Opened WebSocket");
+//        jsl.open();
+//      },
+//      // stop the heartbeat when the socket closes
+//      close: function(e) {
+//        jsl.log("Closed WebSocket " + ((e.wasClean) ? "cleanly" : "unexpectedly") + " (" + e.code + "): " + e.reason);
+//        clearInterval(jsl.heartbeatInterval);
+//        jsl.socket.close();
+//        jsl.socket = null;
+//        jsl.close(e);
+//        jsl.attemptReconnection();
+//      },
+//    });
+//  };
+//  jsl.reconnect();
   if (jsl.socket === null) {
     $("#no-websockets").addClass("show").removeClass("hidden");
   }

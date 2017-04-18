@@ -23,8 +23,8 @@ angular.module('jmri.app').config(['$routeProvider',
 ]);
 
 // add the navigation menu controller to the jmri.app module
-angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http',
-  function ($scope, $http) {
+angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$jsonSocket', '$log',
+  function ($scope, $http, $jsonSocket, $log) {
     // navigation items %3$s
 
     // about display
@@ -42,6 +42,38 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http',
     $scope.onAboutModalClose = function() {
       $scope.isAboutModalOpen = false;
     };
+    
+    // power menu
+    $jsonSocket.register({
+      open: function() {
+        socket.getPower();
+      },
+      power: function (state) {
+        $log.info('got power');
+        $('#navbar-power').data('power', state);
+        disabled = ($('#navbar-power button').hasClass('disabled')) ? " - Setting power disabled" : "";
+        switch (state) {
+          case JsonSocket.UNKNOWN:
+            $('#navbar-power button').addClass('btn-warning').removeClass('btn-success').removeClass('btn-danger');
+            $('#navbar-power button').prop('title', "Layout power unknown" + disabled);
+            $('#navbar-power a').text("Layout Power Unknown");
+            break;
+          case JsonSocket.POWER_ON:
+            $('#navbar-power button').addClass('btn-success').removeClass('btn-danger').removeClass('btn-warning');
+            $('#navbar-power button').prop('title', "Layout power on" + disabled);
+            $('#navbar-power a').text("Layout Power On");
+            break;
+          case JsonSocket.POWER_OFF:
+            $('#navbar-power button').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning');
+            $('#navbar-power button').prop('title', "Layout power off" + disabled);
+            $('#navbar-power a').text("Layout Power Off");
+            break;
+        }
+      }
+    });
+    $log.info('Getting power...');
+    $jsonSocket.list('power');
+    
   }
 ]);
 

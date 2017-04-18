@@ -88,6 +88,7 @@ public class WebAppServlet extends HttpServlet {
             // 6 = help menu contents (in comments)
             // 7 = personal menu title
             // 8 = personal menu contents (in comments)
+            // 9 = power menu title
             FileUtil.appendTextToFile(index, String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
                     ServletUtil.getInstance().getRailroadName(false), // railroad name
@@ -97,7 +98,8 @@ public class WebAppServlet extends HttpServlet {
                     Bundle.getMessage(request.getLocale(), "help"), // help menu title
                     String.format(inComments, manager.getHelpMenuItems(profile, request.getLocale())), // help menu contents (in comments)
                     Bundle.getMessage(request.getLocale(), "user"), // personal menu title
-                    String.format(inComments, manager.getUserMenuItems(profile, request.getLocale())) // personal menu contents (in comments)
+                    String.format(inComments, manager.getUserMenuItems(profile, request.getLocale())), // personal menu contents (in comments)
+                    Bundle.getMessage(request.getLocale(), "power") // power menu title
             ));
         }
         response.getWriter().print(FileUtil.readFile(index));
