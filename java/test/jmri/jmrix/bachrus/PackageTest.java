@@ -17,6 +17,10 @@ import org.slf4j.LoggerFactory;
    SpeedoConnectionTypeListTest.class,
    SpeedoDialTest.class,
    jmri.jmrix.bachrus.swing.PackageTest.class,
+   DccSpeedProfileTest.class,
+   SpeedoMenuTest.class,
+   SpeedoConsoleActionTest.class,
+   SpeedoConsoleFrameTest.class,
 })
 
 /**
