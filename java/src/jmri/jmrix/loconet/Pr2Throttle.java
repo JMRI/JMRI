@@ -35,7 +35,7 @@ public class Pr2Throttle extends AbstractThrottle {
     /**
      * Convert a LocoNet speed integer to a float speed value
      * @param lSpeed loconet speed value
-     * @return speed as float 0->1.0
+     * @return speed as float 0-&gt;1.0
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
