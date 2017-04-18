@@ -50,6 +50,15 @@ People building releases for distribution need permission to directly operate wi
 
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
+!!!!!!!!!!          NOTE FOR NEXT TIME           !!!!!!!!!!!
+!!!   The filenames were like JMRI.4.7.3.R202c9ee.dmg    !!!
+!!!   but should have been like JMRI.4.7.3+R202c9ee.dmg  !!!
+!!!                                                      !!!
+!!!   Fix the build.xml to create the right file, then   !!!
+!!!   check that the ./testrelease script and signing    !!!
+!!!   still works before proceeding further              !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 ================================================================================
 ## Notification
 
@@ -407,10 +416,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.7.3-R9bfae82.dmg](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3-R9bfae82.dmg) | e7223f2ba8163f4b607f1d77d8817eeaff6227b0345d16a92c8cba961f837809
-[JMRI.4.7.3-R9bfae82.exe](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3-R9bfae82.exe) | 27c8542568624dec65943b7787e80235f3cad73f7e598ea1c883573cf7837263
-[JMRI.4.7.3-R9bfae82.tgz](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3-R9bfae82.tgz) | 84cb9ad5411eda97802a86ecaca53e718ec23353b8a57767fa287359bd5d4057
-
+[JMRI.4.7.3+R202c9ee.dmg](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3+R202c9ee.dmg) | c4ca7d32789de60a1764cc0c50cf2b73e2357ecd8e407a79b2c229193487858f
+[JMRI.4.7.3+R202c9ee.exe](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3+R202c9ee.exe) | 4fe5b78e96444939bf9933ad2c0d486a36ec40a472b2dcf1de30c8ffe6edb03b
+[JMRI.4.7.3+R202c9ee.tgz](https://github.com/JMRI/JMRI/releases/download/v4.7.3/JMRI.4.7.3+R202c9ee.tgz) | 87a1cf58c3c39a47cdc22a29ce24469051ee4ae559b804df66dbbe274e520e47
 ```
 
 - Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
@@ -547,7 +555,7 @@ If you don't, a bunch of Windows users are likely to whine
 
 ================================================================================
 
-## Notes for those attempting this on MS Windows platform:
+# Notes for those attempting this on MS Windows platform:
 
 Given that many of the steps involved assume the behaviour of certain POSIX commands (for which there are either no direct equivalent or have subtle behavioural differences), it is easiest to perform these tasks via Cygwin:
 
