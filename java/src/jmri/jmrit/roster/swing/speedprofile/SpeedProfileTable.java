@@ -122,6 +122,9 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 case FORWARD_FACTOR_COL:
                 case REVERSE_FACTOR_COL:
                     return Bundle.getMessage("factor");
+                default:
+                    // fall out
+                    break;
             }
             return "";
         }
@@ -141,6 +144,9 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 case FORWARD_SPEED_COL:
                 case REVERSE_SPEED_COL:
                     return new JTextField(8).getPreferredSize().width;
+                default:
+                    // fall out
+                    break;
             }
             return new JTextField(8).getPreferredSize().width;
         }
@@ -186,6 +192,9 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                     return threeDigit.format(speed);
                 case REVERSE_FACTOR_COL:
                     return threeDigit.format(entry.getValue().getReverseSpeed()/entry.getKey());
+                default:
+                    // fall out
+                    break;
             }
             return "";
         }
