@@ -23,8 +23,8 @@ angular.module('jmri.app').config(['$routeProvider',
 ]);
 
 // add the navigation menu controller to the jmri.app module
-angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$jsonSocket', '$log',
-  function ($scope, $http, $jsonSocket, $log) {
+angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$jsonSocket', '$log', '$interval',
+  function ($scope, $http, $jsonSocket, $log, $interval) {
     // navigation items %3$s
 
     // about display
@@ -43,38 +43,71 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
       $scope.isAboutModalOpen = false;
     };
     
-    // power menu
+    // core socket services (power and keep alive)
+    $scope.heartbeat;
+    $scope.startHeartbeat = function(heartbeat) {
+      $log.info("Starting heartbeat every " + heartbeat + " ms.");
+      if (angular.isDefined($scope.heartbeat)) {
+        return;
+      }
+      $scope.heartbeat = $interval(function() {
+        $jsonSocket.ping();
+      }, heartbeat);
+    };
+    $scope.stopHeartbeat = function() {
+      if (angular.isDefined(heartbeat)) {
+        $interval.cancel(heartbeat);
+        heartbeat = undefined;
+      }
+    };
+    $scope.power = [];
     $jsonSocket.register({
       open: function() {
-        socket.getPower();
+        // will likely cause power to be listed twice
+        socket.list('power');
       },
-      power: function (state) {
-        $log.info('got power');
-        $('#navbar-power').data('power', state);
-        disabled = ($('#navbar-power button').hasClass('disabled')) ? " - Setting power disabled" : "";
-        switch (state) {
-          case JsonSocket.UNKNOWN:
-            $('#navbar-power button').addClass('btn-warning').removeClass('btn-success').removeClass('btn-danger');
-            $('#navbar-power button').prop('title', "Layout power unknown" + disabled);
-            $('#navbar-power a').text("Layout Power Unknown");
-            break;
-          case JsonSocket.POWER_ON:
-            $('#navbar-power button').addClass('btn-success').removeClass('btn-danger').removeClass('btn-warning');
-            $('#navbar-power button').prop('title', "Layout power on" + disabled);
-            $('#navbar-power a').text("Layout Power On");
-            break;
-          case JsonSocket.POWER_OFF:
-            $('#navbar-power button').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning');
-            $('#navbar-power button').prop('title', "Layout power off" + disabled);
-            $('#navbar-power a').text("Layout Power Off");
-            break;
+      power: function(m) {
+        $log.info('got power ' + m.data.name + " (" + m.data.state + ")");
+        var found = false;
+        for (var i in $scope.power) {
+            if ($scope.power[i].name === m.data.name) {
+                $scope.power[i].state = m.data.state;
+                found = true;
+            }
         }
+        if (!found) {
+            $scope.power.push(m.data);
+            socket.getPower(m.name);
+        }
+      },
+      hello: function(m) {
+        $scope.startHeartbeat(m.data.heartbeat);
+      },
+      pong: function(m) {
+        $log.info("Received pong");
+      },
+      close: function() {
+        $scope.stopHeartbeat();
       }
+      
     });
-    $log.info('Getting power...');
     $jsonSocket.list('power');
     
   }
 ]);
 
+angular.module('jmri.app').filter('triStateCheckBox', function() {
+  return function(input) {
+    switch(input) {
+      case 4: // off
+        return 'fa-square';
+        break;
+      case 2: // on
+        return 'fa-check-square';
+        break;
+      default: // unknown
+        return 'fa-minus-square';
+    }
+  };
+});
 // additional providers %4$s
