@@ -4,6 +4,8 @@ import java.awt.Color; // debug only
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -25,7 +27,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent; // for alignment
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,7 +40,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.table.DefaultTableCellRenderer; // for display of icon
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -66,6 +66,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a TurnoutTable GUI.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class TurnoutTableAction extends AbstractTableAction {
 
@@ -517,10 +518,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                         speedListThrown.add(speed);
                     }
                     fireTableRowsUpdated(row, row);
-//                } else if (col == VALUECOL && _graphicState) {
-//                    clickOn(t);
-//                    log.debug("Clicked on");
-//                    // need to redraw table? already listens for turnout state change
+                } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
+                    clickOn(t);
+                    fireTableRowsUpdated(row, row);
                 } else {
                     super.setValueAt(value, row, col);
                 }
@@ -796,8 +796,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
                 protected BufferedImage onImage;
                 protected BufferedImage offImage;
-                protected Icon onIcon;
-                protected Icon offIcon;
+                protected ImageIcon onIcon;
+                protected ImageIcon offIcon;
                 protected int iconHeight = -1;
 
                 @Override
@@ -830,23 +830,30 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
                     }
-                    if (value.equals(closedText) && onIcon != null) {
-                        label = new JLabel(onIcon);
-                        //label.setBackground(Color.white);
+                    if (value.equals(closedText) && offIcon != null) {
+                        label = new JLabel(offIcon);
                         label.setToolTipText(closedText);
                         label.setVerticalAlignment(JLabel.BOTTOM);
-                        log.debug("onIcon set");
-                    } else if (value.equals(thrownText) && offIcon != null) {
-                        label = new JLabel(offIcon);
-                        //label.setBackground(Color.red);
+                        log.debug("offIcon set");
+                    } else if (value.equals(thrownText) && onIcon != null) {
+                        label = new JLabel(onIcon);
                         label.setToolTipText(thrownText);
                         label.setVerticalAlignment(JLabel.BOTTOM);
-                        log.debug("offIcon set");
+                        log.debug("onIcon set");
                     } else {
                         label = new JLabel("?", JLabel.CENTER); // centered text alignment
                         log.debug("Turnout state unknown or error reading icons for TurnoutTable");
                         iconHeight = 0;
                     }
+                    label.addMouseListener (new MouseAdapter ()
+                    {
+                        @Override
+                        public final void mousePressed (MouseEvent evt)
+                        {
+                            log.debug("Clicked on icon in row {}", row);
+                            stopCellEditing();
+                        }
+                    });
                     return label;
                 }
 
@@ -861,7 +868,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         onImage = ImageIO.read(new File(onIconPath));
                         offImage = ImageIO.read(new File(offIconPath));
                     } catch (IOException ex) {
-                        log.error("error reading image from {}/{}", onIconPath, offIconPath, ex);
+                        log.error("error reading image from {} or {}", onIconPath, offIconPath, ex);
                     }
                     log.debug("Success reading images");
                     int imageWidth = onImage.getWidth();
