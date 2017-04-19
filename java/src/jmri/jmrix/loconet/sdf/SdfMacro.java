@@ -93,6 +93,7 @@ public abstract class SdfMacro implements SdfConstants {
 
     /**
      * Total length, including contained instructions
+     * @return length of all parts
      */
     public int totalLength() {
         int result = length();
@@ -115,6 +116,7 @@ public abstract class SdfMacro implements SdfConstants {
      * <P>
      * This provides a default implementation for children, but each subclass
      * needs to store it's own data with setAtIndexAndInc()
+     * @param buffer load with all children
      */
     public void loadByteArray(SdfBuffer buffer) {
         List<SdfMacro> l = getChildren();

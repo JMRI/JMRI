@@ -1,6 +1,7 @@
 package jmri.server.json.route;
 
 import static jmri.server.json.route.JsonRouteServiceFactory.ROUTE;
+import static jmri.server.json.route.JsonRouteServiceFactory.ROUTES;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -17,6 +18,8 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON socket service provider for managing {@link jmri.Route}s.
@@ -26,8 +29,10 @@ import jmri.server.json.JsonSocketService;
 public class JsonRouteSocketService extends JsonSocketService {
 
     private final JsonRouteHttpService service;
-    private final HashMap<String, RouteListener> routes = new HashMap<>();
+    private final HashMap<String, RouteListener> routeListeners = new HashMap<>();
+    private final RoutesListener routesListener = new RoutesListener();
     private Locale locale;
+    private final static Logger log = LoggerFactory.getLogger(JsonRouteSocketService.class);
 
     public JsonRouteSocketService(JsonConnection connection) {
         super(connection);
@@ -43,14 +48,14 @@ public class JsonRouteSocketService extends JsonSocketService {
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.routes.containsKey(name)) {
+        if (!this.routeListeners.containsKey(name)) {
             Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
             if (route != null) {
                 Sensor sensor = route.getTurnoutsAlgdSensor();
                 if (sensor != null) {
                     RouteListener listener = new RouteListener(route);
                     sensor.addPropertyChangeListener(listener);
-                    this.routes.put(name, listener);
+                    this.routeListeners.put(name, listener);
                 }
             }
         }
@@ -60,14 +65,36 @@ public class JsonRouteSocketService extends JsonSocketService {
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.locale = locale;
         this.connection.sendMessage(this.service.doGetList(type, locale));
+        log.debug("adding RoutesListener");
+        InstanceManager.getDefault(RouteManager.class).addPropertyChangeListener(routesListener); //add parent listener
+        addListenersToChildren();
+    }
+
+    private void addListenersToChildren() {
+        InstanceManager.getDefault(RouteManager.class).getSystemNameList().stream().forEach((rn) -> { //add listeners to each child (if not already)
+            if (!routeListeners.containsKey(rn)) {
+                log.debug("adding RouteListener for Route {}", rn);
+                Route route  = InstanceManager.getDefault(RouteManager.class).getRoute(rn);
+                if (route != null) {
+                    Sensor sensor = route.getTurnoutsAlgdSensor();
+                    if (sensor != null) {
+                        RouteListener listener = new RouteListener(route);
+                        sensor.addPropertyChangeListener(listener);
+                        this.routeListeners.put(rn, listener);
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public void onClose() {
-        routes.values().stream().forEach((route) -> {
+        routeListeners.values().stream().forEach((route) -> {
             route.route.removePropertyChangeListener(route);
         });
-        routes.clear();
+        routeListeners.clear();
+        InstanceManager.getDefault(RouteManager.class).removePropertyChangeListener(routesListener);
+
     }
 
     private class RouteListener implements PropertyChangeListener {
@@ -79,22 +106,46 @@ public class JsonRouteSocketService extends JsonSocketService {
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("KnownState")) {
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in RouteListener for '{}' '{}' ('{}'=>'{}')", this.route.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());            
+            try {
                 try {
-                    try {
-                        getConnection().sendMessage(service.doGet(ROUTE, this.route.getSystemName(), locale));
-                    } catch (JsonException ex) {
-                        getConnection().sendMessage(ex.getJsonMessage());
-                    }
-                } catch (IOException ex) {
-                    // if we get an error, de-register
-                    Sensor sensor = route.getTurnoutsAlgdSensor();
-                    if (sensor != null) {
-                        sensor.removePropertyChangeListener(this);
-                    }
-                    routes.remove(this.route.getSystemName());
+                    getConnection().sendMessage(service.doGet(ROUTE, this.route.getSystemName(), locale));
+                } catch (JsonException ex) {
+                    getConnection().sendMessage(ex.getJsonMessage());
                 }
+            } catch (IOException ex) {
+                // if we get an error, de-register
+                Sensor sensor = route.getTurnoutsAlgdSensor();
+                if (sensor != null) {
+                    sensor.removePropertyChangeListener(this);
+                }
+                routeListeners.remove(this.route.getSystemName());
+            }
+        }
+    }
+
+    private class RoutesListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in RoutesListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+
+            try {
+                try {
+                 // send the new list
+                    connection.sendMessage(service.doGetList(ROUTES, locale)); 
+                    //child added or removed, reset listeners
+                    if (evt.getPropertyName().equals("length")) { // NOI18N 
+                        addListenersToChildren();
+                    }
+                } catch (JsonException ex) {
+                    log.warn("json error sending Routes: {}", ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage());
+                }
+            } catch (IOException ex) {
+                // if we get an error, de-register
+                log.debug("deregistering sensorsListener due to IOException");
+                InstanceManager.getDefault(RouteManager.class).removePropertyChangeListener(routesListener);
             }
         }
     }

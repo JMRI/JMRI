@@ -390,6 +390,9 @@ public class CbusThrottle extends AbstractThrottle {
             case 28:
                 this.f28 = state;
                 break;
+            default:
+                log.warn("Unhandled function number: {}", fn);
+                break;
         }
     }
 

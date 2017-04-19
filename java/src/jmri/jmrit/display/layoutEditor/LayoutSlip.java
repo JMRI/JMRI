@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.util.MathUtil.*;
+import static jmri.util.MathUtil.lerp;
+import static jmri.util.MathUtil.midpoint;
+import static jmri.util.MathUtil.third;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -174,6 +176,9 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectC;
             case SLIP_D:
                 return connectD;
+            default:
+                // fall out
+                break;
         }
         log.error("Invalid Point Type " + location); //I18IN
         throw new jmri.JmriException("Invalid Point");

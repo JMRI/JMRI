@@ -850,11 +850,6 @@
       handles JSON strings in four different forms:</p>
 
       <ul>
-        <li>list requests in the form:
-        <code>{"list":"trains"}</code> or
-        <code>{"type":"list","list":"trains"}</code> that return an
-        array of items, or an empty array (<code>[]</code>).</li>
-
         <li>individual item state requests in the form:
         <code>{"type":"turnout","data":{"name":"LT14"}}</code> that
         are passed to type-specific handlers. These requests will
@@ -872,6 +867,14 @@
             this.</li>
           </ul>
         </li>
+
+        <li>list requests in the form:
+        <code>{"list":"trains"}</code> or
+        <code>{"type":"list","list":"trains"}</code> that return an
+        array of items, or an empty array (<code>[]</code>). This request
+        initiates a "listener" which will resend
+        the entire list when items are added or removed, as well as
+        set individual listeners for each item (see above).</li>
 
         <li>a heartbeat in the form <code>*</code> or
         <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
