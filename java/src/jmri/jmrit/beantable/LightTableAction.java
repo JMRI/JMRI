@@ -1780,6 +1780,9 @@ public class LightTableAction extends AbstractTableAction {
                 field1a.setText("");
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 break;
+            default:
+                log.error("Unhandled light control type: {}", ctType);
+                break;
         }
         updateControl.setVisible(true);
         createControl.setVisible(false);
@@ -1885,6 +1888,9 @@ public class LightTableAction extends AbstractTableAction {
                     return new JTextField(8).getPreferredSize().width;
                 case REMOVE_COLUMN:
                     return new JTextField(8).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(8).getPreferredSize().width;
         }
