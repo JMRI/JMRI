@@ -16,8 +16,10 @@ import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractCellEditor; // for iconLabel
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,7 +39,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.DefaultCellEditor;
 import javax.swing.table.DefaultTableCellRenderer; // for display of icon
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -301,8 +302,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return true;
                 } else if (col == EDITCOL) {
                     return true;
-                } else if (col == VALUECOL && _graphicState) {
-                    return false;
+//                } else if (col == VALUECOL && _graphicState) {
+//                    return true;
                 } else {
                     return super.isCellEditable(row, col);
                 }
@@ -517,10 +518,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                     fireTableRowsUpdated(row, row);
 //                } else if (col == VALUECOL && _graphicState) {
-//                    NamedBean nb = getBySystemName(sysNameList.get(row));
-//                     super.ClickOn(nb);
+//                    clickOn(t);
 //                    log.debug("Clicked on");
-                    // need to redraw table? already listens for turnout state change
+//                    // need to redraw table? already listens for turnout state change
                 } else {
                     super.setValueAt(value, row, col);
                 }
@@ -666,8 +666,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 // add extras, override BeanTableDataModel
                 log.debug("Turnout configValueColumn (I am {})", super.toString());
                 if (_graphicState) { // load icons, only once
-
-                    //table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // no editor
+                    table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // no editor
                     table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
                 } else {
                     super.configValueColumn(table); // classic text style state indication
@@ -786,6 +785,95 @@ public class TurnoutTableAction extends AbstractTableAction {
                     Hashtable<Object, TableCellEditor> editorMapSensor1 = new Hashtable<>();
                     Hashtable<Object, TableCellEditor> editorMapSensor2 = new Hashtable<>();
                 };
+            }
+
+            class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+
+                protected JLabel label;
+                protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
+                protected char beanTypeChar = 'T'; // for Turnout
+                protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
+                protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
+                protected BufferedImage onImage;
+                protected BufferedImage offImage;
+                protected Icon onIcon;
+                protected Icon offIcon;
+                protected int iconHeight = -1;
+
+                @Override
+                public Component getTableCellRendererComponent(
+                        JTable table, Object value, boolean isSelected,
+                        boolean hasFocus, int row, int column) {
+
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) {
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                @Override
+                public Component getTableCellEditorComponent(
+                        JTable table, Object value, boolean isSelected,
+                        int row, int column) {
+
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) {
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                public JLabel updateLabel(String value, int row) {
+                    if (iconHeight > 0) { // if necessary, increase row height;
+                        table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
+                    }
+                    if (value.equals(closedText) && onIcon != null) {
+                        label = new JLabel(onIcon);
+                        //label.setBackground(Color.white);
+                        label.setToolTipText(closedText);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("onIcon set");
+                    } else if (value.equals(thrownText) && offIcon != null) {
+                        label = new JLabel(offIcon);
+                        //label.setBackground(Color.red);
+                        label.setToolTipText(thrownText);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("offIcon set");
+                    } else {
+                        label = new JLabel("?", JLabel.CENTER); // centered text alignment
+                        log.debug("Turnout state unknown or error reading icons for TurnoutTable");
+                        iconHeight = 0;
+                    }
+                    return label;
+                }
+
+                @Override
+                public Object getCellEditorValue() {
+                    log.debug("getCellEditorValue, me = {})", this.toString());
+                    return this.toString();
+                }
+
+                protected void loadIcons() {
+                    try {
+                        onImage = ImageIO.read(new File(onIconPath));
+                        offImage = ImageIO.read(new File(offIconPath));
+                    } catch (IOException ex) {
+                        log.error("error reading image from {}/{}", onIconPath, offIconPath, ex);
+                    }
+                    log.debug("Success reading images");
+                    int imageWidth = onImage.getWidth();
+                    int imageHeight = onImage.getHeight();
+                    // scale icons to fit in table rows
+                    Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    onIcon = new ImageIcon(smallOnImage);
+                    offIcon = new ImageIcon(smallOffImage);
+                    iconHeight = onIcon.getIconHeight();
+                }
+
             }
 
         };  // end of custom data model
@@ -1562,63 +1650,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         public BeanComboBoxEditor(JmriBeanComboBox beanBox) {
             super(beanBox);
         }
-    }
-
-    static class ImageIconRenderer extends DefaultTableCellRenderer implements TableCellRenderer { // no TCEditor needed
-
-        private JLabel label;
-        private String onState = Bundle.getMessage("TurnoutStateClosed");
-        private String offState = Bundle.getMessage("TurnoutStateThrown");
-        protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
-        protected char beanTypeChar = 'T'; // for Turnout
-        protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
-        protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
-        protected BufferedImage onImage;
-        protected BufferedImage offImage;
-        private Icon onIcon;
-        private Icon offIcon;
-
-        @Override
-        public Component getTableCellRendererComponent(
-                JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
-
-            log.debug("Renderer Item = {}, State = {}", row, value);
-            try {
-                onImage = ImageIO.read(new File(onIconPath));
-                offImage = ImageIO.read(new File(offIconPath));
-            } catch (IOException ex) {
-                log.error("error reading image from {}/{}", onIconPath, offIconPath, ex);
-            }
-            log.debug("Success reading images");
-            int imageWidth = onImage.getWidth();
-            int imageHeight = onImage.getHeight();
-            // scale icons to fit in table rows
-            Image smallOnImage = onImage.getScaledInstance(imageWidth/2, imageHeight/2, Image.SCALE_DEFAULT);
-            Image smallOffImage = offImage.getScaledInstance(imageWidth/2, imageHeight/2, Image.SCALE_DEFAULT);
-            Icon onIcon = new ImageIcon(smallOnImage);
-            Icon offIcon = new ImageIcon(smallOffImage);
-            // if necessary, increase row height;
-            table.setRowHeight(row, Math.max(table.getRowHeight(), imageHeight/2 - 5));
-            if (value.equals(onState) && onIcon != null) {
-                label = new JLabel(onIcon);
-                label.setBackground(Color.white);
-                label.setToolTipText(onState);
-                label.setVerticalAlignment(BOTTOM);
-                log.debug("onIcon");
-            } else if (value.equals(offState) && offIcon != null) {
-                label = new JLabel(offIcon);
-                label.setBackground(Color.red);
-                label.setToolTipText(offState);
-                label.setVerticalAlignment(BOTTOM);
-                log.debug("offIcon");
-            } else {
-                label = new JLabel("?", CENTER); // centered alignment
-                log.debug("Turnout state unknown or error reading icons for TurnoutTable");
-            }
-            return label;
-        }
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
