@@ -35,7 +35,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private boolean _waitForClear = false;  // waits for signals/occupancy/allocation to clear
     private boolean _waitForSync = false;  // waits for train to catch up to commands
     private boolean _waitForSensor = false; // wait for sensor event
-    private boolean _speedOverride = false; // speed changing due to signal or occupancy
     private boolean _runOnET = false;   // Execute commands on ET only - do not synch
     private boolean _setRunOnET = false; // Need to delay _runOnET from the block that set it
     private int _syncIdx;           // block order index of current command
@@ -81,7 +80,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             et = System.currentTimeMillis();
             ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand);
             _runOnET = _setRunOnET;     // OK to set here
-            long time = (long) (ts.getTime() * _timeRatio); // extend et when speed has been modified from scripted speed
+            long time = ts.getTime();
+            if (getSpeed() > 0.0f) {
+                time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
+            }
             String command = ts.getCommand().toUpperCase();
             if (log.isDebugEnabled()) log.debug("Start Cmd #{} for block \"{}\" currently in \"{}\". wait {}ms to do cmd {}. Warrant {}",
                     _idxCurrentCommand+1, ts.getBeanDisplayName(), _warrant.getCurrentBlockName(), time, command, _warrant.getDisplayName());
@@ -188,7 +190,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
 
             try {
-                if (command.equals("SPEED") && _idxCurrentCommand > _idxNoSpeedCommand) {
+                if (command.equals("SPEED") && !_halt && !_waitForClear && _idxCurrentCommand > _idxNoSpeedCommand) {
                     float speed = Float.parseFloat(ts.getValue());
                     if (log.isTraceEnabled()) log.trace("SPEED CMD: speed= {} type= \"{}\"", speed, _speedType);
                     try {
@@ -371,10 +373,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
     
-    protected boolean ramping() {
-        return _speedOverride;
-    }
-    
     protected void cancelRamp() {
         if (_ramp != null) {
             _ramp.quit();
@@ -547,14 +545,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     synchronized public int getRunState() {
-        if (_abort) {
-            return Warrant.ABORT;
-        } else if(_speedOverride) {
-            return Warrant.SPEED_RESTRICTED;
-        } else if (_halt) {
+        if (_halt) {
             return Warrant.HALT;
         } else if (_waitForClear) {
             return Warrant.WAIT_FOR_CLEAR;
+        } else if (_abort) {
+            return Warrant.ABORT;
         } else if (_waitForSync) {
             return Warrant.WAIT_FOR_TRAIN;
         } else if (_waitForSensor) {
@@ -591,6 +587,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     synchronized public void abort() {
         _abort = true;
+        cancelRamp();
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
         }
@@ -1120,7 +1117,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             
             _lock.lock();
-            _speedOverride = true;
             try {
                 if (log.isDebugEnabled()) log.debug("ThrottleRamp for \"{}\". step increment= {} step interval= {}. Ramp {} to {} on warrant {}",
                         endSpeedType, incr, delay, speed, endSpeed, _warrant.getDisplayName());
@@ -1179,7 +1175,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     }
                  }
             } finally {
-                _speedOverride = false;
                 _lock.unlock();
             }
             ThreadingUtil.runOnLayoutEventually(() -> {

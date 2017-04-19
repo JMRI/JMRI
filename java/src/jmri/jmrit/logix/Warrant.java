@@ -612,50 +612,58 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 String blockName = block.getDisplayName();
                 String speed = _engineer.getSpeedRestriction();
                 
-                String msg = null;
                 switch (_engineer.getRunState()) {
                     case Warrant.HALT:
-                        msg = Bundle.getMessage("Halted", blockName, cmdIdx);
-                        break;
+                        if (_engineer.getSpeed() > 0.0f) {
+                            return Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);                            
+                        }
+                        return Bundle.getMessage("Halted", blockName, cmdIdx);
+                        
                     case Warrant.RESUME:
-                        msg = Bundle.getMessage("reStarted", blockName, cmdIdx, speed);
-                        break;
+                        return Bundle.getMessage("reStarted", blockName, cmdIdx, speed);
+
                     case Warrant.RETRY:
-                        msg = Bundle.getMessage("reRetry", blockName, cmdIdx, speed);
-                        break;
+                        return Bundle.getMessage("reRetry", blockName, cmdIdx, speed);
+
                     case Warrant.ABORT:
                         if (cmdIdx == _commands.size() - 1) {
                             _engineer = null;
                             return Bundle.getMessage("endOfScript", _trainName);
                         }
-                        msg = Bundle.getMessage("Aborted", blockName, cmdIdx);
-                        break;
+                        return Bundle.getMessage("Aborted", blockName, cmdIdx);
+
                     case Warrant.WAIT_FOR_CLEAR:
-                        msg = Bundle.getMessage("WaitForClear", _trainName, blockName, (_stoppingSignal==null ? "occupancy" : "signal"));
-                        break;
+                        if (_engineer.getSpeed() > 0.0f) {
+                            return Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);                            
+                        }
+                        return Bundle.getMessage("WaitForClear", _trainName, blockName, (_stoppingSignal==null ? 
+                                Bundle.getMessage("Occupancy") : Bundle.getMessage("Signal")));
+
                     case Warrant.WAIT_FOR_TRAIN:
                         return Bundle.getMessage("WaitForTrain", cmdIdx,
                                 getBlockOrderAt(blkIdx).getBlock().getDisplayName(), speed);
+                        
                     case Warrant.WAIT_FOR_SENSOR:
                         return Bundle.getMessage("WaitForSensor",
                                 cmdIdx, _engineer.getWaitSensor().getDisplayName(),
                                 _commands.get(cmdIdx).getBeanSystemName());
+                        
+                    case Warrant.RUNNING:
                     case Warrant.SPEED_RESTRICTED:
-                        msg = Bundle.getMessage("SpeedRestricted", blockName, cmdIdx, speed);
-                        break;
+                        return Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);
+
                     default:
-                        msg = Bundle.getMessage("WhereRunning", blockName, cmdIdx, speed);
+                       return _message;
                 }
-                if (_message != null) {
-                    return Bundle.getMessage("Append", msg, _message);
-                }
-                return msg;
 
             case Warrant.MODE_MANUAL:
                 BlockOrder bo = getCurrentBlockOrder();
                 if (bo != null) {
                     return Bundle.getMessage("ManualRunning", bo.getBlock().getDisplayName());
                 }
+                return Bundle.getMessage("ManualRun");
+                
+            default:
         }
         return "ERROR mode= " + MODES[_runMode];
     }
@@ -1200,10 +1208,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.debug("Warrant \"{}\" Cleared _stoppingSignal= \"{}\".",
                         getDisplayName(), _stoppingSignal.getDisplayName());               
                 _stoppingSignal = null;
+                if (_engineer!=null) {
+                    _engineer.setWaitforClear(false);
+                }
                 setMovement(END);
                 return;
             }
-        } else if (property.equals("state") && _stoppingBlock != null && _stoppingBlock.equals(evt.getSource())) {
+        } else if (property.equals("state")) {
+            if (_stoppingBlock != null && _stoppingBlock.equals(evt.getSource())) {
                 // starting block is allocated but not occupied
                 if (_delayStart) {  // wait for arrival of train to begin the run 
                     if ((((Number) evt.getNewValue()).intValue() & OBlock.OCCUPIED) != 0) {
@@ -1240,18 +1252,19 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                       }
                     }
                 }
-            } else if (_delayStart && property.equals("runMode") && ((Number) evt.getNewValue()).intValue()==MODE_NONE)  {
-                // Starting block was owned by another warrant for this engine 
-                // Engine has arrived and Blocking Warrant has finished
-                ((Warrant)evt.getSource()).removePropertyChangeListener(this);
-                if (clearStoppingBlock()) {
-                    _message = acquireThrottle(_dccAddress);
-                }
-            } else if (property.equals("state") && _shareTOBlock!=null && _shareTOBlock==evt.getSource()) {
+            } else if (_shareTOBlock!=null && _shareTOBlock==evt.getSource()) {
                 if ((((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) != 0) {
                     checkShareTOBlock();
                 }
             }
+        } else if (_delayStart && property.equals("runMode") && ((Number) evt.getNewValue()).intValue()==MODE_NONE)  {
+            // Starting block was owned by another warrant for this engine 
+            // Engine has arrived and Blocking Warrant has finished
+            ((Warrant)evt.getSource()).removePropertyChangeListener(this);
+            if (clearStoppingBlock()) {
+                _message = acquireThrottle(_dccAddress);
+            }
+        }
         if (_message != null) {
             abortWarrant(_message);
         }
@@ -1287,6 +1300,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (msg==null && (_runMode==MODE_RUN || _runMode==MODE_MANUAL)) {
             _stoppingBlock.removePropertyChangeListener(this);
             _stoppingBlock = null;
+            if (_engineer!=null) {
+                _engineer.setWaitforClear(false);
+            }
+            allocateFromIndex(_idxCurrentOrder + 1);
             return true;
         }
         return false;
@@ -1340,8 +1357,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 return;
             } else {
                 if (log.isDebugEnabled())
-                    log.debug(" block \"{}\" additional stoppingBlock to \"{}\". warrant {}", 
-                            block, _stoppingBlock, getDisplayName());                
+                    log.debug(" block \"{}\" additional to stoppingBlock= \"{}\". warrant {}", 
+                            block.getDisplayName(), _stoppingBlock.getDisplayName(), getDisplayName());                
             }
             int idx1 = getIndexOfBlock(_stoppingBlock, _idxLastOrder);
             int idx2 = getIndexOfBlock(block, _idxLastOrder);
@@ -1353,8 +1370,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         _stoppingBlock = block;
         _stoppingBlock.addPropertyChangeListener(this);
-        log.info("Warrant \"{}\" sets _stoppingBlock= \"{}\". current block= {}",
-                getDisplayName(), _stoppingBlock.getDisplayName(), getBlockAt(_idxCurrentOrder).getDisplayName());
+        log.info("Warrant \"{}\" sets _stoppingBlock= \"{}\".",
+                getDisplayName(), _stoppingBlock.getDisplayName());
     }
 
     private void setStoppingSignal(NamedBean signal) {
@@ -1431,24 +1448,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.error("goingActive setPath fails: {}",  msg);
             }
     
-            if (_engineer != null) {
-                // Possible case where ramping down to a stop may have the train pass beyond the block where
-                // the ramp was started. e.g. a short block preceeds the _stoppingBlock.
-                if ( _engineer.getSpeed() > 0.0f || _engineer.ramping()) {
-                    if (_engineer.getRunState() == WAIT_FOR_CLEAR || _engineer.getRunState() == HALT) {
-                        _idxCurrentOrder = activeIdx;   //  ramp down still in progress                        
-                    } else {
-                        _engineer.clearWaitForSync();      // Sync commands if train is faster than ET                                                
+            if (!statusOK(block)) {
+                if (_engineer != null && _engineer.getSpeed() <= 0.000001f) {
+                    // Already stopped, cannot have just entered block 
+                    // must rogue just entered or signal aspect just set to Stop
+                    if (setStoppingCondition(_idxCurrentOrder+1) != null) {
+                        _engineer.setWaitforClear(true);                        
                     }
-                } else {
-                    if (!statusOK(block)) {
-                        // after ramping and already stopped, next block may get occupied or 
-                        // signal aspect may be set to Stop
-                        setStoppingCondition(_idxCurrentOrder+1);
-                        return;
-                    }
+                    return;                        
                 }
-            }  //if (_runMode != MODE_LEARN) { run mode engineer lost }
+                // else - we assume train overran a stopping command, so continue
+            }
+            
             // Since we are moving we assume it is our train entering the block
             _idxCurrentOrder = activeIdx;
         } else if (activeIdx > _idxCurrentOrder + 1) {
@@ -1467,7 +1478,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     setStoppingBlock(block);
                     if (log.isDebugEnabled()) {
                         OBlock curBlock = getBlockAt(_idxCurrentOrder);
-                        log.debug("Rogue train entered block \"{}\" ahead of train {} at block \"{}\"!",
+                        log.debug("Rogue train entered block \"{}\" ahead of train {} currently in block \"{}\"!",
                                     block.getDisplayName(), _trainName, curBlock.getDisplayName());
                     }
                     return;
@@ -1545,8 +1556,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 return false;
             }
             _engineer.clearWaitForSync();      // Sync commands if train is faster than ET
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -1601,6 +1613,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             } else {
                 abortWarrant("Warrant "+getDisplayName()+" at last block "+block.getDisplayName()+
                         " and going inactive!");        // abort this
+            }
+        } else if (idx == _idxCurrentOrder + 1) {
+            // next block is clear
+            if (_engineer != null) {
+                _engineer.setWaitforClear(false);
+                setMovement(END);
             }
         }
     }           // end goingInactive
@@ -1754,13 +1772,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private String setStoppingCondition(int idxBlkOrder) {
         BlockOrder blkOrder = getBlockOrderAt(idxBlkOrder);
         OBlock block = blkOrder.getBlock();
-        if (log.isDebugEnabled()) log.debug("setStoppingCondition(): \"{}\" at block \"{}\" warrant= {}",
+        if (log.isDebugEnabled()) log.debug("setStoppingCondition(): at block \"{}\" warrant= {}",
                 block.getDisplayName(), getDisplayName());
-/*        String blockMsg = block.allocate(this);
-        // Check ownership
-        if (blockMsg!=null) {
-            return blockMsg;
-        }*/
         // check occupation
         if ((block.getState() & OBlock.OCCUPIED) != 0) {
             setStoppingBlock(block);
@@ -1770,6 +1783,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (speedType!=null && speedType.equals(Stop)) {
             // block speed cannot be Stop, so OK to assume signal
             setStoppingSignal(blkOrder.getSignal());
+            return "Stop";
         }
         return null;        
     }
@@ -1859,12 +1873,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     /**
-     * Called to set the correct speed for the train. Whether to modify the
-     * scripted speed due to a track condition (signaled speed or rogue
-     * occupation) or to return to the scripted speed after the condition
+     * Called to set the correct speed for the train when the
+     * scripted speed must be modified due to a track condition 
+     * (signaled speed or rogue occupation). Also called to
+     *  return to the scripted speed after the condition
      * is cleared. Assumes the train occupies the block of the current
      * block order.
-     * Looks for speed requirements of this block and takes immediate
+     * <p>Looks for speed requirements of this block and takes immediate
      * action if found. Otherwise looks ahead for future speed change
      * needs.  If speed restriction changes are required to begin in  
      * this block, but the change is not immediate, then
@@ -1901,6 +1916,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return false;
         }
         // Error checking done.
+        
+        if ((runState==WAIT_FOR_CLEAR || runState==HALT) /*&& _engineer.getSpeed()<= 0.0001f*/) {
+            if(log.isDebugEnabled())
+                log.debug("Hold train at block \"{}\" runState= {}, speed= {}.warrant {}",
+                        curBlock.getDisplayName(), RUN_STATE[runState], _engineer.getSpeed(), getDisplayName());
+            return true;
+        }
+
         // Cancel any delayed speed changes currently in progress.
         cancelRamp();
         
@@ -1933,11 +1956,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     _engineer.rampSpeedTo(currentType);                    
                     // TODO Merging of ramp commands with scripted command
                     // Ramp may intrude into this block's speed commands
-                    // end speed should not be larger than entrance speed
-//                  _engineer.rampSpeedTo(currentType, _speedInfo.get(_idxCurrentOrder).getEntranceSpeed());
                 }
             }
-            // continue, there may be nearby blocks ahead that need speed decrease 
+            // continue, there may be blocks ahead that need a speed decrease to begin in this block
         }
         
         if (_noRamp || _speedInfo==null) {
@@ -1953,11 +1974,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return true;
         }
 
+        // Halt and waitForCleat may have been freed
+        if (runState!=WAIT_FOR_CLEAR && runState!=HALT) {
+            _engineer.rampSpeedTo(currentType);                    
+        }
+        
         //look ahead for a speed change slower than the current speed
         // Note: blkOrder still is blkOrder = getBlockOrderAt(_idxCurrentOrder);
-        // Either speedType == currentType or speedType > currentType
+        // Do while speedType >= currentType
         int idxBlockOrder = _idxCurrentOrder;
-        OBlock block = curBlock;
         String speedType = _curSpeedType;
         while (!_engineer.secondGreaterThanFirst(speedType, _curSpeedType)  && idxBlockOrder < _orders.size()-1) {
             speedType = getSpeedTypeForBlock(++idxBlockOrder);
@@ -1965,15 +1990,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_engineer.secondGreaterThanFirst(currentType, speedType)) {
             speedType = currentType;    // any next speed cannot exceed the limit of this block
         }
+        OBlock block = getBlockOrderAt(idxBlockOrder).getBlock();
         
-        // went through remaining BlockOrders, found no speed decreases except possibly the last block
+        // went through remaining BlockOrders, found no speed decreases
         if (idxBlockOrder >= _orders.size()-1) {
             if (_curSpeedType.equals(speedType)) {
                 // no speed changes 
-                if ((runState==WAIT_FOR_CLEAR || runState!=HALT) || (runState!=WAIT_FOR_CLEAR || runState==HALT)) {
-                    // if cleared during a halt, _engineer runningState can't change. Need to resume _curSpeedType
-                    _engineer.rampSpeedTo(_curSpeedType);                    
-                }
                 if(log.isDebugEnabled())
                     log.debug("No speed changes for runState= {} from {} found after block \"{}\" warrant {}",
                             RUN_STATE[runState], _curSpeedType, curBlock.getDisplayName(), getDisplayName());
@@ -1989,11 +2011,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         
         if(log.isDebugEnabled()) log.debug("Speed decrease to {} from {} needed before entering block \"{}\" warrant {}",
-                speedType, _curSpeedType, getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), getDisplayName());
-        // there is a speed change entering block
-        // make change before entering the block
-        // walk back to check if there is enough room to make the change
-        // from the beginning of the block
+                speedType, _curSpeedType, block.getDisplayName(), getDisplayName());
+        // There is a speed change needed before entering the above block
+        // From this block, check if there is enough room to make the change 
+        // using the entrance speed of the block. Walk back using previous
+        // blocks, if necessary.
         Engineer.RampData rampData = new Engineer.RampData(0.0f, 0);
         float rampLen = 1.0f;
         float availDist = 0.0f;
@@ -2022,26 +2044,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     availDist, getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), rampLen, 
                     _engineer.modifySpeed(speed,speedType), speed, getDisplayName());
         }
-        long waitTime = 0;
-        if (idxBlockOrder >= _idxCurrentOrder) {
-            if ((runState==WAIT_FOR_CLEAR || runState!=HALT) || (runState!=WAIT_FOR_CLEAR || runState==HALT)) {
-                // if cleared during a halt, or clearing stopping condition
-                // _engineer runningState can't change. Need to resume currentType
-                _engineer.rampSpeedTo(currentType);
-                // time of this ramp must be subtracted from ramp time of next speed change (if one is needed)
-                waitTime = rampData.getTime(); 
-            }
-            if (idxBlockOrder > _idxCurrentOrder) {
-                if(log.isDebugEnabled()) 
-                    log.debug("Will decrease speed for runState= {} to {} from {} later in block \"{}\", warrant {}",
-                            RUN_STATE[runState], speedType, _curSpeedType, blkOrder.getBlock().getDisplayName(), getDisplayName());
-                return true;    // change speed later                
-            }
+        if (idxBlockOrder > _idxCurrentOrder) {
+            // sufficient ramp room was found before walking back to current block
+            if(log.isDebugEnabled()) 
+                log.debug("Will decrease speed for runState= {} to {} from {} later in block \"{}\", warrant {}",
+                        RUN_STATE[runState], speedType, _curSpeedType, blkOrder.getBlock().getDisplayName(), getDisplayName());
+            return true;    // change speed later                
         }
+        // need to start ramp in the block of _idxCurrentOrder
+        
         if(log.isDebugEnabled()) log.debug("availDist= {} for rampLen= {} from entrance of block \"{}\" ",
                 availDist, rampLen, blkOrder.getBlock().getDisplayName());
 
-        // need to start ramp in the block of _idxCurrentOrder
         // not enough room (shouldn't happen) so do ramp immediately
         if (rampLen >= availDist) {
             log.warn("Train {} ramping to speed \"{}\" in block \"{}\", warrant= {}",
@@ -2060,7 +2074,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if(log.isDebugEnabled()) log.debug("Get time to wait in block \"{}\" before ramping to {}. warrant {}",
                 getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), speedType, getDisplayName());
         blkSpeedInfo = _speedInfo.get(idxBlockOrder);
-        waitTime = getWaitTime(idxBlockOrder, availDist, blkOrder.getEntranceSpace(), speedType) - waitTime;
+        long waitTime = getWaitTime(idxBlockOrder, availDist, blkOrder.getEntranceSpace(), speedType);
         waitTime -= 300;    // shorten time a bit to allow for possible processing time.
         if (waitTime <= 0) {
             if (speedType.equals(Stop) || speedType.equals(EStop)) {
