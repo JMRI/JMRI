@@ -21,7 +21,7 @@ public class CbusDccProgrammerManagerTest {
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc,memo),memo);
+        CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc),memo);
         Assert.assertNotNull("exists",t);
     }
 
