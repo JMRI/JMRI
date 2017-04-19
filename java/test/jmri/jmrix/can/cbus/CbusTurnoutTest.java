@@ -17,7 +17,7 @@ public class CbusTurnoutTest {
 
     @Test
     public void testCTor() {
-        CbusTurnout t = new CbusTurnout("MT1","Test",new TrafficControllerScaffold());
+        CbusTurnout t = new CbusTurnout("MT","+1;-1",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
 

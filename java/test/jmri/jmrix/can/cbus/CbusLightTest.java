@@ -17,7 +17,7 @@ public class CbusLightTest {
 
     @Test
     public void testCTor() {
-        CbusLight t = new CbusLight("ML1","Test",new TrafficControllerScaffold());
+        CbusLight t = new CbusLight("ML","+1;-1",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
 
