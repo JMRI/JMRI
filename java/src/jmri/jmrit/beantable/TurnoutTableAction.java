@@ -1,6 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Color; // debug only
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,7 +72,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -127,7 +127,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
     protected JTable table;
     // for icon state col
-    protected boolean _graphicState = true; // TODO get from prefs
+    protected boolean _graphicState = false; // updated from prefs
 
     @Override
     public void setManager(Manager man) {
@@ -150,13 +150,16 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Turnouts
+     * of Turnouts.
      */
     @Override
     protected void createModel() {
         // store the terminology
         closedText = turnManager.getClosedText();
         thrownText = turnManager.getThrownText();
+
+        // load graphic state column display preference
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
@@ -193,8 +196,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return Bundle.getMessage("ThrownSpeed");
                 } else if (col == STRAIGHTCOL) {
                     return Bundle.getMessage("ClosedSpeed");
-                } else if (col == VALUECOL) {
-                    return Bundle.getMessage("ColumnState");  // override default title
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
@@ -303,8 +304,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return true;
                 } else if (col == EDITCOL) {
                     return true;
-//                } else if (col == VALUECOL && _graphicState) {
-//                    return true;
                 } else {
                     return super.isCellEditable(row, col);
                 }
@@ -411,9 +410,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     c.setEditable(true);
                     c.setSelectedItem(speed);
                     return c;
-                } else if (col == VALUECOL && _graphicState) { // return image instead of text
-                    String turnoutState = getValue(sysNameList.get(row));
-                    return turnoutState;
+                // } else if (col == VALUECOL && _graphicState) { // not neeeded as the
+                //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as classic bean state text button
                 }
                 return super.getValueAt(row, col);
             }
@@ -832,19 +830,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                     if (value.equals(closedText) && offIcon != null) {
                         label = new JLabel(offIcon);
-                        label.setToolTipText(closedText);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("offIcon set");
                     } else if (value.equals(thrownText) && onIcon != null) {
                         label = new JLabel(onIcon);
-                        label.setToolTipText(thrownText);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("onIcon set");
                     } else {
-                        label = new JLabel("?", JLabel.CENTER); // centered text alignment
+                        label = new JLabel(value, JLabel.CENTER); // centered text alignment
                         log.debug("Turnout state unknown or error reading icons for TurnoutTable");
                         iconHeight = 0;
                     }
+                    label.setToolTipText(value);
                     label.addMouseListener (new MouseAdapter ()
                     {
                         @Override
@@ -881,7 +878,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     iconHeight = onIcon.getIconHeight();
                 }
 
-            }
+            }// end of ImageIconRenderer class
 
         };  // end of custom data model
     }
