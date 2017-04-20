@@ -34,6 +34,8 @@ public class Pr2Throttle extends AbstractThrottle {
 
     /**
      * Convert a LocoNet speed integer to a float speed value
+     * @param lSpeed loconet speed value
+     * @return speed as float 0-&gt;1.0
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -70,6 +72,9 @@ public class Pr2Throttle extends AbstractThrottle {
                 return (int) ((fSpeed * 28) * 4) + 12;
             case DccThrottle.SpeedStepMode14:
                 return (int) ((fSpeed * 14) * 8) + 8;
+            default:
+                log.warn("Unhandled speed step mode; {}", this.getSpeedStepMode());
+                break;
         }
         return speed;
     }

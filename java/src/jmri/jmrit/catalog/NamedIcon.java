@@ -280,6 +280,9 @@ public class NamedIcon extends ImageIcon {
                 imageSource = new MemoryImageSource(h, w,
                         ColorModel.getRGBdefault(), newPixels, 0, h);
                 break;
+            default:
+                log.warn("Unhandled rotation code: {}", pRotation);
+                break;
         }
 
         Image myImage = pComponent.createImage(imageSource);
