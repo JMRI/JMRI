@@ -1,47 +1,204 @@
 angular.module('jmri.app').factory('$jsonSocket', function($websocket, $log) {
   // Open a WebSocket connection
   var parts = document.URL.split('/');
-  var socket = $websocket((parts[0] + '//' + parts[2] + '/json/').replace(/^http/, 'ws'));
+  var url = parts[0] + '//' + parts[2] + '/json/';
+  var socket = $websocket(url.replace(/^http/, 'ws'));
 
-  socket.onMessage(function(message) {
-    $log.info('Received message ' + message.data);
+  socket.onMessage(function onMessage(message) {
+    $log.debug('Received message ' + message.data);
   });
 
-  var send = function(type, data, action) {
-    var m = {type: type, data: data, action: action};
-//    $log.info('Sending ' + JSON.stringify(m) + '...');
+  var send = function send(type, data, method) {
+    var m = {type: type, data: data, method: method};
+    $log.debug('Sending ' + JSON.stringify(m) + '...');
     socket.send(m);
   };
 
+  // delete is a ECMAScript reserved word
+  var sendDelete = function sendDelete(type, data) {
+    data.method = 'delete';
+    send(type, data, 'delete');
+  };
+  var sendGet = function sendGet(type, data) {
+    data.method = 'get';
+    send(type, data, 'get');
+  };
+  var sendPost = function sendPost(type, data) {
+    data.method = 'post';
+    send(type, data, 'post');
+  };
+  var sendPut = function sendPut(type, data) {
+    data.method = 'put';
+    send(type, data, 'put');
+  };
+  var sendList = function sendList(type) {
+    var m = {type: 'list', list: type, method: 'get'};
+    $log.debug('Listing ' + type + '...');
+    socket.send(m);  
+  };
+
   var methods = {
+    // general methods
     socket: socket,
-    delete: function(type, data) {
-      data.method = 'delete';
-      send(type, data, 'delete');
-    },
-    get: function(type, data) {
-      data.method = 'get';
-      send(type, data, 'get');
-    },
-    post: function(type, data) {
-      data.method = 'post';
-      send(type, data, 'post');
-    },
-    put: function(type, data) {
-      data.method = 'put';
-      send(type, data, 'put');
-    },
-    list: function(type) {
-      var m = {type: 'list', list: type, action: 'get'};
-      $log.info('Listing ' + type + '...');
-      socket.send(m);  
-    },
-    ping: function() {
+    delete: sendDelete,
+    get: sendGet,
+    post: sendPost,
+    put: sendPut,
+    list: sendList,
+    ping: function ping() {
       socket.send(JSON.stringify({type: "ping"}));
     },
-    register: function(bindings) {
+    /**
+     * Register a listener with the passed in array of functions that will be
+     * called; each bound function will be called if its name matches the type
+     * property of the message with the JSON message contents. 
+     * @param {type} bindings array of overridden functions
+     * @returns {undefined} the new listener
+     */
+    register: function register(bindings) {
       return JsonSocket(this, bindings);
-    }
+    },
+    /**
+     * Push an object onto an array if an object in the array with the same name
+     * is not already in the array; the object is merged into the first matching
+     * object if one already exists.
+     * @param {type} array the target array
+     * @param {type} object the object to push or merge
+     * @returns {false|websocketL#1.methods.push.array} false if object
+     * was pushed onto the array or the merged object
+     */
+    mergePush: function(array, object) {
+      if (array.length > 0) {
+        for (var i = 0; i < array.length; i++) {
+          if (array[i].name === object.name) {
+            var target = array[i];
+            $.extend(true, target, array[i], object);
+            array[i] = target;
+            return target;
+          }
+        }
+      }
+      array.push(object);
+      return false;
+    },
+    // Common getters and setters
+    getLight: function(name) {
+      sendGet("light", {name: name});
+    },
+    setLight: function(name, state) {
+      sendPost("light", {name: name, state: state});
+    },
+    getMemory: function(name) {
+      sendGet("memory", {name: name});
+    },
+    setMemory: function(name, value) {
+      sendPost("memory", {name: name, value: value});
+    },
+    getBlock: function(name) {
+      sendGet("block", {name: name});
+    },
+    setBlock: function(name, value) {
+      sendPost("block", {name: name, value: value});
+    },
+    getLayoutBlock: function(name) {
+      sendGet("layoutBlock", {name: name});
+    },
+    setLayoutBlock: function(name, value) {
+      sendPost("layoutBlock", {name: name, value: value});
+    },
+    getList: function(name) {
+      getList(name);
+    },
+    getPower: function(name) {
+      data = {};
+      if (name) {
+        data.name = name;
+      }
+      sendGet("power", data);
+    },
+    setPower: function(name, state) {
+      data = {};
+      if (state) {
+          data.name = name;
+          data.state = state;
+      } else {
+          data.state = name;
+      }
+      sendPost("power", data);
+    },
+    getRosterGroup: function(id) {
+      sendGet("rosterGroup", {name: id});
+    },
+    getRosterEntry: function(id) {
+      sendGet("rosterEntry", {name: id});
+    },
+    getRoute: function(name) {
+      sendGet("route", {name: name});
+    },
+    setRoute: function(name, state) {
+      sendPost("route", {name: name, state: state});
+    },
+    getSensor: function(name) {
+      sendGet("sensor", {name: name});
+    },
+    setSensor: function(name, state) {
+      sendPost("sensor", {name: name, state: state});
+    },
+    getSignalHead: function(name) {
+      sendGet("signalHead", {name: name});
+    },
+    setSignalHead: function(name, state) {
+      sendPost("signalHead", {name: name, state: state});
+    },
+    getSignalMast: function(name) {
+      sendGet("signalMast", {name: name});
+    },
+    setSignalMast: function(name, state) {
+      sendPost("signalMast", {name: name, state: state});
+    },
+    /**
+     * Get the current status of the throttle
+     *
+     * @param {String} throttle identity
+     */
+    getThrottle: function(throttle) {
+      sendGet("throttle", {throttle: throttle, status: true});
+    },
+    /**
+     * Set some aspect of a throttle as defined in data
+     *
+     * Call this method with the data elements address:[dcc address]
+     * or id:[roster entry id] to create a JMRI throttle. Include the
+     * data element status:true to get the complete throttle status.
+     *
+     * @param {string} throttle the throttle identity
+     * @param {object} data key/value pairs of the throttle properties to change
+     * @returns {boolean} false if unable to use throttles
+     */
+    setThrottle: function(throttle, data) {
+      data.throttle = throttle;
+      sendPost("throttle", data);
+    },
+    getTime: function() {
+      sendGet("time", {});
+    },
+    getTrain: function(id) {
+      sendGet("train", {id: id});
+    },
+    getTurnout: function(name) {
+      sendGet("turnout", {name: name});
+    },
+    setTurnout: function(name, state) {
+      sendPost("turnout", {name: name, state: state});
+    },
+    // Constants
+    UNKNOWN: 0,
+    POWER_ON: 2,
+    POWER_OFF: 4,
+    CLOSED: 2,
+    THROWN: 4,
+    ACTIVE: 2,
+    INACTIVE: 4
   };
 
   return methods;
@@ -50,7 +207,7 @@ angular.module('jmri.app').factory('$jsonSocket', function($websocket, $log) {
 function JsonSocket(service, bindings) {
   var jsl = {
     // Default event handlers that do nothing
-    console: function(data) {
+    console: function(data, method) {
     },
     onError: function(error) {
     },
@@ -68,97 +225,97 @@ function JsonSocket(service, bindings) {
     },
     pong: function() {
     },
-    hello: function(data) {
+    hello: function(data, method) {
     },
-    goodbye: function(data) {
+    goodbye: function(data, method) {
     },
-    block: function(data) {
+    block: function(data, method) {
     },
-    blocks: function(data) {
+    blocks: function(data, method) {
     },
-    car: function(data) {
+    car: function(data, method) {
     },
-    cars: function(data) {
+    cars: function(data, method) {
     },
-    configProfile: function(data) {
+    configProfile: function(data, method) {
     },
-    configProfiles: function(data) {
+    configProfiles: function(data, method) {
     },
-    consist: function(data) {
+    consist: function(data, method) {
     },
-    consists: function(data) {
+    consists: function(data, method) {
     },
-    engine: function(data) {
+    engine: function(data, method) {
     },
-    engines: function(data) {
+    engines: function(data, method) {
     },
-    layoutBlock: function(data) {
+    layoutBlock: function(data, method) {
     },
-    layoutBlocks: function(data) {
+    layoutBlocks: function(data, method) {
     },
-    light: function(data) {
+    light: function(data, method) {
     },
-    lights: function(data) {
+    lights: function(data, method) {
     },
-    location: function(data) {
+    location: function(data, method) {
     },
-    locations: function(data) {
+    locations: function(data, method) {
     },
-    memory: function(data) {
+    memory: function(data, method) {
     },
-    memories: function(data) {
+    memories: function(data, method) {
     },
-    metadata: function(data) {
+    metadata: function(data, method) {
     },
-    networkService: function(data) {
+    networkService: function(data, method) {
     },
-    networkServices: function(data) {
+    networkServices: function(data, method) {
     },
-    power: function(data) {
+    power: function(data, method) {
     },
     railroad: function(name) {
     },
-    reporter: function(data) {
+    reporter: function(data, method) {
     },
-    reporters: function(data) {
+    reporters: function(data, method) {
     },
-    roster: function(data) {
+    roster: function(data, method) {
     },
-    rosterGroups: function(data) {
+    rosterGroups: function(data, method) {
     },
-    rosterGroup: function(data) {
+    rosterGroup: function(data, method) {
     },
-    rosterEntry: function(data) {
+    rosterEntry: function(data, method) {
     },
-    route: function(data) {
+    route: function(data, method) {
     },
-    routes: function(data) {
+    routes: function(data, method) {
     },
-    sensor: function(data) {
+    sensor: function(data, method) {
     },
-    sensors: function(data) {
+    sensors: function(data, method) {
     },
-    signalHead: function(data) {
+    signalHead: function(data, method) {
     },
-    signalHeads: function(data) {
+    signalHeads: function(data, method) {
     },
-    signalMast: function(data) {
+    signalMast: function(data, method) {
     },
-    signalMasts: function(data) {
+    signalMasts: function(data, method) {
     },
-    throttle: function(data) {
+    throttle: function(data, method) {
     },
-    time: function(data) {
+    time: function(data, method) {
     },
-    train: function(data) {
+    train: function(data, method) {
     },
-    trains: function(data) {
+    trains: function(data, method) {
     },
-    turnout: function(data) {
+    turnout: function(data, method) {
     },
-    turnouts: function(data) {
+    turnouts: function(data, method) {
     },
-    version: function(string) {
+    version: function(data, method) {
     }
   };
   jsl.service = service;
@@ -177,422 +334,6 @@ function JsonSocket(service, bindings) {
   });
   // Add user-defined handlers to the settings object
   $.extend(jsl, bindings);
-  // Constants
-  jsl.UNKNOWN = 0;
-  jsl.POWER_ON = 2;
-  jsl.POWER_OFF = 4;
-  jsl.CLOSED = 2;
-  jsl.THROWN = 4;
-  jsl.ACTIVE = 2;
-  jsl.INACTIVE = 4;
-  // Getters and Setters
-  jsl.getLight = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("light", {name: name});
-    } else {
-      $.getJSON(jsl.url + "light/" + name, function(json) {
-        jsl.light(json.data.name, json.data.state, json.data);
-      });
-    }
-  };
-  jsl.setLight = function(name, state) {
-    if (jsl.socket) {
-      jsl.socket.post("light", {name: name, state: state});
-    } else {
-      $.ajax({
-        url: jsl.url + "light/" + name,
-        type: "POST",
-        data: JSON.stringify({state: state}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.light(json.data.name, json.data.state, json.data);
-          jsl.getLight(json.data.name, json.data.state);
-        }
-      });
-    }
-  };
-  jsl.getMemory = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("memory", {name: name});
-    } else {
-      $.getJSON(jsl.url + "memory/" + name, function(json) {
-        jsl.memory(json.data.name, json.data.value, json.data);
-      });
-    }
-  };
-  jsl.setMemory = function(name, value) {
-    if (jsl.socket) {
-      jsl.socket.post("memory", {name: name, value: value});
-    } else {
-      $.ajax({
-        url: jsl.url + "memory/" + name,
-        type: "POST",
-        data: JSON.stringify({value: value}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.memory(json.data.name, json.data.value, json.data);
-          jsl.getMemory(json.data.name, json.data.value);
-        }
-      });
-    }
-  };
-  jsl.getBlock = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("block", {name: name});
-    } else {
-      $.getJSON(jsl.url + "block/" + name, function(json) {
-        jsl.block(json.data.name, json.data.value, json.data);
-      });
-    }
-  };
-  jsl.setBlock = function(name, value) {
-    if (jsl.socket) {
-      jsl.socket.post("block", {name: name, value: value});
-    } else {
-      $.ajax({
-        url: jsl.url + "block/" + name,
-        type: "POST",
-        data: JSON.stringify({value: value}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.block(json.data.name, json.data.value, json.data);
-          jsl.getBlock(json.data.name, json.data.value);
-        }
-      });
-    }
-  };
-  jsl.getLayoutBlock = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("layoutBlock", {name: name});
-    } else {
-      $.getJSON(jsl.url + "layoutBlock/" + name, function(json) {
-        jsl.layoutBlock(json.data.name, json.data.value, json.data);
-      });
-    }
-  };
-  jsl.setLayoutBlock = function(name, value) {
-    if (jsl.socket) {
-      jsl.socket.post("layoutBlock", {name: name, value: value});
-    } else {
-      $.ajax({
-        url: jsl.url + "layoutBlock/" + name,
-        type: "POST",
-        data: JSON.stringify({value: value}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.layoutBlock(json.data.name, json.data.value, json.data);
-          jsl.getLayoutBlock(json.data.name, json.data.value);
-        }
-      });
-    }
-  };
-  jsl.getList = function(name) {
-    jsl.service.getList(name);
-  };
-
-  jsl.getObject = function(type, name) {
-    switch (type) {
-      case "light":
-        jsl.getLight(name);
-        break;
-      case "block":
-        jsl.getBlock(name);
-        break;
-      case "layoutBlock":
-        jsl.getLayoutBlock(name);
-        break;
-      case "memory":
-        jsl.getMemory(name);
-        break;
-      case "rosterEntry":
-        jsl.getRosterEntry(name);
-        break;
-      case "rosterGroup":
-        jsl.getRosterGroup(name);
-        break;
-      case "route":
-        jsl.getRoute(name);
-        break;
-      case "sensor":
-        jsl.getSensor(name);
-        break;
-      case "signalHead":
-        jsl.getSignalHead(name);
-        break;
-      case "signalMast":
-        jsl.getSignalMast(name);
-        break;
-      case "turnout":
-        jsl.getTurnout(name);
-        break;
-      default:
-        if (window.console) {
-          console.log("WARN-unknown type of " + type + " encountered by jquery.jsl.js in getObject().");
-        }
-
-    }
-  };
-  jsl.setObject = function(type, name, state) {
-    switch (type) {
-      case "light":
-        jsl.setLight(name, state);
-        break;
-      case "memory":
-        jsl.setMemory(name, state);
-        break;
-      case "block":
-        jsl.setBlock(name, state);
-        break;
-      case "layoutBlock":
-        jsl.setLayoutBlock(name, state);
-        break;
-      case "rosterEntry":
-        jsl.setRosterEntry(name, state);
-        break;
-      case "route":
-        jsl.setRoute(name, state);
-        break;
-      case "sensor":
-        jsl.setSensor(name, state);
-        break;
-      case "signalHead":
-        jsl.setSignalHead(name, state);
-        break;
-      case "signalMast":
-        jsl.setSignalMast(name, state);
-        break;
-      case "turnout":
-        jsl.setTurnout(name, state);
-        break;
-      default:
-        if (window.console) {
-          console.log("WARN-unknown type of " + type + " encountered by jquery.jsl.js in setObject().");
-        }
-    }
-  };
-  jsl.getPower = function(name) {
-    data = {};
-    if (name) {
-      data.name = name;
-    }
-    if (jsl.socket) {
-      jsl.socket.get("power", data);
-    } else {
-      $.getJSON(jsl.url + "power", function(json) {
-        jsl.power(json.data.state);
-      });
-    }
-  };
-  jsl.setPower = function(state) {
-    if (jsl.socket) {
-      jsl.socket.post("power", {state: state});
-    } else {
-      $.ajax({
-        url: jsl.url + "power",
-        type: "POST",
-        data: JSON.stringify({state: state}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.power(json.data.state);
-        }
-      });
-    }
-  };
-  jsl.getRosterGroup = function(id) {
-    if (jsl.socket) {
-      jsl.socket.get("rosterGroup", {name: id});
-    } else {
-      $.getJSON(jsl.url + "rosterGroup/" + id, function(json) {
-        jsl.rosterGroup(json.data.name, json.data);
-      });
-    }
-  };
-  jsl.getRosterEntry = function(id) {
-    if (jsl.socket) {
-      jsl.socket.get("rosterEntry", {name: id});
-    } else {
-      $.getJSON(jsl.url + "rosterEntry/" + id, function(json) {
-        jsl.rosterEntry(json.data.name, json.data);
-      });
-    }
-  };
-  jsl.getRoute = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("route", {name: name});
-    } else {
-      $.getJSON(jsl.url + "route/" + name, function(json) {
-        jsl.route(json.data.name, json.data.state, json.data);
-      });
-    }
-  };
-  jsl.setRoute = function(name, state) {
-    if (jsl.socket) {
-      jsl.socket.post("route", {name: name, state: state});
-    } else {
-      $.ajax({
-        url: jsl.url + "route/" + name,
-        type: "POST",
-        data: JSON.stringify({state: state}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.route(json.data.name, json.data.state, json.data);
-          jsl.getRoute(json.data.name, json.data.state);
-        }
-      });
-    }
-  };
-  jsl.getSensor = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("sensor", {name: name});
-    } else {
-      $.getJSON(jsl.url + "sensor/" + name, function(json) {
-        jsl.sensor(json.data.name, json.data.state, json.data);
-      });
-    }
-  };
-  jsl.setSensor = function(name, state) {
-    if (jsl.socket) {
-      jsl.socket.post("sensor", {name: name, state: state});
-    } else {
-      $.ajax({
-        url: jsl.url + "sensor/" + name,
-        type: "POST",
-        data: JSON.stringify({state: state}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.sensor(json.data.name, json.data.state, json.data);
-          jsl.getSensor(json.data.name, json.data.state);
-        }
-      });
-    }
-  };
-  jsl.getSignalHead = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("signalHead", {name: name});
-    } else {
-      $.getJSON(jsl.url + "signalHead/" + name, function(json) {
-        jsl.signalHead(json.data.name, json.data.state, json.data);
-      });
-    }
-  };
-  jsl.setSignalHead = function(name, state) {
-    if (jsl.socket) {
-      jsl.socket.post("signalHead", {name: name, state: state});
-    } else {
-      $.ajax({
-        url: jsl.url + "signalHead/" + name,
-        type: "POST",
-        data: JSON.stringify({state: state}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.signalHead(json.data.name, json.data.state, json.data);
-          jsl.getSignalHead(json.data.name, json.data.state);
-        }
-      });
-    }
-  };
-  jsl.getSignalMast = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("signalMast", {name: name});
-    } else {
-      $.getJSON(jsl.url + "signalMast/" + name, function(json) {
-        jsl.signalMast(json.data.name, json.data.state, json.data);
-      });
-    }
-  };
-  jsl.setSignalMast = function(name, state) {
-    if (jsl.socket) {
-      jsl.socket.post("signalMast", {name: name, state: state});
-    } else {
-      $.ajax({
-        url: jsl.url + "signalMast/" + name,
-        type: "POST",
-        data: JSON.stringify({state: state}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.signalMast(json.data.name, json.data.state, json.data);
-          jsl.getSignalMast(json.data.name, json.data.state);
-        }
-      });
-    }
-  };
-  /**
-   * Get the current status of the throttle
-   *
-   * @param {String} throttle identity
-   * @returns {Boolean} false if unable to use throttles
-   */
-  jsl.getThrottle = function(throttle) {
-    if (jsl.socket) {
-      jsl.socket.get("throttle", {throttle: throttle, status: true});
-      return true;
-    } else {
-      return false;
-    }
-  };
-  /**
-   * Set some aspect of a throttle as defined in data
-   *
-   * Call this method with the data elements address:[dcc address]
-   * or id:[roster entry id] to create a JMRI throttle. Include the
-   * data element status:true to get the complete throttle status.
-   *
-   * @param {string} throttle the throttle identity
-   * @param {object} data key/value pairs of the throttle properties to change
-   * @returns {boolean} false if unable to use throttles
-   */
-  jsl.setThrottle = function(throttle, data) {
-    if (jsl.socket) {
-      data.throttle = throttle;
-      jsl.socket.post("throttle", data);
-      return true;
-    } else {
-      return false;
-    }
-  };
-  jsl.getTime = function() {
-    if (jsl.socket) {
-      jsl.socket.get("time", {});
-    } else {
-      $.getJSON(jsl.url + "time", function(json) {
-        jsl.time(json.data.time, json.data);
-      });
-    }
-  };
-  jsl.getTrain = function(id) {
-    if (jsl.socket) {
-      jsl.socket.get("train", {id: id});
-    } else {
-      $.getJSON(jsl.url + "train/" + id, function(json) {
-        jsl.train(json.data.id, json.data);
-      });
-    }
-  };
-  jsl.getTurnout = function(name) {
-    if (jsl.socket) {
-      jsl.socket.get("turnout", {name: name});
-    } else {
-      $.getJSON(jsl.url + "turnout/" + name, function(json) {
-        jsl.turnout(json.data.name, json.data.state, json.data);
-      });
-    }
-  };
-  jsl.setTurnout = function(name, state) {
-    if (jsl.socket) {
-      jsl.socket.post("turnout", {name: name, state: state});
-    } else {
-      $.ajax({
-        url: jsl.url + "turnout/" + name,
-        type: "POST",
-        data: JSON.stringify({state: state}),
-        contentType: "application/json; charset=utf-8",
-        success: function(json) {
-          jsl.turnout(json.data.name, json.data.state, json.data);
-          jsl.getTurnout(json.data.name, json.data.state);
-        }
-      });
-    }
-  };
   /**
    * Force the jsl object to begin communicating with the JMRI server
    * even if the WebSocket connection cannot be immediately established
@@ -603,7 +344,7 @@ function JsonSocket(service, bindings) {
     // if the JMRI WebSocket was open before we overloaded the
     // open() method, we call the open() method to ensure it gets
     // called
-    if (jsl.socket && jsl.socket.readyState === 1) {
+    if (jsl.socket && jsl.service.readyState === 1) {
       jsl.log("Connecting on connect()");
       jsl.open();
     } else {
@@ -613,7 +354,7 @@ function JsonSocket(service, bindings) {
       // throttles, the JMRI object can work around the inability
       // to use WebSockets
       setTimeout(function() {
-        if (!jsl.socket || jsl.socket.readyState !== 1) {
+        if (!jsl.socket || jsl.service.readyState !== 1) {
           jsl.log("Connecting on timeout");
           jsl.open();
         }
@@ -635,7 +376,7 @@ function JsonSocket(service, bindings) {
   };
   // Heartbeat
   jsl.heartbeat = function() {
-    jsl.socket.send("ping");
+    jsl.service.send("ping");
     jsl.ping();
   };
   jsl.heartbeatInterval = null;
@@ -671,14 +412,14 @@ function JsonSocket(service, bindings) {
         var o = m[i];
         h = jsl[o.type];
         if (h) {
-          h.call(this, o);
+          h.call(this, o.data, o.method);
         }
       }
       return;
     }
     h = jsl[m.type];
     if (h) {
-      h.call(this, m);
+      h.call(this, m.data, m.method);
     }
     // note that h being null is not an error!
     if (!m.type) {

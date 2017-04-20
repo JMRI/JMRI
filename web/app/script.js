@@ -11,14 +11,16 @@ angular.module('jmri.app', [
 ]);
 
 // configure the jmri.app module
-angular.module('jmri.app').config(['$routeProvider',
-  function ($routeProvider) {
+angular.module('jmri.app').config(['$routeProvider', '$logProvider',
+  function ($routeProvider, $logProvider) {
     'use strict';
 
     $routeProvider
     // routes %2$s
     // Default
     .otherwise({redirectTo: '/'});
+    
+    $logProvider.debugEnabled = false;
   }
 ]);
 
@@ -46,10 +48,10 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
     // core socket services (power and keep alive)
     $scope.heartbeat;
     $scope.startHeartbeat = function(heartbeat) {
-      $log.info("Starting heartbeat every " + heartbeat + " ms.");
       if (angular.isDefined($scope.heartbeat)) {
         return;
       }
+      $log.info("Starting heartbeat every " + heartbeat + " ms.");
       $scope.heartbeat = $interval(function() {
         $jsonSocket.ping();
       }, heartbeat);
@@ -61,48 +63,50 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
       }
     };
     $scope.power = [];
+    $scope.setPower = function(name, state) {
+      $jsonSocket.setPower(name, (state === $jsonSocket.POWER_ON) ? $jsonSocket.POWER_OFF : $jsonSocket.POWER_ON);
+    };
     $jsonSocket.register({
       open: function() {
-        // will likely cause power to be listed twice
-        socket.list('power');
+        $jsonSocket.list('power');
       },
-      power: function(m) {
-        $log.info('got power ' + m.data.name + " (" + m.data.state + ")");
-        var found = false;
-        for (var i in $scope.power) {
-            if ($scope.power[i].name === m.data.name) {
-                $scope.power[i].state = m.data.state;
-                found = true;
-            }
-        }
-        if (!found) {
-            $scope.power.push(m.data);
-            socket.getPower(m.name);
+      power: function(data, method) {
+        $log.debug('got power ' + data.name + " (" + data.state + ")");
+        if (!$jsonSocket.mergePush($scope.power, data)) {
+          $jsonSocket.getPower(data.name);
         }
       },
-      hello: function(m) {
-        $scope.startHeartbeat(m.data.heartbeat);
+      hello: function(data, method) {
+        $scope.startHeartbeat(data.heartbeat);
       },
-      pong: function(m) {
-        $log.info("Received pong");
+      pong: function(data, method) {
+        $log.debug("Received pong");
       },
       close: function() {
         $scope.stopHeartbeat();
       }
       
     });
-    $jsonSocket.list('power');
     
+    // set the browser locale
+    // TODO: read cookie with locale if one exists
+    // TODO: move this into the factory
+    if (!$jsonSocket.socket.readyState) {
+      var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
+      $jsonSocket.get('locale', {locale: locale});
+    }
+    $jsonSocket.list('power');
+
   }
 ]);
 
-angular.module('jmri.app').filter('triStateCheckBox', function() {
+angular.module('jmri.app').filter('triStateCheckBox', function($jsonSocket) {
   return function(input) {
     switch(input) {
-      case 4: // off
+      case $jsonSocket.POWER_OFF:
         return 'fa-square';
         break;
-      case 2: // on
+      case $jsonSocket.POWER_ON:
         return 'fa-check-square';
         break;
       default: // unknown
@@ -110,4 +114,5 @@ angular.module('jmri.app').filter('triStateCheckBox', function() {
     }
   };
 });
+
 // additional providers %4$s
