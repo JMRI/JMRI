@@ -81,6 +81,9 @@ public class SlipIconAdder extends IconAdder {
             case 0x08:
                 scissorButton.setSelected(true);
                 break;
+            default:
+                log.warn("Unhandled dbslip code: {}", dblSlip);
+                break;
         }
     }
 
@@ -432,6 +435,9 @@ public class SlipIconAdder extends IconAdder {
             case 0x02:
                 delete(5);
                 updateSingleSlipRoute(false);
+                break;
+            default:
+                log.warn("Unhandled slip code: {}", slip);
                 break;
         }
         doubleSlip = slip;
