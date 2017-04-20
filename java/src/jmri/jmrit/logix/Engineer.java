@@ -126,7 +126,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // note, blind runs cannot detect entrance.
             if (!_runOnET && _syncIdx > _warrant.getCurrentOrderIndex()) {
                 // commands are ahead of current train position
-                // When the next block goes active or a control command is made, a call to rampSpeedTo()
+                // When the next block goes active or a control command is made, a clear sync call
                 // will test these indexes again and can trigger a notifyAll() to free the wait
                 if (log.isDebugEnabled()) log.debug("Wait for train to enter \"{}\". Warrant {}",
                         _warrant.getBlockAt(_syncIdx).getDisplayName(), _warrant.getDisplayName());
@@ -329,47 +329,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * {@link Warrant#Normal}, or {@link Warrant#Clear}
      */
     protected void rampSpeedTo(String endSpeedType) {
-        Float speed = getSpeed();
-        if (!_waitForClear && _speedType.equals(endSpeedType) && 
-                Math.abs(speed - modifySpeed(_normalSpeed, endSpeedType)) < 0.001f) {
+        if (!setSpeedRatio(endSpeedType)) {
             return;
         }
         if (log.isDebugEnabled()) log.debug("rampSpeedTo {}. warrant {}",
                 endSpeedType, _warrant.getDisplayName());
-
-        if (endSpeedType!=null) {
-            if (endSpeedType.equals(Warrant.Stop) || endSpeedType.equals(Warrant.EStop)) {
-                if (speed <= 0) {
-                    return;
-                }
-                // rampSpeedTo should never be called for EStop
-                if (endSpeedType.equals(Warrant.EStop)) {
-                    setSpeed(-0.1f);
-                    log.error("speedType == EStop ", new Exception("traceback"));
-                    return;
-                }
-            } else {
-/*                if (_halt) {
-                    return;
-                }*/
-                _speedType = endSpeedType;
-                float speedMod = modifySpeed(1.0f, _speedType);
-                if (Math.abs(1.0f - speedMod) > .0001f) {
-                    _timeRatio = 1.0f / speedMod;
-                } else {
-                    _timeRatio = 1.0f;
-                }
-            }
-        } else {
-            log.error("speedType == null ", new Exception("traceback"));
-            return;
-        }
+        
         synchronized (this) {
-            cancelRamp();
             _ramp = new ThrottleRamp(endSpeedType);
             Thread t= new Thread(_ramp);
             t.setPriority(Thread.MAX_PRIORITY);
-            t.start();
+            t.start();               
         }
     }
     
@@ -451,7 +421,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
     
     synchronized protected float getSpeed() {
-        float speed =_throttle.getSpeedSetting();
+        float speed = _throttle.getSpeedSetting();
         if (speed < 0.0) {
             speed = 0.0f;
             _throttle.setSpeedSetting(speed);
@@ -459,17 +429,33 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return speed;
     }
 
-    protected void setSpeedToType(String speedType) {
-        if (log.isTraceEnabled()) log.trace("setSpeedToType({})", speedType);
-        if (speedType!=null) {
+    /**
+     * Utility for unscripted speed changes.
+     * Records current type and sets time ratio.
+     * EStop is set immediately (do not ramp)
+     * @param speedType name of speed change type
+     * @return true to continue, false to return
+     */
+    private boolean setSpeedRatio(String speedType) {
+        if (speedType == null) {
+            return false;
+        }
+        Float speed = getSpeed();
+        if (Math.abs(speed - modifySpeed(_normalSpeed, speedType)) < 0.0001f) {
+            // no need to reset throttle
+            return false;
+        }
+        
+        cancelRamp();
+
+        synchronized (this) {
             if (speedType.equals(Warrant.EStop)) {
-                setWaitforClear(true);                    
-                setSpeed(-0.1f);
-                return;
+                _waitForClear = true;
+                setSpeed(-0.1f);        // always do immediate EStop
+                return false;
             } else if (speedType.equals(Warrant.Stop)) {
-                setWaitforClear(true);                    
-                setSpeed(0.0f);                    
-                return;
+                _waitForClear = true;
+                return true;
             } else {
                 _speedType = speedType;
                 float speedMod = modifySpeed(1.0f, _speedType);
@@ -478,11 +464,25 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 } else {
                     _timeRatio = 1.0f;
                 }
-            }
-            setSpeed(modifySpeed(_normalSpeed, speedType));
-        } else {
-            log.error("speedType == null ", new Exception("traceback"));
+            }            
         }
+        return true;
+    }
+
+    protected void setSpeedToType(String speedType) {
+        if (log.isTraceEnabled()) log.trace("setSpeedToType({})", speedType);
+        if (!setSpeedRatio(speedType)) {
+            return;
+        }
+        if (speedType.equals(Warrant.Stop)) {
+            setSpeed(0.0f);                    
+            return;
+        }
+        setSpeed(modifySpeed(_normalSpeed, speedType));                
+    }
+    
+    protected float getExpectedSpeed(String speedType) {
+        return modifySpeed(_normalSpeed, speedType);
     }
 
     /**
@@ -499,7 +499,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
         } else {
             _halt = true;
-            cancelRamp();
             rampSpeedTo(Warrant.Stop);     
         }
         if (log.isDebugEnabled()) log.debug("setHalt({}): _halt= {}, throttle speed= {}, _waitForClear= {}, _waitForSync= {}, warrant {}",
@@ -521,7 +520,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
         } else {
             _waitForClear = true;
-            cancelRamp();
             rampSpeedTo(Warrant.Stop);     
         }
         if (log.isDebugEnabled()) log.debug("setWaitforClear({}): _halt= {}, throttle speed= {}, _waitForClear= {}, _waitForSync= {}, warrant {}",
@@ -1078,44 +1076,23 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         public void run() {
             // the time 'right now' is at having done _idxCurrentCommand-1 and is waiting 
             // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
-            float endSpeed = modifySpeed(_normalSpeed, endSpeedType);
+            float endSpeed = modifySpeed(_normalSpeed, endSpeedType);   // requested endspeed
             float speed = getSpeed();
             float incr = _speedMap.getStepIncrement();
             int delay = _speedMap.getStepDelay();
-            float rampSpeed = modifySpeed(_normalSpeed, _speedType);
-            if (log.isDebugEnabled()) log.debug("Current calculated throttleSpeed= {}, actual throttleSpeed= {}",
-                    rampSpeed, speed);
-            boolean increase = (endSpeed > rampSpeed);
-            ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand-1);
-            long scriptTime = ts.getTime() - (System.currentTimeMillis() - et);
-            long ramptime = 0;
-            
-            boolean done = false;
-            while (!done) {
-                while (ramptime < scriptTime) {
-                    ramptime += delay;
-                    if (increase) {
-                        rampSpeed += incr;
-                    } else {
-                        rampSpeed -= incr;                    
-                    }
-                }
-                if (increase) {
-                    if (endSpeed <= rampSpeed) {
-                        done = true;
-                    }
-                } else {
-                    if (endSpeed >= rampSpeed) {
-                        done = true;
-                    } 
-                }                
-                ts = _warrant._commands.get(_idxCurrentCommand);
-                scriptTime += ts.getTime();
+            if (log.isDebugEnabled()) log.debug("Current expected throttleSpeed= {}, actual throttleSpeed= {}",
+                    modifySpeed(_normalSpeed, _speedType), speed);
+            // endSpeed should not exceed scripted speed modified by _speedType
+            float scriptSpeed = 0.0f;
+            for (int idx = 0; idx < _idxCurrentCommand; idx++) {
+                ThrottleSetting ts = _warrant._commands.get(idx);
                 if ("SPEED".equals(ts.getCommand().toUpperCase())) {
-                    endSpeed = modifySpeed(Float.parseFloat(ts.getValue()), endSpeedType);
+                    scriptSpeed = Float.parseFloat(ts.getValue());
                 }
             }
-            
+            // this assumes ramp will end waiting on the current command
+            endSpeed = Math.min(modifySpeed(scriptSpeed, _speedType), endSpeed);
+           
             _lock.lock();
             try {
                 if (log.isDebugEnabled()) log.debug("ThrottleRamp for \"{}\". step increment= {} step interval= {}. Ramp {} to {} on warrant {}",
