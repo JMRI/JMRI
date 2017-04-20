@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -836,9 +837,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                         label = new JLabel(onIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
                         log.debug("onIcon set");
-                    } else {
+                    } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
+                        label = new JLabel("X", JLabel.CENTER); // centered text alignment
+                        label.setForeground(Color.red);
+                        log.debug("Turnout state inconsistent");
+                        iconHeight = 0;
+                    } else if (value.equals(Bundle.getMessage("BeanStateUnknown"))) {
+                        label = new JLabel("?", JLabel.CENTER); // centered text alignment
+                        log.debug("Turnout state unknown");
+                        iconHeight = 0;
+                    } else { // failed to load icon
                         label = new JLabel(value, JLabel.CENTER); // centered text alignment
-                        log.debug("Turnout state unknown or error reading icons for TurnoutTable");
+                        log.warn("Error reading icons for TurnoutTable");
                         iconHeight = 0;
                     }
                     label.setToolTipText(value);
