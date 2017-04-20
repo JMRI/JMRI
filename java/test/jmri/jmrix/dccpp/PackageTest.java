@@ -58,6 +58,9 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMessageExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppConstantsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppRegisterManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppMultiMeterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTurnoutManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCppTurnoutReplyCacheTest.class));
         return suite;
     }
 
