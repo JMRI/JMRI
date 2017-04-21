@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialTrafficController;
 import org.slf4j.Logger;
@@ -233,7 +233,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
 
     /**
      * Local method to do specific port configuration
-     * @throws gnu.io.UnsupportedCommOperationException for invalid options
+     * @throws purejavacomm.UnsupportedCommOperationException for invalid options
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
