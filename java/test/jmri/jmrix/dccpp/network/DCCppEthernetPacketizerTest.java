@@ -17,7 +17,11 @@ public class DCCppEthernetPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketize
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new DCCppEthernetPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation());
+        tc = new DCCppEthernetPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
     @After

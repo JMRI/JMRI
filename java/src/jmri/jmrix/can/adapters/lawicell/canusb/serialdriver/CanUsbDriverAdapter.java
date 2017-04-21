@@ -8,8 +8,8 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  * controlled by the SerialDriverFrame class.
  * <P>
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Andrew Crosland Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
   */
 public class CanUsbDriverAdapter
         extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter

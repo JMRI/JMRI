@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Source of the tree content is the file system. Only directories are included
  * in the tree. A filter can be set to extract particular file types.
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  *
  */
 public class CatalogTreeFS extends AbstractCatalogTree {

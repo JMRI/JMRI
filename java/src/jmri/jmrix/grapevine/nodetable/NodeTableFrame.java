@@ -8,8 +8,8 @@ import jmri.jmrix.grapevine.SerialTrafficController;
 /**
  * Frame for user configuration of serial nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 

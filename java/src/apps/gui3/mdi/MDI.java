@@ -19,7 +19,7 @@ import jmri.util.swing.mdi.MdiMainFrame;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
- * @author	Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
+ * @author Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
  */
 public class MDI extends apps.gui3.Apps3 {
 

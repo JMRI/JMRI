@@ -25,7 +25,7 @@ import purejavacomm.SerialPort;
  * This handles the state transistions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface {
 

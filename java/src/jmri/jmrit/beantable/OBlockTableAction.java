@@ -19,7 +19,7 @@ import jmri.jmrit.beantable.oblock.TableFrames;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman (C) 2009, 2010
+ * @author Pete Cressman (C) 2009, 2010
  */
 public class OBlockTableAction extends AbstractAction {
 

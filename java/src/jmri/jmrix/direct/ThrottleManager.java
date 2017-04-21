@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * time. It also is missing logic to alternate sending speed and function
  * commands; right now it only sends the first group of function packets.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class ThrottleManager extends AbstractThrottleManager {
 

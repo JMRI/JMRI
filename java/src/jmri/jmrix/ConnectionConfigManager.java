@@ -17,6 +17,8 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.ErrorHandler;
+import jmri.configurexml.ErrorMemo;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
@@ -38,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
-    private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
+    private final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
     public final static String CONNECTIONS = "connections"; // NOI18N
     public final static String CONNECTION = "connection"; // NOI18N
     public final static String CLASS = "class"; // NOI18N
@@ -90,12 +92,18 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                     }
                     try {
                         log.debug("Creating connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
-                        if (!((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode)) {
+                        XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
+                        ConnectionConfigManagerErrorHandler handler = new ConnectionConfigManagerErrorHandler();
+                        adapter.setExceptionHandler(handler);
+                        if (!adapter.load(shared, perNode)) {
                             log.error("Unable to create {} for {}, load returned false", className, shared);
                             String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                             String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
                             this.addInitializationException(profile, new InitializationException(english, localized));
                         }
+                        handler.exceptions.forEach((exception) -> {
+                            this.addInitializationException(profile, exception);
+                        });
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
@@ -391,6 +399,34 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             } catch (IOException ex) {
                 log.error("Unable to read PortNamePatterns.properties", ex);
             }
+        }
+    }
+
+    private static class ConnectionConfigManagerErrorHandler extends ErrorHandler {
+
+        ArrayList<InitializationException> exceptions = new ArrayList<>();
+
+        public ConnectionConfigManagerErrorHandler() {
+            super();
+        }
+
+        /**
+         * Capture ErrorMemos as initialization exceptions. {@inheritDoc}
+         */
+        @Override
+        // The memo has a generic message (since the real cause never makes it this far anyway)
+        // If the memo reliably had an exception, we could make a decision about
+        // how to handle that, but since it doesn't all we can do is log it
+        public void handle(ErrorMemo memo) {
+            if (memo.exception != null) {
+                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description), memo.exception));
+            } else {
+                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description) + memo.description));
+            }
+        }
+
+        public List<InitializationException> getExceptions() {
+            return this.exceptions;
         }
     }
 }

@@ -77,7 +77,7 @@ public class SpecificMessage extends SerialMessage {
             case Constants.TIMER_DOWNLOAD:
                 text.append("Set CM11 time");
                 break;
-            case Constants.EXT_CMD_HEADER:	// extended command
+            case Constants.EXT_CMD_HEADER: // extended command
                 text.append("Extended Cmd");
                 if (len == 5) {
                     text.append(" house ");
@@ -96,20 +96,20 @@ public class SpecificMessage extends SerialMessage {
                                 text.append(" data: 0x");
                                 text.append(StringUtil.twoHexFromInt(d));
                             }
-//            			switch ((d >> 6) & 0x03) {
-//            			case 0:
-//            				text.append(" 3.7 Sec");
-//            				break;
-//            			case 1:
-//            				text.append(" 30 Sec");
-//            				break;
-//            			case 2:
-//            				text.append(" 1 Min");
-//            				break;
-//            			case 3:
-//            				text.append(" 5 Min");
-//            				break;
-//            			}
+//               switch ((d >> 6) & 0x03) {
+//               case 0:
+//                text.append(" 3.7 Sec");
+//                break;
+//               case 1:
+//                text.append(" 30 Sec");
+//                break;
+//               case 2:
+//                text.append(" 1 Min");
+//                break;
+//               case 3:
+//                text.append(" 5 Min");
+//                break;
+//               }
                             break;
                         default:
                             text.append(" cmd: 0x");
@@ -154,6 +154,7 @@ public class SpecificMessage extends SerialMessage {
      * This ctor interprets the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
+     * @param l lenght of expected reply
      */
     public SpecificMessage(byte[] a, int l) {
         super(a, l);

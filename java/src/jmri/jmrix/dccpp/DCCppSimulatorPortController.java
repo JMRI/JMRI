@@ -7,9 +7,9 @@ import java.io.DataOutputStream;
  * Abstract base for classes representing a DCCpp communications port
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2004,2010
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2004,2010
+ * @author Mark Underwood Copyright (C) 2015
   *
  * Based on XNetSimulatorPortController by Bob Jacobsen, Paul Bender
  */

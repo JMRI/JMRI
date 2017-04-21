@@ -23,6 +23,7 @@ public class SCWarrant extends Warrant {
     public static final float SPEED_TO_PLATFORM = 0.2f;
     public static final float SPEED_UNSIGNALLED = 0.4f;
     private long timeToPlatform = 500;
+    private boolean forward = true;
     
     /**
      * Create an object with no route defined. The list of BlockOrders is the
@@ -36,6 +37,14 @@ public class SCWarrant extends Warrant {
 
     public long getTimeToPlatform() {
         return timeToPlatform;
+    }
+    
+    public void setForward(boolean set) {
+        forward = set;
+    }
+    
+    public boolean getForward() {
+        return forward;
     }
 
     /**
@@ -111,16 +120,7 @@ public class SCWarrant extends Warrant {
      * Set this train to run backwards or forwards as specified in the command list.
      */
     public void setTrainDirection () {
-        for (int i = 0; i < _commands.size(); i++) {
-            ThrottleSetting ts = _commands.get(i);
-            if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                boolean isForward = Boolean.parseBoolean(ts.getValue());
-                _engineer._throttle.setIsForward(isForward);
-                log.debug(_trainName+" setTrainDirection - forward="+isForward);
-                return;
-            }
-            log.debug(_trainName+" setTrainDirection could not determine direction.");
-        }   
+        _engineer._throttle.setIsForward(forward);
     }
 
     /**
@@ -249,7 +249,7 @@ public class SCWarrant extends Warrant {
             log.debug(_trainName+" ensureRouteConsecutivity for loop #"+i);
             BlockOrder bo = getBlockOrderAt(i);
             OBlock block = bo.getBlock();
-            if (!block.isAllocatedTo(this) || (block.getState() & OBlock.OCCUPIED) != 0) {
+            if (!block.isAllocatedTo(this) && (block.getState() & OBlock.OCCUPIED) != 0) {
                 deAllocateRestOfRoute = true;
             }
             if (deAllocateRestOfRoute) {
@@ -385,7 +385,7 @@ public class SCWarrant extends Warrant {
         }
         String property = evt.getPropertyName();
         log.debug(_trainName+" propertyChange \"" + property + "\" new= " + evt.getNewValue()
-            		+ " source= " + ((NamedBean) evt.getSource()).getDisplayName()
+              + " source= " + ((NamedBean) evt.getSource()).getDisplayName()
                     + " - warrant= " + getDisplayName());
         if (_nextSignal != null && _nextSignal == evt.getSource()) {
             if (property.equals("Aspect") || property.equals("Appearance")) {
@@ -504,6 +504,7 @@ public class SCWarrant extends Warrant {
                     long remaining;
                     while ((remaining = timeWhenDone - System.currentTimeMillis()) > 0) {
                         try {
+                            log.debug(_warrant._trainName+" running slowly to platform for "+remaining+" miliseconds");
                             _warrant.wait(remaining);
                         } catch (InterruptedException e) {
                             log.debug(_warrant._trainName+" InterruptedException "+e);

@@ -10,7 +10,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 /**
  * Frame for user input of Ecos messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {

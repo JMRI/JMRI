@@ -72,8 +72,8 @@ public class UsbDriverAdapter extends NcePortController {
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -123,9 +123,9 @@ public class UsbDriverAdapter extends NcePortController {
         tc.setAdapterMemo(this.getSystemConnectionMemo());
 
         //set the system the USB is connected to
-        if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[1])) {	//if V7 (Nov 2012)
+        if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[1])) { //if V7 (Nov 2012)
             // is new firmware, determine functions available
-            if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {	//SB5
+            if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) { //SB5
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
                 tc.setCmdGroups(NceTrafficController.CMDS_MEM
                         | NceTrafficController.CMDS_AUI_READ
@@ -134,7 +134,7 @@ public class UsbDriverAdapter extends NcePortController {
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
 
-            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {	//TWIN
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) { //TWIN
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
                 tc.setCmdGroups(NceTrafficController.CMDS_MEM
                         | NceTrafficController.CMDS_AUI_READ
@@ -143,20 +143,20 @@ public class UsbDriverAdapter extends NcePortController {
                         | NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
-            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {	//PowerPro
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) { //PowerPro
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
                         | NceTrafficController.CMDS_AUI_READ
                         | NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
-            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {	//SB3
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) { //SB3
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
                         | NceTrafficController.CMDS_USB
                         | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
-            } else {	//PowerCab
+            } else { //PowerCab
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
                 tc.setCmdGroups(NceTrafficController.CMDS_MEM
                         | NceTrafficController.CMDS_AUI_READ

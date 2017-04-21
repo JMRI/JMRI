@@ -18,7 +18,7 @@ import purejavacomm.PortInUseException;
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 
@@ -27,15 +27,19 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for port-busy case
+     * Standard error handling for port-busy case.
+     * @param p the exception being handled, if additional information from it is desired
+     * @param portName name of the port being accessed
+     * @param log where to log a status message
+     * @return Localized message, in case separate presentation to user is desired
      */
     @Override
     public String handlePortBusy(PortInUseException p, String portName, Logger log) {
         log.error(portName + " port is in use: " + p.getMessage());
         /*JOptionPane.showMessageDialog(null, "Port is in use",
          "Error", JOptionPane.ERROR_MESSAGE);*/
-        ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
-        return portName + " port is in use";
+        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        return Bundle.getMessage("SerialPortInUse", portName);
     }
 
     /**
@@ -45,8 +49,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         log.error("Serial port " + portName + " not found");
         /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
          "Error", JOptionPane.ERROR_MESSAGE);*/
-        ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
-        return portName + " not found";
+        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
     @Override
@@ -56,6 +60,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     @Override
     public void setPort(String port) {
+        log.debug("Setting port to "+port);
         mPort = port;
     }
     protected String mPort = null;
@@ -109,10 +114,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Convert a baud rate string to a number.
+     * Convert a baud rate String to a int number,e.g. "9,600" to 9600.
      *
      * Uses the validBaudNumber and validBaudRates methods to do this.
      *
+     * @param currentBaudRate a rate from validBaudRates
      * @return -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {

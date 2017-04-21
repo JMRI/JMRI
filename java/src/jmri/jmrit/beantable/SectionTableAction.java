@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Dave Duchamp Copyright (C) 2008, 2011
+ * @author Dave Duchamp Copyright (C) 2008, 2011
  * @author GT 2009
  */
 public class SectionTableAction extends AbstractTableAction {
@@ -491,7 +491,7 @@ public class SectionTableAction extends AbstractTableAction {
                 }
             });
 // djd debugging - temporarily hide these items until the automatic setting of entry point direction is ready
-//			addFrame.getContentPane().add(p32);
+//   addFrame.getContentPane().add(p32);
 // end djd debugging
             JPanel p33 = new JPanel();
             // initialize table of entry points
@@ -504,12 +504,12 @@ public class SectionTableAction extends AbstractTableAction {
             fromBlockColumn.setResizable(true);
             fromBlockColumn.setMinWidth(250);
             fromBlockColumn.setMaxWidth(310);
-// GT - 12-Oct-2009 - start			
+// GT - 12-Oct-2009 - start   
             TableColumn toBlockColumn = entryPointColumnModel.getColumn(EntryPointTableModel.TO_BLOCK_COLUMN);
             toBlockColumn.setResizable(true);
             toBlockColumn.setMinWidth(150);
             toBlockColumn.setMaxWidth(210);
-// GT - 12-Oct-2009 - end			
+// GT - 12-Oct-2009 - end   
             JComboBox<String> directionCombo = new JComboBox<String>();
             directionCombo.addItem(rbx.getString("SectionForward"));
             directionCombo.addItem(rbx.getString("SectionReverse"));
@@ -1041,8 +1041,8 @@ public class SectionTableAction extends AbstractTableAction {
             }
         }
 // djd debugging
-// here add code to use Layout Editor connectivity if desired in the future	
-/*		if (!manualEntryPoints) {
+// here add code to use Layout Editor connectivity if desired in the future 
+/*  if (!manualEntryPoints) {
          // use Layout Editor connectivity to set directions of Entry Points that have UNKNOWN direction
          // check entry points for first Block
          ArrayList<EntryPoint> tEPList = getSubEPListForBlock(beginBlock);
@@ -1064,7 +1064,7 @@ public class SectionTableAction extends AbstractTableAction {
          }   */
         entryPointTableModel.fireTableDataChanged();
     }
-    /*	private ArrayList<EntryPoint> getSubEPListForBlock(Block b) {
+    /* private ArrayList<EntryPoint> getSubEPListForBlock(Block b) {
      ArrayList<EntryPoint> tList = new ArrayList<EntryPoint>0;
      for (int i=0; i<eplist.size(); i++) {
      EntryPoint tep = epList.get(i);
@@ -1074,7 +1074,7 @@ public class SectionTableAction extends AbstractTableAction {
      }
      return tList;  
      } */
-// end djd debugging	
+// end djd debugging 
 
     private EntryPoint getEntryPointInList(ArrayList<EntryPoint> list, Block b, Block pb, String pbDir) {
         for (int i = 0; i < list.size(); i++) {
@@ -1437,9 +1437,9 @@ public class SectionTableAction extends AbstractTableAction {
 
         public static final int BLOCK_COLUMN = 0;
 
-        public static final int TO_BLOCK_COLUMN = 1;	// GT - 12-Oct-2009
+        public static final int TO_BLOCK_COLUMN = 1; // GT - 12-Oct-2009
 
-        public static final int DIRECTION_COLUMN = 2;	// GT - 12-Oct-2009
+        public static final int DIRECTION_COLUMN = 2; // GT - 12-Oct-2009
 
         public EntryPointTableModel() {
             super();
@@ -1455,7 +1455,7 @@ public class SectionTableAction extends AbstractTableAction {
 
         @Override
         public int getColumnCount() {
-            return 3;	// GT - 12-Oct-2009
+            return 3; // GT - 12-Oct-2009
         }
 
         @Override
@@ -1482,8 +1482,8 @@ public class SectionTableAction extends AbstractTableAction {
                 case BLOCK_COLUMN:
                     return rbx.getString("FromBlock");
 
-                case TO_BLOCK_COLUMN:					// GT - 12-Oct-2009
-                    return rbx.getString("ToBlock");	// GT - 12-Oct-2009
+                case TO_BLOCK_COLUMN:     // GT - 12-Oct-2009
+                    return rbx.getString("ToBlock"); // GT - 12-Oct-2009
 
                 case DIRECTION_COLUMN:
                     return rbx.getString("TravelDirection");

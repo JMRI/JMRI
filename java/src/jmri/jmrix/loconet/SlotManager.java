@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+
 import jmri.CommandStation;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;
@@ -40,14 +43,21 @@ import org.slf4j.LoggerFactory;
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
+    /**
+     * Time to wait after programming operation complete on LocoNet
+     * before reporting completion and hence starting next operation
+     */
+    int postProgDelay = 100;
+
     public SlotManager(LnTrafficController tc) {
         this.tc = tc;
-        // need a longer LONG_TIMEOUT for Fleischman command stations
-        LONG_TIMEOUT = 180000;
+        // change timeout values from AbstractProgrammer superclass
+        LONG_TIMEOUT = 180000;  // Fleischman command stations take forever
+        SHORT_TIMEOUT = 8000;   // DCS240 reads
 
         loadSlots();
 
@@ -55,7 +65,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         tc.addLocoNetListener(~0, this);
 
         // We will scan the slot table every 10 s for in-use slots that are stale
-        staleSlotCheckTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+        final int slotScanDelay = 10000; // 10 seconds; must be less than 90, see checkStaleSlots()
+        staleSlotCheckTimer = new javax.swing.Timer(slotScanDelay, new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkStaleSlots();
@@ -64,7 +75,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         );
 
         staleSlotCheckTimer.setRepeats(true);
-        staleSlotCheckTimer.setInitialDelay(30000);
+        staleSlotCheckTimer.setInitialDelay(3*slotScanDelay);  // wait a bit more at startup
         staleSlotCheckTimer.start();
     }
 
@@ -187,18 +198,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         tc.sendLocoNetMessage(m);
     }
 
+    javax.swing.Timer staleSlotCheckTimer = null;
+
     /**
-     * method to scan the slot array looking for slots that are in-use but have
+     * Scan the slot array looking for slots that are in-use but have
      * not had any updates in over 90s and issue a read slot request to update
      * their state as the command station may have purged or stopped updating
      * the slot without telling us via a LocoNet message.
-     *
+     * <p>
      * This is intended to be called from the staleSlotCheckTimer
      */
-    javax.swing.Timer staleSlotCheckTimer = null;
-
     private void checkStaleSlots() {
-        long staleTimeout = System.currentTimeMillis() - 90000;
+        long staleTimeout = System.currentTimeMillis() - 90000;  // 90 seconds ago
         LocoNetSlot slot;
 
         // We will just check the normal loco slots 1 to 120
@@ -520,7 +531,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 stopTimer();
                 notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
             } else if (checkLackAcceptedBlind(m.getElement(2))) { // task accepted blind
-                if ((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
+                if ((_progRead || _progConfirm) && !mServiceMode) { // incorrect Reserved OpSw setting can cause this response to OpsMode Read
                     // just treat it as a normal OpsMode Read response
                     // move to commandExecuting state
                     log.debug("LACK accepted (ignoring incorrect OpSw), next state 2"); // NOI18N
@@ -533,15 +544,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     stopTimer();
                     // have to send this in a little while to 
                     // allow command station time to execute
-                    int delay = 100; // milliseconds
-                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                    javax.swing.Timer timer = new javax.swing.Timer(postProgDelay, new java.awt.event.ActionListener() {
                         @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
                         }
                     });
                     timer.stop();
-                    timer.setInitialDelay(delay);
+                    timer.setInitialDelay(postProgDelay);
                     timer.setRepeats(false);
                     timer.start();
                 }
@@ -698,6 +708,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean getCanRead() {
         return mCanRead;
     }
+
+    /**
+     * Service mode always checks for DecoderReply.  (The DCS240 also seems to do
+     * ReadAfterWrite, but that's not fully understood yet)
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.DecoderReply; }
 
     /**
      * Set the command station type to one of the known types in the
@@ -911,7 +929,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        tc.sendLocoNetMessage(progTaskStart(progByte, -1, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(progByte, 0, CV, false));
     }
 
     private jmri.ProgListener _usingProgrammer = null;
@@ -952,7 +970,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(7, 0);  // TRK was 0, then 7 for PR2, now back to zero
 
         // store address in CVH, CVL. Note CVH format is truely wierd...
-        m.setElement(8, (addr & 0x300) / 16 + (addr & 0x80) / 128 + (val & 0x80) / 128 * 2);
+        m.setElement(8, ((addr & 0x300)>>4) | ((addr & 0x80) >> 7) | ((val & 0x80) >> 6));
         m.setElement(9, addr & 0x7F);
 
         // store low bits of CV value
@@ -1036,9 +1054,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * is only needed in service mode.
      */
     protected void restartEndOfProgrammingTimer() {
+        final int delay = 10000;
         if (mProgEndSequence) {
             if (mPowerTimer == null) {
-                mPowerTimer = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+                mPowerTimer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
                     @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         doEndOfProgramming();
@@ -1046,7 +1065,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 });
             }
             mPowerTimer.stop();
-            mPowerTimer.setInitialDelay(2000);
+            mPowerTimer.setInitialDelay(delay);
             mPowerTimer.setRepeats(false);
             mPowerTimer.start();
         }

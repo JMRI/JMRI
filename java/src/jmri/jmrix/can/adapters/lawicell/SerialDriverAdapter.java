@@ -18,8 +18,8 @@ import purejavacomm.UnsupportedCommOperationException;
  * Implements SerialPortAdapter for the LAWICELL protocol.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -61,8 +61,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);

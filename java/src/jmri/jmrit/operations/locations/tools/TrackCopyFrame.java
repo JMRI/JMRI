@@ -52,7 +52,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     JCheckBox moveRollingStockCheckBox = new JCheckBox(Bundle.getMessage("MoveRollingStock"));
     JCheckBox deleteTrackCheckBox = new JCheckBox(Bundle.getMessage("DeleteCopiedTrack"));
 
-    Location _location;	// Copy the track to this location
+    Location _location; // Copy the track to this location
 
     // remember state of checkboxes during a session
     static boolean sameName = false;

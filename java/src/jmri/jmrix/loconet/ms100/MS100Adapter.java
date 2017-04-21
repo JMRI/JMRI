@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * 16457 baud. Neither the baud rate configuration nor the "option 1" option are
  * used.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 

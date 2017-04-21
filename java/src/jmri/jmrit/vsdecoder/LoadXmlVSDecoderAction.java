@@ -28,7 +28,7 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
         super(s);
         // Pretty sure I don't need this
         // disable the ourselves if there is no throttle Manager
-	/*
+ /*
          if (jmri.InstanceManager.getNullableDefault(jmri.ThrottleManager.class) == null) {
          setEnabled(false);
          }

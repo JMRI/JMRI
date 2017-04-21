@@ -195,7 +195,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                     }
                 });
         showAdvancedItems();
-        init = false;		// need to reload action listeners
+        init = false;  // need to reload action listeners
         checkInitDone();
     }
 

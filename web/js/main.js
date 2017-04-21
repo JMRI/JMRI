@@ -292,6 +292,12 @@ $(document).ready(function () {
         open: function () {
             nbJmri.getPower();
         },
+    	hello: function(data) {
+    		nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket 
+        },
+        rosterGroups: function (name, data) {
+            getRosterGroups(); // refresh the roster groups in menu
+        },
         power: function (state) {
             $('#navbar-power').data('power', state);
             disabled = ($('#navbar-power button').hasClass('disabled')) ? " - Setting power disabled" : "";

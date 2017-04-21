@@ -41,6 +41,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         this.addrCVlow = Integer.parseInt(addrCVlow);
         this.valueCV = Integer.parseInt(valueCV);
         this.modulo = Integer.parseInt(modulo);
+        _prog = prog;
         log.debug("Created with " + prog + ", " + this.top + ", " + this.addrCVhigh + ", " + this.addrCVlow + ", " + this.valueCV + ", " + this.modulo);
     }
 
@@ -49,10 +50,11 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     int addrCVlow;
     int valueCV;
     int modulo;
+    Programmer _prog;
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override
@@ -116,22 +118,30 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     }
 
     enum ProgState {
-        /** A pass-through operation, waiting reply, when done the entire operation is done */
-        PROGRAMMING, 
-        
-        /** Wrote 1st index on a read operation, waiting for reply */
-        WRITELOWREAD, 
-
-        /** Wrote 1st index on a write operation, waiting for reply */
-        WRITELOWWRITE, 
-
-        /** Wrote 2nd index on a read operation, waiting for reply */
-        FINISHREAD, 
-
-        /** Wrote 2nd index on a write operation, waiting for reply */
-        FINISHWRITE, 
-        
-        /** nothing happening, no reply expected */
+        /**
+         * A pass-through operation, waiting reply, when done the entire
+         * operation is done
+         */
+        PROGRAMMING,
+        /**
+         * Wrote 1st index on a read operation, waiting for reply
+         */
+        WRITELOWREAD,
+        /**
+         * Wrote 1st index on a write operation, waiting for reply
+         */
+        WRITELOWWRITE,
+        /**
+         * Wrote 2nd index on a read operation, waiting for reply
+         */
+        FINISHREAD,
+        /**
+         * Wrote 2nd index on a write operation, waiting for reply
+         */
+        FINISHWRITE,
+        /**
+         * nothing happening, no reply expected
+         */
         NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
@@ -144,8 +154,20 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
+        if (status != OK) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {
@@ -202,22 +224,22 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     // Access to full address space provided by this.
     @Override
     public boolean getCanRead() {
-        return true;
+        return _prog.getCanRead();
     }
 
     @Override
     public boolean getCanRead(String addr) {
-        return Integer.parseInt(addr) <= 1024;
+        return _prog.getCanRead() && (Integer.parseInt(addr) <= 1024);
     }
 
     @Override
     public boolean getCanWrite() {
-        return true;
+        return _prog.getCanWrite();
     }
 
     @Override
     public boolean getCanWrite(String addr) {
-        return Integer.parseInt(addr) <= 1024;
+        return _prog.getCanWrite() && (Integer.parseInt(addr) <= 1024);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());

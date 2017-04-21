@@ -19,7 +19,7 @@ import jmri.InstanceManager;
  * </ul>
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2010, 2016
+ * @author Bob Jacobsen Copyright (C) 2010, 2016
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 

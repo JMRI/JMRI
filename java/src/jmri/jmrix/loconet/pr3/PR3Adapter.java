@@ -13,7 +13,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
  * switch settings on the new Digitrax PR3
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
   */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -40,8 +40,8 @@ public class PR3Adapter extends LocoBufferAdapter {
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in Mac DIN8; on main connector, this is DTR
 
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;

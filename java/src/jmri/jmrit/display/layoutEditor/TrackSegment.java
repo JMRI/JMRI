@@ -303,10 +303,14 @@ public class TrackSegment extends LayoutTrack {
 
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
-        // connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
-        // connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
+        }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
+        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
+        }
     }
 
     /**
@@ -672,12 +676,7 @@ public class TrackSegment extends LayoutTrack {
 
     void segmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = blockNameComboBox.getUserName();
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {
@@ -740,12 +739,7 @@ public class TrackSegment extends LayoutTrack {
             needsRedraw = true;
         }
         // check if Block changed
-        String newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = blockNameComboBox.getUserName();
         if (!blockName.equals(newName)) {
             // block has changed, if old block exists, decrement use
             if (block != null) {

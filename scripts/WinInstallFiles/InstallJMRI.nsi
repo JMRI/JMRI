@@ -50,8 +50,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
-; - Version 0.1.22.8
+; - Version 0.1.22.9
 ; - Remove RXTX and SerialIO files as now replaced by purejavacomm
+; -------------------------------------------------------------------------
+; - Version 0.1.22.8
+; - Remove outmoded jackson files
 ; -------------------------------------------------------------------------
 ; - Version 0.1.22.7
 ; - Remove outmoded jython files
@@ -445,6 +448,11 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
+
+    ; -- Delete old jackson jar files as of JMRI 4.7.1
+    Delete "$OUTDIR\jackson-annotations-2.0.6.jar"
+    Delete "$OUTDIR\jackson-core-2.0.6.jar"
+    Delete "$OUTDIR\jackson-databind-2.0.6.jar"
 
     ; -- Delete old .jar & support files in destination directory
     Delete "$OUTDIR\jh.1.1.2.jar"

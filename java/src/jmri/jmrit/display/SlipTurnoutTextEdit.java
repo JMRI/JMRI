@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  */
 public class SlipTurnoutTextEdit extends JmriJFrame {
 
-    SlipTurnoutIcon pl; 	// layout positional label tracked by this frame
+    SlipTurnoutIcon pl;  // layout positional label tracked by this frame
     static final String INIT = null;
     String oldLWUE = INIT;
     String oldUWLE = INIT;

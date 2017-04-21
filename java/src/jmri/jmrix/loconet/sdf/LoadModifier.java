@@ -8,7 +8,7 @@ import jmri.util.StringUtil;
  * Arg1: Upper 4 bits - math modifiers FMATH_LODE et al Arg2: Arg3:
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class LoadModifier extends SdfMacro {
 

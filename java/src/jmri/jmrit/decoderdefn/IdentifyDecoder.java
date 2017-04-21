@@ -15,22 +15,24 @@ import org.slf4j.LoggerFactory;
  * Contains manufacturer-specific code to generate a 3rd "productID" identifier,
  * in addition to the manufacturer ID and model ID:<ul>
  * <li>QSI: (mfgID == 113) write {@literal 254=>CV49}, write {@literal 4=>CV50},
- * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of ID</li>
+ * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
+ * ID</li>
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID</li>
  * <li>Hornby: (mfgID == 48) CV159 is ID</li>
  * <li>TCS: (mfgID == 153) CV249 is ID</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
- * <li>SoundTraxx: (mfgID == 98, modelID == 70 or 71) CV253 is high byte, CV256 is low byte of ID</li>
+ * <li>SoundTraxx: (mfgID == 98, modelID == 70 or 71) CV253 is high byte, CV256
+ * is low byte of ID</li>
  * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
- * write {@literal 0=>CV31}, write {@literal 255=>CV32},
- * then CVs 261 (lowest) to 264 (highest) are a four byte ID</li>
+ * write {@literal 0=>CV31}, write {@literal 255=>CV32}, then CVs 261 (lowest)
+ * to 264 (highest) are a four byte ID</li>
  * </ul>
  *
  * TODO:
- * <br>The RailCom&reg; Product ID is a 32 bit unsigned value.
- * {@code productID} is currently {@code int} with -1 signifying a null value.
- * Potential for value conflict exists but
- * changing would involve significant code changes elsewhere.
+ * <br>The RailCom&reg; Product ID is a 32 bit unsigned value. {@code productID}
+ * is currently {@code int} with -1 signifying a null value. Potential for value
+ * conflict exists but changing would involve significant code changes
+ * elsewhere.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  * @author Howard G. Penny Copyright (C) 2005
@@ -43,8 +45,8 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         super(programmer);
     }
 
-    int mfgID = -1; 	// cv8
-    int modelID = -1;	// cv7
+    int mfgID = -1;  // cv8
+    int modelID = -1; // cv7
     int productIDhigh = -1;
     int productIDlow = -1;
     int productID = -1;
@@ -212,7 +214,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     public boolean test9(int value) {
         if (mfgID == 151) {  // ESU
             productID = productID + (value * 256 * 256 * 256);
-            log.info("Decoder returns mfgID:" +mfgID + ";modelID:" +modelID + ";productID:" + productID);
+            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         }
         log.error("unexpected step 9 reached with value: " + value);
@@ -230,12 +232,18 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     }
 
     /**
-     * Invoked with the identifier numbers when the identification is complete.
+     * Indicate when identification is complete.
+     *
+     * @param mfgID     identified manufacturer identity
+     * @param modelID   identified model identity
+     * @param productID identified product identity
      */
     abstract protected void done(int mfgID, int modelID, int productID);
 
     /**
-     * Invoked to provide a user-readable message about progress
+     * Provide a user-readable message about progress.
+     *
+     * @param m the message to provide
      */
     abstract protected void message(String m);
 

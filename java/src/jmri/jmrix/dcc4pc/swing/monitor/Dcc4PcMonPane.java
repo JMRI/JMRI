@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcListener, Dcc4PcPanelInterface {
 

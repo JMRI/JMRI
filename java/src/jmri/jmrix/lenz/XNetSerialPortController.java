@@ -10,8 +10,8 @@ import purejavacomm.SerialPort;
  * Abstract base for classes representing a XNet communications port
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2004,2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2004,2010
   */
 public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
 

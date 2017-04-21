@@ -50,13 +50,17 @@ import org.slf4j.LoggerFactory;
  * There are a large number of missing features marked with TODO in comments
  * including code from the earlier implementation.
  * <P>
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public abstract class Apps3 extends AppsBase {
 
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     * <ul>
+     * <li> Operations from {@link AppsBase#preInit(String)}
+     * <li> Initialize the console support
+     * </ul>
      *
      * @param applicationName application name
      */

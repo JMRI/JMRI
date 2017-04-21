@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 

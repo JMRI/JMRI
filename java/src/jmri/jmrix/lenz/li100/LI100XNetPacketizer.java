@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * In particular, LI100XNetPacketizer overrides the automatic exit from service
  * mode in the AbstractMRTrafficController.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author Paul Bender Copyright (C) 2009
  *
  */
 public class LI100XNetPacketizer extends XNetPacketizer {

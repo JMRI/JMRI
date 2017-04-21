@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Concrete subclass to save/restore NoFeedbackTurnoutOperation object to/from
  * XML. Most of the work is done by CommonTurnoutOperationXml
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public class NoFeedbackTurnoutOperationXml extends CommonTurnoutOperationXml {

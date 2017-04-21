@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Provide access to XPressNet via the Hornby Elite's built in USB port.
  * Normally controlled by the lenz.hornbyelite.EliteFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003,2008-2010
  */
 public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
@@ -274,8 +274,8 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
                 SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = 0;  // no flow control is first in the elite setup,

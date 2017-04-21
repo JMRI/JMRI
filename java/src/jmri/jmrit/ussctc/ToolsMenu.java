@@ -5,7 +5,7 @@ import javax.swing.JMenu;
 /**
  * Create a "Tools" menu containing the USS CTC tools
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class ToolsMenu extends JMenu {
 

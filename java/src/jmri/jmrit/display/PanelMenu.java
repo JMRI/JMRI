@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * Also manages the Show Panel menu for all Editor panels.
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2010
+ * @author Bob Jacobsen Copyright 2003, 2004, 2010
  * @author Dave Duchamp Copyright 2007
  * @author Pete Cressman Copyright 2010
  */
@@ -35,6 +35,7 @@ public class PanelMenu extends JMenu {
         newPanel.add(new jmri.jmrit.display.panelEditor.PanelEditorAction(Bundle.getMessage("PanelEditor")));
         newPanel.add(new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction(Bundle.getMessage("ControlPanelEditor")));
         newPanel.add(new jmri.jmrit.display.layoutEditor.LayoutEditorAction(Bundle.getMessage("LayoutEditor")));
+        newPanel.add(new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction(Bundle.getMessage("SwitchboardEditor")));
         add(newPanel);
 
         add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));

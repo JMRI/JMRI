@@ -5,9 +5,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
@@ -24,10 +24,10 @@ import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Comm Port.
- * Normally controlled by the lenz.liusb.LIUSBFrame class.
+ * Provide access to DCC++ via a FTDI Virtual Comm Port. Normally controlled by
+ * the lenz.liusb.LIUSBFrame class.
  *
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
@@ -211,13 +211,13 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     /**
-     * set up all of the other objects to operate with a DCC++ Device connected to this
-     * port
+     * set up all of the other objects to operate with a DCC++ Device connected
+     * to this port
      */
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
-	DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+        DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
         packets.connectPort(this);
 
         // start operation
@@ -286,8 +286,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                 SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)

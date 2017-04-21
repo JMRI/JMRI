@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * use any other options at configuration time.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004
  */
 public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -115,7 +115,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
- 
+
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (UnsupportedCommOperationException | IOException ex) {
@@ -180,7 +180,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     OutputStream serialOutStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public SerialDriverAdapter instance() {
@@ -190,7 +191,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return mInstance;
     }
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static SerialDriverAdapter mInstance = null;

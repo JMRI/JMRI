@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for graph of loco speed curves
  *
- * @author	Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
+ * @author Andrew Crosland Copyright (C) 2010
+ * @author Dennis Miller Copyright (C) 2015
   */
 public class GraphPane extends JPanel implements Printable {
 

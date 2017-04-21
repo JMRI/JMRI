@@ -42,9 +42,9 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Mrc Inc
  * for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Kevin Dickerson Copyright (C) 2014
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Kevin Dickerson Copyright (C) 2014
+ * @author Ken Cameron Copyright (C) 2014
  *
  */
 public class MrcPacketizer extends MrcTrafficController {
@@ -200,6 +200,9 @@ public class MrcPacketizer extends MrcTrafficController {
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     * @param istream data input stream from layout
+     * @return byte stream from interface
+     * @throws java.io.IOException from read errors
      *
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
@@ -665,6 +668,7 @@ public class MrcPacketizer extends MrcTrafficController {
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
      * is needed
+     * @param msg message to tag a transmitted message
      *
      */
     protected void messageTransmited(MrcMessage msg) {

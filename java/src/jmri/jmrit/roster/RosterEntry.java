@@ -11,7 +11,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
@@ -538,10 +537,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             // parse using ISO 8601 date format(s)
             this.setDateModified(new ISO8601DateFormat().parse(date));
-        } catch (IllegalArgumentException | ParseException ex) {
-            // IllegalArgumentException for Jackson 2.0.6
-            // ParseException for Jackson 2.8.5
-            // evaluating Jackson upgrade under separate branch
+        } catch (ParseException | IllegalArgumentException ex) {
             // parse using defaults since thats how it was saved if saved
             // by earlier versions of JMRI
             this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
@@ -1672,6 +1668,24 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         } catch (JDOMException | IOException e) {
             log.error("Exception while loading loco XML file: " + getFileName() + " exception: " + e);
         }
+    }
+
+    /**
+     * Create a RosterEntry from a file.
+     *
+     * @param file The file containing the RosterEntry
+     * @return a new RosterEntry
+     * @throws JDOMException if unable to parse file
+     * @throws IOException if unable to read file
+     */
+    public static RosterEntry fromFile(@Nonnull File file) throws JDOMException, IOException {
+        Element loco = (new LocoFile()).rootFromFile(file).getChild("locomotive");
+        if (loco == null) {
+          throw new JDOMException("missing expected element");   
+        }
+        RosterEntry re = new RosterEntry(loco);
+        re.setFileName(file.getName());
+        return re;
     }
 
     @Override

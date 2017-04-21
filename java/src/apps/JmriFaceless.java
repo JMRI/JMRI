@@ -21,7 +21,7 @@ package apps;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
- * @author	Steve Todd Copyright 2012
+ * @author Steve Todd Copyright 2012
  */
 public class JmriFaceless extends apps.AppsBase {
 

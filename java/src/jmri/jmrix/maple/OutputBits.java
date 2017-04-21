@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * input (1-1000) and output (1001-9000), so input bits are read starting from
  * HMI address 1, and output bits are written starting at HMI address 1001.
  * <P>
- * @author	Dave Duchamp, Copyright (C) 2009
+ * @author Dave Duchamp, Copyright (C) 2009
  */
 public class OutputBits {
 
@@ -29,7 +29,7 @@ public class OutputBits {
     }
 
     // operational variables
-//	private int mPulseWidth = 500;
+// private int mPulseWidth = 500;
     private static int mSendDelay = 200;
     private static int mNumOutputBits = 98;
     protected byte[] outputArray = new byte[256]; // current values of the output bits
@@ -42,8 +42,8 @@ public class OutputBits {
     public static int getNumOutputBits() {
         return mNumOutputBits;
     }
-//	public int getPulseWidth() {return (mPulseWidth);}
-//	public void setPulseWidth(int width) {mPulseWidth = width;}
+// public int getPulseWidth() {return (mPulseWidth);}
+// public void setPulseWidth(int width) {mPulseWidth = width;}
 
     public static void setSendDelay(int n) {
         mSendDelay = n;

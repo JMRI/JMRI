@@ -15,7 +15,7 @@ import jmri.jmrix.grapevine.SerialTrafficController;
 /**
  * Frame lets user renumber a Grapevine node
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class RenumberFrame extends jmri.util.JmriJFrame {
 

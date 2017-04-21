@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * Defines the standard/common routines used in multiple classes related to the
  * a Lenz Command Station, on an XPressNet network.
  *
- * @author	Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
  */
 public class LenzCommandStation implements jmri.CommandStation {
 

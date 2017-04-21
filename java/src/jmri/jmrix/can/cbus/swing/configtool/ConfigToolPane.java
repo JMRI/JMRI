@@ -23,7 +23,7 @@ import jmri.jmrix.can.cbus.CbusMessage;
  * Pane to ease creation of Sensor, Turnouts and Lights that are linked to CBUS
  * events.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
 public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {

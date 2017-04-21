@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * For more info on the signals, see
  * <A HREF="http://www.ldt-infocenter.com">http://www.ldt-infocenter.com</a>.
  *
- * @author	Petr Koud'a Copyright (C) 2007
+ * @author Petr Koud'a Copyright (C) 2007
  */
 public class LsDecSignalHead extends DefaultSignalHead {
 

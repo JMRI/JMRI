@@ -464,7 +464,7 @@
 
    <tocitem text="Digitrax Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
 
-   <tocitem text="DS64 Configuration Tool " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+   <tocitem text="DS64 Configuration Tool " target="package.jmri.jmrix.loconet.ds64.DS64TabbedPanel"/>
 
    <tocitem text="Duplex Network Configuration Tool " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 
@@ -560,7 +560,9 @@
   <tocitem text="How We Do Stuff ">
    <tocitem text="Recommended Practices for Programmers " target="html.doc.Technical.RP"/>
 
-   <tocitem text="JMRI Program Structure " target="html.doc.Technical.IntroStructure"/>
+   <tocitem text="JMRI Library Structure " target="html.doc.Technical.IntroStructure"/>
+
+   <tocitem text="JMRI Program Structure " target="html.doc.Technical.AppStructure"/>
 
    <tocitem text="Names and Naming " target="html.doc.Technical.Names"/>
 
@@ -568,7 +570,9 @@
 
    <tocitem text="Swing Structure " target="html.doc.Technical.Swing"/>
 
-   <tocitem text="External Connection Structure " target="html.doc.Technical.Threads"/>
+   <tocitem text="External Connection Structure " target="html.doc.Technical.SystemStructure"/>
+
+   <tocitem text="Threads and Threading " target="html.doc.Technical.Threads"/>
 
    <tocitem text="JavaHelp HowTo " target="html.doc.Technical.Help"/>
 

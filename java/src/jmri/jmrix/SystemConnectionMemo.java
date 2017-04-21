@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
  * Lightweight abstract class to denote that a system is active, and provide
  * general information.
  * <p>
- * Objects of specific subtypes are registered in the instance manager to
+ * Objects of specific subtypes of this are registered in the {@link jmri.InstanceManager} to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 abstract public class SystemConnectionMemo {
 
@@ -36,6 +36,7 @@ abstract public class SystemConnectionMemo {
         if (!setSystemPrefix(prefix)) {
             for (int x = 2; x < 50; x++) {
                 if (setSystemPrefix(prefix + x)) {
+                    log.debug("created system prefix {}", prefix+x);
                     break;
                 }
             }
@@ -44,6 +45,7 @@ abstract public class SystemConnectionMemo {
         if (!setUserName(userName)) {
             for (int x = 2; x < 50; x++) {
                 if (setUserName(userName + x)) {
+                    log.debug("created user name {}", prefix+x);
                     break;
                 }
             }
@@ -55,18 +57,11 @@ abstract public class SystemConnectionMemo {
         this.userNameAsLoaded = null;
     }
 
-    // private static boolean initialised = false;
-
     /**
      * Provides a method to reserve System Names and prefixes at creation
      */
     private static void initialise() {
         log.debug("initialise called");
-//        if (!initialised) {
-//             addUserName("Internal");
-//             addSystemPrefix("I");
-//             initialised = true;
-//        }
     }
 
     /**
@@ -76,8 +71,6 @@ abstract public class SystemConnectionMemo {
         userNames = new ArrayList<>();
         sysPrefixes = new ArrayList<>();
         listeners = new HashSet<>();
-        
-        //initialised = false;
     }
     
     protected static ArrayList<String> userNames = new ArrayList<>();

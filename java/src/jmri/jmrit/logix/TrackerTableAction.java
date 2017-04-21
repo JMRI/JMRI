@@ -142,8 +142,8 @@ public class TrackerTableAction extends AbstractAction {
             table.setTransferHandler(new jmri.util.DnDTableExportHandler());
             JScrollPane tablePane = new JScrollPane(table);
             Dimension dim = table.getPreferredSize();
-            table.getRowHeight(new JButton("STOPIT").getPreferredSize().height);
-            dim.height = table.getRowHeight() * 2;
+            int height = new JButton("STOPIT").getPreferredSize().height;
+            dim.height = height * 2;
             tablePane.getViewport().setPreferredSize(dim);
 
             JPanel tablePanel = new JPanel();
@@ -376,8 +376,8 @@ public class TrackerTableAction extends AbstractAction {
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-//	        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
-//	        blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
+//         blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
+//         blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
             JPanel panel = new JPanel();
             panel.add(blurb);
@@ -386,7 +386,7 @@ public class TrackerTableAction extends AbstractAction {
             content.add(new PickPanel(models));
 
             _pickFrame.setContentPane(content);
-            /*	        _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            /*         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
              public void windowClosing(java.awt.event.WindowEvent e) {
              closePickList();                   
              }
@@ -448,7 +448,7 @@ public class TrackerTableAction extends AbstractAction {
                 OBlock b = iter.next();
                 if (oldRange.contains(b)) {
                     oldRange.remove(b);
-                    continue;	// held in common. keep listener	    			
+                    continue; // held in common. keep listener        
                 }
                 addBlockListener(b, tracker);       // new block.  Add Listener
             }
@@ -501,9 +501,9 @@ public class TrackerTableAction extends AbstractAction {
                 // The following washes out the extra notifications
 /*                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (OBlock.UNOCCUPIED | OBlock.RUNNING)) {
                     b.setState(state & ~OBlock.RUNNING);
-                    return;		// will do the tracker.move() on the next (repeat call
+                    return;  // will do the tracker.move() on the next (repeat call
                 } else if ((state & OBlock.RUNNING) != 0) {
-                    return;		// repeats previous call that was completed.	            	
+                    return;  // repeats previous call that was completed.              
                 }*/
                 if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.UNOCCUPIED | OBlock.RUNNING))
                         && (state & (OBlock.OCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.OCCUPIED | OBlock.RUNNING))) {
@@ -622,7 +622,7 @@ public class TrackerTableAction extends AbstractAction {
                 t.removeBlock(b);
             }
             list = t.getBlocksOccupied();
-//			removeBlockListeners(list, t);
+//   removeBlockListeners(list, t);
             iter = list.iterator();
             while (iter.hasNext()) {
                 OBlock b = iter.next();
