@@ -23,15 +23,15 @@ import jmri.util.com.sun.TableSorter;
  * provide, and by providing a {@link #extras} implementation that can in turn
  * invoke {@link #addToBottomBox} as needed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
-    Box bottomBox;		// panel at bottom for extra buttons etc
-    int bottomBoxIndex;	// index to insert extra stuff
+    Box bottomBox;  // panel at bottom for extra buttons etc
+    int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
     public void init(BeanTableDataModel model) {
@@ -56,7 +56,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
         // install items in GUI
         add(dataScroll);
         bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
         bottomBoxIndex = 0;
 
         add(bottomBox);

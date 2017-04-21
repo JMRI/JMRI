@@ -18,7 +18,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Since this is by definition connected to an Intellibox II or IB-COM, the
  * command station prompt is suppressed.
  *
- * @author	Alex Shepherd Copyright (C) 2004
+ * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
  */
 public class UhlenbrockAdapter extends LocoBufferAdapter {

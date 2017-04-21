@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener {
 
     public static final int NUM_FUNCTION_BUTTONS = 29;
-    public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
+    public static final int NUM_FUNC_BUTTONS_INIT = 16; //only show 16 function buttons at start
     private DccThrottle _throttle;
     private RosterEntry _rosterEntry;
     private LearnThrottleFrame _throttleFrame;
@@ -65,7 +65,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                         functionButton[i].setText(text);
                         // adjust button width for text
                         int butWidth = functionButton[i].getFontMetrics(functionButton[i].getFont()).stringWidth(text);
-                        butWidth = butWidth + 20;	// pad out the width a bit
+                        butWidth = butWidth + 20; // pad out the width a bit
                         if (butWidth < FunctionButton.getButtonWidth()) {
                             butWidth = FunctionButton.getButtonWidth();
                         }
@@ -195,6 +195,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 28:
                 _throttle.setF28(isSet);
                 break;
+            default:
         }
     }
 
@@ -304,6 +305,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 28:
                 _throttle.setF28Momentary(!isLockable);
                 break;
+            default:
         }
     }
 
@@ -324,7 +326,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      functionButton = null;
      initGUI();
      setEnabled(true);
-     }	*/
+     } */
     JPanel mainPanel = new JPanel();
 
     /**
@@ -395,7 +397,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         functionButton[22].setKeyCode(KeyEvent.VK_F22);
         functionButton[23].setKeyCode(KeyEvent.VK_F23);
         functionButton[24].setKeyCode(KeyEvent.VK_F24);
-        functionButton[25].setKeyCode(0xF00C);			// keycodes 25 - 28 don't exist in KeyEvent
+        functionButton[25].setKeyCode(0xF00C);   // keycodes 25 - 28 don't exist in KeyEvent
         functionButton[26].setKeyCode(0xF00D);
         functionButton[27].setKeyCode(0xF00E);
         functionButton[28].setKeyCode(0xF00F);

@@ -81,7 +81,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
-        _supressDragging = true;		// do dragging when updating
+        _supressDragging = true;  // do dragging when updating
         _currentIconMap = iconMap;
         if (iconMap != null) {
             checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
@@ -95,7 +95,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     public void init(ActionListener doneAction) {
         _update = false;
-        _supressDragging = true;		// do dragging in circuitBuilder
+        _supressDragging = true;  // do dragging in circuitBuilder
         _bottom1Panel = new JPanel();
         addShowButtonToBottom();
         addUpdateButtonToBottom(doneAction);
@@ -201,10 +201,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("checkCurrentMap: for type \"" + _itemType + "\", family \"" + _family + "\"");
         }
         String family = findFamilyOfMap(iconMap, ItemPalette.getFamilyMaps(_itemType));
-        if (family != null) {		// icons same as a known family, maybe with another name
+        if (family != null) {  // icons same as a known family, maybe with another name
             _family = family;
             return;
-        } else {	// no match with Palette families
+        } else { // no match with Palette families
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
 //                JOptionPane.showMessageDialog(_paletteFrame, 
 //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType), 
@@ -220,7 +220,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 if (_family == null || _family.trim().length() == 0) {
                     // bail out
                     _family = null;
-//    	        	_suppressNamePrompts = true;
+//              _suppressNamePrompts = true;
                     return;
                 }
             }

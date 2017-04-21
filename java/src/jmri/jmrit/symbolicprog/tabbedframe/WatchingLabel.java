@@ -4,7 +4,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
  * JLabel that watches another component, setting itself invisible if when the
  * other component is
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class WatchingLabel extends javax.swing.JLabel {
 

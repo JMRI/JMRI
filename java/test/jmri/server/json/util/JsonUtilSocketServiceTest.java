@@ -1,6 +1,9 @@
 package jmri.server.json.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -103,6 +106,8 @@ public class JsonUtilSocketServiceTest {
         Assert.assertEquals(helper.getNetworkServices(locale), connection.getMessage());
         instance.onList(JSON.SYSTEM_CONNECTIONS, empty, locale);
         Assert.assertEquals(helper.getSystemConnections(locale), connection.getMessage());
+        instance.onList(JSON.CONFIG_PROFILES, empty, locale);
+        Assert.assertEquals(helper.getConfigProfiles(locale), connection.getMessage());
     }
 
     /**

@@ -12,7 +12,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <P>
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -202,14 +202,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 + ", is currently assigned to " + conflict + ". Turnout cannot be created as "
                 + "you specified.", "C/MRI Assignment Conflict",
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
-    }
-
-    /**
-     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
     }
 
     //Turnout format is more than a simple format.

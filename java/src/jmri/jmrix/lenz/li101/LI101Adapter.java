@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Provide access to XPressNet via a LI101 on an attached serial comm port.
  * Normally controlled by the lenz.li101.LI101Frame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
  */
 public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
@@ -270,8 +270,8 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
                 SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)

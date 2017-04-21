@@ -328,7 +328,7 @@ public class Sound {
                 return;
             }
             // Read  the sound file in chunks of bytes into buffer, and
-            //			pass them on through the SourceDataLine 
+            //   pass them on through the SourceDataLine 
             int numRead;
             byte[] buffer = new byte[line.getBufferSize()];
             log.debug("streaming sound buffer size = " + line.getBufferSize());

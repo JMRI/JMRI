@@ -26,6 +26,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      *
      * @param pCommandStation reference to associated command station object,
      *                        preserved for later.
+     * @param prot            false if {@link #ASCII}, true if {@link #BINARY}
      */
     Mx1TrafficController(Mx1CommandStation pCommandStation, boolean prot) {
         mCommandStation = pCommandStation;

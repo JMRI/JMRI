@@ -23,8 +23,8 @@ import purejavacomm.UnsupportedCommOperationException;
  * Provide access to Powerline devices via a serial comm port. Derived from the
  * oaktree code.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to multiple connection
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
+ * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
@@ -181,6 +181,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return boolean of xmit port status
      */
     public boolean okToSend() {
         return true;
@@ -255,6 +256,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * Local method to do specific port configuration
+     * @throws gnu.io.UnsupportedCommOperationException used if invalid parms
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -276,8 +278,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default

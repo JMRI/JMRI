@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-core-2.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="lib" path="lib/jhidrawplugin.jar"/>
@@ -30,21 +30,19 @@
 	<classpathentry kind="lib" path="lib/openlcb.jar"/>
 	<classpathentry kind="lib" path="lib/jlfgr-1_0.jar"/>
 	<classpathentry kind="lib" path="lib/rscbundlecheck.jar"/>
-	<classpathentry kind="lib" path="lib/jna.jar"/>
-	<classpathentry kind="lib" path="lib/purejavacomm.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/jul-to-slf4j-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/UmlGraph-5.7.jar"/>
 	<classpathentry kind="lib" path="lib/vecmath-1.5.2.jar"/>
-	<classpathentry kind="lib" path="lib/WinRegistry-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/jna-4.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna-platform-4.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/xAPlib.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-databind-2.0.6.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-annotations-2.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.8.5.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/i18nchecker.jar"/>
-	<classpathentry kind="lib" path="lib/xbjlib-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-1.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/bluecove-2.1.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
@@ -75,8 +73,8 @@
         <classpathentry kind="lib" path="lib/javassist-3.20.0-GA.jar"/>
         <classpathentry kind="lib" path="lib/objenesis-2.2.jar"/>
         <classpathentry kind="lib" path="lib/byte-buddy-1.2.1.jar"/>
-        <classpathentry kind="lib" path="lib/jna-4.2.2.jar"/>
         <classpathentry kind="lib" path="lib/purejavacomm-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jemmy-2.2.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/xbee-java-library-1.2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

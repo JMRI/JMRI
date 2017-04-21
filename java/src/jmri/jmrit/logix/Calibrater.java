@@ -111,11 +111,11 @@ public class Calibrater extends jmri.util.JmriJFrame {
                     // get last acceleration block
                     if ( s>speed) {
                         speed = s;
-                        beforeBlk = ts.getBlockName();
+                        beforeBlk = ts.getBeanDisplayName();
                     }
                     // get first deceleration block
                     if ( s<speed) {
-                        afterBlock = ts.getBlockName();
+                        afterBlock = ts.getBeanDisplayName();
                         break;
                     }
                 } catch (NumberFormatException nfe) {

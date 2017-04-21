@@ -7,7 +7,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 /**
  * Swing action to create and register a Block Routing Table.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockRouteTableAction extends AbstractAction {
 

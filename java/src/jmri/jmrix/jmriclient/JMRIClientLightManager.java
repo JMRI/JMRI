@@ -8,7 +8,7 @@ import jmri.Light;
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the light number without padding.
  *
- * @author	Paul Bender Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010
   */
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 

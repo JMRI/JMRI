@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * The algorithms in this class are a collaborative effort of Digitrax, Inc and
  * Bob Jacobsen.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2010, 2014
+ * @author Bob Jacobsen Copyright (C) 2002, 2010, 2014
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 
@@ -48,9 +48,6 @@ public class SE8cSignalHead extends DefaultSignalHead {
         this.highTurnout = highTO;
         systemName = makeSystemName(lowTO, highTO);
         init();
-
-        // Add listeners to track other changes on LocoNet
-        addListeners();
     }
 
     /**
@@ -174,6 +171,9 @@ public class SE8cSignalHead extends DefaultSignalHead {
         // ensure default appearance
         mAppearance = DARK;  // start turned off
         updateOutput();
+
+        // Add listeners to track other changes on LocoNet
+        addListeners();
     }
 
     @Override
@@ -259,10 +259,10 @@ public class SE8cSignalHead extends DefaultSignalHead {
                     @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         // we're not tracking state, we're tracking changes in state
-                        if (e.getPropertyName().equals("CommandedState")) {
-                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED)) {
+                        if (e.getPropertyName().equals("KnownState")) {
+                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED) && getAppearance() != GREEN) {
                                 setAppearance(GREEN);
-                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN)) {
+                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN) && getAppearance() != RED) {
                                 setAppearance(RED);
                             }
                         }
@@ -275,9 +275,9 @@ public class SE8cSignalHead extends DefaultSignalHead {
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
                         // we're not tracking state, we're tracking changes in state
                         if (e.getPropertyName().equals("CommandedState")) {
-                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED)) {
+                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED) && getAppearance() != DARK) {
                                 setAppearance(DARK);
-                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN)) {
+                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN) && getAppearance() != YELLOW) {
                                 setAppearance(YELLOW);
                             }
                         }

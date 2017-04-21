@@ -3,7 +3,7 @@ package jmri.jmrit.decoderdefn;
 /**
  * Update the decoder index and store as a command-line action
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2011, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2011, 2014
  * @author Randall Wood Copyright (C) 2013
  * @see jmri.jmrit.XmlFile
  */

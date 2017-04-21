@@ -241,7 +241,7 @@
 
   
 <li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 </a>
+<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 </a>
 <ul></ul>
 </li>
 
@@ -618,6 +618,12 @@
 
  
 <li>
+<a href="">Switchboard Editor </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/tools/signaling/ldt/output.shtml">LDT Signals </a>
 <ul></ul>
 </li>
@@ -651,6 +657,12 @@
 <li>LocoNet <ul>
   
 <li>
+<a href="package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16/BDL162/BDL168 </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Command Station Configuration Tool </a>
 <ul></ul>
 </li>
@@ -663,13 +675,43 @@
 
   
 <li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 </a>
+<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Duplex Group </a>
 <ul></ul>
 </li>
 
   
 <li>
 <a href="package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml">Fast Clock </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">Firmware Downloader </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/loconet/LocoBuffer.shtml">LocoBuffer </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/loconet/LocoBufferII.shtml">LocoBuffer-II </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/loconet/LocoBufferUSB.shtml">LocoBuffer-USB </a>
 <ul></ul>
 </li>
 
@@ -682,6 +724,24 @@
   
 <li>
 <a href="html/hardware/loconet/Addressing.shtml">LocoNet Addressing </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">LocoNet Monitor </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">LocoNet Status </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml">Packet sender </a>
 <ul></ul>
 </li>
 
@@ -712,6 +772,12 @@
   
 <li>
 <a href="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/loconet/StandaloneLocoNet.shtml">Standalone LocoNet </a>
 <ul></ul>
 </li>
 
@@ -942,6 +1008,12 @@
 
   
 <li>
+<a href="">Handling Errors </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/apps/PanelPro/Panels.shtml">Intro </a>
 <ul></ul>
 </li>
@@ -961,12 +1033,6 @@
   
 <li>
 <a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="">Handling Errors </a>
 <ul></ul>
 </li>
 

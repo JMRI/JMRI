@@ -1851,6 +1851,8 @@
       panel with blocks defined and signals placed can help in
       deciding where blocks and signals should be placed before
       actually installing them on your layout.</p>
+      <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">
+        PanelPro help page</a>.
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.beans.PropertyChangeEvent;
@@ -208,7 +208,7 @@ public class VSDecoderPreferences {
             Document doc = XmlFile.newDocument(root);
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-/*TODO    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*TODO      java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttles-preferences.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);

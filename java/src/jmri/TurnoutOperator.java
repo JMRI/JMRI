@@ -5,7 +5,7 @@ import jmri.implementation.AbstractTurnout;
 /**
  * Some (not much) common machinery for the concrete turnout operator classes.
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public abstract class TurnoutOperator extends Thread {

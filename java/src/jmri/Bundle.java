@@ -46,12 +46,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @net.jcip.annotations.Immutable
 public class Bundle {
 
+    @Nullable
     private final static String name = "jmri.NamedBeanBundle";  // NOI18N
 
     /**
@@ -147,10 +147,10 @@ public class Bundle {
             if (rb.containsKey(key)) {
                 return rb.getString(key);
             } else {
-                return retry(locale,key);
+                return retry(locale, key);
             }
         } else {  // case of no local bundle
-            return retry(locale,key);
+            return retry(locale, key);
         }
     }
 
@@ -187,7 +187,7 @@ public class Bundle {
 
     // the following is different from the method in subclasses because
     // this is the root of the search tree
-    protected String retry(Locale locale,String key) throws MissingResourceException {
+    protected String retry(Locale locale, String key) throws MissingResourceException {
         throw new MissingResourceException("Resource not found", this.getClass().toString(), key); // NOI18N
     }
 

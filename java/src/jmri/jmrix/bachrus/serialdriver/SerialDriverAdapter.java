@@ -29,8 +29,8 @@ import purejavacomm.UnsupportedCommOperationException;
  * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged
  * with "AJB" indicate changes or observations by me
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -64,8 +64,8 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             //AJB: Removed Jan 2010 - 
             //Setting flow control mode to zero kills comms - SPROG doesn't send data

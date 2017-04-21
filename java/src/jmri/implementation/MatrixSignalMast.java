@@ -28,8 +28,8 @@ import javax.annotation.Nonnull;
  * where n = the number of binary outputs, between 1 and mastBitNum (= 6)</li>
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
+ * @author Egbert Broerse Copyright (C) 2016
  */
 public class MatrixSignalMast extends AbstractSignalMast {
     /**

@@ -85,7 +85,7 @@ public class Z21ReplyTest {
     public void MonitorStringXPressNetReply(){
         byte msg[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Z21Reply m = new Z21Reply(msg,7);
-        Assert.assertEquals("Monitor String","07 00 40 00 61 82 E3",m.toMonitorString());
+        Assert.assertEquals("Monitor String","XPressNet Tunnel Reply: 61 82 E3",m.toMonitorString());
     }
 
     //Test RailCom related methods.

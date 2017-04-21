@@ -104,7 +104,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     // members for handling the programmer interface
     int _val;           // remember the value being read/written for confirmative reply
     String _cv;         // remember the cv number being read/written
-    String _addrType;	// remember the address type: "decoder" or "accessory"
+    String _addrType; // remember the address type: "decoder" or "accessory"
 
     // programming interface
     @Override
@@ -175,8 +175,20 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
+        if (status != OK ) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+        
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {

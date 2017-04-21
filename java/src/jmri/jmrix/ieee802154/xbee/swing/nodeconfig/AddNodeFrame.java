@@ -22,9 +22,9 @@ import com.digi.xbee.api.models.XBee64BitAddress;
 /**
  * Frame for Adding new Nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Paul Bender Copyright (C) 2013,2016
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2013,2016
  */
 public class AddNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.AddNodeFrame {
 

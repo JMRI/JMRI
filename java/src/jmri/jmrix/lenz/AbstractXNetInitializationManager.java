@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * dependent initilization for XPressNet. It adds the appropriate Managers via
  * the Initialization Manager based on the Command Station Type.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
   */
 abstract public class AbstractXNetInitializationManager {
 

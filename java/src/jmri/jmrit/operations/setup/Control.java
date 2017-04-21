@@ -39,7 +39,7 @@ public class Control {
     public static final int panelHeight100 = 100;
 
     /*
-     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	
+     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
      // Maximum panel height
      public static final int panelMaxHeight = screenSize.height;
      */
@@ -51,10 +51,10 @@ public class Control {
     @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
     public static boolean fullTrainOnly = false;
 
-    // Car and Engine attribute maximum string length	
+    // Car and Engine attribute maximum string length 
     public static int max_len_string_attibute = 12;
 
-    // Car and Engine number maximum string length	
+    // Car and Engine number maximum string length 
     public static int max_len_string_road_number = 10;
     
     // Car and Engine number maximum string length when printing  
