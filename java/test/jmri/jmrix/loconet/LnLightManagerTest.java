@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Ib1ThrottleTest {
+public class LnLightManagerTest {
 
     @Test
     public void testCTor() {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        Ib1Throttle t = new Ib1Throttle(new LocoNetSystemConnectionMemo(lnis),new LocoNetSlot(5));
+        LnLightManager t = new LnLightManager(lnis,"L");
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +34,6 @@ public class Ib1ThrottleTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Ib1ThrottleTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLightManagerTest.class.getName());
 
 }
