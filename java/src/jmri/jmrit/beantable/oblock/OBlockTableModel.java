@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * Duplicates the JTable model for BlockTableAction and adds a column for the
  * occupancy sensor. Configured for use within an internal frame.
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
@@ -40,7 +40,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     static public final int COMMENTCOL = 2;
     static public final int STATECOL = 3;
     static public final int SENSORCOL = 4;
-    static public final int EDIT_COL = 5;			// Path button
+    static public final int EDIT_COL = 5;   // Path button
     static public final int DELETE_COL = 6;
     static public final int LENGTHCOL = 7;
     static public final int UNITSCOL = 8;
@@ -340,6 +340,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     return Bundle.getMessage("ButtonDelete");
                 }
                 return Bundle.getMessage("ButtonClear");
+            default:
+                // fall through
+                break;
         }
         return super.getValueAt(row, col);
     }
@@ -468,6 +471,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         tempRow[PERMISSIONCOL] = Bundle.getMessage("Absolute");
                     }
                     return;
+                default:
+                    // fall though
+                    break;
             }
             tempRow[col] = (String) value;
             return;
@@ -587,6 +593,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 deleteBean(block);
                 block = null;
                 return;
+            default:
+                // fall through
+                break;
         }
         super.setValueAt(value, row, col);
     }
@@ -628,6 +637,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return Bundle.getMessage("ButtonEditPath");
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            default:
+                // fall through
+                break;
         }
         return super.getColumnName(col);
     }
@@ -689,6 +701,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case REPORT_CURRENTCOL:
             case PERMISSIONCOL:
                 return Boolean.class;
+            default:
+                // fall through
+                break;
         }
         return String.class;
     }
@@ -726,6 +741,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return new JButton("DELETE").getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }

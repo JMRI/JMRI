@@ -5,7 +5,7 @@ import jmri.TurnoutOperator;
 /**
  * Concrete subclass of TurnoutOperator for a turnout that has no feedback.
  *
- * @author	John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  */
 public class NoFeedbackTurnoutOperator extends TurnoutOperator {
 

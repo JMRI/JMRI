@@ -5,7 +5,7 @@ import javax.swing.BoxLayout;
 /**
  * Frame for adding to the log file.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class LogFrame extends jmri.util.JmriJFrame {
 

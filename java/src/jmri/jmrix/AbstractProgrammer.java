@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *</ul>
  * The duration of these can be adjusted by changing the values of those constants in subclasses.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2012, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2012, 2013
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -207,6 +207,16 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     /**
+     * By default, say that no verification is done.
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return Always WriteConfirmMode.NotVerified
+     */
+    @Nonnull
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
+    
+
+    /**
      * Internal routine to start timer to protect the mode-change.
      */
     protected void startShortTimer() {
@@ -272,6 +282,9 @@ public abstract class AbstractProgrammer implements Programmer {
                 return 7;
             case 8:
                 return 8;
+            default:
+                log.warn("Unhandled register from cv: {}", cv);
+                break;
         }
         throw new ProgrammerException();
     }

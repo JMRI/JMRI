@@ -150,6 +150,9 @@ public class LevelXing extends LayoutTrack {
             case POINTD:
                 namedBean = signalDHeadNamed;
                 break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
+                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -172,6 +175,9 @@ public class LevelXing extends LayoutTrack {
             case POINTD:
                 namedBean = signalDMastNamed;
                 break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
+                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -193,6 +199,9 @@ public class LevelXing extends LayoutTrack {
                 break;
             case POINTD:
                 namedBean = sensorDNamed;
+                break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
                 break;
         }
         if (namedBean != null) {
@@ -579,6 +588,9 @@ public class LevelXing extends LayoutTrack {
                 return connectC;
             case LEVEL_XING_D:
                 return connectD;
+            default:
+                log.warn("Unhandled loc: {}", location);
+                break;
         }
         log.error("Invalid Point Type " + location); //I18IN
         throw new jmri.JmriException("Invalid Point");
@@ -1260,12 +1272,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit1BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = block1NameComboBox.getEditor().getItem().toString();
-        if (-1 != block1NameComboBox.getSelectedIndex()) {
-            newName = block1NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = block1NameComboBox.getUserName();
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1306,7 +1313,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEdit2BlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = block2NameComboBox.getEditor().getItem().toString();
+        String newName = block2NameComboBox.getUserName();
         if (-1 != block2NameComboBox.getSelectedIndex()) {
             newName = block2NameComboBox.getSelectedDisplayName();
         } else {
@@ -1352,12 +1359,7 @@ public class LevelXing extends LayoutTrack {
 
     void xingEditDonePressed(ActionEvent a) {
         // check if Blocks changed
-        String newName = block1NameComboBox.getEditor().getItem().toString();
-        if (-1 != block1NameComboBox.getSelectedIndex()) {
-            newName = block1NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = block1NameComboBox.getUserName();
         if (!blockNameAC.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
@@ -1385,12 +1387,7 @@ public class LevelXing extends LayoutTrack {
             layoutEditor.auxTools.setBlockConnectivityChanged();
             needsBlockUpdate = true;
         }
-        newName = block2NameComboBox.getEditor().getItem().toString();
-        if (-1 != block2NameComboBox.getSelectedIndex()) {
-            newName = block2NameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        newName = block2NameComboBox.getUserName();
         if (!blockNameBD.equals(newName)) {
             // block 2 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {

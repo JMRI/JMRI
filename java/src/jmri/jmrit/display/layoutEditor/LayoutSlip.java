@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.util.MathUtil.*;
+import static jmri.util.MathUtil.lerp;
+import static jmri.util.MathUtil.midpoint;
+import static jmri.util.MathUtil.third;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -174,6 +176,9 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectC;
             case SLIP_D:
                 return connectD;
+            default:
+                // fall out
+                break;
         }
         log.error("Invalid Point Type " + location); //I18IN
         throw new jmri.JmriException("Invalid Point");
@@ -1092,12 +1097,7 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        String newName = turnoutAComboBox.getEditor().getItem().toString();
-        if (-1 != turnoutAComboBox.getSelectedIndex()) {
-            newName = turnoutAComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        String newName = turnoutAComboBox.getUserName();
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1107,12 +1107,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = turnoutBComboBox.getEditor().getItem().toString();
-        if (-1 != turnoutBComboBox.getSelectedIndex()) {
-            newName = turnoutBComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        newName = turnoutBComboBox.getUserName();
         if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
@@ -1124,12 +1119,7 @@ public class LayoutSlip extends LayoutTurnout {
             needRedraw = true;
         }
 
-        newName = blockNameComboBox.getEditor().getItem().toString();
-        if (-1 != blockNameComboBox.getSelectedIndex()) {
-            newName = blockNameComboBox.getSelectedDisplayName();
-        } else {
-            newName = (null != newName) ? newName.trim() : "";
-        }
+        newName = blockNameComboBox.getUserName();
         if (!blockName.equals(newName)) {
             // block 1 has changed, if old block exists, decrement use
             if ((block != null)) {

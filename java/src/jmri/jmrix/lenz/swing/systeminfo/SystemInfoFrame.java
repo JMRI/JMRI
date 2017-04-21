@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
  * that are not available on all XPressNet Command Stations (as an example, the
  * fact that you can't program using the computer on a Commander or Compact)
  *
- * @author	Paul Bender Copyright (C) 2003-2010
- * @author	Giorgio Terdina Copyright (C) 2007
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Giorgio Terdina Copyright (C) 2007
   */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 

@@ -3255,7 +3255,7 @@ public class LlnmonTest extends TestCase {
     public void testPR3ModeMessages() {
         LocoNetMessage l;
 
-        l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x01, 0x00, 0x00, 0x3D});
+        l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x02, 0x00, 0x00, 0x3D});
         assertEquals("PR3 mode test 1",
                 "Set PR3 to decoder programming track mode (i.e. no command station present).\n",
                 f.displayMessage(l));
@@ -3290,9 +3290,9 @@ public class LlnmonTest extends TestCase {
                 "Unable to parse LocoNet message.\ncontents: D3 10 03 00 10 3D\n",
                 f.displayMessage(l));
 
-        l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x02, 0x00, 0x00, 0x3D});
+        l = new LocoNetMessage(new int[] {0xD3, 0x10, 0x01, 0x00, 0x00, 0x3D});
         assertEquals("PR3 mode test 8",
-                "Unable to parse LocoNet message.\ncontents: D3 10 02 00 00 3D\n",
+                "Unable to parse LocoNet message.\ncontents: D3 10 01 00 00 3D\n",
                 f.displayMessage(l));
 
     }

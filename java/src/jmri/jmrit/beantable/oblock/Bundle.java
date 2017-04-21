@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.beantable.Bundle {
 
-    private final static String name = "jmri.jmrit.beantable.OBlockTableBundle";
+    @Nullable
+    private static final String name = "jmri.jmrit.beantable.OBlockTableBundle";
 
     //
     // below here is boilerplate to be copied exactly

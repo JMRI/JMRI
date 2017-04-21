@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.locations.TrackEditFrame;
 
 /**
  *
@@ -17,7 +19,6 @@ import java.awt.GraphicsEnvironment;
 public class TrackDestinationEditFrameTest {
 
     @Test
-    @Ignore("ignore constructor tests for Frames until test dependencies resovled")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrackDestinationEditFrame t = new TrackDestinationEditFrame();

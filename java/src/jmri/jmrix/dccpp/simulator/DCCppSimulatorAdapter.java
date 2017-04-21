@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
  * NOTE: Some material in this file was modified from other portions of the
  * support infrastructure.
  *
- * @author	Paul Bender, Copyright (C) 2009-2010
- * @author	Mark Underwood, Copyright (C) 2015
+ * @author Paul Bender, Copyright (C) 2009-2010
+ * @author Mark Underwood, Copyright (C) 2015
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter
  */
@@ -468,12 +468,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private void generateReadCSStatusReply() {
         /*
-	String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
-	DCCppReply r = new DCCppReply(s);
-	writeReply(r);
-	if (log.isDebugEnabled()) {
-	    log.debug("Simulator Thread sent Reply" + r.toString());
-	}
+ String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
+ DCCppReply r = new DCCppReply(s);
+ writeReply(r);
+ if (log.isDebugEnabled()) {
+     log.debug("Simulator Thread sent Reply" + r.toString());
+ }
          */
 
         DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");

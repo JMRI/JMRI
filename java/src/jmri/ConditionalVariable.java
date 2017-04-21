@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariable {
@@ -277,11 +277,11 @@ public class ConditionalVariable {
 
     public NamedBean getBean() {
         if (_namedBean != null) {
-            return (NamedBean) _namedBean.getBean();
+            return _namedBean.getBean();
         }
         setName(_name); //ReApply name as that will create namedBean, save replicating it here
         if (_namedBean != null) {
-            return (NamedBean) _namedBean.getBean();
+            return _namedBean.getBean();
         }
         return null;
     }
@@ -297,12 +297,9 @@ public class ConditionalVariable {
     public void setDataString(String data) {
         _dataString = data;
         if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
-            try {
-                NamedBean bean = InstanceManager.memoryManagerInstance().provideMemory(data);
+            NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
+            if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
-            } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide memory \"{}\" in setDataString", data);
-                _namedBeanData = null;
             }
         }
     }
@@ -311,7 +308,7 @@ public class ConditionalVariable {
 
     public NamedBean getNamedBeanData() {
         if (_namedBeanData != null) {
-            return (NamedBean) _namedBeanData.getBean();
+            return _namedBeanData.getBean();
         }
         return null;
     }
@@ -666,11 +663,13 @@ public class ConditionalVariable {
                         return (n1 >= n2);
                     case GREATER_THAN:
                         return (n1 > n2);
+                    default:
+                        log.error("Compare numbers: invalid compare case: {}", _num1);
+                        return false;
                 }
             } catch (NumberFormatException nfe) {
                 return false;   // n1 is a number, n2 is not
             }
-            log.error("Compare 'numbers': value1= " + value1 + ", to value2= " + value2);
         } catch (NumberFormatException nfe) {
             try {
                 Integer.parseInt(value2);
@@ -688,7 +687,7 @@ public class ConditionalVariable {
         if (_num1 == 0) { // for former code
             return compare == 0;
         }
-        switch (_num1) {   // fall through
+        switch (_num1) {
             case LESS_THAN:
                 if (compare < 0) {
                     return true;
@@ -713,6 +712,9 @@ public class ConditionalVariable {
                 if (compare > 0) {
                     return true;
                 }
+                break;
+            default:
+                // fall through
                 break;
         }
         return false;
@@ -755,8 +757,10 @@ public class ConditionalVariable {
                 return Bundle.getMessage("BeanNameOBlock"); // NOI18N
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 return Bundle.getMessage("EntryExit"); // NOI18N
+            default:
+                log.warn("Invalid conditional item type: {}", t);
+                return "";
         }
-        return "";
     }
 
     /**
@@ -839,8 +843,10 @@ public class ConditionalVariable {
                 return Bundle.getMessage("SensorStateActive"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
+            default:
+                log.warn("Unhandled condition type: {}", t); // NOI18N
+                return "<none>";
         }
-        return "<none>";
     }
 
     /**
@@ -923,6 +929,9 @@ public class ConditionalVariable {
                 return rbx.getString("TypeEntryExitActive"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                 return rbx.getString("TypeEntryExitInactive"); // NOI18N
+            default:
+                // fall though
+                break;
         }
         return Bundle.getMessage("NONE");
     }
@@ -940,6 +949,9 @@ public class ConditionalVariable {
                 return rbx.getString("GreaterOrEqual"); // NOI18N
             case GREATER_THAN:
                 return rbx.getString("GreaterThan"); // NOI18N
+            default:
+                // fall through
+                break;
         }
         return ""; // NOI18N
     }
@@ -957,6 +969,8 @@ public class ConditionalVariable {
                 return ">="; // NOI18N
             case GREATER_THAN:
                 return ">"; // NOI18N
+            default:
+                break;
         }
         return ""; // NOI18N
     }
@@ -1057,6 +1071,9 @@ public class ConditionalVariable {
                         new Object[]{Bundle.getMessage("EntryExit"), getBean().getUserName(), type}); // NOI18N
             case Conditional.TYPE_NONE:
                 return getName() + " type " + type;
+            default:
+                // fall through
+                break;
         }
         return super.toString();
     }

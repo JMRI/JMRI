@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2003-2010
   *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -1563,7 +1563,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                                 LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                         break;
                     }
-                //fall through
+                    //$FALL-THROUGH$
                 default:
                     text = toString();
             }

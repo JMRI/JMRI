@@ -7,6 +7,8 @@ jmri.web.servlet.json.JsonServlet
 jmri.web.servlet.operations.OperationsServlet
 jmri.web.servlet.panel.ControlPanelServlet
 jmri.web.servlet.panel.LayoutPanelServlet
+jmri.web.servlet.panel.SwitchboardServlet
 jmri.web.servlet.panel.PanelServlet
 jmri.web.servlet.roster.RosterServlet
 jmri.web.servlet.simple.SimpleServlet
+jmri.web.servlet.about.AboutServlet

@@ -30,12 +30,12 @@ public class PackageTest extends TestCase {
 
 //		Something wrong in the xsd files?  maybe using -2-9-6 version?
         suite.addTest(new JUnit4TestAdapter(SchemaTest.class));
-        suite.addTest(OBlockTest.suite());
-        suite.addTest(OBlockManagerTest.suite());
-        suite.addTest(OPathTest.suite());
-        suite.addTest(PortalTest.suite());
-        suite.addTest(WarrantTest.suite());
-        suite.addTest(LogixActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(OBlockTest.class));
+        suite.addTest(new JUnit4TestAdapter(OBlockManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(OPathTest.class));
+        suite.addTest(new JUnit4TestAdapter(PortalTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTest.class));
+        suite.addTest(new JUnit4TestAdapter(LogixActionTest.class));
         suite.addTest(new JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.logix.configurexml.PackageTest.class));
         suite.addTest(NXFrameTest.suite()); //formerly NXWarrantTest        
@@ -45,6 +45,15 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(WarrantManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(WarrantPreferencesPanelTest.class));
         suite.addTest(new JUnit4TestAdapter(WarrantPreferencesTest.class));
+        suite.addTest(new JUnit4TestAdapter(TrackerTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTableActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTableFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(WarrantTableModelTest.class));
+        suite.addTest(new JUnit4TestAdapter(LearnThrottleFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(TrackerTest.class));
+        suite.addTest(new JUnit4TestAdapter(BlockOrderTest.class));
+        suite.addTest(new JUnit4TestAdapter(ControlPanelTest.class));
         return suite;
     }
 

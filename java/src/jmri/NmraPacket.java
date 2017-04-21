@@ -850,7 +850,7 @@ public class NmraPacket {
         if (speed > 0) {
             speedC = speedC + 1;
         }
-        int c = (speed & 0x01) << 4;	// intermediate speed step
+        int c = (speed & 0x01) << 4; // intermediate speed step
 
         speedC = speedC + c;
 
@@ -893,7 +893,7 @@ public class NmraPacket {
             return null;
         }
         int speedC = (speed & 0x1F) >> 1;
-        int c = (speed & 0x01) << 4;	// intermediate speed step
+        int c = (speed & 0x01) << 4; // intermediate speed step
 
         speedC = speedC + c;
 
@@ -1277,6 +1277,9 @@ public class NmraPacket {
 
                 // case turnout accessory decoder
                 return getAccDecoderPktAddress(packet);
+            default:
+                log.error("Unhandled address type {}", extractAddressType(packet));
+                break;
         }
         return -1;
     }
@@ -1300,6 +1303,8 @@ public class NmraPacket {
             case LOCO_LONG_ADDRESS:
             case ACCESSORY_ADDRESS:
                 return packet[2] & 0xFF;
+            default:
+                log.warn("Unhandled address type: {}", extractAddressType(packet));
         }
         return 0;
     }

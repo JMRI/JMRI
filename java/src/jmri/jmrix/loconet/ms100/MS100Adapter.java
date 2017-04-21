@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * 16457 baud. Neither the baud rate configuration nor the "option 1" option are
  * used.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -105,8 +105,8 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             Serialio.SerialPort activeSerialPort = new SerialPortLocal(config);
 
             // set RTS high, DTR low to power the MS100
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(false);  // pin 1 in DIN8; on main connector, this is DTR
 
             // get and save stream
             serialInStream = new SerInputStream(activeSerialPort);

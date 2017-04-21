@@ -22,11 +22,12 @@ import jmri.web.servlet.ServletUtil;
             "/prefs/index.html" // some WiThrottle clients require this URL to show web services
         })
 public class HomeServlet extends HttpServlet {
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getRequestURI().equals("/index.html")
-                || request.getRequestURI().equals("/prefs/index.html")) {
+        if (request.getRequestURI().startsWith("/index.html")
+                || request.getRequestURI().startsWith("/prefs/index.html")) {
             response.sendRedirect("/");
+            return;
         }
         if (!request.getRequestURI().equals("/")) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

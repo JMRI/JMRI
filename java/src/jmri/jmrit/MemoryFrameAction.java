@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
 /**
  * Display memory usage on request
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2012
  */
 public class MemoryFrameAction extends AbstractAction {
 

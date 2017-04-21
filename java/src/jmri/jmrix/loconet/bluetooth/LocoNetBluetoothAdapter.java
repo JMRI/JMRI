@@ -166,6 +166,9 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             case DiscoveryListener.SERVICE_SEARCH_TERMINATED:
                 log.error("Service search on " + portName + " ended prematurely");
                 return "Search for " + portName + " ended unexpectedly";
+            default:
+                log.warn("Unhandled response code: {}", responseCode[0]);
+                break;
             }
             log.error("Unknown error when connecting to " + portName);
             return "Unknown error when connecting to " + portName;

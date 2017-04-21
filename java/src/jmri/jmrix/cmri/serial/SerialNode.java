@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * USIC/SUSIC nodes can have 0-63 inputs and 0-63 output cards, but no more than
  * 64 total cards.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialNode extends AbstractNode {
@@ -54,7 +54,7 @@ public class SerialNode extends AbstractNode {
     protected int nodeType = SMINI;             // See above
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
-    protected int pulseWidth = 500;				// Pulse width for pulsed turnout control (milliseconds)
+    protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[MAXSEARCHLIGHTBYTES]; // SMINI only, 0 = not searchlight LED,
     //   1 = searchlight LED, 2*NS bits must be set to 1

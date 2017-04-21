@@ -13,7 +13,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <P>
  * Based in part on SerialTurnoutManager.java
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -120,15 +120,6 @@ public class SerialLightManager extends AbstractLightManager {
     @Override
     public String convertSystemNameToAlternate(String systemName) {
         return (SerialAddress.convertSystemNameToAlternate(systemName));
-    }
-
-    /**
-     * Allow access to SerialLightManager
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialLightManager instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());

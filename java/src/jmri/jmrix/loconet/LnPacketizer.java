@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -168,6 +168,9 @@ public class LnPacketizer extends LnTrafficController {
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     * @param istream stream to read from
+     * @return buffer of received data
+     * @throws java.io.IOException failure during stream read
      *
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
@@ -212,24 +215,24 @@ public class LnPacketizer extends LnTrafficController {
                             opCode = byte2;
                             throw new LocoNetMessageException();
                         }
+                        int len=2;  
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
                             case 0:
                                 /* 2 byte message */
-
-                                msg = new LocoNetMessage(2);
+                                len = 2;
                                 break;
 
                             case 1:
                                 /* 4 byte message */
 
-                                msg = new LocoNetMessage(4);
+                                len = 4;
                                 break;
 
                             case 2:
                                 /* 6 byte message */
 
-                                msg = new LocoNetMessage(6);
+                                len = 6;
                                 break;
 
                             case 3:
@@ -239,13 +242,16 @@ public class LnPacketizer extends LnTrafficController {
                                     log.error("LocoNet message length invalid: " + byte2
                                             + " opcode: " + Integer.toHexString(opCode)); // NOI18N
                                 }
-                                msg = new LocoNetMessage(byte2);
+                                len = byte2;
+                                break;
+                            default:
+                                log.warn("Unhandled code: {}", (opCode & 0x60) >> 5);
                                 break;
                         }
+                        msg = new LocoNetMessage(len);
                         // message exists, now fill it
                         msg.setOpCode(opCode);
                         msg.setElement(1, byte2);
-                        int len = msg.getNumDataElements();
                         log.trace("len: {}", len); // NOI18N
                         for (int i = 2; i < len; i++) {
                             // check for message-blocking error
@@ -345,23 +351,24 @@ public class LnPacketizer extends LnTrafficController {
                             int byte2 = readByteProtected(istream) & 0xFF;
                             log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
                             // Decide length
+                            int len=2;
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:
                                     /* 2 byte message */
 
-                                    msg = new LocoNetMessage(2);
+                                    len = 2;
                                     break;
 
                                 case 1:
                                     /* 4 byte message */
 
-                                    msg = new LocoNetMessage(4);
+                                    len  = 4;
                                     break;
 
                                 case 2:
                                     /* 6 byte message */
 
-                                    msg = new LocoNetMessage(6);
+                                    len =6;
                                     break;
 
                                 case 3:
@@ -371,13 +378,16 @@ public class LnPacketizer extends LnTrafficController {
                                         log.error("LocoNet message length invalid: " + byte2
                                                 + " opcode: " + Integer.toHexString(opCode)); // NOI18N
                                     }
-                                    msg = new LocoNetMessage(byte2);
+                                    len = byte2;
+                                    break;
+                                default:
+                                    log.warn("Unhandled code: {}", (opCode & 0x60) >> 5);
                                     break;
                             }
+                            msg = new LocoNetMessage(len);
                             // message exists, now fill it
                             msg.setOpCode(opCode);
                             msg.setElement(1, byte2);
-                            int len = msg.getNumDataElements();
                             log.trace("len: {}", len); // NOI18N
                             for (int i = 2; i < len; i++) {
                                 // check for message-blocking error
@@ -503,6 +513,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
      * is needed
+     * @param msg message sent
      *
      */
     protected void messageTransmited(byte[] msg) {

@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.locomon;
 
-import static jmri.jmrix.loconet.LnConstants.PCMD_BYTE_MODE;
-
 import java.time.LocalTime;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
@@ -2606,6 +2604,9 @@ public class Llnmon {
                 case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
                     device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
                     break;
+                default:
+                    log.warn("Unhandled device type: {}", deviceType);
+                    break;
             }
 
             int bdaddr = l.getElement(2) + 1;
@@ -2622,7 +2623,6 @@ public class Llnmon {
         return "";
     }
     private String interpretOpcMultiSense(LocoNetMessage l ) {
-        int pCMD = (l.getElement(3) & 0xF0);
         int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
         switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
@@ -4222,15 +4222,15 @@ public class Llnmon {
         if ((l.getElement(1) == 0x10) && ((l.getElement(2) & 0x7c) == 0)
                 && (l.getElement(3) == 0) && (l.getElement(4) == 0)) {
             // set PR3 mode of operation, where LS 2 bits of byte 2 are encoded as:
-            //	0x00	Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
-            //  0x01	Set the PR3 to decoder programming track mode
-            //  0x03	Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
+            // 0x00 Set the PR3 mode to MS100 interface mode with PR3 LocoNet termination disabled
+            //  0x01 Set the PR3 to decoder programming track mode
+            //  0x03 Set the PR3 to MS100 interface mode with PR3 LocoNet termination enabled
 
             switch (l.getElement(2) & 0x3) {
                 case 0x00: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
                 }
-                case 0x01: {
+                case 0x02: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
                 }
                 case 0x03: {

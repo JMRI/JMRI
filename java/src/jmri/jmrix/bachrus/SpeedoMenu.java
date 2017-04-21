@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 /**
  * Create a "Systems" menu containing the bachrus-specific tools
  *
- * @author	Andrew Crosland Copyright 2010
+ * @author Andrew Crosland Copyright 2010
  */
 public class SpeedoMenu extends JMenu {
 

@@ -209,6 +209,8 @@ public class PositionablePolygon extends PositionableShape {
                             _editor.moveItem(this, _width - SIZE, 0);
                         }
                         break;
+                    default:
+                        log.warn("Unhandled direction code: {}", _hitIndex);
                 }
                 if (path != null) {
                     setShape(path);
@@ -245,7 +247,7 @@ public class PositionablePolygon extends PositionableShape {
     }
 
     private GeneralPath scale(float ratioX, float ratioY) {
-//    	log.info("scale("+ratioX+" , "+ratioY+")");
+//     log.info("scale("+ratioX+" , "+ratioY+")");
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
         PathIterator iter = getPathIterator(null);
         float[] coord = new float[6];
@@ -267,8 +269,11 @@ public class PositionablePolygon extends PositionableShape {
                 case PathIterator.SEG_CLOSE:
                     path.closePath();
                     break;
+                default:
+                    log.warn("Unhandled path iterator type: {}", type);
+                    break;
             }
-//    		log.debug("type= "+type+"  x= "+coord[0]+", y= "+ coord[1]);
+//      log.debug("type= "+type+"  x= "+coord[0]+", y= "+ coord[1]);
             iter.next();
         }
         return path;

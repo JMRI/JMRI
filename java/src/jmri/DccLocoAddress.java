@@ -10,7 +10,7 @@ package jmri;
  *
  * Once created, the number and long/short status cannot be changed.
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class DccLocoAddress implements LocoAddress {
 

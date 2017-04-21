@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008-2011
+ * @author Dave Duchamp Copyright (C) 2008-2011
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -772,6 +772,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * This method is for use to extend the allocation of a section to a active
      * train Its use is to allow a dispatcher to manually route a train to its
      * final destination
+     * @param s section to extend
+     * @param at active train
+     * @param jFrame display frame
+     * @return true on successful extension
      */
     public boolean extendActiveTrainsPath(Section s, ActiveTrain at, JmriJFrame jFrame) {
         if (s.getEntryPointFromSection(at.getEndBlockSection(), Section.FORWARD) != null
@@ -939,6 +943,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      *   frame - window request is from, or "null" if not from a window
      * <P>
      * Returns an ActiveTrain object if successful, returns "null" otherwise
+     * @param transitID transit for train to follow
+     * @param trainID train to make active
+     * @param tSource user, roster or operations
+     * @param startBlockName name of starting block
+     * @param startBlockSectionSequenceNumber starting point in sequence
+     * @param endBlockName name for finish block
+     * @param endBlockSectionSequenceNumber finish point in sequence
+     * @param autoRun auto or manual operation
+     * @param dccAddress loco address
+     * @param priority train priority value
+     * @param resetWhenDone setup to start over when done
+     * @param reverseAtEnd there and back again
+     * @param allocateAllTheWay allocation to destination
+     * @param showErrorMessages enable messages
+     * @param frame display jfram
+     * @return null if unsuccessful
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
@@ -1085,7 +1105,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     }
                 }
             }
-            // check/set Transit specific items for automatic running				
+            // check/set Transit specific items for automatic running    
             // validate connectivity for all Sections in this transit            
             int numErrors = t.validateConnectivity(_LE);
             if (numErrors != 0) {
@@ -1135,16 +1155,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        // all information checks out - create	
+        // all information checks out - create 
         ActiveTrain at = new ActiveTrain(t, trainID, tSource);
         //if (at==null) {
-        //	if (showErrorMessages) {
-        //		JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-        //				"Error11"),new Object[] { transitID, trainID }), Bundle.getMessage("ErrorTitle"),
-        //					JOptionPane.ERROR_MESSAGE);
-        //	}
-        //	log.error("Creating Active Train failed, Transit - "+transitID+", train - "+trainID);
-        //	return null;
+        // if (showErrorMessages) {
+        //  JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+        //    "Error11"),new Object[] { transitID, trainID }), Bundle.getMessage("ErrorTitle"),
+        //     JOptionPane.ERROR_MESSAGE);
+        // }
+        // log.error("Creating Active Train failed, Transit - "+transitID+", train - "+trainID);
+        // return null;
         //}
         activeTrainsList.add(at);
         java.beans.PropertyChangeListener listener = null;
@@ -1212,6 +1232,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     /**
      * Terminates an Active Train and removes it from the Dispatcher The
      * ActiveTrain object should not be used again after this method is called
+     * @param at active train object
      */
     public void terminateActiveTrain(ActiveTrain at) {
         // ensure there is a train to terminate
@@ -1270,15 +1291,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     /**
      * Creates an Allocation Request, and registers it with Dispatcher
      * <P>
-     * Required input entries: activeTrain - ActiveTrain requesting the
-     * allocation section - Section to be allocated direction - direction of
-     * travel in the allocated Section seqNumber - sequence number of the
-     * Section in the Transit of the ActiveTrain. If the requested Section is
-     * not in the Transit, a sequence number of -99 should be entered.
-     * showErrorMessages - "true" if error message dialogs are to be displayed
-     * for detected errors Set to "false" to suppress error message dialogs from
-     * this method. frame - window request is from, or "null" if not from a
-     * window
+     * @param activeTrain train requesting section
+     * @param section section to allocate
+     * @param direction which way to run the transit
+     * @param seqNumber section in transit or 99
+     * @param showErrorMessages "true" display detected errors
+     * @param frame window request is from, or "null" if not from a window
+     * @return true if allocation worked
      */
     protected boolean requestAllocation(ActiveTrain activeTrain, Section section, int direction,
             int seqNumber, boolean showErrorMessages, JmriJFrame frame) {
@@ -1382,6 +1401,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * determine the next Section, or if the next section is the last section,
      * null should be entered for ns. Null should also be entered for ns if
      * allocating an Extra Section that is not the Next Section.
+     * @param ar allocation request details
+     * @param ns next section or null next is last section
+     * @return allocated section if successful, null otherwise
      */
     public AllocatedSection allocateSection(AllocationRequest ar, Section ns) {
         AllocatedSection as = null;
@@ -1439,7 +1461,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 return null;
             }
             // Programming Note: if ns is not null, the program will not check for end Block, but will use ns. Calling
-            //		code must do all validity checks on a non-null ns.
+            //  code must do all validity checks on a non-null ns.
             if (ns != null) {
                 nextSection = ns;
             } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
@@ -1580,9 +1602,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
             // check/set turnouts if requested or if autorun
             // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If 
-            //			turnouts are not set correctly, allocation will not proceed without dispatcher override.
-            //		 If in addition Auto setting of turnouts is requested, the turnouts are set automatically
-            //			if not in the correct position.
+            //   turnouts are not set correctly, allocation will not proceed without dispatcher override.
+            //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
+            //   if not in the correct position.
             // Note: Turnout checking and/or setting is not performed when allocating an extra section.
             if ((_UseConnectivity) && (ar.getSectionSeqNumber() != -99)) {
                 if (!checkTurnoutStates(s, ar.getSectionSeqNumber(), nextSection, at, at.getLastAllocatedSection())) {
@@ -2011,6 +2033,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
      * Releases an allocated Section, and removes it from the Dispatcher Input
      * consists of the AllocatedSection object (returned by "allocateSection")
      * and whether this release is from a Terminate Train.
+     * @param as section to release
+     * @param terminatingTrain true if train is terminating
      */
     public void releaseAllocatedSection(AllocatedSection as, boolean terminatingTrain) {
         // check that section is not occupied if not terminating train
@@ -2087,12 +2111,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         }
     }
     private int nowMinutes = 0;    // last read fast clock minutes
-    private int nowHours = 0;		// last read fast clock hours
+    private int nowHours = 0;  // last read fast clock hours
 
     /**
      * This method tests time assuming both times are on the same day (ignoring
      * midnight) It also sets nowMinutes and nowHours to the latest fast clock
      * values
+     * @param hr hour
+     * @param min minute
+     * @return true if fast time is past this
      */
     @SuppressWarnings("deprecation")
     protected boolean isFastClockTimeGE(int hr, int min) {
@@ -2457,6 +2484,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return new JTextField(17).getPreferredSize().width;
                 case ALLOCATEBUTTON_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(5).getPreferredSize().width;
         }
@@ -2604,6 +2634,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return new JTextField(12).getPreferredSize().width;
                 case CANCELBUTTON_COLUMN:
                     return new JTextField(10).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(5).getPreferredSize().width;
         }
@@ -2744,6 +2777,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return new JTextField(15).getPreferredSize().width;
                 case RELEASEBUTTON_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(5).getPreferredSize().width;
         }

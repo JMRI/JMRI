@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  */
 public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.AddressedProgrammer {

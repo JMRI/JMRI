@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  *
  * Removed Runnable implementation and methods for it
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
@@ -191,6 +191,9 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                     }
                 }
 
+                break;
+            default:
+                log.warn("Unhandled event type: {}", event.getEventType());
                 break;
         }
     }

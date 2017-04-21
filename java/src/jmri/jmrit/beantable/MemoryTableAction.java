@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MemoryTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class MemoryTableAction extends AbstractTableAction {
 

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * System names are "DPnn:yy", where nnn is the board id and yy is the port on
  * that board.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         implements Dcc4PcListener {
@@ -188,7 +188,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     private static int MINRC = 0;
     private static int MAXRC = 5;
     boolean init = true;
-    ArrayList<Integer> activeRCs = new ArrayList<Integer>();		// keep track of those worth polling
+    ArrayList<Integer> activeRCs = new ArrayList<Integer>();  // keep track of those worth polling
 
     int lastAddressUsed;
     Dcc4PcMessage lastMessageSent;
@@ -539,7 +539,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     private final int shortCycleInterval = 550;
-    private final int pollTimeout = 550;				// in case of lost response
+    private final int pollTimeout = 550;    // in case of lost response
     private boolean awaitingReply = false;
     private int boardRequest;
 
@@ -1210,7 +1210,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     @Override
     public void dispose() {
-        stopPolling = true;		// tell polling thread to go away
+        stopPolling = true;  // tell polling thread to go away
         super.dispose();
     }
 

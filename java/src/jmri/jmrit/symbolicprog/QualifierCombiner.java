@@ -8,7 +8,7 @@ import java.util.List;
  * On transition, the qualifiers are evaluated in order, stopping when the
  * outcome is known.
  *
- * @author	Bob Jacobsen Copyright (C) 2011
+ * @author Bob Jacobsen Copyright (C) 2011
  *
  */
 public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeListener {

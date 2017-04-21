@@ -163,7 +163,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         String inPackage = null;
 
-        keepReading = true;	//	Gets set to false when device sends 'Q'uit
+        keepReading = true; // Gets set to false when device sends 'Q'uit
         int consecutiveErrors = 0;
 
         do {
@@ -239,6 +239,9 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                         }
                                         break;
                                     }
+                                    default:
+                                        log.warn("Unhandled code: {}", inPackage.charAt(1));
+                                        break;
                                 }
 
                             }
@@ -277,15 +280,16 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                         case 'H': {  //  Hardware
                             switch (inPackage.charAt(1)) {
-                                case 'U': {
+                                case 'U':
                                     deviceUDID = inPackage.substring(2);
                                     for (int i = 0; i < listeners.size(); i++) {
                                         DeviceListener l = listeners.get(i);
                                         l.notifyDeviceInfoChanged(this);
                                     }
                                     break;
-                                }
-
+                                default:
+                                    log.warn("Unhandled code: {}", inPackage.charAt(1));
+                                    break;
                             }
 
                             break;
@@ -311,18 +315,23 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                     }
                                     break;
                                 }
+                                default:
+                                    log.warn("Unhandled code: {}", inPackage.charAt(1));
+                                    break;
                             }
                             break;
                         }   //  end panel block
 
                         case 'R': {  //  Start 'R'oster case
                             switch (inPackage.charAt(1)) {
-                                case 'C': {
+                                case 'C':
                                     if (isConsistAllowed) {
                                         consistC.handleMessage(inPackage.substring(2));
                                     }
                                     break;
-                                }
+                                default:
+                                    log.warn("Unhandled code: {}", inPackage.charAt(1));
+                                    break;
                             }
 
                             break;
@@ -362,7 +371,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     log.error("readLine failure limit exceeded, ending thread run loop for device '{}'", getName());
                 }
             }
-        } while (keepReading);	//	'til we tell it to stop
+        } while (keepReading); // 'til we tell it to stop
         log.debug("Ending thread run loop for device '{}'", getName());
         closeThrottles();
 
@@ -593,6 +602,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     /**
      * Add a DeviceListener
+     * @param l handle for listener to add
      *
      */
     public void addDeviceListener(DeviceListener l) {
@@ -606,6 +616,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     /**
      * Remove a DeviceListener
+     * @param l listener to remove
      *
      */
     public void removeDeviceListener(DeviceListener l) {

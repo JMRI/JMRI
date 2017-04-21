@@ -43,8 +43,10 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
                 int row = getTable().getSelectedRow();
                 int col = getTable().getSelectedColumn(); // might be -1 if just inserted
                 if (col != 1) return;
-                String username = (String) _model.getTable().getValueAt(row, 1);
-                if (username != null) return;
+                if (row >= 0) {
+                    String username = (String) _model.getTable().getValueAt(row, 1);
+                    if (username != null) return;
+                }
                 // have to set selection to col 0
                 _model.getTable().setColumnSelectionInterval(0,0);
             }

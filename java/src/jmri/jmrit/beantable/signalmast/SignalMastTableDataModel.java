@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a SignalMastTable
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2003, 2009
+ * @author Egbert Broerse Copyright (C) 2016
  */
 public class SignalMastTableDataModel extends BeanTableDataModel {
 

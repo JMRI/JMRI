@@ -157,8 +157,8 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         for (int i = 0; i < sensorList.size(); i++) {
             String sysName = getSystemName(sensorList.get(i));
             if (sysName == null) {
-                creationErrorEncountered("Unexpected missing system name while loading sensors",
-                        null, null, null);
+                handleException("Unexpected missing system name while loading sensors",
+                        null, null, null, null);
                 result = false;
                 break;
             }
@@ -183,8 +183,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 s = tm.newSensor(sysName, userName);
             } catch (IllegalArgumentException e) {
-                creationErrorEncountered("Could not create sensor",
-                        sysName, userName, null);
+                handleException("Could not create sensor", null, sysName, userName, null);
                 result = false;
                 continue;
             }

@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
  *
  * Modified by Dennis Miller for resizing Nov, 2004
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 

@@ -4,7 +4,7 @@ package jmri.jmrix.lenz;
  * interface for XNetPortController objects.
  * <p>
  *
- * @author	Paul Bender Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010
   */
 public interface XNetPortController extends jmri.jmrix.PortAdapter {
 

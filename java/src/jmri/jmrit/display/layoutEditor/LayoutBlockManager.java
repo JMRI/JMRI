@@ -266,9 +266,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             log.error("I/O Exception when retreiving block values " + ioe);
         }
         // special tests for getFacingSignalHead method - comment out next three lines unless using LayoutEditorTests
-//		LayoutEditorTests layoutEditorTests = new LayoutEditorTests();
-//		layoutEditorTests.runClinicTests();
-//		layoutEditorTests.runTestPanel3Tests();
+//  LayoutEditorTests layoutEditorTests = new LayoutEditorTests();
+//  layoutEditorTests.runClinicTests();
+//  layoutEditorTests.runTestPanel3Tests();
         initialized = true;
         log.debug("start initializeLayoutBlockRouting");
         initializeLayoutBlockRouting();
@@ -396,6 +396,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             return lt.getSignalHead(LayoutTurnout.POINTD2);
                         }
                     }
+                default:
+                    log.error("Unhandled crossover connection type: {}", cType);
+                    break;
             }
             // should never reach here, but ...
             log.error("crossover turnout block boundary not found in getFacingSignal");

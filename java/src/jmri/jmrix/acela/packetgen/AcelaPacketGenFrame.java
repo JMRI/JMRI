@@ -7,10 +7,10 @@ import jmri.jmrix.acela.AcelaReply;
 
 /**
  *
- * Description:	Frame for user input of Acela messages
+ * Description: Frame for user input of Acela messages
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.acela.AcelaListener {

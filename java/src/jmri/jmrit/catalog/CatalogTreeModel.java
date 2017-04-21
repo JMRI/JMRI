@@ -20,7 +20,7 @@ import jmri.util.FileUtil;
  * As a special case "simplification", the catalog tree will not contain CVS
  * directories, or files whose name starts with a "."
  *
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  */
 public class CatalogTreeModel extends DefaultTreeModel {
 

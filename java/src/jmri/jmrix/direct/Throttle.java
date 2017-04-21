@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * considered long addresses.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class Throttle extends AbstractThrottle {
 
