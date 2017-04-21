@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final static String name = "jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

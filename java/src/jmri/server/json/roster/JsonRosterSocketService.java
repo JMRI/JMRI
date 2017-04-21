@@ -29,7 +29,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Listen for changes in the roster and notify subscribed clients of the change.
+ * Listen for changes in the roster and notify subscribed clients of changes
+ *   to the roster, including roster groups
  *
  * @author Randall Wood Copyright (C) 2014, 2016
  */
@@ -38,6 +39,7 @@ public class JsonRosterSocketService extends JsonSocketService {
     private final static Logger log = LoggerFactory.getLogger(JsonRosterSocketService.class);
     private final JsonRosterListener rosterListener = new JsonRosterListener();
     private final JsonRosterEntryListener rosterEntryListener = new JsonRosterEntryListener();
+    private final JsonRosterGroupsListener rosterGroupsListener = new JsonRosterGroupsListener();
     private final JsonRosterHttpService service;
     private boolean listening = false;
 
@@ -49,8 +51,10 @@ public class JsonRosterSocketService extends JsonSocketService {
     public void listen() {
         if (!this.listening) {
             Roster.getDefault().addPropertyChangeListener(this.rosterListener);
+            Roster.getDefault().addPropertyChangeListener(this.rosterGroupsListener);
             Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((re) -> {
                 re.addPropertyChangeListener(this.rosterEntryListener);
+                re.addPropertyChangeListener(this.rosterGroupsListener);
             });
             this.listening = true;
         }
@@ -97,8 +101,11 @@ public class JsonRosterSocketService extends JsonSocketService {
     @Override
     public void onClose() {
         Roster.getDefault().removePropertyChangeListener(this.rosterListener);
+        Roster.getDefault().removePropertyChangeListener(this.rosterGroupsListener);
+
         Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((re) -> {
             re.removePropertyChangeListener(this.rosterEntryListener);
+            re.removePropertyChangeListener(this.rosterGroupsListener);
         });
         this.listening = false;
     }
@@ -115,10 +122,12 @@ public class JsonRosterSocketService extends JsonSocketService {
                     RosterEntry old = new RosterEntry((RosterEntry) evt.getSource(), (String) evt.getOldValue());
                     data.put(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource()));
                     data.put(REMOVE, service.getRosterEntry(connection.getLocale(), old));
+                    log.debug("Sending add and remove rosterEntry for {} ({} => {})", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
                     connection.sendMessage(root);
                 } else if (!evt.getPropertyName().equals(RosterEntry.DATE_UPDATED)
-                        && !evt.getPropertyName().equals(RosterEntry.FILENAME)) {
-                    log.debug("Triggering change on {} ({} => {})", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+                        && !evt.getPropertyName().equals(RosterEntry.FILENAME)
+                        && !evt.getPropertyName().equals(RosterEntry.COMMENT)) {  //don't send comment changes
+                    log.debug("Sending updated rosterEntry for {} ({} => {})", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
                     connection.sendMessage(service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource()));
                 }
             } catch (IOException ex) {
@@ -133,6 +142,32 @@ public class JsonRosterSocketService extends JsonSocketService {
         public void propertyChange(PropertyChangeEvent evt) {
             ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, JsonRoster.ROSTER);
             try {
+                if (evt.getPropertyName().equals(Roster.ADD)) {
+                    root.putObject(DATA).put(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue()));
+                    ((PropertyChangeProvider) evt.getNewValue()).addPropertyChangeListener(rosterEntryListener);
+                    connection.sendMessage(root);
+                } else if (evt.getPropertyName().equals(Roster.REMOVE)) {
+                    root.putObject(DATA).put(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue()));
+                    connection.sendMessage(root);
+                } else if (!evt.getPropertyName().equals(Roster.SAVED)
+                        && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
+                                && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)
+                                && ! evt.getPropertyName().equals(Roster.ROSTER_GROUP_RENAMED)) {
+                    // catch all events other than SAVED, and group stuff (handled elsewhere)
+                    connection.sendMessage(service.getRoster(connection.getLocale(), root));
+                }
+            } catch (IOException ex) {
+                onClose();
+            }
+        }
+    }
+
+    private class JsonRosterGroupsListener implements PropertyChangeListener {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            try {
+                //handle direct roster change events
                 if (evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
                         || evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)
                         || evt.getPropertyName().equals(Roster.ROSTER_GROUP_RENAMED)) {
@@ -141,18 +176,38 @@ public class JsonRosterSocketService extends JsonSocketService {
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
-                } else if (evt.getPropertyName().equals(Roster.ADD)) {
-                    root.putObject(DATA).put(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue()));
-                    ((PropertyChangeProvider) evt.getNewValue()).addPropertyChangeListener(rosterEntryListener);
-                    connection.sendMessage(root);
-                } else if (evt.getPropertyName().equals(Roster.REMOVE)) {
-                    root.putObject(DATA).put(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue()));
-                    connection.sendMessage(root);
-                } else if (!evt.getPropertyName().equals(Roster.SAVED)
-                        || evt.getPropertyName().equals(Roster.CHANGE)) {
-                    // catch all events other than SAVED
-                    connection.sendMessage(service.getRoster(connection.getLocale(), root));
+                //handle event names of format "attributeUpdated:RosterGroup:GROUPNAME"
+                } else if (evt.getPropertyName().startsWith(RosterEntry.ATTRIBUTE_UPDATED)) {  
+                    String attrName = evt.getPropertyName().substring(RosterEntry.ATTRIBUTE_UPDATED.length());
+                    if (attrName.startsWith(Roster.ROSTER_GROUP_PREFIX)) {
+                        String groupName = attrName.substring(Roster.ROSTER_GROUP_PREFIX.length());
+                        if (Roster.getDefault().getRosterGroups().containsKey(groupName)) {
+                            try {
+                                log.debug("sending changed rosterGroup {} and updated group array", groupName);
+                                connection.sendMessage(service.getRosterGroup(connection.getLocale(), groupName));
+                                connection.sendMessage(service.getRosterGroups(connection.getLocale()));
+                            } catch (JsonException ex) {
+                                connection.sendMessage(ex.getJsonMessage());
+                            }
+                        }
+                    }
+                //handle attribute deleted, old value is of form "RosterGroup:GROUPNAME"     
+                } else if (evt.getPropertyName().startsWith(RosterEntry.ATTRIBUTE_DELETED)) {
+                    if (((String) evt.getOldValue()).startsWith(Roster.ROSTER_GROUP_PREFIX)) {
+                        String groupName = ((String) evt.getOldValue()).substring(Roster.ROSTER_GROUP_PREFIX.length());
+                        if (Roster.getDefault().getRosterGroups().containsKey(groupName)) {
+                            try {
+                                log.debug("sending changed rosterGroup {} and updated group array", groupName);
+                                connection.sendMessage(service.getRosterGroup(connection.getLocale(), groupName));
+                                connection.sendMessage(service.getRosterGroups(connection.getLocale()));
+                            } catch (JsonException ex) {
+                                connection.sendMessage(ex.getJsonMessage());
+                            }
+                        }
+                    }
+                    
                 }
+
             } catch (IOException ex) {
                 onClose();
             }

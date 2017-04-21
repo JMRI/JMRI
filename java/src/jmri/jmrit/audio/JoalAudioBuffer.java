@@ -165,6 +165,8 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
                 return "8-bit stereo";
             case AL.AL_FORMAT_STEREO16:
                 return "16-bit stereo";
+            default:
+                log.error("Unhandled audio format type: {}", this.format[0]);
         }
         if (this.format[0] == JoalAudioFactory.AL_FORMAT_QUAD8
                 && JoalAudioFactory.AL_FORMAT_QUAD8 != FORMAT_UNKNOWN) {
@@ -327,6 +329,9 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
                 return FORMAT_8BIT_STEREO;
             case AL.AL_FORMAT_STEREO16:
                 return FORMAT_16BIT_STEREO;
+            default:
+                log.error("Unhandled audio format type {}", this.format[0]);
+                break;
         }
         if (this.format[0] == JoalAudioFactory.AL_FORMAT_QUAD8
                 && JoalAudioFactory.AL_FORMAT_QUAD8 != FORMAT_UNKNOWN) {

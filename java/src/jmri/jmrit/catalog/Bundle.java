@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.display.Bundle {
 
-    private final static String name = "jmri.jmrit.catalog.CatalogBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrit.catalog.CatalogBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

@@ -69,6 +69,9 @@
         "http://www.editthis.info/JMRI/index.php/Main_Page">documentation
         Wiki</a>, which lets a lot of people easily contribute to
         building better documentation</li>
+        
+        <li>Chris Atkins helped improve the  
+        <a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#newJython">instructions for using a separate jython install</a></li>
 
         <li>Ron W. Auld, whose llnmon program formed the basis for
         the LocoNet monitoring <a name="B" id="B"></a></li>
@@ -569,7 +572,9 @@
 
         <li>Jim LeFevre, who did the testing on the TMCC
         implementation, including buying components so we could do
-        a more complete job, and coded the function support</li>
+        a more complete job, and coded the function support. 
+        He's also put a lot of work into test and development
+        of the C/MRI support.</li>
 
         <li>Alain Le Marchand, who provided a number of decoder
         definitions and updates</li>

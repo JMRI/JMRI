@@ -23,6 +23,8 @@ public class ChangeTrackFrameTest {
         TrackEditFrame tf = new TrackEditFrame();
         ChangeTrackFrame t = new ChangeTrackFrame(tf);
         Assert.assertNotNull("exists",t);
+        t.dispose();
+        tf.dispose();
     }
 
     // The minimal setup for log4J

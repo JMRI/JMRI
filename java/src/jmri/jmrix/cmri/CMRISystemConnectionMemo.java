@@ -90,6 +90,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public void configureManagers() {
         InstanceManager.setSensorManager(
                 getSensorManager());
+        getTrafficController().setSensorManager(getSensorManager());
 
         InstanceManager.setTurnoutManager(
                 getTurnoutManager());

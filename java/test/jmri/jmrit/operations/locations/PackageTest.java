@@ -56,6 +56,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterByTrackPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterByTrackFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTest.class));
         return suite;
     }
 
