@@ -16,7 +16,8 @@ public class EcosDccThrottleTest {
 
     @Test
     public void testCTor() {
-        EcosDccThrottle t = new EcosDccThrottle(new jmri.DccLocoAddress(100,true),new jmri.jmrix.ecos.EcosSystemConnectionMemo(),true);
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosDccThrottle t = new EcosDccThrottle(new jmri.DccLocoAddress(100,true),new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc),true);
         Assert.assertNotNull("exists",t);
     }
 
