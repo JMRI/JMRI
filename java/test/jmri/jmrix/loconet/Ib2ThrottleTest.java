@@ -17,7 +17,8 @@ public class Ib2ThrottleTest {
     @Test
     public void testCTor() {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        Ib2Throttle t = new Ib2Throttle(new LocoNetSystemConnectionMemo(lnis),new LocoNetSlot(5));
+        SlotManager slotmanager = new SlotManager(lnis);
+        Ib2Throttle t = new Ib2Throttle(new LocoNetSystemConnectionMemo(lnis,slotmanager),new LocoNetSlot(5));
         Assert.assertNotNull("exists",t);
     }
 
