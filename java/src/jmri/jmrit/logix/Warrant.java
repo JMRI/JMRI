@@ -1065,7 +1065,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             OBlock block = bo.getBlock();
             _message = block.allocate(this);
             // loop back routes may enter a block a second time
-            // do not make current block a stopping block
+            // Do not make current block a stopping block
             OBlock currentBlock = getBlockOrderAt(_idxCurrentOrder).getBlock();
             if (!currentBlock.equals(block)) {
                 if (!block.isAllocatedTo(this) || 
