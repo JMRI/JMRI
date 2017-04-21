@@ -90,8 +90,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Set the number of characters expected back from the command station. Used
      * in binary mode, where there's no end-of-reply string to look for.
-     *
-     * @param len the expected number of characters
+     * @param len length of expected reply
      */
     public void setReplyLen(int len) {
         replyLen = len;
@@ -156,7 +155,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Enter programming track mode.
+     * enter programming track mode
      *
      * @param tc controller for the associated connection
      * @return a new message to enter programming track mode

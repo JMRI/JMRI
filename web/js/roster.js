@@ -8,7 +8,6 @@ var jmri = null;
  * request and show roster
  */
 function getRosterTable(group) {
-    jmri.log("requesting roster table for group " + group)
 	$.ajax({
         url: "/roster?format=html" + ((group) ? "&group=" + encodeURIComponent(group) : ""),
         data: {},
@@ -21,6 +20,8 @@ function getRosterTable(group) {
                 }
                 $("#roster").removeClass("show").addClass("hidden");
             } else {
+                $("#warning-roster-no-entries").removeClass("show").addClass("hidden");
+                $("#warning-group-no-entries").removeClass("show").addClass("hidden");
                 $("#roster").removeClass("hidden").addClass("show");
                 $("#roster > tbody").empty();
                 $("#roster > tbody").append(data);
@@ -88,7 +89,6 @@ function initUploads() {
 		progressall: function (e, data) {
 			var progress = parseInt(data.loaded / data.total * 100, 10);
 			$('#progress .bar').css('width', progress + '%');
-			jmri.log("progress bar set to " + progress);
 			if (!$('#progress .bar').is(":visible")) {
 				$('#progress .bar').show();
 			}
@@ -138,26 +138,24 @@ function initUploads() {
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 	jmri = $.JMRI({});
-	jmri.log("starting up roster.js...");
     getRosterTable($("html").data("roster-group"));
     initUploads();
     
     //listen for roster changes and refresh the roster table when this occurs
-    //by overriding processing of websocket messages of interest
+    //  by overriding processing of websocket messages of interest
     jmri = $.JMRI({
     	//wait for the hello message
-    	hello: function(name, state, data) {
-    		jmri.log("in hello:...");
-    		jmri.socket._send('{"list":"roster"}') // request updates to the roster via websocket 
+    	hello: function(data) {
+    		jmri.getList("roster"); // request updates to the roster via websocket 
     	},
-    	//roster "add" and "remove" messages (note: is not called for the roster array)
-    	roster: function(name, state, data) {
-    		jmri.log("in roster. name="+name+", state="+state+", data="+JSON.stringify(data).substr(0,80));
+    	//roster "add" and "remove" messages
+    	roster: function(data) {
+    		//jmri.log("in roster: data="+JSON.stringify(data).substr(0,180) + "...");
     	    getRosterTable($("html").data("roster-group"));
     	},
-    	//updated rosterEntry
-    	rosterEntry: function(name, state, data) {
-    		jmri.log("in rosterEntry. name="+name+", state="+state+", data="+JSON.stringify(data).substr(0,80));
+    	//received an updated rosterEntry, rebuild the entire roster table
+    	rosterEntry: function(name, data) {
+    		//jmri.log("in rosterEntry. name="+name+", data="+JSON.stringify(data).substr(0,180) + "...");
     	    getRosterTable($("html").data("roster-group"));
     	},
     });

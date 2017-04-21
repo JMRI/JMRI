@@ -1,11 +1,14 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -13,9 +16,6 @@ import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
 /**
@@ -465,6 +465,11 @@ public class XBeeNode extends IEEE802154Node {
               } else {
                 PRValue[0]=(byte) (PRValue[0] & (byte) 0x7F);
               }
+                break;
+            default:
+                log.warn("Unhandled pin value: {}", pin);
+                break;
+              
           }
           device.setParameter("PR",PRValue);
           device.applyChanges();  // force the XBee to start using the new value.

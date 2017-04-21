@@ -766,6 +766,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     return _showTooltip;
 //                case OPTION_COORDS:
 //                    return _showCoordinates;
+                default:
+                    log.warn("Unhandled which option code: {}", whichOption);
+                    break;
             }
         }
         return localFlag;
@@ -860,7 +863,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /*
      * Control whether target panel items will show their coordinates in their
-     * popup memu.
+     * popup menu.
      *
      * @param state true for show coodinates.
      */

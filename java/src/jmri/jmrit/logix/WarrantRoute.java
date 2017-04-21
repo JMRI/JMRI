@@ -97,6 +97,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             switch (evt.getPropertyName()) {
                 case WarrantPreferences.SEARCH_DEPTH:
                     this.setDepth((int) evt.getNewValue());
+                    break;
                 default:
                     // do nothing
             }
@@ -688,6 +689,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 case AVOID:
                     _focusedField = _origin;
                     break;
+                default:
+                    log.warn("Unhandled next location code: {}", location);
+                    break;
             }
         }
 
@@ -1149,6 +1153,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     return Bundle.getMessage("PathCol");
                 case DEST_PORTAL_COL:
                     return Bundle.getMessage("DestPortalCol");
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1191,6 +1198,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                         return "";
                     }
                     return bo.getExitName();
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }

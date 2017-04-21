@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -236,7 +237,7 @@ public class WarrantTableAction extends AbstractAction {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getBlockOrders();
+            List<BlockOrder> orders = w.getSavedOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
                 BlockOrder bo = it.next();
@@ -256,7 +257,7 @@ public class WarrantTableAction extends AbstractAction {
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             Warrant w = manager.getBySystemName(iter.next());
-            List<BlockOrder> orders = w.getBlockOrders();
+            List<BlockOrder> orders = w.getSavedOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
                 BlockOrder bo = it.next();
@@ -304,6 +305,7 @@ public class WarrantTableAction extends AbstractAction {
      *
      * @param b the block to validate
      */
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
     public static void checkPathPortals(OBlock b) {
         if (log.isDebugEnabled()) {
             log.debug("checkPathPortals for " + b.getDisplayName());
@@ -419,6 +421,7 @@ public class WarrantTableAction extends AbstractAction {
         checkSharedTurnouts(b);
     }
 
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OPath extends Path")
     public static boolean checkSharedTurnouts(OBlock block) {
         boolean hasShared = false;
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
@@ -445,6 +448,7 @@ public class WarrantTableAction extends AbstractAction {
         return hasShared;
     }
 
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OBlock extends Block")
     private static boolean sharedTO(OPath myPath, OPath path) {
         List<BeanSetting> myTOs = myPath.getSettings();
         Iterator<BeanSetting> iter = myTOs.iterator();

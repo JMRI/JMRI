@@ -23,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmris.Bundle {
 
+    @Nullable
     private static final String name = "jmri.jmris.json.Bundle"; // NOI18N
 
     //
@@ -105,7 +106,7 @@ public class Bundle extends jmri.jmris.Bundle {
 
     @Override
     protected String retry(Locale locale, String key) {
-        return super.getBundle().handleGetMessage(locale,key);
+        return super.getBundle().handleGetMessage(locale, key);
     }
 
 }

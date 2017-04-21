@@ -44,6 +44,25 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrackRoadEditFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AlternateTrackFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AlternateTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeTrackTypeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IgnoreUsedTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IgnoreUsedTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTrackFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PoolTrackActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackDestinationEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackLoadEditActionTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackRoadEditActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditCommentsActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackEditCommentsFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeTracksFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ChangeTracksTypeActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackCopyActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrackCopyFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ShowCarsByLocationActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PrintSwitchListActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetPhysicalLocationActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetPhysicalLocationFrameTest.class));
         return suite;
     }
 

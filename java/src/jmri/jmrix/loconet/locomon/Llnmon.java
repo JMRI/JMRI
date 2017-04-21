@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.locomon;
 
-import static jmri.jmrix.loconet.LnConstants.PCMD_BYTE_MODE;
-
 import java.time.LocalTime;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
@@ -2606,6 +2604,9 @@ public class Llnmon {
                 case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
                     device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
                     break;
+                default:
+                    log.warn("Unhandled device type: {}", deviceType);
+                    break;
             }
 
             int bdaddr = l.getElement(2) + 1;
@@ -4229,7 +4230,7 @@ public class Llnmon {
                 case 0x00: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_LOCONET_IF_WITHOUT_TERM");
                 }
-                case 0x01: {
+                case 0x02: {
                     return Bundle.getMessage("LN_MSG_SET_PR3_MODE_PR3_PROGRAMMING_TRACK_ONLY");
                 }
                 case 0x03: {

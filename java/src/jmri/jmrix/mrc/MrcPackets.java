@@ -2,6 +2,7 @@ package jmri.jmrix.mrc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
+import org.python.jline.internal.Log;
 
 /**
  * Some of the message formats used in this class are Copyright MRC, Inc. and
@@ -441,6 +442,8 @@ public class MrcPackets {
 
     /**
      * Adds the description of the clock's mode to a message being built
+     * @param m clock info message
+     * @param txt build description of clock info onto this
      */
     @SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
     static void appendClockMessage(MrcMessage m, StringBuilder txt) {
@@ -469,6 +472,9 @@ public class MrcPackets {
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
+                break;
+            default:
+                Log.warn("Unhandled clock mode code: {}", clockModeBits);
                 break;
         }
     }

@@ -361,7 +361,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _errorSensorName.setText(name);
 
         int state = _block.getState();
-        StringBuffer stateText = new StringBuffer();
+        StringBuilder stateText = new StringBuilder();
         if ((state & OBlock.UNKNOWN) != 0) {
             stateText.append("Unknown ");
         }
@@ -393,7 +393,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             stateText.append("Not Initialized");
         }
         if (log.isDebugEnabled()) {
-            log.debug("updateContentPanel: state= " + stateText.toString());
+            log.debug("updateContentPanel: state= {}", stateText.toString());
         }
         _blockState.setText(stateText.toString());
     }
@@ -464,7 +464,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         int turnouts = 0;
         if (icons != null) {
             if (log.isDebugEnabled()) {
-                log.debug("updateIconList: icons.size()= " + icons.size());
+                log.debug("updateIconList: icons.size()= {}", icons.size());
             }
             for (int i = 0; i < icons.size(); i++) {
                 Positionable pos = icons.get(i);

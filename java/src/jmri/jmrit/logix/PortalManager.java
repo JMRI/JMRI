@@ -144,15 +144,6 @@ public class PortalManager extends AbstractManager
         // Override, don't register, OBlockManager does store and load of Portals
     }
 
-    static PortalManager _instance = null;
-
-    static public PortalManager instance() {
-        if (_instance == null) {
-            _instance = new PortalManager();
-        }
-        return (_instance);
-    }
-
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNamePortal");

@@ -1,11 +1,15 @@
 package jmri.jmrix.openlcb;
 
+import jmri.NamedBean;
 import jmri.Turnout;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
+import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Turnout for OpenLCB connections.
@@ -38,6 +42,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     VersionedValueListener<Boolean> turnoutListener;
     BitProducerConsumer pc;
+    EventTable.EventTableEntryHolder thrownEventTableEntryHolder = null;
+    EventTable.EventTableEntryHolder closedEventTableEntryHolder = null;
 
     private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR",
             "DIRECT"};
@@ -116,8 +122,47 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
                 }
             }
         };
+        if (thrownEventTableEntryHolder != null) {
+            thrownEventTableEntryHolder.release();
+            thrownEventTableEntryHolder = null;
+        }
+        if (closedEventTableEntryHolder != null) {
+            closedEventTableEntryHolder.release();
+            closedEventTableEntryHolder = null;
+        }
+        thrownEventTableEntryHolder = iface.getEventTable().addEvent(addrThrown.toEventID(), getEventName(true));
+        closedEventTableEntryHolder = iface.getEventTable().addEvent(addrClosed.toEventID(), getEventName(false));
     }
 
+    /**
+     * Computes the display name of a given event to be entered into the Event Table.
+     * @param isThrown true for thrown event, false for closed event
+     * @return user-visible string to represent this event.
+     */
+    private String getEventName(boolean isThrown) {
+        String name = mUserName;
+        if (name == null) name = mSystemName;
+        String msgName = isThrown ? "TurnoutThrownEventName": "TurnoutClosedEventName"; 
+        return Bundle.getMessage(msgName, name);
+    }
+
+    /**
+     * Updates event table entries when the user name changes.
+     * @param s new user name
+     * @throws NamedBean.BadUserNameException see {@link NamedBean}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setUserName(String s) throws NamedBean.BadUserNameException {
+        super.setUserName(s);
+        if (thrownEventTableEntryHolder != null) {
+            thrownEventTableEntryHolder.getEntry().updateDescription(getEventName(true));
+        }
+        if (closedEventTableEntryHolder != null) {
+            closedEventTableEntryHolder.getEntry().updateDescription(getEventName(false));
+        }
+    }
+    
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
         boolean recreate = (mode != _activeFeedbackType) && (pc != null);
@@ -134,14 +179,13 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
-        System.out.println("forward to layout "+s);
         if (s == Turnout.THROWN) {
-            turnoutListener.setFromOwner(true);
+            turnoutListener.setFromOwnerWithForceNotify(true);
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(THROWN);
             }
         } else if (s == Turnout.CLOSED) {
-            turnoutListener.setFromOwner(false);
+            turnoutListener.setFromOwnerWithForceNotify(false);
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(CLOSED);
             }
@@ -165,6 +209,14 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     @Override
     public void dispose() {
+        if (thrownEventTableEntryHolder != null) {
+            thrownEventTableEntryHolder.release();
+            thrownEventTableEntryHolder = null;
+        }
+        if (closedEventTableEntryHolder != null) {
+            closedEventTableEntryHolder.release();
+            closedEventTableEntryHolder = null;
+        }
         if (turnoutListener != null) turnoutListener.release();
         if (pc != null) pc.release();
         super.dispose();
