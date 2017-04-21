@@ -58,7 +58,7 @@ public class PortalManager extends AbstractManager
     /**
      * Method to create a new Portal. Returns null if a
      * Portal with the same systemName or userName already exists. 
-     * </p>
+     *
      * Generate a systemName if called with sName == null and 
      * non null userName.
      */
