@@ -1,6 +1,7 @@
 package jmri.server.json.power;
 
 import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.DEFAULT;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
@@ -60,6 +61,10 @@ public class JsonPowerHttpService extends JsonHttpService {
                 default:
                     data.put(STATE, UNKNOWN);
                     break;
+            }
+            data.put(DEFAULT, false);
+            if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
+                data.put(DEFAULT, false);
             }
         } catch (JmriException e) {
             log.error("Unable to get Power state.", e);
