@@ -16,7 +16,19 @@ public class EcosLocoAddressManagerTest {
 
     @Test
     public void testCTor() {
-        EcosLocoAddressManager t = new EcosLocoAddressManager(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosSystemConnectionMemo memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc){
+           @Override
+           public EcosPreferences getPreferenceManager(){ 
+              return new EcosPreferences(this){
+                  @Override
+                  public boolean getPreferencesLoaded(){
+                     return true;
+                  }
+              };
+           }
+        };
+        EcosLocoAddressManager t = new EcosLocoAddressManager(memo);
         Assert.assertNotNull("exists",t);
     }
 
