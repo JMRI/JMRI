@@ -335,7 +335,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case MANUAL_RUN_COLUMN:
             return new JButton("Xxxx").getPreferredSize().width;
         case CONTROL_COLUMN:
-            return new JTextField(45).getPreferredSize().width;
+            return new JTextField(55).getPreferredSize().width;
         case EDIT_COLUMN:
         case DELETE_COLUMN:
             return new JButton("DELETE").getPreferredSize().width;
@@ -521,12 +521,12 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     int s = -1;
                     if (setting.equals(WarrantTableFrame.halt)) {
                         s = Warrant.HALT;
+                    } else if (setting.equals(WarrantTableFrame.estop)) {
+                        s = Warrant.ESTOP;
                     } else if (setting.equals(WarrantTableFrame.resume)) {
                         s = Warrant.RESUME;
                     } else if (setting.equals(WarrantTableFrame.retry)) {
                         s = Warrant.RETRY;
-                    } else if (setting.equals(WarrantTableFrame.stop)) {
-                        s = Warrant.ESTOP;
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                         s = Warrant.ABORT;
                     }
