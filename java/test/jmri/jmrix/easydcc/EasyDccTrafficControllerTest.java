@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Description:	JUnit tests for the EasyDccTrafficController class
@@ -18,9 +20,12 @@ import org.junit.Test;
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficControllerTest.class);
+    
     @Test
     public void testSendThenRcvReply() throws Exception {
-        EasyDccTrafficController c = (EasyDccTrafficController)tc;
+        EasyDccTrafficController c = (EasyDccTrafficController) tc;
+        log.error("Step 1");
         /*EasyDccTrafficController c = new EasyDccTrafficController() {
             // skip timeout message
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -36,10 +41,12 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         // connect to iostream via port controller
         EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
         c.connectPort(p);
+        log.error("Step 2");
 
         // object to receive reply
         EasyDccListener l = new EasyDccListenerScaffold();
         c.addEasyDccListener(l);
+        log.error("Step 3");
 
         // send a message
         EasyDccMessage m = new EasyDccMessage(3);
@@ -47,30 +54,39 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
         m.setElement(1, '1');
         m.setElement(2, '2');
         c.sendEasyDccMessage(m, l);
+        log.error("Step 4");
 
         ostream.flush();
-        JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
-        
-		// test the result of sending
+        JUnitUtil.waitFor(() -> {
+            return tostream.available() == 4;
+        }, "total length");
+        log.error("Step 5");
 
-		Assert.assertEquals("total length ", 4, tostream.available());
+        // test the result of sending
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());
         Assert.assertEquals("EOM", 0x0d, tostream.readByte());
-
+        log.error("Step 6");
 
         // now send reply
         tistream.write('P');
         tistream.write(0x0d);
+        log.error("Step 7");
 
         // drive the mechanism
         c.handleOneIncomingReply();
+        log.error("Step 8");
 
-        JUnitUtil.waitFor(()->{return rcvdReply != null;}, "reply received");
+        JUnitUtil.waitFor(() -> {
+            return rcvdReply != null;
+        }, "reply received");
+        log.error("Step 9");
 
         Assert.assertTrue("reply received ", rcvdReply != null);
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
+        log.error("Step 10");
     }
 
     // internal class to simulate a EasyDccListener
