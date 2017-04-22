@@ -17,7 +17,23 @@ public class EcosDccThrottleTest {
     @Test
     public void testCTor() {
         EcosTrafficController tc = new EcosInterfaceScaffold();
-        EcosDccThrottle t = new EcosDccThrottle(new jmri.DccLocoAddress(100,true),new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc),true);
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc){
+           @Override
+           public EcosLocoAddressManager getLocoAddressManager(){
+              return new EcosLocoAddressManager(this);
+           }
+
+           @Override
+           public EcosPreferences getPreferenceManager(){ 
+              return new EcosPreferences(this){
+                  @Override
+                  public boolean getPreferencesLoaded(){
+                     return true;
+                  }
+              };
+           }
+        };
+        EcosDccThrottle t = new EcosDccThrottle(new jmri.DccLocoAddress(100,true),memo,true);
         Assert.assertNotNull("exists",t);
     }
 
@@ -26,6 +42,7 @@ public class EcosDccThrottleTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
