@@ -1,3 +1,13 @@
+/**
+ * Create a WebSocket for handling a JMRI JSON service.
+ * 
+ * TODO:
+ * automatic handling of disconnects and reconnects
+ * 
+ * @argument {angularService} $websocket angular-websocket service
+ * @argument {angularService} $log AngularJS logging service
+ * @type AngularJS Service Factory
+ */
 angular.module('jmri.app').factory('$jsonSocket', function($websocket, $log) {
   // Open a WebSocket connection
   var parts = document.URL.split('/');
@@ -14,21 +24,16 @@ angular.module('jmri.app').factory('$jsonSocket', function($websocket, $log) {
     socket.send(m);
   };
 
-  // delete is a ECMAScript reserved word
   var sendDelete = function sendDelete(type, data) {
-    data.method = 'delete';
     send(type, data, 'delete');
   };
   var sendGet = function sendGet(type, data) {
-    data.method = 'get';
     send(type, data, 'get');
   };
   var sendPost = function sendPost(type, data) {
-    data.method = 'post';
     send(type, data, 'post');
   };
   var sendPut = function sendPut(type, data) {
-    data.method = 'put';
     send(type, data, 'put');
   };
   var sendList = function sendList(type) {
