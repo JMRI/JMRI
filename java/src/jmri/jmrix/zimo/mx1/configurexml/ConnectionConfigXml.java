@@ -21,6 +21,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = Mx1Adapter.instance();
     }

@@ -27,7 +27,7 @@ public class IndicatorTOIconDialog extends IconDialog {
      */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key,
             HashMap<String, NamedIcon> iconMap) {
-        super(type, key, parent, iconMap);	// temporarily use key for family to set JL
+        super(type, key, parent, iconMap); // temporarily use key for family to set JL
         _family = family;
         _key = key;
         sizeLocate();
@@ -40,11 +40,13 @@ public class IndicatorTOIconDialog extends IconDialog {
     /**
      * Add/Delete icon family for types that may have more than 1 family
      */
+    @Override
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
         JButton addFamilyButton = new JButton(Bundle.getMessage("addMissingStatus"));
         addFamilyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addFamilySet();
                 dispose();
@@ -55,6 +57,7 @@ public class IndicatorTOIconDialog extends IconDialog {
 
         JButton deleteButton = new JButton(Bundle.getMessage("deleteStatus"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deleteFamilySet();
                 dispose();
@@ -90,7 +93,7 @@ public class IndicatorTOIconDialog extends IconDialog {
             if (key != null) {
                 _key = key;
                 createNewStatusSet();
-//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);        		
+//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);          
             }
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame,

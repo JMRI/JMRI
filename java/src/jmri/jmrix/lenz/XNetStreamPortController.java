@@ -8,8 +8,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  * Abstract base for classes representing a XNet communications port
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2004,2010,2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2004,2010,2014
   */
 public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
 
@@ -19,6 +19,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
         super(new XNetSystemConnectionMemo(), in, out, pname);
     }
 
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
@@ -29,6 +30,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
         new XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
+    @Override
     public XNetSystemConnectionMemo getSystemConnectionMemo() {
         return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
@@ -37,6 +39,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public boolean status() {
         return true;
     }
@@ -91,6 +94,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
      * only be set to false by external processes
      *
      */
+    @Override
     synchronized public void setOutputBufferEmpty(boolean s) {
     }
 

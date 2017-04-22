@@ -16,6 +16,7 @@ public abstract class AbstractLightTestBase extends TestCase {
 
     // implementing classes must provide these abstract members:
     //
+    @Override
     abstract protected void setUp();    	// load t with actual object; create scaffolds as needed
 
     abstract public int numListeners();	// return number of listeners registered with the TrafficController
@@ -34,6 +35,7 @@ public abstract class AbstractLightTestBase extends TestCase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -76,14 +78,16 @@ public abstract class AbstractLightTestBase extends TestCase {
     public void testCommandOff() {
         t.setState(Light.OFF);
         // check
-        Assert.assertEquals("commanded state", jmri.Light.OFF, t.getState());
+        Assert.assertEquals("state 1", jmri.Light.OFF, t.getState());
+        Assert.assertEquals("state 2", "Off", t.describeState(t.getState()));
         checkOffMsgSent();
     }
 
     public void testCommandOn() {
         t.setState(Light.ON);
         // check
-        Assert.assertEquals("commanded state", jmri.Light.ON, t.getState());
+        Assert.assertEquals("state 1", jmri.Light.ON, t.getState());
+        Assert.assertEquals("state 2", "On", t.describeState(t.getState()));
         checkOnMsgSent();
     }
 

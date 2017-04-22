@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for classes representing a LocoNet communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -20,15 +20,18 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
 
     // returns the InputStream from the port
+    @Override
     public abstract DataInputStream getInputStream();
 
     // returns the outputStream to the port
+    @Override
     public abstract DataOutputStream getOutputStream();
 
     /**
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public abstract boolean status();
 
     /**

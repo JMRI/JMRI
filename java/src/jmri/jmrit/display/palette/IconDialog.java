@@ -71,7 +71,7 @@ public class IconDialog extends ItemDialog {
             ItemPanel.checkIconMap(type, _iconMap);
         }
         _iconPanel = makeIconPanel(_iconMap);
-        panel.add(_iconPanel);	// put icons above buttons
+        panel.add(_iconPanel); // put icons above buttons
         panel.add(buttonPanel);
         //panel.setMaximumSize(panel.getPreferredSize());
 
@@ -114,6 +114,7 @@ public class IconDialog extends ItemDialog {
         panel.setLayout(new FlowLayout());
         JButton doneButton = new JButton(Bundle.getMessage(text));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (doDoneAction()) {
                     dispose();
@@ -124,6 +125,7 @@ public class IconDialog extends ItemDialog {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 dispose();
             }

@@ -36,6 +36,7 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     // keep track of length
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = (char) v;
         _nDataChars = Math.max(_nDataChars, n + 1);
@@ -52,12 +53,14 @@ public class Z21Reply extends AbstractMRReply {
         return Integer.decode(Integer.toHexString(getElement(n)));
     }
 
+    @Override
     public void setOpCode(int i) {
         _dataChars[2] = (char) (i & 0x00ff);
         _dataChars[3] = (char) ((i & 0xff00) >> 8);
         _nDataChars = Math.max(_nDataChars, 4);  //smallest reply is of length 4.
     }
 
+    @Override
     public int getOpCode() {
         return (0xff&_dataChars[2]) + ((0xff&_dataChars[3]) << 8);
     }
@@ -72,11 +75,18 @@ public class Z21Reply extends AbstractMRReply {
         return (0xff & _dataChars[0] ) + ((0xff & _dataChars[1]) << 8);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         return 0;
     }
 
     public String toMonitorString() {
+        switch(getOpCode()){
+           case 0x0040:
+               return "XPressNet Tunnel Reply: " + getXNetReply().toMonitorString();
+           default:
+        }
+
         return toString();
     }
 

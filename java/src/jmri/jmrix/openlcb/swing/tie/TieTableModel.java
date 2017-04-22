@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table Model for access to tie info
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
   * @since 2.3.7
  */
 public class TieTableModel extends AbstractTableModel {
@@ -22,30 +22,37 @@ public class TieTableModel extends AbstractTableModel {
     public static final int ID_COLUMN = 1;
     String[] columnName = new String[]{"User Name", "ID"};
 
+    @Override
     public String getColumnName(int c) {
         return columnName[c];
     }
 
+    @Override
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         return false;
     }
 
+    @Override
     public int getColumnCount() {
         return columnName.length;
     }
 
+    @Override
     public int getRowCount() {
         return dummy.length;
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         return dummy[r][c];  // for testing
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
         // nothing is stored here
     }
@@ -63,6 +70,8 @@ public class TieTableModel extends AbstractTableModel {
      * lines between each column. Data is word wrapped within a column. Can only
      * handle 4 columns of data as strings. Adapted from routines in
      * BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
+     * @param w hard copy writer connection
+     * @param colWidth array of column widths
      */
     public void printTable(HardcopyWriter w, int colWidth[]) {
         // determine the column sizes - proportionately sized, with space between for lines

@@ -85,8 +85,8 @@
 
         <li style="list-style: none">
           <ul>
-            <li><a href="#complicatedGuiTesting">Testing
-            Complicated GUI code</a></li>
+            <li><a href="#jemmy">Using Jemmy</a></li>
+            <li><a href="#jfcunit">Using JFCUnit</a></li>
           </ul>
         </li>
       </ul>
@@ -108,7 +108,9 @@
 
       <ul>
         <li><a href="#junit4">Migrating to JUnit4</a></li>
-      </ul><a name="Introduction" id="Introduction"></a> JUnit is a
+      </ul>
+      
+      <a name="Introduction" id="Introduction"></a> JUnit is a
       system for building "unit tests" of software. Unit tests are
       small tests that make sure that individual parts of the
       software do what they're supposed to do. In a distributed
@@ -306,7 +308,10 @@ runs a specific test or test suite.<br>
 
      <p>
      You may also choose to copy an existing test file and make 
-     modifications to suite the needs of your new class.
+     modifications to suite the needs of your new class. Please
+     make sure you're copying a file in the new JUnit4 format,
+     with the @Test statements, to keep us from having to update
+     your new file later.
      </p>
 
      <p>
@@ -322,7 +327,7 @@ runs a specific test or test suite.<br>
      </p>
 
      <p>
-     If the PackageTest has been converted to JUnit4 format, then "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the begining of the PackageTest class.</p>
+     If the PackageTest has been converted to JUnit4 format, then "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the beginning of the PackageTest class.</p>
 
       <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
       Tests for a New Package</a></h3>
@@ -367,7 +372,7 @@ runs a specific test or test suite.<br>
      </p>
 
      <p>
-     If the enclosing PackageTest has been converted to JUnit4 format, then "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the begining of the enclosing PackageTest class.</p>
+     If the enclosing PackageTest has been converted to JUnit4 format, then "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the beginning of the enclosing PackageTest class.</p>
 
 
 
@@ -469,7 +474,13 @@ runs a specific test or test suite.<br>
       <code>setUp()</code> implementation should start with:</p>
       <pre>
 <code>
-    super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a><br>    apps.tests.Log4JFixture.setUp(); <br>    jmri.util.JUnitUtil.resetInstanceManager();<br>    jmri.util.JUnitUtil.initInternalTurnoutManager();<br>    jmri.util.JUnitUtil.initInternalLightManager();<br>    jmri.util.JUnitUtil.initInternalSensorManager();<br></code>
+    super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
+    apps.tests.Log4JFixture.setUp();
+    jmri.util.JUnitUtil.resetInstanceManager();
+    jmri.util.JUnitUtil.initInternalTurnoutManager();
+    jmri.util.JUnitUtil.initInternalLightManager();
+    jmri.util.JUnitUtil.initInternalSensorManager();
+</code>
 </pre>(You can omit the initialization managers you don't need) See
 the jmri.util.JUnitUtil class for the full list of available ones,
 and please add more if you need one that's not there yet.
@@ -477,7 +488,9 @@ and please add more if you need one that's not there yet.
       <p>Your <code>tearDown()</code> should end with:</p>
       <pre>
 <code>
-    jmri.util.JUnitUtil.resetInstanceManager();<br>    apps.tests.Log4JFixture.tearDown(); <br>    super.tearDown();  // Note: skip this line when using <a href="#super">JUnit4</a><br>
+    jmri.util.JUnitUtil.resetInstanceManager();
+    apps.tests.Log4JFixture.tearDown();
+    super.tearDown();  // Note: skip this line when using <a href="#super">JUnit4</a>
 </code>
 </pre>
 
@@ -676,9 +689,9 @@ environment.
       <a href="ContinuousIntegration.shtml">continuous integration
       builds</a>, it's important that tests needing access to the screen start
       with:</p>
-      <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code>
+      <pre><code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></pre>
       or
-      <code>if (GraphicsEnvironment.isHeadless()) { return; }</code>
+      <pre><code>if (GraphicsEnvironment.isHeadless()) { return; }</code></pre><br>
       if the Assume statement throws an exception.
 
       <p>This will run the myTest suite of tests only when a
@@ -691,7 +704,10 @@ environment.
       parameter to control that:</p>
       <pre>
 <code>
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br>            myFrame.setVisible(false);<br>            myFrame.dispose();<br>        }
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {
+            myFrame.setVisible(false);
+            myFrame.dispose();
+        }
 </code>
 </pre>
 
@@ -701,12 +717,40 @@ environment.
       lets you check the logic code separately, but invoking those
       methods and checking the state them update.</p>
 
-      <h3><a name="complicatedGuiTesting" id=
-      "complicatedGuiTesting">Testing Complicated GUI code</a></h3>
+      <p>For more complicated GUI testing, two tools are generally used.
+      The older one, 
+      <a href="#jfcunit">JFCUnit</a>
+      is no longer maintained, so we recommend that new tests be 
+      written with <a href="#jemmy">Jemmy</a>.
+      Note: Only use one of these in your test class!  Don't try
+      to mix them.
+      
+      <h3><a id="jemmy" name="jemmy">Using Jemmy</a></h3>
+      
+      Recently, e.g. 2016, some tests have been developed
+      using the
+      <a href="https://jemmy.java.net/tutorial.html">jemmy</a> tool.  See e.g. the Speedometer tests
+      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a> 
+      for an example.
 
-      <p>For more complicated GUI testing, we use <a href=
-      "http://jfcunit.sourceforge.net/">JFCUnit</a> to control
-      interactions with Swing objects.</p>
+      <h4>Locating GUI Items using Jemmy</h4>
+
+      <p>Jemmy must be able to find the objects on the screen.  Jemmy Operators are generally used to both locate and manipulate items on the screen.</p>  
+
+      <p>Here are a few tips for locating items with Jemmy:</p>
+
+      <ul>
+      <li>Some of the Jemmy Operator Constructors allow leaving off an identifier.  If there is only one object of a given type on the screen at any time, it is acceptable to use this version of the constructor, but the test may be fragile.</li>
+      <li>It is easiest to find objects if they have a unique identifier.  In the case where no unique identifier exists, Jemmy provides a version of most searches that allows you to specify an ordinal index.  Using these may result in tests that break when GUI elements are added or removed from the frame.</li>
+      <li>If an item contains its own text (Buttons, for example), it is recommended you use the text to search for a component.</li>
+      <li>If an item does not contain its own description, but the GUI contains a JLabel describing that component, be certain the JLabel's LabelFor property is set.  A Jemmy JLabelOperator can then be used to find the label, and retrieve the object.</li>
+      </ul>
+      
+      <h3><a id="jfcunit" name=jfcunit">Using JFCUnit</a></h3>
+      
+      <a href="http://jfcunit.sourceforge.net/">JFCUnit</a> to control
+      interactions with Swing objects.
+      </p>
 
       <p>For a very simple example of the use of JFCUnit, see the
       <a href=

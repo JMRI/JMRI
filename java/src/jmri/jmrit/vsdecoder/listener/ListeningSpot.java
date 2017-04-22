@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder.listener;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2012
+ * @author   Mark Underwood Copyright (C) 2012
  * 
  */
 import java.util.regex.Matcher;
@@ -228,6 +228,7 @@ public class ListeningSpot {
         }
     }
 
+    @Override
     public String toString() {
         if ((_location == null) || (_lookAt == null) || (_up == null)) {
             return ("ListeningSpot (undefined)");

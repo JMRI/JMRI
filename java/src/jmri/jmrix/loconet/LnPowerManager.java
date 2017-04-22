@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
@@ -35,6 +35,7 @@ public class LnPowerManager
 
     protected int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
 
@@ -54,6 +55,7 @@ public class LnPowerManager
         firePropertyChange("Power", null, null); // NOI18N
     }
 
+    @Override
     public int getPower() {
         return power;
     }
@@ -73,6 +75,7 @@ public class LnPowerManager
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         if (tc != null) {
             tc.removeLocoNetListener(~0, this);
@@ -89,6 +92,7 @@ public class LnPowerManager
     }
 
     // to listen for status changes from LocoNet
+    @Override
     public void message(LocoNetMessage m) {
         if (m.getOpCode() == LnConstants.OPC_GPON) {
             power = ON;
@@ -147,6 +151,7 @@ public class LnPowerManager
          * then sends a query of slot 0 so that the power manager can inspect
          * the {@code "<trk>"} byte.
          */
+        @Override
         public void run() {
             // wait a little bit to allow power manager to be initialized
             try {

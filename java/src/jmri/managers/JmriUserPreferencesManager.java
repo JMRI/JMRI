@@ -56,6 +56,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager {
 
+    public final static String SAVE_ALLOWED = "saveAllowed";
+
     private final static String CLASSPREFS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/class-preferences-4-3-5.xsd"; // NOI18N
     private final static String CLASSPREFS_ELEMENT = "classPreferences"; // NOI18N
     private final static String COMBOBOX_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/combobox-4-3-5.xsd"; // NOI18N
@@ -77,12 +79,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @return the default UserPreferencesManager
      */
     public static UserPreferencesManager getDefault() {
-        if (InstanceManager.getNullableDefault(UserPreferencesManager.class) == null) {
+        return InstanceManager.getOptionalDefault(UserPreferencesManager.class).orElseGet(() -> {
             JmriUserPreferencesManager manager = new JmriUserPreferencesManager();
-            InstanceManager.setDefault(UserPreferencesManager.class, manager);
             manager.readUserPreferences();
-        }
-        return InstanceManager.getDefault(UserPreferencesManager.class);
+            return InstanceManager.setDefault(UserPreferencesManager.class, manager);
+        });
     }
 
     private boolean dirty = false;
@@ -91,8 +92,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private ArrayList<String> simplePreferenceList = new ArrayList<>();
     //sessionList is used for messages to be suppressed for the current JMRI session only
     private ArrayList<String> sessionPreferenceList = new ArrayList<>();
-    private ArrayList<ComboBoxLastSelection> _comboBoxLastSelection = new ArrayList<>();
-    private HashMap<String, WindowLocations> windowDetails = new HashMap<>();
+    protected final HashMap<String, String> comboBoxLastSelection = new HashMap<>();
+    private final HashMap<String, WindowLocations> windowDetails = new HashMap<>();
     private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
     private File file;
 
@@ -101,7 +102,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.allowSave = false;
 
         //I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
-        this.preferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage")); // NOI18N
+        this.setPreferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage")); // NOI18N
         //I18N in ManagersBundle.properties (this is the title of prefs tab Messages|Misc items)
         this.classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences")); // NOI18N
 
@@ -111,16 +112,18 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
-    public synchronized void allowSave() {
-        this.allowSave = true;
-        if (this.dirty) {
+    public synchronized void setSaveAllowed(boolean saveAllowed) {
+        boolean old = this.allowSave;
+        this.allowSave = saveAllowed;
+        if (saveAllowed && this.dirty) {
             this.savePreferences();
         }
+        this.firePropertyChange(SAVE_ALLOWED, old, this.allowSave);
     }
 
     @Override
-    public synchronized void disallowSave() {
-        this.allowSave = false;
+    public boolean isSaveAllowed() {
+        return this.allowSave;
     }
 
     @Override
@@ -165,25 +168,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return new ArrayList<>(simplePreferenceList);
     }
 
-    /**
-     * Used to save the state of checkboxes which can suppress messages from
-     * being displayed. This method should be used by the initiating code in
-     * conjunction with the preferenceItemDetails. Here the items are stored
-     * against a specific class and access to change them is made available via
-     * the GUI, in the preference manager.
-     * <p>
-     * The strClass parameter does not have to be the exact class name of the
-     * initiating code, but can be one where the information is related and
-     * therefore can be grouped together with.
-     * <p>
-     * Both the strClass and item although free form, should make up a unique
-     * reference.
-     *
-     * @param strClass The class that this preference should be stored or
-     *                 grouped with.
-     * @param item     The specific item that is to be stored
-     * @param state    Boolean state of the item.
-     */
     @Override
     public void setPreferenceState(String strClass, String item, boolean state) {
         // convert old manager preferences to new manager preferences
@@ -223,19 +207,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return false;
     }
 
-    /**
-     * Register details about a perticular preference, so that it can be
-     * displayed in the GUI and provide a meaningful description when presented
-     * to the user.
-     *
-     * @param strClass    A string form of the class that the preference is
-     *                    stored or grouped with
-     * @param item        The specific item that is being stored.
-     * @param description A meaningful decription of the item that the user will
-     *                    understand.
-     */
     @Override
-    public final void preferenceItemDetails(String strClass, String item, String description) {
+    public final void setPreferenceItemDetails(String strClass, String item, String description) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
@@ -316,16 +289,16 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString {@literal &} item parameters should form a
-     * unique value
+     * in the future. The combination of the classString and item parameters
+     * should form a unique value.
      *
-     * @param title    Message Box title
-     * @param message  Message to be displayed
-     * @param strClass String value of the calling class
-     * @param item     String value of the specific item this is used for
+     * @param title    message Box title
+     * @param message  message to be displayed
+     * @param strClass name of the calling class
+     * @param item     name of the specific item this is used for
      */
     @Override
-    public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
+    public void showInfoMessage(String title, String message, String strClass, String item) {
         showInfoMessage(title, message, strClass, item, false, true);
     }
 
@@ -368,7 +341,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      */
     @Override
     public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
-        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
+        this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -429,57 +402,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
-    public void addComboBoxLastSelection(String comboBoxName, String lastValue) {
-        if (getComboBoxLastSelection(comboBoxName) == null) {
-            ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
-            _comboBoxLastSelection.add(combo);
-        } else {
-            setComboBoxLastSelection(comboBoxName, lastValue);
-        }
-        setChangeMade(false);
-    }
-
-    @Override
     public String getComboBoxLastSelection(String comboBoxName) {
-        for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
-            if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
-                return _comboBoxLastSelection.get(i).getLastValue();
-            }
-        }
-        return null;
+        return this.comboBoxLastSelection.get(comboBoxName);
     }
 
     @Override
     public void setComboBoxLastSelection(String comboBoxName, String lastValue) {
-        for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
-            if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
-                _comboBoxLastSelection.get(i).setLastValue(lastValue);
-            }
-        }
+        comboBoxLastSelection.put(comboBoxName, lastValue);
+        setChangeMade(false);
         this.saveComboBoxLastSelections();
-    }
-
-    @Override
-    public int getComboBoxSelectionSize() {
-        return _comboBoxLastSelection.size();
-    }
-
-    @Override
-    public String getComboBoxName(int n) {
-        try {
-            return _comboBoxLastSelection.get(n).getComboBoxName();
-        } catch (IndexOutOfBoundsException ioob) {
-            return null;
-        }
-    }
-
-    @Override
-    public String getComboBoxLastSelection(int n) {
-        try {
-            return _comboBoxLastSelection.get(n).getLastValue();
-        } catch (IndexOutOfBoundsException ioob) {
-            return null;
-        }
     }
 
     public synchronized boolean getChangeMade() {
@@ -497,6 +428,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     @Override
     public synchronized void resetChangeMade() {
         dirty = false;
+    }
+
+    /**
+     * Check if this object is loading preferences from storage.
+     *
+     * @return true if loading preferences; false otherwise
+     */
+    protected boolean isLoading() {
+        return loading;
     }
 
     @Override
@@ -551,17 +491,25 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setSaveWindowSize(String strClass, boolean b) {
-        if (windowDetails.containsKey(strClass)) {
-            windowDetails.get(strClass).setSaveSize(b);
+        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+            return;
         }
+        if (!windowDetails.containsKey(strClass)) {
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setSaveSize(b);
         this.saveWindowDetails();
     }
 
     @Override
     public void setSaveWindowLocation(String strClass, boolean b) {
-        if (windowDetails.containsKey(strClass)) {
-            windowDetails.get(strClass).setSaveLocation(b);
+        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+            return;
         }
+        if (!windowDetails.containsKey(strClass)) {
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setSaveLocation(b);
         this.saveWindowDetails();
     }
 
@@ -579,7 +527,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     @Override
     public void setWindowSize(String strClass, Dimension dim) {
-        if (strClass.equals("jmri.util.JmriJFrame")) {
+        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
             return;
         }
         if (!windowDetails.containsKey(strClass)) {
@@ -623,7 +571,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
-    public boolean isWindowPositionSaved(String strClass) {
+    public boolean hasProperties(String strClass) {
         return windowDetails.containsKey(strClass);
     }
 
@@ -654,7 +602,13 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     public void setClassDescription(String strClass) {
         try {
             Class<?> cl = Class.forName(strClass);
-            Object t = cl.newInstance();
+            Object t;
+            try {
+                t = cl.newInstance();
+            } catch ( IllegalArgumentException | NullPointerException | ExceptionInInitializerError ex) {
+                log.error("setClassDescription({}) failed in newInstance", strClass, ex.toString());
+                return;
+            }
             boolean classDesFound;
             boolean classSetFound;
             String desc = null;
@@ -664,7 +618,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 method = cl.getDeclaredMethod("getClassDescription");
                 desc = (String) method.invoke(t);
                 classDesFound = true;
-            } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                 log.debug(ex.toString());
                 classDesFound = false;
             }
@@ -672,7 +626,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 try {
                     method = cl.getMethod("getClassDescription");
                     desc = (String) method.invoke(t);
-                } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                     log.debug(ex.toString());
                     classDesFound = false;
                 }
@@ -690,7 +644,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 method = cl.getDeclaredMethod("setMessagePreferencesDetails");
                 method.invoke(t);
                 classSetFound = true;
-            } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                 log.debug(ex.toString()); // *TableAction.setMessagePreferencesDetails() method is routinely not present in multiple classes
                 classSetFound = false;
             }
@@ -698,41 +652,18 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 try {
                     method = cl.getMethod("setMessagePreferencesDetails");
                     method.invoke(t);
-                } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
                     log.debug(ex.toString());
                 }
             }
 
-        } catch (java.lang.ClassNotFoundException ex) {
-            log.error("class name \"{}\" is invalid", strClass, ex);
-        } catch (java.lang.IllegalAccessException ex) {
+        } catch (ClassNotFoundException ex) {
+            log.warn("class name \"{}\" cannot be found, perhaps an expected plugin is missing?", strClass);
+        } catch (IllegalAccessException ex) {
             log.error("unable to access class \"{}\"", strClass, ex);
         } catch (InstantiationException ex) {
             log.error("unable to get a class name \"{}\"", strClass, ex);
         }
-    }
-
-    /**
-     * Add descriptive details about a specific message box, so that if it needs
-     * to be reset in the preferences, then it is easily identifiable. displayed
-     * to the user in the preferences GUI.
-     *
-     * @param strClass      String value of the calling class/group
-     * @param item          String value of the specific item this is used for.
-     * @param description   A meaningful description that can be used in a label
-     *                      to describe the item
-     * @param msgOption     Description of each option valid option.
-     * @param msgNumber     The references number against which the Description
-     *                      is refering too.
-     * @param defaultOption The default option for the given item.
-     */
-    @Override
-    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
-        HashMap<Integer, String> options = new HashMap<>(msgOption.length);
-        for (int i = 0; i < msgOption.length; i++) {
-            options.put(msgNumber[i], msgOption[i]);
-        }
-        messageItemDetails(strClass, description, item, options, defaultOption);
     }
 
     /**
@@ -749,7 +680,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      * @param defaultOption The default option for the given item.
      */
     @Override
-    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
+    public void setMessageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
@@ -828,7 +759,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 }
             }
         }
-        return 0x00;
+        return 0;
     }
 
     @Override
@@ -841,7 +772,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 }
             }
         }
-        return 0x00;
+        return 0;
     }
 
     @Override
@@ -849,11 +780,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
-        for (MultipleChoice mc : classPreferenceList.get(strClass).getMultipleChoiceList()) {
-            if (mc.getItem().equals(choice)) {
-                mc.setValue(value);
-            }
-        }
+        classPreferenceList.get(strClass).getMultipleChoiceList().stream()
+                .filter((mc) -> (mc.getItem().equals(choice))).forEachOrdered((mc) -> {
+            mc.setValue(value);
+        });
         this.savePreferencesState();
     }
 
@@ -1035,20 +965,21 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         Element element = this.readElement(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
         if (element != null) {
             element.getChildren("comboBox").stream().forEach((combo) -> {
-                _comboBoxLastSelection.add(new ComboBoxLastSelection(combo.getAttributeValue("name"), combo.getAttributeValue("lastSelected")));
+                comboBoxLastSelection.put(combo.getAttributeValue("name"), combo.getAttributeValue("lastSelected"));
             });
         }
     }
 
     private void saveComboBoxLastSelections() {
         this.setChangeMade(false);
-        if (this.allowSave && getComboBoxSelectionSize() > 0) {
+        if (this.allowSave && !comboBoxLastSelection.isEmpty()) {
             Element element = new Element(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
             // Do not store blank last entered/selected values
-            _comboBoxLastSelection.stream().filter((cbls) -> (cbls.getLastValue() != null && !cbls.getLastValue().isEmpty())).map((cbls) -> {
+            comboBoxLastSelection.entrySet().stream().
+                    filter((cbls) -> (cbls.getValue() != null && !cbls.getValue().isEmpty())).map((cbls) -> {
                 Element combo = new Element("comboBox");
-                combo.setAttribute("name", cbls.getComboBoxName());
-                combo.setAttribute("lastSelected", cbls.getLastValue());
+                combo.setAttribute("name", cbls.getKey());
+                combo.setAttribute("lastSelected", cbls.getValue());
                 return combo;
             }).forEach((combo) -> {
                 element.addContent(combo);
@@ -1151,6 +1082,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (element != null) {
             element.getChildren("window").stream().forEach((window) -> {
                 String reference = window.getAttributeValue("class");
+                log.debug("Reading window details for {}", reference);
                 try {
                     if (window.getAttribute("locX") != null && window.getAttribute("locX") != null) {
                         double x = window.getAttribute("locX").getDoubleValue();
@@ -1165,16 +1097,20 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 } catch (DataConversionException ex) {
                     log.error("Unable to read dimensions of window \"{}\"", reference);
                 }
-                if (element.getChild("properties") != null) {
-                    element.getChild("properties").getChildren().stream().forEach((property) -> {
+                if (window.getChild("properties") != null) {
+                    window.getChild("properties").getChildren().stream().forEach((property) -> {
                         String key = property.getChild("key").getText();
                         try {
                             Class<?> cl = Class.forName(property.getChild("value").getAttributeValue("class"));
                             Constructor<?> ctor = cl.getConstructor(new Class<?>[]{String.class});
                             Object value = ctor.newInstance(new Object[]{property.getChild("value").getText()});
+                            log.debug("Setting property {} for {} to {}", key, reference, value);
                             this.setProperty(reference, key, value);
                         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                             log.error("Unable to retrieve property \"{}\" for window \"{}\"", key, reference);
+                        } catch (NullPointerException ex) {
+                            // null properties do not get set
+                            log.debug("Property \"{}\" for window \"{}\" is null", key, reference);
                         }
                     });
                 }
@@ -1264,34 +1200,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.saveSimplePreferenceState();
         this.saveWindowDetails();
         this.resetChangeMade();
-        JmriJTablePersistenceManager manager = InstanceManager.getNullableDefault(JmriJTablePersistenceManager.class);
-        if (manager != null) {
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((manager) -> {
             manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
-        }
-    }
-
-    protected final static class ComboBoxLastSelection {
-
-        String comboBoxName = null;
-        String lastValue = null;
-
-        ComboBoxLastSelection(String comboBoxName, String lastValue) {
-            this.comboBoxName = comboBoxName;
-            this.lastValue = lastValue;
-        }
-
-        String getLastValue() {
-            return lastValue;
-        }
-
-        void setLastValue(String lastValue) {
-            this.lastValue = lastValue;
-        }
-
-        String getComboBoxName() {
-            return comboBoxName;
-        }
-
+        });
     }
 
     /**
@@ -1380,11 +1291,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         }
 
         void setValue(String value) {
-            for (Integer o : options.keySet()) {
-                if (options.get(o).equals(value)) {
-                    this.value = o;
-                }
-            }
+            options.keySet().stream().filter((o) -> (options.get(o).equals(value))).forEachOrdered((o) -> {
+                this.value = o;
+            });
         }
 
         void setMessageItems(String description, HashMap<Integer, String> options, int defaultOption) {

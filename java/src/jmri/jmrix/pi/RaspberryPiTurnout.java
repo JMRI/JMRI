@@ -36,7 +36,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
 
    public RaspberryPiTurnout(String systemName, GpioController _gpio) {
         super(systemName.toUpperCase());
-	log.debug("Provisioning turnout {}",systemName);
+ log.debug("Provisioning turnout {}",systemName);
         init(systemName.toUpperCase(),_gpio);
    }
 
@@ -57,6 +57,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    }
     
    //support inversion for RPi turnouts
+   @Override
    public boolean canInvert() {
        return true;
    }

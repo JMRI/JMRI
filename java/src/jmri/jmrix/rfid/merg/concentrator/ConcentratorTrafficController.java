@@ -26,11 +26,10 @@ import org.slf4j.LoggerFactory;
 public class ConcentratorTrafficController extends RfidTrafficController {
 
     private final String range;
-    private final RfidSystemConnectionMemo memo;
 
     public ConcentratorTrafficController(RfidSystemConnectionMemo memo, String range) {
         super();
-        this.memo = memo;
+        adapterMemo = memo;
         this.range = range;
         logDebug = log.isDebugEnabled();
 
@@ -43,7 +42,7 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     @Override
     public void sendInitString() {
-        String init = memo.getProtocol().initString();
+        String init = adapterMemo.getProtocol().initString();
         if (init.length() > 0) {
             sendRfidMessage(new ConcentratorMessage(init, 0), null);
         }
@@ -65,7 +64,7 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     @Override
     protected AbstractMRReply newReply() {
-        ConcentratorReply reply = new ConcentratorReply(memo.getTrafficController());
+        ConcentratorReply reply = new ConcentratorReply(adapterMemo.getTrafficController());
         return reply;
     }
 
@@ -76,7 +75,7 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        return memo.getProtocol().endOfMessage(msg);
+        return adapterMemo.getProtocol().endOfMessage(msg);
     }
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received

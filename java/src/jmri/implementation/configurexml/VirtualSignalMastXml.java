@@ -26,6 +26,7 @@ public class VirtualSignalMastXml
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         VirtualSignalMast p = (VirtualSignalMast) o;
         Element e = new Element("virtualsignalmast");
@@ -89,6 +90,7 @@ public class VirtualSignalMastXml
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

@@ -21,19 +21,19 @@ import javax.swing.table.TableRowSorter;
  * they provide, and by providing a {@link #extras} implementation that can in
  * turn invoke {@link #addToBottomBox} as needed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Kevin Dickerson Copyright (C) 2009
   */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
     RosterGroupTableModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
-    Box bottomBox;		// panel at bottom for extra buttons etc
-    int bottomBoxIndex;	// index to insert extra stuff
+    Box bottomBox;  // panel at bottom for extra buttons etc
+    int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
-    Box topBox;		// panel at bottom for extra buttons etc
-    int topBoxIndex;	// index to insert extra stuff
+    Box topBox;  // panel at bottom for extra buttons etc
+    int topBoxIndex; // index to insert extra stuff
     static final int topStrutWidth = 20;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
@@ -69,13 +69,13 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
         // install items in GUI
         topBox = Box.createHorizontalBox();
-        topBox.add(Box.createHorizontalGlue());	// stays at beginning of box
+        topBox.add(Box.createHorizontalGlue()); // stays at beginning of box
         topBoxIndex = 0;
         getContentPane().add(topBox);
         getContentPane().add(dataScroll);
 
         bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
         bottomBoxIndex = 0;
 
         getContentPane().add(bottomBox);
@@ -134,6 +134,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         ++topBoxIndex;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
             dataModel.dispose();

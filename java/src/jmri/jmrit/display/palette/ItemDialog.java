@@ -19,7 +19,7 @@ public class ItemDialog extends JmriJFrame {
     protected String _type;
 //    protected String    _family;
 
-    private static ItemDialog _instance = null;		// only let one dialog at a time
+    private static ItemDialog _instance = null;  // only let one dialog at a time
 
     /**
      */
@@ -47,10 +47,11 @@ public class ItemDialog extends JmriJFrame {
     }
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Null reference to singular version to allow gc earlier")
+    @Override
     public void dispose() {
         closeDialogs();
         super.dispose();
-        _instance = null;	// remove reference to allow gc
+        _instance = null; // remove reference to allow gc
 
     }
 }

@@ -39,15 +39,20 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.can.cbus.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractCanTrafficControllerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(TrafficControllerTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CanConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CanConstantsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CanSystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(CanConfigurationManagerTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

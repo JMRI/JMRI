@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class PaneProgAction extends AbstractAction {
 
@@ -59,6 +59,7 @@ public class PaneProgAction extends AbstractAction {
 
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (log.isDebugEnabled()) {
@@ -71,6 +72,7 @@ public class PaneProgAction extends AbstractAction {
 
         // ensure status line is cleared on close so it is normal if re-opened
         f.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent we) {
                 statusLabel.setText(SymbolicProgBundle.getMessage("StateIdle"));
                 f.windowClosing(we);
@@ -90,6 +92,7 @@ public class PaneProgAction extends AbstractAction {
         // new Loco on programming track
         JPanel pane1 = new CombinedLocoSelTreePane(statusLabel, modePane) {
 
+            @Override
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
                 String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),

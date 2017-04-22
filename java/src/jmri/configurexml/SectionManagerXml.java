@@ -27,6 +27,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * @param o Object to store, of type SectionManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element sections = new Element("sections");
         setStoreElementClass(sections);
@@ -133,6 +134,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         sections.setAttribute("class", "jmri.configurexml.SectionManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -251,6 +253,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         }
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.SectionManager.class).getXMLOrder();
     }

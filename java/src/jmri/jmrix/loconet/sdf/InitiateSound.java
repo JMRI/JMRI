@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition
  * language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class InitiateSound extends SdfMacro {
 
@@ -17,6 +17,7 @@ public class InitiateSound extends SdfMacro {
         this.prempt = (byte1 & 0x7) + (byte2 & 0x80);
     }
 
+    @Override
     public String name() {
         return "INITIATE_SOUND"; // NOI18N
     }
@@ -44,6 +45,7 @@ public class InitiateSound extends SdfMacro {
         this.prempt = (byte1 & 0x7) + (byte2 & 0x80);
     }
 
+    @Override
     public int length() {
         return 2;
     }
@@ -108,6 +110,7 @@ public class InitiateSound extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte1);
@@ -117,14 +120,17 @@ public class InitiateSound extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return "Define Sequence " + triggerVal() + "," + premptVal() + '\n';
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + " " + triggerVal() + "," + premptVal() + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         String output = indent + oneInstructionString();
         if (children == null) {

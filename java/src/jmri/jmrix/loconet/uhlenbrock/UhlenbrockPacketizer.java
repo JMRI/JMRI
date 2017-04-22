@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  *
  */
 public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
@@ -48,7 +48,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     public static final int NOTIFIEDSTATE = 15;    // xmt notified, will next wake
     public static final int WAITMSGREPLYSTATE = 25;  // xmt has sent, await reply to message
 
-    static int defaultWaitTimer = 2000;
+    static int defaultWaitTimer = 10000;
 
     /**
      * Forward a preformatted LocoNetMessage to the actual interface.
@@ -58,6 +58,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         log.debug("add to queue message " + m);
         // update statistics
@@ -112,6 +113,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
             trafficController = lt;
         }
 
+        @Override
         public void run() {
 
             int opCode;
@@ -225,6 +227,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTC = thisTC;
 
+                            @Override
                             public void run() {
                                 myTC.notify(msgForLater);
                             }
@@ -262,6 +265,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
 
             while (true) {   // loop permanently
@@ -341,6 +345,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = " + priority

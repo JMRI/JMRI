@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <li>(IT1)(IT2) - colon-separated list of names for Turnouts
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
 
@@ -258,6 +258,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             if (evt.getOldValue() instanceof Turnout) {
@@ -271,6 +272,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

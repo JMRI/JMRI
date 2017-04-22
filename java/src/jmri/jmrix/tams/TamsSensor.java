@@ -28,6 +28,7 @@ public class TamsSensor extends AbstractSensor {
     private void init(String id) {
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 

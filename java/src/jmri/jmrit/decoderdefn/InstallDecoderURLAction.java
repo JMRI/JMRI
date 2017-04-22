@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Install decoder definition from URL
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends JmriAbstractAction {
@@ -62,6 +62,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         return null;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (rb == null) {
             rb = ResourceBundle.getBundle("jmri.jmrit.decoderdefn.DecoderFile");
@@ -192,6 +193,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

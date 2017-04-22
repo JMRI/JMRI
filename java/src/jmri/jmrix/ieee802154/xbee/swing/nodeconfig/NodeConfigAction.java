@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a NodeConfigFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigAction {
 
@@ -42,6 +42,7 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
         this("Configure XBee Nodes", cm);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame((jmri.jmrix.ieee802154.xbee.XBeeTrafficController) xcm.getTrafficController());
         try {

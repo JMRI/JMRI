@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory;
  * to control JMRI turnout operations centrally, so that retransmissions can
  * controlled.
  * <P>
- * Description:	Implement turnout manager for loconet
+ * Description: Implement turnout manager for loconet
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 
@@ -60,10 +60,12 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
 
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public void dispose() {
         if (fastcontroller != null) {
             fastcontroller.removeLocoNetListener(~0, this);
@@ -79,6 +81,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         _useOffSwReqAsConfirmation = true;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
@@ -102,6 +105,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     LocoNetMessage lastSWREQ = null;
 
     // listen for turnouts, creating them as needed
+    @Override
     public void message(LocoNetMessage l) {
         //log.info("LnTurnoutManager message "+l);
         // parse message type

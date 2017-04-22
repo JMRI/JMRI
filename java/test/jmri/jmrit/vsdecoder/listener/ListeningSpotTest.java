@@ -2,10 +2,8 @@ package jmri.jmrit.vsdecoder.listener;
 
 import apps.tests.Log4JFixture;
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 

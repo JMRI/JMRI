@@ -14,16 +14,16 @@ import org.slf4j.LoggerFactory;
 public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
 
     /**
-     * Zimo does use a service mode
+     * {@inheritDoc}
+     *
+     * @return true
      */
+    @Override
     public boolean getHasServiceMode() {
         return true;
     }
 
-    /**
-     * If this command station has a service mode, is the command station
-     * currently in that mode?
-     */
+    @Override
     public boolean getInServiceMode() {
         return mInServiceMode;
     }
@@ -32,7 +32,9 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
      * Provides the version string returned during the initial check. This
      * function is not yet implemented...
      *
+     * @return {@literal <unknown>}
      */
+    @Override
     public String getVersionString() {
         return "<unknown>";
     }
@@ -44,7 +46,13 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
     boolean mInServiceMode = false;
 
     /**
-     * Generate a message to change turnout state
+     * Generate a turnout control message.
+     *
+     * @param pNumber turnout number
+     * @param pClose  true to close the turnout; false otherwise
+     * @param pThrow  true to throw the turnout; false otherwise
+     * @param pOn     ignored
+     * @return a message to throw or close a turnout
      */
     public Mx1Message getTurnoutCommandMsg(int pNumber, boolean pClose,
             boolean pThrow, boolean pOn) {
@@ -84,13 +92,16 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
     }
 
     /**
-     * If this is a turnout-type message, return address. Otherwise return -1.
-     * Note we only identify the command now; the reponse to a request for
-     * status is not yet seen here.
+     * Get the turnout address from a turnout control message. Note we only
+     * identify the command now; the response to a request for status is not yet
+     * seen here.
+     *
+     * @param pMsg the message to check
+     * @return turnout address or -1 if not a turnout message
      */
     public int getTurnoutMsgAddr(Mx1Message pMsg) {
         if (isTurnoutCommand(pMsg)) {
-            javax.swing.JOptionPane.showMessageDialog(null, "A-Programma komt tot hier!");
+            //javax.swing.JOptionPane.showMessageDialog(null, "A-Programma komt tot hier!");
             int a1 = pMsg.getElement(1);
             int a2 = pMsg.getElement(2);
             return (((a1 & 0xff) * 4) + (a2 & 0x6) / 2 + 1);
@@ -101,6 +112,9 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
 
     /**
      * Is this a command to change turnout state?
+     *
+     * @param pMsg the message to check
+     * @return true if turnout control message; false otherwise
      */
     public boolean isTurnoutCommand(Mx1Message pMsg) {
         return pMsg.getElement(0) == 0x4E;

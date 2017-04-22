@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Specialization of a ThrottleManager for the Intellibox.
  *
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 public class Ib2ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
 
@@ -19,6 +19,7 @@ public class Ib2ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
         log.debug("Ib2ThrottleManager created");
     }
 
+    @Override
     DccThrottle createThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot s) {
         return new Ib2Throttle(memo, s);
     }

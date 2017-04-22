@@ -121,62 +121,73 @@ public class AbstractIdentifyTest extends TestCase {
     class AITest extends AbstractIdentify {
         public AITest(Programmer p) { super(p);}
         
+        @Override
         public boolean test1() {
             invoked = 1;
             return retval;
         }
 
+        @Override
         public boolean test2(int value) {
             invoked = 2;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test3(int value) {
             invoked = 3;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test4(int value) {
             invoked = 4;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test5(int value) {
             invoked = 5;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test6(int value) {
             invoked = 6;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test7(int value) {
             invoked = 7;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test8(int value) {
             invoked = 8;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test9(int value) {
             invoked = 8;
             ivalue = value;
             return retval;
         }
 
+        @Override
         protected void statusUpdate(String s) {
         }
 
+        @Override
         public void error() {
         }
 
@@ -204,13 +215,15 @@ public class AbstractIdentifyTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class.getName());
+	// private final static Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class.getName());
 }

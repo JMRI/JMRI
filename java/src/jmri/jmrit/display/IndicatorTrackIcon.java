@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
@@ -49,6 +50,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         _iconMap = new HashMap<String, NamedIcon>();
     }
 
+    @Override
     public Positionable deepClone() {
         IndicatorTrackIcon pos = new IndicatorTrackIcon(_editor);
         return finishClone(pos);
@@ -74,6 +76,7 @@ public class IndicatorTrackIcon extends PositionableIcon
      *
      * @param pName Used as a system/user name to lookup the sensor object
      */
+    @Override
     public void setOccSensor(String pName) {
         if (pName == null || pName.trim().length() == 0) {
             setOccSensorHandle(null);
@@ -91,6 +94,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
     }
 
+    @Override
     public void setOccSensorHandle(NamedBeanHandle<Sensor> senHandle) {
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);
@@ -107,6 +111,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
     }
 
+    @Override
     public Sensor getOccSensor() {
         if (namedOccSensor == null) {
             return null;
@@ -114,6 +119,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return namedOccSensor.getBean();
     }
 
+    @Override
     public NamedBeanHandle<Sensor> getNamedOccSensor() {
         return namedOccSensor;
     }
@@ -123,6 +129,7 @@ public class IndicatorTrackIcon extends PositionableIcon
      *
      * @param pName Used as a system/user name to lookup the OBlock object
      */
+    @Override
     public void setOccBlock(String pName) {
         if (pName == null || pName.trim().length() == 0) {
             setOccBlockHandle(null);
@@ -130,12 +137,13 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
         OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(pName);
         if (block != null) {
-            setOccBlockHandle(new NamedBeanHandle<OBlock>(pName, block));
+            setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, block));
         } else {
             log.error("Detection OBlock '" + pName + "' not available, icon won't see changes");
         }
     }
 
+    @Override
     public void setOccBlockHandle(NamedBeanHandle<OBlock> blockHandle) {
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
@@ -153,6 +161,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
     }
 
+    @Override
     public OBlock getOccBlock() {
         if (namedOccBlock == null) {
             return null;
@@ -160,18 +169,22 @@ public class IndicatorTrackIcon extends PositionableIcon
         return namedOccBlock.getBean();
     }
 
+    @Override
     public NamedBeanHandle<OBlock> getNamedOccBlock() {
         return namedOccBlock;
     }
 
+    @Override
     public void setShowTrain(boolean set) {
         _pathUtil.setShowTrain(set);
     }
 
+    @Override
     public boolean showTrain() {
         return _pathUtil.showTrain();
     }
 
+    @Override
     public ArrayList<String> getPaths() {
         return _pathUtil.getPaths();
     }
@@ -180,10 +193,12 @@ public class IndicatorTrackIcon extends PositionableIcon
         _pathUtil.setPaths(paths);
     }
 
+    @Override
     public void addPath(String path) {
         _pathUtil.addPath(path);
     }
 
+    @Override
     public void removePath(String path) {
         _pathUtil.removePath(path);
     }
@@ -191,6 +206,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     /**
      * get track name for known state of occupancy sensor
      */
+    @Override
     public void setStatus(int state) {
         _status = _pathUtil.getStatus(state);
     }
@@ -212,6 +228,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return _status;
     }
 
+    @Override
     public int maxHeight() {
         int max = 0;
         Iterator<NamedIcon> iter = _iconMap.values().iterator();
@@ -221,6 +238,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return max;
     }
 
+    @Override
     public int maxWidth() {
         int max = 0;
         Iterator<NamedIcon> iter = _iconMap.values().iterator();
@@ -230,6 +248,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return max;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: " + getNameString() + " property " + evt.getPropertyName() + " is now "
@@ -270,6 +289,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
     }
 
+    @Override
     public String getNameString() {
         String str = "";
         if (namedOccBlock != null) {
@@ -283,6 +303,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     /**
      * Pop-up displays unique attributes
      */
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         return false;
     }
@@ -301,14 +322,17 @@ public class IndicatorTrackIcon extends PositionableIcon
         updateSize();
     }
     
+    @Override
     public void rotate(int deg) {
         super.rotate(deg);
         displayState(_status);
     }
 
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack"));
         popup.add(new javax.swing.AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 editItem();
             }
@@ -321,6 +345,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
 
         ActionListener updateAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
@@ -383,6 +408,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         displayState(_status);
     }
 
+    @Override
     public void dispose() {
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);
@@ -396,6 +422,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         super.dispose();
     }
 
+    @Override
     public jmri.NamedBean getNamedBean() {
         if (namedOccBlock != null) {
             return namedOccBlock.getBean();

@@ -67,9 +67,9 @@ public class OPath extends jmri.Path {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("Ctor: name= " + name + ", block= " + owner.getDisplayName()
-                    + ", fromPortal= " + (_fromPortal == null ? "null" : _fromPortal.getName())
-                    + ", toPortal= " + (_toPortal == null ? "null" : _toPortal.getName()));
+            log.debug("OPath Ctor: name= {}, block= {}, fromPortal= {}, toPortal= {}",
+                    name, owner.getDisplayName(), (_fromPortal == null ? "null" : _fromPortal.getName()),
+                            (_toPortal == null ? "null" : _toPortal.getName()));
         }
     }
 
@@ -84,9 +84,9 @@ public class OPath extends jmri.Path {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("OPath \"" + _name + "\" changing blocks from "
-                    + (getBlock() != null ? getBlock().getDisplayName() : null)
-                    + " to " + (block != null ? block.getDisplayName() : null) + ".");
+            log.debug("OPath \"{}\" changing blocks from {} to {}",
+                    _name, (getBlock() != null ? getBlock().getDisplayName() : null),
+                    (block != null ? block.getDisplayName() : null) + ".");
         }
         super.setBlock(block);
     }
@@ -105,9 +105,10 @@ public class OPath extends jmri.Path {
         return null;
     }
 
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="OBlock extends Block")
     public void setName(String name) {
         if (log.isDebugEnabled()) {
-            log.debug("OPath \"" + _name + "\" setName to " + name);
+            log.debug("OPath \"{}\" setName to \"{}\"", _name, name);
         }
         if (name == null || name.length() == 0) {
             return;
@@ -133,7 +134,7 @@ public class OPath extends jmri.Path {
 
     public void setFromPortal(Portal p) {
         if (log.isDebugEnabled() && p != null) {
-            log.debug("OPath \"" + _name + "\" setFromPortal= " + p.getName());
+            log.debug("OPath \"{}\" setFromPortal= \"{}\"",_name, p.getName());
         }
         _fromPortal = p;
     }
@@ -144,7 +145,7 @@ public class OPath extends jmri.Path {
 
     public void setToPortal(Portal p) {
         if (log.isDebugEnabled() && p != null) {
-            log.debug("OPath \"" + _name + "\" setToPortal= " + p.getName());
+            log.debug("OPath \"{}\" setToPortal= \"{}\"", _name, p.getName());
         }
         _toPortal = p;
     }
@@ -178,7 +179,7 @@ public class OPath extends jmri.Path {
                 _timer.start();
                 _timerActive = true;
             } else {
-                log.warn("timer already active for delayed turnout action on path " + toString());
+                log.warn("timer already active for delayed turnout action on path {}", toString());
             }
         } else {
             fireTurnouts(getSettings(), set, lockState, lock);
@@ -190,7 +191,7 @@ public class OPath extends jmri.Path {
             BeanSetting bs = list.get(i);
             Turnout t = (Turnout) bs.getBean();
             if (t == null) {
-                log.error("Invalid turnout on path " + toString());
+                log.error("Invalid turnout on path {}", toString());
             } else {
                 if (set) {
                     t.setCommandedState(bs.getSetting());
@@ -246,15 +247,28 @@ public class OPath extends jmri.Path {
     }
 
     public String getDescription() {
-        return "\"" + _name + "\"" + (_fromPortal == null ? "" : " from portal " + _fromPortal.getName())
-                + (_toPortal == null ? "" : " to portal " + _toPortal.getName());
+        StringBuilder sb = new StringBuilder("\"");
+        sb.append(_name);
+        sb.append("\" from portal \"");
+        sb.append(_fromPortal==null?"null":_fromPortal.getName());
+        sb.append("\" to portal \"");
+        sb.append(_toPortal==null?"null":_toPortal.getName());
+        sb.append("\"");
+        return sb.toString();
     }
 
     @Override
     public String toString() {
-        return "OPath \"" + _name + "\"on block " + (getBlock() != null ? getBlock().getDisplayName() : "null")
-                + (_fromPortal == null ? "" : " from portal " + _fromPortal.getName())
-                + (_toPortal == null ? "" : " to portal " + _toPortal.getName());
+        StringBuilder sb = new StringBuilder("OPath \"");
+        sb.append(_name);
+        sb.append("\" on block \"");
+        sb.append(getBlock()==null?"null":getBlock().getDisplayName());
+        sb.append("\" from portal \"");
+        sb.append(_fromPortal==null?"null":_fromPortal.getName());
+        sb.append("\" to portal \"");
+        sb.append(_toPortal==null?"null":_toPortal.getName());
+        sb.append("\"");
+        return sb.toString();
     }
 
     /**
@@ -266,7 +280,7 @@ public class OPath extends jmri.Path {
         while (iter.hasNext()) {
             BeanSetting bs = iter.next();
             if (bs.getBeanName().equals(t.getBeanName())) {
-                log.error("TO setting for \"" + t.getBeanName() + "\" already set to " + bs.getSetting());
+                log.error("TO setting for \"{}\" already set to {}", t.getBeanName(), bs.getSetting());
                 return;
             }
         }
@@ -276,11 +290,10 @@ public class OPath extends jmri.Path {
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.getBlock());
         hash = 67 * hash + Objects.hashCode(this._fromPortal);
         hash = 67 * hash + Objects.hashCode(this._toPortal);
-        hash = 67 * hash + Objects.hashCode(this._name);
-        hash = 67 * hash + Objects.hashCode(this._timer);
-        hash = 67 * hash + (this._timerActive ? 1 : 0);
+        hash = 67 * hash + Objects.hashCode(this.getSettings());
         return hash;
     }
 
@@ -301,10 +314,13 @@ public class OPath extends jmri.Path {
             return false;
         }
         OPath path = (OPath) obj;
-        if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal())) {
+        if (getBlock() != path.getBlock()) {
             return false;
         }
-        if (_toPortal != null && !_toPortal.equals(path.getToPortal())) {
+        if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal()) && !_fromPortal.equals(path.getToPortal())) {
+            return false;
+        }
+        if (_toPortal != null && !_toPortal.equals(path.getToPortal()) && !_toPortal.equals(path.getFromPortal())) {
             return false;
         }
         Iterator<BeanSetting> iter = path.getSettings().iterator();

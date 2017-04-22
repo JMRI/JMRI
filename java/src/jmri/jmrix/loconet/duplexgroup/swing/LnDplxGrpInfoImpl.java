@@ -96,6 +96,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         waitingForIplReply = false;
 
         swingTmrIplQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.IPL_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
@@ -112,6 +113,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             }
         });
         swingTmrDuplexInfoQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.DPLX_QUERY_DELAY, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrDuplexInfoQuery.stop();
                 waitingForIplReply = false;
@@ -344,18 +346,19 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * Create a LocoNet packet to set the Duplex group password.
      * <p>
      * If s provides anything other than a 4 character length group password
-     * which uses only valid group ID characters (0-9, A-C, a-c), a bogus
+     * which uses only valid group ID characters (0-9, A-C), a bogus
      * LocoNet message is returned.
      * <p>
      * @param sGroupPassword The desired group password as a string
      * @return The packet which writes the Group Password to the UR92 device(s)
+     * @throws jmri.jmrix.loconet.LocoNetException in case of invalid sGrooupPassword
      */
     public static final LocoNetMessage createSetUr92GroupPasswordPacket(String sGroupPassword) throws jmri.jmrix.loconet.LocoNetException {
 
-        int gr_p1 = sGroupPassword.charAt(0);
-        int gr_p2 = sGroupPassword.charAt(1);
-        int gr_p3 = sGroupPassword.charAt(2);
-        int gr_p4 = sGroupPassword.charAt(3);
+        int gr_p1 = sGroupPassword.toUpperCase().charAt(0);
+        int gr_p2 = sGroupPassword.toUpperCase().charAt(1);
+        int gr_p3 = sGroupPassword.toUpperCase().charAt(2);
+        int gr_p4 = sGroupPassword.toUpperCase().charAt(3);
         int i;
 
         if (validateGroupPassword(sGroupPassword) == false) {
@@ -692,6 +695,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * match, a message is displayed on the status line in the GUI, else nothing
      * is displayed in the GUI status line.
      */
+    @Override
     public void message(LocoNetMessage m) {
 
         if (handleMessageIplResult(m)) {

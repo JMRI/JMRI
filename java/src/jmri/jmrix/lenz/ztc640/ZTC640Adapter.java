@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to XPressNet via a ZTC640 connected via an FTDI virtual comm
  * port. Normally controlled by the lenz.ztc640.ZTC640Frame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
  */
 public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
@@ -33,6 +33,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         options.put(option1Name, new Option("ZTC640 connection uses : ", validOption1));
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in XPressNet mode, check ability to set moderators
         try {
@@ -81,6 +82,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
             }
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
+                @Override
                 public void serialEvent(SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
@@ -209,6 +211,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
      * set up all of the other objects to operate with a ZTC640 connected to
      * this port
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new ZTC640XNetPacketizer(new LenzCommandStation());
@@ -221,6 +224,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
 
     // base class methods for the XNetSerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -229,6 +233,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -241,6 +246,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -262,8 +268,8 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
                 SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = 0; // default, but also deftaul for getOptionState(option1Name)

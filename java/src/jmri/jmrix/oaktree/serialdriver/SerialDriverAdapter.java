@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to Oak Tree via a serial comm port. Normally controlled by the
  * oaktree.serialdriver.SerialDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -31,6 +31,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         this.manufacturerName = jmri.jmrix.oaktree.SerialConnectionTypeList.OAK;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
@@ -92,6 +93,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -181,6 +183,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * set up all of the other objects to operate connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
@@ -195,6 +198,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     // base class methods for the SerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -203,6 +207,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -215,6 +220,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -234,8 +240,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
@@ -250,6 +256,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Set the baud rate.
      */
+    @Override
     public void configureBaudRate(String rate) {
         log.debug("configureBaudRate: " + rate);
         selectedSpeed = rate;

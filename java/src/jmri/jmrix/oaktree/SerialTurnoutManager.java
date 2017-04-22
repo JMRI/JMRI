@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "OTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
   */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -18,10 +18,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "O";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);

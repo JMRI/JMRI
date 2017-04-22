@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -13,24 +14,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DefaultSignalGroup.java
- *
  * A Conditional type to provide Signal Groups (n Signal Heads w/Conditionals for a main Mast).
- * <P>
+ *
  * @see jmri.SignalGroup SignalGroup
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse 2017
  */
 public class DefaultSignalGroup extends AbstractNamedBean implements jmri.SignalGroup {
 
+    /**
+     * Constructor for SignalGroup instance.
+     *
+     * @param systemName suggested system name
+     * @param userName provided user name
+     */
     public DefaultSignalGroup(String systemName, String userName) {
         super(systemName, userName);
     }
 
+    /**
+     * Constructor for SignalGroup instance.
+     *
+     * @param systemName suggested system name
+     */
     public DefaultSignalGroup(String systemName) {
         super(systemName, null);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalGroup");
     }
@@ -43,14 +54,17 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     private boolean enabled = true;
 
+    @Override
     public void setEnabled(boolean boo) {
         enabled = boo;
     }
 
+    @Override
     public boolean getEnabled() {
         return enabled;
     }
 
+    @Override
     public void setSignalMast(String pName) {
         SignalMast mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(pName);
         if (mMast == null) {
@@ -63,12 +77,15 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         setSignalMast(mMast, pName);
     }
 
+    @Override
     public void setSignalMast(SignalMast signalMast, String mastName) {
         if (_signalMast != null) {
             getSignalMast().removePropertyChangeListener(mSignalMastListener);
         }
-        _signalMast = new NamedBeanHandle<SignalMast>(mastName, signalMast);
+        _signalMast = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(mastName, signalMast);
         getSignalMast().addPropertyChangeListener(mSignalMastListener = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Aspect")) {
                     String now = ((String) e.getNewValue());
@@ -83,14 +100,17 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     }
 
+    @Override
     public SignalMast getSignalMast() {
         return _signalMast.getBean();
     }
 
+    @Override
     public String getSignalMastName() {
         return _signalMast.getName();
     }
 
+    @Override
     public void addSignalMastAspect(String aspect) {
         if (isSignalMastAspectIncluded(aspect)) {
             return;
@@ -98,6 +118,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         _signalMastAspects.add(aspect);
     }
 
+    @Override
     public boolean isSignalMastAspectIncluded(String aspect) {
         for (int i = 0; i < _signalMastAspects.size(); i++) {
             if (_signalMastAspects.get(i).equals(aspect)) {
@@ -108,14 +129,17 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return false;
     }
 
+    @Override
     public void deleteSignalMastAspect(String aspect) {
         _signalMastAspects.remove(aspect);
     }
 
+    @Override
     public int getNumSignalMastAspects() {
         return _signalMastAspects.size();
     }
 
+    @Override
     public String getSignalMastAspectByIndex(int x) {
         try {
             return _signalMastAspects.get(x);
@@ -124,20 +148,21 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public void clearSignalMastAspect() {
         _signalMastAspects = new ArrayList<String>();
     }
 
-    /**
-     * Add a new Signal Head to the group by Bean
-     */
+    @Override
     public void addSignalHead(NamedBeanHandle<SignalHead> headBean) {
         SignalHeadItem shi = new SignalHeadItem(headBean);
         _signalHeadItem.add(shi);
     }
 
     /**
-     * Add a new Signal Head to the group by name
+     * Add a new Signal Head to the group by name.
+     *
+     * @param pName system or username of existing signal head to add to group
      */
     public void addSignalHead(String pName) {
         SignalHead mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(pName);
@@ -147,21 +172,26 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         if (mHead == null) {
             log.warn("did not find a SignalHead named " + pName);
         } else {
-            addSignalHead(new NamedBeanHandle<SignalHead>(pName, mHead));
+            addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(pName, mHead));
         }
     }
 
+    @Override
     public void addSignalHead(SignalHead signalHead) {
-        addSignalHead(new NamedBeanHandle<SignalHead>(signalHead.getDisplayName(), signalHead));
+        addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class) 
+                        .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
     }
 
     protected PropertyChangeListener mSignalMastListener = null;
 
+    @Override
     public void setHeadAlignTurnout(SignalHead signalHead, Turnout turnout, int state) {
         SignalHeadItem shi = getHeadItem(signalHead);
         shi.addTurnout(turnout, state);
     }
 
+    @Override
     public void setHeadAlignSensor(SignalHead signalHead, Sensor sensor, int state) {
         SignalHeadItem shi = getHeadItem(signalHead);
         shi.addSensor(sensor, state);
@@ -175,6 +205,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public String getHeadItemNameByIndex(int x) {
         try {
             return getHeadItemByIndex(x).getName();
@@ -183,6 +214,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public SignalHead getHeadItemBeanByIndex(int x) {
         try {
             return getHeadItemByIndex(x).getSignalHead();
@@ -191,10 +223,12 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getNumHeadItems() {
         return _signalHeadItem.size();
     }
 
+    @Override
     public int getHeadOffState(SignalHead headBean) {
         try {
             return getHeadItem(headBean).getOffAppearance();
@@ -203,6 +237,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getHeadOnState(SignalHead headBean) {
         try {
             return getHeadItem(headBean).getOnAppearance();
@@ -211,6 +246,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getHeadOnStateByIndex(int x) {
         try {
             return getHeadItemByIndex(x).getOnAppearance();
@@ -219,6 +255,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getHeadOffStateByIndex(int x) {
         try {
             return getHeadItemByIndex(x).getOffAppearance();
@@ -227,24 +264,29 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public void deleteSignalHead(SignalHead sh) {
         _signalHeadItem.remove(getHeadItem(sh));
     }
 
+    @Override
     public void deleteSignalHead(NamedBeanHandle<SignalHead> headBean) {
         _signalHeadItem.remove(getHeadItem(headBean.getName()));
     }
 
+    @Override
     public void setHeadOnState(SignalHead head, int state) {
         getHeadItem(head).setOnAppearance(state);
         firePropertyChange("UpdateCondition", null, null);
     }
 
+    @Override
     public void setHeadOffState(SignalHead head, int state) {
         getHeadItem(head).setOffAppearance(state);
         firePropertyChange("UpdateCondition", null, null);
     }
 
+    @Override
     public boolean isHeadIncluded(SignalHead signalHead) {
         for (int i = 0; i < _signalHeadItem.size(); i++) {
             if (_signalHeadItem.get(i).getSignalHead() == signalHead) {
@@ -279,10 +321,12 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return null;
     }
 
+    @Override
     public boolean isTurnoutIncluded(SignalHead signalHead, Turnout turnout) {
         return getHeadItem(signalHead).isTurnoutIncluded(turnout);
     }
 
+    @Override
     public int getTurnoutState(SignalHead signalHead, Turnout turnout) {
         SignalHeadItem shi = getHeadItem(signalHead);
         if (shi != null) {
@@ -291,6 +335,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return -1;
     }
 
+    @Override
     public int getTurnoutStateByIndex(int x, Turnout turnout) {
         try {
             return getHeadItemByIndex(x).getTurnoutState(turnout);
@@ -299,6 +344,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getTurnoutStateByIndex(int x, int pTurnout) {
         try {
             return getHeadItemByIndex(x).getTurnoutState(pTurnout);
@@ -307,6 +353,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public String getTurnoutNameByIndex(int x, int pTurnout) {
         try {
             return getHeadItemByIndex(x).getTurnoutName(pTurnout);
@@ -315,6 +362,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public Turnout getTurnoutByIndex(int x, int pTurnout) {
         try {
             return getHeadItemByIndex(x).getTurnout(pTurnout);
@@ -323,6 +371,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getSensorStateByIndex(int x, int pSensor) {
         try {
             return getHeadItemByIndex(x).getSensorState(pSensor);
@@ -331,6 +380,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public String getSensorNameByIndex(int x, int pSensor) {
         try {
             return getHeadItemByIndex(x).getSensorName(pSensor);
@@ -339,6 +389,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public Sensor getSensorByIndex(int x, int pSensor) {
         try {
             return getHeadItemByIndex(x).getSensor(pSensor);
@@ -347,10 +398,12 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public boolean isSensorIncluded(SignalHead signalHead, Sensor sensor) {
         return getHeadItem(signalHead).isSensorIncluded(sensor);
     }
 
+    @Override
     public int getSensorState(SignalHead signalHead, Sensor sensor) {
         SignalHeadItem shi = getHeadItem(signalHead);
         if (shi != null) {
@@ -359,23 +412,28 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return -1;
     }
 
+    @Override
     public boolean getSensorTurnoutOper(SignalHead signalHead) {
         return getHeadItem(signalHead).getSensorTurnoutOper();
     }
 
+    @Override
     public boolean getSensorTurnoutOperByIndex(int x) {
         return getHeadItemByIndex(x).getSensorTurnoutOper();
     }
 
+    @Override
     public void setSensorTurnoutOper(SignalHead signalHead, boolean boo) {
         getHeadItem(signalHead).setSensorTurnoutOper(boo);
         firePropertyChange("UpdateCondition", null, null);
     }
 
+    @Override
     public void clearHeadTurnout(SignalHead signalHead) {
         getHeadItem(signalHead).clearSignalTurnouts();
     }
 
+    @Override
     public void clearHeadSensor(SignalHead signalHead) {
         getHeadItem(signalHead).clearSignalSensors();
     }
@@ -403,6 +461,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getNumHeadSensorsByIndex(int x) {
         try {
 
@@ -412,6 +471,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getNumHeadTurnoutsByIndex(int x) {
         try {
             return getHeadItemByIndex(x).getNumTurnouts();
@@ -679,10 +739,12 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
 
+    @Override
     public int getState() {
         return 0x00;
     }
 
+    @Override
     public void setState(int state) {
 
     }
@@ -691,24 +753,29 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
      */
+    @Override
     public synchronized int getNumPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners().length;
     }
 
+    @Override
     public synchronized java.beans.PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
+    @Override
     protected void firePropertyChange(String p, Object old, Object n) {
         if (pcs != null) {
             pcs.firePropertyChange(p, old, n);
         }
     }
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }

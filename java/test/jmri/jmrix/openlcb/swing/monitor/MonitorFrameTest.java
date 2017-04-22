@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
@@ -29,6 +28,7 @@ public class MonitorFrameTest {
 
         MonitorPane f = new MonitorPane() {
 
+            @Override
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
@@ -46,6 +46,9 @@ public class MonitorFrameTest {
         Assert.assertEquals("formatted", "S: Alias 0x678 CID 2 frame\n", testFormatted);
         Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         f.dispose();
+        
+        // accept WARN message due to defect in code as written - see #3091
+        jmri.util.JUnitAppender.assertWarnMessage("No User Preferences Manager, not saving format"); 
     }
 
     @Test
@@ -53,6 +56,7 @@ public class MonitorFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
+            @Override
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
@@ -71,6 +75,9 @@ public class MonitorFrameTest {
         Assert.assertEquals("formatted", "R: Alias 0x678 CID 2 frame\n", testFormatted);
         Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         f.dispose();
+        
+        // accept WARN message due to defect in code as written - see #3091
+        jmri.util.JUnitAppender.assertWarnMessage("No User Preferences Manager, not saving format"); 
     }
 
     // The minimal setup for log4J

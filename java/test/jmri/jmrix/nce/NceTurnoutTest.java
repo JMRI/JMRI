@@ -1,11 +1,8 @@
 package jmri.jmrix.nce;
 
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class

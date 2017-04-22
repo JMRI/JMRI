@@ -20,6 +20,7 @@ public class SerialPacketGenAction extends AbstractAction {
         this("Send SECSI message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame();
         try {

@@ -9,7 +9,7 @@ import jmri.jmrix.maple.SerialTrafficController;
 /**
  * Frame displaying (and logging) serial command messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -17,25 +17,30 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         super();
     }
 
+    @Override
     protected String title() {
         return "Maple Serial Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         SerialTrafficController.instance().addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
         super.dispose();
     }
 
+    @Override
     protected void addHelpMenu() {
         addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
     }
 
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
+    @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
@@ -77,6 +82,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {

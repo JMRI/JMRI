@@ -36,6 +36,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV=" + CV + " val=" + val);
 
@@ -58,11 +59,13 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         }
     }
 
+    @Override
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
+    @Override
     synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
@@ -78,6 +81,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         return ret;
     }
 
+    @Override
     synchronized public void notifyReply(SprogReply m) {
         // We will not see any replies
     }
@@ -93,14 +97,17 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         return false;
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }

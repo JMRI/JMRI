@@ -237,6 +237,7 @@ public class EliteXNetProgrammerTest extends TestCase {
             rcvdStatus = 0;
         }
 
+        @Override
         public void programmingOpReply(int value, int status) {
             rcvdValue = value;
             rcvdStatus = status;
@@ -265,10 +266,12 @@ public class EliteXNetProgrammerTest extends TestCase {
     }
 
     // The minimal setup is for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

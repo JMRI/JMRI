@@ -77,6 +77,6 @@ abstract public class AbstractWiThrottlePreferences {
     public static class AbstractWiThrottlePreferencesXml extends XmlFile {
     }
 
-    private static Logger log = LoggerFactory.getLogger(AbstractWiThrottlePreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractWiThrottlePreferences.class.getName());
 
 }

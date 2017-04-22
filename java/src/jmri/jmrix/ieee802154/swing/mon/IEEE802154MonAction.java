@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a IEEE802154MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Paul Bender Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Paul Bender Copyright (C) 2013
  */
 public class IEEE802154MonAction extends AbstractAction {
 
@@ -36,6 +36,7 @@ public class IEEE802154MonAction extends AbstractAction {
         this(Bundle.getMessage("MonActionTitle"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a IEEE802154MonFrame
         IEEE802154MonFrame f = new IEEE802154MonFrame(_memo);

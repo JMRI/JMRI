@@ -28,6 +28,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.simpleclock.SimpleTimebaseTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.simpleclock.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleClockActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SimpleClockFrameTest.class));
         return suite;
     }
 

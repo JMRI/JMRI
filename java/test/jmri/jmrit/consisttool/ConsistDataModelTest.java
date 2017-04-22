@@ -6,10 +6,8 @@ import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of ConsistDataModel
@@ -82,7 +80,7 @@ public class ConsistDataModelTest {
         ConsistDataModel model = new ConsistDataModel(1,4);
         // this uses an internal detail (The private column number).  If the 
         // column numbering changes, the test may need to change.
-        Assert.assertEquals("roster column class",javax.swing.JComboBox.class, model.getColumnClass(1));
+        Assert.assertEquals("roster column class",String.class, model.getColumnClass(1));
     }
 
     @Test

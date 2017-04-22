@@ -7,9 +7,9 @@ import jmri.jmrix.jmriclient.JMRIClientReply;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 
 /**
- * Description:	Frame for user input of JMRIClient messages
+ * Description: Frame for user input of JMRIClient messages
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.jmriclient.JMRIClientListener {
 
@@ -22,6 +22,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.j
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -48,6 +49,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.j
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -67,9 +69,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.j
         tc.sendJMRIClientMessage(m, this);
     }
 
+    @Override
     public void message(JMRIClientMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(JMRIClientReply r) {
     } // ignore replies
 

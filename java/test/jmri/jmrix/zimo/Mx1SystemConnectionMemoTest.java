@@ -1,10 +1,8 @@
 package jmri.jmrix.zimo;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,7 +34,7 @@ public class Mx1SystemConnectionMemoTest {
           public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
           }
        };
-       memo = new Mx1SystemConnectionMemo();
+       memo = new Mx1SystemConnectionMemo(tc);
     }
 
     @After

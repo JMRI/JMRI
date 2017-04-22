@@ -3,13 +3,9 @@ package jmri.jmrix.ieee802154.swing.nodeconfig;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
-import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JOptionPane;
-import javax.swing.border.Border;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import org.slf4j.Logger;
@@ -18,9 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Editing Nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Paul Bender Copyright (C) 2013,2016
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2013,2016
  */
 public class EditNodeFrame extends jmri.util.JmriJFrame {
 
@@ -48,6 +44,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("EditNodeWindowTitle"));
         Container contentPane = getContentPane();
@@ -73,6 +70,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
         editButton.setVisible(true);
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -84,6 +82,7 @@ public class EditNodeFrame extends jmri.util.JmriJFrame {
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }

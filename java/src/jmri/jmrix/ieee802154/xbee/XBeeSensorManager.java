@@ -1,9 +1,5 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.packet.XBeePacket;
-import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
@@ -23,10 +19,11 @@ import org.slf4j.LoggerFactory;
  * System names are "ZSnnn", where nnn is the sensor number without padding. or
  * "ZSstring:pin", where string is a node address and pin is the io pin used.
  *
- * @author	Paul Bender Copyright (C) 2003-2016
+ * @author Paul Bender Copyright (C) 2003-2016
  */
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -42,12 +39,14 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     static private XBeeSensorManager mInstance = null;
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
         super.dispose();
     }
 
     // XBee specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
@@ -81,6 +80,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // IIOSampleReceiveListener methods
+    @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
@@ -225,6 +225,20 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             }
         }
 
+    }
+
+    /**
+     * Do the sensor objects provided by this manager support configuring
+     * an internal pullup or pull down resistor?
+     * <p>
+     * For Raspberry Pi systems, it is possible to set the pullup or
+     * pulldown resistor, so return true.
+     *
+     * @return true if pull up/pull down configuration is supported.
+     */
+    @Override
+    public boolean isPullResistanceConfigurable(){
+       return true;
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class.getName());

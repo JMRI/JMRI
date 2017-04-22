@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
@@ -81,6 +81,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
         addRange.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         rangeState();
                     }

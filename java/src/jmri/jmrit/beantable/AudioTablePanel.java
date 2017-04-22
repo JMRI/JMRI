@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
 public class AudioTablePanel extends JPanel {
@@ -114,7 +114,7 @@ public class AudioTablePanel extends JPanel {
         add(audioTabs, BorderLayout.CENTER);
 
         bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
         bottomBoxIndex = 0;
 
         add(bottomBox, BorderLayout.SOUTH);

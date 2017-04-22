@@ -38,7 +38,11 @@ abstract public class AbstractConsistManager implements ConsistManager {
     }
 
     /**
-     * Add a new Consist with the given address to the consistTable/consistList
+     * Add a new Consist with the given address.
+     *
+     * @param address consist address
+     * @return a consist at address; this will be the existing consist if a
+     *         consist is already known to exist at address
      */
     abstract protected Consist addConsist(DccLocoAddress address);
 

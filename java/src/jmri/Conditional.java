@@ -33,16 +33,20 @@ import java.util.ArrayList;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Dave Duchamp Copyright (C) 2007, 2008
- * @author	Pete Cressman Copyright (C) 2009, 2010, 2011
+ * @author Dave Duchamp Copyright (C) 2007, 2008
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
  */
 public interface Conditional extends NamedBean {
 
-    // states 
-    public static final int TRUE = 0x01;
+    // states
+    /**
+     * @deprecated since 4.7.1; use {@link jmri.NamedBean#UNKNOWN} instead
+     */
+    @Deprecated
+    public static final int UNKNOWN = NamedBean.UNKNOWN;
     public static final int FALSE = 0x02;
-    public static final int UNKNOWN = 0x04;
+    public static final int TRUE = 0x04;
 
     // logic operators used in antecedent
     public static final int ALL_AND = 0x01;
@@ -69,7 +73,7 @@ public interface Conditional extends NamedBean {
     public static final int TYPE_MEMORY_EQUALS = 9;
     public static final int TYPE_FAST_CLOCK_RANGE = 10;
 // Note - within the TYPE_SIGNAL_HEAD definitions, all must be together,
-//		RED must be first, and HELD must be last
+//  RED must be first, and HELD must be last
     public static final int TYPE_SIGNAL_HEAD_RED = 11;
     public static final int TYPE_SIGNAL_HEAD_YELLOW = 12;
     public static final int TYPE_SIGNAL_HEAD_GREEN = 13;

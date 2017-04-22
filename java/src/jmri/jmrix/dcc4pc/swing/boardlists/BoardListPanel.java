@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Signal Mast Add / Edit Panel
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  * 
  */
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
@@ -44,6 +44,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         super();
     }
 
+    @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
         senMan = jmri.InstanceManager.getDefault(jmri.jmrix.dcc4pc.Dcc4PcSensorManager.class);
@@ -76,11 +77,13 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         add(footer, BorderLayout.SOUTH);
     }
 
+    @Override
     public void initComponents() throws Exception {
     }
 
     JLabel sourceLabel = new JLabel();
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
 
     }
@@ -180,6 +183,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 _boardListCount = senMan.getBoards();
@@ -222,6 +226,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                     .setPreferredWidth((sample.getPreferredSize().width) + 4);
         }
 
+        @Override
         public int getColumnCount() {
             return 6;
         }
@@ -266,6 +271,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         public void setSetToState(String x) {
         }
 
+        @Override
         public int getRowCount() {
             if (_boardListCount == null) {
                 return 0;
@@ -273,6 +279,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             return _boardListCount.size();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (senMan == null) {
                 return null;

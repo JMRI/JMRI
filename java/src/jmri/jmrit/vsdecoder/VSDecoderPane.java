@@ -21,7 +21,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.BorderLayout;
@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * Virtual Sound Decoder for playing sounds off of LocoNet messages. Based on
  * the LocoMon tool by Bob Jacobsen
  *
- * @author	Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("serial")
 public class VSDecoderPane extends JmriPanel {
@@ -121,6 +121,7 @@ public class VSDecoderPane extends JmriPanel {
      *
      * Return a reference to the help file
      */
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.vsdecoder.VSDecoderPane";
     }
@@ -130,6 +131,7 @@ public class VSDecoderPane extends JmriPanel {
      *
      * Return a suggested title for the enclosing frame.
      */
+    @Override
     public String getTitle() {
         return Bundle.getMessage("WindowTitle");
     }
@@ -156,6 +158,7 @@ public class VSDecoderPane extends JmriPanel {
     /**
      * initContext() : does nothing. Here to satisfy the parent class
      */
+    @Override
     public void initContext(Object context) {
         // Does nothing.  Here for completeness.
     }
@@ -165,6 +168,7 @@ public class VSDecoderPane extends JmriPanel {
      *
      * initialzies the GUI components.
      */
+    @Override
     public void initComponents() {
         log.debug("initComponents()");
         //buildMenu();
@@ -218,6 +222,7 @@ public class VSDecoderPane extends JmriPanel {
         volume.setValue(80);
         volume.setPreferredSize(new Dimension(200, 20));
         volume.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 volumeChange(e);
             }
@@ -227,6 +232,7 @@ public class VSDecoderPane extends JmriPanel {
         JToggleButton mute_button = new JToggleButton("Mute");
 
         mute_button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 muteButtonPressed(e);
             }
@@ -289,6 +295,7 @@ public class VSDecoderPane extends JmriPanel {
     /**
      * Add a listener for this Pane's property change events
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
         if (!l.contains(listener)) {
@@ -299,6 +306,7 @@ public class VSDecoderPane extends JmriPanel {
     /**
      * Remove a listener
      */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         listenerList.remove(PropertyChangeListener.class, listener);
     }
@@ -363,30 +371,38 @@ public class VSDecoderPane extends JmriPanel {
             // Register the decoder as a listener on our frame... so it can react
             // to the window closing
             parent.addWindowListener(new WindowListener() {
+                @Override
                 public void windowActivated(WindowEvent e) {
                 }
 
+                @Override
                 public void windowClosed(WindowEvent e) {
                 }
 
+                @Override
                 public void windowClosing(WindowEvent e) {
                     VSDecoderManager.instance().getVSDecoderByID(decoder_id).windowChange(e);
                 }
 
+                @Override
                 public void windowDeactivated(WindowEvent e) {
                 }
 
+                @Override
                 public void windowDeiconified(WindowEvent e) {
                 }
 
+                @Override
                 public void windowIconified(WindowEvent e) {
                 }
 
+                @Override
                 public void windowOpened(WindowEvent e) {
                 }
             });
             // Register ourselves as an event listener to the decoder
             dec.addEventListener(new VSDecoderListener() {
+                @Override
                 public void eventAction(VSDecoderEvent e) {
                     decoderEventAction(e);
                 }

@@ -75,7 +75,24 @@
       "http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
       objects to handle references to NamedBeans. They automate the
       process of renaming.</p>
-
+      <p>To do this, when you want to store a reference to 
+      a NamedBean, e.g. to remember a particular Sensor, Turnout, SignalMast, etc
+      ask (through the InstanceManager) the NamedBeanHandlerManager to give you a 
+      NamedBeanHandle:
+      <pre><code>
+      NamedBeanHandle&lt;Sensor&gt; handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBean(name, sensor);
+      </code></pre> 
+      where <code>name</code> is the String name that the user provided, either a 
+      system name or user name, and <code>sensor</code> is the particular <code>Sensor</code> object
+      being stored.   When you need to reference the sensor itself, just do
+      <pre><code>
+      sensor = handle.getBean();
+      </code></pre>
+      Please use <code>getBean()</code> every time you need to access the bean.  Don't cache the
+      reference from <code>getBean()</code>.  That way, if somebody does a "move" or "rename" operation,
+      the <code>NamedBeanHandle</code> will get updated and you're next <code>getBean()</code> call will get the
+      right reference.
+      
       <h2>Code Organization</h2>
 
       <p>At the highest level, we separate test code from

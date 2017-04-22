@@ -1,12 +1,9 @@
 package jmri.jmrix.pi;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
@@ -17,7 +14,10 @@ import jmri.Sensor;
 /**
  * <P>
  * Tests for RaspberryPiSensorManager
- * </P>
+ * </P><p>
+ * This is somehow not reseting the GPIO support, so each reference to a "pin"
+ * needs to be do a different one, even across multiple test types
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -68,7 +68,6 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @Override
     @Test
     public void testRename() {
-        // get light
         Sensor t1 = l.newSensor(getSystemName(12), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
@@ -87,7 +86,25 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(13)));
     }
 
+    @Override
+    @Test
+    public void testMoveUserName() {
+        Sensor t1 = l.provideSensor("21");
+        Sensor t2 = l.provideSensor("22");
+        t1.setUserName("UserName");
+        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        
+        t2.setUserName("UserName");
+        Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
+        Assert.assertTrue(null == t1.getUserName());
+    }
+
+    @Override
+    @Test
+    public void testPullResistanceConfigurable(){
+       Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+    }
 
     @Override
     @Before

@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class RemoveRosterEntryToGroupAction extends AbstractAction {
 
@@ -55,6 +55,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     JButton okButton = new JButton(Bundle.getMessage("ButtonRemove"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonDone"));
 
+    @Override
     public void actionPerformed(ActionEvent event) {
         frame = new JmriJFrame(Bundle.getMessage("DeleteFromGroup"));
         rosterBox = new RosterEntrySelectorPanel();
@@ -71,12 +72,14 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         p.setLayout(new FlowLayout());
         p.add(okButton);
         okButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed();
             }
         });
         p.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }

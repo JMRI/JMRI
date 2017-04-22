@@ -49,6 +49,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     }
 
     // Clean Up local storage
+    @Override
     public void dispose() {
         if (ConsistList.size() > 0) {
             // kill this consist
@@ -60,6 +61,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     }
 
     // Set the Consist Type
+    @Override
     public void setConsistType(int consist_type) {
         if (consist_type == Consist.ADVANCED_CONSIST) {
             ConsistType = consist_type;
@@ -71,6 +73,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
 
     /* is there a size limit for this consist?
      */
+    @Override
     public int sizeLimit() {
         return 6;
     }
@@ -82,6 +85,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
      * @param directionNormal is True if the locomotive is traveling the same
      *                        direction as the consist, or false otherwise.
      */
+    @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
         if (!contains(locoAddress)) {
             // NCE has 6 commands for adding a loco to a consist, lead, rear, and mid, plus direction
@@ -132,6 +136,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
      *
      * @param locoAddress is the locomotive address to remove from this consist
      */
+    @Override
     public synchronized void remove(DccLocoAddress locoAddress) {
         if (contains(locoAddress)) {
             // can not delete the lead or rear loco from a NCE consist
@@ -266,10 +271,12 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         tc.sendNceMessage(m, this);
     }
 
+    @Override
     public void message(NceMessage m) {
         // not used
     }
 
+    @Override
     public void reply(NceReply r) {
         if (_busy == 0) {
             log.debug("Consist " + _consistNum + " read reply not for this consist");
@@ -317,6 +324,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
 
         // load up the consist lists by lead, rear, and then mid
+        @Override
         public void run() {
             readConsistMemory(_consistNum, LEAD);
             readConsistMemory(_consistNum, REAR);
@@ -378,11 +386,13 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             return true;
         }
 
+        @Override
         public void message(NceMessage m) {
             // not used
         }
 
         @SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
+        @Override
         public void reply(NceReply r) {
             if (_busy == 0) {
                 log.debug("Consist " + _consistNum + " read reply not for this consist");

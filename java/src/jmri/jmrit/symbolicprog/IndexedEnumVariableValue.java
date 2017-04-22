@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author Howard G. Penny Copyright (C) 2005
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  * @deprecated since 3.7.1
  *
  */
@@ -43,6 +43,7 @@ public class IndexedEnumVariableValue extends VariableValue
     int _minVal;
     int _maxVal;
 
+    @Override
     public CvValue[] usesCVs() {
         return new CvValue[]{
             _cvMap.get(getCvName())};
@@ -51,6 +52,7 @@ public class IndexedEnumVariableValue extends VariableValue
     /**
      * Provide a user-readable description of the CVs accessed by this variable.
      */
+    @Override
     public String getCvDescription() {
         return "CV" + getCvName();
     }
@@ -112,6 +114,7 @@ public class IndexedEnumVariableValue extends VariableValue
         }
     }
 
+    @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
@@ -127,10 +130,12 @@ public class IndexedEnumVariableValue extends VariableValue
 
     Color _defaultColor;
 
+    @Override
     public Object rangeVal() {
         return "enum: " + _minVal + " - " + _maxVal;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // see if this is from _value itself, or from an alternate rep.
         // if from an alternate rep, it will contain the value to select
@@ -157,14 +162,17 @@ public class IndexedEnumVariableValue extends VariableValue
 
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
+    @Override
     public String getValueString() {
         return "" + _value.getSelectedIndex();
     }
 
+    @Override
     public void setIntValue(int i) {
         selectValue(i);
     }
 
+    @Override
     public String getTextValue() {
         return _value.getSelectedItem().toString();
     }
@@ -206,6 +214,7 @@ public class IndexedEnumVariableValue extends VariableValue
         _value.setSelectedItem("Reserved value " + value);
     }
 
+    @Override
     public int getIntValue() {
         if ((_value.getSelectedIndex() >= _valueArray.length) || _value.getSelectedIndex() < 0) {
             log.error("trying to get value " + _value.getSelectedIndex() + " too large"
@@ -214,10 +223,12 @@ public class IndexedEnumVariableValue extends VariableValue
         return _valueArray[_value.getSelectedIndex()];
     }
 
+    @Override
     public Object getValueObject() {
         return Integer.valueOf(_value.getSelectedIndex());
     }
 
+    @Override
     public Component getCommonRep() {
         return _value;
     }
@@ -231,6 +242,7 @@ public class IndexedEnumVariableValue extends VariableValue
         }
     }
 
+    @Override
     public Component getNewRep(String format) {
         // sort on format type
         if (format.equals("checkbox")) {
@@ -272,6 +284,7 @@ public class IndexedEnumVariableValue extends VariableValue
     private List<ComboRadioButtons> comboRBs = new ArrayList<ComboRadioButtons>();
 
     // implement an abstract member to set colors
+    @Override
     void setColor(Color c) {
         if (_value != null) {
             if (c != null) {
@@ -287,6 +300,7 @@ public class IndexedEnumVariableValue extends VariableValue
         }
     }
 
+    @Override
     public void setAvailable(boolean a) {
         for (IndexedComboCheckBox c : comboCBs) {
             c.setVisible(a);
@@ -327,10 +341,12 @@ public class IndexedEnumVariableValue extends VariableValue
      * Notify the connected CVs of a state change from above
      *
      */
+    @Override
     public void setCvState(int state) {
         (_cvMap.get(getCvName())).setState(state);
     }
 
+    @Override
     public void setToRead(boolean state) {
         if (getInfoOnly() || getWriteOnly()) {
             state = false;
@@ -338,10 +354,12 @@ public class IndexedEnumVariableValue extends VariableValue
         (_cvMap.get(getCvName())).setToRead(state);
     }
 
+    @Override
     public boolean isToRead() {
         return getAvailable() && (_cvMap.get(getCvName())).isToRead();
     }
 
+    @Override
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly()) {
             state = false;
@@ -349,27 +367,32 @@ public class IndexedEnumVariableValue extends VariableValue
         (_cvMap.get(getCvName())).setToWrite(state);
     }
 
+    @Override
     public boolean isToWrite() {
         return getAvailable() && (_cvMap.get(getCvName())).isToWrite();
     }
 
+    @Override
     public boolean isChanged() {
         CvValue cv = (_cvMap.get(getCvName()));
         return considerChanged(cv);
     }
 
+    @Override
     public void readChanges() {
         if (isChanged()) {
             readAll();
         }
     }
 
+    @Override
     public void writeChanges() {
         if (isChanged()) {
             writeAll();
         }
     }
 
+    @Override
     public void readAll() {
         setBusy(true);  // will be reset when value changes
         setToRead(false);
@@ -390,6 +413,7 @@ public class IndexedEnumVariableValue extends VariableValue
         (_cvMap.get(getCvName())).writePI(_status);
     }
 
+    @Override
     public void writeAll() {
         if (getReadOnly()) {
             log.error("unexpected write operation when readOnly is set");
@@ -413,6 +437,7 @@ public class IndexedEnumVariableValue extends VariableValue
         (_cvMap.get(getCvName())).writePI(_status);
     }
 
+    @Override
     public void confirmAll() {
         setBusy(true);  // will be reset when value changes
         setToRead(false);
@@ -434,6 +459,7 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     // handle incoming parameter notification
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("Property changed: " + e.getPropertyName());
@@ -596,6 +622,7 @@ public class IndexedEnumVariableValue extends VariableValue
             super(m);
             _var = var;
             _l = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (log.isDebugEnabled()) {
                         log.debug("VarComboBox saw property change: " + e);
@@ -628,6 +655,7 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     // clean up connections when done
+    @Override
     public void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");

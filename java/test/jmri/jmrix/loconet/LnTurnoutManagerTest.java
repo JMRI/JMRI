@@ -42,6 +42,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     }
 
     @Test
+    @Override
     public void testMisses() {
         // try to get nonexistant turnouts
         Assert.assertTrue(null == l.getByUserName("foo"));

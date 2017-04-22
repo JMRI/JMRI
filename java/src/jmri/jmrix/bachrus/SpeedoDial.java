@@ -19,7 +19,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * Based on analogue clock frame by Dennis Miller
  *
  * @author Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
+ * @author Dennis Miller Copyright (C) 2015
  *
  */
 public class SpeedoDial extends JPanel {
@@ -85,12 +85,14 @@ public class SpeedoDial extends JPanel {
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(new ComponentAdapter() {
+            @Override
             public void componentResized(ComponentEvent e) {
                 scaleFace();
             }
         });
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         if (!(g instanceof Graphics2D) ) {

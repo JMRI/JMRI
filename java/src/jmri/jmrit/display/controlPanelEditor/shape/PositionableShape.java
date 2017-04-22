@@ -41,12 +41,12 @@ public class PositionableShape extends PositionableJComponent
     private int _degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
-    private int _saveLevel = 5;			// default level set in popup
+    private int _saveLevel = 5;   // default level set in popup
     private int _changeLevel = 5;
-    private boolean _doHide;		// whether sensor controls show/hide or change level
+    private boolean _doHide;  // whether sensor controls show/hide or change level
     // GUI resizing params
     private Rectangle[] _handles;
-    protected int _hitIndex = -1;	// dual use! also is index of polygon's vertices
+    protected int _hitIndex = -1; // dual use! also is index of polygon's vertices
     protected int _lastX;
     protected int _lastY;
     // params for shape's bounding box
@@ -205,7 +205,7 @@ public class PositionableShape extends PositionableJComponent
             r.width += _lineWidth;
             r.height += _lineWidth;
             g2d.draw(r);
-//       		g2d.fill(r);
+//         g2d.fill(r);
             for (int i = 0; i < _handles.length; i++) {
                 if (_handles[i] != null) {
                     g2d.setColor(Color.RED);
@@ -290,6 +290,7 @@ public class PositionableShape extends PositionableJComponent
         return _degrees;
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("property change: \"{}\"= {} for {}", 
@@ -475,6 +476,7 @@ public class PositionableShape extends PositionableJComponent
         return new Point(x, y);
     }
 
+    @Override
     public void doMousePressed(MouseEvent event) {
         _hitIndex = -1;
         if (!_editor.isEditable()) {
@@ -532,6 +534,9 @@ public class PositionableShape extends PositionableJComponent
                         width = SIZE;
                     }
                     setWidth(width);
+                    break;
+                default:
+                    log.warn("Unhandled dir: {}", _hitIndex);
                     break;
             }
             if (_editFrame!=null) {

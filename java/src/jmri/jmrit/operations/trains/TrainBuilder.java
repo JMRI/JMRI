@@ -511,6 +511,8 @@ public class TrainBuilder extends TrainCommon {
                                     Integer.toString(track.getNumberCars())}));
                     // is the departure track available?
                     if (!checkDepartureStagingTrack(track)) {
+                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
+                                new Object[]{track.getName(), _train.getName()}));
                         continue;
                     }
                     _departStageTrack = track;
@@ -608,8 +610,8 @@ public class TrainBuilder extends TrainCommon {
                     Integer.toString(requested), _train.getName(), Integer.toString(_carList.size())}));
         }
 
-        // remove unwanted cars
-        removeCars();
+        // remove unwanted cars and list available cars by location
+        removeAndListCars();
 
         // Do caboose changes in reverse order in case there isn't enough track space
         // second caboose change?
@@ -1477,7 +1479,7 @@ public class TrainBuilder extends TrainCommon {
      * track assignment, and check that the car can be serviced by this train.
      * Lists all cars available to train by location.
      */
-    private void removeCars() throws BuildFailedException {
+    private void removeAndListCars() throws BuildFailedException {
         addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCars"));
         boolean showCar = true;
@@ -3018,6 +3020,8 @@ public class TrainBuilder extends TrainCommon {
             return true;
         }
         if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
+                    new Object[]{terminateStageTrack.getName(), _train.getName()}));
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildOptionRestrictStaging"));
             return false;
         }

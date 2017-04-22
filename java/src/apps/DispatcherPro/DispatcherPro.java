@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class DispatcherPro extends Apps {
 
@@ -41,23 +41,28 @@ public class DispatcherPro extends Apps {
         super(p);
     }
 
+    @Override
     protected String logo() {
         return "resources/logo.gif";
     }
 
+    @Override
     protected String mainWindowHelpID() {
         return "package.apps.DispatcherPro.DispatcherPro";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("DispatcherProVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/DispatcherPro ";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -65,6 +70,7 @@ public class DispatcherPro extends Apps {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

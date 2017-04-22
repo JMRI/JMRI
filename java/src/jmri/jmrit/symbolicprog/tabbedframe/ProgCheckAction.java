@@ -18,7 +18,7 @@ import org.jdom2.Element;
 /**
  * Check the names in an XML programmer file against the names.xml definitions
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @see jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -32,6 +32,7 @@ public class ProgCheckAction extends AbstractAction {
 
     JPanel _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");

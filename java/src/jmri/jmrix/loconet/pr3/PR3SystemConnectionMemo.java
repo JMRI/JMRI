@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Lightweight class to denote that a PR3 is active
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @author B. Milhaupt  Copyright (C) 2017
  */
 public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * on the serial bus. E.g. you can manually change a state via an icon, and not
  * have it change back the next time that node is polled.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialNode extends AbstractNode {
@@ -140,6 +140,7 @@ public class SerialNode extends AbstractNode {
      * Public method to return state of Sensors. Note: returns 'true' if at
      * least one sensor is active for this node
      */
+    @Override
     public boolean getSensorsActive() {
         return hasActiveSensors;
     }
@@ -148,6 +149,7 @@ public class SerialNode extends AbstractNode {
      * Public to reset state of needSend flag. Can only reset if there are no
      * bytes that need to be sent
      */
+    @Override
     public void resetMustSend() {
         for (int i = 0; i < (outputBits[nodeType] + 7) / 8; i++) {
             if (outputByteChanged[i]) {
@@ -185,6 +187,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Check for valid node address
      */
+    @Override
     protected boolean checkNodeAddress(int address) {
         return (address >= 1) && (address <= 127);
     }
@@ -202,11 +205,13 @@ public class SerialNode extends AbstractNode {
      * As an Ugly Hack to keep these separate, only the first is put in the
      * reply from this. The other(s) are sent via the usual output methods.
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
 
         // first, queue a timer to send 2nd message
         javax.swing.Timer timer = new javax.swing.Timer(250, null);
         java.awt.event.ActionListener l = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 SerialMessage m2 = new SerialMessage(4);
                 int i = 0;
@@ -242,6 +247,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Public Method to create an Transmit packet (SerialMessage)
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         if (log.isDebugEnabled()) {
             log.debug("createOutPacket for nodeType "
@@ -427,6 +433,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         // normal to timeout in response to init, output
@@ -450,6 +457,7 @@ public class SerialNode extends AbstractNode {
         }
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");

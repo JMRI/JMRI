@@ -2,8 +2,6 @@ package jmri.jmrix.dcc4pc;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -13,7 +11,15 @@ import org.slf4j.LoggerFactory;
    Dcc4PcReporterManagerTest.class,
    Dcc4PcSystemConnectionMemoTest.class,
    Dcc4PcPortControllerTest.class,
-   Dcc4PcTrafficControllerTest.class
+   Dcc4PcTrafficControllerTest.class,
+   Dcc4PcConnectionTypeListTest.class,
+   Dcc4PcReplyTest.class,
+   Dcc4PcMessageTest.class,
+   Dcc4PcProgrammerManagerTest.class,
+   Dcc4PcOpsModeProgrammerTest.class,
+   Dcc4PcSensorTest.class,
+   Dcc4PcSensorManagerTest.class,
+   Dcc4PcReporterTest.class
 })
 /**
  * Tests for the jmri.jmrix.pi package

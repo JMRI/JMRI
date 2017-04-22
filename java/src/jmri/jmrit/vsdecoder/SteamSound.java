@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +50,7 @@ class SteamSound extends EngineSound {
             if (use_chuff) {
                 sound.setLooped(false);
                 t = newTimer(1000, true, new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         doChuff();
                     }
@@ -116,6 +117,7 @@ class SteamSound extends EngineSound {
         is_playing = false;
     }
 
+    @Override
     public void startEngine() {
         log.debug("Starting Engine");
         current_rpm_sound = getRPMSound(0);
@@ -123,6 +125,7 @@ class SteamSound extends EngineSound {
         engine_started = true;
     }
 
+    @Override
     public void stopEngine() {
         current_rpm_sound.sound.fadeOut();
         engine_started = false;
@@ -205,6 +208,7 @@ class SteamSound extends EngineSound {
         }
     }
 
+    @Override
     public Element getXml() {
         // OUT OF DATE
         return (super.getXml());
@@ -236,7 +240,7 @@ class SteamSound extends EngineSound {
             //log.debug("Num Cylinders: " + num_cylinders);
         }
         // For now, num_rpms is not used.  
-	/*
+ /*
          n = e.getChild("rpm-steps").getValue();
          if (n != null) {
          num_rpms = Integer.parseInt(n);

@@ -14,7 +14,7 @@ import jmri.jmrix.ecos.EcosTrafficController;
 /**
  * Panel to show ECoS status
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
   */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
@@ -31,6 +31,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         super();
     }
 
+    @Override
     public void initComponents(EcosSystemConnectionMemo memo) {
         super.initComponents(memo);
         //memo.getTrafficController().addEcosListener(this);
@@ -58,6 +59,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
 
         add(sendButton);
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -71,6 +73,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.removeEcosListener(this);
         tc = null;
@@ -93,6 +96,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
     EcosTrafficController tc;
 
     // to listen for status changes from Ecos system
+    @Override
     public void reply(EcosReply m) {
         // power message?
         String msg = m.toString();
@@ -120,10 +124,12 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return memo.getUserName() + " info";

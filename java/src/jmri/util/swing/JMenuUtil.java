@@ -162,6 +162,7 @@ public class JMenuUtil extends GuiUtilBase {
 
         try {
             methodListener.invoke(context, new PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals(ref)) {
                         String method = (String) e.getOldValue();
@@ -174,13 +175,13 @@ public class JMenuUtil extends GuiUtilBase {
                 }
             });
         } catch (IllegalArgumentException ex) {
-            System.out.println("IllegalArgument " + ex);
+            log.error("IllegalArgument in setMenuItemInterAction ", ex);
         } catch (IllegalAccessException ex) {
-            System.out.println("IllegalAccess " + ex);
+            log.error("IllegalAccess in setMenuItemInterAction ", ex);
         } catch (java.lang.reflect.InvocationTargetException ex) {
-            System.out.println("InvocationTarget " + ref + " " + ex.getCause());
+            log.error("InvocationTarget {} in setMenuItemInterAction ", ref, ex);
         } catch (java.lang.NullPointerException ex) {
-            System.out.println("NPE " + context.getClass().getName() + " " + ex.toString());
+            log.error("NPE {} in setMenuItemInterAction ", context.getClass().getName(), ex);
         }
 
     }

@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -90,6 +90,7 @@ class DieselSound extends EngineSound {
                 // Handle notch transition...
                 t = newTimer(notch_transition.getLengthAsInt() - notch_sounds.get(new_notch).getFadeInTime(), false,
                         new ActionListener() {
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 handleNotchTimerPop(e);
                             }

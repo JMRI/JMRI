@@ -18,7 +18,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
@@ -46,6 +46,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Return the C/MRI system letter
      */
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
@@ -54,6 +55,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Create a new sensor if all checks are passed System name is normalized to
      * ensure uniqueness.
      */
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
@@ -104,6 +106,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Dummy routine
      */
+    @Override
     public void message(SerialMessage r) {
         log.warn("unexpected message");
     }
@@ -111,6 +114,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Process a reply to a poll of Sensors of one node
      */
+    @Override
     public void reply(SerialReply r) {
         // determine which node
         SerialNode node = (SerialNode) _memo.getTrafficController().getNodeFromAddress(r.getUA());
@@ -147,23 +151,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    /**
-     * static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
-    }
-
-
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
         if (curAddress.contains(":")) {
@@ -210,6 +203,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     int bitNum = 0;
     int nAddress = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address past does not already exist then this can
         //be considered the next valid address.

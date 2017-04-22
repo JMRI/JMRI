@@ -1,11 +1,7 @@
 package jmri.managers;
 
-import jmri.Reporter;
-import jmri.ReporterManager;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test the InternalReporterManager
@@ -17,7 +13,7 @@ import org.junit.Test;
 public class InternalReporterManagerTest extends AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "IR" + i;
     }
 

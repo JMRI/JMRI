@@ -30,6 +30,7 @@ public class ShapeDrawer {
         JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Rectangle")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newRectangle();
             }
@@ -37,6 +38,7 @@ public class ShapeDrawer {
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("roundRect")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newRoundRectangle();
             }
@@ -45,6 +47,7 @@ public class ShapeDrawer {
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Polygon")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newPolygon();
             }
@@ -53,6 +56,7 @@ public class ShapeDrawer {
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Circle")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newCircle();
             }
@@ -60,6 +64,7 @@ public class ShapeDrawer {
         shapeItem = new JMenuItem(Bundle.getMessage("drawSth", Bundle.getMessage("Ellipse")));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 newEllipse();
             }
@@ -177,7 +182,7 @@ public class ShapeDrawer {
     public boolean doMouseDragged(MouseEvent event) {
         if (_drawFrame instanceof DrawPolygon && _currentSelection == null) {
             ((DrawPolygon) _drawFrame).moveTo(event.getX(), event.getY());
-            return true;		// no select rect
+            return true;  // no select rect
         } else if (_currentSelection != null) {
             return _currentSelection.doHandleMove(event);
         }

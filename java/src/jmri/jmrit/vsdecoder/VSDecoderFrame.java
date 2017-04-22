@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.BorderLayout;
@@ -79,6 +79,7 @@ class VSDecoderFrame extends JmriJFrame {
 
     }
 
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         // Call the superclass function
         super.windowClosing(e);

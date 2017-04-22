@@ -434,7 +434,8 @@ are <a href="#id">not stored</a> in the roster entry.
         a new locomotive version exists)</li>
       </ol>
 
-      <h3>Programming Capabilities</h3>Some decoders can do extra
+      <a name="capability" id="capability"></a><h3>Programming Capabilities</h3>
+      Some decoders can do extra
       programming operations, for example bypassing limitations on
       CV programming in the command station. "Capability" elements
       are used to tell DecoderPro about these.
@@ -599,8 +600,9 @@ selects the different algorithm needed here.
 
         <li>"Indicator" - value added to the value being stored to
         High Address CV to tell the decoder to use this mode.</li>
-      </ul><a id="accessoryops" name="accessoryops"></a>
+      </ul>
 
+      <a id="accessoryops" name="accessoryops"></a>
       <h4>Accessory Decoder Ops Mode</h4>Special programming
       packets are used by certain accessory decoders to configure
       their CVs from the DCC track signal. The capability to do
@@ -608,13 +610,23 @@ selects the different algorithm needed here.
       <pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
+            &lt;parameter name="Address Type"&gt;decoder&lt;/name&gt;
         &lt;/capability&gt;
-</pre>There are no parameters. Note that this only works for
-ops-mode writes; these particular NMRA DCC packets do not perform
-read operations, nor do they work in the service mode (programming
-track).
+</pre>The "Address Type" parameter is optional:
+      <ul>
+          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit decoder address.</li>
+          <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory address.</li>
+      </ul>
+      <p>
+        Note that this only works for
+        ops-mode writes; these particular NMRA DCC packets do not perform
+        read operations, nor do they work in the service mode (programming
+        track).
+      </p>
 
-      <h4>Indexed CV Access</h4>To access indexed CVs, include this
+      <a name="indexedcap" id="indexedcap"></a></a>
+      <h4>Indexed CV Access</h4>
+      To access indexed CVs, include this
       capability element:
       <pre style="font-family: monospace;">
         &lt;capability&gt;
@@ -622,11 +634,17 @@ track).
             &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
             &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
             &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
+            &lt;parameter name="skipDupIndexWrite"&gt;true&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
-by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
-ESU.
-
+</pre>
+      <p>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
+        by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
+        ESU.
+      <p>If skipDupIndexWrite is true, certain writes to the PI and SI
+        CVs can be skipped if the user selects skipping them. This speeds up access.
+        Some decoders  require that the CVs be written for each operation, 
+        in which case this should be set to false.  The default is true.
+      
       <p>If both this and the "access to high CV" capabilities are
       present, this one should be listed second.</p>
 
@@ -634,8 +652,9 @@ ESU.
       <a href=
       "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml"
       target="_blank">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
-      <a id="tcsaccess" name="tcsaccess"></a></p>
+      </p>
 
+        <a id="tcsaccess" name="tcsaccess"></a>
       <h4>TCS WOW decoder access</h4>The TCS WOW decoders use
       several unique (to say the least) CV access methods. JMRI
       accommodates them via a special capability element:
@@ -693,13 +712,13 @@ ESU.
 </pre>
 
       <p>For an example, see the <a href=
-      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6."
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6.xml"
       target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a>
       file.</p>
 
       <p>For details and more advanced features, see this <a href=
       "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html"
-      target="_blank">JavaDoc page</a></p><a name="conditional" id=
+      target="_blank">Javadoc page</a></p><a name="conditional" id=
       "conditional"></a>
 
       <h3>Conditional Decoder Definitions</h3>To reduce the number

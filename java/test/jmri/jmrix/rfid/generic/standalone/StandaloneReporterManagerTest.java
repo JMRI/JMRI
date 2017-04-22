@@ -1,23 +1,21 @@
 package jmri.jmrix.rfid.generic.standalone;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import jmri.Reporter;
+
+import org.junit.Assert;
 
 /**
- * StandaloneReporterManagerTest.java
- *
- * Description:	tests for the StandaloneReporterManager class
+ * Note: Standalone only allows _one_ NamedBean, named e.g. RR1, which means certain tests
+ * are defaulted away.
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "RR" + i;
     }
 
@@ -26,7 +24,7 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
     // The minimal setup for log4J
     @Before
     @Override
-    public void setUp() {
+    public void setUp() {   
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo(){
@@ -49,29 +47,10 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
     }
 
     @Override
-    protected int getNumToTest1() {
-        return 1;
-    }
+    protected int maxN() { return 1; }
 
     @Override
-    protected int getNumToTest2() {
-        return 1;
+    protected String getNameToTest1() {
+        return "1";
     }
-
-    @Override
-    protected int getNumToTest3() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest4() {
-        return 1;
-    }
-
-    @Override
-    protected int getNumToTest5() {
-        return 1;
-    }
-
-
 }

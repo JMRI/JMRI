@@ -141,8 +141,7 @@
 
       <p>Currently the servlet supports the following list names
       (not all of these are actually lists) used for GET operations
-      to return lists. These lists are roughly grouped according to
-      the module that uses them.</p>
+      to return lists.</p>
 
       <table class="data">
         <tr>
@@ -154,7 +153,7 @@
 
           <th>POST</th>
 
-          <th>Module</th>
+          <th>Returns:</th>
         </tr>
 
         <tr>
@@ -166,7 +165,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>block array</td>
         </tr>
 
         <tr>
@@ -178,8 +177,10 @@
 
           <td></td>
 
-          <td>OperationsPro</td>
+          <td>car array</td>
         </tr>
+
+        <tr><td>configProfiles</td><td>*</td><td></td><td></td><td>configProfile array</td></tr>
 
         <tr>
           <td>consists</td>
@@ -190,7 +191,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>consist array</td>
         </tr>
 
         <tr>
@@ -202,7 +203,7 @@
 
           <td></td>
 
-          <td>OperationsPro</td>
+          <td>engine array</td>
         </tr>
 
         <tr>
@@ -214,7 +215,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>hello message and power message</td>
         </tr>
 
         <tr>
@@ -226,7 +227,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>layoutBlock array</td>
         </tr>
 
         <tr>
@@ -238,7 +239,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>light array</td>
         </tr>
 
         <tr>
@@ -250,19 +251,7 @@
 
           <td></td>
 
-          <td>OperationsPro</td>
-        </tr>
-
-        <tr>
-          <td>panels</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>PanelPro</td>
+          <td>location array</td>
         </tr>
 
         <tr>
@@ -274,7 +263,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>memory array</td>
         </tr>
 
         <tr>
@@ -286,7 +275,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>metadata array</td>
         </tr>
 
         <tr>
@@ -298,7 +287,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>networkService array</td>
         </tr>
 
         <tr>
@@ -310,7 +299,19 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>node message</td>
+        </tr>
+
+        <tr>
+          <td>panels</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>panel array</td>
         </tr>
 
         <tr>
@@ -322,7 +323,7 @@
 
           <td>*</td>
 
-          <td>PanelPro</td>
+          <td>n/a</td>
         </tr>
 
         <tr>
@@ -334,79 +335,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>roster</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>rosterGroups</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>routes</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>PanelPro</td>
-        </tr>
-
-        <tr>
-          <td>systemConnections</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>time</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>trains</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>OperationsPro</td>
+          <td>railroad message</td>
         </tr>
 
         <tr>
@@ -418,7 +347,43 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>reporter array</td>
+        </tr>
+
+        <tr>
+          <td>roster</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>rosterEntry array</td>
+        </tr>
+
+        <tr>
+          <td>rosterGroups</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>rosterGroup array</td>
+        </tr>
+
+        <tr>
+          <td>routes</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>route array</td>
         </tr>
 
         <tr>
@@ -430,7 +395,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>signalHead array</td>
         </tr>
 
         <tr>
@@ -442,7 +407,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>signalMast array</td>
         </tr>
 
         <tr>
@@ -454,7 +419,43 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>sensor array</td>
+        </tr>
+
+        <tr>
+          <td>systemConnections</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>systemConnection array</td>
+        </tr>
+
+        <tr>
+          <td>time</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>n/a</td>
+        </tr>
+
+        <tr>
+          <td>trains</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>train array</td>
         </tr>
 
         <tr>
@@ -466,7 +467,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>turnout array</td>
         </tr>
       </table>
 
@@ -849,11 +850,6 @@
       handles JSON strings in four different forms:</p>
 
       <ul>
-        <li>list requests in the form:
-        <code>{"list":"trains"}</code> or
-        <code>{"type":"list","list":"trains"}</code> that return an
-        array of items, or an empty array (<code>[]</code>).</li>
-
         <li>individual item state requests in the form:
         <code>{"type":"turnout","data":{"name":"LT14"}}</code> that
         are passed to type-specific handlers. These requests will
@@ -871,6 +867,14 @@
             this.</li>
           </ul>
         </li>
+
+        <li>list requests in the form:
+        <code>{"list":"trains"}</code> or
+        <code>{"type":"list","list":"trains"}</code> that return an
+        array of items, or an empty array (<code>[]</code>). This request
+        initiates a "listener" which will resend
+        the entire list when items are added or removed, as well as
+        set individual listeners for each item (see above).</li>
 
         <li>a heartbeat in the form <code>*</code> or
         <code>{"type":"ping"}</code>. The <code>*</code> heartbeat

@@ -5,13 +5,16 @@ import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeInterfaceScaffold;
-import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import java.awt.GraphicsEnvironment;
+
+import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
+import org.powermock.core.classloader.annotations.MockPolicy;
+@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * Test simple functioning of EditNodeFrame
@@ -33,7 +36,6 @@ public class EditNodeFrameTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
         tc = new XBeeInterfaceScaffold();
         m = new XBeeConnectionMemo();
@@ -45,7 +47,6 @@ public class EditNodeFrameTest {
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
         tc = null;
     }
 }

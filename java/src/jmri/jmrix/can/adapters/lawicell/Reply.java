@@ -54,6 +54,7 @@ public class Reply extends AbstractMRReply {
         return ret;
     }
 
+    @Override
     protected int skipPrefix(int index) {
         while (_dataChars[index] == ':') {
             index++;

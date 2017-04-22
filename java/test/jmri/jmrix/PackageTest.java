@@ -55,6 +55,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.loconet.PackageTest.suite());
         suite.addTest(jmri.jmrix.maple.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.marklin.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.merg.PackageTest.class));
         suite.addTest(jmri.jmrix.modbus.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.mrc.PackageTest.class));
         suite.addTest(jmri.jmrix.nce.PackageTest.suite());
@@ -82,15 +83,32 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(NetworkConfigExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(SerialConfigExceptionTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionStatusTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.swing.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ActiveSystemsMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DCCManufacturerListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OtherConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemsMenuTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.debugthrottle.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMRMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NetMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractNodeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractMonPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemConnectionMemoTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmrixConfigPaneTest.class));
         return suite;
 
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

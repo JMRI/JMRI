@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
   */
 public class EcosTurnout extends AbstractTurnout
@@ -128,12 +128,13 @@ public class EcosTurnout extends AbstractTurnout
     }
 
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -159,7 +160,7 @@ public class EcosTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newCommandedState" to indicate it's
      * taken place. Must be followed by "newKnownState" to complete the turnout
      * action.
@@ -177,7 +178,7 @@ public class EcosTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
      * <P>
@@ -191,6 +192,7 @@ public class EcosTurnout extends AbstractTurnout
         newKnownState(state);
     }
 
+    @Override
     public void turnoutPushbuttonLockout(boolean b) {
     }
 
@@ -296,6 +298,7 @@ public class EcosTurnout extends AbstractTurnout
     // to listen for status changes from Ecos system
     int newstate = UNKNOWN;
     int newstateext = UNKNOWN;
+    @Override
     public void reply(EcosReply m) {
 
         String msg = m.toString();
@@ -386,6 +389,7 @@ public class EcosTurnout extends AbstractTurnout
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }

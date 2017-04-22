@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * will include the ability to set the status of function buttons
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2005-2010
+ * @author Paul Bender Copyright (C) 2005-2010
   */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -57,6 +57,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to retrieve the next entry
         nextButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getNextEntry();
             }
@@ -71,6 +72,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to retrieve the previous entry
         previousButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getPreviousEntry();
             }
@@ -93,6 +95,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to remove the current entry
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 deleteEntry();
             }
@@ -103,6 +106,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         // add listener object to retrieve the next entry
         refreshButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 getAllEntries();
             }
@@ -145,7 +149,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(CurrentStatus);
-	//getContentPane().add(pane3);
+ //getContentPane().add(pane3);
 
         // Set up the jtable in a Scroll Pane..
         JScrollPane stackPane = new JScrollPane(stackTable);
@@ -162,6 +166,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         tc.addXNetListener(~0, this);
     }
 
+    @Override
     public void addNotify() {
         super.addNotify();
 
@@ -259,6 +264,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     // The XNet Listener Interface
     // We need to be able to recieve information from the command station
+    @Override
     public void message(XNetReply r) {
         if (r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
             int address = r.getThrottleMsgAddr();
@@ -326,10 +332,12 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     // We need to be able to receive information sent by the computer to 
     // the command station
+    @Override
     public void message(XNetMessage m) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());

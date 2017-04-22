@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * This handles the state transistions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccTrafficController extends AbstractMRTrafficController
         implements EasyDccInterface {
@@ -29,10 +29,12 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     }
 
     // The methods to implement the EasyDccInterface
+    @Override
     public synchronized void addEasyDccListener(EasyDccListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeEasyDccListener(EasyDccListener l) {
         this.removeListener(l);
     }
@@ -40,6 +42,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     /**
      * Forward a EasyDccMessage to all registered EasyDccInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((EasyDccListener) client).message((EasyDccMessage) m);
     }
@@ -47,6 +50,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     /**
      * Forward a EasyDccReply to all registered EasyDccInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((EasyDccListener) client).reply((EasyDccReply) m);
     }
@@ -54,10 +58,12 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     public void setSensorManager(jmri.SensorManager m) {
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -65,14 +71,17 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendEasyDccMessage(EasyDccMessage m, EasyDccListener reply) {
         sendMessage(m, reply);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return EasyDccMessage.getProgMode();
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return EasyDccMessage.getExitProgMode();
     }
@@ -103,10 +112,12 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         self = this;
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new EasyDccReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // note special case:  CV read / register read messages dont actually
         // end until a P is received!

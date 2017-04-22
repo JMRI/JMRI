@@ -71,6 +71,7 @@ public class Source {
         entryExitPopUp = new JMenu(Bundle.getMessage("MenuEntryExit"));
         editClear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
         editClear.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelClearInterlockFromSource(EntryExitPairs.CLEARROUTE);
             }
@@ -78,6 +79,7 @@ public class Source {
         entryExitPopUp.add(editClear);
         editCancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
         editCancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelClearInterlockFromSource(EntryExitPairs.CANCELROUTE);
             }
@@ -86,6 +88,7 @@ public class Source {
 
         editOneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
         editOneClick.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 new ManuallySetRoute(pd);
             }
@@ -94,6 +97,7 @@ public class Source {
 
         clear = new JMenuItem(Bundle.getMessage("MenuItemClearRoute"));
         clear.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelClearInterlockFromSource(EntryExitPairs.CLEARROUTE);
             }
@@ -101,6 +105,7 @@ public class Source {
 
         cancel = new JMenuItem(Bundle.getMessage("MenuItemCancelRoute"));
         cancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelClearInterlockFromSource(EntryExitPairs.CANCELROUTE);
             }
@@ -108,6 +113,7 @@ public class Source {
 
         oneClick = new JMenuItem(Bundle.getMessage("MenuItemLockManualRoute"));
         oneClick.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 new ManuallySetRoute(pd);
             }

@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
@@ -63,11 +63,13 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         return mNumber;
     }
 
+    @Override
     public String getSystemName() {
         return "LH" + getNumber(); // NOI18N
     }
 
     // Handle a request to change state by sending a LocoNet command
+    @Override
     protected void updateOutput() {
         // send SWREQ for close
         LocoNetMessage l = new LocoNetMessage(4);
@@ -131,10 +133,11 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //						Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //      Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
+    @Override
     public void message(LocoNetMessage l) {
         int oldAppearance = mAppearance;
         // parse message type
@@ -225,6 +228,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         }
     }
 
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
     }

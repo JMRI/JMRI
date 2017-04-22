@@ -90,7 +90,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Dave Duchamp Copyright (C) 2008-2011
+ * @author Dave Duchamp Copyright (C) 2008-2011
  */
 public class ActiveTrain {
 
@@ -114,9 +114,9 @@ public class ActiveTrain {
     public static final int PAUSED = 0x02;    // paused for a number of fast minutes
     public static final int WAITING = 0x04;   // waiting for a section allocation
     public static final int WORKING = 0x08;   // actively working
-    public static final int READY = 0x10;	  // completed work, waiting for restart
+    public static final int READY = 0x10;   // completed work, waiting for restart
     public static final int STOPPED = 0x20;   // stopped by the dispatcher (auto trains only)
-    public static final int DONE = 0x40;	  // completed its transit
+    public static final int DONE = 0x40;   // completed its transit
 
     /**
      * Constants representing Type of ActiveTrains.
@@ -128,7 +128,7 @@ public class ActiveTrain {
     public static final int THROUGH_FREIGHT = 0x04;    // normal priority through freight train 
     public static final int EXPRESS_PASSENGER = 0x05;  // high priority passenger train    
     public static final int EXPRESS_FREIGHT = 0x06;    // high priority freight train 
-    public static final int MOW = 0x07;			       // low priority maintenance of way train  
+    public static final int MOW = 0x07;          // low priority maintenance of way train  
 
     /**
      * Constants representing the mode of running of the Active Train The mode
@@ -428,6 +428,7 @@ public class ActiveTrain {
         if (delaySensorListener == null) {
             final ActiveTrain at = this;
             delaySensorListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {
@@ -456,6 +457,7 @@ public class ActiveTrain {
         if (restartSensorListener == null) {
             final ActiveTrain at = this;
             restartSensorListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("KnownState")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.ACTIVE) {

@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * Any exception thrown by at method is used to select an error message to
  * display in the status line of the pane.
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2015
+ * @author Bob Jacobsen Copyright (C) 2005, 2015
  * @author B. Milhaupt Copyright (C) 2013, 2014
   */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
@@ -48,6 +48,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      */
     protected LocoNetSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof LocoNetSystemConnectionMemo) {
             initComponents((LocoNetSystemConnectionMemo) context);
@@ -62,6 +63,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     public void initComponents() throws Exception {
     }
         
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) throws Exception {
         this.memo = memo; 
         super.initComponents();
@@ -1017,6 +1019,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * based on the validity of the parameter values in the GUI and the state of
      * the memory contents object.
      */
+    @Override
     protected void updateDownloadVerifyButtons() {
         if (parametersAreValid() && !inputContent.isEmpty()) {
             enableDownloadVerifyButtons();
@@ -1025,6 +1028,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         updateDownloadVerifyButtons();
         log.info("ActionListener");

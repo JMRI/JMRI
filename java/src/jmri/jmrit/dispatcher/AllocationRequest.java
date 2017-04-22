@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008-2010
+ * @author Dave Duchamp Copyright (C) 2008-2010
  */
 public class AllocationRequest {
 
@@ -40,6 +40,7 @@ public class AllocationRequest {
         // listen for changes in Section occupancy
         if (mSection != null) {
             mSection.addPropertyChangeListener(mSectionListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     handleSectionChange(e);
                 }
@@ -168,6 +169,7 @@ public class AllocationRequest {
     public void setWaitingForSignalMast(jmri.SignalMast sm) {
         if (mSignalMastListener == null) {
             mSignalMastListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("Held")) {
                         if (!((Boolean) e.getNewValue()).booleanValue()) {
@@ -193,6 +195,7 @@ public class AllocationRequest {
     protected void setWaitingOnBlock(jmri.Block b) {
         if (mWaitingOnBlockListener == null) {
             mWaitingOnBlockListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("state")) {
                         if (((Integer) e.getNewValue()).intValue() == jmri.Block.UNOCCUPIED) {

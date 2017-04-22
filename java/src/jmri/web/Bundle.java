@@ -23,6 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.Bundle {
 
+    @Nullable
     private final static String name = null; // no local resources
 
     //
@@ -105,7 +106,7 @@ public class Bundle extends jmri.Bundle {
 
     @Override
     protected String retry(Locale locale, String key) {
-        return super.getBundle().handleGetMessage(locale,key);
+        return super.getBundle().handleGetMessage(locale, key);
     }
 
 }

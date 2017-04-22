@@ -20,6 +20,7 @@ public class DebuggerAction extends AbstractAction {
         this("RPS Debugger Window");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("starting frame creation");
         DebuggerFrame f = new DebuggerFrame();

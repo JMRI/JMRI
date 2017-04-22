@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user input of Marklin messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implements MarklinListener {
@@ -28,6 +28,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
@@ -54,6 +55,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
             add(sendButton);
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -61,14 +63,17 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.marklin.swing.packetgen.PacketGenFrame";
     }
 
+    @Override
     public String getTitle() {
         return "Send CS2 command";
     }
 
+    @Override
     public void initComponents(MarklinSystemConnectionMemo memo) {
         super.initComponents(memo);
     }
@@ -96,9 +101,11 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
 
     }
 
+    @Override
     public void message(MarklinMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(MarklinReply r) {
         packetReplyField.setText(r.toHexString());
     } // ignore replies

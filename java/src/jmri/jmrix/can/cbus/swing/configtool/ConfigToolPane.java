@@ -23,7 +23,7 @@ import jmri.jmrix.can.cbus.CbusMessage;
  * Pane to ease creation of Sensor, Turnouts and Lights that are linked to CBUS
  * events.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
 public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
@@ -50,6 +50,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         // add sensor
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive") {
 
+            @Override
             void create(String name) {
                 if (memo != null) {
                     ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor("MS" + name);
@@ -63,6 +64,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
         // add turnout
         makeTurnout = new MakeNamedBean("LabelEventThrown", "LabelEventClosed") {
+            @Override
             void create(String name) {
                 if (memo != null) {
                     ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout("MS" + name);
@@ -78,12 +80,14 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
     TrafficController tc;
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
     }
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " Event Capture Tool");
@@ -95,6 +99,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     MakeNamedBean makeSensor;
     MakeNamedBean makeTurnout;
 
+    @Override
     public void reply(jmri.jmrix.can.CanReply m) {
         // forward to anybody waiting to capture
         makeSensor.reply(m);
@@ -107,6 +112,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
     }
 
+    @Override
     public void message(jmri.jmrix.can.CanMessage m) {
         // forward to anybody waiting to capture
         makeSensor.message(m);
@@ -119,6 +125,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
     }
 
+    @Override
     public void dispose() {
         // disconnect from the CBUS
         tc.removeCanListener(this);
@@ -141,6 +148,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             // actions
             bc = new JButton(rb.getString("ButtonCreate"));
             bc.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     if (f2.getText().equals("")) {
                         create(f1.getText());
@@ -195,6 +203,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         void create(String name) {
         }
 
+        @Override
         public void reply(jmri.jmrix.can.CanReply m) {
             if (b1.isSelected()) {
                 f1.setText(CbusMessage.toAddress(m));
@@ -206,6 +215,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             }
         }
 
+        @Override
         public void message(jmri.jmrix.can.CanMessage m) {
             if (b1.isSelected()) {
                 f1.setText(CbusMessage.toAddress(m));
@@ -241,6 +251,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             return capture.isSelected();
         }
 
+        @Override
         public void reply(jmri.jmrix.can.CanReply m) {
             if (capture.isSelected()) {
                 event.setText(CbusMessage.toAddress(m));
@@ -248,6 +259,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             }
         }
 
+        @Override
         public void message(jmri.jmrix.can.CanMessage m) {
             if (capture.isSelected()) {
                 event.setText(CbusMessage.toAddress(m));

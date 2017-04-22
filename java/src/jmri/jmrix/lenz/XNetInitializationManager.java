@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
  * adds the appropriate Managers via the Initialization Manager based on the
  * Command Station Type.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
- * @author	Giorgio Terdina Copyright (C) 2007
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Giorgio Terdina Copyright (C) 2007
   */
 public class XNetInitializationManager extends AbstractXNetInitializationManager {
 
@@ -17,6 +17,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
         super(memo);
     }
 
+    @Override
     protected void init() {
         if (log.isDebugEnabled()) {
             log.debug("Init called");

@@ -10,7 +10,7 @@ import javax.swing.table.TableRowSorter;
 /**
  * Frame providing a table of Automat instances
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
@@ -48,6 +48,7 @@ public class AutomatTableFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
+    @Override
     public void dispose() {
         dataModel.dispose();
         dataModel = null;

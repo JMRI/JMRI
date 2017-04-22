@@ -9,7 +9,7 @@ import jmri.jmrix.ecos.swing.EcosPanelInterface;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListener, EcosPanelInterface {
 
@@ -17,10 +17,12 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
         super();
     }
 
+    @Override
     public String getHelpTarget() {
         return null;
     }
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return memo.getUserName() + " Command Monitor";
@@ -28,6 +30,7 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
         return "ECOS Command Monitor";
     }
 
+    @Override
     public void dispose() {
         // disconnect from the ECosTrafficController
         memo.getTrafficController().removeEcosListener(this);
@@ -35,23 +38,27 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
         super.dispose();
     }
 
+    @Override
     public void init() {
     }
 
     EcosSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof EcosSystemConnectionMemo) {
             initComponents((EcosSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(EcosSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the LnTrafficController
         memo.getTrafficController().addEcosListener(this);
     }
 
+    @Override
     public synchronized void message(EcosMessage l) {  // receive a message and log it
         if (l.isBinary()) {
             nextLine("binary cmd: " + l.toString() + "\n", null);
@@ -60,6 +67,7 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
         }
     }
 
+    @Override
     public synchronized void reply(EcosReply l) {  // receive a reply message and log it
         String raw = "";
         for (int i = 0; i < l.getNumDataElements(); i++) {

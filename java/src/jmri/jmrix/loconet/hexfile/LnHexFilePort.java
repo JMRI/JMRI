@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * contain as many bytes as needed, each represented by two Hex characters and
  * separated by a space. Variable whitespace is not (yet) supported
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
@@ -40,11 +40,11 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: " + e.toString());
         }
-        options.put("SensorDefaultState",  // NOI18N
-                new Option(Bundle.getMessage("DefaultSensorState") + 
-                        ":",  // NOI18N
-                        new String[]{Bundle.getMessage("BeanStateUnknown"), 
-                            Bundle.getMessage("SensorStateInactive"), 
+        options.put("SensorDefaultState", // NOI18N
+                new Option(Bundle.getMessage("DefaultSensorState")
+                        + ":", // NOI18N
+                        new String[]{Bundle.getMessage("BeanStateUnknown"),
+                            Bundle.getMessage("SensorStateInactive"),
                             Bundle.getMessage("SensorStateActive")}, true));
     }
 
@@ -63,6 +63,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         }
     }
 
+    @Override
     public void connect() throws Exception {
         jmri.jmrix.loconet.hexfile.HexFileFrame f
                 = new jmri.jmrix.loconet.hexfile.HexFileFrame();
@@ -76,6 +77,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         f.configure();
     }
 
+    @Override
     public void run() { // invoked in a new thread
         if (log.isInfoEnabled()) {
             log.info("LocoNet Simulator Started"); // NOI18N
@@ -154,6 +156,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     // base class methods
+    @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream: called before load(), stream not available"); // NOI18N
@@ -161,6 +164,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream: called before load(), stream not available"); // NOI18N
@@ -168,6 +172,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return pout;
     }
 
+    @Override
     public boolean status() {
         return (pout != null) && (pin != null);
     }
@@ -188,38 +193,40 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     private DataOutputStream outpipe = null;  // feed pin
     //private DataInputStream inpipe = null; // feed pout
 
+    @Override
     public boolean okToSend() {
         return true;
     }
     // define operation
-    private int delay = 100;  				// units are milliseconds; default is quiet a busy LocoNet
+    private int delay = 100;      // units are milliseconds; default is quiet a busy LocoNet
 
+    @Override
     public java.util.Vector<String> getPortNames() {
-        log.error("getPortNames should not have been invoked"); // NOI18N
-        new Exception().printStackTrace();
+        log.error("getPortNames should not have been invoked", new Exception());
         return null;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
-        log.error("openPort should not have been invoked"); // NOI18N
-        new Exception().printStackTrace();
+        log.error("openPort should not have been invoked", new Exception());
         return null;
     }
 
     @Override
     public void configure() {
-        log.error("configure should not have been invoked"); // NOI18N
+        log.error("configure should not have been invoked");
     }
 
     @Override
     public String[] validBaudRates() {
-        log.error("validBaudRates should not have been invoked", new Throwable()); // NOI18N
+        log.error("validBaudRates should not have been invoked", new Exception());
         return null;
     }
 
     /**
      * Get an array of valid values for "option 3"; used to display valid
      * options. May not be null, but may have zero entries
+     *
      * @return the options
      */
     public String[] validOption3() {
@@ -238,6 +245,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      * Set the third port option. Only to be used after construction, but before
      * the openPort call
      */
+    @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
         log.debug("configureOption3: " + value); // NOI18N

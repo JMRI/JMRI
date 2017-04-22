@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class providing the basic logic of the Logix interface.
  *
- * @author	Dave Duchamp Copyright (C) 2007
+ * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -34,6 +34,7 @@ public class DefaultLogix extends AbstractNamedBean
         super(systemName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameLogix");
     }
@@ -54,6 +55,7 @@ public class DefaultLogix extends AbstractNamedBean
     /**
      * Get number of Conditionals for this Logix
      */
+    @Override
     public int getNumConditionals() {
         return _conditionalSystemNames.size();
     }
@@ -62,6 +64,7 @@ public class DefaultLogix extends AbstractNamedBean
      * Move 'row' to 'nextInOrder' and shift all between 'row' and 'nextInOrder'
      * up one position {@literal ( row > nextInOrder )}
      */
+    @Override
     public void swapConditional(int nextInOrder, int row) {
         if (row <= nextInOrder) {
             return;
@@ -81,6 +84,7 @@ public class DefaultLogix extends AbstractNamedBean
      *
      * @param order - order in which the Conditional calculates.
      */
+    @Override
     public String getConditionalByNumberOrder(int order) {
         try {
             return _conditionalSystemNames.get(order);
@@ -99,6 +103,7 @@ public class DefaultLogix extends AbstractNamedBean
      *                   order is negative, the conditional is added at the end
      *                   of current group of conditionals
      */
+    @Override
     public boolean addConditional(String systemName, int order) {
         _conditionalSystemNames.add(systemName);
         return (true);
@@ -109,6 +114,7 @@ public class DefaultLogix extends AbstractNamedBean
      * to UNKNOWN state and recalculated when the Logix is enabled, provided the
      * Logix has been previously activated.
      */
+    @Override
     public void setEnabled(boolean state) {
 
         boolean old = mEnabled;
@@ -128,6 +134,7 @@ public class DefaultLogix extends AbstractNamedBean
     /**
      * Get enabled status
      */
+    @Override
     public boolean getEnabled() {
         return mEnabled;
     }
@@ -144,6 +151,7 @@ public class DefaultLogix extends AbstractNamedBean
      *
      * @param systemName The Conditional system name
      */
+    @Override
     public String[] deleteConditional(String systemName) {
         if (_conditionalSystemNames.size() <= 0) {
             return (null);
@@ -200,6 +208,7 @@ public class DefaultLogix extends AbstractNamedBean
      * Calculate all Conditionals, triggering action if the user specified
      * conditions are met, and the Logix is enabled.
      */
+    @Override
     public void calculateConditionals() {
         // are there Conditionals to calculate?
         // There are conditionals to calculate
@@ -224,6 +233,7 @@ public class DefaultLogix extends AbstractNamedBean
      * A Logix must be activated before it will calculate any of its
      * Conditionals.
      */
+    @Override
     public void activateLogix() {
         // if the Logix is already busy, simply return
         if (_isActivated) {
@@ -250,7 +260,7 @@ public class DefaultLogix extends AbstractNamedBean
             Conditional conditional = cm.getBySystemName(_conditionalSystemNames.get(i));
             if (conditional != null) {
                 try {
-                    conditional.setState(Conditional.UNKNOWN);
+                    conditional.setState(NamedBean.UNKNOWN);
                 } catch (JmriException e) {
                     // ignore
                 }
@@ -282,7 +292,7 @@ public class DefaultLogix extends AbstractNamedBean
                     NamedBeanHandle<?> namedBean = variable.getNamedBean();
                     int varType = variable.getType();
                     int signalAspect = -1;
-                    // Get Listener type from varible type
+                    // Get Listener type from variable type
                     switch (varType) {
                         case Conditional.TYPE_SENSOR_ACTIVE:
                         case Conditional.TYPE_SENSOR_INACTIVE:
@@ -360,6 +370,9 @@ public class DefaultLogix extends AbstractNamedBean
                         case Conditional.TYPE_ENTRYEXIT_ACTIVE:
                         case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                             varListenerType = LISTENER_TYPE_ENTRYEXIT;
+                            break;
+                        default:
+                            log.warn("Unhandled conditional variable type: {}", varType);
                             break;
                     }
                     int positionOfListener = getPositionOfListener(varListenerType, varType, varName);
@@ -622,6 +635,7 @@ public class DefaultLogix extends AbstractNamedBean
      * <P>
      * A Logix must be deactivated before it's Conditionals are changed.
      */
+    @Override
     public void deActivateLogix() {
         if (_isActivated) {
             // Logix is active, deactivate it and all listeners
@@ -685,7 +699,7 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                     break;
                 }
-                nb = (NamedBean) namedBeanHandle.getBean();
+                nb = namedBeanHandle.getBean();
                 nb.addPropertyChangeListener(listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
                 return;
         }
@@ -753,12 +767,12 @@ public class DefaultLogix extends AbstractNamedBean
                         }
                         break;
                     }
-                    nb = (NamedBean) namedBeanHandle.getBean();
+                    nb = namedBeanHandle.getBean();
                     nb.removePropertyChangeListener(listener);
                     return;
             }
-        } catch (Throwable t) {
-            log.error("Bad name for listener on \"" + listener.getDevName() + "\": " + t);
+        } catch (Exception ex) {
+            log.error("Bad name for listener on \"{}\": ", listener.getDevName(), ex);
         }
         log.error("Bad name for " + msg + " listener on \"" + listener.getDevName()
                 + "\" when removing");
@@ -875,6 +889,7 @@ public class DefaultLogix extends AbstractNamedBean
      * Not needed for Logixs - included to complete implementation of the
      * NamedBean interface.
      */
+    @Override
     public int getState() {
         log.warn("Unexpected call to getState in DefaultLogix.");
         return UNKNOWN;
@@ -884,11 +899,13 @@ public class DefaultLogix extends AbstractNamedBean
      * Not needed for Logixs - included to complete implementation of the
      * NamedBean interface.
      */
+    @Override
     public void setState(int state) {
         log.warn("Unexpected call to setState in DefaultLogix.");
         return;
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             NamedBean nb = (NamedBean) evt.getOldValue();

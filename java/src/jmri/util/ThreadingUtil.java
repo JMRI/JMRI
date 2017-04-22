@@ -4,14 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 
 /**
- * Utilities for handling JMRI's threading conventions
+ * Utilities for handling JMRI's threading conventions.
  * <p>
  * For background, see
  * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">http://jmri.org/help/en/html/doc/Technical/Threads.shtml</a>
  * <p>
- * Note this distinguishes "on layout", e.g. Setting a sensor, from "on GUI",
- * e.g. manipulating the Swing GUI. That may not be an important distinction
- * now, but it might be later, so we build it into the calls.
+ * Note this distinguishes "on layout", for example, Setting a sensor, from "on
+ * GUI", for example, manipulating the Swing GUI. That may not be an important
+ * distinction now, but it might be later, so we build it into the calls.
  *
  * @author Bob Jacobsen Copyright 2015
  */
@@ -22,6 +22,7 @@ public class ThreadingUtil {
         /**
          * Must handle its own exceptions
          */
+        @Override
         public void run();
     }
 

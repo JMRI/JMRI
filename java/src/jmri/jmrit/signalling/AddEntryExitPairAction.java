@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register the Add Entry Exit Pair
+ * Swing action to create and register the Add Entry Exit Pair.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class AddEntryExitPairAction extends AbstractAction {
 
@@ -19,6 +19,7 @@ public class AddEntryExitPairAction extends AbstractAction {
     }
     LayoutEditor panel;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         AddEntryExitPairFrame f = new AddEntryExitPairFrame();
         try {

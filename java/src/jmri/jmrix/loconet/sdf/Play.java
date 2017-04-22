@@ -5,7 +5,7 @@ import jmri.util.StringUtil;
 /**
  * Implement the PLAY macro from the Digitrax sound definition language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Play extends SdfMacro {
 
@@ -19,6 +19,7 @@ public class Play extends SdfMacro {
         this.byte2 = byte2;
     }
 
+    @Override
     public String name() {
         return "PLAY"; // NOI18N
     }
@@ -80,6 +81,7 @@ public class Play extends SdfMacro {
         this.wavebrkFlags = byte1 & 0x18;
     }
 
+    @Override
     public int length() {
         return 2;
     }
@@ -97,6 +99,7 @@ public class Play extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte1);
@@ -106,14 +109,17 @@ public class Play extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return "Play Fragment " + handleVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + ' ' + handleVal() + ',' + brkVal() + ',' + wavebrkFlagsVal() + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }

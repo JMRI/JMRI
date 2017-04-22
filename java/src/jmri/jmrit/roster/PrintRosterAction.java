@@ -14,12 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to print a summary of the Roster contents
+ * Action to print a summary of the Roster contents.
  * <P>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  */
 public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
@@ -48,15 +48,17 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
      * Frame hosting the printing
      */
     Frame mFrame = new Frame();
+
     /**
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter to do this
         Roster r = Roster.getDefault();
-        String title = "DecoderPro Roster";
+        String title = Bundle.getMessage("TitleDecoderProRoster");
         String rosterGroup = r.getDefaultRosterGroup();
         // rosterGroup may legitimately be null
         // but getProperty returns null if the property cannot be found, so
@@ -65,9 +67,9 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
             rosterGroup = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         if (rosterGroup == null) {
-            title = title + " All Entries";
+            title = title + " " + Bundle.getMessage("ALLENTRIES");
         } else {
-            title = title + " Group " + rosterGroup + " Entires";
+            title = title + " " + Bundle.getMessage("TitleGroup") + " " + Bundle.getMessage("TitleEntries", rosterGroup);
         }
         HardcopyWriter writer = null;
         try {
@@ -113,10 +115,12 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
+    @Override
     public void setParameter(String parameter, String value) {
         parameter = parameter.toLowerCase();
         value = value.toLowerCase();

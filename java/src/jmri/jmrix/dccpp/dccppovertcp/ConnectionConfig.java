@@ -30,9 +30,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
-	log.debug("NetworkPortAdapter ConnectionConfig Ctor called. ");
+ log.debug("NetworkPortAdapter ConnectionConfig Ctor called. ");
     }
 
+    @Override
     public String name() {
         return "DCC++ Server";
     }
@@ -41,6 +42,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppTcpDriverAdapter();

@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 public class ManageLocationsFrame extends JmriJFrame {
 
@@ -143,6 +143,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         b1.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeRoom"));
         b1.setMnemonic(Mnemonics.get("RoomMode")); // NOI18N
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 modeRadioButtonPressed(e);
             }
@@ -151,6 +152,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         b2.setMnemonic(Mnemonics.get("HeadphoneMode")); // NOI18N
         b2.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeHeadphone"));
         b2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 modeRadioButtonPressed(e);
             }
@@ -244,6 +246,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 closeButtonPressed(e);
             }
@@ -252,6 +255,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFSave"));
         saveButton.setMnemonic(Mnemonics.get("SaveButton")); // NOI18N
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveButtonPressed(e);
             }
@@ -300,6 +304,7 @@ public class ManageLocationsFrame extends JmriJFrame {
      *
      * WARNING: BORROWED FROM JmriJFrame.
      */
+    @Override
     public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
         JMenuBar bar = getJMenuBar();
@@ -369,7 +374,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         dispose();
     }
 
-    static private Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
 
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations
@@ -404,31 +409,38 @@ public class ManageLocationsFrame extends JmriJFrame {
             return (retv);
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        @Override
         public int getRowCount() {
             return rowData.length;
         }
 
+        @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             return rowData[row][col];
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             rowData[row][col] = value;
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 1:
@@ -484,31 +496,38 @@ public class ManageLocationsFrame extends JmriJFrame {
             return (retv);
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        @Override
         public int getRowCount() {
             return rowData.length;
         }
 
+        @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             return rowData[row][col];
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             rowData[row][col] = value;
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 1:

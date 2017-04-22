@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
@@ -84,12 +84,14 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         addRange.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         rangeState();
                     }
                 });
 
         sysName.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyReleased(KeyEvent a) {
                 if (sysName.getText().length() > 0) {
                     ok.setEnabled(true);
@@ -102,6 +104,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         autoSystem.addItemListener(
                 new ItemListener() {
+                    @Override
                     public void itemStateChanged(ItemEvent e) {
                         autoSystemName();
                     }

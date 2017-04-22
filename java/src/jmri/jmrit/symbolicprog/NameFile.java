@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Initially, we only need one of these, so we use an "instance" method to
  * locate the one associated with the "xml/names.xml" file.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NameFile extends XmlFile {
 
@@ -122,6 +122,6 @@ public class NameFile extends XmlFile {
     static String fileLocation = "";
     static String nameFileName = "names.xml";
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(NameFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NameFile.class.getName());
 
 }

@@ -118,7 +118,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
-    private boolean _disablePortalSelection = true;		// only select PortalIcon in CircuitBuilder
+    private boolean _disablePortalSelection = true;  // only select PortalIcon in CircuitBuilder
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
 //    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
@@ -1076,6 +1076,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             case SCROLL_VERTICAL:
                 scrollVertical.setSelected(true);
                 break;
+            default:
+                log.warn("Unhandled scroll state: {}", _scrollState);
+                break;
         }
         log.debug("InitView done");
     }
@@ -1153,7 +1156,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     if (selection.getDisplayLevel() <= BKG && selections.size() > 1) {
                         selection = selections.get(selections.size() - 2);
                     }
-//            		_manualSelection = false;
+//              _manualSelection = false;
                 }
             } else {
                 if (event.isShiftDown() && selections.size() > 1) {
@@ -1494,7 +1497,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         targetWindowClosing(true);
     }
 
@@ -1757,14 +1759,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected NamedIcon getPortalIcon(String name) {
-        if (_portalIconMap == null) {		// set defaults
+        if (_portalIconMap == null) {  // set defaults
             makePortalIconMap();
         }
         return _portalIconMap.get(name);
     }
 
     public HashMap<String, NamedIcon> getPortalIconMap() {
-        if (_portalIconMap == null) {		// set defaults
+        if (_portalIconMap == null) {  // set defaults
             makePortalIconMap();
         }
         return _portalIconMap;
@@ -1828,7 +1830,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     protected void setSelectionGroup(ArrayList<Positionable> group) {
         _highlightcomponent = null;
-//        _currentSelection = null;		need non-null for Portal dragging in CircuitBuilder
+//        _currentSelection = null;  need non-null for Portal dragging in CircuitBuilder
         _selectionGroup = group;
         repaint();
     }

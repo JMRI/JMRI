@@ -191,7 +191,7 @@ public final class XMLUtil extends Object {
      * </pre> creates new DOM of a well-formed document with root element named
      * book.
      *
-     * @param rootQName       qualified name of root element. e.g.
+     * @param rootQName       qualified name of root element, for example
      *                        <code>myroot</code> or <code>ns:myroot</code>
      * @param namespaceURI    URI of root element namespace or <code>null</code>
      * @param doctypePublicID public ID of DOCTYPE or <code>null</code>
@@ -447,7 +447,7 @@ public final class XMLUtil extends Object {
      *
      * @param doc DOM document to be written
      * @param out data sink
-     * @param enc XML-defined encoding name (e.g. "UTF-8")
+     * @param enc XML-defined encoding name (for example, "UTF-8")
      * @throws IOException if JAXP fails or the stream cannot be written to
      */
     public static void write(Document doc, OutputStream out, String enc) throws IOException {
@@ -556,14 +556,17 @@ public final class XMLUtil extends Object {
         Validator v = schema.newValidator();
         final SAXException[] error = {null};
         v.setErrorHandler(new ErrorHandler() {
+            @Override
             public void warning(SAXParseException x) throws SAXException {
             }
 
+            @Override
             public void error(SAXParseException x) throws SAXException {
                 // Just rethrowing it is bad because it will also print it to stderr.
                 error[0] = x;
             }
 
+            @Override
             public void fatalError(SAXParseException x) throws SAXException {
                 error[0] = x;
             }
@@ -1159,16 +1162,19 @@ public final class XMLUtil extends Object {
             log.error(null, exception);
         }
 
+        @Override
         public void fatalError(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
+        @Override
         public void error(SAXParseException exception) throws SAXException {
             annotate(exception);
             throw exception;
         }
 
+        @Override
         public void warning(SAXParseException exception) throws SAXException {
             log.warn(null, exception);
         }

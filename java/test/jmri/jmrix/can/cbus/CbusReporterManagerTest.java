@@ -1,11 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -20,7 +16,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "MR" + i;
     }
 

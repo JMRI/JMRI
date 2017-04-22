@@ -2,14 +2,20 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     SchemaTest.class,
     BundleTest.class,
-    jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class
+    jmri.jmrit.display.controlPanelEditor.shape.configurexml.PackageTest.class,
+    LocoLabelTest.class,
+    PositionableCircleTest.class,
+    PositionableEllipseTest.class,
+    PositionablePolygonTest.class,
+    PositionableRectangleTest.class,
+    PositionableRoundRectTest.class,
+    PositionableShapeTest.class,
+    ShapeDrawerTest.class,
 })
 
 /**

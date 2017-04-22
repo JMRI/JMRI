@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Encodes a message for direct DCC
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -34,27 +34,33 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
+    @Override
     public void setOpCode(int i) {
         _dataChars[0] = i;
     }
 
+    @Override
     public int getOpCode() {
         return _dataChars[0];
     }
 
+    @Override
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode());
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v & 0x7F;
     }
@@ -62,6 +68,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
         String s = "";
         for (int i = 0; i < _nDataChars; i++) {

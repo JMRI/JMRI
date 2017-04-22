@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
 /**
  * Pane to for setting node configuration
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
   * @since 2.3.1
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
@@ -37,6 +37,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         tc.addCanListener(this);
     }
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " " + ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title"));
@@ -91,12 +92,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
     }
 
+    @Override
     public void reply(jmri.jmrix.can.CanReply m) {
     }
 
+    @Override
     public void message(jmri.jmrix.can.CanMessage m) {
     }
 
+    @Override
     public void dispose() {
         // disconnect from the CBUS
         if (tc != null) {

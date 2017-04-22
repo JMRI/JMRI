@@ -44,7 +44,7 @@ public class AllTest extends TestCase {
         suite.addTest(jmri.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
         // at the end, we check for Log4J messages again
-        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
         return suite;
     }
 
@@ -53,10 +53,12 @@ public class AllTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

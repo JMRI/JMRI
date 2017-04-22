@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * This handles the state transistions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -43,10 +43,12 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     EcosSystemConnectionMemo adaptermemo;
 
     // The methods to implement the EcosInterface
+    @Override
     public synchronized void addEcosListener(EcosListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeEcosListener(EcosListener l) {
         this.removeListener(l);
     }
@@ -60,12 +62,14 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     /**
      * CommandStation implementation This is NOT Supported in the ECOS
      */
+    @Override
     public void sendPacket(byte[] packet, int count) {
     }
 
     /**
      * Forward a EcosMessage to all registered EcosInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((EcosListener) client).message((EcosMessage) m);
     }
@@ -73,14 +77,17 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a EcosReply to all registered EcosInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((EcosListener) client).reply((EcosReply) r);
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -88,6 +95,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a pre-formatted message to the actual interface.
      */
+    @Override
     public void sendEcosMessage(EcosMessage m, EcosListener reply) {
         sendMessage(m, reply);
     }
@@ -100,11 +108,13 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected boolean unsolicitedSensorMessageSeen = false;
 
     //Ecos doesn't support this function.
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return EcosMessage.getProgMode();
     }
 
     //Ecos doesn't support this function!
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return EcosMessage.getExitProgMode();
     }
@@ -132,6 +142,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     // migration is complete
     final static protected EcosTrafficController self = null;
 
+    @Override
     protected AbstractMRReply newReply() {
         EcosReply reply = new EcosReply();
         return reply;
@@ -143,6 +154,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return true;
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // detect that the reply buffer ends with "COMMAND: " (note ending
         // space)
@@ -292,6 +304,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
     }
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "ECoS";
@@ -299,6 +312,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "U";

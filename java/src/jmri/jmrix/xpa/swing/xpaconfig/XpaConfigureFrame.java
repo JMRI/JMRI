@@ -49,6 +49,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo = m;
     }
 
+    @Override
     public void initComponents() {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -89,6 +90,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         setAddr.setVisible(true);
 
         setAddr.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setAddrActionPerformed(e);
             }
@@ -108,6 +110,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         zeroEmergencyOff.setSelected(true);
 
         zeroEmergencyOff.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 zeroEmergencyOffActionPerformed(e);
             }
@@ -117,6 +120,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         zeroEmergencyStop.setSelected(false);
 
         zeroEmergencyStop.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 zeroEmergencyStopActionPerformed(e);
             }
@@ -125,6 +129,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         setZero.setText("Set Zero Function");
 
         setZero.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setZeroActionPerformed(e);
             }
@@ -135,6 +140,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         setFunction.setVisible(true);
 
         setFunction.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setFunctionActionPerformed(e);
             }
@@ -152,6 +158,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         xpaReset.setVisible(true);
 
         xpaReset.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 xpaResetActionPerformed(e);
             }
@@ -200,9 +207,11 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         memo.getXpaTrafficController().sendXpaMessage(m, this);
     }
 
+    @Override
     public void message(XpaMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(XpaMessage r) {
     } // ignore replies
 

@@ -7,7 +7,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Does configuration for Nmra Net communications implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
@@ -20,12 +20,14 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
+    @Override
     public void configureManagers() {
     }
 
     /**
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (adapterMemo.getDisabled()) {
             return false;
@@ -34,6 +36,7 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled()) {
             return null;
@@ -41,6 +44,7 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return null; // nothing, by default
     }
 
+    @Override
     public void dispose() {
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
@@ -48,6 +52,7 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.deregister(this, NmraConfigurationManager.class);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;

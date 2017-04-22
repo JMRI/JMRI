@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * User interface for adding an item to the log file.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
   */
 public class LogPanel extends JPanel {
 
@@ -30,6 +30,7 @@ public class LogPanel extends JPanel {
 
         sendButton.setToolTipText("Add message to the log file");
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }

@@ -105,5 +105,5 @@ public abstract class AbstractNode {
 
     boolean needSend = true;          // 'true' if something has changed that requires data to be sent
 
-    private static Logger log = LoggerFactory.getLogger(AbstractNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNode.class.getName());
 }

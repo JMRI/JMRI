@@ -9,21 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The JMRI application for developing the DecoderPro 3 GUI
- * <BR>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
+ * The JMRI application for developing the DecoderPro 3 GUI.
+ * <p>
+ * Inserts DP3 interface elements stored in xml/config/parts/jmri/
+ * that are also used in the web server interface.
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
+ * @author Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
  */
 public class DecoderPro3 extends apps.gui3.Apps3 {
 
@@ -112,7 +103,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     static public void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
-        setConfigFilename("DecoderProConfig3.xml", args);
+        apps.gui3.Apps3.setConfigFilename("DecoderProConfig3.xml", args);
     }
 
     /**

@@ -33,11 +33,17 @@ public class PackageTest extends TestCase {
         suite.addTest(EngineManagerTest.suite());
         suite.addTest(XmlTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(EnginesTableFrameTest.suite());
-        suite.addTest(EngineEditFrameTest.suite());
-        suite.addTest(EngineAttributeEditFrameTest.suite());
-        suite.addTest(EngineSetFrameTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineAttributeEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineSetFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EngineManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EnginesTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ExportEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ImportRosterEnginesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConsistTest.class));
         return suite;
     }
 

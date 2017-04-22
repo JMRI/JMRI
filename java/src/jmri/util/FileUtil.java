@@ -138,8 +138,8 @@ public final class FileUtil {
      * </ul>
      * In any case, absolute pathnames will work.
      *
-     * @param pName The name string, possibly starting with home:,
-     *              profile:, program:, preference:, scripts:, or settings:
+     * @param pName The name string, possibly starting with home:, profile:,
+     *              program:, preference:, scripts:, or settings:
      * @return Absolute file name to use, or null. This will include
      *         system-specific file separators.
      * @since 2.7.2
@@ -515,15 +515,20 @@ public final class FileUtil {
      * {@link java.net.URI} for that file.
      * <p>
      * Search order is:
-     * <ol><li>For any provided searchPaths, iterate over the searchPaths by
+     * <ol>
+     * <li>For any provided searchPaths, iterate over the searchPaths by
      * prepending each searchPath to the path and following the following search
-     * order:
-     * <ol><li>As a {@link java.io.File} in the user preferences directory</li>
+     * order:<ol>
+     * <li>As a {@link java.io.File} in the user preferences directory</li>
      * <li>As a File in the current working directory (usually, but not always
-     * the JMRI distribution directory)</li> <li>As a File in the JMRI
-     * distribution directory</li> <li>As a resource in jmri.jar</li></ol></li>
+     * the JMRI distribution directory)</li>
+     * <li>As a File in the JMRI distribution directory</li>
+     * <li>As a resource in jmri.jar</li>
+     * </ol></li>
      * <li>If the file or resource has not been found in the searchPaths, search
-     * in the four locations listed without prepending any path</li></ol>
+     * in the four locations listed without prepending any path</li>
+     * <li>As a File with an absolute path</li>
+     * </ol>
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
@@ -665,7 +670,8 @@ public final class FileUtil {
     /**
      * Get the JMRI distribution jar file.
      *
-     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     * @return the JAR file containing the JMRI library or null if not running
+     *         from a JAR file
      */
     static public JarFile jmriJarFile() {
         return FileUtilSupport.getDefault().getJmriJarFile();
@@ -808,11 +814,11 @@ public final class FileUtil {
      * @param extension The extension to use for the rotations. If null or an
      *                  empty string, the rotation number is used as the
      *                  extension.
-     * @throws java.io.IOException if a backup cannot be created
+     * @throws java.io.IOException      if a backup cannot be created
      * @throws IllegalArgumentException if max is less than one
      * @see jmri.util.FileUtilSupport#rotate(java.io.File, int,
      * java.lang.String)
-     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
+     * @see jmri.util.FileUtilSupport#backup(java.io.File)
      */
     public static void rotate(File file, int max, String extension) throws IOException {
         FileUtilSupport.getDefault().rotate(file, max, extension);

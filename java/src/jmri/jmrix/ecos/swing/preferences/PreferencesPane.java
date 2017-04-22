@@ -25,7 +25,7 @@ import jmri.swing.PreferencesPanel;
 /**
  * Pane to show ECoS preferences
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
   */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener, PreferencesPanel {
 
@@ -67,6 +67,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         JButton updateButton = new JButton("Update");
 
         updateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateButtonPressed();
             }
@@ -86,6 +87,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
 
     }
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (updateButtonPressed) {
             return;

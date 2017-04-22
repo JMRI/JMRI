@@ -20,7 +20,7 @@ import jmri.util.swing.multipane.MultiPaneWindow;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
+ * @author Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
  */
 public class Paned extends apps.gui3.Apps3 {
 
@@ -31,6 +31,7 @@ public class Paned extends apps.gui3.Apps3 {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
+    @Override
     protected void createMainFrame() {
         // create and populate main window
         mainFrame = new MultiPaneWindow(Application.getApplicationName(),
@@ -44,6 +45,7 @@ public class Paned extends apps.gui3.Apps3 {
         new Paned(args);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
     }

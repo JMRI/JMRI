@@ -1,11 +1,9 @@
 package jmri.jmrix.xpa;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class
@@ -23,12 +21,12 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
 
     @Override
     protected void sendOnReply() {
-       ((XpaPowerManager)p).reply(new XpaMessage("ATDT0;"));
+        ((XpaPowerManager) p).reply(new XpaMessage("ATDT0;"));
     }
 
     @Override
     protected void sendOffReply() {
-       ((XpaPowerManager)p).reply(new XpaMessage("ATDT0;"));
+        ((XpaPowerManager) p).reply(new XpaMessage("ATDT0;"));
     }
 
     @Override
@@ -47,30 +45,29 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
 
     @Override
     protected boolean outboundOnOK(int index) {
-        return ((tc.outbound.elementAt(index))).toString().equals("ATDT0;");
+        return ((tc.outbound.get(index))).toString().equals("ATDT0;");
     }
 
-   @Override
+    @Override
     protected boolean outboundOffOK(int index) {
-        return ((tc.outbound.elementAt(index))).toString().equals("ATDT0;");
+        return ((tc.outbound.get(index))).toString().equals("ATDT0;");
     }
 
     @Test
     @Override
     @Ignore("unsolicited state changes are currently ignored")
-    public void testStateOn(){
+    public void testStateOn() {
     }
 
     @Test
     @Override
     @Ignore("unsolicited state changes are currently ignored")
-    public void testStateOff(){
+    public void testStateOff() {
     }
-
 
     // The minimal setup for log4J
-    @Override
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tc = new XpaTrafficControlScaffold();

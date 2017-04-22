@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MemoryTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class MemoryTableAction extends AbstractTableAction {
 
@@ -52,9 +52,11 @@ public class MemoryTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of Memory objects
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
 
+            @Override
             public String getValue(String name) {
                 Memory mem = InstanceManager.memoryManagerInstance().getBySystemName(name);
                 if (mem == null) {
@@ -68,27 +70,33 @@ public class MemoryTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
                 return InstanceManager.memoryManagerInstance();
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return InstanceManager.memoryManagerInstance().getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return InstanceManager.memoryManagerInstance().getByUserName(name);
             }
 
+            @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because 
                 // we override setValueAt
             }
 
+            @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
                     Memory t = (Memory) getBySystemName(sysNameList.get(row));
@@ -99,6 +107,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
                     return Bundle.getMessage("BlockValue");
@@ -106,6 +115,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
                     return String.class;
@@ -114,30 +124,36 @@ public class MemoryTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("alue")>=0);
             }
 
+            @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameMemory");
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleMemoryTable"));
     }
 
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.MemoryTable";
     }
@@ -153,6 +169,7 @@ public class MemoryTableAction extends AbstractTableAction {
     JCheckBox autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager p;
 
+    @Override
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
@@ -161,11 +178,13 @@ public class MemoryTableAction extends AbstractTableAction {
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
             ActionListener okListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
             ActionListener cancelListener = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
@@ -262,10 +281,12 @@ public class MemoryTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleMemoryTable");
     }
 
+    @Override
     protected String getClassName() {
         return MemoryTableAction.class.getName();
     }

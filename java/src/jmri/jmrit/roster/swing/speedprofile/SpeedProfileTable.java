@@ -88,6 +88,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 entry = speeds.higherEntry(entry.getKey());
             }
         }
+        @Override
         public int getColumnCount() {
             return NUMCOLS;
         }
@@ -96,6 +97,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         public int getRowCount() {
             return speedArray.size();
         }
+        @Override
         public String getColumnName(int col) {
             String rate;
             switch(interp) {
@@ -120,9 +122,13 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 case FORWARD_FACTOR_COL:
                 case REVERSE_FACTOR_COL:
                     return Bundle.getMessage("factor");
+                default:
+                    // fall out
+                    break;
             }
             return "";
         }
+        @Override
         public Class<?> getColumnClass(int col) {
             return String.class;
         }
@@ -138,10 +144,14 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 case FORWARD_SPEED_COL:
                 case REVERSE_SPEED_COL:
                     return new JTextField(8).getPreferredSize().width;
+                default:
+                    // fall out
+                    break;
             }
             return new JTextField(8).getPreferredSize().width;
         }
         
+        @Override
         public boolean isCellEditable(int row, int col) {
             return false;
         }
@@ -182,10 +192,14 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                     return threeDigit.format(speed);
                 case REVERSE_FACTOR_COL:
                     return threeDigit.format(entry.getValue().getReverseSpeed()/entry.getKey());
+                default:
+                    // fall out
+                    break;
             }
             return "";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
         }
     }

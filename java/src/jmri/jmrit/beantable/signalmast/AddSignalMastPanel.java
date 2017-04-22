@@ -67,7 +67,7 @@ public class AddSignalMastPanel extends JPanel {
 
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected";
-    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected";
+    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // N11N
     String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected";
     String matrixBitNumSelectionCombo = this.getClass().getName() + ".matrixBitNumSelected";
     List<NamedBean> alreadyUsed = new ArrayList<NamedBean>();
@@ -110,8 +110,9 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Build a blank panel to configure a new signal mast after pressing 'Add...' on the Signal Mast Table
-     * responds to choice of signal system, mast type and driver {@link #updateSelectedDriver()}
+     * Constructor providing a blank panel to configure a new signal mast after pressing 'Add...' on the Signal Mast Table.
+     * <p>
+     * Responds to choice of signal system, mast type and driver {@link #updateSelectedDriver()}
      */
     public AddSignalMastPanel() {
 
@@ -206,6 +207,7 @@ public class AddSignalMastPanel extends JPanel {
         cancel.setVisible(true);
         buttonHolder.add(cancel);
         cancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 cancelPressed(e);
             } // Cancel button on add new mast pane
@@ -213,6 +215,7 @@ public class AddSignalMastPanel extends JPanel {
         cancel.setVisible(true);
         buttonHolder.add(create);
         create.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             } // Create button on add new mast pane
@@ -220,6 +223,7 @@ public class AddSignalMastPanel extends JPanel {
         create.setVisible(true);
         buttonHolder.add(apply);
         apply.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             } // Apply button on Edit existing mast pane
@@ -233,18 +237,21 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         signalMastDriver.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateSelectedDriver();
             }
         });
 
         allowUnLit.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 updateUnLit();
             }
         });
 
         includeUsed.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 refreshHeadComboBox();
             }
@@ -265,6 +272,7 @@ public class AddSignalMastPanel extends JPanel {
         updateHeads();
         refreshHeadComboBox();
         sigSysBox.addItemListener(new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 loadMastDefinitions();
                 updateSelectedDriver();
@@ -275,8 +283,9 @@ public class AddSignalMastPanel extends JPanel {
     boolean inEditMode = false;
 
     /**
-     * Build a panel filled in for existing mast after pressing 'Edit' in the Signal Mast table
-     * @param mast NamedBeanHandle&lt;SignalMast&gt; for the signal mast to be retrieved
+     * Build a panel filled in for existing mast after pressing 'Edit' in the Signal Mast table.
+     *
+     * @param mast {@code NamedBeanHandle<SignalMast> } for the signal mast to be retrieved
      * @see #AddSignalMastPanel()
     */
     public AddSignalMastPanel(SignalMast mast) {
@@ -486,15 +495,18 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Responds to the CancelAdd button
+     * Respond to the CancelAdd button.
+     *
+     * @param e the event heard
      */
     void cancelPressed(ActionEvent e) {
         clearPanel();
     }
 
     /**
-     * Close and dispose() panel
-     * called at end of okPressed() and from Cancel Add or Edit mode
+     * Close and dispose() panel.
+     * <p>
+     * Called at end of okPressed() and from Cancel Add or Edit mode
      */
     void clearPanel() {
         ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
@@ -511,9 +523,10 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Update contents of Add/Edit mast panel appropriate for chosen Driver type
-     * hide the other JPanels
-     * invoked when selecting a Signal Mast Driver
+     * Update contents of Add/Edit mast panel appropriate for chosen Driver type.
+     * <p>
+     * Hides the other JPanels.
+     * Invoked when selecting a Signal Mast Driver in {@link #loadMastDefinitions}
      */
     protected void updateSelectedDriver() {
         signalHeadPanel.setVisible(false);
@@ -574,7 +587,7 @@ public class AddSignalMastPanel extends JPanel {
         repaint();
     }
 
-    JTextField userName = new JTextField(20);
+    JTextField userName = new JTextField(20); // N11N
     JComboBox<String> sigSysBox = new JComboBox<String>();
     JComboBox<String> mastBox = new JComboBox<String>(new String[]{Bundle.getMessage("MastEmpty")});
     JCheckBox includeUsed = new JCheckBox(Bundle.getMessage("IncludeUsedHeads"));
@@ -659,7 +672,7 @@ public class AddSignalMastPanel extends JPanel {
                 for (File app : apps) {
                     if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
                         log.debug("   found file: " + app.getName());
-                        // load it and get name 
+                        // load it and get name
                         // If the mast file name already exists no point in re-adding it
                         if (!mastNames.contains(app)) {
                             mastNames.add(app);
@@ -683,6 +696,7 @@ public class AddSignalMastPanel extends JPanel {
             log.warn("in loadMastDefinitions", e);
         }
         mastBox.addItemListener(new ItemListener() {
+            @Override
             public void itemStateChanged(ItemEvent e) {
                 updateSelectedDriver();
             }
@@ -717,13 +731,16 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Store user input for a signal mast definition in new or existing mast object
-     * invoked from Apply/Create button
+     * Store user input for a signal mast definition in new or existing mast object.
+     * <p>
+     * Invoked from Apply/Create button.
+     *
+     * @param e the event heard
      */
     void okPressed(ActionEvent e) {
         String mastname = mastNames.get(mastBox.getSelectedIndex()).getName();
 
-        String user = userName.getText().trim();
+        String user = userName.getText().trim(); // N11N
         if (user.equals("")) {
             int i = JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",
                     "No UserName Given",
@@ -761,7 +778,7 @@ public class AddSignalMastPanel extends JPanel {
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(name);
-                    return; // without creating       
+                    return; // without creating
                 }
                 if (!user.equals("")) {
                     m.setUserName(user);
@@ -1219,8 +1236,9 @@ public class AddSignalMastPanel extends JPanel {
     HashMap<String, TurnoutAspectPanel> turnoutAspect = new HashMap<String, TurnoutAspectPanel>(10);
 
     /**
-     * JPanel to define properties of an Aspect for a Turnout Signal Mast
-     * invoked from the AddSignalMastPanel class when a Turnout Signal Mast is selected
+     * JPanel to define properties of an Aspect for a Turnout Signal Mast.
+     * <p>
+     * Invoked from the AddSignalMastPanel class when a Turnout Signal Mast is selected.
      */
     class TurnoutAspectPanel {
 
@@ -1243,7 +1261,9 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         /**
-         * Store the mast name as comment in the turnout
+         * Store the mast name as comment in the turnout.
+         *
+         * @param reference Text to use as comment
          */
         void setReference(String reference) {
             beanBox.setReference(reference);
@@ -1315,6 +1335,7 @@ public class AddSignalMastPanel extends JPanel {
                 panel.setBorder(border);
 
                 disabledCheck.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setAspectDisabled(disabledCheck.isSelected());
                     }
@@ -1342,6 +1363,7 @@ public class AddSignalMastPanel extends JPanel {
         border.setTitle(Bundle.getMessage("DCCUnlitAspectNumber"));
         dccUnLitPanel.setBorder(border);
         unLitAspectField.addFocusListener(new FocusListener() {
+            @Override
             public void focusLost(FocusEvent e) {
                 if (unLitAspectField.getText().equals("")) {
                     return;
@@ -1351,6 +1373,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
 
+            @Override
             public void focusGained(FocusEvent e) {
             }
 
@@ -1397,6 +1420,7 @@ public class AddSignalMastPanel extends JPanel {
         dccMastPanel.add(dccAspectAddressField);
         if (dccAddressListener == null) {
             dccAddressListener = new FocusListener() {
+                @Override
                 public void focusLost(FocusEvent e) {
                     if (dccAspectAddressField.getText().equals("")) {
                         return;
@@ -1404,6 +1428,7 @@ public class AddSignalMastPanel extends JPanel {
                     validateDCCAddress();
                 }
 
+                @Override
                 public void focusGained(FocusEvent e) {
                 }
 
@@ -1499,6 +1524,7 @@ public class AddSignalMastPanel extends JPanel {
             mastSelect.setSelectedIndex(0);
             mastSelect.addActionListener(new ActionListener() {
                 @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     JComboBox<String> eb = (JComboBox<String>) e.getSource();
                     String sourceMast = (String) eb.getSelectedItem();
@@ -1527,8 +1553,9 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * JPanel to define properties of an Aspect for a DCC Signal Mast
-     * invoked from the AddSignalMastPanel class when a DCC Signal Mast is selected
+     * JPanel to define properties of an Aspect for a DCC Signal Mast.
+     * <p>
+     * Invoked from the AddSignalMastPanel class when a DCC Signal Mast is selected.
      */
     static class DCCAspectPanel {
 
@@ -1590,6 +1617,7 @@ public class AddSignalMastPanel extends JPanel {
                 border.setTitle(aspect);
                 panel.setBorder(border);
                 aspectId.addFocusListener(new FocusListener() {
+                    @Override
                     public void focusLost(FocusEvent e) {
                         if (aspectId.getText().equals("")) {
                             return;
@@ -1599,11 +1627,13 @@ public class AddSignalMastPanel extends JPanel {
                         }
                     }
 
+                    @Override
                     public void focusGained(FocusEvent e) {
                     }
 
                 });
                 disabledCheck.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setAspectDisabled(disabledCheck.isSelected());
                     }
@@ -1625,6 +1655,7 @@ public class AddSignalMastPanel extends JPanel {
     BeanSelectCreatePanel turnoutBox5 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
     BeanSelectCreatePanel turnoutBox6 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
     // repeat in order to set MAXMATRIXBITS > 6
+
     /**
      * The number of columns in logic matrix
      */
@@ -1632,10 +1663,13 @@ public class AddSignalMastPanel extends JPanel {
     // ToDo: add boxes to set DCC Packets (with drop down selection "Output Type": Turnouts/Direct DCC Packets)
 
     /**
-     * Create bitNumPanel with drop down to set number of columns
-     * separate from the rest for redraw
-     * auto refresh to show/hide input (turnout) selection boxes
-     * hide/show checkboxes in matrix (per aspect)
+     * Create bitNumPanel with drop down to set number of columns,
+     * separate from the rest for redraw.
+     * <p>
+     * Auto refresh to show/hide input (turnout) selection boxes.
+     * Hide/show checkboxes in matrix (per aspect).
+     *
+     * @return a JPanel with a comboBox to select number of outputs, set at current value
      */
     JPanel makeMatrixMastBitnumPanel() {
         JPanel bitnumpanel = new JPanel();
@@ -1648,6 +1682,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         columnChoice.setSelectedIndex(bitNum - 1);
         columnChoice.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String newBitnumString = (String) columnChoice.getSelectedItem();
                 bitNumChanged(Integer.valueOf(newBitnumString));
@@ -1657,8 +1692,9 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Build lower half of Add Signal Mast panel, specificically for Matrix Mast
-     * called when Mast Type drop down changes
+     * Build lower half of Add Signal Mast panel, specificically for Matrix Mast.
+     * <p>
+     * Called when Mast Type drop down changes.
      */
     void updateMatrixMastPanel() {
         if ((!Bundle.getMessage("MatrixCtlMast").equals(signalMastDriver.getSelectedItem()))) {
@@ -1807,7 +1843,8 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * When the user changes the number of columns in matrix from the drop down: store the new value
+     * When the user changes the number of columns in matrix from the drop down: store the new value.
+     *
      * @param newColNum int with the new value = the number of columns in the Matrix Table
      */
     void bitNumChanged(Integer newColNum) {
@@ -1829,7 +1866,12 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Write mast name + output no. to output bean comment, called from ca line 980
+     * Write matrix mast name + output no. to output bean comment.
+     * <p>
+     * Called from {@link #okPressed(ActionEvent)}
+     *
+     * @param bp the bean panel containing the Turnout (output)
+     * @param functionName Description of turnout function on mast
      */
     void setMatrixReference(BeanSelectCreatePanel bp, String functionName) {
         //System.out.println("box: " + bp.getDisplayName()); // debug
@@ -1908,8 +1950,10 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Call for sub panel per aspect from hashmap matrixAspect with check boxes to set properties
-     * called when updating MatrixMastPanel
+     * Call for sub panel per aspect from hashmap matrixAspect with check boxes to set properties.
+     * <p>
+     * Invoked when updating MatrixMastPanel
+     *
      * @see #updateMatrixMastPanel()
      */
     void updateMatrixAspectPanel() {
@@ -1945,7 +1989,7 @@ public class AddSignalMastPanel extends JPanel {
     JTextField unLitBitsField = new JTextField(MAXMATRIXBITS); // for debug
 
     /**
-     * JPanel to set outputs for an unlit (Dark) Matrix Signal Mast
+     * JPanel to set outputs for an unlit (Dark) Matrix Signal Mast.
      */
     void matrixUnLitPanel() {
         if (bitNum < 1 || bitNum > MAXMATRIXBITS) {
@@ -1977,31 +2021,37 @@ public class AddSignalMastPanel extends JPanel {
         matrixUnLitPanel.setToolTipText(Bundle.getMessage("MatrixUnlitTooltip"));
 
         UnLitCheck1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(1, UnLitCheck1.isSelected());
             }
         });
         UnLitCheck2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(2, UnLitCheck2.isSelected());
             }
         });
         UnLitCheck3.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(3, UnLitCheck3.isSelected());
             }
         });
         UnLitCheck4.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(4, UnLitCheck4.isSelected());
             }
         });
         UnLitCheck5.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setUnLitBit(5, UnLitCheck5.isSelected());
             }
         });
         UnLitCheck6.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) { setUnLitBit(6, UnLitCheck6.isSelected());
             }
         });
@@ -2009,8 +2059,10 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * Updates the on/off positions for the unLitPanelBits char[]
-     * called from bit checkboxes 1 to MAXMATRIXBITS on unLitPanel
+     * Update the on/off positions for the unLitPanelBits char[].
+     * <p>
+     * Invoked from bit checkboxes 1 to MAXMATRIXBITS on unLitPanel.
+     *
      * @param column int as index for an output (between 1 and 6)
      * @param state boolean for the output On (Closed) or Off (Thrown)
      */
@@ -2026,9 +2078,10 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     /**
-     * JPanel to define properties of an Aspect for a Matrix Signal Mast
-     * invoked from the AddSignalMastPanel class when a Matrix Signal Mast is selected
-     * @author	Egbert Broerse
+     * JPanel to define properties of an Aspect for a Matrix Signal Mast.
+     * <p>
+     * Invoked from the AddSignalMastPanel class when a Matrix Signal Mast is selected.
+     * @author Egbert Broerse
      */
     class MatrixAspectPanel {
 
@@ -2083,8 +2136,10 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         /**
-         * Sets an Aspect Panels elements inactive
-         * called from Disabled (aspect) checkbox and from Edit mast pane
+         * Set an Aspect Panels elements inactive.
+         * <p>
+         * Invoked from Disabled (aspect) checkbox and from Edit mast pane.
+         *
          * @param boo true (On) or false (Off)
          */
         void setAspectDisabled(boolean boo) {
@@ -2131,8 +2186,10 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         /**
-         * Updates the on/off positions for an Aspect in the aspectBits char[]
-         * called from bit checkboxes 1 to MAXMATRIXBITS on aspectPanels
+         * Update the on/off positions for an Aspect in the aspectBits char[].
+         * <p>
+         * Invoked from bit checkboxes 1 to MAXMATRIXBITS on aspectPanels.
+         *
          * @param column int of the output (between 1 and MAXMATRIXBITS)
          * @param state boolean for the output On (Closed) or Off (Thrown)
          * @see #aspectBits
@@ -2149,11 +2206,12 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         /**
-         * Sends the on/off positions for an Aspect to mast
+         * Send the on/off positions for an Aspect to mast.
+         *
          * @return A char[] of '1' and '0' elements with a length between 1 and 5
          * corresponding with the number of outputs for this mast
          * @see jmri.implementation.MatrixSignalMast
-         * @see #okPressed(java.awt.event.ActionEvent) 
+         * @see #okPressed(java.awt.event.ActionEvent)
          */
         char[] trimAspectBits() {
             try {
@@ -2166,7 +2224,8 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         /**
-         * Activate the corresponding checkboxes on a MatrixApectPanel
+         * Activate the corresponding checkboxes on a MatrixApectPanel.
+         *
          * @param aspectBits A char[] of '1' and '0' elements with a length between 1 and 5
          *                   corresponding with the number of outputs for this mast
          */
@@ -2195,7 +2254,8 @@ public class AddSignalMastPanel extends JPanel {
         JPanel panel;
 
         /**
-         * Build a JPanel for an Aspect Matrix row
+         * Build a JPanel for an Aspect Matrix row.
+         *
          * @return JPanel to be displayed on the Add/Edit Signal Mast panel
          */
         JPanel getPanel() {
@@ -2230,37 +2290,44 @@ public class AddSignalMastPanel extends JPanel {
                 panel.setBorder(border);
 
                 disabledCheck.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setAspectDisabled(disabledCheck.isSelected());
                     }
                 });
 
                 bitCheck1.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(1, bitCheck1.isSelected());
                     }
                 });
                 bitCheck2.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(2, bitCheck2.isSelected());
                     }
                 });
                 bitCheck3.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(3, bitCheck3.isSelected());
                     }
                 });
                 bitCheck4.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(4, bitCheck4.isSelected());
                     }
                 });
                 bitCheck5.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         setBit(5, bitCheck5.isSelected());
                     }
                 });
                 bitCheck6.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) { setBit(6, bitCheck6.isSelected());
                     }
                 });

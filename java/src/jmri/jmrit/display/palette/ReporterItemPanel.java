@@ -30,6 +30,7 @@ public class ReporterItemPanel extends TableItemPanel {
         super(parentFrame, type, family, model, editor);
     }
 
+    @Override
     public void init() {
         if (!_initialized) {
             super.init();
@@ -48,6 +49,7 @@ public class ReporterItemPanel extends TableItemPanel {
         return panel;
     }
 
+    @Override
     protected void initIconFamiliesPanel() {
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
@@ -60,6 +62,7 @@ public class ReporterItemPanel extends TableItemPanel {
         _iconFamilyPanel.add(_dragIconPanel);
     }
 
+    @Override
     protected void makeBottomPanel(ActionListener doneAction) {
         if (doneAction != null) {
             addUpdateButtonToBottom(doneAction);
@@ -68,6 +71,7 @@ public class ReporterItemPanel extends TableItemPanel {
         add(_iconFamilyPanel);
     }
     
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
@@ -98,6 +102,7 @@ public class ReporterItemPanel extends TableItemPanel {
     /**
      * ListSelectionListener action from table
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
@@ -132,6 +137,7 @@ public class ReporterItemPanel extends TableItemPanel {
             super(flavor, comp);
         }
         
+        @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
@@ -143,6 +149,7 @@ public class ReporterItemPanel extends TableItemPanel {
         }
 
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;

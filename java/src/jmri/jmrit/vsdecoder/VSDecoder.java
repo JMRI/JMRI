@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -335,6 +335,7 @@ public class VSDecoder implements PropertyChangeListener {
         // DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
         jmri.InstanceManager.throttleManagerInstance().attachListener(config.getDccAddress(),
                 new PropertyChangeListener() {
+                    @Override
                     public void propertyChange(PropertyChangeEvent event) {
                         log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue()
                                 + " new " + event.getNewValue());
@@ -450,6 +451,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @param evt (PropertyChangeEvent) event to respond to
      */
     @SuppressWarnings("cast")
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String property = evt.getPropertyName();
         // Respond to events from the new GUI.

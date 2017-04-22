@@ -58,6 +58,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TransitCreationToolTest.class));
         suite.addTest(LayoutEditorWindowTest.suite());
         suite.addTest(LEConnectivityTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LayoutEditorFindItemsTest.class));
         return suite;
     }
 }

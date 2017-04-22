@@ -1,20 +1,18 @@
 package jmri.jmrix.openlcb;
 
-import org.openlcb.OlcbInterface;
-
 import java.util.ArrayList;
-
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
+import org.openlcb.OlcbInterface;
 
 /**
  * OpenLCB implementation of a TurnoutManager.
  * <p>
  * Turnouts must be manually created.
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2010
   * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
@@ -32,6 +30,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     // Turnouts that are being loaded from XML.
     private final ArrayList<OlcbTurnout> pendingTurnouts = new ArrayList<>();
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -42,6 +41,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      *
      * @return never null
      */
+    @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbTurnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
@@ -86,6 +86,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         return false;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         // don't check for integer; should check for validity here
         try {
@@ -96,6 +97,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // always return this (the current) name without change
         try {
@@ -128,6 +130,10 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     /**
      * A method that creates an array of systems names to allow bulk creation of
      * turnouts.
+     * @param start initial id for a range
+     * @param numberToAdd size of the range
+     * @param prefix system connection prefix
+     * @return array system names for range
      */
     //further work needs to be done on how to format a number of turnouts, therefore this method will only return one entry.
     public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) {

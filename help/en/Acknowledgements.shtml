@@ -69,6 +69,9 @@
         "http://www.editthis.info/JMRI/index.php/Main_Page">documentation
         Wiki</a>, which lets a lot of people easily contribute to
         building better documentation</li>
+        
+        <li>Chris Atkins helped improve the  
+        <a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#newJython">instructions for using a separate jython install</a></li>
 
         <li>Ron W. Auld, whose llnmon program formed the basis for
         the LocoNet monitoring <a name="B" id="B"></a></li>
@@ -202,6 +205,9 @@
 
         <li>Stephen Brooks, who did the initial testing of the
         Grapevine and Maple support</li>
+
+        <li>Andy Brown, who helped solve a problem with NX 
+        entry/exit pairs.</li>
 
         <li>Bill Brown, whose layout was used for the first NCE
         tests</li>
@@ -521,6 +527,8 @@
         <li>Georg Kautzsch, who provided a decoder definition for
         the Uhlenbrock 67800 servo decoder.</li>
 
+        <li>Klaus Killinger, who improved the sound support</li>
+        
         <li>Scott Kitts, who helped debug the new communications
         library for Mac OS X</li>
 
@@ -564,7 +572,9 @@
 
         <li>Jim LeFevre, who did the testing on the TMCC
         implementation, including buying components so we could do
-        a more complete job, and coded the function support</li>
+        a more complete job, and coded the function support. 
+        He's also put a lot of work into test and development
+        of the C/MRI support.</li>
 
         <li>Alain Le Marchand, who provided a number of decoder
         definitions and updates</li>
@@ -622,18 +632,20 @@
 
         <li>Greg McCartney, who provided a <a href=
         "http://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk
-        and Western signal definition</a> and a <a href=
+        and Western signal definition</a>, the <a href=
         "http://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O
-        1980 signal definition</a></li>
-
-        <li>David McGowan, who handled many aspects of JMRI legal
-        defense against Matt Katzer</li>
+        1980 signal definition</a>, and the
+        <a href="http://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
+        </li>
 
         <li>David McDowell of the North Raleigh Model Railroad Club
         created a <a href=
         "http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">
         clinic</a> covering Block Occupancy, Transponding and
         Simple Signal Logic.</li>
+
+        <li>David McGowan, who handled many aspects of JMRI legal
+        defense against Matt Katzer</li>
 
         <li>Randy McKenzie, who contributed some CTC panel
         background images</li>
@@ -925,8 +937,8 @@
         "http://jmri.org/community/clinics/">clinic
         presentations</a>, created the <a href=
         "html/doc/Technical/XmlEditors.shtml">page on XML
-        editors</a>, and has done a large amount of work on decoder
-        definitions.</li>
+        editors</a>, has done a large amount of work on decoder
+        definitions, and helped solve a problem with the NX entry/exit implementation.</li>
 
         <li>Mark Underwood, who provided a fix for a problem with
         looping sounds and added support for the DCC++ hardware.

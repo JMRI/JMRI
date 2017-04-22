@@ -43,6 +43,7 @@ public class PackageTest extends TestCase {
         suite.addTest(IndicatorTurnoutIconTest.suite());
         suite.addTest(IconEditorWindowTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.configurexml.PackageTest.class));
+        suite.addTest(jmri.jmrit.display.switchboardEditor.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
         suite.addTest(jmri.jmrit.display.panelEditor.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrit.display.palette.PackageTest.class));
@@ -68,6 +69,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(SlipIconAdderTest.class));
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutIconTest.class));
         suite.addTest(new JUnit4TestAdapter(SlipTurnoutTextEditTest.class));
+        suite.addTest(new JUnit4TestAdapter(NewPanelActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(MemoryInputIconTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionableJComponentTest.class));
+        suite.addTest(new JUnit4TestAdapter(PositionableJPanelTest.class));
         return suite;
     }
 

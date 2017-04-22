@@ -39,14 +39,17 @@ public class PortalManager extends AbstractManager
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'P';
     }
@@ -136,19 +139,12 @@ public class PortalManager extends AbstractManager
         return portal;
     }
 
+    @Override
     protected void registerSelf() {
         // Override, don't register, OBlockManager does store and load of Portals
     }
 
-    static PortalManager _instance = null;
-
-    static public PortalManager instance() {
-        if (_instance == null) {
-            _instance = new PortalManager();
-        }
-        return (_instance);
-    }
-
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNamePortal");
     }

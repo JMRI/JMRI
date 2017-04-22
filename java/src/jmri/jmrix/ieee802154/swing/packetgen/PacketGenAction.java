@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a IEEE802154 PacketGenFrame
  * object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
   */
 public class PacketGenAction extends AbstractAction {
 
@@ -36,6 +36,7 @@ public class PacketGenAction extends AbstractAction {
         this("Send IEEE 802.15.4 Message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame();

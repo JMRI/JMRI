@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * This is a configuration utility for the LIUSB. It allows the user to set the
  * XPressNet Address and the port speed used to communicate with the LIUSB.
  *
- * @author	Paul Bender Copyright (C) 2009-2010
+ * @author Paul Bender Copyright (C) 2009-2010
   */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -63,6 +63,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
         // install read settings, write settings button handlers
         readSettingsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 readLIUSBSettings();
             }
@@ -70,6 +71,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         );
 
         writeSettingsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 writeLIUSBSettings();
             }
@@ -78,6 +80,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -87,6 +90,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
         // install reset button handler
         resetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 resetLIUSBSettings();
 
@@ -140,6 +144,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
     }
 
     // listen for responces from the LI101
+    @Override
     public void message(XNetReply l) {
         // Check to see if this is an LI101 info request messgage, if it
         //is, determine if it's the baud rate setting, or the address
@@ -154,10 +159,12 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
     }
 
     // listen for the messages to the LIUSB
+    @Override
     public void message(XNetMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -170,6 +177,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         addrBox.setSelectedIndex(30);
     }
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

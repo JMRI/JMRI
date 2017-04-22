@@ -4,7 +4,7 @@ package jmri.jmrix.lenz;
  * interface for XNetPortController objects.
  * <p>
  *
- * @author	Paul Bender Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010
   */
 public interface XNetPortController extends jmri.jmrix.PortAdapter {
 
@@ -12,6 +12,7 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public boolean status();
 
     /**

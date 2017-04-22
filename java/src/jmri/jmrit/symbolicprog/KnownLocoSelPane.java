@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * (e.g. in a local anonymous class) to create the programmer frame you're
  * interested in.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class KnownLocoSelPane extends LocoSelPane {
 
@@ -56,6 +56,7 @@ public class KnownLocoSelPane extends LocoSelPane {
         if (mCanIdent) {
             JButton idloco = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ReadAndSelect"));
             idloco.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) {
                         log.debug("Identify locomotive pressed");
@@ -76,6 +77,7 @@ public class KnownLocoSelPane extends LocoSelPane {
 
         JButton go2 = new JButton(Bundle.getMessage("OpenProgrammer"));
         go2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Open programmer pressed");
@@ -120,17 +122,20 @@ public class KnownLocoSelPane extends LocoSelPane {
         IdentifyLoco id = new IdentifyLoco(p) {
             private KnownLocoSelPane who = me;
 
+            @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
                 who.selectLoco(dccAddress);
             }
 
+            @Override
             protected void message(String m) {
                 if (mStatusLabel != null) {
                     mStatusLabel.setText(m);
                 }
             }
 
+            @Override
             public void error() {
             }
         };

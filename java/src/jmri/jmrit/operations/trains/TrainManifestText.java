@@ -18,7 +18,7 @@ public class TrainManifestText {
     private static String arrivalTime = Bundle.getMessage("WorkArrivalTime");
     private static String noScheduledWorkAt = Bundle.getMessage("NoScheduledWorkAt");
     private static String noScheduledWorkAtRouteComment = Bundle.getMessage("NoScheduledWorkAtWithRouteComment");
-    private static String departTime = Bundle.getMessage("departureTime");	// this get's appended to "no scheduled work at"
+    private static String departTime = Bundle.getMessage("departureTime"); // this get's appended to "no scheduled work at"
     private static String trainDepartsCars = Bundle.getMessage("TrainDepartsCars");
     private static String trainDepartsLoads = Bundle.getMessage("TrainDepartsLoads");
     private static String trainTerminatesIn = Bundle.getMessage("TrainTerminatesIn");

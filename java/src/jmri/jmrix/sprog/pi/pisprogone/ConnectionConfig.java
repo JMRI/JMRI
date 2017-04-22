@@ -25,14 +25,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return "Pi-SPROG One Programmer";
     }
 
+    @Override
     public String getManufacturer() {
         return adapter.getManufacturer();
     }
 
+    @Override
     public void setManufacturer(String manu) {
         adapter.setManufacturer(manu);
     }
@@ -55,6 +58,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null) {
            adapter = new PiSprogOneSerialDriverAdapter();

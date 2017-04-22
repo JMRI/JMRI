@@ -20,7 +20,7 @@ import jmri.util.FileUtil;
 /**
  * Pane for downloading .hex files
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -41,10 +41,12 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     SpjFile file;
     LoaderEngine engine;
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.soundloader.LoaderFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSoundload"));
     }
@@ -57,6 +59,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             JButton b = new JButton(res.getString("ButtonSelect"));
             b.addActionListener(new AbstractAction() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     selectInputFile();
                 }
@@ -79,6 +82,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             readButton.setToolTipText(res.getString("TipReadDisabled"));
             p.add(readButton);
             readButton.addActionListener(new AbstractAction() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doRead();
                 }
@@ -108,6 +112,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             loadButton.setToolTipText(res.getString("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new AbstractAction() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }
@@ -206,6 +211,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         // Override notify() method to do a swing-thread update of status field
         if (engine == null) {
             engine = new LoaderEngine(memo) {
+                @Override
                 public void notify(String s) {
                     javax.swing.SwingUtilities.invokeLater(new Notifier(s));
                 }
@@ -214,6 +220,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // start the download itself
         new Thread() {
+            @Override
             public void run() {
                 engine.runDownload(file);
             }
@@ -231,6 +238,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
         String msg;
 
+        @Override
         public void run() {
             status.setText(msg);
         }
@@ -239,6 +247,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     /**
      * Get rid of any held resources
      */
+    @Override
     public void dispose() {
         if (file != null) {
             file.dispose();

@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.beans.PropertyChangeEvent;
@@ -61,6 +61,7 @@ abstract public class Trigger implements PropertyChangeListener {
         trigger_type = TriggerType.NONE;
     }
 
+    @Override
     abstract public void propertyChange(PropertyChangeEvent event);
 
     // JavaBean set/get functions

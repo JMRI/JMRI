@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
- * @author	Bob Jacobsen Copyright (C) 2001, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2014
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -56,6 +56,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     /**
      * Get the selected programmer
      */
+    @Override
     public Programmer getProgrammer() {
         if (progBox.getSelectedItem() == null) return null;
         return ((GlobalProgrammerManager) progBox.getSelectedItem()).getGlobalProgrammer();
@@ -66,6 +67,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      *
      * @return true is any button is selected
      */
+    @Override
     public boolean isSelected() {
         for (JRadioButton button : buttonMap.values()) {
             if (button.isSelected()) {
@@ -120,6 +122,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
             log.debug("Set combobox box selection to InstanceManager global default: {}", InstanceManager.getDefault(jmri.GlobalProgrammerManager.class));
             progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
             progBox.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     // new programmer selection
                     programmerSelected();
@@ -177,6 +180,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     /**
      * Listen to buttons for mode changes
      */
+    @Override
     public void actionPerformed(@Nonnull java.awt.event.ActionEvent e) {
         // find selected button
         log.debug("Selected button: {}", e.getActionCommand());
@@ -192,6 +196,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     /**
      * Listen to programmer for mode changes
      */
+    @Override
     public void propertyChange(@Nonnull java.beans.PropertyChangeEvent e) {
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
@@ -214,6 +219,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     }
 
     // no longer needed, disconnect if still connected
+    @Override
     public void dispose() {
         for (GlobalProgrammerManager pm : getMgrList()) {
             pm.getGlobalProgrammer().removePropertyChangeListener(this);

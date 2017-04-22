@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 public class DnDStringImportHandler extends TransferHandler {
 
     /////////////////////import
+    @Override
     public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
         //if (log.isDebugEnabled()) log.debug("DnDStringImportHandler.canImport ");
 
@@ -31,6 +32,7 @@ public class DnDStringImportHandler extends TransferHandler {
         return false;
     }
 
+    @Override
     public boolean importData(JComponent comp, Transferable tr) {
         //if (log.isDebugEnabled()) log.debug("DnDStringImportHandler.importData ");
         DataFlavor[] flavors =  tr.getTransferDataFlavors();

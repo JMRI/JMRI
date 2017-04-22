@@ -18,10 +18,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     }
 
+    @Override
     public String getSystemPrefix() {
         return "V";
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName);

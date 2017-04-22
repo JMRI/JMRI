@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * be notified of changes in the SdfBuffer, acccessed by reference during
  * editing (to avoid another dependency), but that's a project for another day)
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public abstract class SdfMacro implements SdfConstants {
 
@@ -57,6 +57,7 @@ public abstract class SdfMacro implements SdfConstants {
      *
      * @return newline-terminated string; never null
      */
+    @Override
     abstract public String toString();
 
     /**
@@ -92,6 +93,7 @@ public abstract class SdfMacro implements SdfConstants {
 
     /**
      * Total length, including contained instructions
+     * @return length of all parts
      */
     public int totalLength() {
         int result = length();
@@ -114,6 +116,7 @@ public abstract class SdfMacro implements SdfConstants {
      * <P>
      * This provides a default implementation for children, but each subclass
      * needs to store it's own data with setAtIndexAndInc()
+     * @param buffer load with all children
      */
     public void loadByteArray(SdfBuffer buffer) {
         List<SdfMacro> l = getChildren();
@@ -222,6 +225,6 @@ public abstract class SdfMacro implements SdfConstants {
         return val;
     }
 
-    private static Logger log = LoggerFactory.getLogger(SdfMacro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfMacro.class.getName());
 
 }

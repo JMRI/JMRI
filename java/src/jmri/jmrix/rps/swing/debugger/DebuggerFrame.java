@@ -41,6 +41,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         return "RPS Debugger";
     }  // product name, not translated
 
+    @Override
     public void dispose() {
         // separate from data source
         Distributor.instance().removeReadingListener(this);
@@ -68,6 +69,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
     int NUMSENSORS;
 
+    @Override
     public void initComponents() {
 
         nf = java.text.NumberFormat.getInstance();
@@ -138,6 +140,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
 
         doButton = new JButton("Do Once");
         doButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doOnce();
             }
@@ -306,6 +309,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         Distributor.instance().submitReading(r);
     }
 
+    @Override
     public void notify(Reading r) {
         // This implementation creates a new Calculator
         // each time to ensure that the most recent
@@ -334,6 +338,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         Distributor.instance().submitMeasurement(m);
     }
 
+    @Override
     public void notify(Measurement m) {
         // show result
         x.setText(nf.format(m.getX()));

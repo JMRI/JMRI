@@ -27,8 +27,23 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.routes.PackageTest"); // no tests in class itself
         suite.addTest(OperationsRoutesTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(OperationsRoutesGuiTest.suite());
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsRoutesGuiTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteCopyFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteEditTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RoutesTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RoutesTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RoutesTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainIconPositionFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteCopyActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainIconPositionActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteLocationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RouteTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainIconRouteActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SetTrainIconRouteFrameTest.class));
         return suite;
     }
 

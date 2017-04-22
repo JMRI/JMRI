@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * more general implementation, which can work with any system(s), is available
  * in {@link jmri.implementation.DccSignalMast}.
  *
- * @author	Kevin Dickerson Copyright (C) 2002
+ * @author Kevin Dickerson Copyright (C) 2002
  */
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
@@ -57,10 +57,11 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //						Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //      Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
+    @Override
     public void message(LocoNetMessage l) {
         if (l.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return;
@@ -99,6 +100,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         }
     }
 
+    @Override
     public void setAspect(String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
             c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
@@ -114,6 +116,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         firePropertyChange("Aspect", oldAspect, aspect); // NOI18N
     }
 
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
     }

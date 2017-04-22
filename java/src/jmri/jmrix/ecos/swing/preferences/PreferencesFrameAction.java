@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a PreferencesFrame object
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
   */
 public class PreferencesFrameAction extends AbstractAction {
 
@@ -20,6 +20,7 @@ public class PreferencesFrameAction extends AbstractAction {
 
     EcosSystemConnectionMemo adaptermemo;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PreferencesFrame f = new PreferencesFrame();
         try {

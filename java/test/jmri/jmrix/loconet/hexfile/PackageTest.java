@@ -27,6 +27,10 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.hexfile.LocoStatsTest");  // no tests in this class itself
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.loconet.hexfile.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(HexFileFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(HexFileServerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LnHexFilePortTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoNetSystemConnectionMemoTest.class));
         return suite;
     }
 

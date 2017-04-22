@@ -13,13 +13,11 @@ import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
-import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.sprog.update.SprogType;
 import jmri.jmrix.sprog.update.SprogVersion;
 import jmri.jmrix.sprog.update.SprogVersionListener;
-import jmri.jmrix.sprog.update.SprogVersionQuery;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -153,6 +151,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         );
 
         cmdTextField.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -561,6 +560,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 log.debug("reply in WRITESENT state: " + replyString);
                 // All done
                 state = State.IDLE;
+                break;
+            default:
+                log.warn("Unhandled state: {}", state);
+                break;
         }
     }
 
@@ -595,6 +598,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts
+     * @param delay milliseconds to delay
      */
     protected void restartTimer(int delay) {
         if (timer == null) {

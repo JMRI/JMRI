@@ -4,11 +4,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JTable;
-import javax.swing.table.TableColumnModel;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +51,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         updateList();
         fireTableStructureChanged();
         initTable();
+        if (_table.getRowSorter() != null) {
+            _table.getRowSorter().setSortKeys(null);
+        }
     }
 
     private void updateList() {
@@ -96,8 +99,13 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         if (_table == null) {
             return;
         }
+        
+        // Save table column order
+        XTableColumnModel tcm = new XTableColumnModel();
+        _table.setColumnModel(tcm);
+        _table.createDefaultColumnsFromModel();
+        
         // Install the button handlers
-        TableColumnModel tcm = _table.getColumnModel();
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // set column preferred widths
@@ -133,6 +141,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 return Bundle.getMessage("Name");
             case DESCRIPTIONCOLUMN:
                 return Bundle.getMessage("Description");
+            default:
+                // fall out
+                break;
         }
         TrainSchedule ts = getSchedule(col);
         if (ts != null) {
@@ -150,6 +161,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 return String.class;
             case DESCRIPTIONCOLUMN:
                 return String.class;
+            default:
+                // fall out
+                break;
         }
         if (col >= getFixedColumn() && col < getColumnCount()) {
             return Boolean.class;
@@ -189,6 +203,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 return train.getIconName();
             case DESCRIPTIONCOLUMN:
                 return train.getDescription();
+            default:
+                // fall out
+                break;
         }
         TrainSchedule ts = getSchedule(col);
         if (ts != null) {

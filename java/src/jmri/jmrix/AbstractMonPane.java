@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base class for JPanels displaying communications monitor information
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
 public abstract class AbstractMonPane extends JmriPanel {
 
@@ -211,6 +211,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
             final static String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
+            @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
                     AttributeSet attrs) throws BadLocationException {
                 if (text.matches(pattern)) { // NOI18N
@@ -220,6 +221,7 @@ public abstract class AbstractMonPane extends JmriPanel {
                 }
             }
 
+            @Override
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text,
                     AttributeSet attrs) throws BadLocationException {
                 if (text.matches(pattern)) { // NOI18N

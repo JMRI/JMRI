@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * of the Turnout interface.
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
  * 
  */
@@ -26,6 +26,9 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     /**
      * Mrc turnouts use any address allowed as an accessory decoder address on
      * the particular command station.
+     * @param number turnout address value
+     * @param tc traffic controller for connection
+     * @param p system prefix for connection
      */
     public MrcTurnout(int number, MrcTrafficController tc, String p) {
         super(p + "T" + number);
@@ -47,11 +50,13 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     /**
      * MRC turnouts can be inverted
      */
+    @Override
     public boolean canInvert() {
         return true;
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -80,6 +85,7 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
         tc.sendMrcMessage(m);
     }
 
+    @Override
     public void notifyRcv(Date timestamp, MrcMessage m) {
         if (m.getMessageClass() != MrcInterface.TURNOUTS) {
             return;
@@ -101,12 +107,15 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
         newKnownState(m.getAccState());
     }
 
+    @Override
     public void notifyXmit(Date timestamp, MrcMessage m) {/* message(m); */
 
     }
 
+    @Override
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 

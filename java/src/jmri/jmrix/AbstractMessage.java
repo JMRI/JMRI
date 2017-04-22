@@ -47,15 +47,18 @@ public abstract class AbstractMessage implements Message {
         }
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
@@ -92,6 +95,7 @@ public abstract class AbstractMessage implements Message {
     /**
      * Hash code from base data
      */
+    @Override
     public int hashCode() {
         int retval = 0;
         for(int i = 0;i<this.getNumDataElements();i++){ 
@@ -100,5 +104,5 @@ public abstract class AbstractMessage implements Message {
         return retval;
     }
 
-    private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
 }

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
+ * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
  */
 public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
@@ -60,10 +60,12 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         setTypeWord(0x71);  // configure BDL16x message type
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.bdl16.BDL16Frame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemBDL16Programmer"));
     }
@@ -73,6 +75,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
      * <p>
      * Used before write operations start
      */
+    @Override
     protected void copyToOpsw() {
         // copy over the display
         opsw[1] = commonrail.isSelected();
@@ -99,6 +102,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     }
 
+    @Override
     protected void updateDisplay() {
         commonrail.setSelected(opsw[1]);
         polarity.setSelected(opsw[3]);
@@ -123,6 +127,7 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         setdefault.setSelected(opsw[40]);
     }
 
+    @Override
     protected int nextState(int state) {
         switch (state) {
             case 1:

@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
  * When opened, the user must first select a serial port and click "Start". The
  * rest of the GUI then appears.
  *
- * @author	Ken Cameron Copyright (C) 2010 derived from -
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Ken Cameron Copyright (C) 2010 derived from -
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
@@ -53,9 +53,11 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         super();
     }
 
+    @Override
     public void init() {
     }
 
+    @Override
     public void initContext(Object context) throws Exception {
         if (context instanceof NceSystemConnectionMemo) {
             try {
@@ -66,10 +68,12 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -82,6 +86,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         return x.toString();
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
         this.memo = m;
 
@@ -96,6 +101,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         openPortButton.setText("Open");
         openPortButton.setToolTipText("Configure program to use selected port");
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
@@ -133,6 +139,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             checkButton.setEnabled(false);
             p.add(checkButton);
             checkButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     if (checkButton.isSelected()) {
                         sendBytes(new byte[]{(byte) '?'});
@@ -161,6 +168,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'V'});
                 }
@@ -170,6 +178,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'H', (byte) '0'});
                 }
@@ -180,6 +189,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'H', (byte) '1'});
                 }
@@ -190,6 +200,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'H', (byte) '2'});
                 }
@@ -200,6 +211,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'H', (byte) '3'});
                 }
@@ -210,6 +222,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'H', (byte) '4'});
                 }
@@ -220,6 +233,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'H', (byte) '5'});
                 }
@@ -227,7 +241,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end hex/verbose group
 
-        {	// start acc off/on
+        { // start acc off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -237,6 +251,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'A', (byte) '-'});
                 }
@@ -246,6 +261,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'A', (byte) '+'});
                 }
@@ -253,7 +269,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end acc off/on
 
-        {	// start idle off/on
+        { // start idle off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -263,6 +279,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'I', (byte) '-'});
                 }
@@ -272,6 +289,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'I', (byte) '+'});
                 }
@@ -279,7 +297,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end idle off/on
 
-        {	// start loco off/on
+        { // start loco off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -288,6 +306,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(locoSpeedButton);
             p.add(locoSpeedButton);
             locoSpeedButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'L', (byte) '-'});
                 }
@@ -297,6 +316,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'L', (byte) '+'});
                 }
@@ -304,7 +324,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end loco off/on
 
-        {	// start reset off/on
+        { // start reset off/on
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -314,6 +334,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'R', (byte) '-'});
                 }
@@ -323,6 +344,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'R', (byte) '+'});
                 }
@@ -330,7 +352,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end reset off/on
 
-        {	// start signal on/off
+        { // start signal on/off
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
@@ -340,6 +362,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'S', (byte) '-'});
                 }
@@ -349,6 +372,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'S', (byte) '+'});
                 }
@@ -356,7 +380,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p2.add(p);
         }  // end signal off/on
 
-        {	// Monitor command acc single/double
+        { // Monitor command acc single/double
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             JLabel t = new JLabel("Monitor Command");
@@ -368,6 +392,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'A', (byte) 'S'});
                 }
@@ -377,6 +402,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             g.add(b);
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte) 'A', (byte) 'P'});
                 }
@@ -421,6 +447,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e open button event
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
@@ -449,6 +476,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         t.stop();
     }
 
+    @Override
     public synchronized void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread != null) {
@@ -507,8 +535,8 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -577,6 +605,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
          * PortController via <code>connectPort</code>. Terminates with the
          * input stream breaking out of the try block.
          */
+        @Override
         public void run() {
             // have to limit verbosity!
 
@@ -639,6 +668,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
                     // retain a copy of the message at startup
                     String msgForLater = msgString;
 
+                    @Override
                     public void run() {
                         nextLine(msgForLater, "");
                     }

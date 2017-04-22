@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    Pr3SelectPaneTest.class
 })
 public class PackageTest {
 }

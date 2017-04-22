@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * 
  * Based on LIUSBEthernetAdapter
 o*
- * @author	Paul Bender (C) 2011-2013
+ * @author Paul Bender (C) 2011-2013
  * @author      Mark Underwood (C) 2015
  */
 public class DCCppEthernetAdapter extends DCCppNetworkPortController {
@@ -57,6 +57,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      * Can the port accept additional characters? return true if the port is
      * opened.
      */
+    @Override
      public boolean okToSend() {
         return status();
     }
@@ -104,6 +105,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
             keepAliveTimer = new java.util.TimerTask(){
+                @Override
                 public void run() {
                     // If the timer times out, send a request for status
                     DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()

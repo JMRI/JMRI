@@ -1,7 +1,6 @@
 package jmri.jmrit.consisttool;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of consist information.
  *
- * @author	Paul Bender Copyright (c) 2004-2005
+ * @author Paul Bender Copyright (c) 2004-2005
  */
 public class ConsistDataModel extends AbstractTableModel {
 
@@ -94,7 +93,7 @@ public class ConsistDataModel extends AbstractTableModel {
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ROSTERCOLUMN:
-                return (JComboBox.class);
+                return (String.class);
             case DELCOLUMN:
                 return (JButton.class);
             case DIRECTIONCOLUMN:
@@ -131,10 +130,10 @@ public class ConsistDataModel extends AbstractTableModel {
         switch (col) {
             case ADDRCOLUMN:
                 return (_consist.getConsistList().get(row).toString());
-            /*case ROSTERCOLUMN: JComboBox RosterBox = Roster.getDefault().matchingComboBox(null,null,null,null,null,null,null);
-             RosterBox.insertItemAt("",0);
-             RosterBox.setSelectedItem(getValueAt(ADDRCOLUMN,row));
-             return RosterBox;*/
+            case ROSTERCOLUMN: {
+                String entry = (_consist.getRosterId(_consist.getConsistList().get(row)));
+                return entry;
+              }
             case DIRECTIONCOLUMN:
                 return (Boolean.valueOf(_consist.getLocoDirection(_consist.getConsistList().get(row))));
             case DELCOLUMN:

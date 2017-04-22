@@ -10,8 +10,8 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -72,6 +72,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
          jmri.InstanceManager.setReporterManager(reporterManager);*/
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinActionListBundle");
     }
@@ -106,6 +107,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     /**
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -128,6 +130,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;

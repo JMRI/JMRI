@@ -61,16 +61,31 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.autospeed.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.symbolicprog.symbolicframe.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(QualifierCombinerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConstantValueTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndexedEnumVariableValueTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(IndexedVariableValueTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoSelPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NameFileTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NewLocoSelPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgDefaultTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgrammerConfigManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgrammerConfigPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SpeedTableVarValueTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ValueEditorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ValueRendererTest.class));
+
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

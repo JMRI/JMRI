@@ -1,11 +1,9 @@
 package jmri;
 
 import java.util.List;
-import jmri.jmrit.audio.AudioFactory;
-
-import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.jmrit.audio.AudioFactory;
 
 /**
  * Locate an Audio object representing some specific audio information.
@@ -19,7 +17,7 @@ import javax.annotation.Nonnull;
  * Each Audio has two names. The "user" name is entirely free form, and can be
  * used for any purpose. The "system" name is provided by the system-specific
  * implementations, if any, and provides a unique mapping to the layout control
- * system (e.g. LocoNet, NCE, etc) and address within that system. Note that
+ * system (for example LocoNet or NCE) and address within that system. Note that
  * most (all?) layout systems don't have anything corresponding to this, in
  * which case the "Internal" Audio objects are still available with names like
  * IAS23.
@@ -83,7 +81,7 @@ public interface AudioManager extends Manager {
      * Locate an instance based on a system name. Returns null if no instance
      * already exists.
      *
-     * @param systemName Audio object system name (e.g. IAS1, IAB4)
+     * @param systemName Audio object system name (such as IAS1 or IAB4)
      * @return requested Audio object or null if none exists
      */
     @CheckForNull public Audio getBySystemName(@Nonnull String systemName);
@@ -119,7 +117,7 @@ public interface AudioManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Audio objects when you should be looking them up.
      *
-     * @param systemName Audio object system name (e.g. IAS1, IAB4)
+     * @param systemName Audio object system name (such as IAS1 or IAB4)
      * @param userName   Audio object user name
      * @return requested Audio object (never null)
      * @throws AudioException if error occurs during creation

@@ -2,7 +2,6 @@ package jmri.util;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -237,21 +236,6 @@ public class StringUtil {
         Arrays.sort(values);
     }
 
-    static void bubblesortUpper(@Nonnull Object[] values) {
-        for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
-            for (int j = values.length - 2; j >= i; j--) {
-                // check that the jth value is smaller than j+1th,
-                // else swap
-                if (0 < (values[j].toString().toUpperCase()).compareTo(values[j + 1].toString().toUpperCase())) {
-                    // swap
-                    Object temp = values[j];
-                    values[j] = values[j + 1];
-                    values[j + 1] = temp;
-                }
-            }
-        }
-    }
-
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
@@ -259,8 +243,7 @@ public class StringUtil {
      * @param values the Objects to sort
      */
     static public void sortUpperCase(@Nonnull Object[] values) {
-        // no Java sort, so ugly bubble sort
-        bubblesortUpper(values);
+        Arrays.sort(values, (Object o1, Object o2) -> o1.toString().compareToIgnoreCase(o2.toString()));
     }
 
     /**
@@ -288,20 +271,17 @@ public class StringUtil {
      *
      * @param s	        collection of strings
      * @param delimiter the delimiter
-     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
+     * @return the results of
+     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
+     * @deprecated since 4.7.2; use
+     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
+     * instead
      */
     @CheckReturnValue
     @Nonnull
+    @Deprecated
     public static String join(@Nonnull Collection<String> s, @Nonnull String delimiter) {
-        StringBuilder buffer = new StringBuilder();
-        Iterator<String> iter = s.iterator();
-        while (iter.hasNext()) {
-            buffer.append(iter.next());
-            if (iter.hasNext()) {
-                buffer.append(delimiter);
-            }
-        }
-        return buffer.toString();
+        return String.join(delimiter, s);
     }
 
     /**
@@ -309,7 +289,8 @@ public class StringUtil {
      *
      * @param s	        collection of strings
      * @param delimiter the delimiter
-     * @return e.g. {@code join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"}
+     * @return the results of
+     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
      * @deprecated since 4.5.6; use
      * {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
      * instead
@@ -318,14 +299,7 @@ public class StringUtil {
     @Deprecated
     @Nonnull
     public static String join(@Nonnull String[] s, @Nonnull String delimiter) {
-        StringBuilder buffer = new StringBuilder();
-        for (int i = 0; i < s.length; i++) {
-            buffer.append(s[i]);
-            if (i < s.length - 1) {
-                buffer.append(delimiter);
-            }
-        }
-        return buffer.toString();
+        return String.join(delimiter, s);
     }
 
     /**

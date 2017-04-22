@@ -49,15 +49,18 @@ public class PackageTest extends TestCase {
 
         suite.addTest(SdiJfcUnitTest.suite());
         suite.addTest(new JUnit4TestAdapter(SdiWindowTest.class));
+        suite.addTest(new JUnit4TestAdapter(JmriJFrameInterfaceTest.class));
 
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

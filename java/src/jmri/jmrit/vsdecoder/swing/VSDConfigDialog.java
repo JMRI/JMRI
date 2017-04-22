@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigDialog extends JDialog {
@@ -103,6 +103,7 @@ public class VSDConfigDialog extends JDialog {
         super(SwingUtilities.getWindowAncestor(parent), title);
         config = c;
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
+            @Override
             public void eventAction(VSDManagerEvent evt) {
                 vsdecoderManagerEventAction(evt);
             }
@@ -166,6 +167,7 @@ public class VSDConfigDialog extends JDialog {
         addressSetButton.setToolTipText(Bundle.getMessage("AddressSetButtonToolTip"));
         addressSetButton.setMnemonic(Mnemonics.get("AddressSet"));
         addressSetButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressSetButtonActionPerformed(evt);
             }
@@ -202,6 +204,7 @@ public class VSDConfigDialog extends JDialog {
         profileComboBox.addItem((loadProfilePrompt = new NullProfileBoxItem()));
         profileComboBox.setSelectedItem(loadProfilePrompt);
         profileComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileComboBoxActionPerformed(evt);
             }
@@ -209,6 +212,7 @@ public class VSDConfigDialog extends JDialog {
         profilePanel.add(profileComboBox);
         profilePanel.add(profileLoadButton);
         profileLoadButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileLoadButtonActionPerformed(evt);
             }
@@ -219,6 +223,7 @@ public class VSDConfigDialog extends JDialog {
         rosterSaveButton = new javax.swing.JButton();
         rosterSaveButton.setText(Bundle.getMessage("ConfigSaveButtonLabel"));
         rosterSaveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterSaveButtonAction(e);
             }
@@ -233,6 +238,7 @@ public class VSDConfigDialog extends JDialog {
         closeButton.setToolTipText(Bundle.getMessage("CD_CloseButtonToolTip"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton"));
         closeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 closeButtonActionPerformed(e);
             }
@@ -242,6 +248,7 @@ public class VSDConfigDialog extends JDialog {
         cancelButton.setToolTipText(Bundle.getMessage("CD_CancelButtonToolTip"));
         cancelButton.setMnemonic(Mnemonics.get("CancelButton"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }

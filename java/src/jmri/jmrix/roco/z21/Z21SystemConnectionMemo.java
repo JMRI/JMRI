@@ -85,6 +85,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -103,6 +104,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Provide manager by class
      */
     @SuppressWarnings("unchecked")  // xpressnet code managed type for cast
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -147,6 +149,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
  
    }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
     }
@@ -187,6 +190,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
+    @Override
     public void dispose() {
         shutdownTunnel();
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);

@@ -27,10 +27,12 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
     }
 
     // The methods to implement the JMRIClientInterface
+    @Override
     public synchronized void addJMRIClientListener(JMRIClientListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeJMRIClientListener(JMRIClientListener l) {
         this.removeListener(l);
     }
@@ -39,6 +41,7 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
      * Forward a JMRIClientMessage to all registered JMRIClientInterface
      * listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((JMRIClientListener) client).message((JMRIClientMessage) m);
     }
@@ -47,14 +50,17 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
      * Forward a JMRIClientReply to all registered JMRIClientInterface
      * listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((JMRIClientListener) client).reply((JMRIClientReply) m);
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -62,22 +68,27 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
         sendMessage(m, reply);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return JMRIClientMessage.getProgMode();
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return JMRIClientMessage.getExitProgMode();
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new JMRIClientReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         int index = msg.getNumDataElements() - 1;
         if (msg.getElement(index) == 0x0D) {

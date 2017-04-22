@@ -24,7 +24,10 @@ import org.slf4j.LoggerFactory;
  * Conditional system names are set automatically when the Conditional is
  * created. All alphabetic characters in a Conditional system name must be upper
  * case. This is enforced when a new Conditional is created via
- * LogixTableAction.java.
+ * {@link jmri.jmrit.beantable.LogixTableAction}
+ * <p>
+ * Conditional user names have specific requirements that are
+ * addressed in the {@link jmri.Conditional} class.
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cresman Copyright (C) 2009
@@ -36,14 +39,17 @@ public class DefaultConditionalManager extends AbstractManager
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.CONDITIONALS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'X';
     }
@@ -54,9 +60,12 @@ public class DefaultConditionalManager extends AbstractManager
      * Conditional is still created. The scenario can happen when a Logix is
      * loaded from a file after its Conditionals.
      *
+     * @param systemName properly formatted system name for the new Conditional
+     * @param userName must not be null, use "" instead
      * @return null if a Conditional with the same systemName or userName
      *         already exists, or if there is trouble creating a new Conditional
      */
+    @Override
     public Conditional createNewConditional(String systemName, String userName) {
         // check that Conditional with same system name does not already exist
         Conditional c = getBySystemName(systemName);
@@ -95,11 +104,21 @@ public class DefaultConditionalManager extends AbstractManager
     }
 
     /**
+     * Do not insist that Conditional user names are unique,
+     * unlike the usual NamedBean support
+     */
+    @Override
+    protected void handleUserNameUniqueness(jmri.NamedBean s) {
+        // eventually needs error checking and reporting
+    }
+
+    /**
      * Parses the Conditional system name to get the parent Logix system name,
      * then gets the parent Logix, and returns it.
      *
      * @param name - system name of Conditional (must be trimmed and upper case)
      */
+    @Override
     public Logix getParentLogix(String name) {
         if (name.length() < 4) {
             return null;
@@ -117,6 +136,7 @@ public class DefaultConditionalManager extends AbstractManager
      * Remove an existing Conditional. Parent Logix must have been deactivated
      * before invoking this.
      */
+    @Override
     public void deleteConditional(Conditional c) {
         deregister(c);
     }
@@ -131,6 +151,7 @@ public class DefaultConditionalManager extends AbstractManager
      * @param name - name to look up
      * @return null if no match found
      */
+    @Override
     public Conditional getConditional(Logix x, String name) {
         Conditional c = null;
         if (x != null) {
@@ -142,6 +163,7 @@ public class DefaultConditionalManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public Conditional getConditional(String name) {
         Conditional c = getBySystemName(name);
         if (c == null) {
@@ -150,6 +172,7 @@ public class DefaultConditionalManager extends AbstractManager
         return c;
     }
 
+    @Override
     public Conditional getByUserName(String key) {
         if (key == null) {
             return null;
@@ -180,6 +203,7 @@ public class DefaultConditionalManager extends AbstractManager
         return null;
     }
 
+    @Override
     public Conditional getByUserName(Logix x, String key) {
         if (x == null) {
             return null;
@@ -196,6 +220,7 @@ public class DefaultConditionalManager extends AbstractManager
         return null;
     }
 
+    @Override
     public Conditional getBySystemName(String name) {
         if (name == null) {
             return null;
@@ -207,6 +232,7 @@ public class DefaultConditionalManager extends AbstractManager
      * Get a list of all Conditional system names with the specified Logix
      * parent
      */
+    @Override
     public List<String> getSystemNameListForLogix(Logix x) {
         log.error("getSystemNameListForLogix - Not implemented yet.");
         return null;
@@ -221,6 +247,7 @@ public class DefaultConditionalManager extends AbstractManager
         return (_instance);
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameConditional");
     }

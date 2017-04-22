@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "DCCppSnnn", where nnn is the sensor number without padding.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2003-2010
+ * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
@@ -29,12 +30,14 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     static private DCCppSensorManager mInstance = null;
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.removeDCCppListener(DCCppInterface.FEEDBACK, this);
         super.dispose();
     }
 
     // XPressNet specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         return new DCCppSensor(systemName, userName, tc);
     }
@@ -51,6 +54,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     // listen for sensors, creating them as needed
+    @Override
     public void message(DCCppReply l) {
         int addr = 0;
         if (log.isDebugEnabled()) {
@@ -85,16 +89,19 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }

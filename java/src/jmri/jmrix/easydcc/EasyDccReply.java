@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an EasyDccMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
  */
 public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 
@@ -23,6 +23,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
         super(l);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // start at index, passing any whitespace & control characters at the start of the buffer
         while (index < getNumDataElements() - 1
@@ -37,6 +38,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
      * can't be parsed. Expects a message of the formnat "CVnnnvv" where vv is
      * the hexadecimal value or "Vnvv" where vv is the hexadecimal value.
      */
+    @Override
     public int value() {
         int index = 0;
         if ((char) getElement(index) == 'C') {
