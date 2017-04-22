@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Description:	JUnit tests for the EasyDccTrafficController class
@@ -18,6 +20,8 @@ import org.junit.Test;
  */
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficControllerTest.class);
+    
     @Test
     public void testSendThenRcvReply() throws Exception {
         EasyDccTrafficController c = (EasyDccTrafficController) tc;
@@ -158,6 +162,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         tc = new EasyDccTrafficController();
     }
 
