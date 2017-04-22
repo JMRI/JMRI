@@ -63,6 +63,7 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
       }
     };
     $scope.power = [];
+    $scope.defaultPowerState = $jsonSocket.UNKNOWN;
     $scope.setPower = function(name, state) {
       $jsonSocket.setPower(name, (state === $jsonSocket.POWER_ON) ? $jsonSocket.POWER_OFF : $jsonSocket.POWER_ON);
     };
@@ -71,9 +72,21 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
         $jsonSocket.list('power');
       },
       power: function(data, method) {
-        $log.debug('got power ' + data.name + " (" + data.state + ")");
+        $log.debug('got ' + (data.default ? 'default ' : '') + 'power ' + data.name + " (" + data.state + ")");
+        if (method === 'delete') {
+          for (var i = 0; i < $scope.power.length; i++) {
+            if (data.name === $scope.power[i].name) {
+              $scope.power.splice(i, 1);
+              break;
+            }
+          }
+        }
         if (!$jsonSocket.mergePush($scope.power, data)) {
+          // express a desire to listen for changes in the object state
           $jsonSocket.getPower(data.name);
+        }
+        if (data.default) {
+          $scope.defaultPowerState = data.state;
         }
       },
       hello: function(data, method) {
@@ -100,17 +113,17 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
   }
 ]);
 
-angular.module('jmri.app').filter('triStateCheckBox', function($jsonSocket) {
+angular.module('jmri.app').filter('powerTriState', function($jsonSocket) {
   return function(input) {
     switch(input) {
       case $jsonSocket.POWER_OFF:
-        return 'fa-square';
+        return 'fa-circle-o';
         break;
       case $jsonSocket.POWER_ON:
-        return 'fa-check-square';
+        return 'fa-bolt';
         break;
       default: // unknown
-        return 'fa-minus-square';
+        return 'fa-question';
     }
   };
 });
