@@ -2,11 +2,13 @@ package jmri.jmrix.ecos;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -16,6 +18,7 @@ public class EcosLocoAddressManagerTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc){
            @Override
