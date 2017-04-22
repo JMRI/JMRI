@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.maple.serialdriver;
 
 import javax.swing.JButton;
@@ -30,6 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     JButton b = new JButton("Configure Maple Nodes");
 
+    @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
         b.addActionListener(new NodeConfigAction());
@@ -40,10 +40,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     }
 
+    @Override
     public String name() {
         return "Serial";
     }
 
+    @Override
     protected void setInstance() {
         adapter = SerialDriverAdapter.instance();
     }

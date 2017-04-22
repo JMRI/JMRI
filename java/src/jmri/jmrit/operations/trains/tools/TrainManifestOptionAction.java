@@ -31,10 +31,10 @@ public class TrainManifestOptionAction extends AbstractAction {
             f.initComponents(frame);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionAction.class.getName());
 }
 
-/* @(#)TrainManifestOptionAction.java */
+

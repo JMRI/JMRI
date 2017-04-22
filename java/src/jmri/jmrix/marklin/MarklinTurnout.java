@@ -1,4 +1,3 @@
-// MarklinTurnout.java
 package jmri.jmrix.marklin;
 
 import jmri.Turnout;
@@ -15,16 +14,12 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class MarklinTurnout extends AbstractTurnout
         implements MarklinListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8288482023350129321L;
     String prefix;
 
     /**
@@ -44,12 +39,13 @@ public class MarklinTurnout extends AbstractTurnout
     MarklinTrafficController tc;
 
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //										Object oldValue,
-        //										Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -75,7 +71,7 @@ public class MarklinTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newCommandedState" to indicate it's
      * taken place. Must be followed by "newKnownState" to complete the turnout
      * action.
@@ -93,7 +89,7 @@ public class MarklinTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
      * <P>
@@ -106,6 +102,7 @@ public class MarklinTurnout extends AbstractTurnout
         }
     }
 
+    @Override
     public void turnoutPushbuttonLockout(boolean b) {
     }
 
@@ -136,6 +133,7 @@ public class MarklinTurnout extends AbstractTurnout
         meterTimer.schedule(new java.util.TimerTask() {
             boolean state = newstate;
 
+            @Override
             public void run() {
                 try {
                     sendOffMessage((state ? 1 : 0));
@@ -156,6 +154,7 @@ public class MarklinTurnout extends AbstractTurnout
     }
 
     // to listen for status changes from Marklin system
+    @Override
     public void reply(MarklinReply m) {
         if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.ACCCOMMANDSTART && m.getCommand() <= MarklinConstants.ACCCOMMANDEND) {
             if (protocol == UNKNOWN) {
@@ -183,6 +182,7 @@ public class MarklinTurnout extends AbstractTurnout
         }
     }
 
+    @Override
     public void message(MarklinMessage m) {
         // messages are ignored
     }
@@ -197,5 +197,3 @@ public class MarklinTurnout extends AbstractTurnout
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class.getName());
 }
-
-/* @(#)MarklinTurnout.java */

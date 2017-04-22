@@ -1,14 +1,18 @@
 package jmri.jmrit.operations.automation;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
+    @Test
     public void testNewFrameCreation() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AutomationManager manager = AutomationManager.instance();
         Assert.assertEquals("Number of automations", 0, manager.getSize());
 
@@ -16,7 +20,6 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("test creation", f);
         f.automationNameTextField.setText("New Automation Test Name");
         f.commentTextField.setText("New Automation Test Comment");
-        flushAWT(); // to allow time to take effect
 
         // Confirm enable state of buttons
         Assert.assertTrue(f.addAutomationButton.isEnabled());
@@ -27,7 +30,7 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse(f.runActionButton.isEnabled());
         Assert.assertFalse(f.resumeActionButton.isEnabled());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addAutomationButton));
+        enterClickAndLeave(f.addAutomationButton);
 
         Assert.assertEquals("Number of automations", 1, manager.getSize());
         Automation automation = manager.getAutomationByName("New Automation Test Name");
@@ -46,7 +49,7 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse(f.resumeActionButton.isEnabled());
 
         // Test add action button       
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
+        enterClickAndLeave(f.addActionButton);
         Assert.assertEquals(1, automation.getSize());
         Assert.assertNotNull("The first item", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -62,8 +65,8 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertTrue(f.resumeActionButton.isEnabled());
 
         // add two more actions
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
+        enterClickAndLeave(f.addActionButton);
+        enterClickAndLeave(f.addActionButton);
         Assert.assertEquals(3, automation.getSize());
         jmri.util.JUnitUtil.waitFor(() -> 
             { return automation.getCurrentAutomationItem() != null && "1c1".equals(automation.getCurrentAutomationItem().getId()); },
@@ -75,20 +78,20 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("1c3", automation.getItemBySequenceId(3).getId());
 
         // test step button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.stepActionButton));
+        enterClickAndLeave(f.stepActionButton);
         jmri.util.JUnitUtil.waitFor(() -> 
             { return automation.getCurrentAutomationItem() != null && "1c2".equals(automation.getCurrentAutomationItem().getId()); },
             "The 2nd item: getId() was 1c2");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.stepActionButton));
+        enterClickAndLeave(f.stepActionButton);
         jmri.util.JUnitUtil.waitFor(() -> 
             { return automation.getCurrentAutomationItem() != null && "1c3".equals(automation.getCurrentAutomationItem().getId()); },
             "The 3rd item: getId() was 1c3");
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
 
         // back to the start
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.stepActionButton));
+        enterClickAndLeave(f.stepActionButton);
         jmri.util.JUnitUtil.waitFor(() -> 
         { return automation.getCurrentAutomationItem() != null && "1c1".equals(automation.getCurrentAutomationItem().getId()); },
         "The 1st item: getId() was 1c1");
@@ -97,7 +100,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testFrameCreation() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Automation automation = AutomationManager.instance().newAutomation("Automation Table Frame Name");
         automation.setComment("Gui Test Automation Table Frame Comment");
 
@@ -117,15 +122,15 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse(f.resumeActionButton.isEnabled());
 
         // test add button, add item at top of table
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionAtTopRadioButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
+        enterClickAndLeave(f.addActionAtTopRadioButton);
+        enterClickAndLeave(f.addActionButton);
 
         Assert.assertNotNull("The first item", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
         Assert.assertEquals("Do Nothing", automation.getCurrentAutomationItem().getActionName());
         Assert.assertEquals(1, automation.getSize());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
+        enterClickAndLeave(f.addActionButton);
 
         Assert.assertNotNull("The first item is now in second place", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -134,7 +139,7 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("1c2", automation.getItemBySequenceId(1).getId());
         Assert.assertEquals("1c1", automation.getItemBySequenceId(2).getId());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
+        enterClickAndLeave(f.addActionButton);
 
         Assert.assertNotNull("The first item is now in 3rd place", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -145,8 +150,8 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("1c1", automation.getItemBySequenceId(3).getId());
         
         // test add action in middle radio button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionAtMiddleRadioButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addActionButton));
+        enterClickAndLeave(f.addActionAtMiddleRadioButton);
+        enterClickAndLeave(f.addActionButton);
         
         Assert.assertNotNull("The first item is now in second place", automation.getCurrentAutomationItem());
         Assert.assertEquals("1c1", automation.getCurrentAutomationItem().getId());
@@ -159,15 +164,17 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
         // test delete button
         Assert.assertEquals(1, AutomationManager.instance().getSize());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteAutomationButton));
+        enterClickAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
-        pressDialogButton(f, "Yes");
+        pressDialogButton(f,Bundle.getMessage("DeleteAutomation?"), "Yes");
         Assert.assertEquals(0, AutomationManager.instance().getSize());
 
         f.dispose();
     }
 
+    @Test
     public void testFrameCreationWithAction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Automation automation = AutomationManager.instance().newAutomation("Automation Table Frame Name");
         automation.setComment("Gui Test Automation Table Frame Comment");
         automation.addItem();
@@ -189,9 +196,9 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
         // test delete button
         Assert.assertEquals(1, AutomationManager.instance().getSize());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteAutomationButton));
+        enterClickAndLeave(f.deleteAutomationButton);
         // confirm delete dialog window should appear
-        pressDialogButton(f, "No");
+        pressDialogButton(f,Bundle.getMessage("DeleteAutomation?"), "No");
         Assert.assertEquals(1, AutomationManager.instance().getSize());
 
         f.dispose();
@@ -199,30 +206,15 @@ public class AutomationTableFrameGuiTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
-    }
-
-    public AutomationTableFrameGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",
-                AutomationTableFrameGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AutomationTableFrameGuiTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         // apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }

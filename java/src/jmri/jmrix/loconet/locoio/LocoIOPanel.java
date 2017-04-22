@@ -1,4 +1,3 @@
-// LocoIOPanel.java
 package jmri.jmrix.loconet.locoio;
 
 import java.awt.event.ActionEvent;
@@ -29,21 +28,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel displaying and programming a LocoIO configuration.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
   */
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2652944223325097266L;
 
     public LocoIOPanel() {
         super();
 
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         ln = memo.getLnTrafficController();
@@ -97,8 +92,8 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         p1.add(subAddrField);
         p1.add(Box.createGlue());  // -------------------
         probeButton = new JButton("Probe");
-        probeButton.addActionListener(
-                new ActionListener() {
+        probeButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         data.setLIOVersion("<Not found>");
                         LocoIO.probeLocoIOs(ln);
@@ -107,16 +102,16 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         p1.add(probeButton);
         p1.add(Box.createGlue());  // -------------------
         readAllButton = new JButton("Read All");
-        readAllButton.addActionListener(
-                new ActionListener() {
+        readAllButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         data.readAll();
                     }
                 });
         p1.add(readAllButton);
         writeAllButton = new JButton("Write All");
-        writeAllButton.addActionListener(
-                new ActionListener() {
+        writeAllButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         data.writeAll();
                     }
@@ -125,8 +120,8 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         p1.add(Box.createGlue());  // -------------------
         addrSetButton = new JButton("Set address");
         p1.add(addrSetButton);
-        addrSetButton.addActionListener(
-                new ActionListener() {
+        addrSetButton.addActionListener(new ActionListener() {
+            @Override
                     public void actionPerformed(ActionEvent a) {
                         addrSet();
                     }
@@ -163,27 +158,30 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         // updating the Board address needs to be conveyed to the table
         ActionListener al4UnitAddress = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 try {
                     data.setUnitAddress(
                             Integer.valueOf(addrField.getText(), 16).intValue(),
                             Integer.valueOf(subAddrField.getText(), 16).intValue());
                 } catch (NullPointerException e) {
-                    log.error("Caught NullPointerException", e);
+                    log.error("Caught NullPointerException", e); // NOI18N
                 }
             }
         };
         FocusListener fl4UnitAddress = new FocusListener() {
+            @Override
             public void focusGained(FocusEvent event) {
             }
 
+            @Override
             public void focusLost(FocusEvent event) {
                 try {
                     data.setUnitAddress(
                             Integer.valueOf(addrField.getText(), 16).intValue(),
                             Integer.valueOf(subAddrField.getText(), 16).intValue());
                 } catch (NullPointerException e) {
-                    log.error("Caught NullPointerException", e);
+                    log.error("Caught NullPointerException", e); // NOI18N
                 }
             }
         };
@@ -196,17 +194,19 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         try {
             data.setUnitAddress(0x51, 0x00);
         } catch (NullPointerException e) {
-            log.error("Caught NullPointerException", e);
+            log.error("Caught NullPointerException", e); // NOI18N
         }
 
     }
 
     LnTrafficController ln;
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locoio.LocoIOFrame";
+        return "package.jmri.jmrix.loconet.locoio.LocoIOFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemLocoIOProgrammer"));
     }
@@ -217,7 +217,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
      * with caution.
      */
     protected int cautionAddrSet() {
-        log.info("Caution: Set locoio address is a broadcast operation");
+        log.info("Caution: Set locoio address is a broadcast operation"); // NOI18N
         return JOptionPane.showOptionDialog(this,
                 "This will set the address of all attached LocoIO boards",
                 "Global operation!",
@@ -235,26 +235,27 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         int subAddress = Integer.valueOf(subAddrField.getText(), 16).intValue();
 
         if ((address & 0x7F00) != 0x0100) {
-            log.warn("High part of address should be 0x01, was "
+            log.warn("High part of address should be 0x01, was " // NOI18N
                     + (address & 0x7F00) / 256);
         }
         if ((address & 0x7FFF) == 0x0180) {
-            log.warn("Only a LocoBuffer can use address 0x80");
+            log.warn("Only a LocoBuffer can use address 0x80"); // NOI18N
         }
 
         if (subAddress > 126) {
-            log.warn("subAddress must be [1..126]"
-                    + ", was " + subAddress);
+            log.warn("subAddress must be [1..126]" // NOI18N
+                    + ", was " + subAddress); // NOI18N
         }
         address = 0x0100 | (address & 0x07F);  // range is [1..79, 81..127]
-        subAddress = subAddress & 0x07F;	// range is [1..126]
+        subAddress = subAddress & 0x07F; // range is [1..126]
         LocoIO.programLocoIOAddress(address, subAddress, ln);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // these messages can arrive without a complete
         // GUI, in which case we just ignore them
-        if (evt.getPropertyName().equals("UnitAddress")) {
+        if (evt.getPropertyName().equals("UnitAddress")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
             int v = i.intValue();
             v = v & 0xFF;
@@ -265,7 +266,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                 firmware.setText("unknown  ");
             }
         }
-        if (evt.getPropertyName().equals("UnitSubAddress")) {
+        if (evt.getPropertyName().equals("UnitSubAddress")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
             int v = i.intValue();
             if (subAddrField != null) {
@@ -275,19 +276,19 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                 firmware.setText("unknown  ");
             }
         }
-        if (evt.getPropertyName().equals("LBVersionChange")) {
+        if (evt.getPropertyName().equals("LBVersionChange")) { // NOI18N
             String v = (String) evt.getNewValue();
             if (locobuffer != null) {
                 locobuffer.setText(" " + v);
             }
         }
-        if (evt.getPropertyName().equals("LIOVersionChange")) {
+        if (evt.getPropertyName().equals("LIOVersionChange")) { // NOI18N
             String v = (String) evt.getNewValue();
             if (firmware != null) {
                 firmware.setText(v + "    ");
             }
         }
-        if (evt.getPropertyName().equals("StatusChange")) {
+        if (evt.getPropertyName().equals("StatusChange")) { // NOI18N
             String v = (String) evt.getNewValue();
             if (status != null) {
                 status.setText(v + " ");
@@ -313,6 +314,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTable table;
     JScrollPane scroll;
 
+    @Override
     public void dispose() {
         // dispose of the model
         model.dispose();

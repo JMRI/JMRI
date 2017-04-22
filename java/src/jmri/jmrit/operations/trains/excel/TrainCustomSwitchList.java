@@ -19,19 +19,23 @@ public class TrainCustomSwitchList extends TrainCustomCommon {
         return _instance;
     }
     
+    @Override
     public String getDirectoryName() {
         return directoryName;
     }
 
+    @Override
     public void setDirectoryName(String name) {
         directoryName = name;
     }
     
+    @Override
     public void load(Element options) {
         Element mc = options.getChild(Xml.SWITCHLIST_CREATOR);
         super.load(mc);
     }
     
+    @Override
     public void store(Element options) {
         Element mc = new Element(Xml.SWITCHLIST_CREATOR);
         super.store(mc);

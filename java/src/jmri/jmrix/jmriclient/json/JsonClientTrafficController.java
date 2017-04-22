@@ -15,18 +15,19 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.SwingUtilities;
-import jmri.server.json.JSON;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.ConnectionStatus;
+import jmri.server.json.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
 
     protected final ObjectMapper mapper;
     protected Timer heartbeat = null;
-    final private static Logger log = LoggerFactory.getLogger(JsonClientTrafficController.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonClientTrafficController.class);
 
     public JsonClientTrafficController() {
         super();
@@ -148,7 +149,7 @@ public class JsonClientTrafficController extends AbstractMRTrafficController imp
 
         while (true) {
             try {
-                JsonNode root = reader.readTree(this.istream);
+                JsonNode root = reader.readTree((InputStream) this.istream);
                 String type = root.path(TYPE).asText();
                 JsonNode data = root.path(DATA);
                 log.debug("Processing {} with {}", type, data);

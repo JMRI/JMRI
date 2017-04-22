@@ -8,9 +8,9 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialPortController;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
+import jmri.jmrix.cmri.serial.SerialPortAdapter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  * Provide access to C/MRI via a serial comm port. Normally controlled by the
  * cmri.serial.serialdriver.SerialDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super(new CMRISystemConnectionMemo());
@@ -30,6 +30,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
@@ -91,6 +92,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -180,6 +182,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * set up all of the other objects to operate connected to this port
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         SerialTrafficController tc = new SerialTrafficController();
@@ -188,7 +191,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 
-    // base class methods for the SerialPortController interface
+    // base class methods for the SerialPortAdapter interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -197,6 +201,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -209,6 +214,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -228,25 +234,23 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         activeSerialPort.setFlowControlMode(flow);
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Set the baud rate.
      */
+    @Override
     public void configureBaudRate(String rate) {
         log.debug("configureBaudRate: " + rate);
         selectedSpeed = rate;

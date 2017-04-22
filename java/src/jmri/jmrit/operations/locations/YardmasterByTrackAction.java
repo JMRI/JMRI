@@ -1,4 +1,3 @@
-// YardmasterByTrackAction.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Frame;
@@ -42,8 +41,8 @@ public class YardmasterByTrackAction extends AbstractAction {
             f = new YardmasterByTrackFrame(_location);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)YardmasterByTrackAction.java */
+

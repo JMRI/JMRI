@@ -34,13 +34,16 @@ public interface UserPreferencesManager {
      * <p>
      * The name is free-form, but to avoid ambiguity it should start with the
      * package name (package.Class) for the primary using class.
+     *
+     * @param name the name of the preference
+     * @return the state or false if never set
      */
     boolean getSimplePreferenceState(String name);
 
     /**
      * This is used to remember the last selected state of a checkBox and thus
      * allow that checkBox to be set to a true state when it is next
-     * initialised. This can also be used anywhere else that a simple yes/no,
+     * initialized. This can also be used anywhere else that a simple yes/no,
      * true/false type preference needs to be stored.
      *
      * It should not be used for remembering if a user wants to suppress a
@@ -50,12 +53,14 @@ public interface UserPreferencesManager {
      * (package.Class) for the primary using class.
      *
      * @param name  A unique name to identify the state being stored
-     * @param state simple boolean.
+     * @param state simple boolean
      */
     void setSimplePreferenceState(String name, boolean state);
 
     /**
-     * Returns an ArrayList of the checkbox states set as true.
+     * Returns an ArrayList of the check box states set as true.
+     *
+     * @return list of simple preferences names
      */
     public ArrayList<String> getSimplePreferenceStateList();
 
@@ -83,35 +88,69 @@ public interface UserPreferencesManager {
     /**
      * Returns the state of a given item registered against a specific class or
      * item.
+     *
+     * @param strClass name of the class for this preference
+     * @param item     name of the item for which the state is being retrieved
+     * @return the state or false if not set
      */
     public boolean getPreferenceState(String strClass, String item);
 
     /**
-     * Register details about a perticular preference, so that it can be
+     * Register details about a particular preference, so that it can be
      * displayed in the GUI and provide a meaning full description when
      * presented to the user.
      *
      * @param strClass    A string form of the class that the preference is
      *                    stored or grouped with
-     * @param item        The specific item that is being stored.
-     * @param description A meaningful decription of the item that the user will
-     *                    understand.
+     * @param item        The specific item that is being stored
+     * @param description A meaningful description of the item that the user
+     *                    will understand
+     * @deprecated since 4.7.2; use
+     * {@link #setPreferenceItemDetails(java.lang.String, java.lang.String, java.lang.String)}
+     * instead
      */
-    public void preferenceItemDetails(String strClass, String item, String description);
+    @Deprecated // prefix with "set"
+    public default void preferenceItemDetails(String strClass, String item, String description) {
+        this.setPreferenceItemDetails(strClass, item, description);
+    }
+
+    /**
+     * Register details about a particular preference, so that it can be
+     * displayed in the GUI and provide a meaning full description when
+     * presented to the user.
+     *
+     * @param strClass    A string form of the class that the preference is
+     *                    stored or grouped with
+     * @param item        The specific item that is being stored
+     * @param description A meaningful description of the item that the user
+     *                    will understand
+     */
+    public void setPreferenceItemDetails(String strClass, String item, String description);
 
     /**
      * Returns a list of preferences that are registered against a specific
      * class.
+     *
+     * @param strClass the class name
+     * @return the list of preference names
      */
     public ArrayList<String> getPreferenceList(String strClass);
 
     /**
      * Returns the itemName of the n preference in the given class
+     *
+     * @param strClass the name of the class
+     * @param n        the position in an array
+     * @return the name of the preference or null if non-existent
      */
     public String getPreferenceItemName(String strClass, int n);
 
     /**
      * Returns the description of the given item preference in the given class
+     *
+     * @param strClass the name of the class
+     * @param item     the name of the item
+     * @return the description of the preference
      */
     public String getPreferenceItemDescription(String strClass, String item);
 
@@ -122,6 +161,9 @@ public interface UserPreferencesManager {
      * <p>
      * The name is free-form, but to avoid ambiguity it should start with the
      * package name (package.Class) for the primary using class.
+     *
+     * @param name the name of the preference
+     * @return the state or false if not set
      */
     public boolean getSessionPreferenceState(String name);
 
@@ -146,13 +188,13 @@ public interface UserPreferencesManager {
     /**
      * Show an info message ("don't forget ...") with a given dialog title and
      * user message. Use a given preference name to determine whether to show it
-     * in the future. The classString {@literal &} item parameters should form a
-     * unique value
+     * in the future. The combination of the classString and item parameters
+     * should form a unique value.
      *
-     * @param title       Message Box title
-     * @param message     Message to be displayed
-     * @param classString String value of the calling class
-     * @param item        String value of the specific item this is used for
+     * @param title       message Box title
+     * @param message     message to be displayed
+     * @param classString name of the calling class
+     * @param item        name of the specific item this is used for
      */
     public void showInfoMessage(String title, String message, String classString, String item);
 
@@ -211,66 +253,104 @@ public interface UserPreferencesManager {
     public void showWarningMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
 
     /**
-     * Adds the last selection of a combo box.
+     * Add the last selection to a combo box.
      * <p>
      * The name is free-form, but to avoid ambiguity it should start with the
      * package name (package.Class) for the primary using class, followed by an
-     * identifier for the combobox
+     * identifier for the combo box
+     *
+     * @param comboBoxName the combo box name
+     * @param lastValue    the value to append
+     * @deprecated since 4.7.2; use
+     * {@link #setComboBoxLastSelection(java.lang.String, java.lang.String)}
+     * instead
      */
-    public void addComboBoxLastSelection(String comboBoxName, String lastValue);
+    @Deprecated
+    public default void addComboBoxLastSelection(String comboBoxName, String lastValue) {
+        this.setComboBoxLastSelection(comboBoxName, lastValue);
+    }
 
     /**
-     * returns the last selected value in a given combobox
+     * The last selected value in a given combo box.
      *
-     *
+     * @param comboBoxName the combo box name
+     * @return the selected value
      */
     public String getComboBoxLastSelection(String comboBoxName);
 
     /**
-     * sets the last selected value in a given combobox
+     * Set the last selected value in a given combo box.
+     * <p>
+     * The name is free-form, but to avoid ambiguity it should start with the
+     * package name (package.Class) for the primary using class, followed by an
+     * identifier for the combo box.
      *
-     *
+     * @param comboBoxName the combo box name
+     * @param lastValue    the selected value
      */
     public void setComboBoxLastSelection(String comboBoxName, String lastValue);
 
-    /**
-     * returns the number of comboBox options saved
-     *
-     *
-     */
-    public int getComboBoxSelectionSize();
-
-    /**
-     * returns the ComboBox Name at position n
-     *
-     *
-     */
-    public String getComboBoxName(int n);
-
-    /**
-     * returns the ComboBox Value at position n
-     *
-     *
-     */
-    public String getComboBoxLastSelection(int n);
-
     public Dimension getScreen();
 
-    public void allowSave();
+    /**
+     * Convenience method allow saving preferences.
+     *
+     * @deprecated since 4.7.2; use {@link #setSaveAllowed(boolean)} with true
+     * instead
+     */
+    @Deprecated
+    public default void allowSave() {
+        this.setSaveAllowed(true);
+    }
 
-    public void disallowSave();
+    /**
+     * Convenience method set allow saving preferences to false.
+     *
+     * @deprecated since 4.7.2; use {@link #setSaveAllowed(boolean)} with false
+     * instead
+     */
+    @Deprecated
+    public default void disallowSave() {
+        this.setSaveAllowed(false);
+    }
+
+    /**
+     * Check if saving preferences is allowed.
+     *
+     * @return true if saving is allowed; false otherwise
+     */
+    public boolean isSaveAllowed();
+
+    /**
+     * Set if saving preferences is allowed. When setting true, preferences will
+     * be saved immediately if needed.
+     * <p>
+     * <strong>Note</strong> only set false if a number of preferences will be
+     * set together to avoid excessive disk I/O while setting preferences.
+     * <p>
+     * <strong>Note</strong> remember to allow saving as soon as blocking saving
+     * is no longer needed.
+     *
+     * @param saveAllowed true to allow saving; false to block saving
+     */
+    public void setSaveAllowed(boolean saveAllowed);
 
     public void removePropertyChangeListener(PropertyChangeListener l);
 
     public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
-     * Returns the description of a class/group registered with the preferences.
+     * Get the description of a class/group registered with the preferences.
+     *
+     * @param strClass the class name
+     * @return the description
      */
     public String getClassDescription(String strClass);
 
     /**
-     * Returns a list of the classes registered with the preference manager.
+     * Get the list of the classes registered with the preference manager.
+     *
+     * @return the list of class names
      */
     public ArrayList<String> getPreferencesClasses();
 
@@ -299,10 +379,63 @@ public interface UserPreferencesManager {
      *                      to describe the item
      * @param msgOption     Description of each option valid option.
      * @param msgNumber     The references number against which the Description
-     *                      is refering too.
+     *                      is referring too.
      * @param defaultOption The default option for the given item.
+     * @deprecated since 4.7.2; use
+     * {@link #setMessageItemDetails(java.lang.String, java.lang.String, java.lang.String, java.lang.String[], int[], int)}
+     * instead
      */
-    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption);
+    @Deprecated
+    public default void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
+        this.setMessageItemDetails(strClass, item, description, msgOption, msgNumber, defaultOption);
+    }
+
+    /**
+     * Add descriptive details about a specific message box, so that if it needs
+     * to be reset in the preferences, then it is easily identifiable. displayed
+     * to the user in the preferences GUI.
+     *
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param msgOption     Description of each option valid option.
+     * @param msgNumber     The references number against which the Description
+     *                      is referring too.
+     * @param defaultOption The default option for the given item.
+     * @deprecated since 4.7.2; use
+     * {@link #setMessageItemDetails(java.lang.String, java.lang.String, java.lang.String, java.util.HashMap, int)}
+     * instead
+     */
+    @Deprecated
+    public default void setMessageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
+        HashMap<Integer, String> options = new HashMap<>(msgOption.length);
+        for (int i = 0; i < msgOption.length; i++) {
+            options.put(msgNumber[i], msgOption[i]);
+        }
+        setMessageItemDetails(strClass, description, item, options, defaultOption);
+    }
+
+    /**
+     * Add descriptive details about a specific message box, so that if it needs
+     * to be reset in the preferences, then it is easily identifiable. displayed
+     * to the user in the preferences GUI.
+     *
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param options       A map of the integer value of the option against a
+     *                      meaningful description.
+     * @param defaultOption The default option for the given item.
+     * @deprecated since 4.7.2; use
+     * {@link #setMessageItemDetails(java.lang.String, java.lang.String, java.lang.String, java.util.HashMap, int)}
+     * instead
+     */
+    @Deprecated
+    public default void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
+        this.setMessageItemDetails(strClass, item, description, options, defaultOption);
+    }
 
     /**
      * Add descriptive details about a specific message box, so that if it needs
@@ -317,7 +450,7 @@ public interface UserPreferencesManager {
      *                      meaningful description.
      * @param defaultOption The default option for the given item.
      */
-    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption);
+    public void setMessageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption);
 
     /**
      * Returns a map of the value against description of the different items in
@@ -325,55 +458,88 @@ public interface UserPreferencesManager {
      *
      * @param strClass Class or group of the given item
      * @param item     the item which we wish to return the details about.
+     * @return map of choices
      */
     public HashMap<Integer, String> getChoiceOptions(String strClass, String item);
 
     /**
-     * Returns the number of Mulitple Choice items registered with a given
-     * class.
+     * Get the number of Multiple Choice items registered with a given class.
+     *
+     * @param strClass the class name
+     * @return number of items
      */
     public int getMultipleChoiceSize(String strClass);
 
     /**
-     * Returns a list of all the multiple choice items registered with a given
+     * Get a list of all the multiple choice items registered with a given
      * class.
+     *
+     * @param strClass the class name
+     * @return list of item names
      */
     public ArrayList<String> getMultipleChoiceList(String strClass);
 
     /**
-     * Returns the nth item name in a given class
+     * Get the nth item name in a given class.
+     *
+     * @param strClass the class name
+     * @param n        the position
+     * @return the item name
      */
     public String getChoiceName(String strClass, int n);
 
     /**
-     * Returns the a meaningful description of a given item in a given class or
+     * Get the a meaningful description of a given item in a given class or
      * group.
+     *
+     * @param strClass the class name
+     * @param item     the item name
+     * @return the item description
      */
     public String getChoiceDescription(String strClass, String item);
 
     /**
-     * Returns the current value of a given item in a given class
+     * Get the current value of a given item in a given class.
+     *
+     * @param strClass the class name
+     * @param item     the item name
+     * @return the value
      */
     public int getMultipleChoiceOption(String strClass, String item);
 
     /**
      * Returns the default value of a given item in a given class
+     *
+     * @param strClass the class name
+     * @param choice   the item name
+     * @return the default value
      */
     public int getMultipleChoiceDefaultOption(String strClass, String choice);
 
     /**
      * Sets the value of a given item in a given class, by its string
-     * description
+     * description.
+     *
+     * @param strClass the class name
+     * @param choice   the item name
+     * @param value    the item value description
      */
     public void setMultipleChoiceOption(String strClass, String choice, String value);
 
     /**
-     * Sets the value of a given item in a given class, by its integer value
+     * Sets the value of a given item in a given class, by its integer value.
+     *
+     * @param strClass the class name
+     * @param choice   the item name
+     * @param value    the item value
      */
     public void setMultipleChoiceOption(String strClass, String choice, int value);
 
     /**
-     * returns the combined size of both types of items registered.
+     * Get the combined size of both types of items registered.
+     *
+     * @param strClass the class name
+     * @return number of registered preferences
      */
     public int getPreferencesSize(String strClass);
 
@@ -403,31 +569,64 @@ public interface UserPreferencesManager {
     public void setWindowSize(String strClass, Dimension dim);
 
     /**
-     * Returns the x,y location of a given Window
+     * Get the x,y location of a given Window.
+     *
+     * @param strClass the class name
+     * @return the location
      */
     public Point getWindowLocation(String strClass);
 
     /**
      * Returns the width, height size of a given Window
+     *
+     * @param strClass the class name
+     * @return the size
      */
     public Dimension getWindowSize(String strClass);
 
     public ArrayList<String> getWindowList();
 
     /**
-     * Do we have a saved window position for the class
+     * Do we have a saved set of properties for the class
      *
      * @param strClass class to check
-     * @return true if the window position details are stored, false if not.
+     * @return true if the window position details are stored; false otherwise
+     * @deprecated since 4.7.2; use {@link #hasProperties(java.lang.String)}
+     * instead
      */
-    public boolean isWindowPositionSaved(String strClass);
+    @Deprecated
+    public default boolean isWindowPositionSaved(String strClass) {
+        return this.hasProperties(strClass);
+    }
+
+    /**
+     * Check if there are properties for the given class
+     *
+     * @param strClass class to check
+     * @return true if properties for strClass are maintained; false otherwise
+     */
+    public boolean hasProperties(String strClass);
 
     public boolean getSaveWindowSize(String strClass);
 
     public boolean getSaveWindowLocation(String strClass);
 
+    /**
+     * Set if window sizes should be saved for a given class. Method has no
+     * effect if strClass is null or equals {@code jmri.util.JmriJFrame}.
+     *
+     * @param strClass name of the class
+     * @param b        true if window sizes should be saved; false otherwise
+     */
     public void setSaveWindowSize(String strClass, boolean b);
 
+    /**
+     * Set if window locations should be saved for a given class. Method has no
+     * effect if strClass is null or equals {@code jmri.util.JmriJFrame}.
+     *
+     * @param strClass name of the class
+     * @param b        true if window locations should be saved; false otherwise
+     */
     public void setSaveWindowLocation(String strClass, boolean b);
 
     /**
@@ -532,8 +731,8 @@ public interface UserPreferencesManager {
      * Get a name for a column at index i
      *
      * @param table The reference for the table
-     * @param i     The column index returns null if not found, otherwise the
-     *              column name
+     * @param i     The column index
+     * @return null if not found, otherwise the column name
      * @deprecated since 4.5.4 without direct replacement. Use the
      * {@link jmri.swing.JTablePersistenceManager} API to maintain JTable user
      * interface state.

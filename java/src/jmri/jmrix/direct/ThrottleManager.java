@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * time. It also is missing logic to alternate sending speed and function
  * commands; right now it only sends the first group of function packets.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
@@ -50,6 +50,7 @@ public class ThrottleManager extends AbstractThrottleManager {
     /**
      * Create throttle data structures.
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         if (currentThrottle != null) {
             log.error("DCC direct cannot handle more than one throttle now");
@@ -61,14 +62,17 @@ public class ThrottleManager extends AbstractThrottleManager {
         notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
     }
 
+    @Override
     public boolean addressTypeUnique() {
         return false;
     }
 
+    @Override
     public boolean canBeShortAddress(int a) {
         return a < 128;
     }
 
+    @Override
     public boolean canBeLongAddress(int a) {
         return a > 0;
     }
@@ -77,6 +81,7 @@ public class ThrottleManager extends AbstractThrottleManager {
      * Invoked when a throttle is released, this updates the local data
      * structures
      */
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             currentThrottle = null;

@@ -22,7 +22,7 @@ package jmri.jmrit.vsdecoder.listener;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2012
+ * @author   Mark Underwood Copyright (C) 2012
  * 
  */
 import java.util.regex.Matcher;
@@ -228,6 +228,7 @@ public class ListeningSpot {
         }
     }
 
+    @Override
     public String toString() {
         if ((_location == null) || (_lookAt == null) || (_up == null)) {
             return ("ListeningSpot (undefined)");
@@ -238,7 +239,7 @@ public class ListeningSpot {
 
     public Element getXml(String elementName) {
         Element me = new Element(elementName);
-        me.setAttribute("name", _name);
+        me.setAttribute("name", (_name == null ? "default" : _name));
         me.setAttribute("location", _location.toString());
         me.setAttribute("up", _up.toString());
         me.setAttribute("look_at", _lookAt.toString());

@@ -44,10 +44,12 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 // The methods to implement the SprogInterface
     protected Vector<SprogListener> cmdListeners = new Vector<SprogListener>();
 
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
 
+    @Override
     public synchronized void addSprogListener(SprogListener l) {
         // add only if not already registered
         if (l == null) {
@@ -58,6 +60,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         }
     }
 
+    @Override
     public synchronized void removeSprogListener(SprogListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);
@@ -170,6 +173,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * SendSprogMessage(SprogMessage) after notifying any listeners Notifies
      * listeners
      */
+    @Override
     public synchronized void sendSprogMessage(SprogMessage m, SprogListener replyTo) {
 
         if (waitingForReply) {
@@ -181,7 +185,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         waitingForReply = true;
 
         if (log.isDebugEnabled()) {
-            log.debug("sendSprogMessage message: [" + m + "]");
+            log.debug("sendSprogMessage message: [" + m.toString(isSIIBootMode()) + "]");
         }
         // remember who sent this
         lastSender = replyTo;
@@ -268,6 +272,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * only dealing with DATA_AVAILABLE but the other events are left here for
      * reference. AJB Jan 2010
      */
+    @Override
     public void serialEvent(SerialPortEvent event) {
         switch (event.getEventType()) {
             case SerialPortEvent.BI:
@@ -283,6 +288,9 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             case SerialPortEvent.DATA_AVAILABLE:
                 log.debug("Data Available");
                 handleOneIncomingReply();
+                break;
+            default:
+                log.warn("Unhandled serial port event code: {}", event.getEventType());
                 break;
         }
     }
@@ -338,6 +346,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 SprogReply replyForLater = thisReply;
                 SprogTrafficController myTC = thisTC;
 
+                @Override
                 public void run() {
                     log.debug("Delayed notify starts");
                     myTC.notifyReply(replyForLater);

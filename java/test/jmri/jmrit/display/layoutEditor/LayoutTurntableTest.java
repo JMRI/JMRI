@@ -1,60 +1,44 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of LayoutTurntable
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LayoutTurntableTest extends TestCase {
+public class LayoutTurntableTest {
 
+    @Test
     public void testCtor() {
-        LayoutTurntable  t = new LayoutTurntable("test",new Point2D.Double(0.0,0.0),new LayoutEditor());
-        Assert.assertNotNull("exists", t );
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LayoutTurntable t = new LayoutTurntable("test", new Point2D.Double(0.0, 0.0), new LayoutEditor());
+        Assert.assertNotNull("exists", t);
     }
 
     // from here down is testing infrastructure
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
         // reset the instance manager.
         JUnitUtil.resetInstanceManager();
     }
- 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+
+    @After
+    public void tearDown() throws Exception {
         // dispose of the single PanelMenu instance
         jmri.jmrit.display.PanelMenu.dispose();
         JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
-    }
-
-
-
-    public LayoutTurntableTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LayoutTurntableTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutTurntableTest.class);
-        return suite;
     }
 
 }

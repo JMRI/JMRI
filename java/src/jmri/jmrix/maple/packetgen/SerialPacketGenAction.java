@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialPacketGenFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class SerialPacketGenAction extends AbstractAction {
 
@@ -17,9 +17,10 @@ public class SerialPacketGenAction extends AbstractAction {
     }
 
     public SerialPacketGenAction() {
-        this("Send C/MRI message");
+        this("Send Maple message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SerialPacketGenFrame f = new SerialPacketGenFrame();
         try {

@@ -1,4 +1,3 @@
-// MrcPanelInterface.java
 package jmri.jmrix.mrc.swing;
 
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
@@ -14,10 +13,12 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 public interface MrcPanelInterface {
 
     /**
-     * 2nd stage of initialization, invoked after the constuctor is complete.
+     * 2nd stage of initialization, invoked after the constructor is complete.
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo system connection memo
+     * @throws Exception float exceptions upwards
      */
     public void initComponents(MrcSystemConnectionMemo memo) throws Exception;
 

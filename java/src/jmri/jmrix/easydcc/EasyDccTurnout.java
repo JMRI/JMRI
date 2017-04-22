@@ -1,4 +1,3 @@
-// EasyDccTurnout.java
 package jmri.jmrix.easydcc;
 
 import jmri.NmraPacket;
@@ -14,20 +13,17 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * Description:	extend jmri.AbstractTurnout for EasyDcc layouts
+ * Description: extend jmri.AbstractTurnout for EasyDcc layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001
-  */
+ * @author Bob Jacobsen Copyright (C) 2001
+ */
 public class EasyDccTurnout extends AbstractTurnout {
 
     /**
+     * Create a turnout. EasyDcc turnouts use the NMRA number (0-511) as their
+     * numerical identification.
      *
-     */
-    private static final long serialVersionUID = -2850269669837354617L;
-
-    /**
-     * EasyDcc turnouts use the NMRA number (0-511) as their numerical
-     * identification.
+     * @param number the NMRA turnout number from 0 to 511
      */
     public EasyDccTurnout(int number) {
         super("ET" + number);
@@ -46,6 +42,7 @@ public class EasyDccTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -53,7 +50,6 @@ public class EasyDccTurnout extends AbstractTurnout {
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
             } else {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
@@ -64,6 +60,7 @@ public class EasyDccTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ET" + _number);
@@ -124,6 +121,3 @@ public class EasyDccTurnout extends AbstractTurnout {
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnout.class.getName());
 
 }
-
-
-/* @(#)EasyDccTurnout.java */

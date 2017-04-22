@@ -93,10 +93,12 @@ public class ReporterTest extends TestCase {
     // Utility method to create a concrete AbstractReporter
     private Reporter createNewReporter(String systemName, String userName) {
         return new AbstractReporter(systemName, userName) {
+            @Override
             public int getState() {
                 return state;
             }
 
+            @Override
             public void setState(int s) {
                 state = s;
             }
@@ -137,4 +139,4 @@ public class ReporterTest extends TestCase {
 
 }
 
-/* @(#)ReporterTest.java */
+

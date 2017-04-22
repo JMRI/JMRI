@@ -1,4 +1,3 @@
-// IEEE802154SystemConnectionMemo.java
 package jmri.jmrix.ieee802154;
 
 import java.util.ResourceBundle;
@@ -12,11 +11,11 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into IEEE802154
+ * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into IEEE802154
  * by
- * @author	Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013
  */
 public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -73,6 +72,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     /**
      * Tells which managers this provides by class
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -83,6 +83,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     /**
      * Provide manager by class
      */
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -98,10 +99,12 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         // now does nothing here, it's done by the specific class
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, IEEE802154SystemConnectionMemo.class);
         super.dispose();
@@ -110,4 +113,4 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 }
 
 
-/* @(#)IEEE802154SystemConnectionMemo.java */
+

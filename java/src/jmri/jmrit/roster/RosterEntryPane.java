@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,13 +32,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Display and edit a RosterEntry.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dennis Miller Copyright 2004, 2005
  */
 public class RosterEntryPane extends javax.swing.JPanel {
 
     // Field sizes expanded to 30 from 12 to match comment
-// fields and allow for more text to be displayed
+    // fields and allow for more text to be displayed
     JTextField id = new JTextField(30);
     JTextField roadName = new JTextField(30);
     JTextField maxSpeed = new JTextField(3);
@@ -408,8 +409,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
     }
 
     /**
-     * File GUI from roster contents
+     * File GUI from roster contents.
+     *
+     * @param r the roster entry to display
      */
+    @SuppressWarnings("deprecation") // r.getDateUpdated()
     public void updateGUI(RosterEntry r) {
         roadName.setText(r.getRoadName());
         roadNumber.setText(r.getRoadNumber());
@@ -420,8 +424,10 @@ public class RosterEntryPane extends javax.swing.JPanel {
         decoderModel.setText(r.getDecoderModel());
         decoderFamily.setText(r.getDecoderFamily());
         decoderComment.setText(r.getDecoderComment());
-        dateUpdated.setText(r.getDateUpdated());
-        maxSpeedSpinner.setValue(Integer.valueOf(r.getMaxSpeedPCT()));
+        dateUpdated.setText((r.getDateModified() != null)
+                ? DateFormat.getDateTimeInstance().format(r.getDateModified())
+                : r.getDateUpdated());
+        maxSpeedSpinner.setValue(r.getMaxSpeedPCT());
     }
 
     public void setDccAddress(String a) {

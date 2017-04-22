@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2010
+ * @author Dave Duchamp Copyright (C) 2010
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
@@ -73,6 +73,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         if (aat != null) {
             _autoTrainsList.add(aat);
             java.beans.PropertyChangeListener throttleListener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     handleThrottleChange(e);
                 }
@@ -86,6 +87,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             ActiveTrain at = aat.getActiveTrain();
             java.beans.PropertyChangeListener listener = null;
             at.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     handleActiveTrainChange(e);
                 }
@@ -242,6 +244,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         JButton stopAllButton = new JButton(rb.getString("StopAll"));
         pB.add(stopAllButton);
         stopAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 stopAllPressed(e);
             }
@@ -275,6 +278,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         px.add(tStop);
         _stopButtons.add(tStop);
         tStop.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 stopResume(s);
             }
@@ -283,6 +287,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         px.add(tManual);
         _manualButtons.add(tManual);
         tManual.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 manualAuto(s);
             }
@@ -291,6 +296,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         px.add(tResumeAuto);
         _resumeAutoRunningButtons.add(tResumeAuto);
         tResumeAuto.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 resumeAutoOperation(s);
             }
@@ -302,6 +308,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         px.add(fBut);
         _forwardButtons.add(fBut);
         fBut.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 directionButton(s);
             }
@@ -311,6 +318,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         px.add(rBut);
         _reverseButtons.add(rBut);
         rBut.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 directionButton(s);
             }
@@ -320,6 +328,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         px.add(sSlider);
         _speedSliders.add(sSlider);
         sSlider.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 int val = ((JSlider) (e.getSource())).getValue();
                 sliderChanged(s, val);
@@ -575,4 +584,4 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
 }
 
-/* @(#)AutoTrainsFrame.java */
+

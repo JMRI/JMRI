@@ -1,16 +1,18 @@
 //EngineAttributeEditFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Engines GUI class
@@ -20,14 +22,16 @@ import junit.framework.TestSuite;
  */
 public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
+    @Test
     public void testEngineAttributeEditFrameModel() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.MODEL);
         // confirm that the right number of models were loaded
         Assert.assertEquals(27, f.comboBox.getItemCount());
         // now add a new model name
         f.addTextBox.setText("New Model");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
         // new model should appear at start of list
         Assert.assertEquals("new model name", "New Model", f.comboBox.getItemAt(0));
 
@@ -35,20 +39,22 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         f.comboBox.setSelectedItem("SD45");
         f.addTextBox.setText("DS54");
         // push replace button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
+        enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, "Yes");
+        pressDialogButton(f,Bundle.getMessage("replaceAll"), "Yes");
         // did the replace work?
         Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
+        enterClickAndLeave(f.deleteButton);
         // new model was next
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 
         f.dispose();
     }
 
+    @Test
     public void testEngineAttributeEditFrame2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineEditFrame.LENGTH);
         f.dispose();
@@ -64,7 +70,8 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadEngines();
@@ -152,24 +159,9 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
     }
 
-    public EngineAttributeEditFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineAttributeEditFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineAttributeEditFrameTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

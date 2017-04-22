@@ -1,4 +1,3 @@
-// SerialSensor.java
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractSensor;
@@ -6,14 +5,9 @@ import jmri.implementation.AbstractSensor;
 /**
  * Extend jmri.AbstractSensor for serial systems
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class SerialSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -196410325440991581L;
 
     public SerialSensor(String systemName) {
         super(systemName);
@@ -32,9 +26,8 @@ public class SerialSensor extends AbstractSensor {
      * Eventually, we may want to have this move the related AIU to the top of
      * the polling queue.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 
 }
-
-/* @(#)SerialSensor.java */

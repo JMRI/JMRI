@@ -1,4 +1,3 @@
-// GraphPane.java
 package jmri.jmrix.bachrus;
 
 import java.awt.BasicStroke;
@@ -23,15 +22,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for graph of loco speed curves
  *
- * @author	Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
+ * @author Andrew Crosland Copyright (C) 2010
+ * @author Dennis Miller Copyright (C) 2015
   */
 public class GraphPane extends JPanel implements Printable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 260997228988676886L;
 
     final int PAD = 40;
 
@@ -103,6 +97,7 @@ public class GraphPane extends JPanel implements Printable {
         return units;
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGraph(g);
@@ -265,6 +260,7 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
+    @Override
     public int print(Graphics g, PageFormat pf, int page) throws
             PrinterException {
 

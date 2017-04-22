@@ -1,4 +1,3 @@
-// MrcTurnoutManager.java
 package jmri.jmrix.mrc;
 
 import jmri.Turnout;
@@ -8,7 +7,7 @@ import jmri.Turnout;
  * <P>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
  * 
  */
@@ -23,10 +22,12 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     String prefix = "";
     MrcTrafficController tc = null;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
         Turnout t = new MrcTurnout(addr, tc, getSystemPrefix());
@@ -36,4 +37,4 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
 }
 
-/* @(#)MrcTurnoutManager.java */
+

@@ -1,12 +1,15 @@
 package jmri.jmrit.decoderdefn;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import jmri.LocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +56,7 @@ public class DecoderFile extends XmlFile {
         _replacementFamily = replacementFamily;
         _developerID = "-1";
     }
-    
+
     public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
             String highVersionID, String family, String filename, String developerID,
             int numFns, int numOuts, Element decoder, String replacementModel, String replacementFamily) {
@@ -104,6 +107,7 @@ public class DecoderFile extends XmlFile {
     /**
      * Test for correct decoder version number
      *
+     * @param i the version to match
      * @return true if decoder version matches id
      */
     public boolean isVersion(int i) {
@@ -113,16 +117,17 @@ public class DecoderFile extends XmlFile {
     /**
      * return array of versions
      *
+     * @return array of boolean where each element is true if version matches;
+     *         false otherwise
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public boolean[] getVersions() {
-        return (versions);
+        return Arrays.copyOf(versions, versions.length);
     }
 
     public String getVersionsAsString() {
         String ret = "";
         int partStart = -1;
-        String part = "";
+        String part;
         for (int i = 0; i < 256; i++) {
             if (partStart >= 0) {
                 /* working on part, found end of range */
@@ -152,7 +157,7 @@ public class DecoderFile extends XmlFile {
             } else {
                 part = "" + partStart;
             }
-            if (ret != "") {
+            if (ret.equals("")) {
                 ret = ret + "," + part;
             } else {
                 ret = part;
@@ -171,7 +176,7 @@ public class DecoderFile extends XmlFile {
     String _replacementModel = null;
     String _replacementFamily = null;
     String _developerID = null;
-    
+
     int _numFns = -1;
     int _numOuts = -1;
     Element _element = null;
@@ -266,12 +271,12 @@ public class DecoderFile extends XmlFile {
     }
 
     private void setSupportedProtocols() {
-        protocols = new ArrayList<LocoAddress.Protocol>();
+        protocols = new ArrayList<>();
         if (_element.getChild("protocols") != null) {
             List<Element> protocolList = _element.getChild("protocols").getChildren("protocol");
-            for (Element e : protocolList) {
+            protocolList.forEach((e) -> {
                 protocols.add(LocoAddress.Protocol.getByShortName(e.getText()));
-            }
+            });
         }
     }
 
@@ -290,6 +295,7 @@ public class DecoderFile extends XmlFile {
      *                     against include/exclude conditions
      * @param extraInclude additional "include" terms
      * @param extraExclude additional "exclude" terms
+     * @return true if element is included; false otherwise
      */
     public static boolean isIncluded(Element e, String productID, String modelID, String familyID, String extraInclude, String extraExclude) {
         String include = e.getAttributeValue("include");
@@ -324,18 +330,22 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * @param checkFor     see if this value is present within (this value could also be a comma-separated list)
-     * @param okList       this comma-separated list of items (familyID/modelID/productID)
+     * @param checkFor see if this value is present within (this value could
+     *                 also be a comma-separated list)
+     * @param okList   this comma-separated list of items
+     *                 (familyID/modelID/productID)
      */
     private static boolean isInList(String checkFor, String okList) {
         String test = "," + okList + ",";
-        if ( test.contains("," + checkFor + ",") ) {
+        if (test.contains("," + checkFor + ",")) {
             return true;
-        } else if ( checkFor != null ) {
+        } else if (checkFor != null) {
             String testList[] = checkFor.split(",");
-            if ( testList.length > 1 ) {
+            if (testList.length > 1) {
                 for (String item : testList) {
-                if ( test.contains("," + item + ",") ) return true;
+                    if (test.contains("," + item + ",")) {
+                        return true;
+                    }
                 }
             }
         }
@@ -379,14 +389,14 @@ public class DecoderFile extends XmlFile {
                 // if its associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
-                        && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue()) {
+                        && getNumOutputs() < Integer.parseInt(e.getAttribute("minOut").getValue())) {
                     continue;
                 }
                 // if not correct productID, skip
                 if (!isProductIDok(e, extraInclude, extraExclude)) {
                     continue;
                 }
-            } catch (Exception ex) {
+            } catch (NumberFormatException | DataConversionException ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                         + e.getAttribute("item") + " exception: " + ex);
             }
@@ -413,7 +423,7 @@ public class DecoderFile extends XmlFile {
                 if (!isProductIDok(e, extraInclude, extraExclude)) {
                     continue;
                 }
-            } catch (Exception ex) {
+            } catch (DataConversionException ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                         + e.getAttribute("item") + " exception: " + ex);
             }
@@ -444,7 +454,7 @@ public class DecoderFile extends XmlFile {
                 if (!isProductIDok(e, extraInclude, extraExclude)) {
                     continue;
                 }
-            } catch (Exception ex) {
+            } catch (DataConversionException ex) {
                 log.warn("Problem parsing minFn or minOut in decoder file, variable "
                         + e.getAttribute("item") + " exception: " + ex);
             }
@@ -483,9 +493,11 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Convert to a cannonical text form for ComboBoxes, etc.
+     * Convert to a canonical text form for ComboBoxes, etc.
      * <P>
-     * Must distinquish identical models in different families.
+     * Must be able to distinguish identical models in different families.
+     *
+     * @return the title string for the decoder
      */
     public String titleString() {
         return titleString(getModel(), getFamily());
@@ -495,7 +507,7 @@ public class DecoderFile extends XmlFile {
         return model + " (" + family + ")";
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // script access
+    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // script access
     static public String fileLocation = "decoders" + File.separator;
 
     // initialize logging

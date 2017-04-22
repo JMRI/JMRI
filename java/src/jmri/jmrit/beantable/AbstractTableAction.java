@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignalHeadTable GUI
+ * Swing action to create and register a NamedBeanTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractTableAction extends AbstractAction {
 
@@ -31,12 +31,12 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific
-     * NamedBean type
+     * NamedBean type.
      */
     protected abstract void createModel();
 
     /**
-     * Include the correct title
+     * Include the correct title.
      */
     protected abstract void setTitle();
 
@@ -58,11 +58,13 @@ abstract public class AbstractTableAction extends AbstractAction {
             /**
              * Include an "add" button
              */
+            @Override
             void extras() {
                 if (includeAddButton) {
                     JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                     addToBottomBox(addButton, this.getClass().getName());
                     addButton.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             addPressed(e);
                         }
@@ -70,7 +72,7 @@ abstract public class AbstractTableAction extends AbstractAction {
                 }
             }
         };
-        setMenuBar(f);
+        setMenuBar(f); // comes after the Help menu is added by f = new BeanTableFrame(etc.) in stand alone application
         setTitle();
         addToFrame(f);
         f.pack();
@@ -87,15 +89,19 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     /**
-     * Allow subclasses to add to the frame without have to actually subclass
-     * the BeanTableDataFrame
+     * Allow subclasses to add to the frame without having to actually subclass
+     * the BeanTableDataFrame.
+     *
+     * @param f the Frame to add to
      */
     public void addToFrame(BeanTableFrame f) {
     }
 
     /**
      * If the subClass is being included in a greater tabbed frame, then this
-     * method is used to add the details to the tabbed frame
+     * method is used to add the details to the tabbed frame.
+     *
+     * @param f AbstractTableTabAction for the containing frame containing these and other tabs
      */
     public void addToPanel(AbstractTableTabAction f) {
     }
@@ -103,13 +109,17 @@ abstract public class AbstractTableAction extends AbstractAction {
     /**
      * If the subClass is being included in a greater tabbed frame, then this is
      * used to specify which manager the subclass should be using.
+     *
+     * @param man Manager for this table tab
      */
     protected void setManager(Manager man) {
     }
 
     /**
-     * Allow subclasses to add alter the frames Menubar without have to actually
-     * subclass the BeanTableDataFrame
+     * Allow subclasses to alter the frame's Menubar without having to actually
+     * subclass the BeanTableDataFrame.
+     *
+     * @param f the Frame to attach the menubar to
      */
     public void setMenuBar(BeanTableFrame f) {
     }
@@ -125,7 +135,9 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     /**
-     * Specify the JavaHelp target for this specific panel
+     * Specify the JavaHelp target for this specific panel.
+     *
+     * @return a fixed default string "index" pointing to to highest level in JMRI Help
      */
     protected String helpTarget() {
         return "index";  // by default, go to the top
@@ -154,6 +166,10 @@ abstract public class AbstractTableAction extends AbstractAction {
     /**
      * Used with the Tabbed instances of table action, so that the print option
      * is handled via that on the appropriate tab.
+     *
+     * @param mode         table print mode
+     * @param headerFormat messageFormat for header
+     * @param footerFormat messageFormat for footer
      */
     public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat) {
         log.error("Caught here");

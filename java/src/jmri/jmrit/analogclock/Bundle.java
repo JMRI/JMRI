@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.Bundle {
 
-    private final static String name = null; // No local resources
+    @Nullable
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

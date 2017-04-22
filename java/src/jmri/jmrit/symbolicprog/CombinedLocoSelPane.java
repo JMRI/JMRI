@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * <LI>selectedDecoderName
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -74,6 +74,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         decoderBox.setSelectedIndex(0);
         decoderBox.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (decoderBox.getSelectedIndex() != 0) {
                     // reset and disable loco selection
@@ -81,10 +82,10 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText(Bundle.getMessage("CLICK TO OPEN THE PROGRAMMER"));
+                    go2.setToolTipText(Bundle.getMessage("TipClickToOpen"));
                 } else {
                     go2.setEnabled(false);
-                    go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+                    go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
                 }
             }
         });
@@ -108,6 +109,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             iddecoder.setToolTipText(Bundle.getMessage("TipNoRead"));
         }
         iddecoder.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startIdentifyDecoder();
             }
@@ -153,7 +155,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     protected JPanel layoutRosterSelection() {
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
-        pane2a.add(new JLabel(Bundle.getMessage("USE LOCOMOTIVE SETTINGS FOR: ")));
+        pane2a.add(new JLabel(Bundle.getMessage("USE LOCOMOTIVE SETTINGS FOR:")));
         locoBox.setNonSelectedItem(Bundle.getMessage("<NONE - NEW LOCO>"));
         Roster.getDefault().addPropertyChangeListener(this);
         pane2a.add(locoBox);
@@ -167,10 +169,10 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText(Bundle.getMessage("CLICK TO OPEN THE PROGRAMMER"));
+                    go2.setToolTipText(Bundle.getMessage("TipClickToOpen"));
                 } else {
                     go2.setEnabled(false);
-                    go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+                    go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
                 }
             }
         });
@@ -184,6 +186,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             idloco.setToolTipText(Bundle.getMessage("BUTTON DISABLED BECAUSE CONFIGURED COMMAND STATION CAN'T READ CVS"));
         }
         idloco.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Identify locomotive pressed");
@@ -232,6 +235,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 
         go2 = new JButton(Bundle.getMessage("OpenProgrammer"));
         go2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Open programmer pressed");
@@ -241,7 +245,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         });
         go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         go2.setEnabled(false);
-        go2.setToolTipText(Bundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+        go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
         pane3a.add(progFormat);
         pane3a.add(go2);
         return pane3a;
@@ -271,17 +275,20 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         IdentifyLoco id = new IdentifyLoco(p) {
             private CombinedLocoSelPane who = me;
 
+            @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
                 who.selectLoco(dccAddress);
             }
 
+            @Override
             protected void message(String m) {
                 if (_statusLabel != null) {
                     _statusLabel.setText(m);
                 }
             }
 
+            @Override
             protected void error() {
                 // raise the button again
                 idloco.setSelected(false);
@@ -308,17 +315,20 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         IdentifyDecoder id = new IdentifyDecoder(p) {
             private CombinedLocoSelPane who = me;
 
+            @Override
             protected void done(int mfg, int model, int productID) {
                 // if Done, updated the selected decoder
                 who.selectDecoder(mfg, model, productID);
             }
 
+            @Override
             protected void message(String m) {
                 if (_statusLabel != null) {
                     _statusLabel.setText(m);
                 }
             }
 
+            @Override
             protected void error() {
                 // raise the button again
                 iddecoder.setSelected(false);
@@ -333,6 +343,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      *
      * @param ev Ignored.
      */
+    @Override
     public void propertyChange(PropertyChangeEvent ev) {
         locoBox.update();
     }

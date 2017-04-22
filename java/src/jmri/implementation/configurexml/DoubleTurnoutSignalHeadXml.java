@@ -27,6 +27,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DoubleTurnoutSignalHead p = (DoubleTurnoutSignalHead) o;
 
@@ -90,8 +91,13 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
     }
 
     /**
-     * Needs to handle two types of element: turnoutname is new form turnout is
-     * old form
+     * Process stored signal head output (turnout).
+     * <p>
+     * Needs to handle two types of element: turnoutname is new form; turnout is
+     * old form.
+     *
+     * @param o xml object defining a turnout on an SE8C signal head
+     * @return named bean for the turnout
      */
     NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element) o;
@@ -119,6 +125,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

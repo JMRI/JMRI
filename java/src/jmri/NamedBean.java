@@ -1,5 +1,8 @@
 package jmri;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -9,11 +12,29 @@ import javax.annotation.Nonnull;
  * Provides common services for classes representing objects on the layout, and
  * allows a common form of access by their Managers.
  * <P>
- * Each object has a two names. The "user" name is entirely free form, and can
- * be used for any purpose. The "system" name is provided by the system-specific
+ * Each object has two types of names:<p>
+ * The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
- *
+ * (for example LocoNet or NCE) and address within that system. It must 
+ * be present and unique across the JMRI instance.
+ * <p>
+ * The "user" name is optional. It's free form text except for two restrictions:
+ * <ul>
+ * <li>It can't be the empty string "".  (A non-existant user name is coded as a null)
+ * <li>And eventually, we may insist on normalizing user names to a specific form, 
+ *     e.g. remove leading and trailing white space; 
+ *     see the {@link #normalizeUserName(java.lang.String)} method
+ * </ul><p> 
+ * Each of these two
+ * names must be unique for every NamedBean of the same type on the layout and a single NamedBean
+ * cannot have a user name that is the same as the system name of another NamedBean of the same type. 
+ * (The complex wording is saying that a single NamedBean object is allowed to have its 
+ * system name and user name be the same, but that's the only non-uniqueness that's allowed within a specific type).
+ * Note that the uniqueness restrictions are currently not completely 
+ * enforced, only warned about; a future version of JMRI will enforce this restriction.
+ *<p>
+ * For more information, see the <a href="http://jmri.org/help/en/html/doc/Technical/Names.shtml">Names and Naming</a> page
+ * in the <a href="http://jmri.org/help/en/html/doc/Technical/index.shtml">Technical Info</a> pages.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -26,7 +47,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
  */
 public interface NamedBean {
@@ -47,7 +68,8 @@ public interface NamedBean {
 
     /**
      * User's identification for the item. Bound parameter so manager(s) can
-     * listen
+     * listen to changes. Any given user name must be unique within the layout.
+     * Must not match the system name.
      *
      * @return null if not set
      */
@@ -55,11 +77,11 @@ public interface NamedBean {
     @CheckForNull
     public String getUserName();
 
-    public void setUserName(@CheckForNull String s);
+    public void setUserName(@CheckForNull String s) throws BadUserNameException;
 
     /**
      * Get a system-specific name. This encodes the hardware addressing
-     * information.
+     * information. Any given system name must be unique within the layout.
      *
      * @return the system-specific name.
      */
@@ -91,7 +113,7 @@ public interface NamedBean {
      * the known state, commanded state, user and system names.
      *
      * @param l           The listener. This may change in the future to be a
-     *                    subclass of NamedProprtyCHangeListener that carries
+     *                    subclass of NamedProprtyChangeListener that carries
      *                    the name and listenerRef values internally
      * @param name        The name (either system or user) that the listener
      *                    uses for this namedBean, this parameter is used to
@@ -100,20 +122,27 @@ public interface NamedBean {
      * @param listenerRef A textual reference for the listener, that can be
      *                    presented to the user when a delete is called
      */
-    public void addPropertyChangeListener(@Nonnull java.beans.PropertyChangeListener l, String name, String listenerRef);
+    public void addPropertyChangeListener(@Nonnull PropertyChangeListener l, String name, String listenerRef);
 
-    public void addPropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
+    /**
+     * Add a listener that receives a call-back when a bound property changes.
+     *
+     * @param l the listener to add; if null no action is taken and no exception
+     *          is thrown
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
      *
-     * @param l the listener to remove
+     * @param l the listener to remove; if null no action is taken and no
+     *          exception is thrown
      */
-    public void removePropertyChangeListener(@CheckForNull java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(PropertyChangeListener l);
 
-    public void updateListenerRef(@Nonnull java.beans.PropertyChangeListener l, String newName);
+    public void updateListenerRef(@Nonnull PropertyChangeListener l, String newName);
 
-    public void vetoableChange(@Nonnull java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException;
+    public void vetoableChange(@Nonnull PropertyChangeEvent evt) throws PropertyVetoException;
 
     /**
      * Get the textual reference for the specific listener
@@ -122,7 +151,7 @@ public interface NamedBean {
      * @return the textual reference
      */
     @CheckReturnValue
-    public String getListenerRef(@Nonnull java.beans.PropertyChangeListener l);
+    public String getListenerRef(@Nonnull PropertyChangeListener l);
 
     /**
      * Returns a list of all the listeners references
@@ -151,7 +180,7 @@ public interface NamedBean {
      */
     @CheckReturnValue
     @Nonnull
-    public java.beans.PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
+    public PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
 
     /**
      * Deactivate this object, so that it releases as many resources as possible
@@ -195,6 +224,17 @@ public interface NamedBean {
      */
     @CheckReturnValue
     public int getState();
+
+    /**
+     * Provide human-readable, localized version of state value.
+     * <P>
+     * This method is intended for use when presenting to a human operator.
+     *
+     * @param state the state to describe
+     * @return the state in localized form
+     */
+    @CheckReturnValue
+    public String describeState(int state);
 
     /**
      * Get associated comment text.
@@ -263,4 +303,23 @@ public interface NamedBean {
     @CheckReturnValue
     @Nonnull
     public String getBeanType();
+    
+    /**
+     * Enforces, and as a user convenience converts to, the standard form for a user name.
+     * <p>
+     * This implementation just passes the name through, but later versions might 
+     * e.g. trim leading and trailing spaces.
+     *
+     * @param inputName User name to be normalized
+     * @throws BadUserNameException If the inputName can't be converted to normalized form
+     * @return A user name in standard normalized form 
+     */
+    @CheckReturnValue
+    static public @CheckForNull String normalizeUserName(@CheckForNull String inputName) throws BadUserNameException {
+        // uncomment next line to allow debugging of trimmed user names
+        // return inputName.trim();
+        return inputName;
+    }
+    public class BadUserNameException extends IllegalArgumentException {}
+    public class BadSystemNameException extends IllegalArgumentException {}
 }

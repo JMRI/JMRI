@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * <LI> (everything else)
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -34,10 +34,6 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
 // The methods to implement the XNetInterface
-    public boolean status() {
-        return (ostream != null && istream != null);
-    }
-
     /**
      * Forward a preformatted XNetMessage to the actual interface.
      *
@@ -46,6 +42,7 @@ public class XNetPacketizer extends XNetTrafficController {
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendXNetMessage(XNetMessage m, XNetListener reply) {
         if (m.length() != 0) {
             sendMessage(m, reply);

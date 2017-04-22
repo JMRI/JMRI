@@ -1,7 +1,7 @@
-// SimpleWebSocketServlet.java
 package jmri.web.servlet.simple;
 
 import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
@@ -30,12 +30,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * WebSocket servlet for JMRI Simple service protocol.
  *
- * @author rhwood
+ * @author Randall Wood (c) 2016
  */
+@WebServlet(name = "SimpleServlet",
+        urlPatterns = {"/simple"})
 public class SimpleServlet extends WebSocketServlet {
 
-    private static final long serialVersionUID = 3435613482175230757L;
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
 
     @Override

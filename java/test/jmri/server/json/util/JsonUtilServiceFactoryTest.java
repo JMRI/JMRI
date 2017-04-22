@@ -1,6 +1,7 @@
 package jmri.server.json.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
@@ -53,7 +54,8 @@ public class JsonUtilServiceFactoryTest {
             JSON.PANELS,
             JSON.PING,
             JSON.RAILROAD,
-            JSON.SYSTEM_CONNECTIONS};
+            JSON.SYSTEM_CONNECTIONS,
+            JSON.CONFIG_PROFILES};
         String[] result = instance.getTypes();
         assertArrayEquals(expResult, result);
     }

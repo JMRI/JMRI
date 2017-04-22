@@ -1,14 +1,11 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import apps.tests.Log4JFixture;
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  * Test simple functioning of CbusConsolePane
@@ -19,7 +16,6 @@ public class CbusConsolePaneTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusConsolePane pane = new CbusConsolePane();
         Assert.assertNotNull("exists", pane);
     }

@@ -20,6 +20,7 @@ public class XpaPacketGenAction extends AbstractAction {
         memo = m;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         XpaPacketGenFrame f = new XpaPacketGenFrame(memo);
         try {
@@ -33,4 +34,4 @@ public class XpaPacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)XpaPacketGenAction.java */
+

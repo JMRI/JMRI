@@ -18,10 +18,12 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element reporters) {
-        reporters.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnReporterManagerXml");
+        reporters.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnReporterManagerXml"); // NOI18N
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

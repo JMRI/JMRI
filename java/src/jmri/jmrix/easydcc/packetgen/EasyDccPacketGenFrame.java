@@ -1,10 +1,3 @@
-/**
- * EasyDccPacketGenFrame.java
- *
- * Description:	Frame for user input of EasyDcc messages
- *
- * @author	Bob Jacobsen Copyright (C) 2001
-  */
 package jmri.jmrix.easydcc.packetgen;
 
 import java.awt.Dimension;
@@ -13,12 +6,13 @@ import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
+/**
+ * Frame for user input of EasyDcc messages
+ *
+ * @author Bob Jacobsen Copyright (C) 2001
+  */
 public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.easydcc.EasyDccListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7918242560848851246L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -28,6 +22,7 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -54,6 +49,7 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -72,9 +68,11 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         EasyDccTrafficController.instance().sendEasyDccMessage(m, this);
     }
 
+    @Override
     public void message(EasyDccMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(EasyDccReply r) {
     } // ignore replies
 }

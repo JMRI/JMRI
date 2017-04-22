@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class RemoveRosterEntryToGroupAction extends AbstractAction {
 
@@ -50,13 +50,14 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     String curRosterGroup;
     JmriJFrame frame = null;
 //    JComboBox typeBox;
-    JLabel jLabel = new JLabel("Select the Group");
+    JLabel jLabel = new JLabel(Bundle.getMessage("SelectTheGroup"));
     RosterEntrySelectorPanel rosterBox;
-    JButton okButton = new JButton("Remove");
-    JButton cancelButton = new JButton("Exit");
+    JButton okButton = new JButton(Bundle.getMessage("ButtonRemove"));
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonDone"));
 
+    @Override
     public void actionPerformed(ActionEvent event) {
-        frame = new JmriJFrame("Remove Loco from Group");
+        frame = new JmriJFrame(Bundle.getMessage("DeleteFromGroup"));
         rosterBox = new RosterEntrySelectorPanel();
         rosterBox.getRosterGroupComboBox().setAllEntriesEnabled(false);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
@@ -71,12 +72,14 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         p.setLayout(new FlowLayout());
         p.add(okButton);
         okButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed();
             }
         });
         p.add(cancelButton);
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
@@ -84,7 +87,6 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         frame.getContentPane().add(p);
         frame.pack();
         frame.setVisible(true);
-
     }
 
     /**
@@ -93,15 +95,13 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
      *
      * @return true if user says to continue
      */
-    boolean userOK(String entry) {
+    boolean userOK(String entry, String group) {
         return (JOptionPane.YES_OPTION
                 == JOptionPane.showConfirmDialog(_who,
-                        "Delete roster group " + entry,
-                        "Delete roster group " + entry + "?", JOptionPane.YES_NO_OPTION));
+                        Bundle.getMessage("DeleteEntryFromGroupDialog", entry, group),
+                        Bundle.getMessage("DeleteEntryFromGroupTitle", entry, group),
+                        JOptionPane.YES_NO_OPTION));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupAction.class.getName());
 
     public void okPressed() {
         String group = rosterBox.getSelectedRosterGroup();
@@ -110,19 +110,23 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
             if (rosterBox.getSelectedRosterEntries().length != 0) {
                 RosterEntry re = rosterBox.getSelectedRosterEntries()[0];
                 log.info("Preparing to remove " + re.getId() + " from " + group);
-                re.deleteAttribute(Roster.getRosterGroupProperty(group));
-                re.updateFile();
-                Roster.getDefault().writeRoster();
-                rosterBox.getRosterEntryComboBox().update();
+                if (userOK(re.getId(), group)) {
+                    re.deleteAttribute(Roster.getRosterGroupProperty(group));
+                    re.updateFile();
+                    Roster.getDefault().writeRoster();
+                    rosterBox.getRosterEntryComboBox().update();
+                }
             }
         }
         frame.pack();
-
     }
 
     public void dispose() {
         frame.dispose();
 
     }
+
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupAction.class.getName());
 
 }

@@ -40,6 +40,14 @@
         bring complex information back from the layout.</p>
       </div>
 
+        <p>Note that we don't do this very often, and 
+        the specifics are more important than the generalities
+        here.  You should should make sure you 
+        understand the 
+        <a href="SystemStructure.shtml">intended system connection structure</a>
+        which is documented 
+        <a href="SystemStructure.shtml">documented on another page</a>.
+
       <div class="list">
         <p>We list the files that are modified and created in the
         order they were done in this case; other orders may also
@@ -292,7 +300,7 @@
           <dt>ant javadoc</dt>
 
           <dd>
-            <p>Create the JavaDocs, and fix any new (or old)
+            <p>Create the Javadocs, and fix any new (or old)
             problems.</p>
           </dd>
         </dl>

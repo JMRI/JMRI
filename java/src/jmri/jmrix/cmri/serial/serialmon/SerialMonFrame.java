@@ -4,7 +4,6 @@ import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
 import java.awt.event.ActionEvent;
@@ -17,9 +16,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
- * @author	    Bob Jacobsen   Copyright (C) 2001
- * @author	    Chuck Catania  Copyright (C) 2014, 2015, 2016
- * @version         $Revision: 17977 $
+ *
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -36,6 +34,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         return "CMRI Serial Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         _memo.getTrafficController().addSerialListener(this);

@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.update;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
@@ -25,6 +26,7 @@ public class SprogIIUpdateFrame
     /**
      * Set the help item
      */
+    @Override
     public void initComponents() throws Exception {
         super.initComponents();
 
@@ -37,7 +39,8 @@ public class SprogIIUpdateFrame
 
     int bootVer = 0;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
+    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
+    @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         if (sv.sprogType.isSprog() == false) {
@@ -76,6 +79,7 @@ public class SprogIIUpdateFrame
         }
     }
 
+    @Override
     synchronized protected void frameCheck() {
         // If SPROG II is in boot mode, check message framing and checksum
         if ((bootState != BootState.RESETSENT) && tc.isSIIBootMode() && !reply.strip()) {
@@ -96,6 +100,7 @@ public class SprogIIUpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateBootVerReqSent() {
         stopTimer();
         if (log.isDebugEnabled()) {
@@ -141,6 +146,7 @@ public class SprogIIUpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateWriteSent() {
         stopTimer();
         if (log.isDebugEnabled()) {
@@ -167,6 +173,7 @@ public class SprogIIUpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateEraseSent() {
         stopTimer();
         if (log.isDebugEnabled()) {
@@ -206,6 +213,7 @@ public class SprogIIUpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateSprogModeSent() {
         stopTimer();
         if (log.isDebugEnabled()) {
@@ -231,6 +239,7 @@ public class SprogIIUpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateResetSent() {
         stopTimer();
         if (log.isDebugEnabled()) {
@@ -244,6 +253,7 @@ public class SprogIIUpdateFrame
         bootState = BootState.IDLE;
     }
 
+    @Override
     synchronized protected void requestBoot() {
         // Look for SPROG in boot mode by requesting bootloader version.
         if (log.isDebugEnabled()) {
@@ -257,6 +267,7 @@ public class SprogIIUpdateFrame
         startLongTimer();
     }
 
+    @Override
     synchronized protected void sendWrite() {
         if ((hexFile.getAddressU()&0xFF) >= 0xF0) {
             // Write to EEPROM
@@ -277,7 +288,7 @@ public class SprogIIUpdateFrame
             }
             msg = SprogMessage.getWriteFlash(hexFile.getAddress(), hexFile.getData(), blockLen);
             if (log.isDebugEnabled()) {
-                log.debug(msg.toString());
+                log.debug(msg.toString(true));
             }
         } else {
             // Do nothing
@@ -297,6 +308,7 @@ public class SprogIIUpdateFrame
         } else {
             // use timeout to kick off the next write
             bootState = BootState.NULLWRITE;
+            statusBar.setText("Skip " + hexFile.getAddress());
             startVShortTimer();
         }
     }
@@ -317,6 +329,7 @@ public class SprogIIUpdateFrame
         startLongTimer();
     }
 
+    @Override
     synchronized protected void doneWriting() {
         // Finished
         if (log.isDebugEnabled()) {
@@ -330,6 +343,7 @@ public class SprogIIUpdateFrame
         bootState = BootState.IDLE;
     }
 
+    @Override
     synchronized public void programButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (hexFile != null) {
             openFileChooserButton.setEnabled(false);
@@ -345,6 +359,7 @@ public class SprogIIUpdateFrame
         }
     }
 
+    @Override
     synchronized public void setSprogModeButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("Set SPROG mode");

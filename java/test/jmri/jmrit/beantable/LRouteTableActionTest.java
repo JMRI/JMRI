@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import jmri.Conditional;
 import jmri.InstanceManager;
@@ -28,6 +29,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testCreate() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");
@@ -104,6 +108,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -119,6 +124,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _logixTable = new LogixTableAction() {
             // skip dialog box if in edit mode, just assume OK pressed
+            @Override
             boolean checkEditConditional() {
                 if (inEditConditionalMode) {
                     return true;
@@ -147,6 +153,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         }
     }
 
+    @Override
     protected void tearDown() throws Exception {
         // now close action window
         TestHelper.disposeWindow(_lRouteTable.f, this);

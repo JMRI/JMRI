@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.awt.BorderLayout;
@@ -58,11 +58,12 @@ class VSDecoderFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-        JMenu fileMenu = new JMenu(Bundle.getMessage("VSDecoderFileMenu"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
         fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")));
         fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuSaveProfile")));
         fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("VSDecoderFileMenuLoadProfile")));
+        fileMenu.addSeparator();
         fileMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
         fileMenu.getItem(1).setEnabled(false); // disable XML store
@@ -78,6 +79,7 @@ class VSDecoderFrame extends JmriJFrame {
 
     }
 
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         // Call the superclass function
         super.windowClosing(e);

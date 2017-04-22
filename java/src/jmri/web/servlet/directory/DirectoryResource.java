@@ -15,13 +15,16 @@ import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.util.StringUtil;
 import org.eclipse.jetty.util.URIUtil;
 import org.eclipse.jetty.util.resource.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Override {@link org.eclipse.jetty.util.resource.Resource#getListHTML(java.lang.String, boolean)
- * } in {@link org.eclipse.jetty.util.resource.Resource} so that directory
+ * Override
+ * {@link org.eclipse.jetty.util.resource.Resource#getListHTML(java.lang.String, boolean)}
+ * in {@link org.eclipse.jetty.util.resource.Resource} so that directory
  * listings can include the complete JMRI look and feel.
  *
- * @author rhwood
+ * @author Randall Wood (C) 2016
  */
 public class DirectoryResource extends Resource {
 
@@ -119,6 +122,9 @@ public class DirectoryResource extends Resource {
                 case '>':
                     buf = new StringBuffer(raw.length() << 1);
                     break loop;
+                default:
+                    log.warn("Unhandled code: {}", c);
+                    break;
             }
         }
         if (buf == null) {
@@ -234,4 +240,6 @@ public class DirectoryResource extends Resource {
         return this.resource.getReadableByteChannel();
     }
 
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(DirectoryResource.class.getName());
 }

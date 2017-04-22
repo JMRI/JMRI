@@ -20,6 +20,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     // override some XNetTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -29,6 +30,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
      */
     public Vector<XNetMessage> outbound = new Vector<XNetMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendXNetMessage [" + m + "]");
@@ -37,6 +39,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
         outbound.addElement(m);
     }
 
+    @Override
     public void sendHighPriorityXNetMessage(XNetMessage m, XNetListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendXNetMessage [" + m + "]");
@@ -68,16 +71,33 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
+    }
+
+
+
+    /**
+     * This is normal, don't log at ERROR level
+     */
+    @Override 
+    protected void reportReceiveLoopException(Exception e) {
+        log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        if (controller instanceof jmri.jmrix.AbstractNetworkPortController) {
+            portWarnTCP(e);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
@@ -85,4 +105,4 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

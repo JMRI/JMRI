@@ -1,4 +1,3 @@
-// OlcbConstants.java
 package jmri.jmrix.openlcb;
 
 /**
@@ -7,8 +6,8 @@ package jmri.jmrix.openlcb;
  * Left over from CBUS migration, these references should go to the OpenLCB
  * libraries instead
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Andrew Crosland Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public final class OlcbConstants {
 
@@ -22,4 +21,4 @@ public final class OlcbConstants {
 
 }
 
-/* @(#)OlcbConstants.java */
+

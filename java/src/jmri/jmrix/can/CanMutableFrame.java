@@ -1,4 +1,3 @@
-// CanMutableFrame.java
 package jmri.jmrix.can;
 
 /**
@@ -28,4 +27,4 @@ public interface CanMutableFrame extends CanFrame {
 
 }
 
-/* @(#)CanMutableFrame.java */
+

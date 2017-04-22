@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigDialog extends JDialog {
@@ -103,6 +103,7 @@ public class VSDConfigDialog extends JDialog {
         super(SwingUtilities.getWindowAncestor(parent), title);
         config = c;
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
+            @Override
             public void eventAction(VSDManagerEvent evt) {
                 vsdecoderManagerEventAction(evt);
             }
@@ -128,13 +129,13 @@ public class VSDConfigDialog extends JDialog {
         rosterPanel.setLayout(new BoxLayout(rosterPanel, BoxLayout.LINE_AXIS));
         addressPanel = new JPanel();
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.LINE_AXIS));
-        locoSelectPanel.addTab(Bundle.getMessage("LocoTabbedPaneRosterTab"), rosterPanel);
+        locoSelectPanel.addTab(Bundle.getMessage("RosterLabel"), rosterPanel); // tab name
         locoSelectPanel.addTab(Bundle.getMessage("LocoTabbedPaneManualTab"), addressPanel);
         //NOTE: There appears to be a bug in Swing that doesn't let Mnemonics work on a JTabbedPane when a sibling component
         // has the focus.  Oh well.
         try {
-            locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneRosterTab")), Bundle.getMessage("LTPRosterTabToolTip"));
-            locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneRosterTab")), Mnemonics.get("RosterTab"));
+            locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(Bundle.getMessage("RosterLabel")), Bundle.getMessage("LTPRosterTabToolTip"));
+            locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(Bundle.getMessage("RosterLabel")), Mnemonics.get("RosterTab"));
             locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Bundle.getMessage("LTPManualTabToolTip"));
             locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Mnemonics.get("ManualTab"));
         } catch (IndexOutOfBoundsException iobe) {
@@ -159,13 +160,14 @@ public class VSDConfigDialog extends JDialog {
         // Address Tab Components
         addressLabel = new javax.swing.JLabel();
         addressSelector = new DccLocoAddressSelector();
-        addressSelector.setToolTipText(Bundle.getMessage("LTPAddressSelectorToolTip"));
+        addressSelector.setToolTipText(Bundle.getMessage("LTPAddressSelectorToolTip", Bundle.getMessage("ButtonSet")));
         addressSetButton = new javax.swing.JButton();
-        addressSetButton.setText(Bundle.getMessage("AddressSetButtonLabel"));
+        addressSetButton.setText(Bundle.getMessage("ButtonSet"));
         addressSetButton.setEnabled(true);
         addressSetButton.setToolTipText(Bundle.getMessage("AddressSetButtonToolTip"));
         addressSetButton.setMnemonic(Mnemonics.get("AddressSet"));
         addressSetButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressSetButtonActionPerformed(evt);
             }
@@ -181,7 +183,7 @@ public class VSDConfigDialog extends JDialog {
         profileComboBox = new javax.swing.JComboBox<>();
         profileComboBox.setToolTipText(Bundle.getMessage("ProfileComboBoxToolTip"));
         profileLabel = new javax.swing.JLabel();
-        profileLoadButton = new JButton(Bundle.getMessage("LoadVSDFileButtonLabel"));
+        profileLoadButton = new JButton(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile"));
         profileLoadButton.setToolTipText(Bundle.getMessage("ProfileLoadButtonToolTip"));
         profileLoadButton.setMnemonic(Mnemonics.get("ProfileLoad"));
         profileLoadButton.setEnabled(true);
@@ -202,6 +204,7 @@ public class VSDConfigDialog extends JDialog {
         profileComboBox.addItem((loadProfilePrompt = new NullProfileBoxItem()));
         profileComboBox.setSelectedItem(loadProfilePrompt);
         profileComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileComboBoxActionPerformed(evt);
             }
@@ -209,6 +212,7 @@ public class VSDConfigDialog extends JDialog {
         profilePanel.add(profileComboBox);
         profilePanel.add(profileLoadButton);
         profileLoadButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileLoadButtonActionPerformed(evt);
             }
@@ -219,6 +223,7 @@ public class VSDConfigDialog extends JDialog {
         rosterSaveButton = new javax.swing.JButton();
         rosterSaveButton.setText(Bundle.getMessage("ConfigSaveButtonLabel"));
         rosterSaveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterSaveButtonAction(e);
             }
@@ -228,20 +233,22 @@ public class VSDConfigDialog extends JDialog {
         rosterSaveButton.setMnemonic(Mnemonics.get("RosterSave"));
 
         JPanel cbPanel = new JPanel();
-        closeButton = new JButton(Bundle.getMessage("CloseButtonLabel"));
+        closeButton = new JButton(Bundle.getMessage("ButtonOK"));
         closeButton.setEnabled(false);
         closeButton.setToolTipText(Bundle.getMessage("CD_CloseButtonToolTip"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton"));
         closeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 closeButtonActionPerformed(e);
             }
         });
 
-        JButton cancelButton = new JButton(Bundle.getMessage("CancelButtonLabel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.setToolTipText(Bundle.getMessage("CD_CancelButtonToolTip"));
         cancelButton.setMnemonic(Mnemonics.get("CancelButton"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }

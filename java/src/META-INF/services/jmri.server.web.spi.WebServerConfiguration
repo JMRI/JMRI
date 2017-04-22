@@ -1,0 +1,3 @@
+# Providers of WebServerConfiguration instances
+# Order is insignificant
+jmri.server.web.DefaultWebServerConfiguration

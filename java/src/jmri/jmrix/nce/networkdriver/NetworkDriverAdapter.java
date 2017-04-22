@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.nce.networkdriver;
 
 import jmri.jmrix.nce.NceNetworkPortController;
@@ -11,7 +10,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This connects an NCE command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
   */
 public class NetworkDriverAdapter extends NceNetworkPortController {
 
@@ -27,6 +26,7 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
      * set up all of the other objects to operate with an NCE command station
      * connected to this port
      */
+    @Override
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);

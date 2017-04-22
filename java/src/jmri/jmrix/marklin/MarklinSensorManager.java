@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * System names are "USnnn:yy", where nnn is the Marklin Object Number for a
  * given s88 Bus Module and yy is the port on that module.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         implements MarklinListener {
@@ -30,10 +30,12 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     //The hash table simply holds the object number against the MarklinSensor ref.
     private Hashtable<Integer, Hashtable<Integer, MarklinSensor>> _tmarklin = new Hashtable<Integer, Hashtable<Integer, MarklinSensor>>();   // stores known Marklin Obj
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {
@@ -68,6 +70,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         return s;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
             log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
@@ -106,6 +109,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     int board = 0;
     int port = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -160,6 +164,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     // to listen for status changes from Marklin system
+    @Override
     public void reply(MarklinReply r) {
         if (r.getPriority() == MarklinConstants.PRIO_1 && r.getCommand() >= MarklinConstants.FEECOMMANDSTART && r.getCommand() <= MarklinConstants.FEECOMMANDEND) {
             if (r.getCommand() == MarklinConstants.S88EVENT) {
@@ -215,6 +220,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    @Override
     public void message(MarklinMessage m) {
         // messages are ignored
     }
@@ -248,4 +254,4 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     private final static Logger log = LoggerFactory.getLogger(MarklinSensorManager.class.getName());
 }
 
-/* @(#)MarklinSensorManager.java */
+

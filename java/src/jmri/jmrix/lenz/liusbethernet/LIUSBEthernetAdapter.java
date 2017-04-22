@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
  *
- * @author	Paul Bender (C) 2011-2013
+ * @author Paul Bender (C) 2011-2013
  */
 public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
@@ -51,12 +51,13 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     }
 
     /**
-     * Can the port accept additional characters? return true if the port is
-     * opened.
+     * Can the port accept additional characters?
+     *
+     * @return true if the port is opened
      */
     @Override
     public boolean okToSend() {
-        return status();
+        return ( status() && super.okToSend());
     }
 
     @Override
@@ -84,42 +85,31 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         new XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
-    /**
-     * Local method to do specific configuration
-     */
-    @Deprecated
-    static public LIUSBEthernetAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new LIUSBEthernetAdapter();
-        }
-        return mInstance;
-    }
-    volatile static LIUSBEthernetAdapter mInstance = null;
-
     /*
      * Set up the keepAliveTimer, and start it.
      */
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
-            keepAliveTimer = new java.util.TimerTask(){
+            keepAliveTimer = new java.util.TimerTask() {
+                @Override
                 public void run() {
                     // If the timer times out, and we are not currently 
                     // programming, send a request for status
                     jmri.jmrix.lenz.XNetSystemConnectionMemo m = LIUSBEthernetAdapter.this
-                                              .getSystemConnectionMemo(); 
+                            .getSystemConnectionMemo();
                     XNetTrafficController t = m.getXNetTrafficController();
-                    jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer)(m.getProgrammerManager().getGlobalProgrammer());
-                    if(!(p.programmerBusy())) {
-                       t.sendXNetMessage(
-                                    jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
-                                    null);
-                   }
+                    jmri.jmrix.lenz.XNetProgrammer p = (jmri.jmrix.lenz.XNetProgrammer) (m.getProgrammerManager().getGlobalProgrammer());
+                    if (p == null || !(p.programmerBusy())) {
+                        t.sendXNetMessage(
+                                jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
+                                null);
+                    }
                 }
             };
         } else {
-           keepAliveTimer.cancel();
+            keepAliveTimer.cancel();
         }
-        new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
+        new java.util.Timer().schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
 
     private boolean mDNSConfigure = false;

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Andrew Crosland Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2009
  */
 public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements AddressedProgrammer {
 
@@ -79,6 +79,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         return ret;
     }
 
+    @Override
     synchronized public void reply(CanReply m) {
         // We will not see any replies
     }
@@ -93,14 +94,17 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         return false;
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }

@@ -37,31 +37,62 @@ public class PackageTest extends TestCase {
         suite.addTest(StringUtilTest.suite());
         suite.addTest(ThreadingUtilTest.suite());
         suite.addTest(I18NTest.suite());
+        suite.addTest(AlphanumComparatorTest.suite());
         suite.addTest(ColorUtilTest.suite());
-
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(SwingTestCaseTest.suite());
-        }
-
+        suite.addTest(MathUtilTest.suite());
+        suite.addTest(SwingTestCaseTest.suite());
         suite.addTest(jmri.util.docbook.PackageTest.suite());
         suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());
         suite.addTest(jmri.util.jdom.PackageTest.suite());
-
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(jmri.util.swing.PackageTest.suite());
-        }
+        suite.addTest(jmri.util.swing.PackageTest.suite());
 
         suite.addTest(jmri.util.WaitHandlerTest.suite());
         suite.addTest(jmri.util.zeroconf.PackageTest.suite());
         suite.addTest(jmri.util.DateUtilTest.suite());
-        suite.addTest(jmri.util.prefs.PackageTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.prefs.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.javamail.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.davidflanagan.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.datatransfer.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.com.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.table.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.iharder.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BareBonesBrowserLaunchTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionNameFromSystemNameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DnDStringImportHandlerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DnDTableExportHandlerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(DnDTableImportExportHandlerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(FileUtilSupportTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(FontUtilTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GetArgumentListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GetClassPathTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(GetJavaPropertyTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(HelpUtilTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JTableUtilTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JTextPaneAppenderTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriInsetsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriJFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriLocalEntityResolverTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(JmriNullEntityResolverTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(LocoAddressComparatorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(MouseInputAdapterInstallerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NamedBeanComparatorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(NoArchiveFileFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OrderedPropertiesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PhysicalLocationPanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PhysicalLocationTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PortNameMapperTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ResizableImagePanelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(RuntimeUtilTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SerialUtilTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SocketUtilTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemNameComparatorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SystemTypeTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(XmlFilenameFilterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.xml.PackageTest.class));
 
         // deliberately at end
-        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
-        
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
+
         return suite;
     }
 

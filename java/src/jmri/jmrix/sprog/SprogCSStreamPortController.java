@@ -92,6 +92,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
             this.control = control;
         }
 
+        @Override
         public void run() {
             do {
                 try {

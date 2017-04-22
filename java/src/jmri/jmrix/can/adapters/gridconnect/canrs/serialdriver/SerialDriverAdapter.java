@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
 import jmri.jmrix.can.TrafficController;
@@ -14,8 +13,8 @@ import org.slf4j.LoggerFactory;
  * Normally controlled by the SerialDriverFrame class.
  * <P>
  *
- * @author	Andrew Crosland Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Andrew Crosland Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2009
   */
 public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
 
@@ -30,6 +29,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
      * set up all of the other objects to operate with a CAN RS adapter
      * connected to this port
      */
+    @Override
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection

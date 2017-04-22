@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.ArithmeticQualifier
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame
  *
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  *
  */
 public abstract class QualifierAdder {

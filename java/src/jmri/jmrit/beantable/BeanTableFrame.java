@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,15 +32,15 @@ import org.slf4j.LoggerFactory;
  * provide, and by providing a {@link #extras} implementation that can in turn
  * invoke {@link #addToBottomBox} as needed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
-    Box bottomBox;		// panel at bottom for extra buttons etc
-    int bottomBoxIndex;	// index to insert extra stuff
+    Box bottomBox;  // panel at bottom for extra buttons etc
+    int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
     ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
@@ -81,6 +82,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -99,7 +101,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         // install items in GUI
         getContentPane().add(dataScroll);
         bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
         bottomBoxIndex = 0;
 
         getContentPane().add(bottomBox);
@@ -137,7 +139,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
      * @param comp {@link Component} to add
      * @param c    Class name
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
+    @SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
             justification = "param c is required in the listedtableframe")
     protected void addToBottomBox(Component comp, String c) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
@@ -146,6 +148,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         ++bottomBoxIndex;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
             dataModel.stopPersistingTable(dataTable);

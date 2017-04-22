@@ -8,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialTrafficController;
 import org.slf4j.Logger;
@@ -17,8 +18,8 @@ import org.slf4j.LoggerFactory;
  * Provide access to Powerline devices via a serial comm port. Derived from the
  * oaktree code.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
+ * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
@@ -30,6 +31,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         super(new SpecificSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
@@ -90,6 +92,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -172,6 +175,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     /**
      * set up all of the other objects to operate connected to this port
      */
+    @Override
     public void configure() {
         SerialTrafficController tc = null;
         // create a insteon2412s port controller
@@ -187,15 +191,13 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     // base class methods for the SerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -204,6 +206,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -216,6 +219,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -225,6 +229,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
 
     /**
      * Local method to do specific port configuration
+     * @throws gnu.io.UnsupportedCommOperationException for invalid connection/settings
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -234,8 +239,8 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default

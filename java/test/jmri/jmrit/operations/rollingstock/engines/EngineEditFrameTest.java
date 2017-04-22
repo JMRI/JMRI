@@ -1,6 +1,7 @@
 //EngineEditFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -8,10 +9,11 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations EngineEditFrame class
@@ -23,8 +25,9 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
 
     List<String> tempEngines;
 
+    @Test
     public void testEngineEditFrame() {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
         f.setTitle("Test Add Engine Frame");
@@ -36,7 +39,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         f.builtTextField.setText("1999");
         f.ownerComboBox.setSelectedItem("Owner1");
         f.commentTextField.setText("test Engine comment field");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
+        enterClickAndLeave(f.addButton);
 
         EngineManager cManager = EngineManager.instance();
         // should have 6 Engines
@@ -52,14 +55,16 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         Assert.assertEquals("Engine owner", "Owner1", c6.getOwner());
         Assert.assertEquals("Engine comment", "test Engine comment field", c6.getComment());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        enterClickAndLeave(f.saveButton);
         // should have 6 Engines now
         Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
 
         f.dispose();
     }
 
+    @Test
     public void testEngineEditFrameRead() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineManager cManager = EngineManager.instance();
         Engine e1 = cManager.getByRoadAndNumber("NH", "1");
         EngineEditFrame f = new EngineEditFrame();
@@ -78,7 +83,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         Assert.assertEquals("Engine comment", "Test Engine NH 1 Comment", f.commentTextField.getText());
 
         // test delete button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
+        enterClickAndLeave(f.deleteButton);
 
         // should have 5 Engines now
         Assert.assertEquals("number of Engines", 4, cManager.getNumEntries());
@@ -87,7 +92,8 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadEngines();
@@ -175,24 +181,9 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
     }
 
-    public EngineEditFrameTest (String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineEditFrameTest .class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineEditFrameTest .class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

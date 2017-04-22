@@ -18,7 +18,7 @@ def getPreferences(node, shared = True):
     Profile, otherwise return preferences specific to this computer.
     
     A Preferences object can be used to store simple preferences values. See
-    the JavaDocs for java.util.prefs.Preferences for more information.
+    the Javadocs for java.util.prefs.Preferences for more information.
     
     Preferences objects are stored in the JMRI portable paths
     profile:profile/profile.properties if shared, and
@@ -34,7 +34,7 @@ def getConfiguration():
     Configuration Profile.
     
     An AuxiliaryConfiguration object can be used to store XML elements. See
-    the JavaDocs for jmri.profile.AuxiliaryConfiguration for more information.
+    the Javadocs for jmri.profile.AuxiliaryConfiguration for more information.
     
     Configurations are stored in the JMRI portable paths
     profile:profile/profile.xml if shared, and

@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,16 +14,18 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class LinkingLabelTest extends jmri.util.SwingTestCase {
 
     LinkingLabel to = null;
     jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShow() {
-        panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
-            
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+
         JFrame jf = new jmri.util.JmriJFrame("LinkingLabel Target Panel");
         JPanel p = new JPanel();
         jf.getContentPane().add(p);
@@ -73,23 +77,25 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         if (panel != null) {
             // now close panel window
             java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-            for (int i = 0; i < listeners.length; i++) {
-                panel.getTargetFrame().removeWindowListener(listeners[i]);
+            for (WindowListener listener : listeners) {
+                panel.getTargetFrame().removeWindowListener(listener);
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-            apps.tests.Log4JFixture.tearDown();
-            
+
             panel = null;
         }
+        apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
 }

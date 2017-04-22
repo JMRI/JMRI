@@ -10,6 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to DCC++ via a FTDI Virtual Comm Port.
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Mark Underwood Copyright (C) 2015
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
@@ -35,6 +36,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in DCC++ mode, check ability to set moderators
         try {
@@ -87,6 +89,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             }
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
+                @Override
                 public void serialEvent(SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
@@ -207,9 +210,10 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
      * set up all of the other objects to operate with a DCC++ Device connected to this
      * port
      */
+    @Override
     public void configure() {
         // connect to a packetizing traffic controller
-	DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+ DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
         packets.connectPort(this);
 
         // start operation
@@ -228,9 +232,10 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return new BufferedReader(new InputStreamReader(serialStream));
     }
 
+    @Override
     public DataInputStream getInputStream() {
-	//log.error("Not Using DataInputStream version anymore!");
-    	//return(null);
+ //log.error("Not Using DataInputStream version anymore!");
+     //return(null);
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
         }
@@ -242,6 +247,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -254,6 +260,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -275,8 +282,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                 SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
@@ -289,13 +296,9 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         //    checkBuffer = true;
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"115,200 baud"};
@@ -309,7 +312,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     InputStream serialStream = null;
 
     @Deprecated
-	static public DCCppAdapter instance() {
+ static public DCCppAdapter instance() {
         if (mInstance == null) {
             mInstance = new DCCppAdapter();
         }

@@ -1,4 +1,3 @@
-// SprogReply.java
 package jmri.jmrix.sprog;
 
 import jmri.jmrix.AbstractMRReply;
@@ -26,6 +25,7 @@ public class SprogReply extends AbstractMRReply {
     }
 
     // no need to do anything
+    @Override
     protected int skipPrefix(int index) {
         return index;
     }
@@ -127,6 +127,7 @@ public class SprogReply extends AbstractMRReply {
     /**
      * Returns a string representation of this SprogReply
      */
+    @Override
     public String toString() {
         //String s = "";
         StringBuffer buf = new StringBuffer();
@@ -154,6 +155,7 @@ public class SprogReply extends AbstractMRReply {
      * include the prompt that was printed after the previous command Reply to a
      * CV read is of the form " = hvv" where vv is the CV value in hex
      */
+    @Override
     public int value() {
         int index = 0;
         index = skipWhiteSpace(index);
@@ -176,6 +178,7 @@ public class SprogReply extends AbstractMRReply {
     /**
      * Returns the index of String s in the reply
      */
+    @Override
     public int match(String s) {
         // find a specific string in the reply
         String rep = new String(_dataChars, 0, _nDataChars);
@@ -277,4 +280,4 @@ public class SprogReply extends AbstractMRReply {
 }
 
 
-/* @(#)SprogReply.java */
+

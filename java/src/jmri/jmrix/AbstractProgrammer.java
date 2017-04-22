@@ -13,11 +13,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common implementations for the Programmer interface.
+ * <p>
+ * Contains two time-out handlers:
+ * <ul>
+ * <li> SHORT_TIMEOUT, the "short timer", is on operations other than reads
+ * <li> LONG_TIMEOUT, the "long timer", is for the "read from decoder" step, which can take a long time.
+ *</ul>
+ * The duration of these can be adjusted by changing the values of those constants in subclasses.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2012, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2012, 2013
  */
 public abstract class AbstractProgrammer implements Programmer {
 
+    @Override
     public String decodeErrorCode(int code) {
         if (code == ProgListener.OK) {
             return Bundle.getMessage("StatusOK");
@@ -81,10 +89,12 @@ public abstract class AbstractProgrammer implements Programmer {
      *
      * @param listener The PropertyChangeListener to be added
      */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
@@ -93,10 +103,12 @@ public abstract class AbstractProgrammer implements Programmer {
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
+    @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         writeCV(Integer.parseInt(CV), val, p);
     }
 
+    @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         readCV(Integer.parseInt(CV), p);
     }
@@ -110,6 +122,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Basic implementation. Override this to turn reading on and off globally.
      */
+    @Override
     public boolean getCanRead() {
         return true;
     }
@@ -117,6 +130,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Checks using the current default programming mode
      */
+    @Override
     public boolean getCanRead(String addr) {
         if (!getCanRead()) {
             return false; // check basic implementation first
@@ -165,6 +179,7 @@ public abstract class AbstractProgrammer implements Programmer {
         return null;
     }
 
+    @Override
     public final ProgrammingMode getMode() {
         if (mode == null) {
             mode = getBestMode();
@@ -173,11 +188,12 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     @Override
-    abstract public @Nonnull List<ProgrammingMode> getSupportedModes();
+    abstract @Nonnull public List<ProgrammingMode> getSupportedModes();
 
     /**
      * Basic implementation. Override this to turn writing on and off globally.
      */
+    @Override
     public boolean getCanWrite() {
         return true;
     }
@@ -185,14 +201,26 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Checks using the current default programming mode.
      */
+    @Override
     public boolean getCanWrite(String addr) {
         return getCanWrite();
     }
 
     /**
+     * By default, say that no verification is done.
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return Always WriteConfirmMode.NotVerified
+     */
+    @Nonnull
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
+    
+
+    /**
      * Internal routine to start timer to protect the mode-change.
      */
     protected void startShortTimer() {
+        log.debug("startShortTimer");
         restartTimer(SHORT_TIMEOUT);
     }
 
@@ -200,6 +228,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to restart timer with a long delay
      */
     protected void startLongTimer() {
+        log.debug("startLongTimer");
         restartTimer(LONG_TIMEOUT);
     }
 
@@ -207,6 +236,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to stop timer, as all is well
      */
     protected synchronized void stopTimer() {
+        log.debug("stop timer");
         if (timer != null) {
             timer.stop();
         }
@@ -216,11 +246,11 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to handle timer starts {@literal &} restarts
      */
     protected synchronized void restartTimer(int delay) {
-        if (log.isDebugEnabled()) {
-            log.debug("restart timer with delay " + delay);
-        }
+        log.debug("(re)start timer with delay {}", delay);
+
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }
@@ -252,6 +282,9 @@ public abstract class AbstractProgrammer implements Programmer {
                 return 7;
             case 8:
                 return 8;
+            default:
+                log.warn("Unhandled register from cv: {}", cv);
+                break;
         }
         throw new ProgrammerException();
     }

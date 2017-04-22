@@ -81,7 +81,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
-        _supressDragging = true;		// do dragging when updating
+        _supressDragging = true;  // do dragging when updating
         _currentIconMap = iconMap;
         if (iconMap != null) {
             checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
@@ -95,7 +95,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     public void init(ActionListener doneAction) {
         _update = false;
-        _supressDragging = true;		// do dragging in circuitBuilder
+        _supressDragging = true;  // do dragging in circuitBuilder
         _bottom1Panel = new JPanel();
         addShowButtonToBottom();
         addUpdateButtonToBottom(doneAction);
@@ -140,6 +140,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     private void addShowButtonToBottom() {
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_iconPanel.isVisible()) {
                     hideIcons();
@@ -158,6 +159,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         addShowButtonToBottom();
         _editIconsButton = new JButton(Bundle.getMessage("ButtonEditIcons"));
         _editIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 openEditDialog();
             }
@@ -168,6 +170,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!_update) {
             JButton createIconsButton = new JButton(Bundle.getMessage("createNewFamily"));
             createIconsButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     newFamilyDialog();
                 }
@@ -177,6 +180,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
             JButton deleteButton = new JButton(Bundle.getMessage("deleteFamily"));
             deleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     deleteFamilySet();
                     dispose();
@@ -197,10 +201,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("checkCurrentMap: for type \"" + _itemType + "\", family \"" + _family + "\"");
         }
         String family = findFamilyOfMap(iconMap, ItemPalette.getFamilyMaps(_itemType));
-        if (family != null) {		// icons same as a known family, maybe with another name
+        if (family != null) {  // icons same as a known family, maybe with another name
             _family = family;
             return;
-        } else {	// no match with Palette families
+        } else { // no match with Palette families
             if (ItemPalette.getIconMap(_itemType, _family) != null) {
 //                JOptionPane.showMessageDialog(_paletteFrame, 
 //                        Bundle.getMessage("DuplicateFamilyName", _family, _itemType), 
@@ -212,16 +216,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!_suppressNamePrompts) {
             if (_family == null || _family.trim().length() == 0) {
                 _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
-                        Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
                 if (_family == null || _family.trim().length() == 0) {
                     // bail out
                     _family = null;
-//    	        	_suppressNamePrompts = true;
+//              _suppressNamePrompts = true;
                     return;
                 }
             }
             int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                    Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("questionTitle"),
+                    Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
                 ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap);
@@ -349,6 +353,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             button.addActionListener(new ActionListener() {
                 String fam;
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     setFamily(fam);
                 }
@@ -407,7 +412,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void familiesMissing() {
         int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                Bundle.getMessage("AllFamiliesDeleted", _itemType), Bundle.getMessage("questionTitle"),
+                Bundle.getMessage("AllFamiliesDeleted", _itemType), Bundle.getMessage("QuestionTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             ItemPalette.loadMissingItemType(_itemType, _editor);
@@ -574,6 +579,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         panel.setLayout(new FlowLayout());
         JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 newFamilyDialog();
             }
@@ -583,6 +589,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 updateFamiliesPanel();
             }

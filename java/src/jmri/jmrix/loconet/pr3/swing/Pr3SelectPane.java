@@ -1,10 +1,8 @@
-// Pr3SelectPane.java
 package jmri.jmrix.loconet.pr3.swing;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import jmri.jmrix.loconet.LnConstants;
@@ -17,20 +15,16 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for downloading software updates to PRICOM products
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
   */
 public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8933317271320213820L;
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.pr3.Pr3Bundle");
-
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.pr3.swing.Pr3Select";
+        return "package.jmri.jmrix.loconet.pr3.swing.Pr3Select"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemPr3ModeSelect"));
     }
@@ -40,16 +34,18 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         // first build GUI
         setLayout(new FlowLayout());
 
-        JButton b = new JButton(res.getString("ButtonPr2Mode"));
+        JButton b = new JButton(Bundle.getMessage("ButtonPr2Mode"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 selectPR2mode();
             }
         });
         add(b);
 
-        b = new JButton(res.getString("ButtonMs100Mode"));
+        b = new JButton(Bundle.getMessage("ButtonMs100Mode"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 selectMS100mode();
             }
@@ -59,6 +55,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -75,11 +72,11 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
-    JLabel status = new JLabel(res.getString("StatusUnknown"));
+    JLabel status = new JLabel(Bundle.getMessage("StatusUnknown"));
 
     void selectPR2mode() {
         // set to PR2 mode
-        status.setText(res.getString("StatusPr2"));
+        status.setText(Bundle.getMessage("StatusPr2"));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(0xD3);
         msg.setElement(1, 0x10);
@@ -91,7 +88,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
     void selectMS100mode() {
         // set to MS100 mode
-        status.setText(res.getString("StatusMs100"));
+        status.setText(Bundle.getMessage("StatusMs100"));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(0xD3);
         msg.setElement(1, 0x10);
@@ -101,6 +98,7 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (msg.getElement(1) == 0x10)
@@ -110,10 +108,10 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             int mode = msg.getElement(8) & 0x0C;
             if (mode == 0x00) {
                 // PR2 format
-                status.setText(res.getString("StatusPr2"));
+                status.setText(Bundle.getMessage("StatusPr2"));
             } else {
                 // MS100 format
-                status.setText(res.getString("StatusMs100"));
+                status.setText(Bundle.getMessage("StatusMs100"));
             }
         }
     }
@@ -122,11 +120,6 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3595956373670767395L;
 
         public Default() {
             super(Bundle.getMessage("MenuItemPr3ModeSelect"),

@@ -114,7 +114,7 @@ import org.slf4j.LoggerFactory;
  * proceed at track speed when it reaches that next signal (along the track with
  * the green signal).
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
  *
  * Revisions to add facing point sensors, approach lighting, and check box to
  * limit speed. Dick Bronosn (RJB) 2006
@@ -237,7 +237,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor being monitored
+     * Return the system name of the sensor being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -289,7 +289,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the turnout being monitored
+     * Return the system name of the turnout being monitored.
      *
      * @return system name; null if no turnout configured
      */
@@ -331,7 +331,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the signal being monitored for first route
+     * Return the system name of the signal being monitored for first route.
      *
      * @return system name; null if no primary signal configured
      */
@@ -355,7 +355,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
     /**
      * Return the system name of the alternate signal being monitored for first
-     * route
+     * route.
      *
      * @return system name; null if no signal configured
      */
@@ -378,7 +378,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the signal being monitored for the 2nd route
+     * Return the system name of the signal being monitored for the 2nd route.
      *
      * @return system name; null if no signal configured
      */
@@ -402,7 +402,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
     /**
      * Return the system name of the secondary signal being monitored for the
-     * 2nd route
+     * 2nd route.
      *
      * @return system name; null if no secondary signal configured
      */
@@ -427,7 +427,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the original name of the sensor being monitored
+     * Return the original name of the sensor being monitored.
      *
      * @return original name; null if no sensor configured
      */
@@ -452,7 +452,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor being monitored
+     * Return the system name of the sensor being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -477,7 +477,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the system name of the sensor being monitored
+     * Return the system name of the sensor being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -498,11 +498,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         } catch (IllegalArgumentException ex) {
             log.warn(rb.getString("Sensor2Alt_") + name + rb.getString("_was_not_found!"));
         }
-
     }
 
     /**
-     * Return the system name of the sensor being monitored
+     * Return the system name of the sensor being monitored.
      *
      * @return system name; null if no sensor configured
      */
@@ -544,20 +543,26 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     boolean mHold = false;
 
     /**
-     * Provide the current value of the "hold" parameter. If true, the output is
-     * forced to a RED "stop" aspect. This allows CTC and other higher-level
-     * functions to control permission to enter this section of track.
+     * Provide the current value of the "hold" parameter.
+     * <p>
+     * If true, the output is forced to a RED "stop" aspect.
+     * This allows CTC and other higher-level functions to control
+     * permission to enter this section of track.
+     *
+     * @return true if this Logic currently is Held
      */
     public boolean getHold() {
         return mHold;
     }
-    /*
+
+    /**
      * Set the current value of the "hold" parameter.
      * If true, the output is forced to a RED "stop" aspect.
      * This allows CTC and other higher-level functions to 
      * control permission to enter this section of track.
+     *
+     * @param m true to set Logic to Held
      */
-
     public void setHold(boolean m) {
         mHold = m;
         setOutput();  // to invoke the new state
@@ -613,6 +618,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     /**
      * Define the siglet's input and output.
      */
+    @Override
     public void defineIO() {
         NamedBean[] tempArray = new NamedBean[10];
         int n = 0;
@@ -692,6 +698,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         // avoid a loop, or avoid somebody changing appearance
         // manually and having it instantly recomputed & changed back
         driveSignal.getBean().addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals(rb.getString("Held"))) {
                     setOutput();
@@ -703,6 +710,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     /**
      * Recompute new output state and apply it.
      */
+    @Override
     public void setOutput() {
         if (log.isTraceEnabled()) {
             log.trace("setOutput for " + name);
@@ -736,7 +744,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
                 doFacing();
                 break;
             default:
-                log.error(rb.getString("Unexpected_mode:_") + mode + "_Signal_" + getDrivenSignal());
+                log.error(rb.getString("UnexpectedMode") + mode + "_Signal_" + getDrivenSignal());
         }
     }
 
@@ -791,8 +799,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Given two {@link SignalHead} color constants, returns the one
+     * Given two {@link SignalHead} color constants, return the one
      * corresponding to the slower speed.
+     *
+     * @param a color constant 1 to compare with
+     * @param b color constant 2
+     * @return the lowest of the two values entered
      */
     static int slowerOf(int a, int b) {
         // DARK is smallest, FLASHING GREEN is largest
@@ -800,8 +812,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Given two {@link SignalHead} color constants, returns the one
+     * Given two {@link SignalHead} color constants, return the one
      * corresponding to the faster speed.
+     *
+     * @param a color constant 1 to compare with
+     * @param b color constant 2
+     * @return the highest of the two values entered
      */
     static int fasterOf(int a, int b) {
         // DARK is smallest, FLASHING GREEN is largest
@@ -1118,9 +1134,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal, having
-     * removed it from use.
+     * Return the BlockBossLogic item governing a specific signal head by its name,
+     * having removed it from use.
      *
+     * @param signal name of the signal head object
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(String signal) {
@@ -1128,9 +1145,10 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal, having
+     * Return the BlockBossLogic item governing a specific signal head, having
      * removed it from use.
      *
+     * @param sh signal head object
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(SignalHead sh) {
@@ -1191,6 +1209,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return (new BlockBossLogic(sh.getDisplayName()));
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N

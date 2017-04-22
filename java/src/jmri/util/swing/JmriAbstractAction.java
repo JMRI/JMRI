@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  *
  * An opaque Object can be passed as a context, but null is also possible.
  *
- * <b>NOTE</b> Either {@link jmri.util.swing.JmriAbstractAction#actionPerformed(java.awt.event.ActionEvent)
- * }
- * or {@link jmri.util.swing.JmriAbstractAction#makePanel() } must be overridden
+ * <b>NOTE</b> Either
+ * {@link jmri.util.swing.JmriAbstractAction#actionPerformed(java.awt.event.ActionEvent)}
+ * or {@link jmri.util.swing.JmriAbstractAction#makePanel()} must be overridden
  * by extending classes.
  *
  * @author	Bob Jacobsen Copyright (C) 2010

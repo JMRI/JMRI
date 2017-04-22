@@ -55,39 +55,39 @@
       Preferences</a> for information about configuration.</p>
 
       <h2>How To Get Started</h2>
-
       <ul>
         <li>Definitions of OBlocks, Portals and OPaths are found at
         <a href="OBlockTable.shtml">The Occupancy Block
         Tables</a>.</li>
 
         <li>Opening the Occupancy Block Tables is done by either
-        the <b>Tables -&gt; Occupancy Blocks</b> menu item under
-        the <b>Tools</b> menu in the main PanelPro window, or by
-        the <b>Occupancy Blocks</b> menu item under the <b>Add
-        Items</b> menu of a Control Panel Editor. How to create
+        the <b>Tools-&gt;Tables-&gt;Occupancy Blocks</b> menu item
+        from the menus in the main PanelPro window, or by
+        the <b>Add Items-&gt;Occupancy Blocks</b> menu item 
+        from the menus of Control Panel Editor. How to create
         OBlock, Portals and OPaths is described in <a href=
         "OBlockEdit.shtml">Creating and Editing OBlocks, Portals
         and OPaths</a>.</li>
 
         <li>OBlocks, Portals and Paths can be created using the
         <b>Circuit Builder</b> tool found in the Control Panel
-        Editor. Intially, the Circuit Builder can be opened using
+        Editor. Initially, the Circuit Builder can be opened using
         the <b>Open Circuit Builder</b> menu item under the
         <b>Warrants</b> menu. Instructions for use are found in
         <a href="../display/CircuitBuilder.shtml">The Circuit
         Builder</a>.</li>
       </ul>
 
-      <h3>More About Circuit Builder</h3>Circuit Builder is an
+      <h3>What is Circuit Builder</h3>Circuit Builder is an
       interactive tool that creates OBlocks, Portals and Paths
       graphically. It is necessary to have a track diagram of your
       layout expressed with track icons (track segments and turnout
-      icons). OBlocks are created by clicking on track icons. The
+      icons) in a Control Panel Editor panel. OBlocks are created  
+      by clicking on the track icons. The
       Circuit Builder can convert the track segments and turnout
-      icons of your layout to Indicator Track and Indicator Turnout
+      icons of your layout into Indicator Track and Indicator Turnout
       icons. These icons display the status of the OBlock they
-      represent by color - whether the track circuit of the OBlock
+      represent by color, i.e. whether the track circuit of the OBlock
       is occupied or unoccupied, whether a warrant has allocated it
       or whether a train under warrant currently is proceeding over
       the circuit. Details are found at <a href=
@@ -95,7 +95,7 @@
 
       <h3>Compatibility With Layout Editor</h3>OBlocks, Portals and
       Paths can be used with Layout Editor. Compatibility is
-      achieved by using the same occupancy detection sensor(s) for
+      achieved by using the same occupancy detection sensors for
       LayoutBlocks as for OBlocks. If there is no corresponding
       Control Panel layout diagram, Circuit Builder cannot be used.
       The Occupancy Block Tables will have to be used to define the
@@ -145,8 +145,29 @@
       Builder menu contains menu items to create and edit OBlocks,
       Portals and OPaths and to position icons that represent them.
 
+	  <h3>Warrants without Occupancy Detection</h3>
+	    It is possible to create and run warrants without block 
+	    detection.  OBlocks can be defined and they 
+	    do not necessarily have to have detection sensors.  Such blocks
+	    are called "Dark Blocks".  Dark blocks, Portals and the paths
+	    within the block can be defined for a layout diagram.  A Warrant
+	    can be recorded and be able to be played back, including 
+	    having its route set.  However, be advised for such trains
+	    <b><i>there is no protection for having it collide with 
+	    other trains or throwing switches under other trains.</i></b>
+	    It will proceed <b>only</b> according to the <i>elapsed times</i>
+	    and <i>throttle settings</i> that were recorded.
+	    
+	    <h3>The Importance of Block Path Lengths</h3>
+	    A Warrant detects a position of its train when it enters
+	    a block having occupancy detection.  All other positional 
+	    information must be calculated. For this, the speed of the
+	    train and the length of the path it is on must be known.
+	    Please see <a href="#RampParams">Parameters Needed for Ramping</a>
+	    below if you intend to use NXWarrants and employ gradual changes 
+	    of speed.
+	        
       <h2>Creating a Warrant</h2>There are three types of warrants;
-
       <ul>
         <li>A recorded script Warrant, where throttle commands are
         recorded from a throttle you use to drive a train over
@@ -161,11 +182,6 @@
         generate the commands to drive the train from start to end.
         To create an NXwarrant select the menu item <b>Create
         NXWarrant</b> from the <b>Warrants</b> menu.</li>
-
-        <li>A <a href="SCWarrant.shtml">signal controlled
-        warrant</a>, that is specially suited for small layouts
-        fully covered by sensors and preferably also with
-        signals.</li>
       </ul>
 
       <p>In either case, first a route must be chosen on which to
@@ -174,7 +190,10 @@
 
       <h2>Elements of a Warrant</h2>A warrant consists of two
       parts; The route over which a train will run and the commands
-      it will receive when running over the route.
+      it will receive when running over the route. For a Warrant, you
+      drive the train over the route you selected and the commands you
+      used are recorded for playback later. For an NXWarrant, commands
+      are generated automatically for the route you have selected.
 
       <h3>Creating Routes</h3>A warrant route is a series of block
       paths linked together so a train may travel over it. A
@@ -189,7 +208,8 @@
       displayed OBlock table. Blocks can also be chosen by clicking
       on track icons that represent these OBlocks. To use this
       feature your panel must have your layout depicted by
-      Indicator Track Icons placed there by Circuit builder.
+      Indicator Track Icons placed there by Circuit builder or
+      by you manually.
       Successive clicks cycle the choices through the four block
       fields.
 
@@ -200,18 +220,17 @@
       and Paths need to be chosen for the route also. If no route
       is found, a dialog is offered where you can examine the
       routes that were attempted with the current Block, Portal and
-      Path selections.</p>
-
-      <p><a href="CreateEditWarrant.shtml">Creating and Editing
+      Path selections.
+      <a href="CreateEditWarrant.shtml">Creating and Editing
       Warrants</a> has more information about creating routes.</p>
 
       <h3>Scripting the Train Action</h3>The second part of a
       Warrant are the throttle commands to control the train as it
       traverses the route. These commands are recorded
-      automatically from running a train over the route in "Learn
+      automatically by running a train over the route in "Learn
       Mode" or are generated automatically as an "NXWarrant". The
-      script commands contain the elapsed time between commands and
-      playback will duplicate this timing. However, when a warrant
+      script commands contain the elapsed time between commands.
+      Playback will duplicate this timing. However when a warrant
       is run with a different engine or a different consist, or
       even the same train depending whether the motor is hot or
       cold, this timing may not be replicated exactly. Because of
@@ -219,33 +238,34 @@
       detection OBlock. So, if the train is slow in reaching the
       next block, the commands for the next block will be delayed
       until the train enters the block. Conversely, if the train
-      reaches the next block ahead of time, any remaing commands in
-      the block just left will issued with no elasped time so that
+      reaches the next block ahead of time, any remaining commands in
+      the block just left will issued with no elapsed time so that
       the train can <i>catch up</i> to the script.
 
       <p>Warrant scripts are recorded or generated with a
       <i>"Clear"</i>, aspect throughout the route even through
       blocks with restricted speeds. These speeds in the script are
-      the <i>"Normal"</i> speeds. However, when running, track
-      conditions may not be "Clear" due to a signal's speed
-      restriction, a block's speed restriction or occupancy by a
-      rouge train. Warrants are able to deal with these
-      restrictions and will modify their "Normal" speeds as needed
+      the <i>"Normal"</i> speeds. However, after creation when running, track
+      conditions may not be <i>"Clear",</i> due to a signal's speed
+      restriction, a block's speed restriction, occupancy by a
+      rouge train or even intevention by you to halt the train. 
+      Warrants are able to deal with these
+      restrictions and will modify their <i>Normal"</i> speeds as needed
       to comply with the restrictions. The section <a href=
       "#SpeedMap">"Warrants and Speed Restrictions"</a> below
       explains this relationship.</p>
 
-      <h4>Recorded Scripts</h4>This is done by putting a screen
+      <h4>Recording Scripts</h4>This is done by putting a screen
       throttle into <i>Learn Mode</i> that records all the throttle
       commands you make when driving the train over the route. This
       script can then be replayed to drive the train automatically.
       All possible throttle functions can be recorded and played
       back.
 
-      <p>With LocoNet you may steal the address and use a manual
-      walk around throttle. For other command systems, a WiFi
-      throttle may take the same address and be used to record a
-      walk around script.</p>
+      <p>With LocoNet you may steal the address and manual
+      LocoNet throttle. For other command systems, a WiFi
+      throttle may take the same address as the screen throttle 
+      and be used to record a walk around script.</p>
 
       <h4>Generated Scripts</h4>For NXWarrants the script is
       generated by the warrant itself. It ramps the train up to a
@@ -261,94 +281,148 @@
       "CreateEditWarrant.shtml">Creating and Editing Warrants</a>.
       has more information about creating and customizing scripts.
 
-      <p><a name="SpeedMap" id="SpeedMap"></a></p>
-
+      <a name="SpeedMap" id="SpeedMap"></a>
       <h2>Warrants and Speed Restrictions</h2>A train running under
       a warrant must be aware of track conditions ahead. Signals
       may indicate reduced speed or permission to return to normal
       speed. Blocks may impose yard limit speed restrictions. Rogue
-      trains may show up unexpectedly in the route. we can presume
-      their detection means our warrant engineer sees a fusse. For
+      trains may show up unexpectedly in the route. In our
+      imagination, we can presume
+      their detection means our warrant "engineer" sees a fusse. For
       each of these cases the warrant must look ahead, detect the
       need for a speed change and schedule the right time to do it
       - all the while making the change smoothly and completing it
-      in prototypical fashion. The smoothness for slow down and
-      speed up are done by stepping up and down with two "ramp"
-      parameters; the throttle increment per step and the time
-      interval of each step.
-
-      <p>When a warrant makes a speed change due to a signal, block
+      in prototypical fashion.
+      
+      <h3>Configuring Speed Restrictions</h3>
+      For a warrant to detect a <b>signaled speed change</b> the signal 
+      must be configured in the Occupancy Block Tables. 
+      The Signal Table there configures the entrance Portal to the
+      OBlock that the signal protects.  The warrant then uses the 
+      signal system configured for the signal to detect the aspect
+      speed.
+      <p>Likewise, <b>block speeds</b> are configured in the Occupancy 
+      Block Tables.  A column in the OBlock Table allows you to
+      choose an aspect speed that the warrant will enforce.</p>
+      
+      <p>When a <b>occupancy</b> sensor is activated ahead of the train
+      on its route, the warrant will take note of it and
+      make any necessary speed change.</p>
+      <p>Finally, <b>you</b> can instruct the warrant to ramp down to a stop
+      or issue an emergency stop.  Also, you can ramp up from a stop 
+      and resume the former speed.</p>
+      
+	  <p>When a warrant ramps down a speed change due to a signal, block
       or rouge occupancy condition, That speed change remains in
-      effect until the condition is removed. For a warrant to
-      detect a signaled speed change the signal must be configured
-      in the Occupancy Block Tables. Likewise, block speeds must be
-      configured there also.</p>
+      effect until the condition is removed. At that time the
+      speed is ramped up to the previous "normal" speed.  The
+      precedence order is: rouge occupancy, signal aspect, block speed.</p>
+            
+      <h3>A Note About Ramps</h3>When JMRI needs to intervene and
+      enforce a speed change that was not recorded, several calculations
+      must be made. Two pieces of information are vital.
+      <ul>
+        <li><b>Distance</b> from the train to the situation requiring  
+        the speed change.  For this the lengths of the paths of the 
+        route must be known. </li>
+        <li><b>Speed</b> of the train.  For this a 
+        correlation of the throttle settings to the actual speed
+        of the train on the layout must be known.</li> 
+      </ul>
+      There are several options in providing this information and there
+      are default values for all of the parameters.  You may want
+      to experiment with warrants using these default settings
+      and defer reading the following sections until later.
 
-      <p>Several parameters are required to make an automatic speed
-      change. The default settings will probably be satisfactory
-      and the following can be deferred until later.</p>
-
-      <h2>Throttle Setting Speed Factors</h2>To compute how far to
+      <a name="RampParams" id="RampParams"></a>
+      <h2>Parameters Needed for Ramping</h2>To compute how far to
       look ahead and the time when to modify speed the following
-      must be known:
-
+      must be known.
       <ul>
         <li>
-          <b>Block Lengths</b> - Obviously needed for distances.
-          Set in the OBlock Table at <i>Add Items-&gt;Occupancy
-          Blocks</i> or on an Circuit Builder Edit OBlock window
-          <i>Circuit Builder-&gt;Edit OBlock-&gt;window</i>
-
-          <p>If the paths within a block vary widely, path length
-          can be set per path from the Block/Path table or the
-          Circuit Builder Edit Path window <i>Circuit
-          Builder-&gt;Edit Path-&gt;window</i>. Otherwise, path
-          lengths are inherited from the block length.</p>
+          <b>Block Lengths</b> are needed for distances.  There
+          is a length column in the OBlock Table.  There is also
+          a column to open its path tables. Each path table has
+          a length column as well.  Likewise the OBlock and OPath
+          windows in Circuit Builder have text fields to enter 
+          lengths. Inches or centimeters may be used.
+          <p>When no block length is specified a rather
+          large value is assumed.  It is <b><i>highly recommended
+          </i></b> that block lengths be specified. <i>Your
+          wild guess is better than the default.</i>  If the 
+          paths within a block vary widely, path lengths
+          should be set. Otherwise, path
+          lengths are inherited from the block length.
         </li>
-
-        <li><b>Ramp Step throttle Increment</b> - Needed for smooth
-        speed change. Set in
-        <i>&gt;Edit-&gt;Preferences-&gt;Warrants</i>. This value is
+        <li><b>Layout Scale</b> is needed for distances when speed is
+        expressed as Mph or Km/h.  This is set from a drop down box at
+        the <b>Edit-&gt;Preferences-&gt;Warrants</b> menu of the main 
+        PanelPro window</li>
+        <li>
+          <b>Track Speed</b> is more difficult to obtain reproducibly.
+          <ul>
+            <li>
+            A first approximation is the <b>"Throttle Setting/Speed Factor"</b>
+            value at Edit-&gt;Preferences-&gt;Warrants.
+            <p>When used this factor is a linear multiplier to relate throttle
+            setting to track speed.  Note this is a global value so 
+            all of the locomotives
+            in your fleet may not operate optimally with the same factor.
+            However, it could be satisfactory for your tastes.</li>
+            <li> 
+            For more precision a <b>Speed Profile</b> can be made for each
+            locomotive.  While somewhat laborious to do, it does provide
+            values to make more accurate calculations. The Speed Profiler
+            is found at <b>Roster-&gt;Speed Profiling</b>.</li>  
+          </ul>
+          In spite of precise calculations, there are parameters
+          such as train length, the friction of individual cars, track
+          cleanliness, motor performance (and on and on) that influence
+          actual track speed.  
+          A rough approximation of speed factors may be sufficient for 
+          your satisfaction.
+         </li>  
+      </ul>  
+        
+         The smoothness for slow down and
+      speed up are done by stepping up and down with two "ramp"
+      parameters; the throttle increment per step and the time
+        interval of each step.  These two parameters are paired to
+        make a "stair step" pattern for changing speed.  
+        Generally, they are paired in that a small throttle increment
+        should be done in a short time interval and a large increment
+        in a longer time. When setting them, the time interval should
+        be long enough for the speed increment to complete given the 
+        momentum you have programmed into your decoders.
+        They are set in <b>&gt;Edit-&gt;Preferences-&gt;Warrants</b>.
+	  <ul>
+        <li><b>Ramp Step throttle Increment</b>  This value is
         a ratio of full throttle. Seven or eight speed steps of a
         128 step throttle is an appropriate increment for a
-        locomotive with modest momentum. A value of 0.04 or 0.06 is
+        locomotive with modest momentum. A value of 0.03 to 0.06 is
         recommended.</li>
 
-        <li><b>Ramp Step time</b> - Needed for smooth speed change.
-        Set in <i>&gt;Edit-&gt;Preferences-&gt;Warrants</i>.
-        Depending how the user has configured momentum on the
-        locomotives, this value may be lengthened and a larger
-        throttle increment used. Conversely with no momentum, a
-        shorter time and smaller throttle increment may be
-        appropriate. 750 or 1000 milliseconds is recommended.</li>
-
-        <li><b>Layout Scale</b> - Obviously needed for scale
-        distances. Set in a drop down box at
-        <i>Edit-&gt;Preferences-&gt;Warrants</i>.</li>
-      </ul>Given all the above, throttle settings still must be
-      related to actual track speed regardless of scale. A global
-      value for this is found at
-      <i>&gt;Edit-&gt;Preferences-&gt;Warrants</i>. The value of
-      <b>Throttle Setting / Speed Factor</b> can be satisfactory
-      for all engines if they do not need to respond to Signal
-      aspect speeds or block speeds and you do not use scale speeds
-      for the <b>Speed Name Values</b>. <i>If this is the case for
-      your layout you do not need to read the following
-      sections</i>.
+        <li><b>Ramp Step time</b> Depending how you have
+        configured momentum on your
+        locomotives, adjust this value so the speed change is 
+        completed within this period of time. Typically 
+        300 to 1000 milliseconds would be appropriate.</li>
+      </ul>
 
       <h3>Getting Speed Profiles for Your Trains</h3>Converting a
       throttle setting to achieve a given track speed is dependent
-      on the engine and its decoder. That is, the decoder's speed
+      on the engine and its decoder. The decoder's speed
       curve to deliver voltage to the motor, and the motor's rpm
-      response under load with that voltage. Likewise, whether the
-      motor is driving the train forward or reverse often has
-      different track speeds..
+      response under load with that voltage is rarely linear. 
+      Likewise, whether the
+      motor is driving the train forward or reverse often results
+      in different track speeds.
 
       <p>A Speed Profile can be made for an engine that will
       provide the necessary factors to set throttle settings that
-      will result in accurate track speeds. These profiles are
+      will result in more accurate track speeds. These profiles are
       maintained in the Roster and there is a tool that will create
-      them, <b>Roster-&gt;Speed Profiling</b>. Alternatively, Speed
+      them at <b>Roster-&gt;Speed Profiling</b>. Alternatively, Speed
       Profile factors for a selected set of throttle settings for
       the motive power used in a warrant can be determined by using
       the NXWarrant <b>Compute Throttle Factor</b> checkbox.</p>

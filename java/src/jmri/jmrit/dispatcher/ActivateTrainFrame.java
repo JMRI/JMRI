@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  */
 public class ActivateTrainFrame {
 
@@ -96,6 +96,7 @@ public class ActivateTrainFrame {
     private JButton deleteButton = null;
     private JCheckBox autoRunBox = new JCheckBox(Bundle.getMessage("AutoRun"));
     private JCheckBox loadAtStartupBox = new JCheckBox(Bundle.getMessage("LoadAtStartup"));
+    private JCheckBox allocateAllTheWayBox = new JCheckBox(Bundle.getMessage("AllocateAllTheWay"));
     private JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
     private JTextField priorityField = new JTextField(6);
     private JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
@@ -183,6 +184,7 @@ public class ActivateTrainFrame {
             p0.setLayout(new FlowLayout());
             p0.add(loadButton = new JButton(Bundle.getMessage("LoadButton")));
             loadButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     loadTrainInfo(e);
                 }
@@ -190,13 +192,15 @@ public class ActivateTrainFrame {
             loadButton.setToolTipText(Bundle.getMessage("LoadButtonHint"));
             p0.add(saveButton = new JButton(Bundle.getMessage("SaveButton")));
             saveButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     saveTrainInfo(e);
                 }
             });
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
-            p0.add(deleteButton = new JButton(Bundle.getMessage("DeleteButton")));
+            p0.add(deleteButton = new JButton(Bundle.getMessage("ButtonDelete")));
             deleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deleteTrainInfo(e);
                 }
@@ -210,6 +214,7 @@ public class ActivateTrainFrame {
             p1.add(new JLabel(Bundle.getMessage("TransitBoxLabel") + " :"));
             p1.add(transitSelectBox);
             transitSelectBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleTransitSelectionChanged(e);
                 }
@@ -232,6 +237,7 @@ public class ActivateTrainFrame {
             p2.setLayout(new FlowLayout());
             p2.add(inTransitBox);
             inTransitBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleInTransitClick(e);
                 }
@@ -244,6 +250,7 @@ public class ActivateTrainFrame {
             p3.add(startingBlockBox);
             startingBlockBox.setToolTipText(Bundle.getMessage("StartingBlockBoxHint"));
             startingBlockBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleStartingBlockSelectionChanged(e);
                 }
@@ -255,10 +262,16 @@ public class ActivateTrainFrame {
             p4.add(destinationBlockBox);
             destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
             initiatePane.add(p4);
+            JPanel p4a = new JPanel();
+            p4a.setLayout(new FlowLayout());
+            p4a.add(allocateAllTheWayBox);
+            allocateAllTheWayBox.setToolTipText(Bundle.getMessage("AllocateAllTheWayBoxHint"));
+            initiatePane.add(p4a);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(resetWhenDoneBox);
             resetWhenDoneBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleResetWhenDoneClick(e);
                 }
@@ -271,6 +284,7 @@ public class ActivateTrainFrame {
             p6a.add(delayedReStartLabel);
             p6a.add(delayedReStartBox);
             delayedReStartBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleResetWhenDoneClick(e);
                 }
@@ -297,6 +311,7 @@ public class ActivateTrainFrame {
             reverseAtEndBox.setToolTipText(Bundle.getMessage("ReverseAtEndBoxHint"));
             initiatePane.add(p10);
             reverseAtEndBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleReverseAtEndBoxClick(e);
                 }
@@ -325,6 +340,7 @@ public class ActivateTrainFrame {
             p9.add(delayedStartBox);
             delayedStartBox.setToolTipText(Bundle.getMessage("DelayedStartHint"));
             delayedStartBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleDelayStartClick(e);
                 }
@@ -354,6 +370,7 @@ public class ActivateTrainFrame {
             p5.setLayout(new FlowLayout());
             p5.add(autoRunBox);
             autoRunBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleAutoRunClick(e);
                 }
@@ -367,8 +384,9 @@ public class ActivateTrainFrame {
             JPanel p7 = new JPanel();
             p7.setLayout(new FlowLayout());
             JButton cancelButton = null;
-            p7.add(cancelButton = new JButton(Bundle.getMessage("CancelButton")));
+            p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelInitiateTrain(e);
                 }
@@ -376,6 +394,7 @@ public class ActivateTrainFrame {
             cancelButton.setToolTipText(Bundle.getMessage("CancelButtonHint"));
             p7.add(addNewTrainButton = new JButton(Bundle.getMessage("AddNewTrainButton")));
             addNewTrainButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addNewTrain(e);
                 }
@@ -402,6 +421,7 @@ public class ActivateTrainFrame {
         setAutoRunDefaults();
         autoRunBox.setSelected(false);
         loadAtStartupBox.setSelected(false);
+        allocateAllTheWayBox.setSelected(false);
         initializeFreeTransitsCombo(new ArrayList<Transit>());
         initializeFreeTrainsCombo();
         initiateFrame.pack();
@@ -410,7 +430,7 @@ public class ActivateTrainFrame {
 
     private void initializeTrainTypeBox() {
         trainTypeBox.removeAllItems();
-        trainTypeBox.addItem(Bundle.getMessage("None"));
+        trainTypeBox.addItem("<" + Bundle.getMessage("None").toLowerCase() + ">"); // <none>
         trainTypeBox.addItem(Bundle.getMessage("LOCAL_PASSENGER"));
         trainTypeBox.addItem(Bundle.getMessage("LOCAL_FREIGHT"));
         trainTypeBox.addItem(Bundle.getMessage("THROUGH_PASSENGER"));
@@ -560,6 +580,7 @@ public class ActivateTrainFrame {
         }
         boolean resetWhenDone = resetWhenDoneBox.isSelected();
         boolean reverseAtEnd = reverseAtEndBox.isSelected();
+        boolean allocateAllTheWay = allocateAllTheWayBox.isSelected();
         int delayedStart = delayModeFromBox(delayedStartBox);
         int delayedReStart = delayModeFromBox(delayedReStartBox);
         int departureTimeHours = 8;
@@ -713,7 +734,7 @@ public class ActivateTrainFrame {
         // create a new Active Train
         ActiveTrain at = _dispatcher.createActiveTrain(transitName, trainName, tSource, startBlockName,
                 startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority,
-                resetWhenDone, reverseAtEnd, true, initiateFrame);
+                resetWhenDone, reverseAtEnd, allocateAllTheWay, true, initiateFrame);
         if (at == null) {
             return;  // error message sent by createActiveTrain
         }
@@ -810,6 +831,7 @@ public class ActivateTrainFrame {
             }
             if (trainSelectBoxListener == null) {
                 trainSelectBoxListener = new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         RosterEntry r = trainBoxList.get(trainSelectBox.getSelectedIndex());
                         if (transitsFromSpecificBlock) {
@@ -1006,7 +1028,7 @@ public class ActivateTrainFrame {
         try {
             _tiFile.writeTrainInfo(info, fileName);
         } //catch (org.jdom2.JDOMException jde) { 
-        //	log.error("JDOM exception writing Train Info: "+jde); 
+        // log.error("JDOM exception writing Train Info: "+jde); 
         //}                           
         catch (java.io.IOException ioe) {
             log.error("IO exception writing Train Info: " + ioe);
@@ -1069,6 +1091,7 @@ public class ActivateTrainFrame {
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
+        allocateAllTheWayBox.setSelected(info.getAllocateAllTheWay());
         autoTrainInfoToDialog(info);
     }
 
@@ -1098,6 +1121,7 @@ public class ActivateTrainFrame {
         info.setTrainType((String) trainTypeBox.getSelectedItem());
         info.setAutoRun(autoRunBox.isSelected());
         info.setLoadAtStartup(loadAtStartupBox.isSelected());
+        info.setAllocateAllTheWay(allocateAllTheWayBox.isSelected());
         info.setDelayedRestart(delayModeFromBox(delayedReStartBox));
         info.setRestartSensorName(delayReStartSensor.getSelectedDisplayName());
         info.setRestartDelayMin(Integer.parseInt(delayMinField.getText()));

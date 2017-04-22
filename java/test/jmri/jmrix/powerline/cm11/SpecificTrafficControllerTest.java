@@ -10,10 +10,9 @@ import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,16 +23,10 @@ import org.slf4j.LoggerFactory;
  * connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificTrafficControllerTest extends TestCase {
+public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
 
     SerialTrafficController t = null;
     SerialSystemConnectionMemo memo = null;
-
-    public void testCreate(SerialTrafficController tc) {
-        SpecificSystemConnectionMemo m = new SpecificSystemConnectionMemo();
-        t = new SpecificTrafficController(m);
-        Assert.assertNotNull("exists", m);
-    }
 
     // inner class to give access to protected endOfMessage method
     class TestSerialTC extends SpecificTrafficController {
@@ -46,10 +39,12 @@ public class SpecificTrafficControllerTest extends TestCase {
             return endOfMessage(r);
         }
 
+        @Override
         protected void forwardToPort(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener reply) {
         }
     }
 
+    @Test
     public void testReceiveStates1() {
         TestSerialTC c = new TestSerialTC(memo);
         SerialReply r = new SpecificReply(t);
@@ -58,6 +53,7 @@ public class SpecificTrafficControllerTest extends TestCase {
         Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
     }
 
+    @Test
     public void testReceiveStatesRead() {
         TestSerialTC c = new TestSerialTC(memo);
         SerialReply r = new SpecificReply(t);
@@ -169,10 +165,12 @@ public class SpecificTrafficControllerTest extends TestCase {
             rcvdMsg = null;
         }
 
+        @Override
         public void message(SerialMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(SerialReply r) {
             rcvdReply = r;
         }
@@ -183,17 +181,21 @@ public class SpecificTrafficControllerTest extends TestCase {
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
+        @Override
         public java.util.Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -210,16 +212,19 @@ public class SpecificTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }
@@ -230,29 +235,18 @@ public class SpecificTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public SpecificTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SpecificTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SpecificTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    @Test
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        memo = new SpecificSystemConnectionMemo();
+        tc = t = new SpecificTrafficController(memo);
     }
 
-    protected void tearDown() {
+    @Override
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

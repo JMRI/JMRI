@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
@@ -9,7 +10,6 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.TurnoutManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
@@ -30,12 +30,15 @@ import org.junit.Assert;
 public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
     OBlockManager _OBlockMgr;
-    PortalManager _portalMgr;
+//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-    TurnoutManager _turnoutMgr;
+//    TurnoutManager _turnoutMgr;
     
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testLearnWarrant() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
         /* This layout designed so that the block and path will define a unique
@@ -63,6 +66,10 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
 
         pressButton(frame, Bundle.getMessage("Calculate"));
+        flushAWT();  
+        JUnitUtil.waitFor(() -> {
+            return (frame.getOrders()!=null);
+        }, "Found orders");
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
         

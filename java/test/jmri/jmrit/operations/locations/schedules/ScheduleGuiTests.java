@@ -1,12 +1,15 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Schedules class
@@ -15,7 +18,9 @@ import org.junit.Assert;
  */
 public class ScheduleGuiTests extends OperationsSwingTestCase {
 
+    @Test
     public void testScheduleCopyFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ScheduleCopyFrame f = new ScheduleCopyFrame();
         Assert.assertNotNull(f);
 
@@ -23,7 +28,9 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testScheduleOptionsFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationManager lManager = LocationManager.instance();
         Track track = lManager.getLocationByName("Test Loc E").getTrackByName("Test Track", null);
         ScheduleManager sManager = ScheduleManager.instance();
@@ -39,7 +46,9 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSchedulesByLoadFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SchedulesByLoadFrame f = new SchedulesByLoadFrame();
         Assert.assertNotNull(f);
 
@@ -47,7 +56,9 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         f.dispose();
     }
 
+    @Test
     public void testSchedulesTableFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SchedulesTableFrame f = new SchedulesTableFrame();
         Assert.assertNotNull(f);
 
@@ -73,30 +84,16 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadLocations();
     }
 
-    public ScheduleGuiTests(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ScheduleGuiTests.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ScheduleGuiTests.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

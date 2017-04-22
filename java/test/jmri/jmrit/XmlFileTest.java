@@ -33,43 +33,115 @@ public class XmlFileTest extends TestCase {
             + "util" + File.separator
             + "xml" + File.separator;
 
+    // Test cases to make sure schema and DTD validation 
+    // is properly controlled.  For each of DTD valid, invalid and absent
+    // (ditto schema), check with validate on and off that proper result is obtained.
+    // That's 3*3*2*2 cases!
+    enum Type { ABSENT, VALID, INVALID }
+    public void testValidationControl() {
+    
+        final String docTypeValid = "<!DOCTYPE decoderIndex-config SYSTEM \"decoderIndex-config.dtd\">";
+        final String docTypeInvalid = "<!DOCTYPE layout-config SYSTEM \"layout-config-2-5-4.dtd\">";
+
+        final String contentSchemaValid = "<decoderIndex-config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/decoder.xsd\">";
+        final String contentSchemaInvalid = "<decoderIndex-config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/layout-2-9-6.xsd \">";
+        final String contentSchemaAbsent = "<decoderIndex-config>";
+        
+        final String ending = "<decoderIndex><mfgList nmraListDate=\"\" updated=\"\"><manufacturer mfg=\"\"/></mfgList><familyList><family mfg=\"\" name=\"\" file=\"\"/></familyList></decoderIndex></decoderIndex-config>";
+
+        for (XmlFile.Validate validate : XmlFile.Validate.values()) {
+            for (Type theDTD : Type.values()) {
+                for (Type theSchema : Type.values()) {
+                    boolean passes = true;
+                                     
+                    boolean checkDTD = (validate == XmlFile.Validate.CheckDtd) || (validate == XmlFile.Validate.CheckDtdThenSchema);
+                    boolean checkSchema = (validate == XmlFile.Validate.RequireSchema) || (validate == XmlFile.Validate.CheckDtdThenSchema);
+                           
+                    if (theSchema == Type.INVALID && checkSchema) passes = false; // Cannot find the declaration of element 'decoderIndex-config'.
+                    if (theSchema == Type.ABSENT && checkSchema) passes = false; // Cannot find the declaration of element 'decoderIndex-config'.
+                    
+                    if (theDTD == Type.INVALID && checkDTD) passes = false; // Document root element "decoderIndex-config", must match DOCTYPE root "layout-config".
+                    
+                    // but if you're checking both
+                    if ( checkDTD  && checkSchema) {
+                        // a pass is a pass
+                        if (theDTD == Type.VALID) passes = true; 
+                        if (theSchema == Type.VALID) passes = true;       
+                        
+                        // but a DTD fail is a fail
+                        if (theDTD == Type.INVALID) passes = false; 
+                    }
+                    
+                    // create input
+                    
+                    String content = "";
+                    
+                    if (theDTD == Type.VALID) content += docTypeValid;
+                    if (theDTD == Type.INVALID) content += docTypeInvalid;
+
+                    if (theSchema == Type.VALID) content += contentSchemaValid;
+                    if (theSchema == Type.INVALID) content += contentSchemaInvalid;
+                    if (theSchema == Type.ABSENT) content += contentSchemaAbsent;
+                    
+                    content += ending;
+
+                    boolean result = false;
+
+                    try {
+                        XmlFile xf = new XmlFile() {
+                            { warned = false; }
+                        };   // odd syntax is due to XmlFile being abstract
+                        xf.setValidate(validate);
+                        xf.rootFromInputStream(new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+                        result = true;
+                    } catch (Exception ex) {
+                        result = false;
+                        log.debug(ex.toString());
+                    }
+
+                    log.debug("DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+") expects "+passes+" was "+result+(passes!=result?" !!!!!!!!!!!!!!!!!!!!!!!!!":"") );
+                    Assert.assertEquals("DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+")", passes, result);
+
+                }
+            }
+        }
+    }
+    
+    
     public void testProgIncludeRelative() {
-        validate(new File(testFileDir + "ProgramMainRelative.xml"));
+        validateFileAndDtdAccess(new File(testFileDir + "ProgramMainRelative.xml"));
     }
 
     public void testProgIncludeURL() {
-        validate(new File(testFileDir + "ProgramMainURL.xml"));
+        validateFileAndDtdAccess(new File(testFileDir + "ProgramMainURL.xml"));
     }
 
     public void testDotDotDTD() {
-        validate(new File(testFileDir + "DotDotDTD.xml"));
+        validateFileAndDtdAccess(new File(testFileDir + "DotDotDTD.xml"));
     }
 
     public void testHttpURL() {
-        validate(new File(testFileDir + "HttpURL.xml"));
+        validateFileAndDtdAccess(new File(testFileDir + "HttpURL.xml"));
     }
 
     public void testJustFilename() {
-        validate(new File(testFileDir + "JustFilename.xml"));
+        validateFileAndDtdAccess(new File(testFileDir + "JustFilename.xml"));
     }
 
     public void testPathname() {
-        validate(new File(testFileDir + "Pathname.xml"));
+        validateFileAndDtdAccess(new File(testFileDir + "Pathname.xml"));
     }
 
-    public void validate(File file) {
-        boolean original = XmlFile.getVerify();
+
+    private void validateFileAndDtdAccess(File file) {  // don't check Schema so can check DTD
         try {
-            XmlFile.setVerify(true);
             XmlFile xf = new XmlFile() {
             };   // odd syntax is due to XmlFile being abstract
+            xf.setValidate(XmlFile.Validate.CheckDtd);
             xf.rootFromFile(file);
         } catch (Exception ex) {
-            XmlFile.setVerify(original);
             Assert.fail(ex.toString());
             return;
-        } finally {
-            XmlFile.setVerify(original);
         }
     }
 
@@ -103,6 +175,10 @@ public class XmlFileTest extends TestCase {
         };
         // create a minimal XML file
         Element root = new Element("decoder-config");
+        root.setAttribute("noNamespaceSchemaLocation",
+                "http://jmri.org/xml/schema/decoder.xsd",
+                org.jdom2.Namespace.getNamespace("xsi",
+                        "http://www.w3.org/2001/XMLSchema-instance"));
         Document doc = new Document(root);
         doc.setDocType(new DocType("decoder-config", "decoder-config.dtd"));
 
@@ -122,6 +198,10 @@ public class XmlFileTest extends TestCase {
         // try to read
         XmlFile x = new XmlFile() {
         };
+        
+        // not a real file
+        x.setValidate(XmlFile.Validate.None);
+        
         Element e = x.rootFromName("temp" + File.separator + "prefs" + File.separator + "test.xml");
         Assert.assertTrue("Element found", e != null);
     }
@@ -132,7 +212,7 @@ public class XmlFileTest extends TestCase {
         Element e;
         FileInputStream fs = new FileInputStream(new File("java/test/jmri/jmrit/XmlFileTest_PI.xml"));
         try {
-            SAXBuilder builder = XmlFile.getBuilder(false);  // argument controls validation
+            SAXBuilder builder = XmlFile.getBuilder(XmlFile.Validate.None);  // argument controls validation
             doc = builder.build(new BufferedInputStream(fs));
             Assert.assertNotNull("Original Document found", doc);
             e = doc.getRootElement();
@@ -179,10 +259,12 @@ public class XmlFileTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

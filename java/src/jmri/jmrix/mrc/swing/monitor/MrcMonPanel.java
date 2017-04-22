@@ -1,12 +1,3 @@
-/**
- * MrcMonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
- */
 package jmri.jmrix.mrc.swing.monitor;
 
 import java.util.Date;
@@ -19,18 +10,25 @@ import jmri.jmrix.mrc.swing.MrcPanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author Daniel Boudreau Copyright (C) 2012 added human readable format
+ */
 public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTrafficListener, MrcPanelInterface {
-
-    private static final long serialVersionUID = 6106790197336170372L;
 
     public MrcMonPanel() {
         super();
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel";
     }//NOI18N
 
+    @Override
     public String getTitle() {
         return(Bundle.getMessage("MrcMonPanelName"));
     }
@@ -85,6 +83,7 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
         logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextXmit")); //NOI18N
     }
 
+    @Override
     public synchronized void notifyFailedXmit(Date timestamp, MrcMessage m) {
 
         logMessage(timestamp, m, Bundle.getMessage("MrcMonPanelTextFailed"));   //NOI18N
@@ -128,8 +127,6 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
      */
     static public class Default extends jmri.jmrix.mrc.swing.MrcNamedPaneAction {
 
-        private static final long serialVersionUID = -7644336249246783644L;
-
         public Default() {
             super("Mrc Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -141,6 +138,3 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
     private final static Logger log = LoggerFactory.getLogger(MrcMonPanel.class.getName());
 
 }
-
-
-/* @(#)MonAction.java */

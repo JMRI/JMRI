@@ -1,4 +1,3 @@
-// SimpleProgFrame.java
 package jmri.jmrit.simpleprog;
 
 import java.awt.GridLayout;
@@ -7,24 +6,29 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.ProgListener;
 import jmri.Programmer;
 
 /**
  * Frame providing a simple command station programmer
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @author Giorgio Terdina Copyright (C) 2007
   */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
     /**
-     *
+     * GUI member declarations
      */
-    // GUI member declarations
     javax.swing.JToggleButton readButton = new javax.swing.JToggleButton();
     javax.swing.JToggleButton writeButton = new javax.swing.JToggleButton();
-    javax.swing.JTextField addrField = new javax.swing.JTextField(4);
+    // use JSpinner for CV number input
+    SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 1024, 1); // 1024 is highest CV number documented by NMRA as per 2017
+    JSpinner addrField = new JSpinner(model);
+
     javax.swing.JTextField valField = new javax.swing.JTextField(4);
 
     jmri.jmrit.progsupport.ProgModePane modePane = new jmri.jmrit.progsupport.ProgModePane(BoxLayout.Y_AXIS);
@@ -39,33 +43,37 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         super();
 
         // configure items for GUI
-        readButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ CV"));
-        readButton.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ THE VALUE FROM THE SELECTED CV"));
+        readButton.setText(SymbolicProgBundle.getMessage("READ CV"));
+        readButton.setToolTipText(SymbolicProgBundle.getMessage("READ THE VALUE FROM THE SELECTED CV"));
 
-        writeButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE CV"));
-        writeButton.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE THE VALUE TO THE SELECTED CV"));
+        writeButton.setText(SymbolicProgBundle.getMessage("WRITE CV"));
+        writeButton.setToolTipText(SymbolicProgBundle.getMessage("WRITE THE VALUE TO THE SELECTED CV"));
 
-        hexButton.setText("Hexadecimal");
-        decButton.setText("Decimal");
+        hexButton.setText(SymbolicProgBundle.getMessage("Hexadecimal"));
+        decButton.setText(SymbolicProgBundle.getMessage("Decimal"));
         decButton.setSelected(true);
 
         // add the actions to the buttons
         readButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 readPushed(e);
             }
         });
         writeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 writePushed(e);
             }
         });
         decButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 decHexButtonChanged(e);
             }
         });
         hexButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 decHexButtonChanged(e);
             }
@@ -74,7 +82,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         resultsField.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
         // general GUI config
-        setTitle(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("SIMPLE PROGRAMMER"));
+        setTitle(SymbolicProgBundle.getMessage("SIMPLE PROGRAMMER"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
@@ -89,9 +97,9 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         tPane = new JPanel();
         tPane.setLayout(new GridLayout(2, 2));
-        tPane.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("CV NUMBER:")));
-        tPane.add(addrField);
-        tPane.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("VALUE:")));
+        tPane.add(new JLabel(SymbolicProgBundle.getMessage("CV NUMBER:")));
+        tPane.add(addrField); // JSpinner
+        tPane.add(new JLabel(SymbolicProgBundle.getMessage("VALUE:")));
         tPane.add(valField);
         getContentPane().add(tPane);
 
@@ -108,7 +116,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
         radixGroup.add(decButton);
         radixGroup.add(hexButton);
-        tPane2.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("VALUE IS:")));
+        tPane2.add(new JLabel(SymbolicProgBundle.getMessage("VALUE IS:")));
         tPane2.add(decButton);
         tPane2.add(hexButton);
         tPane2.add(Box.createVerticalGlue());
@@ -147,27 +155,23 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     }
 
     private String getNewAddr() {
-        if (addrField.getText()!=null && !addrField.getText().equals("")) {
-            return addrField.getText();
-        } else {
-            addrField.setText("0");
-            return addrField.getText();
-        }
+        return addrField.getValue() + "";
     }
 
     private String statusCode(int status) {
         Programmer p = modePane.getProgrammer();
         if (status == ProgListener.OK) {
-            return "OK";
+            return SymbolicProgBundle.getMessage("StateOK");
         }
         if (p == null) {
-            return "No programmer connected";
+            return SymbolicProgBundle.getMessage("StateNoProgrammer");
         } else {
             return p.decodeErrorCode(status);
         }
     }
 
     // listen for messages from the Programmer object
+    @Override
     public void programmingOpReply(int value, int status) {
         resultsField.setText(statusCode(status));
 
@@ -190,19 +194,19 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     public void readPushed(java.awt.event.ActionEvent e) {
         Programmer p = modePane.getProgrammer();
         if (p == null) {
-            resultsField.setText("No programmer connected");
+            resultsField.setText(SymbolicProgBundle.getMessage("StateNoProgrammer"));
             readButton.setSelected(false);
         } else {
             if (p.getCanRead()) {
                 try {
-                    resultsField.setText("programming...");
+                    resultsField.setText(SymbolicProgBundle.getMessage("StateReading"));
                     p.readCV(getNewAddr(), this);
                 } catch (jmri.ProgrammerException ex) {
                     resultsField.setText("" + ex);
                     readButton.setSelected(false);
                 }
             } else {
-                resultsField.setText("can't read in this Mode");
+                resultsField.setText(SymbolicProgBundle.getMessage("CantReadThisMode"));
                 readButton.setSelected(false);
             }
         }
@@ -211,11 +215,11 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     public void writePushed(java.awt.event.ActionEvent e) {
         Programmer p = modePane.getProgrammer();
         if (p == null) {
-            resultsField.setText("No programmer connected");
+            resultsField.setText(SymbolicProgBundle.getMessage("StateNoProgrammer"));
             writeButton.setSelected(false);
         } else {
             try {
-                resultsField.setText("programming...");
+                resultsField.setText(SymbolicProgBundle.getMessage("StateWriting"));
                 p.writeCV(getNewAddr(), getNewVal(), this);
             } catch (jmri.ProgrammerException ex) {
                 resultsField.setText("" + ex);
@@ -226,7 +230,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
     // provide simple data conversion if dec or hex button changed
     public void decHexButtonChanged(java.awt.event.ActionEvent e) {
-        resultsField.setText("OK");
+        resultsField.setText(SymbolicProgBundle.getMessage("StateOK"));
         if (valField.getText().equals("")) {
             return;
         }
@@ -240,7 +244,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
                 value = Integer.valueOf(valField.getText()).intValue();
             }
         } catch (java.lang.NumberFormatException ee) {
-            resultsField.setText("error");
+            resultsField.setText(Bundle.getMessage("ErrorTitle"));
         }
         if (value != 0) {
             if (decButton.isSelected()) {
@@ -251,6 +255,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         }
     }
 
+    @Override
     public void dispose() {
         modePane.dispose();
         super.dispose();

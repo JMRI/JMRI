@@ -8,7 +8,13 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    jmri.jmrix.rfid.generic.standalone.configurexml.PackageTest.class
+    jmri.jmrix.rfid.generic.standalone.configurexml.PackageTest.class,
+    StandaloneReporterManagerTest.class,
+    StandaloneSystemConnectionMemoTest.class,
+    StandaloneTrafficControllerTest.class,
+    StandaloneSensorManagerTest.class,
+    StandaloneMessageTest.class,
+    StandaloneReplyTest.class
 })
 /**
  * Tests for the jmri.jmrix.rfid.generic.standalone package.

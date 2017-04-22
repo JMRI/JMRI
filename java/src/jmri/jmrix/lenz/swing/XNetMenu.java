@@ -1,4 +1,3 @@
-// XNetMenu.java
 package jmri.jmrix.lenz.swing;
 
 import java.util.ResourceBundle;
@@ -7,14 +6,9 @@ import javax.swing.JMenu;
 /**
  * Create a menu containing the XPressNet specific tools
  *
- * @author	Paul Bender Copyright 2003,2010
+ * @author Paul Bender Copyright 2003,2010
  */
 public class XNetMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8473128194237379596L;
 
     public XNetMenu(String name, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         this(memo);

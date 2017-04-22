@@ -14,10 +14,6 @@ import jmri.jmrix.jmriclient.json.JsonClientTrafficController;
  */
 class JsonClientMonitorFrame extends AbstractMonFrame implements JsonClientListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5627511290743526816L;
     protected JsonClientTrafficController trafficController = null;
 
     public JsonClientMonitorFrame(JsonClientSystemConnectionMemo memo) {

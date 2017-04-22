@@ -532,146 +532,8 @@
 	<label>F12 controls output 6</label>
 	<label xml:lang="it">F12 controlla uscita 6</label>
   </variable>
-  <variable item="FL(f) controls output 7" CV="43" mask="XXXXXXXV" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>FL(f) controls output 7</label>
-	<label xml:lang="it">Luci(in avanti) controlla uscita 7</label>
-  </variable>
-  <variable item="FL(r) controls output 7" CV="43" mask="XXXXXXVX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>FL(r) controls output 7</label>
-	<label xml:lang="it">Luci(in retro) controlla uscita 7</label>
-  </variable>
-  <variable item="F1 controls output 7" CV="43" mask="XXXXXVXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F1 controls output 7</label>
-	<label xml:lang="it">F1 controlla uscita 7</label>
-  </variable>
-  <variable item="F2 controls output 7" CV="43" mask="XXXXVXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F2 controls output 7</label>
-	<label xml:lang="it">F2 controlla uscita 7</label>
-  </variable>
-  <variable item="F3 controls output 7" CV="43" mask="XXXVXXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F3 controls output 7</label>
-	<label xml:lang="it">F3 controlla uscita 7</label>
-  </variable>
-  <variable item="F4 controls output 7" CV="43" mask="XXVXXXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F4 controls output 7</label>
-	<label xml:lang="it">F4 controlla uscita 7</label>
-  </variable>
-  <variable item="F5 controls output 7" CV="43" mask="XVXXXXXX" minOut="7" default="1">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F5 controls output 7</label>
-	<label xml:lang="it">F5 controlla uscita 7</label>
-  </variable>
-  <variable item="F6 controls output 7" CV="43" mask="VXXXXXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F6 controls output 7</label>
-	<label xml:lang="it">F6 controlla uscita 7</label>
-  </variable>
-  <variable item="FL(f) controls output 8" CV="44" mask="XXXXXXXV" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>FL(f) controls output 8</label>
-	<label xml:lang="it">Luci(in avanti) controlla uscita 8</label>
-  </variable>
-  <variable item="FL(r) controls output 8" CV="44" mask="XXXXXXVX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>FL(r) controls output 8</label>
-	<label xml:lang="it">Luci(in retro) controlla uscita 8</label>
-  </variable>
-  <variable item="F1 controls output 8" CV="44" mask="XXXXXVXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F1 controls output 8</label>
-	<label xml:lang="it">F1 controlla uscita 8</label>
-  </variable>
-  <variable item="F2 controls output 8" CV="44" mask="XXXXVXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F2 controls output 8</label>
-	<label xml:lang="it">F2 controlla uscita 8</label>
-  </variable>
-  <variable item="F3 controls output 8" CV="44" mask="XXXVXXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F3 controls output 8</label>
-	<label xml:lang="it">F3 controlla uscita 8</label>
-  </variable>
-  <variable item="F4 controls output 8" CV="44" mask="XXVXXXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F4 controls output 8</label>
-	<label xml:lang="it">F4 controlla uscita 8</label>
-  </variable>
-  <variable item="F5 controls output 8" CV="44" mask="XVXXXXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F5 controls output 8</label>
-	<label xml:lang="it">F5 controlla uscita 8</label>
-  </variable>
-  <variable item="F6 controls output 8" CV="44" mask="VXXXXXXX" minOut="8" default="1">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F6 controls output 8</label>
-	<label xml:lang="it">F6 controlla uscita 8</label>
-  </variable>
-  <variable item="F7 controls output 7" CV="45" mask="XXXXXVXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F7 controls output 7</label>
-	<label xml:lang="it">F7 controlla uscita 7</label>
-  </variable>
-  <variable item="F8 controls output 7" CV="45" mask="XXXXVXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F8 controls output 7</label>
-	<label xml:lang="it">F8 controlla uscita 7</label>
-  </variable>
-  <variable item="F9 controls output 7" CV="45" mask="XXXVXXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F9 controls output 7</label>
-	<label xml:lang="it">F9 controlla uscita 7</label>
-  </variable>
-  <variable item="F10 controls output 7" CV="45" mask="XXVXXXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F10 controls output 7</label>
-	<label xml:lang="it">F10 controlla uscita 7</label>
-  </variable>
-  <variable item="F11 controls output 7" CV="45" mask="XVXXXXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F11 controls output 7</label>
-	<label xml:lang="it">F11 controlla uscita 7</label>
-  </variable>
-  <variable item="F12 controls output 7" CV="45" mask="VXXXXXXX" minOut="7">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F12 controls output 7</label>
-	<label xml:lang="it">F12 controlla uscita 7</label>
-  </variable>
-  <variable item="F7 controls output 8" CV="46" mask="XXXXXVXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F7 controls output 8</label>
-	<label xml:lang="it">F7 controlla uscita 8</label>
-  </variable>
-  <variable item="F8 controls output 8" CV="46" mask="XXXXVXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F8 controls output 8</label>
-	<label xml:lang="it">F8 controlla uscita 8</label>
-  </variable>
-  <variable item="F9 controls output 8" CV="46" mask="XXXVXXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F9 controls output 8</label>
-	<label xml:lang="it">F9 controlla uscita 8</label>
-  </variable>
-  <variable item="F10 controls output 8" CV="46" mask="XXVXXXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F10 controls output 8</label>
-	<label xml:lang="it">F10 controlla uscita 8</label>
-  </variable>
-  <variable item="F11 controls output 8" CV="46" mask="XVXXXXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F11 controls output 8</label>
-	<label xml:lang="it">F11 controlla uscita 8</label>
-  </variable>
-  <variable item="F12 controls output 8" CV="46" mask="VXXXXXXX" minOut="8">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-	<label>F12 controls output 8</label>
-	<label xml:lang="it">F12 controlla uscita 8</label>
-  </variable>
+  <constant item="F5 controls output 7" minOut="7" minFn="5" default="1"/>
+  <constant item="F6 controls output 8" minOut="8" minFn="6" default="1"/>
   <variable CV="49" mask="XVXXXXXX" item="Output 1 options" default="0">
 	<enumVal>
 	  <enumChoice choice="Group 0">
@@ -902,87 +764,18 @@
 	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
 	</enumVal><label>Pink Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa</label></variable>
   <variable CV="54" mask="XXVVXXXX" minOut="6" default="2" item="Output 6 option 1" exclude="61">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
-	<label>Pink Wire Timing</label>
-	<label xml:lang="it">Temporizzazioni filo Rosa</label>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+    <label>Pink Wire Timing</label>
+    <label xml:lang="it">Temporizzazioni filo Rosa</label>
   </variable>
-  <variable CV="55" mask="XVXXXXXX" minOut="7" item="Output 7 options" default="0">
-	<enumVal>
-	  <enumChoice choice="Group 0">
-		  <choice xml:lang="it">Gruppo 0</choice>
-	  </enumChoice>
-	  <enumChoice choice="Group 1">
-		  <choice xml:lang="it">Gruppo 1</choice>
-	  </enumChoice>
-	</enumVal>
-	<label>Pink/Purple Wire Effect Group</label>
-	<label xml:lang="it">Gruppo Effetti filo Rosa/Porpora</label>
-  </variable>
-  <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
-        <qualifier>
-	  <variableref>Pink/Purple Wire Effect Group</variableref>
-	  <relation>eq</relation>
-	  <value>1</value>
-	</qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Pink/Purple Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Rosa/Porpora</label></variable>
-  <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 behavior">
-        <qualifier>
-	  <variableref>Pink/Purple Wire Effect Group</variableref>
-	  <relation>eq</relation>
-	  <value>0</value>
-	</qualifier>
-        <enumVal>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-	</enumVal><label>Pink/Purple Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa/Porpora</label></variable>
-  <variable CV="55" mask="XXVVXXXX" minOut="7" default="2" item="Output 7 option 1">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
-	<label>Pink/Purple Wire Timing</label>
-	<label xml:lang="it">Temporizzazioni filo Rosa/Porpora</label>
-  </variable>
-  <variable CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" default="0">
-	<enumVal>
-	  <enumChoice choice="Group 0">
-		  <choice xml:lang="it">Gruppo 0</choice>
-	  </enumChoice>
-	  <enumChoice choice="Group 1">
-		  <choice xml:lang="it">Gruppo 1</choice>
-	  </enumChoice>
-	</enumVal>
-	<label>Green/Brown Wire Effect Group</label>
-	<label xml:lang="it">Gruppo Effetti filo Verde/Marrone</label>
-  </variable>
-  <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
-        <qualifier>
-	  <variableref>Green/Brown Wire Effect Group</variableref>
-	  <relation>eq</relation>
-	  <value>1</value>
-	</qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Green/Brown Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Verde/Marrone</label></variable>
-  <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 behavior">
-        <qualifier>
-	  <variableref>Green/Brown Wire Effect Group</variableref>
-	  <relation>eq</relation>
-	  <value>0</value>
-	</qualifier>
-        <enumVal>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
-	  <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-	</enumVal><label>Green/Brown Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Verde/Marrone</label></variable>
-  <variable CV="58" mask="XXVVXXXX" minOut="8" default="2" item="Output 8 option 1">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
-	<label>Green/Brown Wire Timing</label>
-	<label xml:lang="it">Temporizzazioni filo Verde/Marrone</label>
+  <variable CV="58" minOut="8" item="Output 7 effect generated" default="0">
+    <enumVal>
+      <enumChoice choice="F5 and F6 on/off constant bright">
+      </enumChoice>
+      <enumChoice value="9" choice="F5 smoke unit coil and F6 smoke unit fan">
+      </enumChoice>
+    </enumVal>
+    <label>Outputs 7 and 8 effect generated</label>
   </variable>
   <variable CV="61" mask="XXXXVXXX" default="1" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>

@@ -26,17 +26,72 @@ import org.slf4j.LoggerFactory;
 public class WebServerPreferences extends Bean {
 
     // preferences elements
-    public static final String DisallowedFrames = "disallowedFrames"; // NOI18N
-    public static final String WebServerPreferences = "WebServerPreferences"; // NOI18N
-    public static final String Frame = "frame"; // NOI18N
-    public static final String Port = "port"; // NOI18N
-    public static final String ClickDelay = "clickDelay"; // NOI18N
-    public static final String RefreshDelay = "refreshDelay"; // NOI18N
-    public static final String UseAjax = "useAjax"; // NOI18N
-    public static final String Simple = "simple"; // NOI18N
-    public static final String RailRoadName = "railRoadName"; // NOI18N
-    public static final String AllowRemoteConfig = "allowRemoteConfig"; // NOI18N
-    public static final String ReadonlyPower = "readonlyPower"; // NOI18N
+    public static final String DISALLOWED_FRAMES = "disallowedFrames"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #DISALLOWED_FRAMES} instead
+     */
+    @Deprecated
+    public static final String DisallowedFrames = DISALLOWED_FRAMES;
+    public static final String WEB_SERVER_PREFERENCES = "WebServerPreferences"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #WEB_SERVER_PREFERENCES} instead
+     */
+    @Deprecated
+    public static final String WebServerPreferences = WEB_SERVER_PREFERENCES;
+    public static final String FRAME = "frame"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #FRAME} instead
+     */
+    @Deprecated
+    public static final String Frame = FRAME;
+    public static final String PORT = "port"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #PORT} instead
+     */
+    @Deprecated
+    public static final String Port = PORT;
+    public static final String CLICK_DELAY = "clickDelay"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #CLICK_DELAY} instead
+     */
+    @Deprecated
+    public static final String ClickDelay = CLICK_DELAY;
+    public static final String REFRESH_DELAY = "refreshDelay"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #REFRESH_DELAY} instead
+     */
+    @Deprecated
+    public static final String RefreshDelay = REFRESH_DELAY;
+    public static final String USE_AJAX = "useAjax"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #USE_AJAX} instead
+     */
+    @Deprecated
+    public static final String UseAjax = USE_AJAX;
+    public static final String SIMPLE = "simple"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #SIMPLE} instead
+     */
+    @Deprecated
+    public static final String Simple = SIMPLE;
+    public static final String RAILROAD_NAME = "railRoadName"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #RAILROAD_NAME} instead
+     */
+    @Deprecated
+    public static final String RailRoadName = RAILROAD_NAME;
+    public static final String ALLOW_REMOTE_CONFIG = "allowRemoteConfig"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #ALLOW_REMOTE_CONFIG} instead
+     */
+    @Deprecated
+    public static final String AllowRemoteConfig = ALLOW_REMOTE_CONFIG;
+    public static final String READONLY_POWER = "readonlyPower"; // NOI18N
+    /**
+     * @deprecated since 4.7.1; use {@link #READONLY_POWER} instead
+     */
+    @Deprecated
+    public static final String ReadonlyPower = READONLY_POWER;
     public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
     public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
     // properties
@@ -57,9 +112,9 @@ public class WebServerPreferences extends Bean {
     private boolean allowRemoteConfig = false;
     private boolean readonlyPower = true;
     private int port = 12080;
-    private boolean disableFrames = false;
+    private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
-    private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
     public WebServerPreferences(String fileName) {
         boolean migrate = false;
@@ -108,17 +163,17 @@ public class WebServerPreferences extends Bean {
     }
 
     private void readPreferences(Preferences sharedPreferences) {
-        this.allowRemoteConfig = sharedPreferences.getBoolean(AllowRemoteConfig, this.allowRemoteConfig);
-        this.clickDelay = sharedPreferences.getInt(ClickDelay, this.clickDelay);
-        this.simple = sharedPreferences.getBoolean(Simple, this.simple);
-        this.railRoadName = sharedPreferences.get(RailRoadName, this.railRoadName);
-        this.readonlyPower = sharedPreferences.getBoolean(ReadonlyPower, this.readonlyPower);
-        this.refreshDelay = sharedPreferences.getInt(RefreshDelay, this.refreshDelay);
-        this.useAjax = sharedPreferences.getBoolean(UseAjax, this.useAjax);
+        this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
+        this.clickDelay = sharedPreferences.getInt(CLICK_DELAY, this.clickDelay);
+        this.simple = sharedPreferences.getBoolean(SIMPLE, this.simple);
+        this.railRoadName = sharedPreferences.get(RAILROAD_NAME, this.railRoadName);
+        this.readonlyPower = sharedPreferences.getBoolean(READONLY_POWER, this.readonlyPower);
+        this.refreshDelay = sharedPreferences.getInt(REFRESH_DELAY, this.refreshDelay);
+        this.useAjax = sharedPreferences.getBoolean(USE_AJAX, this.useAjax);
         this.disableFrames = sharedPreferences.getBoolean(DISABLE_FRAME_SERVER, this.disableFrames);
         this.redirectFramesToPanels = sharedPreferences.getBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
-            Preferences frames = sharedPreferences.node(DisallowedFrames);
+            Preferences frames = sharedPreferences.node(DISALLOWED_FRAMES);
             if (frames.keys().length != 0) {
                 this.disallowedFrames.clear();
                 for (String key : frames.keys()) { // throws BackingStoreException
@@ -132,13 +187,13 @@ public class WebServerPreferences extends Bean {
             // this is expected if sharedPreferences have not been written previously,
             // so do nothing.
         }
-        this.port = sharedPreferences.getInt(Port, this.port);
+        this.port = sharedPreferences.getInt(PORT, this.port);
         this.setIsDirty(false);
     }
 
     public void load(Element child) {
         Attribute a;
-        a = child.getAttribute(ClickDelay);
+        a = child.getAttribute(CLICK_DELAY);
         if (a != null) {
             try {
                 setClickDelay(a.getIntValue());
@@ -146,7 +201,7 @@ public class WebServerPreferences extends Bean {
                 log.debug(e.getLocalizedMessage(), e);
             }
         }
-        a = child.getAttribute(RefreshDelay);
+        a = child.getAttribute(REFRESH_DELAY);
         if (a != null) {
             try {
                 setRefreshDelay(a.getIntValue());
@@ -154,23 +209,23 @@ public class WebServerPreferences extends Bean {
                 log.debug(e.getLocalizedMessage(), e);
             }
         }
-        a = child.getAttribute(UseAjax);
+        a = child.getAttribute(USE_AJAX);
         if (a != null) {
             setUseAjax(Boolean.parseBoolean(a.getValue()));
         }
-        a = child.getAttribute(Simple);
+        a = child.getAttribute(SIMPLE);
         if (a != null) {
             setSimple(Boolean.parseBoolean(a.getValue()));
         }
-        a = child.getAttribute(AllowRemoteConfig);
+        a = child.getAttribute(ALLOW_REMOTE_CONFIG);
         if (a != null) {
             setAllowRemoteConfig(Boolean.parseBoolean(a.getValue()));
         }
-        a = child.getAttribute(ReadonlyPower);
+        a = child.getAttribute(READONLY_POWER);
         if (a != null) {
             setReadonlyPower(Boolean.parseBoolean(a.getValue()));
         }
-        a = child.getAttribute(Port);
+        a = child.getAttribute(PORT);
         if (a != null) {
             try {
                 setPort(a.getIntValue());
@@ -179,14 +234,14 @@ public class WebServerPreferences extends Bean {
                 log.error("Unable to read port. Setting to default value.", ex);
             }
         }
-        a = child.getAttribute(RailRoadName);
+        a = child.getAttribute(RAILROAD_NAME);
         if (a != null) {
             setRailRoadName(a.getValue());
         }
-        Element df = child.getChild(DisallowedFrames);
+        Element df = child.getChild(DISALLOWED_FRAMES);
         if (df != null) {
             this.disallowedFrames.clear();
-            df.getChildren(Frame).stream().forEach((f) -> {
+            df.getChildren(FRAME).stream().forEach((f) -> {
                 this.disallowedFrames.add(f.getText().trim());
             });
         }
@@ -248,18 +303,18 @@ public class WebServerPreferences extends Bean {
 
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
-        sharedPreferences.putInt(Port, this.getPort());
-        sharedPreferences.putInt(ClickDelay, this.getClickDelay());
-        sharedPreferences.putInt(RefreshDelay, this.getRefreshDelay());
-        sharedPreferences.putBoolean(UseAjax, this.isUseAjax());
-        sharedPreferences.putBoolean(Simple, this.isSimple());
-        sharedPreferences.putBoolean(AllowRemoteConfig, this.allowRemoteConfig());
-        sharedPreferences.putBoolean(ReadonlyPower, this.isReadonlyPower());
-        sharedPreferences.put(RailRoadName, getRailRoadName());
+        sharedPreferences.putInt(PORT, this.getPort());
+        sharedPreferences.putInt(CLICK_DELAY, this.getClickDelay());
+        sharedPreferences.putInt(REFRESH_DELAY, this.getRefreshDelay());
+        sharedPreferences.putBoolean(USE_AJAX, this.isUseAjax());
+        sharedPreferences.putBoolean(SIMPLE, this.isSimple());
+        sharedPreferences.putBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig());
+        sharedPreferences.putBoolean(READONLY_POWER, this.isReadonlyPower());
+        sharedPreferences.put(RAILROAD_NAME, getRailRoadName());
         sharedPreferences.putBoolean(DISABLE_FRAME_SERVER, this.isDisableFrames());
         sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
-            Preferences node = sharedPreferences.node(DisallowedFrames);
+            Preferences node = sharedPreferences.node(DISALLOWED_FRAMES);
             this.disallowedFrames.stream().forEach((frame) -> {
                 node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
             });
@@ -295,7 +350,7 @@ public class WebServerPreferences extends Bean {
         int old = this.clickDelay;
         if (old != value) {
             this.clickDelay = value;
-            this.firePropertyChange(ClickDelay, old, value);
+            this.firePropertyChange(CLICK_DELAY, old, value);
         }
     }
 
@@ -307,7 +362,7 @@ public class WebServerPreferences extends Bean {
         int old = this.refreshDelay;
         if (old != value) {
             this.refreshDelay = value;
-            this.firePropertyChange(RefreshDelay, old, value);
+            this.firePropertyChange(REFRESH_DELAY, old, value);
         }
     }
 
@@ -323,7 +378,7 @@ public class WebServerPreferences extends Bean {
         boolean old = this.useAjax;
         if (old != useAjax) {
             this.useAjax = useAjax;
-            this.firePropertyChange(UseAjax, old, useAjax);
+            this.firePropertyChange(USE_AJAX, old, useAjax);
         }
     }
 
@@ -335,7 +390,7 @@ public class WebServerPreferences extends Bean {
         boolean old = this.simple;
         if (old != value) {
             this.simple = value;
-            this.firePropertyChange(Simple, old, value);
+            this.firePropertyChange(SIMPLE, old, value);
         }
     }
 
@@ -347,7 +402,7 @@ public class WebServerPreferences extends Bean {
         boolean old = this.allowRemoteConfig;
         if (old != value) {
             this.allowRemoteConfig = value;
-            this.firePropertyChange(AllowRemoteConfig, old, value);
+            this.firePropertyChange(ALLOW_REMOTE_CONFIG, old, value);
         }
     }
 
@@ -370,7 +425,7 @@ public class WebServerPreferences extends Bean {
         if (!Arrays.equals(old, disallowedFrames)) {
             this.disallowedFrames.clear();
             this.disallowedFrames.addAll(Arrays.asList(disallowedFrames));
-            this.firePropertyChange(DisallowedFrames, old, disallowedFrames);
+            this.firePropertyChange(DISALLOWED_FRAMES, old, disallowedFrames);
         }
     }
 
@@ -382,7 +437,7 @@ public class WebServerPreferences extends Bean {
         int old = this.port;
         if (old != value) {
             this.port = value;
-            this.firePropertyChange(Port, old, value);
+            this.firePropertyChange(PORT, old, value);
             this.setRestartRequired();
         }
     }
@@ -405,7 +460,7 @@ public class WebServerPreferences extends Bean {
             } else {
                 this.railRoadName = Bundle.getMessage("DefaultRailroadName");
             }
-            this.firePropertyChange(RailRoadName, old, this.railRoadName);
+            this.firePropertyChange(RAILROAD_NAME, old, this.railRoadName);
         }
     }
 

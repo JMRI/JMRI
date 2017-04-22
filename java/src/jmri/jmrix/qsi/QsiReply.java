@@ -1,9 +1,11 @@
 package jmri.jmrix.qsi;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
- * Carries the reply to an QsiMessage
+ * Carries the reply to an QsiMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
 
@@ -27,7 +29,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
         super(s);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public QsiReply(String s, boolean b) {
@@ -44,6 +46,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
 
     // accessors to the bulk data
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
         _nDataChars = Math.max(_nDataChars, n + 1);
@@ -81,9 +84,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
         }
 
         // Copy back to original QsiReply
-        for (int i = 0; i < j; i++) {
-            _dataChars[i] = tmp[i];
-        }
+        System.arraycopy(tmp, 0, _dataChars, 0, j);
         _nDataChars = j;
         return true;
     }
@@ -100,14 +101,17 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
 
     // display format
+    @Override
     public String toString() {
-       QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
-       return toString(memo.getQsiTrafficController());
+        QsiSystemConnectionMemo memo = jmri.InstanceManager.getDefault(jmri.jmrix.qsi.QsiSystemConnectionMemo.class);
+        return toString(memo.getQsiTrafficController());
     }
 
     public String toString(QsiTrafficController controller) {
         StringBuilder s = new StringBuilder();
-        if (_dataChars == null) return "<none>";
+        if (_dataChars == null) {
+            return "<none>";
+        }
         if (controller == null || controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s.append(jmri.util.StringUtil.twoHexFromInt(_dataChars[i]));
@@ -124,12 +128,13 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
 
     /**
-     * Extracts Read-CV returned value from a message. Returns -1 if message
-     * can't be parsed.
+     * Extracts Read-CV returned value from a message.
      *
      * QSI is assumed to not be echoing commands. A reply to a command may
      * include the prompt that was printed after the previous command Reply to a
-     * CV read is of the form " = hvv" where vv is the CV value in hex
+     * CV read is of the form " = hvv" where vv is the CV value in hex.
+     *
+     * @return the value of the read CV or -1 if the reply cannot be parsed.
      */
     public int value() {
         return getElement(5) & 0xFF;

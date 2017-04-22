@@ -1,4 +1,3 @@
-// RosterRecorder.java
 package jmri.jmrit.roster;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Watches a Roster and writes it to file when a change is seen.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
   * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -21,21 +20,23 @@ public class RosterRecorder extends Thread {
 
         // listen for any new entries
         roster.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 changedRoster(e);
             }
         });
 
         // listen to each entry
-        for (int i = 0; i < roster.numEntries(); i++) {
-            watchEntry(roster.getEntry(i));
-        }
+        roster.getAllEntries().forEach((entry) -> {
+            watchEntry(entry);
+        });
 
     }
 
     void watchEntry(RosterEntry e) {
         log.debug("watchEntry");
         e.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 changedEntry(e);
             }
@@ -82,6 +83,7 @@ public class RosterRecorder extends Thread {
     }
 
     // the actual thread code starts here
+    @Override
     public void run() {
         while (true) {  // loop until daemon thread ends
             // wait roster to write

@@ -1,10 +1,9 @@
-// SerialPortController.java
 package jmri.jmrix.powerline;
 
 /**
  * Abstract base for classes representing a communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */
@@ -24,4 +23,4 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
 }
 
 
-/* @(#)SerialPortController.java */
+

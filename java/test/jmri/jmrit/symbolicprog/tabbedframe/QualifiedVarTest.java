@@ -28,12 +28,14 @@ public class QualifiedVarTest extends TestCase {
 
         // run all following on Swing thread
         javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
             public void run() {
                 setupDoc();
                 PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                         "test qualified var", "programmers/Basic.xml",
                         new jmri.progdebugger.ProgDebugger(), false) {
                             // dummy implementations
+                    @Override
                             protected JPanel getModePane() {
                                 return null;
                             }
@@ -199,10 +201,12 @@ public class QualifiedVarTest extends TestCase {
     private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class.getName());
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

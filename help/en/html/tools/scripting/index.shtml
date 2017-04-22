@@ -29,9 +29,14 @@
 
       <h2>JMRI: Scripting</h2>
       
-      <p>Any <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html">Java Scripting API </a> (commonly refered to JSR-223) compliant scripting language can be added to JMRI, however, beyond JavaScript and Python are not directly supported in the default installation. If you want to add another scripting language, find a JSR-223 compliant interpreter and add it to the JMRI classpath as <a href="../../doc/Technical/StartUpScripts.shtml">documented for your operating system</a> (different operating systems have different launchers that are configured differently).</p>
+      <p>Any <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html">
+        Java Scripting API </a> (commonly refered to JSR-223) compliant scripting language can be added to JMRI,
+        however, beyond JavaScript and Python are not directly supported in the default installation.
+        If you want to add another scripting language, find a JSR-223 compliant interpreter and add it to
+        the JMRI classpath as <a href="../../doc/Technical/StartUpScripts.shtml">documented for your operating system</a>
+        (different operating systems have different launchers that are configured differently).</p>
 
-      <p>The following pages discusses scripting JMRI using the Jython version of Python:</p>
+      <p>The following pages discuss scripting JMRI using the Jython version of Python:</p>
 
       <ol>
         <li><a href="Start.shtml">Getting started with simple scripts</a></li>

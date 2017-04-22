@@ -1,8 +1,6 @@
 package jmri.jmrit.consisttool;
 
-import java.util.ResourceBundle;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
@@ -19,11 +17,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of consist information.
  *
- * @author	Paul Bender Copyright (c) 2004-2005
+ * @author Paul Bender Copyright (c) 2004-2005
  */
 public class ConsistDataModel extends AbstractTableModel {
 
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     static private final int ADDRCOLUMN = 0;    // Locomotive address
     static private final int ROSTERCOLUMN = 1;  // Roster Entry, this exists
     static private final int DIRECTIONCOLUMN = 2;  // Relative Direction
@@ -82,11 +79,11 @@ public class ConsistDataModel extends AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case ADDRCOLUMN:
-                return rb.getString("AddressColumnLabel");
+                return Bundle.getMessage("AddressColumnLabel");
             case ROSTERCOLUMN:
-                return rb.getString("RosterColumnLabel");
+                return Bundle.getMessage("RosterColumnLabel");
             case DIRECTIONCOLUMN:
-                return rb.getString("DirectionColumnLabel");
+                return Bundle.getMessage("DirectionColumnLabel");
             default:
                 return "";
         }
@@ -96,7 +93,7 @@ public class ConsistDataModel extends AbstractTableModel {
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ROSTERCOLUMN:
-                return (JComboBox.class);
+                return (String.class);
             case DELCOLUMN:
                 return (JButton.class);
             case DIRECTIONCOLUMN:
@@ -133,14 +130,14 @@ public class ConsistDataModel extends AbstractTableModel {
         switch (col) {
             case ADDRCOLUMN:
                 return (_consist.getConsistList().get(row).toString());
-            /*case ROSTERCOLUMN: JComboBox RosterBox = Roster.getDefault().matchingComboBox(null,null,null,null,null,null,null);
-             RosterBox.insertItemAt("",0);
-             RosterBox.setSelectedItem(getValueAt(ADDRCOLUMN,row));
-             return RosterBox;*/
+            case ROSTERCOLUMN: {
+                String entry = (_consist.getRosterId(_consist.getConsistList().get(row)));
+                return entry;
+              }
             case DIRECTIONCOLUMN:
                 return (Boolean.valueOf(_consist.getLocoDirection(_consist.getConsistList().get(row))));
             case DELCOLUMN:
-                return rb.getString("DeleteColumnButtonLabel");
+                return Bundle.getMessage("DeleteColumnButtonLabel");
             default:
                 return ("");
         }

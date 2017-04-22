@@ -1,11 +1,8 @@
-// OlcbConfigurationManager.java
 package jmri.jmrix.openlcb;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanListener;
@@ -13,9 +10,8 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
-import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
-import org.openlcb.Message;
+import org.openlcb.LoaderClient;
 import org.openlcb.MessageDecoder;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
@@ -24,23 +20,18 @@ import org.openlcb.SimpleNodeIdentInfoReplyMessage;
 import org.openlcb.SimpleNodeIdentInfoRequestMessage;
 import org.openlcb.Version;
 import org.openlcb.can.AliasMap;
-import org.openlcb.can.CanFrame;
-import org.openlcb.can.CanFrameListener;
 import org.openlcb.can.CanInterface;
 import org.openlcb.can.MessageBuilder;
-import org.openlcb.can.NIDaAlgorithm;
 import org.openlcb.can.OpenLcbCanFrame;
-import org.openlcb.implementations.DatagramMeteringBuffer;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
-import org.openlcb.LoaderClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Does configuration for OpenLCB communications implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  *
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
@@ -55,6 +46,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
+    @Override
     public void configureManagers() {
 
         // create our NodeID
@@ -93,13 +85,17 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         tc.addCanListener(new CanListener() {
             @Override
             public void message(CanMessage m) {
-                if (!m.isExtended() || m.isRtr()) return;
+                if (!m.isExtended() || m.isRtr()) {
+                    return;
+                }
                 aliasMap.processFrame(convertFromCan(m));
             }
 
             @Override
             public void reply(CanReply m) {
-                if (!m.isExtended() || m.isRtr()) return;
+                if (!m.isExtended() || m.isRtr()) {
+                    return;
+                }
                 aliasMap.processFrame(convertFromCan(m));
             }
         });
@@ -117,12 +113,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     // These components are internal implementation details of the OpenLCB library
     // and should not be exposed here.
-    @Deprecated AliasMap aliasMap;
-    @Deprecated MessageBuilder messageBuilder;
+    @Deprecated
+    AliasMap aliasMap;
+    @Deprecated
+    MessageBuilder messageBuilder;
 
     /**
-     * Tells which managers this provides by class
+     * Check if a type of manager is provided by this manager.
+     *
+     * @param type the class of manager to check
+     * @return true if the type of manager is provided; false otherwise
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (adapterMemo.getDisabled()) {
             return false;
@@ -167,6 +169,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled()) {
             return null;
@@ -261,6 +264,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return sensorManager;
     }
 
+    @Override
     public void dispose() {
         if (turnoutManager != null) {
             InstanceManager.deregister(turnoutManager, jmri.jmrix.openlcb.OlcbTurnoutManager.class);
@@ -275,6 +279,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     class SimpleNodeIdentInfoHandler extends MessageDecoder {
+
         SimpleNodeIdentInfoHandler() {
             byte[] part1 = new byte[]{1, 'J', 'M', 'R', 'I', 0, 'P', 'a', 'n', 'e', 'l', 'P', 'r', 'o', 0}; // NOI18N
             byte[] part2 = new byte[]{0};
@@ -301,20 +306,21 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 content[i++] = part4[j];
             }
         }
-        private byte[] content;
+        private final byte[] content;
 
         @Override
         public void handleSimpleNodeIdentInfoRequest(SimpleNodeIdentInfoRequestMessage msg,
-                                                     Connection sender) {
+                Connection sender) {
             if (msg.getDestNodeID().equals(nodeID)) {
                 // Sending a SNIP reply to the bus crashes the library up to 0.7.7.
-                if (msg.getSourceNodeID().equals(nodeID) || (Version.major > 0 || Version.minor > 7 || Version.libMod > 7)) {
+                if (msg.getSourceNodeID().equals(nodeID) || Version.libVersionAtLeast(0, 7, 8)) {
                     getInterface().getOutputConnection().put(new SimpleNodeIdentInfoReplyMessage(nodeID, msg.getSourceNodeID(), content), this);
                 }
             }
         }
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.openlcb.OlcbActionListBundle");
     }
@@ -381,7 +387,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
             @Override
             public void reply(CanReply m) {
-                if (!m.isExtended() || m.isRtr()) return;
+                if (!m.isExtended() || m.isRtr()) {
+                    return;
+                }
                 olcbIf.frameInput().send(convertFromCan(m));
             }
         });
@@ -397,10 +405,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     static OpenLcbCanFrame convertFromCan(jmri.jmrix.can.CanFrame message) {
         OpenLcbCanFrame fin = new OpenLcbCanFrame(0);
         fin.setHeader(message.getHeader());
-        if (message.getNumDataElements() == 0) return fin;
+        if (message.getNumDataElements() == 0) {
+            return fin;
+        }
         byte[] data = new byte[message.getNumDataElements()];
         for (int i = 0; i < data.length; ++i) {
-            data[i] = (byte)(message.getElement(i) & 0xff);
+            data[i] = (byte) (message.getElement(i) & 0xff);
         }
         fin.setData(data);
         return fin;
@@ -410,6 +420,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
      * State machine to handle startup
      */
     class StartUpHandler {
+
         javax.swing.Timer timer;
 
         static final int START_DELAY = 2500;
@@ -418,15 +429,13 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             log.debug("StartUpHandler starts up");
             // wait geological time for adapter startup
             javax.swing.Action doNextStep = new javax.swing.AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -5412454245885537585L;
 
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     new Thread(() -> {
                         olcbCanInterface.initialize();
                     }).start();
+                    timer.stop();
                 }
             };
 
@@ -438,4 +447,4 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     private final static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class.getName());
 }
 
-/* @(#)OlcbConfigurationManager.java */
+

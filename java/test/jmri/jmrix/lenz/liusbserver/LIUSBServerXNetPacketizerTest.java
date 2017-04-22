@@ -1,42 +1,66 @@
 package jmri.jmrix.lenz.liusbserver;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * <p>
  * Title: LIUSBServerXNetPacketizerTest </p>
  * <p>
- * Description: </p>
- * <p>
- * Copyright: Copyright (c) 2009</p>
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2009
  */
-public class LIUSBServerXNetPacketizerTest extends TestCase {
+public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
-    public void testCtor() {
-        LIUSBServerXNetPacketizer f = new LIUSBServerXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
-        Assert.assertNotNull(f);
-    }
+    @Test
+    @Override
+    public void testOutbound() throws Exception {
+        LIUSBServerXNetPacketizer c = (LIUSBServerXNetPacketizer)tc;
+        // connect to iostream via port controller scaffold
+        jmri.jmrix.lenz.XNetPortControllerScaffold p = new jmri.jmrix.lenz.XNetPortControllerScaffold();
+        c.connectPort(p);
+        jmri.jmrix.lenz.XNetMessage m = jmri.jmrix.lenz.XNetMessage.getTurnoutCommandMsg(22, true, false, true);
+        m.setTimeout(1);  // don't want to wait a long time
+        c.sendXNetMessage(m, null);
 
-    // from here down is testing infrastructure
-    public LIUSBServerXNetPacketizerTest(String s) {
-        super(s);
-    }
+        p.flush();
+        jmri.util.JUnitUtil.waitFor(()->{return p.tostream.available()==13;},"total length 13");
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LIUSBServerXNetPacketizerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+        Assert.assertEquals("total length ", 13, p.tostream.available());
+        Assert.assertEquals("Char 0", '5', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 1", '2', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 2", ' ', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 3", '0', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 4", '5', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 5", ' ', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 6", '8', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 7", 'A', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 8", ' ', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 9", 'D', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 10", 'D', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 11", '\n', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 12", '\r', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("remaining ", 0, p.tostream.available());
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new LIUSBServerXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
+        tc = null;
         apps.tests.Log4JFixture.tearDown();
     }
 

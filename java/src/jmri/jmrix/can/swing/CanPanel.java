@@ -18,6 +18,7 @@ abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanP
      */
     protected CanSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
     }

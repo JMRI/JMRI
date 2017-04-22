@@ -1,4 +1,3 @@
-// TamsConnectionTypeList.java
 package jmri.jmrix.tams;
 
 /**

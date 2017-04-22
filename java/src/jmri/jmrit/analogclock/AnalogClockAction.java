@@ -7,14 +7,9 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a AnalogClockFrame object Copied from
  * code for NixieClockAction by Bob Jacobsen
  *
- * @author	Dennis Miller Copyright (C) 2004
+ * @author Dennis Miller Copyright (C) 2004
  */
 public class AnalogClockAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4819621738581568597L;
 
     public AnalogClockAction() {
         this("Analog Clock");
@@ -24,6 +19,7 @@ public class AnalogClockAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         AnalogClockFrame f = new AnalogClockFrame();

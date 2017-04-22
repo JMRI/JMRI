@@ -20,6 +20,7 @@ public class SprogPacketGenAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SprogPacketGenFrame f = new SprogPacketGenFrame(_memo);
         try {
@@ -33,4 +34,4 @@ public class SprogPacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)SprogPacketGenAction.java */
+

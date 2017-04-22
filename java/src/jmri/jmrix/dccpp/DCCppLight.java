@@ -1,4 +1,3 @@
-// DCCppLight.java
 package jmri.jmrix.dccpp;
 
 import jmri.implementation.AbstractLight;
@@ -50,6 +49,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     /*
      * Dispose of the light object
      */
+    @Override
     public void dispose() {
         tc.removeDCCppListener(DCCppInterface.FEEDBACK | DCCppInterface.COMMINFO | DCCppInterface.CS_INFO, this);
         super.dispose();
@@ -92,6 +92,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     /**
      * Return the current state of this Light
      */
+    @Override
     synchronized public int getState() {
         return mState;
     }
@@ -100,6 +101,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
      * Set the current state of this Light This routine requests the hardware to
      * change.
      */
+    @Override
     synchronized public void setState(int newState) {
         if (newState != ON && newState != OFF) {
             // Unsuported state
@@ -107,28 +109,22 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
             return;
         }
 
-	log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
+ log.debug("Light Set State: mstate = {} newstate = {}", mState, newState);
 
         // get the right packet
-	// Going to use the Stationary Decoder here, with the convention/assumption that:
-	// mAddress = (address - 1) * 4 + subaddress + 1 for address>0;
-	if (mAddress > 0) {
-	    int addr = (mAddress - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
-	    int subaddr = (mAddress - 1) % (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
-	    boolean state = (newState == jmri.Light.ON);
-	    DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(addr,
-								    subaddr,
-								    state);
-	    //InternalState = COMMANDSENT;
-	    tc.sendDCCppMessage(msg, this);
+ if (mAddress > 0) {
+     boolean state = (newState == jmri.Light.ON);
+     DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(mAddress, state);
+     //InternalState = COMMANDSENT;
+     tc.sendDCCppMessage(msg, this);
 
-	    if (newState != mState) {
-		int oldState = mState;
-		mState = newState;
-		// notify listeners, if any
-		firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
-	    }
-	}
+     if (newState != mState) {
+  int oldState = mState;
+  mState = newState;
+  // notify listeners, if any
+  firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
+     }
+ }
     }
 
     /*
@@ -136,18 +132,21 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
      *  NOTE: We aren't registered as a listener, so This is only triggered 
      *  when we send out a message
      */
+    @Override
     synchronized public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
-	// We don't expect a reply, so we don't do anything with replies.
+ // We don't expect a reply, so we don't do anything with replies.
     }
 
     // listen for the messages to the LI100/LI101
+    @Override
     public void message(DCCppMessage l) {
     }
 
     // Handle a timeout notification
+    @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
@@ -157,4 +156,4 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     private final static Logger log = LoggerFactory.getLogger(DCCppLight.class.getName());
 }
 
-/* @(#)DCCppLight.java */
+

@@ -1,19 +1,18 @@
 package jmri.util;
 
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
-
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
-
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.util.SwingTestCase class.
@@ -27,6 +26,9 @@ public class SwingTestCaseTest extends SwingTestCase {
      * and seeing that the check changed its state.
      */
     public void testCheckBox() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume because TestCase
+        }
         // create a little GUI with a single check box
         JFrame f = new JFrame("SwingTextCaseTest");
         f.setSize(100, 100);	        // checkbox must be visible for test to work
@@ -50,7 +52,7 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.dispose();
     }
 
-    /** 
+    /**
      * Test formatting
      */
     public void testFormatPixel() {
@@ -59,29 +61,31 @@ public class SwingTestCaseTest extends SwingTestCase {
         Assert.assertEquals("0xffffffff", formatPixel(0xffffffff));
         Assert.assertEquals("0xffffff0f", formatPixel(0xffffff0f));
     }
- 
+
     public void testAssertPixel() {
         assertPixel("test RED", Pixel.RED, 0xffff0000);
     }
-    
-    public void testAssertImageNinePoints() {
 
+    public void testAssertImageNinePoints() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume because TestCase
+        }
         // special target to make sure we're doing the right points
         JFrame f = new JFrame();
         f.getContentPane().setBackground(java.awt.Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-        
+
         JLabel wIcon = new JLabel(new ImageIcon("resources/icons/CornerBits.gif")); // 13 high 39 wide
         wIcon.setOpaque(false);
-        
+
         f.add(wIcon);
         f.pack();
         flushAWT();
-        Assert.assertEquals("icon size", new Dimension(39, 13).toString(),wIcon.getSize().toString());
-         
-        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
-        
-        Assert.assertEquals("icon arraylength", 39*13, val.length);
+        Assert.assertEquals("icon size", new Dimension(39, 13).toString(), wIcon.getSize().toString());
+
+        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+
+        Assert.assertEquals("icon arraylength", 39 * 13, val.length);
 
         assertImageNinePoints("test image", val, wIcon.getSize(),
                 Pixel.RED, Pixel.GREEN, Pixel.BLUE,
@@ -93,7 +97,9 @@ public class SwingTestCaseTest extends SwingTestCase {
      * Confirm methodology to test the content of a JLabel
      */
     public void testGetDisplayedContentGreen() {
-    
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume because TestCase
+        }
         JFrame f = new JFrame();
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
@@ -101,17 +107,17 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.add(wIcon);
         f.pack();
         flushAWT();
-        
-        Assert.assertEquals("icon size", new Dimension(13,13).toString(),wIcon.getSize().toString());
- 
-        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
-        
-        Assert.assertEquals("icon arraylength", 13*13, val.length);
 
-        assertPixel("icon first",   Pixel.GREEN, val[0]);
-        assertPixel("icon middle",  Pixel.GREEN, val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1]);
-        assertPixel("icon last",    Pixel.GREEN, val[wIcon.getSize().height*wIcon.getSize().width-1]);
-        
+        Assert.assertEquals("icon size", new Dimension(13, 13).toString(), wIcon.getSize().toString());
+
+        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+
+        Assert.assertEquals("icon arraylength", 13 * 13, val.length);
+
+        assertPixel("icon first", Pixel.GREEN, val[0]);
+        assertPixel("icon middle", Pixel.GREEN, val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width + (int) Math.floor(wIcon.getSize().width / 2) - 1]);
+        assertPixel("icon last", Pixel.GREEN, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
+
         Assert.assertEquals("icon first", "0xff00ff00", formatPixel(val[0])); // compare strings to make error readable
 
         assertImageNinePoints("icon", val, wIcon.getSize(),
@@ -120,71 +126,75 @@ public class SwingTestCaseTest extends SwingTestCase {
                 Pixel.GREEN, Pixel.GREEN, Pixel.GREEN);
 
         f.dispose();
-        
+
     }
-    
+
     /**
      * Confirm methodology to test transparent pixels in a JLabel
      */
     public void testGetDisplayedContentRedTransparentBkg() {
-    
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume because TestCase
+        }
         JFrame f = new JFrame();
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-        
+
         JLabel wIcon = new JLabel(new ImageIcon("resources/icons/redTransparentBox.gif")); // 13x13
         wIcon.setOpaque(true);
         wIcon.setBackground(java.awt.Color.blue);
-        
+
         f.add(wIcon);
         f.pack();
         flushAWT();
-        Assert.assertEquals("icon size", new Dimension(13,13).toString(),wIcon.getSize().toString());
-         
-        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
-        
-        Assert.assertEquals("icon arraylength", 13*13, val.length);
-        
-        assertPixel("icon first",   Pixel.RED, val[0]);
-        assertPixel("icon middle",  Pixel.BLUE, val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1]);
-        assertPixel("icon last",    Pixel.RED, val[wIcon.getSize().height*wIcon.getSize().width-1]);
-        
+        Assert.assertEquals("icon size", new Dimension(13, 13).toString(), wIcon.getSize().toString());
+
+        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+
+        Assert.assertEquals("icon arraylength", 13 * 13, val.length);
+
+        assertPixel("icon first", Pixel.RED, val[0]);
+        assertPixel("icon middle", Pixel.BLUE, val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width + (int) Math.floor(wIcon.getSize().width / 2) - 1]);
+        assertPixel("icon last", Pixel.RED, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
+
         Assert.assertEquals("icon first", "0xffff0000", formatPixel(val[0])); // compare strings to make error readable
 
         assertImageNinePoints("icon", val, wIcon.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
-        
+
         f.dispose();
     }
-    
+
     public void testGetDisplayedContentRedTransparentTransp() {
-    
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume because TestCase
+        }
         JFrame f = new JFrame();
         f.getContentPane().setBackground(java.awt.Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-        
+
         JLabel wIcon = new JLabel(new ImageIcon("resources/icons/redTransparentBox.gif")); // 13x13
         wIcon.setOpaque(false);
-        
+
         f.add(wIcon);
         f.pack();
         flushAWT();
-        Assert.assertEquals("icon", new Dimension(13,13).toString(),wIcon.getSize().toString());
-         
-        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
-        
+        Assert.assertEquals("icon", new Dimension(13, 13).toString(), wIcon.getSize().toString());
+
+        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+
         assertImageNinePoints("test image", val, wIcon.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.TRANSPARENT, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
-        
+
         // now check that background shows through
         // Need to find the icon location first
-        Point p = SwingUtilities.convertPoint(wIcon,0,0,f.getContentPane());
-        
+        Point p = SwingUtilities.convertPoint(wIcon, 0, 0, f.getContentPane());
+
         val = getDisplayedContent(f.getContentPane(), wIcon.getSize(), p);
-        Assert.assertEquals("frame arraylength", 13*13, val.length);
+        Assert.assertEquals("frame arraylength", 13 * 13, val.length);
 
         assertImageNinePoints("frame", val, wIcon.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
@@ -194,7 +204,6 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.dispose();
     }
 
-    
     // from here down is testing infrastructure
     public SwingTestCaseTest(String s) {
         super(s);
@@ -213,15 +222,17 @@ public class SwingTestCaseTest extends SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         //apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         //apps.tests.Log4JFixture.tearDown();
     }
 
-	//static Logger log = LoggerFactory.getLogger(SwingTestCaseTest.class.getName());
+    //static Logger log = LoggerFactory.getLogger(SwingTestCaseTest.class.getName());
 }

@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -69,17 +68,18 @@ public class XBeeIOStreamTest {
        a=null;
    }
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         tc = new XBeeInterfaceScaffold();
-        byte uad[] = {(byte) 0x00, (byte) 0x02};
         tc.setAdapterMemo(new XBeeConnectionMemo());
+        byte uad[] = {(byte) 0x00, (byte) 0x02};
         node = (XBeeNode) tc.getNodeFromAddress(uad);
         Assume.assumeNotNull(tc,node);
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @After
+    public void tearDown() {
         tc.dispose();
         tc = null;
         node = null;

@@ -16,14 +16,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
   */
 public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3189519475374368759L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs

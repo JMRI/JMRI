@@ -1,4 +1,3 @@
-// Dcc4PcReply.java
 package jmri.jmrix.dcc4pc;
 
 import jmri.jmrix.AbstractMRReply;
@@ -8,10 +7,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Dcc4PcReply.java
  *
- * Description:	Carries the reply to a Dcc4PcMessage
+ * Description: Carries the reply to a Dcc4PcMessage
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
 public class Dcc4PcReply extends AbstractMRReply {
@@ -36,6 +35,7 @@ public class Dcc4PcReply extends AbstractMRReply {
     }
 
     // no need to do anything
+    @Override
     protected int skipPrefix(int index) {
         return index;
     }
@@ -125,6 +125,7 @@ public class Dcc4PcReply extends AbstractMRReply {
     /**
      * Returns the index of String s in the reply
      */
+    @Override
     public int match(String s) {
         // find a specific string in the reply
         String rep = new String(_dataChars, 0, _nDataChars);
@@ -147,6 +148,7 @@ public class Dcc4PcReply extends AbstractMRReply {
         return msg;
     }
 
+    @Override
     public int maxSize() {
         return maxSize;
     }
@@ -154,6 +156,3 @@ public class Dcc4PcReply extends AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class.getName());
 
 }
-
-
-/* @(#)Dcc4PcReply.java */

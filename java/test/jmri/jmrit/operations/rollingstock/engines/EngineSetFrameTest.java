@@ -1,6 +1,7 @@
 //EngineSetFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -8,8 +9,10 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations EnginesSetFrame class
@@ -19,7 +22,9 @@ import junit.framework.TestSuite;
  */
 public class EngineSetFrameTest extends OperationsSwingTestCase {
 
+    @Test
     public void testEngineSetFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineSetFrame f = new EngineSetFrame();
         f.setTitle("Test Engine Set Frame");
         f.initComponents();
@@ -31,7 +36,8 @@ public class EngineSetFrameTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadEngines();
@@ -119,24 +125,9 @@ public class EngineSetFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
     }
 
-    public EngineSetFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineSetFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineSetFrameTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

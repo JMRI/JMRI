@@ -1,4 +1,3 @@
-// StackMonDataModel.java
 package jmri.jmrix.lenz.swing.stackmon;
 
 import javax.swing.JTable;
@@ -18,10 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7752680157999743122L;
     static private final int ADDRCOLUMN = 0;    // Locomotive address
     static private final int TYPECOLUMN = 1;    // Type of Database Entry
     //static private final int PLACEHODLER = 2;   // 
@@ -53,6 +48,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         _stackFrame = stackFrame;
     }
 
+    @Override
     public int getRowCount() {
         try {
             return (_addressList.size());
@@ -61,10 +57,12 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case ADDRCOLUMN:
@@ -76,6 +74,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ADDRCOLUMN:
@@ -87,6 +86,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         log.debug("isCellEditable called for row: " + row + " column: " + col);
         if (col == DELCOLUMN) {
@@ -96,6 +96,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         log.debug("getValueAt called for row: " + row + " column: " + col);
         // some error checking
@@ -115,6 +116,7 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         log.debug("setValueAt called for row: " + row + " column: " + col);
         switch (col) {

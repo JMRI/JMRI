@@ -1,4 +1,3 @@
-// EcosReply.java
 package jmri.jmrix.ecos;
 
 import java.util.Arrays;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Some rudimentary support is provided for the "binary" option.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
  */
 public class EcosReply extends jmri.jmrix.AbstractMRReply {
@@ -30,15 +29,18 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // these can be very large
+    @Override
     public int maxSize() {
         return 5000;
     }
 
     // no need to do anything
+    @Override
     protected int skipPrefix(int index) {
         return index;
     }
 
+    @Override
     public int value() {
         if (isBinary()) {
             return getElement(0) & 0xFF;  // avoid stupid sign extension
@@ -124,6 +126,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     }
 
     //An event message is Unsolicited
+    @Override
     public boolean isUnsolicited() {
         if (isEvent()) {
             setUnsolicited();
@@ -263,4 +266,4 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     private final static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
 }
 
-/* @(#)EcosReply.java */
+

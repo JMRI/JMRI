@@ -1,9 +1,13 @@
 //CarSetFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations CarSetFrame class
@@ -12,7 +16,9 @@ import junit.framework.TestSuite;
  */
 public class CarSetFrameTest extends OperationsSwingTestCase {
 
+    @Test
     public void testCarSetFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         loadCars();		// load cars
         CarSetFrame f = new CarSetFrame();
         f.setTitle("Test Car Set Frame");
@@ -101,28 +107,14 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @After
+    public void setUp() throws Exception {
         super.setUp();
     }
 
-    public CarSetFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarSetFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarSetFrameTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @Before
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

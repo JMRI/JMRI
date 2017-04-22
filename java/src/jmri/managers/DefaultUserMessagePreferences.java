@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -36,10 +37,11 @@ import org.slf4j.LoggerFactory;
  * next time"
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager} instead.
+ * @deprecated Since 4.5.4; use {@link jmri.managers.JmriUserPreferencesManager}
+ * instead.
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+@SuppressFBWarnings(
         value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Class is single-threaded, and uses statics extensively")
 @Deprecated
@@ -53,9 +55,11 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     DefaultUserMessagePreferences(boolean doInit) {
-        if (doInit) init();
+        if (doInit) {
+            init();
+        }
     }
-    
+
     void init() {
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
@@ -97,7 +101,18 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         readUserPreferences();
     }
 
+    @Override
+    public boolean isSaveAllowed() {
+        return DefaultUserMessagePreferencesHolder.instance.allowSave;
+    }
+
+    @Override
+    public void setSaveAllowed(boolean saveAllowed) {
+        DefaultUserMessagePreferencesHolder.instance.allowSave = saveAllowed;
+    }
+
     private static class DefaultUserMessagePreferencesHolder {
+
         static DefaultUserMessagePreferences instance = null;
     }
 
@@ -112,14 +127,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         DefaultUserMessagePreferencesHolder.instance = null;
     }
 
-    public synchronized void allowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = true;
-    }
-
-    public synchronized void disallowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = false;
-    }
-
+    @Override
     public Dimension getScreen() {
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
@@ -139,6 +147,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param name  A unique name to identify the state being stored
      * @param state simple boolean.
      */
+    @Override
     public void setSimplePreferenceState(String name, boolean state) {
         if (state) {
             if (!simplePreferenceList.contains(name)) {
@@ -160,6 +169,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * The name is free-form, but to avoid ambiguity it should start with the
      * package name (package.Class) for the primary using class.
      */
+    @Override
     public boolean getSimplePreferenceState(String name) {
         return simplePreferenceList.contains(name);
     }
@@ -167,6 +177,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns an ArrayList of the checkbox states set as true.
      */
+    @Override
     public ArrayList<String> getSimplePreferenceStateList() {
         return simplePreferenceList;
     }
@@ -190,6 +201,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param item     The specific item that is to be stored
      * @param state    Boolean state of the item.
      */
+    @Override
     public void setPreferenceState(String strClass, String item, boolean state) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
@@ -214,6 +226,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Returns the state of a given item registered against a specific class or
      * item.
      */
+    @Override
     public boolean getPreferenceState(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
@@ -237,7 +250,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param description A meaningful decription of the item that the user will
      *                    understand.
      */
-    public void preferenceItemDetails(String strClass, String item, String description) {
+    @Override
+    public void setPreferenceItemDetails(String strClass, String item, String description) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
@@ -255,6 +269,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Returns a list of preferences that are registered against a specific
      * class.
      */
+    @Override
     public ArrayList<String> getPreferenceList(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
@@ -271,6 +286,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns the itemName of the n preference in the given class
      */
+    @Override
     public String getPreferenceItemName(String strClass, int n) {
         if (classPreferenceList.containsKey(strClass)) {
             return classPreferenceList.get(strClass).getPreferenceName(n);
@@ -281,6 +297,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns the description of the given item preference in the given class
      */
+    @Override
     public String getPreferenceItemDescription(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
@@ -304,8 +321,9 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name  A unique identifer for preference.
+     * @param name A unique identifer for preference.
      */
+    @Override
     public void setSessionPreferenceState(String name, boolean state) {
         if (state) {
             if (!sessionPreferenceList.contains(name)) {
@@ -327,6 +345,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * The name is free-form, but to avoid ambiguity it should start with the
      * package name (package.Class) for the primary using class.
      */
+    @Override
     public boolean getSessionPreferenceState(String name) {
         return sessionPreferenceList.contains(name);
     }
@@ -342,6 +361,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param strClass String value of the calling class
      * @param item     String value of the specific item this is used for
      */
+    @Override
     public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
         showInfoMessage(title, message, strClass, item, false, true);
     }
@@ -362,6 +382,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
+    @Override
     public void showErrorMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
     }
@@ -382,6 +403,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
+    @Override
     public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
     }
@@ -402,6 +424,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
+    @Override
     public void showWarningMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.WARNING_MESSAGE);
     }
@@ -452,6 +475,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * package name (package.Class) for the primary using class, followed by an
      * identifier for the combobox
      */
+    @Override
     public void addComboBoxLastSelection(String comboBoxName, String lastValue) {
         if (getComboBoxLastSelection(comboBoxName) == null) {
             ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
@@ -466,6 +490,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * returns the last selected value in a given combobox
      *
      */
+    @Override
     public String getComboBoxLastSelection(String comboBoxName) {
         for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
             if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
@@ -479,26 +504,34 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * sets the last selected value in a given combobox
      *
      */
+    @Override
     public void setComboBoxLastSelection(String comboBoxName, String lastValue) {
-        for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
-            if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
-                _comboBoxLastSelection.get(i).setLastValue(lastValue);
+        if (getComboBoxLastSelection(comboBoxName) == null) {
+            ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
+            _comboBoxLastSelection.add(combo);
+        } else {
+            for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
+                if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
+                    _comboBoxLastSelection.get(i).setLastValue(lastValue);
+                }
             }
         }
         setChangeMade(false);
     }
 
     /**
-     * returns the number of comboBox options saved
-     *
+     * @return the number of comboBox options saved
      */
     public int getComboBoxSelectionSize() {
         return _comboBoxLastSelection.size();
     }
 
     /**
-     * returns the ComboBox Name at position n
+     * Get the combo box name at position n in the array of combo box
+     * selections.
      *
+     * @param n the position in the array
+     * @return the ComboBox Name at position n
      */
     public String getComboBoxName(int n) {
         try {
@@ -509,8 +542,11 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     /**
-     * returns the ComboBox Value at position n
+     * Get the ComboBox Value at position n in the array of combo box
+     * selections.
      *
+     * @param n the position in the array
+     * @return the ComboBox value at position n
      */
     public String getComboBoxLastSelection(int n) {
         try {
@@ -562,16 +598,19 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     //The reset is used after the preferences have been loaded for the first time
+    @Override
     public synchronized void resetChangeMade() {
         _changeMade = false;
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered
         if (!listeners.contains(l)) {
@@ -600,10 +639,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     private static volatile boolean _loading = false;
 
+    @Override
     public void setLoading() {
         _loading = true;
     }
 
+    @Override
     public void finishLoading() {
         _loading = false;
         resetChangeMade();
@@ -619,6 +660,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     Hashtable<String, WindowLocations> windowDetails = new Hashtable<String, WindowLocations>();
 
+    @Override
     public Point getWindowLocation(String strClass) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getLocation();
@@ -626,6 +668,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
+    @Override
     public Dimension getWindowSize(String strClass) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getSize();
@@ -633,6 +676,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
+    @Override
     public boolean getSaveWindowSize(String strClass) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getSaveSize();
@@ -640,6 +684,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return false;
     }
 
+    @Override
     public boolean getSaveWindowLocation(String strClass) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getSaveLocation();
@@ -647,18 +692,21 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return false;
     }
 
+    @Override
     public void setSaveWindowSize(String strClass, boolean b) {
         if (windowDetails.containsKey(strClass)) {
             windowDetails.get(strClass).setSaveSize(b);
         }
     }
 
+    @Override
     public void setSaveWindowLocation(String strClass, boolean b) {
         if (windowDetails.containsKey(strClass)) {
             windowDetails.get(strClass).setSaveLocation(b);
         }
     }
 
+    @Override
     public void setWindowLocation(String strClass, Point location) {
         if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
             return;
@@ -670,6 +718,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         setChangeMade(false);
     }
 
+    @Override
     public void setWindowSize(String strClass, Dimension dim) {
         if (strClass.equals("jmri.util.JmriJFrame")) {
             return;
@@ -681,6 +730,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         setChangeMade(false);
     }
 
+    @Override
     public ArrayList<String> getWindowList() {
         ArrayList<String> list = new ArrayList<String>();
         Enumeration<String> keys = windowDetails.keys();
@@ -691,6 +741,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return list;
     }
 
+    @Override
     public void setProperty(String strClass, String key, Object value) {
         if (strClass.equals("jmri.util.JmriJFrame")) {
             return;
@@ -701,6 +752,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         windowDetails.get(strClass).setProperty(key, value);
     }
 
+    @Override
     public Object getProperty(String strClass, String key) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getProperty(key);
@@ -708,6 +760,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
+    @Override
     public java.util.Set<String> getPropertyKeys(String strClass) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getPropertyKeys();
@@ -715,7 +768,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
-    public boolean isWindowPositionSaved(String strClass) {
+    @Override
+    public boolean hasProperties(String strClass) {
         return windowDetails.containsKey(strClass);
     }
 
@@ -724,6 +778,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns the description of a class/group registered with the preferences.
      */
+    @Override
     public String getClassDescription(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
             return classPreferenceList.get(strClass).getDescription();
@@ -734,6 +789,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns a list of the classes registered with the preference manager.
      */
+    @Override
     public ArrayList<String> getPreferencesClasses() {
         ArrayList<String> list = new ArrayList<String>();
         Enumeration<String> keys = classPreferenceList.keys();
@@ -754,6 +810,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * invoke the methods, this will then trigger the class to send details
      * about its preferences back to this code.
      */
+    @Override
     public void setClassDescription(String strClass) {
         try {
             Class<?> cl = Class.forName(strClass);
@@ -885,33 +942,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param item          String value of the specific item this is used for.
      * @param description   A meaningful description that can be used in a label
      *                      to describe the item
-     * @param msgOption     Description of each option valid option.
-     * @param msgNumber     The references number against which the Description
-     *                      is refering too.
-     * @param defaultOption The default option for the given item.
-     */
-    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
-        HashMap<Integer, String> options = new HashMap<Integer, String>(msgOption.length);
-        for (int i = 0; i < msgOption.length; i++) {
-            options.put(msgNumber[i], msgOption[i]);
-        }
-        messageItemDetails(strClass, description, item, options, defaultOption);
-    }
-
-    /**
-     * Add descriptive details about a specific message box, so that if it needs
-     * to be reset in the preferences, then it is easily identifiable. displayed
-     * to the user in the preferences GUI.
-     *
-     * @param strClass      String value of the calling class/group
-     * @param item          String value of the specific item this is used for.
-     * @param description   A meaningful description that can be used in a label
-     *                      to describe the item
      * @param options       A map of the integer value of the option against a
      *                      meaningful description.
      * @param defaultOption The default option for the given item.
      */
-    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
+    @Override
+    public void setMessageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
@@ -932,6 +968,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param strClass Class or group of the given item
      * @param item     the item which we wish to return the details about.
      */
+    @Override
     public HashMap<Integer, String> getChoiceOptions(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
@@ -948,6 +985,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Returns the number of Mulitple Choice items registered with a given
      * class.
      */
+    @Override
     public int getMultipleChoiceSize(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
             return classPreferenceList.get(strClass).getMultipleChoiceListSize();
@@ -959,6 +997,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Returns a list of all the multiple choice items registered with a given
      * class.
      */
+    @Override
     public ArrayList<String> getMultipleChoiceList(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
@@ -974,6 +1013,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns the nth item name in a given class
      */
+    @Override
     public String getChoiceName(String strClass, int n) {
         if (classPreferenceList.containsKey(strClass)) {
             return classPreferenceList.get(strClass).getChoiceName(n);
@@ -985,6 +1025,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Returns the a meaningful description of a given item in a given class or
      * group.
      */
+    @Override
     public String getChoiceDescription(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
@@ -1000,6 +1041,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns the current value of a given item in a given class
      */
+    @Override
     public int getMultipleChoiceOption(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
@@ -1015,6 +1057,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Returns the default value of a given item in a given class
      */
+    @Override
     public int getMultipleChoiceDefaultOption(String strClass, String choice) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
@@ -1031,6 +1074,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * Sets the value of a given item in a given class, by its string
      * description
      */
+    @Override
     public void setMultipleChoiceOption(String strClass, String choice, String value) {
         if (!classPreferenceList.containsKey(strClass)) {
             return;
@@ -1046,6 +1090,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * Sets the value of a given item in a given class, by its integer value
      */
+    @Override
     public void setMultipleChoiceOption(String strClass, String choice, int value) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
@@ -1161,6 +1206,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     /**
      * returns the combined size of both types of items registered.
      */
+    @Override
     public int getPreferencesSize(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
             return classPreferenceList.get(strClass).getPreferencesSize();

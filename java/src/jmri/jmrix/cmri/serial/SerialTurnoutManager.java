@@ -12,7 +12,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <P>
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -22,10 +22,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
        _memo = memo;
     }
 
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = "";
@@ -99,6 +101,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * other turnout control options, such as pulsed control of turnout
      * machines.
      */
+    @Override
     public int askNumControlBits(String systemName) {
 
         // ask user how many bits should control the turnout - 1 or 2
@@ -145,6 +148,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * for 'pulsed' control, where n specifies the duration of the pulse
      * (normally in seconds).
      */
+    @Override
     public int askControlType(String systemName) {
         // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
         //   'pulsed' output (some turnout controllers).
@@ -200,27 +204,23 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
                 javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
     }
 
-    /**
-     * @deprecated JMRI Since 4.5.1 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
-
     //Turnout format is more than a simple format.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public boolean isNumControlBitsSupported(String systemName) {
         return true;
     }
 
+    @Override
     public boolean isControlTypeSupported(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         int seperator = 0;
         String tmpSName;
@@ -264,6 +264,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * A method that returns the next valid free turnout hardware address
      */
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
         try {
@@ -314,4 +315,4 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
 }
 
-/* @(#)SerialTurnoutManager.java */
+

@@ -24,6 +24,7 @@ public class PacketGenAction extends AbstractAction {
         this("Generate SRCP message",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PacketGenFrame f = new PacketGenFrame(_memo);
         try {

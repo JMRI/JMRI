@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 public class PathTurnoutTableModel extends AbstractTableModel {
 
@@ -64,24 +64,31 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
+    @Override
     public int getRowCount() {
         return _path.getSettings().size() + 1;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case TURNOUT_NAME_COL:
                 return Bundle.getMessage("LabelItemName");
             case SETTINGCOLUMN:
                 return Bundle.getMessage("ColumnSetting");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
 
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (_path.getSettings().size() == rowIndex) {
             return tempRow[columnIndex];
@@ -112,10 +119,14 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 }
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (_path.getSettings().size() == row) {
             switch (col) {
@@ -135,6 +146,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     initTempRow();
                     fireTableRowsUpdated(row, row);
                     return;
+                default:
+                    // fall through
+                    break;
             }
             Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(tempRow[TURNOUT_NAME_COL]);
             if (t != null) {
@@ -200,13 +214,19 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     _path.removeSetting(bs);
                     fireTableDataChanged();
                 }
+                break;
+            default:
+                log.warn("Unhandled col: {}", col);
+                break;
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         return true;
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL) {
             return JButton.class;
@@ -224,6 +244,9 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                 return new JTextField(10).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }

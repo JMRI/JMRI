@@ -1,6 +1,8 @@
 package jmri.jmrix.mrc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
+import org.python.jline.internal.Log;
 
 /**
  * Some of the message formats used in this class are Copyright MRC, Inc. and
@@ -440,34 +442,39 @@ public class MrcPackets {
 
     /**
      * Adds the description of the clock's mode to a message being built
+     * @param m clock info message
+     * @param txt build description of clock info onto this
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
+    @SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
     static void appendClockMessage(MrcMessage m, StringBuilder txt) {
         int clockModeBits = m.getElement(2) & 0xC0;
         switch (clockModeBits) {
-            case 0x00:	// AM format
+            case 0x00: // AM format
                 txt.append((m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockModeAm")); //IN18N
                 break;
-            case 0x40:	// PM format
+            case 0x40: // PM format
                 txt.append((m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockModePm")); //IN18N
                 break;
-            case 0x80:	// 24 hour format
+            case 0x80: // 24 hour format
                 txt.append(twoDigits.format(m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockMode24"));//IN18N
                 break;
-            case 0xC0:	// Unk format
+            case 0xC0: // Unk format
                 txt.append(twoDigits.format(m.getElement(2) & 0x1F)
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
+                break;
+            default:
+                Log.warn("Unhandled clock mode code: {}", clockModeBits);
                 break;
         }
     }

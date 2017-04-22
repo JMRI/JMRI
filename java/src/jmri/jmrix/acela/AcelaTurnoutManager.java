@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Based in part on AcelaTurnoutManager.java
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified
  * to establish Acela support.
  */
 public class AcelaTurnoutManager extends AbstractTurnoutManager {
@@ -27,6 +27,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      * Returns the system letter for Acela
      */
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
@@ -36,6 +37,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * system name is not in a valid format Assumes calling method has checked
      * that a Light with this system name does not already exist
      */
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout trn = null;
         // check if the output bit is available
@@ -49,7 +51,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
             return (null);
         }
 
-// Bob C: Fix this up		
+// Bob C: Fix this up  
 /*
          conflict = AcelaAddress.isOutputBitFree(nAddress,bitNum);
          if ( conflict != "" ) {

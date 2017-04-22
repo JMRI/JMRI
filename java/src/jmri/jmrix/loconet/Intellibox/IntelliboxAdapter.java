@@ -1,6 +1,6 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.Intellibox;
 
+import java.util.Arrays;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * Since this is by definition connected to an Intellibox, the command station
  * prompt has limited choices
  *
- * @author	Alex Shepherd Copyright (C) 2004
+ * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
   */
 public class IntelliboxAdapter extends LocoBufferAdapter {
@@ -31,6 +31,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
      * Set up all of the other objects to operate with a LocoBuffer connected to
      * this port.
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -50,20 +51,17 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Get an array of valid baud rates as integers.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public int[] validBaudNumber() {
-        return validSpeedValues;
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**

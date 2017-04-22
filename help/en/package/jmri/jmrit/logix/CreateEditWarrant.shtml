@@ -46,7 +46,7 @@
       <b>Define Route</b> tab in the Edit Warrant window.
 
       <h3>Origin, Destination, Via and Avoid Blocks</h3>The Origin
-      Block is obviously where a train given this route will start
+      Block is where a train given this route will start
       and the starting path within the origin block is the track it
       is on - e.g. a path named "Departure Track #3" in block named
       "Main Terminal". Choosing the portal of the path, e.g. portal
@@ -104,8 +104,8 @@
             portal for the destination. This is needed when the
             layout has reversing loops allowing the path to be
             entered from either end. <i>A common mistake where no
-            route will be found is to specify an entry portal or
-            path that cannot be reached by the direction taken when
+            route will be found is to specify an <b>entry portal</b> or
+            <b>path</b> that cannot be reached by the direction taken when
             leaving the origin block.</i>
           </div>
 
@@ -155,9 +155,11 @@
           "max length", it presents a list of the routes that it
           found and their lengths. Choose a route by pressing its
           radio button. Pressing the <b>Review</b> button will
-          display the route for you to examine in the Route Table.
-          Each block, path and portals used to traverse the route
-          is displayed.</p>
+          display the route for you to examine in a Train Route Table.
+          Each block, its path and portals used to traverse the route
+          is displayed. Also you can view the route on the PanelPro layout
+          diagram if the track icons consist of <i>Indicator Track,</i>
+          icons.</p>
 
           <p>You may inspect all the routes in this manner.
           Choosing a route and pressing the <b>Select</b> button
@@ -205,7 +207,7 @@
           you trace the attempted routes you may find that you have
           forgotten to enter a path or mis-labeled the correct
           portal to a path. <i>A common mistake is to incorrectly
-          specify the portal that must be used to leave the
+          specify the path or portal that must be used to leave the
           starting block or to enter the destination block.</i></p>
 
           <p>Another possible reason is the search depth was
@@ -214,38 +216,26 @@
           by entering a larger number in the <b>Max Number of
           Blocks in Route</b> box.</p>
 
-          <p>When you are satisfied with the route, select the
-          <b>Record/Playback Script</b> tab.</p>
-
-          <h2>Choosing the warrant type</h2>You may select whether
-          your warrant shall be of the <a href=
-          "Warrant.shtml">normal kind</a> (by selecting "Use
-          throttle commands") or it shall be a <a href=
-          "SCWarrant.shtml">signal controlled warrant</a> (by
-          selecting "Use signals").
-
-          <p>For signal controlled warrants, you can select whether
-          your train shall move backwards or forwards and how many
-          milliseconds it shall run into the destination block.</p>
-
-          <p>Standard warrants are somewhat more flexible, i.e. you
-          can determine which throttle commands that shall be
-          executed as the train moves along its route. This is
-          described further in the following.</p>
-
-          <h2>Recording and Editing a Script</h2>Recording a script
-          is done from the <b>Record/Playback Script</b> tab. Radio
-          buttons on this tab allow you to select either the
+          <p><p>When you are satisfied with the route, the
+          <b>Record/Playback Script</b> tab will be selected for
+          you. </p>
+          <p>At the very top are
+          two Radio buttons which allow you to select either the
           <b>Route Table</b> or the <b>Throttle Command Table</b>.
           The Route Table shows the track circuits (OBlock, Portals
           and Paths) the warrant defines. The Throttle Command
-          Table shows each throttle command that is recorded in
-          "Learn Mode". After recording, the table can be edited.
+          Table shows the throttle commands that will be used 
+          when driving the train over the warrant's route.
           Additional items on this tab allow you pick the engine to
           power your train and to test and modify the recorded
-          script.
+          script. Presently the <b>Throttle Commands</b> table is
+          empty. The bottom half displays four
+          outlined areas; <b>Choose Engine Consist</b>, 
+          <b>Learn mode</b>, <b>Run Parameters,</b> and <b>Test 
+          Run Train,</b>. The first thing to do
+          is to choose an engine consist.
 
-          <h3>Choosing a train</h3>The <b>Train Name</b> field is
+          <h3>Choosing a Train</h3>The <b>Train Name</b> field is
           used to provide a name that can be displayed by an
           indicator track icon as the train travels along the
           warrant route. If you have defined an JMRI engine roster,
@@ -256,7 +246,7 @@
 
           <p>A DCC address typed into the<b>Address</b> text field
           will be used whether or not it is found in the JMRI
-          engine roster.</p>
+          Engine Roster.</p>
 
           <h2>Learn Mode</h2>Throttle commands are created by
           recording the commands you send to a train while
@@ -282,11 +272,13 @@
           </div>The learn script should be done with a completely
           clear route - All turnouts set should be set for the
           route, all blocks unoccupied (except origin), all signals
-          should be set for clear runing and no changes made during
+          should be set for clear running and no changes made during
           the recording period. When the train is run by playing
           back the script, any changes to signal aspects will be
           taken into account and the train's speed and scheduled
-          times will be altered accordingly.
+          times will be altered accordingly. The recorded 
+          speeds and elapsed times should be for unrestricted
+          speeds.
 
           <p>Pressing the <b>Stop</b> button will end the
           recording.</p>
@@ -294,12 +286,50 @@
           <div style="margin-left: 2em">
             <b>NOTE:</b> The train must <b><i>not</i></b> be moving
             when the recording is stopped. <i>When play back of the
-            warrant ends, the train continue to run without a
-            warrant to control it!</i>
+            warrant ends, the train might continue to run without a
+            warrant to control it!</i> After recording a script, check 
+            the ending throttle commands to see thst the speed is set
+            to 0.0           
           </div>
-
+          
+          	In normal operation, when the script is played back, 
+          	the train will follow the commands as recorded.
+			However if a track condition ahead of it is detected that 
+			requires a speed change, the warrant will modify the recorded
+			speed accordingly.  Track conditions requiring speed changes
+			is discussed in <a href="Warrant.shtml #SpeedMap">Warrants 
+			and Speed Restrictions</a>.
+			When the warrant makes such a speed change it "ramps" the change
+			in small steps to give a more prototypical smooth look to
+			the change.  When decreasing speed it calculates and issues
+			these step-wise speed changes so that the required speed is 
+			achieved just at the point where the speed limit must be enforced.
+			When increasing speed it begins a similar "ramp up" when entering
+			the block permitting the speed increase.
+					
+			<h3>Run Parameters</h3>This area has check boxes to modify
+			how the train will operate when running the warrant.
+			<ul>
+			<li><b>Clearance to Share Route</b> Normally a track warrant
+			assigns exclusive rights to only one train.  This option allows
+			several trains to share rights to a route, such as train sections 
+			following one another. Multiple "shared warrants" are still
+			subject to ramping speed changes due to signals or rogue
+			occupancy.</li> 
+			<li><b>Don't Ramp Speed Changes</b> Suppress the 
+			ramping calculations. Instead, thw warrant makes immediate speed
+			change upon entering the approach block to the block requiring
+			a speed change.</li>
+			<li><b>Use Elapsed Time Only</b> Do not synchronize commands
+			with block detection. <i>Using this options allows Warrants to
+			be run on layouts without block detection.</i></li>
+			</ul> 
+			Using the "Don't Ramp" or "Elapsed Time" options are the 
+			only cases where block path lengths and engine speed factors
+			are not necessary. 
+			
           <h2>Run Mode</h2>After a script is recorded, pressing the
-          <b>AutoRun</b> button in the <b>Run Train</b> box will
+          <b>AutoRun</b> button in the <b>Test Run Train</b> box will
           send the throttle commands to the train specified in the
           warrant.
 
@@ -308,29 +338,21 @@
             Path of the Origin block of the route and the direction
             of the engine is compatible with the first direction
             specified in the throttle commands.
-          </div>The <b>Run Train</b> box will display each block
+          </div>
+          <p>The <b>Status</b> field will display each block
           entered by the train as it traverses the route.
 
-          <p>The occupancy detection and synchronized commands used
-          to notify a train when it enters a block depends on
-          accurate occupancy detection. If the layout does not have
-          reliable occupancy detection, automated trains may run
-          with unexpected consequences. Trains may wait
-          indefinitely when false detection occurs. However, the
-          block protection done when entering a block can be
-          disabled. The following radio buttons set this:</p>
+          <p>The <b>Test Run Train</b> box has four radio buttons to
+          control the train and override the Throttle commands.
 
-          <ul>
-            <li><b>Run with block Protection</b>: - Runs the train
-            with the occupancy detection when entering blocks and
-            with the synchronization features.</li>
-
-            <li><b>Run with blocks dark</b>: - Runs the train as
-            described for Dark Blocks.</li>
-          </ul>
-
-          <h2>saving the Warrant</h2>When you are satisfied with
-          the performance of the warrant, prees the <b>Save</b>
+		    <ul>
+			<li><b>Halt</b>Ramp the speed down to a stop.</li>
+			<li><b>Resume</b>Ramp the speed up to its previous speed.</li>
+			<li><b>E-Stop</b>Issue an Emergency Stop to the train.</li>
+			<li><b>Abort</b>Stop the train and null the warrant.</li>
+			</ul>          
+		  <h2>Saving the Warrant</h2>When you are satisfied with
+          the performance of the warrant, press the <b>Save</b>
           button to add the warrant to the <a href=
           "WarrantTable.shtml">Warrant Table</a>.
 
@@ -348,7 +370,7 @@
 
             <li><b>Value</b>: - The value of the command.</li>
 
-            <li><b>Block</b>: - The block the train occupied when
+            <li><b>Block Name</b>: - The block the train occupied when
             the throttle command was recorded.</li>
           </ul>
 
@@ -356,8 +378,8 @@
           boundaries.</h3>Changing the consist of a train or
           perhaps even a temperature change between recording and
           playback, may result in the train not performing a
-          throttle command at the same place on the on the route
-          where the "Learn Mode" train recorded them.
+          throttle command at exactly the same place on the on the 
+          route where the "Learn Mode" train recorded them.
 
           <p>The entry into each block is recorded with a "NoOp"
           marker. These markers are used to synchronize the elapsed
@@ -369,7 +391,8 @@
           are issued to the running train. This will be the case if
           the train is late in arriving at the block. On the other
           hand if the train arrives earlier than expected the
-          elapsed times of the preceding block will be skipped.</p>
+          remaining commands of the preceding block are executed in
+          fractions of a second to catch up.</p>
 
           <p>If a more precise way is needed to have a script event
           occur at a particular location, see the section
@@ -428,7 +451,7 @@
           <b><i>Command</i></b> column and a valid sensor name in
           the <b><i>Block</i></b> column. The <b><i>Value</i></b>
           column should have the action you want the sensor to take
-          at its execution time - the words <b>active</b> or
+          at its execution time. That is enter the words <b>active</b> or
           <b>inactive</b>. Also enter the elapsed time when to
           trigger the setting of the sensor. On playback when this
           command is executed the state of the sensor will be set.
@@ -443,7 +466,7 @@
           name in the <b><i>Block</i></b> column. The
           <b><i>Value</i></b> column should have the action words
           <b>active</b> or <b>inactive</b>. On playback when this
-          command is executed the script pauses and the current
+          command is executed the script is suspended and the current
           movement of the train is sustained until the sensor
           changes to the specified state. When that happens the
           script continues to execute according to the recorded
@@ -455,13 +478,68 @@
           slow speed until the sensor makes the detection. Then the
           script continues and the speed 0 command stops the train.
 
-          <p>Likewise the script and train may stay stopped until a
+          <p>The script and train will stay stopped until a
           second "Wait Sensor" command triggers the script to
           continue.</p>
 
-          <p>If the "Wait Sensor" is already at the specified state
-          when playback executes its command the script
-          continues.</p>
+          <p><b>Note</b>This can be a dangerous command to use.  To 
+          be clear, the following is a sample script segment.</p>
+          <table border="1">
+            <tr>
+              <th colspan="0.25">#</th>
+              <th colspan="1.25">ET(msec)</th>
+              <th colspan="1.5">Command</th>
+              <th colspan="1.5">Value</th>
+              <th colspan="2.75">Block or Sensor Name</th>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>1000</td>
+              <td>speed</td>
+              <td>0.1111</td>
+              <td>OB_WEST_YARD</td>
+            </tr>
+            <tr>
+              <td>11</td>
+              <td>1000</td>
+              <td>speed</td>
+              <td>0.05</td>
+              <td>OB_WEST_YARD</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>0</td>
+              <td>Wait Sensor</td>
+              <td>Active</td>
+              <td>IS_STOP_TRAIN</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>0</td>
+              <td>speed</td>
+              <td>0.0</td>
+              <td>OB_WEST_YARD</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>10</td>
+              <td>Wait Sensor</td>
+              <td>Inactive</td>
+              <td>IS_STOP_TRAIN</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>0</td>
+              <td>speed</td>
+              <td>0.1111</td>
+              <td>OB_WEST_YARD</td>
+            </tr>
+          </table>
+          The train continues the speed of Command #11 until the 
+          sensor at command #12 <b>changes</b> to active. If 
+          already active, the train continues to move. Command #13
+          stops the train and it remains stopped until the sensor
+          at command #14 <b>changes</b> to inactive.</p>
 
           <h3>Automatic Sequencing of Scripts</h3>It is possible to
           start another script from a script. To do this, insert a
@@ -490,10 +568,8 @@
           <table border="1">
             <tr>
               <th colspan="1.75">Command</th>
-
               <th colspan="1.75">Value</th>
-
-              <th colspan="1.75">Block</th>
+              <th colspan="1.75">Block or Sensor Name</th>
             </tr>
 
             <tr>
@@ -573,7 +649,7 @@
           the initial setting of turnouts, the warrant cannot reset
           the turnouts or modify its speed while the train is
           <em>en route</em>. This means there is no protection from
-          rouge trains fouling the route or from turnouts being
+          rogue trains fouling the route or from turnouts being
           changed while the train is <em>en route</em>. Therefore,
           run trains with caution over Dark Blocks.
 
@@ -581,10 +657,10 @@
           differently that an occupancy block. Obviously, entry
           into an occupancy Block is recorded when the occupancy
           block detects occupancy. However entry into a Dark Block
-          can only be recorded as the time when the previous
+          can only be recorded when the previous
           occupancy Block shows no occupancy. That is, the elapsed
-          time for entry into a Dark Block is recorded by the tail
-          of the train not the head.</p>
+          time for entry into a Dark Block is recorded by the the tail
+          of the train entered the dark, not the head.</p>
 
           <h2>Save etc.</h2>There are three buttons at the bottom
           of the window:

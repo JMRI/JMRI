@@ -1,4 +1,3 @@
-// LnMessageManager.java
 package jmri.jmrix.loconet;
 
 /**
@@ -10,7 +9,7 @@ package jmri.jmrix.loconet;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnMessageManager implements LocoNetListener {
 
@@ -61,9 +60,7 @@ public class LnMessageManager implements LocoNetListener {
      * This doesn't do anything now. Eventually, it will handle the user
      * response.
      */
+    @Override
     public void message(LocoNetMessage m) {
     }
 }
-
-
-/* @(#)LnMessageManager.java */

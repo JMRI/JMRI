@@ -26,6 +26,7 @@ public class ProgListenerScaffold implements ProgListener {
         rcvdStatus = -1;
     }
 
+    @Override
     public void programmingOpReply(int value, int status) {
         rcvdValue = value;
         rcvdStatus = status;
@@ -51,4 +52,4 @@ public class ProgListenerScaffold implements ProgListener {
 }
 
 
-/* @(#)ProgListenerScaffold.java */
+

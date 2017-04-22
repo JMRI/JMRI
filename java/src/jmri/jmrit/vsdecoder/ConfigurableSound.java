@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 // JMRI and Java stuff
@@ -94,6 +94,7 @@ class ConfigurableSound extends VSDSound {
         return (is_playing);
     }
 
+    @Override
     public void play() {
         if (use_short_sound) {
             short_sound.play();
@@ -102,6 +103,7 @@ class ConfigurableSound extends VSDSound {
             if (use_start_sound) {
                 t = newTimer(start_sound.getLengthAsInt(), false,
                         new ActionListener() {
+                    @Override
                             public void actionPerformed(ActionEvent e) {
                                 handleTimerPop(e);
                             }
@@ -118,12 +120,14 @@ class ConfigurableSound extends VSDSound {
         }
     }
 
+    @Override
     public void loop() {
         if (use_start_sound) {
             start_sound.setLooped(false);
             start_sound.play();
             t = newTimer(start_sound.getLengthAsInt() - 100, false,
                     new ActionListener() {
+                @Override
                         public void actionPerformed(ActionEvent e) {
                             handleTimerPop(e);
                         }
@@ -148,6 +152,7 @@ class ConfigurableSound extends VSDSound {
         t.stop();
     }
 
+    @Override
     public void stop() {
         log.warn("Stopping");
         // make sure the start sound is killed
@@ -179,14 +184,17 @@ class ConfigurableSound extends VSDSound {
         is_playing = false;
     }
 
+    @Override
     public void fadeIn() {
         this.play();
     }
 
+    @Override
     public void fadeOut() {
         this.stop();
     }
 
+    @Override
     public void shutdown() {
         if (use_start_sound) {
             start_sound.stop();

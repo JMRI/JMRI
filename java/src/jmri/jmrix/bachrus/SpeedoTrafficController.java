@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  *
  * Removed Runnable implementation and methods for it
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
@@ -33,10 +33,12 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     // The methods to implement the SpeedoInterface
     protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
 
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
 
+    @Override
     public synchronized void addSpeedoListener(SpeedoListener l) {
         // add only if not already registered
         if (l == null) {
@@ -47,6 +49,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         }
     }
 
+    @Override
     public synchronized void removeSpeedoListener(SpeedoListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);
@@ -153,6 +156,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      * only dealing with DATA_AVAILABLE but the other events are left here for
      * reference. AJB Jan 2010
      */
+    @Override
     public void serialEvent(SerialPortEvent event) {
         switch (event.getEventType()) {
             case SerialPortEvent.BI:
@@ -188,6 +192,9 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 }
 
                 break;
+            default:
+                log.warn("Unhandled event type: {}", event.getEventType());
+                break;
         }
     }
 
@@ -208,6 +215,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 SpeedoReply msgForLater = thisReply;
                 SpeedoTrafficController myTC = thisTC;
 
+                @Override
                 public void run() {
                     myTC.notifyReply(msgForLater);
                 }

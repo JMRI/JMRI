@@ -3,6 +3,7 @@ package apps.gui3;
 import apps.AppsBase;
 import apps.SplashWindow;
 import apps.SystemConsole;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -49,13 +50,17 @@ import org.slf4j.LoggerFactory;
  * There are a large number of missing features marked with TODO in comments
  * including code from the earlier implementation.
  * <P>
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public abstract class Apps3 extends AppsBase {
 
     /**
      * Initial actions before frame is created, invoked in the applications
      * main() routine.
+     * <ul>
+     * <li> Operations from {@link AppsBase#preInit(String)}
+     * <li> Initialize the console support
+     * </ul>
      *
      * @param applicationName application name
      */
@@ -107,7 +112,7 @@ public abstract class Apps3 extends AppsBase {
      * For compatability with adding in buttons to the toolbar using the
      * existing createbuttonmodel
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected static void setButtonSpace() {
         _buttonSpace = new JPanel();
@@ -129,18 +134,13 @@ public abstract class Apps3 extends AppsBase {
     protected JmriJFrame mainFrame;
 
     protected void initializeHelpSystem() {
-        try {
+        // initialize help system
+        HelpUtil.initOK();
 
-            // initialize help system
-            HelpUtil.initOK();
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-            // help items are set in the various Tree/Menu/Toolbar constructors        
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help: " + e3);
-        }
+        // help items are set in the various Tree/Menu/Toolbar constructors        
     }
 
     abstract protected void createMainFrame();
@@ -212,7 +212,7 @@ public abstract class Apps3 extends AppsBase {
             debugListener = new AWTEventListener() {
 
                 @Override
-                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
+                @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "debugmsg write is semi-global")
                 public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button
@@ -323,7 +323,7 @@ public abstract class Apps3 extends AppsBase {
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
-        // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
+        // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use

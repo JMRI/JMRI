@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 @net.jcip.annotations.Immutable
 public enum LnCommandStationType {
@@ -75,6 +75,7 @@ public enum LnCommandStationType {
         return canRead;
     }
 
+    @Override
     public String toString() {
         return name;
     }
@@ -92,7 +93,7 @@ public enum LnCommandStationType {
                 return p;
             }
         }
-        throw new java.lang.IllegalArgumentException("argument value [" + name + "] not valid");
+        throw new java.lang.IllegalArgumentException("argument value [" + name + "] not valid"); // NOI18N
     }
 
     /**
@@ -101,8 +102,8 @@ public enum LnCommandStationType {
     public ThrottleManager getThrottleManager(LocoNetSystemConnectionMemo memo) {
         try {
             // uses reflection
-            String className = "jmri.jmrix.loconet." + throttleClassName;
-            log.debug("attempting to create {}", className);
+            String className = "jmri.jmrix.loconet." + throttleClassName; // NOI18N
+            log.debug("attempting to create {}", className); // NOI18N
             Class<?> c = Class.forName(className);
             java.lang.reflect.Constructor<?>[] allConstructors = c.getDeclaredConstructors();
             for (java.lang.reflect.Constructor<?> ctor : allConstructors) {
@@ -131,7 +132,7 @@ public enum LnCommandStationType {
     public SlotManager getSlotManager(LnTrafficController tc) {
         try {
             // uses reflection
-            String className = "jmri.jmrix.loconet." + slotManagerClassName;
+            String className = "jmri.jmrix.loconet." + slotManagerClassName; // NOI18N
             log.debug("attempting to create {}", className);
             Class<?> c = Class.forName(className);
             java.lang.reflect.Constructor<?>[] allConstructors = c.getDeclaredConstructors();

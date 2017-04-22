@@ -28,10 +28,12 @@ public class TrackPowerController extends AbstractController implements Property
         }
     }
 
+    @Override
     public boolean verifyCreation() {
         return isValid;
     }
 
+    @Override
     public void handleMessage(String message) {
         if (message.charAt(0) == 'A') {
             if (message.charAt(1) == '1') {
@@ -89,14 +91,17 @@ public class TrackPowerController extends AbstractController implements Property
 
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         sendCurrentState();
     }
 
+    @Override
     public void register() {
         pwrMgr.addPropertyChangeListener(this);
     }
 
+    @Override
     public void deregister() {
         pwrMgr.removePropertyChangeListener(this);
     }

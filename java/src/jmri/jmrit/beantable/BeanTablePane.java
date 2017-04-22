@@ -23,15 +23,15 @@ import jmri.util.com.sun.TableSorter;
  * provide, and by providing a {@link #extras} implementation that can in turn
  * invoke {@link #addToBottomBox} as needed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
-    Box bottomBox;		// panel at bottom for extra buttons etc
-    int bottomBoxIndex;	// index to insert extra stuff
+    Box bottomBox;  // panel at bottom for extra buttons etc
+    int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
     public void init(BeanTableDataModel model) {
@@ -56,7 +56,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
         // install items in GUI
         add(dataScroll);
         bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
         bottomBoxIndex = 0;
 
         add(bottomBox);
@@ -74,19 +74,19 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
         // set preferred scrolling options
         dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
     }
 
     /**
-     * Hook to allow sub-types to install more items in GUI
+     * Hook to allow sub-types to install more items in GUI.
      */
     void extras() {
     }
 
     /**
-     * Hook to allow sub-typing of JTable created
+     * Hook to allow sub-typing of JTable created.
      *
      * @param sorter the sorter model
+     * @return JTable created
      * @deprecated since 4.5.4; use
      * {@link jmri.jmrit.beantable.BeanTableDataModel#makeJTable(java.lang.String, javax.swing.table.TableModel, javax.swing.RowSorter)}
      * instead.
@@ -101,8 +101,9 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Add a component to the bottom box. Takes care of organising glue, struts
-     * etc
+     * Add a component to the bottom box.
+     * <p>
+     * Takes care of organising glue, struts etc.
      *
      * @param comp {@link Component} to add
      */
@@ -113,6 +114,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
         ++bottomBoxIndex;
     }
 
+    @Override
     public void dispose() {
         if (dataModel != null) {
             dataModel.dispose();

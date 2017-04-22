@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * type.
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class PaneEditAction extends AbstractAction {
     Object o1, o2, o3, o4;
@@ -38,6 +38,7 @@ public class PaneEditAction extends AbstractAction {
 
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (log.isDebugEnabled()) {
@@ -58,6 +59,7 @@ public class PaneEditAction extends AbstractAction {
         // known entry, no programmer
         JPanel pane1 = new KnownLocoSelPane(false) {  // not programming
 
+            @Override
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
                 String title = SymbolicProgBundle.getMessage("FrameEditEntryTitle");
@@ -65,6 +67,7 @@ public class PaneEditAction extends AbstractAction {
                         title, "programmers" + File.separator + filename + ".xml",
                         null, false) {
 
+                    @Override
                             protected JPanel getModePane() {
                                 return null;
                             }

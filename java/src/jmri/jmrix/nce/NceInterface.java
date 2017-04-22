@@ -1,11 +1,10 @@
-// NceInterface.java
 package jmri.jmrix.nce;
 
 /**
  * Define interface for sending and receiving messages to the NCE command
  * station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public interface NceInterface {
 
@@ -29,4 +28,4 @@ public interface NceInterface {
     void sendNceMessage(NceMessage m, NceListener l);
 }
 
-/* @(#)NceInterface.java */
+

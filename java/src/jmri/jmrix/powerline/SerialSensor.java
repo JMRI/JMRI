@@ -1,4 +1,3 @@
-// SerialSensor.java
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractSensor;
@@ -6,16 +5,11 @@ import jmri.implementation.AbstractSensor;
 /**
  * Extend jmri.AbstractSensor for serial systems
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SerialSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7887272776433351376L;
 
     public SerialSensor(String systemName, SerialTrafficController tc) {
         super(systemName);
@@ -38,9 +32,10 @@ public class SerialSensor extends AbstractSensor {
      * Eventually, we may want to have this move the related AIU to the top of
      * the polling queue.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 
 }
 
-/* @(#)SerialSensor.java */
+

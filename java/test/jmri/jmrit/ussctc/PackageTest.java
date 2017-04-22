@@ -1,5 +1,6 @@
 package jmri.jmrit.ussctc;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,17 +27,25 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.ussctc.PackageTest");   // no tests in this class itself
         suite.addTest(jmri.jmrit.ussctc.FollowerTest.suite());
-        suite.addTest(jmri.jmrit.ussctc.FollowerActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.ussctc.FollowerActionTest.class));
         suite.addTest(jmri.jmrit.ussctc.OsIndicatorTest.suite());
-        suite.addTest(jmri.jmrit.ussctc.OsIndicatorActionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrit.ussctc.OsIndicatorActionTest.class));
+        suite.addTest(new JUnit4TestAdapter(BasePanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(FollowerFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(FollowerPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(OsIndicatorFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(OsIndicatorPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(ToolsMenuTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

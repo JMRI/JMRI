@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 /**
  * Swing action to create and show a "Simple Signal Logic" GUI panel.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class BlockBossAction extends AbstractAction {
 
@@ -23,6 +23,7 @@ public class BlockBossAction extends AbstractAction {
         this(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Simple_Signal_Logic"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create the frame

@@ -22,7 +22,7 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: B&O-2005 (CSX) Signaling Definition
+JMRI: B&O-2009 (CSX) Signaling Definition
 </h1>
 
 This directory contains signaling definitions corresponding to 
@@ -42,7 +42,10 @@ signal masts are the same but with unused lamps left off.
 Signal Mast definitions:
 <ul>
 <li><a href="appearance-full.xml">Signal mast with full set of marker lamps</a>
+<li><a href="appearance-bothm.xml">Signal mast with full left set of marker lamps</a>
+<li><a href="appearance-boths.xml">Signal mast with full right set of marker lamps</a>
 <li><a href="appearance-fast1.xml">Basic full speed home signal mast with top centre marker lamp</a>
+<li><a href="appearance-junm.xml">Signal mast with central and top left marker lamps</a>
 <li><a href="appearance-med1.xml">Basic medium speed home signal mast with bottom centre marker lamp</a>
 <li><a href="appearance-slow.xml">Basic slow speed home signal mast with no marker lamps</a>
 <li><a href="appearance-block.xml">Basic full speed block signal mast with top centre marker lamp and number plate</a>

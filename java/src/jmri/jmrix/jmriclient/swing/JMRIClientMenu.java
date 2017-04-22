@@ -1,4 +1,3 @@
-// JMRIClientMenu.java
 package jmri.jmrix.jmriclient.swing;
 
 import java.util.ResourceBundle;
@@ -7,14 +6,9 @@ import javax.swing.JMenu;
 /**
  * Create a "JMRIClient" menu containing the system-specific tools
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class JMRIClientMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5861232083288110754L;
 
     public JMRIClientMenu(String name, jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
         this(memo);

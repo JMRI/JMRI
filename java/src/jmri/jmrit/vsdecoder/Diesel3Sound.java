@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -113,6 +113,7 @@ class Diesel3Sound extends EngineSound {
     }
 
     // Responds to "CHANGE" trigger
+    @Override
     public void changeThrottle(float s) {
         // This is all we have to do.  The loop thread will handle everything else.
         if (_loopThread != null) {
@@ -236,7 +237,7 @@ class Diesel3Sound extends EngineSound {
                 sb.addLoopBuffers(l);
                 j++;
             }
-	    //log.debug("Notch: " + nn + " File: " + fn);
+     //log.debug("Notch: " + nn + " File: " + fn);
 
             // Gain is broken, for the moment.  Buffers don't have gain. Sources do.
             //_sound.setGain(setXMLGain(el));
@@ -490,22 +491,15 @@ class Diesel3Sound extends EngineSound {
 
         static public List<AudioBuffer> getBufferList(VSDFile vf, String filename, String sname, String uname) {
             List<AudioBuffer> buflist = null;
-            if (vf == null) {
-                // Need to fix this.
-                //buf.setURL(vsd_file_base + filename);
-                log.debug("No VSD File");
-                return (null);
+            java.io.InputStream ins = vf.getInputStream(filename);
+            if (ins != null) {
+                //buflist = AudioUtil.getSplitInputStream(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
+                buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix + filename, ins, 250, 100);
             } else {
-                java.io.InputStream ins = vf.getInputStream(filename);
-                if (ins != null) {
-                    //buflist = AudioUtil.getSplitInputStream(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
-                    buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix + filename, ins, 250, 100);
-                } else {
-                    log.debug("Input Stream failed");
-                    return (null);
-                }
-                return (buflist);
+                log.debug("Input Stream failed");
+                return (null);
             }
+            return (buflist);
         }
 
         static public AudioBuffer getBuffer(VSDFile vf, String filename, String sname, String uname) {
@@ -514,19 +508,12 @@ class Diesel3Sound extends EngineSound {
             try {
                 buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + filename);
                 buf.setUserName(VSDSound.BufUserNamePrefix + uname);
-                if (vf == null) {
-                    // Need to fix this.
-                    //buf.setURL(vsd_file_base + filename);
-                    log.debug("No VSD File");
-                    return (null);
+                java.io.InputStream ins = vf.getInputStream(filename);
+                if (ins != null) {
+                    buf.setInputStream(ins);
                 } else {
-                    java.io.InputStream ins = vf.getInputStream(filename);
-                    if (ins != null) {
-                        buf.setInputStream(ins);
-                    } else {
-                        log.debug("Input Stream failed");
-                        return (null);
-                    }
+                    log.debug("Input Stream failed");
+                    return (null);
                 }
             } catch (AudioException | IllegalArgumentException ex) {
                 log.error("Problem creating SoundBite: " + ex);
@@ -569,7 +556,7 @@ class Diesel3Sound extends EngineSound {
             is_looping = false;
             is_dying = false;
             _notch = n;
-            _sound = new SoundBite(s, SoundBite.BufferMode.QUEUE_MODE);
+            _sound = new SoundBite(s);
             _sound.setGain(0.8f);
             _parent = d;
             _throttle = 0.0f;
@@ -641,6 +628,7 @@ class Diesel3Sound extends EngineSound {
             }
         }
 
+        @Override
         public void run() {
             try {
                 while (is_running) {

@@ -1,12 +1,14 @@
-/* SlotManager.java */
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+
 import jmri.CommandStation;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;
@@ -41,14 +43,21 @@ import org.slf4j.LoggerFactory;
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
+    /**
+     * Time to wait after programming operation complete on LocoNet
+     * before reporting completion and hence starting next operation
+     */
+    int postProgDelay = 100;
+
     public SlotManager(LnTrafficController tc) {
         this.tc = tc;
-        // need a longer LONG_TIMEOUT for Fleischman command stations
-        LONG_TIMEOUT = 180000;
+        // change timeout values from AbstractProgrammer superclass
+        LONG_TIMEOUT = 180000;  // Fleischman command stations take forever
+        SHORT_TIMEOUT = 8000;   // DCS240 reads
 
         loadSlots();
 
@@ -56,7 +65,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         tc.addLocoNetListener(~0, this);
 
         // We will scan the slot table every 10 s for in-use slots that are stale
-        staleSlotCheckTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+        final int slotScanDelay = 10000; // 10 seconds; must be less than 90, see checkStaleSlots()
+        staleSlotCheckTimer = new javax.swing.Timer(slotScanDelay, new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 checkStaleSlots();
             }
@@ -64,7 +75,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         );
 
         staleSlotCheckTimer.setRepeats(true);
-        staleSlotCheckTimer.setInitialDelay(30000);
+        staleSlotCheckTimer.setInitialDelay(3*slotScanDelay);  // wait a bit more at startup
         staleSlotCheckTimer.start();
     }
 
@@ -82,15 +93,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * interface.
      *
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
         if (repeats > 7) {
-            log.error("Too many repeats!");
+            log.error("Too many repeats!"); // NOI18N
         }
         if (packet.length <= 1) {
-            log.error("Invalid DCC packet length: " + packet.length);
+            log.error("Invalid DCC packet length: " + packet.length); // NOI18N
         }
         if (packet.length > 6) {
-            log.error("Only 6-byte packets accepted: " + packet.length);
+            log.error("Only 6-byte packets accepted: " + packet.length); // NOI18N
         }
 
         LocoNetMessage m = new LocoNetMessage(11);
@@ -186,18 +198,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         tc.sendLocoNetMessage(m);
     }
 
+    javax.swing.Timer staleSlotCheckTimer = null;
+
     /**
-     * method to scan the slot array looking for slots that are in-use but have
+     * Scan the slot array looking for slots that are in-use but have
      * not had any updates in over 90s and issue a read slot request to update
      * their state as the command station may have purged or stopped updating
      * the slot without telling us via a LocoNet message.
-     *
+     * <p>
      * This is intended to be called from the staleSlotCheckTimer
      */
-    javax.swing.Timer staleSlotCheckTimer = null;
-
     private void checkStaleSlots() {
-        long staleTimeout = System.currentTimeMillis() - 90000;
+        long staleTimeout = System.currentTimeMillis() - 90000;  // 90 seconds ago
         LocoNetSlot slot;
 
         // We will just check the normal loco slots 1 to 120
@@ -245,9 +257,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             v = (Vector<SlotListener>) slotListeners.clone();
         }
         if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " SlotListeners about slot "
-                    + s.getSlot());
+            log.debug("notify " + v.size() // NOI18N
+                    + " SlotListeners about slot " // NOI18N
+                    + s.getSlot()); 
         }
         // forward to all listeners
         int cnt = v.size();
@@ -265,6 +277,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      *
      * @param m incoming message
      */
+    @Override
     public void message(LocoNetMessage m) {
         // LACK processing for resend of immediate command
         if (!mTurnoutNoRetry && immedPacket != null && m.getOpCode() == LnConstants.OPC_LONG_ACK && m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
@@ -495,7 +508,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // If this is a LACK to a Slot op, and progState is command pending,
         // assume its for us...
         if (log.isDebugEnabled()) {
-            log.debug("LACK in state " + progState + " message: " + m.toString());
+            log.debug("LACK in state " + progState + " message: " + m.toString()); // NOI18N
         }
         if (checkLackByte1(m.getElement(1)) && progState == 1) {
             // in programming state
@@ -504,7 +517,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // 'not implemented' (op on main)
                 // but BDL16 and other devices can eventually reply, so
                 // move to commandExecuting state
-                log.debug("LACK accepted, next state 2");
+                log.debug("LACK accepted, next state 2"); // NOI18N
                 if ((_progRead || _progConfirm) && mServiceMode) {
                     startLongTimer();
                 } else {
@@ -518,10 +531,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 stopTimer();
                 notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
             } else if (checkLackAcceptedBlind(m.getElement(2))) { // task accepted blind
-                if ((_progRead || _progConfirm) && !mServiceMode) {	// incorrect Reserved OpSw setting can cause this response to OpsMode Read
+                if ((_progRead || _progConfirm) && !mServiceMode) { // incorrect Reserved OpSw setting can cause this response to OpsMode Read
                     // just treat it as a normal OpsMode Read response
                     // move to commandExecuting state
-                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2");
+                    log.debug("LACK accepted (ignoring incorrect OpSw), next state 2"); // NOI18N
                     startShortTimer();
                     progState = 2;
                 } else {
@@ -531,19 +544,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     stopTimer();
                     // have to send this in a little while to 
                     // allow command station time to execute
-                    int delay = 100; // milliseconds
-                    javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                    javax.swing.Timer timer = new javax.swing.Timer(postProgDelay, new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             notifyProgListenerEnd(-1, 0); // no value (e.g. -1), no error status (e.g.0)
                         }
                     });
                     timer.stop();
-                    timer.setInitialDelay(delay);
+                    timer.setInitialDelay(postProgDelay);
                     timer.setRepeats(false);
                     timer.start();
                 }
             } else { // not sure how to cope, so complain
-                log.warn("unexpected LACK reply code " + m.getElement(2));
+                log.warn("unexpected LACK reply code " + m.getElement(2)); // NOI18N
                 // move to not programming state
                 progState = 0;
                 // notify user ProgListener
@@ -558,15 +571,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // if here, i holds the slot number, and we expect to be able to parse
         // and have the slot handle the message
         if (i >= _slots.length || i < 0) {
-            log.error("Received slot number " + i
-                    + " is greater than array length " + _slots.length + " Message was "
+            log.error("Received slot number " + i // NOI18N
+                    + " is greater than array length " + _slots.length + " Message was " // NOI18N
                     + m.toString());
         }
         try {
             _slots[i].setSlot(m);
         } catch (LocoNetException e) {
             // must not have been interesting, or at least routed right
-            log.error("slot rejected LocoNetMessage" + m);
+            log.error("slot rejected LocoNetMessage" + m); // NOI18N
             return;
         }
         // notify listeners that slot may have changed
@@ -580,16 +593,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // note that slot has already been told, so
             // slot i has the address of this request
             int addr = _slots[i].locoAddr();
-            log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr);
+            log.debug("LOCO_ADR resp is slot {} for addr {}", i, addr); // NOI18N
             SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
             if (l != null) {
                 // only notify once per request
                 mLocoAddrHash.remove(Integer.valueOf(addr));
                 // and send the notification
-                log.debug("notify listener");
+                log.debug("notify listener"); // NOI18N
                 l.notifyChangedSlot(_slots[i]);
             } else {
-                log.debug("no request for addr {}", addr);
+                log.debug("no request for addr {}", addr); // NOI18N
             }
         }
     }
@@ -600,8 +613,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (i == 124) {
             // here its an operation on the programmer slot
             if (log.isDebugEnabled()) {
-                log.debug("Message " + m.getOpCodeHex()
-                        + " for slot 124 in state " + progState);
+                log.debug("Prog Message " + m.getOpCodeHex() // NOI18N
+                        + " for slot 124 in state " + progState); // NOI18N
             }
             switch (progState) {
                 case 0:   // notProgramming
@@ -612,6 +625,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 case 2:   // commandExecuting
                     // waiting for slot read, is it present?
                     if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
+                        log.debug("  was OPC_SL_RD_DATA"); // NOI18N
                         // yes, this is the end
                         // move to not programming state
                         stopTimer();
@@ -650,7 +664,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     }
                     break;
                 default:  // error!
-                    log.error("unexpected programming state " + progState);
+                    log.error("unexpected programming state " + progState); // NOI18N
                     break;
             }
         }
@@ -696,6 +710,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
+     * Service mode always checks for DecoderReply.  (The DCS240 also seems to do
+     * ReadAfterWrite, but that's not fully understood yet)
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.DecoderReply; }
+
+    /**
      * Set the command station type to one of the known types in the
      * {@link LnCommandStationType} enum.
      */
@@ -727,24 +749,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
-        if (log.isDebugEnabled()) {
-            log.debug("timeout fires in state " + progState);
-        }
+        log.debug("timeout fires in state {}", progState); // NOI18N
+        
         if (progState != 0) {
             // we're programming, time to stop
-            if (log.isDebugEnabled()) {
-                log.debug("timeout while programming");
-            }
+            log.debug("timeout while programming"); // NOI18N
+            
             // perhaps no communications present? Fail back to end of programming
             progState = 0;
             // and send the notification; error code depends on state
-            if (progState == 2 && !mServiceMode) // ops mode command executing,
-            // so did talk to command station at first
-            {
+            if (progState == 2 && !mServiceMode) { // ops mode command executing,
+                // so did talk to command station at first
                 notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.NoAck);
-            } else // all others
-            {
+            } else {
+                // all others
                 notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.FailedTimeout);
                 // might be leaving power off, but that's currently up to user to fix
             }
@@ -783,16 +803,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
-            throw new jmri.ProgrammerException("mode not supported");
+            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
         }
 
         doWrite(CV, val, p, pcmd);
     }
 
     public void doWrite(int CV, int val, jmri.ProgListener p, int pcmd) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeCV: " + CV);
-        }
+        log.debug("writeCV: {}", CV); // NOI18N
+
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
@@ -831,7 +850,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
-            throw new jmri.ProgrammerException("mode not supported");
+            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
         }
 
         doConfirm(CV, val, p, pcmd);
@@ -839,9 +858,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public void doConfirm(int CV, int val, ProgListener p,
             int pcmd) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("confirmCV: " + CV);
-        }
+
+        log.debug("confirmCV: {}", CV); // NOI18N
+
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
@@ -890,16 +909,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 || getMode().equals(DefaultProgrammerManager.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
         } else {
-            throw new jmri.ProgrammerException("mode not supported");
+            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
         }
 
         doRead(CV, p, pcmd);
     }
 
     void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("readCV: " + CV);
-        }
+
+        log.debug("readCV: {}", CV); // NOI18N
+
         stopEndOfProgrammingTimer();  // still programming, so no longer waiting for power off
 
         useProgrammer(p);
@@ -910,7 +929,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        tc.sendLocoNetMessage(progTaskStart(progByte, -1, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(progByte, 0, CV, false));
     }
 
     private jmri.ProgListener _usingProgrammer = null;
@@ -919,10 +938,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
-            }
-            throw new jmri.ProgrammerException("programmer in use");
+                
+            log.info("programmer already in use by {}", _usingProgrammer); // NOI18N
+
+            throw new jmri.ProgrammerException("programmer in use"); // NOI18N
         } else {
             _usingProgrammer = p;
             return;
@@ -951,7 +970,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(7, 0);  // TRK was 0, then 7 for PR2, now back to zero
 
         // store address in CVH, CVL. Note CVH format is truely wierd...
-        m.setElement(8, (addr & 0x300) / 16 + (addr & 0x80) / 128 + (val & 0x80) / 128 * 2);
+        m.setElement(8, ((addr & 0x300)>>4) | ((addr & 0x80) >> 7) | ((val & 0x80) >> 6));
         m.setElement(9, addr & 0x7F);
 
         // store low bits of CV value
@@ -970,6 +989,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param status The error code, if any
      */
     protected void notifyProgListenerEnd(int value, int status) {
+        log.debug("  notifyProgListenerEnd with {}, {} and _usingProgrammer = {}", value, status, _usingProgrammer); // NOI18N
         // (re)start power timer
         restartEndOfProgrammingTimer();
         // and send the reply
@@ -1006,53 +1026,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!mServiceMode) {
             delay = 100;  // value in ops mode
         }
-        NotifyDelay r = new NotifyDelay(delay, p, value, status);
-        r.start();
-    }
-
-    static class NotifyDelay extends Thread {
-
-        int delay;
-        ProgListener p;
-        int value;
-        int status;
-
-        NotifyDelay(int delay, ProgListener p, int value, int status) {
-            this.delay = delay;
-            this.p = p;
-            this.value = value;
-            this.status = status;
-        }
-
-        public void run() {
-            synchronized (this) {
-                try {
-                    wait(delay);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                }
+        
+        // delay and run on GUI thread
+        javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                p.programmingOpReply(value, status);
             }
-            // to avoid problems, we defer this to Swing thread
-            NotifyExec r = new NotifyExec(p, value, status);
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-    }
-
-    static class NotifyExec implements Runnable {
-
-        ProgListener p;
-        int value;
-        int status;
-
-        NotifyExec(ProgListener p, int value, int status) {
-            this.p = p;
-            this.value = value;
-            this.status = status;
-        }
-
-        public void run() {
-            p.programmingOpReply(value, status);
-        }
+        });
+        timer.setInitialDelay(delay);
+        timer.setRepeats(false);
+        timer.start();
     }
 
     /**
@@ -1070,16 +1054,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * is only needed in service mode.
      */
     protected void restartEndOfProgrammingTimer() {
+        final int delay = 10000;
         if (mProgEndSequence) {
             if (mPowerTimer == null) {
-                mPowerTimer = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+                mPowerTimer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                    @Override
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         doEndOfProgramming();
                     }
                 });
             }
             mPowerTimer.stop();
-            mPowerTimer.setInitialDelay(2000);
+            mPowerTimer.setInitialDelay(delay);
             mPowerTimer.setRepeats(false);
             mPowerTimer.start();
         }
@@ -1092,14 +1078,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (progState == 0) {
              if ( mServiceMode ) {
                 // finished service-track programming, time to power on
-                log.debug("end service-mode programming: turn power on");
+                log.debug("end service-mode programming: turn power on"); // NOI18N
                 try {
                     jmri.InstanceManager.getDefault(jmri.PowerManager.class).setPower(jmri.PowerManager.ON);
                 } catch (jmri.JmriException e) {
-                    log.error("exception during power on at end of programming: " + e);
+                    log.error("exception during power on at end of programming: {}", e); // NOI18N
                 }
             } else {
-                log.debug("end ops-mode programming: no power change");
+                log.debug("end ops-mode programming: no power change"); // NOI18N
             }
         }
     }
@@ -1139,6 +1125,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // schedule next read if needed
         if (nextReadSlot < 127) {
             javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     readNextSlot();
                 }
@@ -1167,13 +1154,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     LocoNetSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
-            return "LocoNet";
+            return "LocoNet"; // NOI18N
         }
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "L";
@@ -1188,6 +1177,3 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
 }
-
-
-/* @(#)SlotManager.java */

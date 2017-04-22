@@ -1,5 +1,6 @@
 package jmri.jmrit.operations;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
@@ -346,7 +347,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
     protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
 
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel();	// kludge fix for horizontal scrollbar
+        pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
         panel.add(pad);
 
@@ -360,13 +361,13 @@ public class OperationsPanel extends JPanel implements AncestorListener {
 
     @Override
     public void ancestorAdded(AncestorEvent event) {
-//		log.debug("Ancestor Added");
+//  log.debug("Ancestor Added");
         // do nothing
     }
 
     @Override
     public void ancestorRemoved(AncestorEvent event) {
-//		log.debug("Ancestor Removed");	
+//  log.debug("Ancestor Removed"); 
         // do nothing
     }
 
@@ -375,12 +376,12 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         if (pad != null) {
             if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
                 pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
-//				log.debug("Scrollbar visible: {}", pad.isVisible());
+//    log.debug("Scrollbar visible: {}", pad.isVisible());
             }
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Checks for instance")
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Checks for instance")
     protected String getWindowFrameRef() {
         if (this.getTopLevelAncestor() instanceof JmriJFrame) {
             return ((JmriJFrame) this.getTopLevelAncestor()).getWindowFrameRef();

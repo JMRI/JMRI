@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2016                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2017                                      -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -24,14 +24,14 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2016"/>
+    <property name="jmri.copyright.year" value="1997-2017"/>
 
     <property environment="env"/>
 
     <!-- local.properties file      (not an error if doesn't exist)                      -->
     <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
-    <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
+    <!--    # Your SourceForge ID (used for Javadocs, distribution) if different         -->
     <!--    sourceforge.userid=                                                          -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
@@ -179,12 +179,13 @@
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
+        <pathelement location="${libdir}/jna-4.4.0.jar"/>
+        <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.2.1.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.8.5.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.8.5.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.8.5.jar"/>
         <pathelement location="${libdir}/jetty-http-9.3.9.v20160517.jar"/>
         <pathelement location="${libdir}/jetty-security-9.3.9.v20160517.jar"/>
         <pathelement location="${libdir}/jetty-server-9.3.9.v20160517.jar"/>
@@ -199,7 +200,7 @@
         <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
-        <pathelement location="${libdir}/xbjlib-1.1.1.jar"/>
+        <pathelement location="${libdir}/xbee-java-library-1.2.0.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
         <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>
@@ -239,8 +240,8 @@
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
-         
-
+        <pathelement location="${libdir}/jemmy-2.2.7.5.jar"/>
+        <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -322,7 +323,7 @@
             <format property="TODAY" pattern="yyyyMMdd" timezone="GMT"/>
             <format property="NOW"   pattern="HHmm"     timezone="GMT"/>
         </tstamp>
-        <property name="release.build_date" value="${TODAY}${NOW}"/>
+        <property name="release.build_date" value="${TODAY}T${NOW}Z"/>
         <!-- Create the build directory structure used by compile -->
         <quiet>
         <mkdir dir="${target}"/>
@@ -337,6 +338,7 @@
             <filter token="release.major"          value="${release.major}"/>
             <filter token="release.minor"          value="${release.minor}"/>
             <filter token="release.build"          value="${release.build}"/>
+            <filter token="release.modifier"       value="${release.modifier}"/>
             <filter token="release.revision_id"    value="${release.revision_id}"/>
             <filter token="release.build_user"     value="${release.build_user}"/>
             <filter token="release.official"       value="${release.official}"/>
@@ -350,7 +352,6 @@
       <antversion property="ant-version-actual"/>
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
-
 
     <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
@@ -371,6 +372,17 @@
             </not>
           </condition>
         </fail>
+        <!-- create a URL-encoded version -->
+        <loadresource property="release.version-encoded-string">
+          <propertyresource name="release.version-string"/>
+          <filterchain>
+            <tokenfilter>
+              <filetokenizer/>
+              <replaceregex flags="g" pattern="\+" replace="%2B" />
+            </tokenfilter>
+          </filterchain>
+        </loadresource>
+        <echo message="${release.version-encoded-string}" />
     </target>
 
     <target name="realclean"
@@ -467,6 +479,7 @@
     <target name="jjdoc"
             description="create JJDoc BNF documentation"
             depends="init, javacc">
+        <quiet>
         <mkdir dir="${doctarget}/jmri/jmris/srcp/"/>
         <jjdoc target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
                javacchome="${libdir}"
@@ -479,6 +492,7 @@
         <jjdoc target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmris/simpleserver/JmriServerParser.html"/>
+        </quiet>
     </target>
 
 
@@ -500,6 +514,12 @@
             outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
             javacchome="${libdir}"/>
         </quiet>
+        <!-- Turn all Javadoc comments in generated code into plain comments -->
+        <replaceregexp match="\/\*\*" replace="\/\*" flags="g">
+            <fileset dir="${genjavasrcdir}">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
     </target>
 
 
@@ -606,7 +626,7 @@
     <target depends="-pre-single-test" unless="test.isTest" name="-test-single-src">
         <property name="test.test" value="${test.includes}Test"/>
     </target>
-    <target depends="-test-single-src,-test-single-test,tests" description="Run single unit test." name="test-single">
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -959,7 +979,7 @@
     <!-- ============================================================================= -->
 
 
-    <!-- Force false language/country to check I8N -->
+    <!-- Force false language/country to check I18N -->
     <target name="locale"
             description="check DecoderPro I8N"
             depends="debug, runtime-library-selection">
@@ -1113,25 +1133,17 @@
     </target>
 
     <!-- check for bad line ends, e.g. not ready to go into Git -->
-    <!-- May not (probably will not) work on Windows -->
 
     <target name="checklineends" description="check text files for proper LF line ends (Linux, Mac only)">
-      <exec executable="sh" outputproperty="checklineeds.files">
-        <arg value="-c" />
-        <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
-      </exec>
-
-      <fail message="${checklineeds.files}">
-        <condition>
-          <length string="${checklineeds.files}" when="greater" length="0" />
-        </condition>
-      </fail>
+        <property name="test.includes" value="jmri.util.FileLineEndingsTest" />
+        <antcall target="test-single" />
     </target>
 
     <!-- end of file-checking targets -->
+    <!-- should match list in jmri.util.FileEncodingsTest -->
 
     <target name="fixlineends" description="convert specific files to LF line ends">
-        <fixcrlf eol="unix" srcdir="." includes="
+        <fixcrlf eol="unix" srcdir="." encoding="UTF-8" includes="
             **/*.csh
             **/*.css
             **/*.df
@@ -1230,6 +1242,32 @@
           <html destdir="${coveragetarget}" />
        </jacoco:report>
     </target>
+    
+    <target name="headless-coveragecheck" depends="headlesstest" description="Generate Test Coverage Report from headlesstest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
@@ -1238,7 +1276,6 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1254,13 +1291,13 @@
     </target>
 
     <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
+        <jacoco:coverage destfile="jacoco.exec" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
 
@@ -1271,6 +1308,7 @@
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
+        </jacoco:coverage>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
@@ -1286,11 +1324,8 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
-
-            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
 
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
@@ -1366,6 +1401,57 @@
        </jacoco:report>
     </target>
 
+    <target name="alltest-coveragecheck" depends="logalltest" description="Test Coverage check from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
+
+    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis" description="Test Coverage check from logalltest">
+    <!-- Generate Code Coverage report
+    See: http://www.eclemma.org/jacoco/trunk/doc/ant.html -->
+       <jacoco:report>
+          <executiondata>
+              <file file="jacoco.exec" />
+          </executiondata>
+
+          <structure name="AntTestReporting">
+              <classfiles>
+                 <fileset refid="jacocofileset"/>
+              </classfiles>
+          </structure>
+
+          <check>
+              <rule> 
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.30"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.50"/>
+              </rule>
+              <rule element="PACKAGE">
+                 <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+          </check>
+       </jacoco:report>
+    </target>
 
 
     <!-- end of test execution targets -->
@@ -1464,7 +1550,7 @@
         </jar>
     </target>
 
-    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs">
+    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1485,7 +1571,9 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="4866"/><!-- change from default 100 warnings -->
+            <arg value="2750"/><!-- change from default 100 warnings -->
+            <arg value="-quiet"/>
+            <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1526,13 +1614,80 @@
         </javadoc>
     </target>
 
+    <!-- same as javadoc target, but lints the javadoc without exclusions -->
+    <!-- can be removed once the number of accepted warnings drops below 100 -->
+    <!-- keep the maxwarns value in sync with javadoc target -->
+    <target name="javadoc-lint" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
+        <javadoc packagenames="jmri.*, apps.*"
+           maxmemory="512m"
+           overview="${source}/jmri/overview.html"
+           destdir="${doctarget}"
+           additionalparam="-breakiterator"
+           author="true"
+           version="false"
+           package="yes"
+           use="true"
+           failonerror="true"
+           windowtitle="JMRI API">
+            <packageset dir="${source}" defaultexcludes="yes">
+                <include name="jmri/**"/>
+                <include name="apps/**"/>
+            </packageset>
+            <packageset dir="${tmptarget}" defaultexcludes="yes">
+                <include name="jmri/**"/>
+            </packageset>
+            <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
+            <arg value="-Xmaxwarns"/>
+            <arg value="2750"/><!-- change from default 100 warnings -->
+            <arg value="-quiet"/>
+            <arg value="-splitindex"/>
+            <!-- disable output of custom @navassoc tag - used for UML image generation -->
+            <tag name="navassoc" enabled="false"/>
+
+            <group title="Core" packages="jmri"/>
+            <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
+            <group title="Applications" packages="apps:apps.*"/>
+            <group title="Implementations" packages="jmri.implementation:jmri.implementation.*:jmri.managers:jmri.managers.*:jmri.progdebugger:jmri.layout"/>
+            <group title="Utilities" packages="jmri.util:jmri.util.*"/>
+            <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
+            <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
+            <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
+      <!-- Layout Connections last because so large -->
+            <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
+
+            <classpath refid="compile.class.path"/>
+            <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
+            </doctitle>
+            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br>Site hosted by:
+                       <a href="http://sourceforge.net/projects/jmri">
+                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
+                ]]>
+            </bottom>
+            <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://download.oracle.com/javase/8/docs/api/"/>
+            <link href="http://java.sun.com/products/javacomm/reference/api/"/>
+            <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
+            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <link href="http://javacsv.sourceforge.net/"/>
+            <link href="http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
+            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
+            <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
+            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
+            <link href="http://http://www.javadoc.io/doc/org.openlcb/openlcb/0.7.11"/>
+            <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+        </javadoc>
+    </target>
+
   <!-- The structure of the following should closely follow the  -->
   <!-- main 'javadoc' target directly above. The only difference -->
   <!-- is the doclet clause referencing the UML generator, the   -->
   <!-- use of the public option in the main task definition, and -->
   <!-- the execution of "dot" at the bottom.                     -->
   <!-- Requires Graphviz from http://www.graphviz.org            -->
-    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs with UML">
+    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs with UML">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1555,6 +1710,8 @@
             <arg value="500"/><!-- change from default 100 warnings -->
             <arg value="-Xmaxerrs"/>
             <arg value="500"/><!-- change from default 100 errors -->
+            <arg value="-quiet"/>
+            <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1596,7 +1753,7 @@
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
-            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
+            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.8.5"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
@@ -1626,7 +1783,7 @@
         </plantuml>
     </target>
 
-    <target name="uploadjavadoc" description="upload existing JavaDocs to jmri.org without recreating">
+    <target name="uploadjavadoc" description="upload existing Javadocs to jmri.org without recreating">
         <exec executable="rsync">
             <arg value="-avz"/>
             <arg value="--delete"/>
@@ -1866,11 +2023,26 @@
               failonerror="true">
             <!-- ORDER MATTERS HERE -->
             <arg value="${release.version-string}"/>
-            <arg path="${dist.release}/JMRI.${release.version-string}.dmg"/>
+            <arg path="${dist.release}/JMRI.${release.version-string}+unsigned.dmg"/>
             <arg path="${dist.macosx}"/>
         </exec>
     </target>
 
+    <target name="sign-macosx"
+            description="sign the macOS distribution DMG file; assumes package-macosx"
+            depends="get-version-string">
+        <chmod perm="ugo+rwx" dir="${dist.release}"/>
+        <!-- invoke signing server -->
+        <exec executable="wget"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="-t 1200"/>
+            <arg value="-O signing-wget.log"/>
+            <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
+        </exec>
+        <chmod perm="go-w" dir="${dist.release}"/>
+    </target>
+            
     <target name="package-linux"
             description="create a Linux release package"
             depends="get-version-string, jar, startup-scripts-linux">
@@ -2072,18 +2244,27 @@
     <!-- CI Test runners -->
     <target name="travis-ci" description="Parallel execution of CI tasks on Travis CI">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
-            <antcall target="checklineends" />
             <antcall target="checknonascii" />
             <sequential>
                 <antcall target="compile-generated-source" />
-                <parallel>
-                    <antcall target="javadoc" />
-                    <antcall target="ci-test-travis" />
-                </parallel>
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis" />
             </sequential>
         </parallel>
     </target>
-    
+
+    <target name="travis-ci-coverage" description="Parallel execution of CI tasks on Travis CI">
+        <parallel threadCount="4"> <!-- allow up to four tasks at once -->
+            <antcall target="checknonascii" />
+            <sequential>
+                <antcall target="compile-generated-source" />
+                <antcall target="javadoc" />
+                <antcall target="ci-test-travis-coveragecheck" />
+            </sequential>
+        </parallel>
+    </target>
+
+	
     <target name="appveyor" description="Parallel execution of CI tasks on Appveyor">
         <parallel threadCount="4"> <!-- allow up to four tasks at once -->
             <antcall target="checkPropertiesFiles" />

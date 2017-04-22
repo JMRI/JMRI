@@ -91,10 +91,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelEditor extends Editor implements ItemListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3568655156437993712L;
     JTextField nextX = new JTextField("0", 4);
     JTextField nextY = new JTextField("0", 4);
 
@@ -409,7 +405,6 @@ public class PanelEditor extends Editor implements ItemListener {
 
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
                 Iterator<JFrameItem> iter = iconAdderFrames.values().iterator();
                 while (iter.hasNext()) {
                     JFrameItem frame = iter.next();
@@ -560,11 +555,6 @@ public class PanelEditor extends Editor implements ItemListener {
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         menuBar.add(editMenu);
         editMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7003482354206142094L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(true);
@@ -572,11 +562,6 @@ public class PanelEditor extends Editor implements ItemListener {
         });
         editMenu.addSeparator();
         editMenu.add(new AbstractAction(Bundle.getMessage("DeletePanel")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3302292525750164017L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (deletePanel()) {
@@ -589,33 +574,18 @@ public class PanelEditor extends Editor implements ItemListener {
         JMenu markerMenu = new JMenu(Bundle.getMessage("MenuMarker"));
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(Bundle.getMessage("AddLoco")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3904117730465002247L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         markerMenu.add(new AbstractAction(Bundle.getMessage("AddLocoRoster")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 9124717518244688272L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         markerMenu.add(new AbstractAction(Bundle.getMessage("RemoveMarkers")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3102044914128656099L;
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();
@@ -629,7 +599,6 @@ public class PanelEditor extends Editor implements ItemListener {
 
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
         return targetFrame;
-
     }
 
     /**
@@ -1240,10 +1209,6 @@ public class PanelEditor extends Editor implements ItemListener {
     @Override
     public void setRemoveMenu(Positionable p, JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7169869783719845309L;
             Positionable comp;
 
             @Override

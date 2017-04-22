@@ -31,10 +31,11 @@ public class SRCPProgrammerManager extends DefaultProgrammerManager {
     //public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
     //    return new SRCPOpsModeProgrammer(pAddress, pLongAddress,_memo);
     //}
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }
 
 
-/* @(#)SRCPProgrammerManager.java */
+

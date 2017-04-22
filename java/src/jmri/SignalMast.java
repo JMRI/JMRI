@@ -1,4 +1,3 @@
-// SignalMast.java
 package jmri;
 
 import java.util.Vector;
@@ -13,11 +12,11 @@ import java.util.Vector;
  * <P>
  * This class has three bound parameters:
  * <DL>
- * <DT>aspect<DD>The specific aspect being shown.
+ * <DT>Aspect<DD>The specific aspect being shown.
  * <p>
  * Aspects are named by a user defined String name.
  *
- * <DT>lit<DD>Whether the mast's lamps are lit or left dark.
+ * <DT>Lit<DD>Whether the mast's lamps are lit or left dark.
  * <P>
  * This differs from the DARK color defined for the appearance parameter, in
  * that it's independent of that. Lit is intended to allow you to extinquish a
@@ -25,7 +24,7 @@ import java.util.Vector;
  * to a definite value for e.g. display on a panel or evaluation in higher level
  * logic.
  *
- * <DT>held<DD>Whether the mast's lamps should be forced to a specific aspect,
+ * <DT>Held<DD>Whether the mast's lamps should be forced to a specific aspect,
  * e.g. Stop, in higher-level logic.
  * <P>
  * For use in signaling systems, this is a convenient way of storing whether a
@@ -47,22 +46,24 @@ import java.util.Vector;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
+ * @author Pete Cressman Copyright (C) 2009
  */
 public interface SignalMast extends NamedBean {
 
     /**
      * Set aspect to a valid name in the current signal system definition.
      *
+     * @param aspect the new aspect shown
      * @throws IllegalArgumentException if not a valid aspect name
      */
     public void setAspect(String aspect);
 
     /**
-     * Get current aspect name. This is a bound property.
+     * Get current aspect name. Changes to this property can be listened to
+     * using the property {@literal Aspect}.
      *
-     * @return null if not yet set
+     * @return the current aspect or null if not set
      */
     public String getAspect();
 
@@ -73,17 +74,22 @@ public interface SignalMast extends NamedBean {
     public SignalAppearanceMap getAppearanceMap();
 
     /**
-     * Lit is a bound parameter. It controls whether the signal mast's lamps are
-     * lit or left dark.
+     * Get if signal mast is lit or dark. Changes to this property can be
+     * listened to using the property {@literal Lit}.
+     *
+     * @return true if lit; false if dark
      */
     public boolean getLit();
 
     public void setLit(boolean newLit);
 
     /**
-     * Held is a bound parameter. It controls what mechanisms can control the
-     * mast's appearance. The actual semantics are defined by those external
-     * mechanisms.
+     * Get the held state of the signal mast. It controls what mechanisms can
+     * control the mast's appearance. The actual semantics are defined by those
+     * external mechanisms. Changes to this property can be listened to using
+     * the property {@literal Held}.
+     *
+     * @return true if held; false otherwise
      */
     public boolean getHeld();
 

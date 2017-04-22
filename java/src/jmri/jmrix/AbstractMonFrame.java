@@ -80,6 +80,10 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
+    String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
+    String timeStampCheck = this.getClass().getName() + ".TimeStamp"; // NOI18N
+    String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop"; // NOI18N
+    String autoScrollCheck = this.getClass().getName() + ".AutoScroll"; // NOI18N
     String rawDataCheck = this.getClass().getName()+".RawData";
     String timeStampCheck = this.getClass().getName()+".TimeStamp";
     String deltaTCheck = this.getClass().getName()+".DeltaT";
@@ -104,6 +108,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         self = this;
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -369,6 +374,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         // if not frozen, display it in the Swing thread
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     synchronized (self) {
                         monTextPane.append(linesBuffer.toString());

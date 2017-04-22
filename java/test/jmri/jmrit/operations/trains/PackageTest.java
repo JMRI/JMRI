@@ -35,11 +35,26 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrit.operations.trains.excel.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.trains.timetable.PackageTest.suite());
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.operations.trains.configurexml.PackageTest.class));
-        // GUI tests start here
-        if (!System.getProperty("java.awt.headless", "false").equals("true")) {
-            suite.addTest(OperationsTrainsGuiTest.suite());
-        }
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OperationsTrainsGuiTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BuildFailedExceptionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainConductorPanelTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCsvCommonTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainCsvSwitchListsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainEditBuildOptionsFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainLoadOptionsFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainLoggerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManagerXmlTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestHeaderTextTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainManifestTextTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainPrintUtilitiesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainRoadOptionsFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainSwitchListEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainSwitchListTextTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainSwitchListsTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainUtilitiesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsTableActionTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsTableFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TrainsTableModelTest.class));
         return suite;
     }
 

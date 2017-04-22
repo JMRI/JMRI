@@ -1,4 +1,3 @@
-// TieTablePane.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.util.ResourceBundle;
@@ -13,15 +12,10 @@ import javax.swing.table.TableRowSorter;
 /**
  * Pane for showing the tie table
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
   * @since 2.3.7
  */
 public class TieTablePane extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6218419515561898759L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
@@ -56,5 +50,3 @@ public class TieTablePane extends JPanel {
     }
 
 }
-
-/* @(#)TieTablePane.java */

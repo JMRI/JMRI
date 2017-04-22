@@ -1,4 +1,3 @@
-// NceMonBinary.java
 package jmri.jmrix.nce.ncemon;
 
 import java.text.MessageFormat;
@@ -7,13 +6,14 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.util.StringUtil;
+import org.python.jline.internal.Log;
 
 /**
  * A utility class for formatting NCE binary command and replies into
  * human-readable text. The text for the display comes from NCE's Bincmds.txt
  * published November 2007 and is used with NCE's permission.
  *
- * @author	Daniel Boudreau Copyright (C) 2012
+ * @author Daniel Boudreau Copyright (C) 2012
  * 
  */
 public class NceMonBinary {
@@ -35,7 +35,7 @@ public class NceMonBinary {
     private static final int REPLY_TWO = 2;
     private static final int REPLY_THREE = 3;
     private static final int REPLY_FOUR = 4;
-    private static final int REPLY_OK = 0x21;		// !
+    private static final int REPLY_OK = 0x21;  // !
 
     public String displayMessage(NceMessage m) {
         return parseMessage(m) + NEW_LINE;
@@ -51,15 +51,14 @@ public class NceMonBinary {
                 return rb.getString("STOP_CLOCK_CMD");
             case (NceBinaryCommand.START_CLOCK_CMD):
                 return rb.getString("START_CLOCK_CMD");
-            case (NceBinaryCommand.SET_CLOCK_CMD): {
+            case (NceBinaryCommand.SET_CLOCK_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(rb.getString("SET_CLOCK_CMD"),
                             new Object[]{m.getElement(1), m.getElement(2)})
                             + NEW_LINE;
                 }
                 break;
-            }
-            case (NceBinaryCommand.CLOCK_1224_CMD): {
+            case (NceBinaryCommand.CLOCK_1224_CMD):
                 if (m.getNumDataElements() == 2) {
                     String hr = "12";
                     if (m.getElement(1) == 1) {
@@ -69,104 +68,90 @@ public class NceMonBinary {
                             new Object[]{hr});
                 }
                 break;
-            }
-            case (NceBinaryCommand.CLOCK_RATIO_CMD): {
+            case (NceBinaryCommand.CLOCK_RATIO_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("CLOCK_RATIO_CMD"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
             case (NceMessage.ENABLE_MAIN_CMD):
                 return rb.getString("ENABLE_MAIN_CMD");
             case (NceMessage.KILL_MAIN_CMD):
                 return rb.getString("KILL_MAIN_CMD");
-            case (NceBinaryCommand.WRITEn_CMD): {
+            case (NceBinaryCommand.WRITE_N_CMD):
                 if (m.getNumDataElements() == 20) {
                     return MessageFormat.format(rb.getString("WRITEn_CMD"),
                             new Object[]{m.getElement(3), getAddress(m), getDataBytes(m, 4, 16)});
                 }
                 break;
-            }
             // Send n bytes commands 0x93 - 0x96
-            case (NceMessage.SENDn_BYTES_CMD + 3): {
+            case (NceMessage.SENDn_BYTES_CMD + 3):
                 if (m.getNumDataElements() == 5) {
                     return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
                             new Object[]{"3", m.getElement(1), getDataBytes(m, 2, 3)});
                 }
                 break;
-            }
-            case (NceMessage.SENDn_BYTES_CMD + 4): {
+            case (NceMessage.SENDn_BYTES_CMD + 4):
                 if (m.getNumDataElements() == 6) {
                     return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
                             new Object[]{"4", m.getElement(1), getDataBytes(m, 2, 4)});
                 }
                 break;
-            }
-            case (NceMessage.SENDn_BYTES_CMD + 5): {
+            case (NceMessage.SENDn_BYTES_CMD + 5):
                 if (m.getNumDataElements() == 7) {
                     return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
                             new Object[]{"5", m.getElement(1), getDataBytes(m, 2, 5)});
                 }
                 break;
-            }
-            case (NceMessage.SENDn_BYTES_CMD + 6): {
+            case (NceMessage.SENDn_BYTES_CMD + 6):
                 if (m.getNumDataElements() == 8) {
                     return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
                             new Object[]{"6", m.getElement(1), getDataBytes(m, 2, 6)});
                 }
                 break;
-            }
-
-            case (NceBinaryCommand.WRITE1_CMD): {
+            case (NceBinaryCommand.WRITE1_CMD):
                 if (m.getNumDataElements() == 4) {
                     return MessageFormat.format(rb.getString("WRITE1_CMD"),
                             new Object[]{getAddress(m), getDataBytes(m, 3, 1)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.WRITE2_CMD): {
+            case (NceBinaryCommand.WRITE2_CMD):
                 if (m.getNumDataElements() == 5) {
                     return MessageFormat.format(rb.getString("WRITE2_CMD"),
                             new Object[]{getAddress(m), getDataBytes(m, 3, 2)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.WRITE4_CMD): {
+            case (NceBinaryCommand.WRITE4_CMD):
                 if (m.getNumDataElements() == 7) {
                     return MessageFormat.format(rb.getString("WRITE4_CMD"),
                             new Object[]{getAddress(m), getDataBytes(m, 3, 4)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.WRITE8_CMD): {
+            case (NceBinaryCommand.WRITE8_CMD):
                 if (m.getNumDataElements() == 11) {
                     return MessageFormat.format(rb.getString("WRITE8_CMD"),
                             new Object[]{getAddress(m), getDataBytes(m, 3, 8)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.MACRO_CMD): {
+            case (NceBinaryCommand.MACRO_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("MACRO_CMD"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
             case (NceMessage.ENTER_PROG_CMD): {
                 replyType = REPLY_ENTER_PROGRAMMING_MODE;
                 return rb.getString("ENTER_PROG_CMD");
             }
             case (NceMessage.EXIT_PROG_CMD):
                 return rb.getString("EXIT_PROG_CMD");
-            case (NceMessage.WRITE_PAGED_CV_CMD): {
+            case (NceMessage.WRITE_PAGED_CV_CMD):
                 if (m.getNumDataElements() == 4) {
                     return MessageFormat.format(rb.getString("WRITE_PAGED_CV_CMD"),
                             new Object[]{getNumber(m), getDataBytes(m, 3, 1)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.LOCO_CMD): {
+            case (NceBinaryCommand.LOCO_CMD):
                 if (m.getNumDataElements() == 5) {
                     // byte three is the Op_1
                     switch (m.getElement(3)) {
@@ -233,47 +218,44 @@ public class NceMonBinary {
                         case (0x17):
                             return MessageFormat.format(rb.getString("LOCO_CMD_Op1_17"),
                                     new Object[]{getLocoAddress(m), m.getElement(4)});
+                        default:
+                            Log.error("Unhandled loco cmd op1 code: {}", m.getElement(3));
+                            break;
                     }
                 }
                 break;
-            }
             // Queue commands 0xA3 - 0xA5
-            case (NceMessage.QUEUEn_BYTES_CMD + 3): {
+            case (NceMessage.QUEUEn_BYTES_CMD + 3):
                 if (m.getNumDataElements() == 5) {
                     return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
                             new Object[]{"3", m.getElement(1), getDataBytes(m, 2, 3)});
                 }
                 break;
-            }
-            case (NceMessage.QUEUEn_BYTES_CMD + 4): {
+            case (NceMessage.QUEUEn_BYTES_CMD + 4):
                 if (m.getNumDataElements() == 6) {
                     return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
                             new Object[]{"4", m.getElement(1), getDataBytes(m, 2, 4)});
                 }
                 break;
-            }
-            case (NceMessage.QUEUEn_BYTES_CMD + 5): {
+            case (NceMessage.QUEUEn_BYTES_CMD + 5):
                 if (m.getNumDataElements() == 7) {
                     return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
                             new Object[]{"5", m.getElement(1), getDataBytes(m, 2, 5)});
                 }
                 break;
-            }
-            case (NceMessage.WRITE_REG_CMD): {
+            case (NceMessage.WRITE_REG_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(rb.getString("WRITE_REG_CMD"),
                             new Object[]{m.getElement(1), getDataBytes(m, 2, 1)});
                 }
                 break;
-            }
-            case (NceMessage.WRITE_DIR_CV_CMD): {
+            case (NceMessage.WRITE_DIR_CV_CMD):
                 if (m.getNumDataElements() == 4) {
                     return MessageFormat.format(rb.getString("WRITE_DIR_CV_CMD"),
                             new Object[]{getNumber(m), getDataBytes(m, 3, 1)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.ACC_CMD): {
+            case (NceBinaryCommand.ACC_CMD):
                 if (m.getNumDataElements() == 5) {
                     // byte three is the Op_1
                     switch (m.getElement(3)) {
@@ -289,97 +271,94 @@ public class NceMonBinary {
                         case (5):
                             return MessageFormat.format(rb.getString("ACC_CMD_Op1_05"),
                                     new Object[]{getNumber(m), m.getElement(4)});
+                        default:
+                            Log.error("Unhandled acc cmd op1 code: {}", m.getElement(3));
+                            break;
                     }
                 }
                 break;
-            }
-            case (NceBinaryCommand.USB_SET_CAB_CMD): {
+            case (NceBinaryCommand.USB_SET_CAB_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("Usb_Set_Cab_Op1"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.USB_MEM_POINTER_CMD): {
+            case (NceBinaryCommand.USB_MEM_POINTER_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(rb.getString("Usb_Set_Mem_Ptr_Cmd"),
                             new Object[]{m.getElement(1), m.getElement(2)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.USB_MEM_WRITE_CMD): {
+            case (NceBinaryCommand.USB_MEM_WRITE_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("Usb_Mem_Write_Cmd"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.USB_MEM_READ_CMD): {
+            case (NceBinaryCommand.USB_MEM_READ_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("Usb_Mem_Read_Cmd"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
+            default:
+                Log.error("Unhandled command code: {}", m.getOpCode() & 0xFF);
+                break;
         }
         // 2nd pass, check for messages that have a data reply
         replyType = REPLY_DATA;
         switch (m.getOpCode() & 0xFF) {
             case (NceBinaryCommand.READ_CLOCK_CMD):
                 return rb.getString("READ_CLOCK_CMD");
-            case (NceBinaryCommand.READ_AUI4_CMD): {
+            case (NceBinaryCommand.READ_AUI4_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("READ_AUI4_CMD"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
             case (NceBinaryCommand.DUMMY_CMD):
                 return rb.getString("DUMMY_CMD");
-            case (NceBinaryCommand.READ16_CMD): {
+            case (NceBinaryCommand.READ16_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(rb.getString("READ16_CMD"),
                             new Object[]{getAddress(m)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.READ_AUI2_CMD): {
+            case (NceBinaryCommand.READ_AUI2_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("READ_AUI2_CMD"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
-            case (NceBinaryCommand.READ1_CMD): {
+            case (NceBinaryCommand.READ1_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(rb.getString("READ1_CMD"),
                             new Object[]{getAddress(m)});
                 }
                 break;
-            }
-            case (NceMessage.READ_PAGED_CV_CMD): {
+            case (NceMessage.READ_PAGED_CV_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(rb.getString("READ_PAGED_CV_CMD"),
                             new Object[]{getNumber(m)});
                 }
                 break;
-            }
-            case (NceMessage.READ_REG_CMD): {
+            case (NceMessage.READ_REG_CMD):
                 if (m.getNumDataElements() == 2) {
                     return MessageFormat.format(rb.getString("READ_REG_CMD"),
                             new Object[]{m.getElement(1)});
                 }
                 break;
-            }
-            case (NceMessage.READ_DIR_CV_CMD): {
+            case (NceMessage.READ_DIR_CV_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(rb.getString("READ_DIR_CV_CMD"),
                             new Object[]{getNumber(m)});
                 }
                 break;
-            }
             case (NceBinaryCommand.SW_REV_CMD):
                 return rb.getString("SW_REV_CMD");
+            default:
+                Log.error("Unhandled cmd code: {}", m.getOpCode() & 0xFF);
+                break;
         }
         // this is one we don't know about or haven't coded it up 
         replyType = REPLY_UNKNOWN;
@@ -502,7 +481,7 @@ public class NceMonBinary {
 
     private String parseReply(NceReply r) {
         switch (replyType) {
-            case (REPLY_STANDARD): {
+            case (REPLY_STANDARD):
                 /* standard reply is a single byte
                  * Errors returned: '0'= command not supported
                  * '1'= loco/accy/signal address out of range
@@ -525,11 +504,13 @@ public class NceMonBinary {
                             return rb.getString("NceReplyFour");
                         case (REPLY_OK):
                             return rb.getString("NceReplyOK");
+                        default:
+                            Log.error("Unhandled reply code: {}", r.getOpCode() & 0xFF);
+                            break;
                     }
                 }
                 break;
-            }
-            case (REPLY_ENTER_PROGRAMMING_MODE): {
+            case (REPLY_ENTER_PROGRAMMING_MODE):
                 /* enter programming mode reply is a single byte
                  * '3'= short circuit
                  * '!'= command completed successfully
@@ -540,9 +521,15 @@ public class NceMonBinary {
                             return rb.getString("NceReplyThreeProg");
                         case (REPLY_OK):
                             return rb.getString("NceReplyOK");
+                        default:
+                            Log.error("Unhandled programming reply code: {}", r.getOpCode() & 0xFF);
+                            break;
                     }
                 }
-            }
+                break;
+            default:
+                Log.error("Unhandled reply type code: {}", replyType);
+                break;
         }
         return MessageFormat.format(rb.getString("NceReply"), new Object[]{r.toString()});
     }

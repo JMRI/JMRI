@@ -1,4 +1,3 @@
-// LnHexFileAction.java
 package jmri.jmrix.loconet.hexfile;
 
 import java.awt.event.ActionEvent;
@@ -9,19 +8,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a LnHexFileFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class LnHexFileAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1088838081840819866L;
 
     public LnHexFileAction(String s) {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a LnHexFileFrame
         HexFileFrame f = new HexFileFrame();
@@ -39,6 +34,3 @@ public class LnHexFileAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(LnHexFileAction.class.getName());
 
 }
-
-
-/* @(#)LnHexFileAction.java */

@@ -3,7 +3,7 @@ package jmri.jmrit.ussctc;
 /**
  * JmriJFrameAction to create and register a FollowerFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
 public class FollowerAction extends jmri.util.JmriJFrameAction {
 
@@ -20,6 +20,7 @@ public class FollowerAction extends jmri.util.JmriJFrameAction {
      * Method to be overridden to make this work. Provide a completely qualified
      * class name, must be castable to JmriJFrame
      */
+    @Override
     public String getName() {
         return "jmri.jmrit.ussctc.FollowerFrame";
     }

@@ -10,7 +10,7 @@ import jmri.util.swing.WindowInterface;
  *
  * Ignores WindowInterface.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -27,6 +27,7 @@ public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
         super(s, i, wi);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         jmri.util.swing.multipane.MultiPaneWindow mainFrame
                 = new PanelProFrame("PanelPro");
@@ -35,11 +36,13 @@ public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public void dispose() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

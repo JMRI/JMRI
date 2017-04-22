@@ -45,6 +45,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         super(Bundle.getMessage("TitleControlsFilter"), true, true);
     }
 
+    @Override
     public void initComponents() throws Exception {
         JTabbedPane tabbedPane = new JTabbedPane();
         if (InstanceManager.getNullableDefault(jmri.TurnoutManager.class) != null) {
@@ -139,6 +140,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         JButton selectAllButton = new JButton(rb.getString("ButtonSelectAll"));
         selectAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 fm.setIncludeColToValue(true);
             }
@@ -147,6 +149,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         JButton deselectAllButton = new JButton(rb.getString("ButtonDeselectAll"));
         deselectAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 fm.setIncludeColToValue(false);
             }
@@ -155,6 +158,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         JButton selectUserNamedButton = new JButton(rb.getString("ButtonSelectByUserName"));
         selectUserNamedButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 fm.SetIncludeToUserNamed();
             }
@@ -169,10 +173,11 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.add(Box.createVerticalGlue());
 
-        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.setAlignmentX(CENTER_ALIGNMENT);
         cancelButton.setToolTipText(rb.getString("ToolTipCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 dispose();
             }
@@ -183,6 +188,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         saveButton.setAlignmentX(CENTER_ALIGNMENT);
         saveButton.setToolTipText(rb.getString("ToolTipSave"));
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 storeValues();
                 dispose();
@@ -193,10 +199,12 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         return p;
     }
 
+    @Override
     protected void storeValues() {
         new jmri.configurexml.StoreXmlUserAction().actionPerformed(null);
     }
 
+    @Override
     public void tableChanged(TableModelEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("Set mod flag true for: " + getTitle());
@@ -206,13 +214,10 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     public abstract class AbstractFilterModel extends AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4167975455673762191L;
         List<String> sysNameList = null;
         boolean isDirty;
 
+        @Override
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDECOL) {
                 return Boolean.class;
@@ -221,6 +226,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 fireTableDataChanged();
@@ -232,18 +238,22 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             InstanceManager.getDefault(jmri.RouteManager.class).removePropertyChangeListener(this);
         }
 
+        @Override
         public String getColumnName(int c) {
             return COLUMN_NAMES[c];
         }
 
+        @Override
         public int getColumnCount() {
             return 3;
         }
 
+        @Override
         public int getRowCount() {
             return sysNameList.size();
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return (c == INCLUDECOL);
         }
@@ -259,10 +269,6 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
     class TurnoutFilterModel extends AbstractFilterModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 647944884708203007L;
         TurnoutManager mgr = InstanceManager.turnoutManagerInstance();
 
         TurnoutFilterModel() {
@@ -271,6 +277,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             mgr.addPropertyChangeListener(this);
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
 
             // some error checking
@@ -294,6 +301,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
 
             switch (c) {
@@ -304,9 +312,13 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                         isDirty = true;
                     }
                     break;
+                default:
+                    log.warn("Unhandled col: {}", c);
+                    break;
             }
         }
 
+        @Override
         public void setIncludeColToValue(boolean value) {
             for (String sysName : sysNameList) {
                 mgr.getBySystemName(sysName).setProperty("WifiControllable", value);
@@ -314,6 +326,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             fireTableDataChanged();
         }
 
+        @Override
         public void SetIncludeToUserNamed() {
             for (String sysName : sysNameList) {
                 NamedBean bean = mgr.getBySystemName(sysName);
@@ -338,6 +351,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             mgr.addPropertyChangeListener(this);
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
 
             // some error checking
@@ -368,6 +382,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             }
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
 
             switch (c) {
@@ -381,9 +396,13 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                         }
                     }
                     break;
+                default:
+                    log.warn("Unhandled col: {}", c);
+                    break;
             }
         }
 
+        @Override
         public void setIncludeColToValue(boolean value) {
             for (String sysName : sysNameList) {
                 Route rt = mgr.getBySystemName(sysName);
@@ -394,6 +413,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
             fireTableDataChanged();
         }
 
+        @Override
         public void SetIncludeToUserNamed() {
             for (String sysName : sysNameList) {
                 NamedBean bean = mgr.getBySystemName(sysName);

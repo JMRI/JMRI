@@ -85,7 +85,8 @@
           When clicked the following commands can be sent:
 
           <ul>
-            <li><b>Halt</b> - Temporarily halts the train and
+            <li><b>Halt</b> - Temporarily ramps the train down
+            to a stop and
             suspends execution of the throttle command script</li>
 
             <li><b>Resume</b> - Ramps up the speed of the train to
@@ -101,6 +102,9 @@
             due to a short or other hardware malfunction. This
             reset may allow a stopped train to continue.)</li>
 
+			<li><b>Stop</b> - Issues an emergency stop to the train
+			and suspends execution of the throttle command script.
+			</li>
             <li><b>Abort</b> - Abort the script and deallocate the
             warrant.</li>
           </ul>

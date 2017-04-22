@@ -11,7 +11,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to create and register a SimpleProgAction object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SimpleProgAction extends JmriAbstractAction {
 
@@ -42,6 +42,7 @@ public class SimpleProgAction extends JmriAbstractAction {
         this(Bundle.getMessage("MenuItemSingleCVProgrammer"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create a SimpleProgFrame
@@ -51,6 +52,7 @@ public class SimpleProgAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

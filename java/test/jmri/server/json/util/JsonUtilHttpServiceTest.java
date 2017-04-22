@@ -8,12 +8,9 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.Metadata;
 import jmri.jmris.json.JsonServerPreferences;
-import jmri.profile.NullProfile;
-import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
@@ -51,8 +48,7 @@ public class JsonUtilHttpServiceTest {
 
     @Before
     public void setUp() throws IOException {
-        Profile profile = new NullProfile("TestProfile", null, FileUtil.getFile(FileUtil.SETTINGS));
-        ProfileManager.getDefault().setActiveProfile(profile);
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 
@@ -119,6 +115,7 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(instance.getMetadata(locale), instance.doGetList(JSON.METADATA, locale));
         Assert.assertEquals(instance.getNetworkServices(locale), instance.doGetList(JSON.NETWORK_SERVICES, locale));
         Assert.assertEquals(instance.getSystemConnections(locale), instance.doGetList(JSON.SYSTEM_CONNECTIONS, locale));
+        Assert.assertEquals(instance.getConfigProfiles(locale), instance.doGetList(JSON.CONFIG_PROFILES, locale));
     }
 
     /**

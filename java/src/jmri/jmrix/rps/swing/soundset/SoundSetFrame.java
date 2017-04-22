@@ -20,6 +20,7 @@ public class SoundSetFrame extends jmri.util.JmriJFrame {
 
     SoundSetPane pane;
 
+    @Override
     public void dispose() {
         if (pane != null) {
             pane.dispose();
@@ -28,6 +29,7 @@ public class SoundSetFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
+    @Override
     public void initComponents() {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 

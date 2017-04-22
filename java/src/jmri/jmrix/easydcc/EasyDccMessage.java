@@ -1,4 +1,3 @@
-// EasyDccMessage.java
 package jmri.jmrix.easydcc;
 
 import org.slf4j.Logger;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The {@link EasyDccReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
   */
 public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -221,4 +220,4 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 }
 
 
-/* @(#)EasyDccMessage.java */
+

@@ -1,4 +1,3 @@
-// LocoGenPanel.java
 package jmri.jmrix.loconet.locogen;
 
 import java.awt.GridLayout;
@@ -27,15 +26,11 @@ import org.slf4j.LoggerFactory;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
   */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8721664131869665655L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -52,14 +47,17 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locogen.LocoGenFrame";
+        return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -85,6 +83,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(Box.createVerticalGlue());
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -116,12 +115,14 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 runButtonActionPerformed(e);
             }
         });
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -143,6 +144,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendNextItem();
                 }
@@ -182,8 +184,9 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Process the incoming message to look for the needed echo
      *
      */
+    @Override
     public void message(LocoNetMessage m) {
-        log.debug("message");
+        log.debug("message"); // NOI18N
         // are we running?
         if (!mRunButton.isSelected()) {
             return;
@@ -200,7 +203,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Echo has been heard, start delay for next packet
      */
     void startSequenceDelay() {
-        log.debug("startSequenceDelay");
+        log.debug("startSequenceDelay"); // NOI18N
         // at the start, mNextSequenceElement contains index we're
         // working on
         int delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
@@ -215,7 +218,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * elapsed.
      */
     void sendNextItem() {
-        log.debug("sendNextItem");
+        log.debug("sendNextItem"); // NOI18N
         // check if still running
         if (!mRunButton.isSelected()) {
             return;
@@ -260,6 +263,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * When the window closes, stop any sequences running
      */
+    @Override
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();

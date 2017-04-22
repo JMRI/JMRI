@@ -7,20 +7,24 @@
  */
 package jmri.jmrix.tmcc.serialmon;
 
+import java.awt.GraphicsEnvironment;
 import java.util.Vector;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SerialMonFrameTest extends TestCase {
+public class SerialMonFrameTest {
 
+    @Test
     public void testCreateAndShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SerialMonFrame f = new SerialMonFrame();
         try {
             f.initComponents();
@@ -43,36 +47,43 @@ public class SerialMonFrameTest extends TestCase {
         f.dispose();
     }
 
-// Following are timing-specific, occasionally fail, so commented out    
-/*     public void testMsg() { */
-    /*         NceMessage m = new NceMessage(3); */
-    /*         m.setBinary(false); */
-    /*         m.setOpCode('L'); */
-    /*         m.setElement(1, '0'); */
-    /*         m.setElement(2, 'A'); */
-    /*          */
-    /*         NceMonFrame f = new NceMonFrame(); */
-    /*          */
-    /*         f.message(m); */
-    /*          */
-    /*         Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length()); */
-    /*         Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText()); */
-    /*     } */
-    /*      */
-    /*     public void testReply() { */
-    /*         NceReply m = new NceReply(); */
-    /*         m.setBinary(false); */
-    /*         m.setOpCode('C'); */
-    /*         m.setElement(1, 'o'); */
-    /*         m.setElement(2, ':'); */
-    /*          */
-    /*         NceMonFrame f = new NceMonFrame(); */
-    /*          */
-    /*         f.reply(m); */
-    /*          */
-    /*         Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText()); */
-    /*         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length()); */
-    /*     } */
+    /*  When uncommented following cause compiler fails
+    @Ignore // Following are timing-specific, occasionally fail, so commented out
+    @Test
+    public void testMsg() {
+        NceMessage m = new NceMessage(3);
+        m.setBinary(false);
+        m.setOpCode('L');
+        m.setElement(1, '0');
+        m.setElement(2, 'A');
+
+        NceMonFrame f = new NceMonFrame();
+
+        f.message(m);
+
+        Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length());
+        Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
+    }
+
+    @Ignore // Following are timing-specific, occasionally fail, so commented out
+    @Test
+    public void testReply() {
+        NceReply m = new NceReply();
+        m.setBinary(false);
+        m.setOpCode('C');
+        m.setElement(1, 'o');
+        m.setElement(2, ':');
+
+        NceMonFrame f = new NceMonFrame();
+
+        f.reply(m);
+
+        Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
+        Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
+    }
+     */
+    
+    @Test
     public void testWrite() {
 
         // infrastructure objects
@@ -88,6 +99,7 @@ public class SerialMonFrameTest extends TestCase {
         }
 
         // override some SerialInterfaceController methods for test purposes
+        @Override
         public boolean status() {
             return true;
         }
@@ -97,6 +109,7 @@ public class SerialMonFrameTest extends TestCase {
          */
         public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 
+        @Override
         public void sendSerialMessage(SerialMessage m, jmri.jmrix.tmcc.SerialListener l) {
             if (log.isDebugEnabled()) {
                 log.debug("sendMessage [" + m + "]");
@@ -136,38 +149,19 @@ public class SerialMonFrameTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public SerialMonFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialMonFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialMonFrameTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
-
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(SerialMonFrameTest.class.getName());
 
 }

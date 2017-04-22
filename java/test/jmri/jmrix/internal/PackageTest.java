@@ -9,7 +9,14 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.internal.configurexml.PackageTest.class
+   jmri.jmrix.internal.configurexml.PackageTest.class,
+   InternalReporterManagerTest.class,
+   InternalTurnoutManagerTest.class,
+   InternalSensorManagerTest.class,
+   InternalLightManagerTest.class,
+   InternalAdapterTest.class,
+   InternalConnectionTypeListTest.class,
+   InternalSystemConnectionMemoTest.class
 })
 /**
  * Tests for the jmri.jmrix.internal package.

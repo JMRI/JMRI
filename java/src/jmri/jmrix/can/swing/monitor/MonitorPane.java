@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame displaying (and logging) CAN frames
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
 
@@ -21,12 +21,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     CanSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
@@ -38,13 +40,16 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
     }
 
+    @Override
     public String getTitle() {
         return "CAN Monitor";
     }
 
+    @Override
     public void init() {
     }
 
+    @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) {
             log.debug("Message: " + l.toString());
@@ -61,6 +66,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         nextLine("M: " + buf.toString() + "\n", l.toString());
     }
 
+    @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) {
             log.debug("Reply: " + l.toString());
@@ -77,6 +83,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         nextLine("R: " + buf.toString() + "\n", l.toString());
     }
 
+    @Override
     public void dispose() {
         // disconnect from the LnTrafficController
         memo.getTrafficController().removeCanListener(this);

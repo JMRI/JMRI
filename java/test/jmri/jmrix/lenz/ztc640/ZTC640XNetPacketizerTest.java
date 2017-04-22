@@ -1,42 +1,34 @@
 package jmri.jmrix.lenz.ztc640;
 
-import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+
 
 /**
  * <p>
  * Title: ZTC640XNetPacketizerTest </p>
  * <p>
- * Description: </p>
- * <p>
- * Copyright: Copyright (c) 2009</p>
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2009
  */
-public class ZTC640XNetPacketizerTest extends TestCase {
-
-    public void testCtor() {
-        ZTC640XNetPacketizer f = new ZTC640XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
-        Assert.assertNotNull(f);
-    }
-
-    // from here down is testing infrastructure
-    public ZTC640XNetPacketizerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ZTC640XNetPacketizerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
+public class ZTC640XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        tc = new ZTC640XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
+        tc = null;
         apps.tests.Log4JFixture.tearDown();
     }
 

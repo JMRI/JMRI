@@ -9,9 +9,8 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers for MRC
  * systems
  *
- * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  * 
  */
@@ -29,6 +28,7 @@ public class MrcProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
@@ -36,18 +36,21 @@ public class MrcProgrammerManager extends DefaultProgrammerManager {
     /**
      * @return true
      */
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new MrcOpsModeProgrammer(tc, pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }
 
 
-/* @(#)MrcProgrammerManager.java */
+

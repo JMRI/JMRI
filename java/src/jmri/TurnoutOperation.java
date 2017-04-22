@@ -81,14 +81,14 @@ import jmri.implementation.AbstractTurnout;
  * AbstractTurnout.getTurnoutOperator if you want to do something <i>really</i>
  * different.
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public abstract class TurnoutOperation implements Comparable<Object> {
 
     String name;
     int feedbackModes = 0;
-    boolean nonce = false;		// created just for one turnout and not reusable 
+    boolean nonce = false;  // created just for one turnout and not reusable 
 
     TurnoutOperation(@Nonnull String n) {
         name = n;
@@ -99,7 +99,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      * factory to make a copy of an operation identical in all respects except
      * the name
      *
-     * @param n	name for new copy
+     * @param n name for new copy
      * @return TurnoutOperation of same concrete class as this
      */
     public abstract TurnoutOperation makeCopy(@Nonnull String n);
@@ -108,7 +108,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      * set feedback modes - part of construction but done separately for
      * ordering problems
      *
-     * @param fm	valid feedback modes for this class
+     * @param fm valid feedback modes for this class
      */
     protected void setFeedbackModes(int fm) {
         feedbackModes = fm;
@@ -117,7 +117,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * get the descriptive name of the operation
      *
-     * @return	name
+     * @return name
      */
     public String getName() {
         return name;
@@ -126,9 +126,10 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * Ordering by name so operations can be sorted on name
      *
-     * @param other	other TurnoutOperation object
+     * @param other other TurnoutOperation object
      * @return usual compareTo return values
      */
+    @Override
     public int compareTo(Object other) {
         return name.compareTo(((TurnoutOperation) other).name);
     }
@@ -136,6 +137,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * The identity of an operation is its name
      */
+    @Override
     public boolean equals(Object ro) {
         if (ro == null) return false;
         if (ro instanceof TurnoutOperation)
@@ -144,6 +146,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
             return false;
     }
     
+    @Override
     public int hashCode() {
         return name.hashCode();
     }
@@ -190,7 +193,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 
     /**
      *
-     * @return	true iff this is the "defining instance" of the class, which we
+     * @return true iff this is the "defining instance" of the class, which we
      *         determine by the name of the instance being the same as the
      *         prefix of the class
      */
@@ -205,8 +208,8 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      * Get an instance of the operator for this operation type, set up and
      * started to do its thing in a private thread for the specified turnout.
      *
-     * @param	t	the turnout to apply the operation to
-     * @return	the operator
+     * @param t the turnout to apply the operation to
+     * @return the operator
      */
     public abstract TurnoutOperator getOperator(@Nonnull AbstractTurnout t);
 
@@ -219,7 +222,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         if (!isDefinitive()) {
             TurnoutOperationManager.getInstance().removeOperation(this);
             name = "*deleted";
-            pcs.firePropertyChange("Deleted", null, null);		// this will remove all dangling references
+            pcs.firePropertyChange("Deleted", null, null);  // this will remove all dangling references
         }
     }
 
@@ -284,7 +287,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
 
     /**
      * @param mode feedback mode for a turnout
-     * @return	true iff this operation's feedback mode is one we know how to
+     * @return true iff this operation's feedback mode is one we know how to
      *         deal with
      */
     public boolean matchFeedbackMode(int mode) {

@@ -1,4 +1,3 @@
-// LnPr2PowerManager.java
 package jmri.jmrix.loconet.pr2;
 
 import jmri.DccLocoAddress;
@@ -22,7 +21,7 @@ import jmri.jmrix.loconet.SlotManager;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
@@ -37,6 +36,7 @@ public class LnPr2PowerManager extends LnPowerManager {
     LnTrafficController tc;
     LocoNetSystemConnectionMemo memo;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
 
@@ -51,10 +51,11 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // set bit 1 in CV 128
                 pm.writeCV(128, 1, null);
                 power = ON;
-                firePropertyChange("Power", null, null);
+                firePropertyChange("Power", null, null); // NOI18N
                 // start making sure that the power is refreshed
                 if (timer == null) {
                     timer = new javax.swing.Timer(2 * 1000, new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             refresh();
                         }
@@ -81,7 +82,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             }
         }
         // notify of change
-        firePropertyChange("Power", null, null);
+        firePropertyChange("Power", null, null); // NOI18N
     }
 
     void refresh() {
@@ -92,6 +93,7 @@ public class LnPr2PowerManager extends LnPowerManager {
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -100,19 +102,20 @@ public class LnPr2PowerManager extends LnPowerManager {
 
     private void checkOpsProg() throws JmriException {
         if (pm == null) {
-            throw new JmriException("Use PR2 power manager after dispose");
+            throw new JmriException("Use PR2 power manager after dispose"); // NOI18N
         }
     }
 
     // to listen for status changes from LocoNet
+    @Override
     public void message(LocoNetMessage m) {
         if (m.getOpCode() == LnConstants.OPC_GPON) {
             power = ON;
-            firePropertyChange("Power", null, null);
+            firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
             timer.stop();
-            firePropertyChange("Power", null, null);
+            firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == 0xEF) {
             // if this is a service mode write, drop out of power on mode
             if ((m.getElement(1) == 0x0E)
@@ -122,7 +125,7 @@ public class LnPr2PowerManager extends LnPowerManager {
                 if (power == ON) {
                     power = OFF;
                     timer.stop();
-                    firePropertyChange("Power", null, null);
+                    firePropertyChange("Power", null, null); // NOI18N
                 }
             }
         } else if ( // check for status showing going off
@@ -139,7 +142,7 @@ public class LnPr2PowerManager extends LnPowerManager {
                     if (timer != null) {
                         timer.stop();
                     }
-                    firePropertyChange("Power", null, null);
+                    firePropertyChange("Power", null, null); // NOI18N
                 }
             }
         }
@@ -149,5 +152,3 @@ public class LnPr2PowerManager extends LnPowerManager {
     javax.swing.Timer timer = null;
 }
 
-
-/* @(#)LnPr2PowerManager.java */

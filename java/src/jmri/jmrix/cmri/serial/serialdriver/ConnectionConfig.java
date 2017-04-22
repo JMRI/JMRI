@@ -4,7 +4,8 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
+import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
@@ -31,6 +32,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    JButton b;
+
+    @Override
     public void loadDetails(JPanel details) {
     	// have to embed the usual one in a new JPanel
     	
@@ -45,8 +49,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         details.add(b);
 
         setInstance();
-
-        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        b = new JButton("Configure C/MRI nodes");
+        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
         if (!additionalItems.contains(b)) {
             additionalItems.add(b);
         }
@@ -59,10 +63,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
 
+    @Override
     public String name() {
         return "Serial";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

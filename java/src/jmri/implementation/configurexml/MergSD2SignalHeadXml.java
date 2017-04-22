@@ -37,6 +37,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
      * @param o Object to store, of type MergSD2SignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         MergSD2SignalHead p = (MergSD2SignalHead) o;
 
@@ -201,6 +202,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

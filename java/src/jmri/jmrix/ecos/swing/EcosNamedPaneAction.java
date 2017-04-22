@@ -1,4 +1,3 @@
-// EcosNamedPaneAction.java
 package jmri.jmrix.ecos.swing;
 
 import javax.swing.Icon;
@@ -11,14 +10,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
   */
 public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5891812706143295616L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -55,5 +49,3 @@ public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class.getName());
 }
-
-/* @(#)EcosNamedPaneAction.java */

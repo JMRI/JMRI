@@ -1,4 +1,3 @@
-// XNetLightManagerXml.java
 package jmri.jmrix.lenz.configurexml;
 
 import org.jdom2.Element;
@@ -19,10 +18,12 @@ public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.lenz.configurexml.XNetLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

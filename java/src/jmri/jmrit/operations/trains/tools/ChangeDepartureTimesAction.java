@@ -1,4 +1,3 @@
-// ChangeDepartureTimesAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -26,8 +25,8 @@ public class ChangeDepartureTimesAction extends AbstractAction {
             f = new ChangeDepartureTimesFrame();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)ChangeDepartureTimesAction.java */
+

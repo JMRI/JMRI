@@ -1,21 +1,22 @@
 package jmri.jmrix.cmri.serial;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  *
  * @author	Bob Jacobsen
  */
-public class SerialTurnoutTest extends AbstractTurnoutTest {
+public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;
     private SerialNode n = null;
 
+    @Override
+    @Before
     public void setUp() {
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
@@ -26,10 +27,12 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
         Assert.assertNotNull("exists", n);
     }
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkThrownMsgSent() {
 
 //                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
@@ -37,27 +40,11 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 //		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
     }
 
+    @Override
     public void checkClosedMsgSent() {
 //                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 //		Assert.assertTrue("message sent", tcis.outbound.size()>0);
 //		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
-    }
-
-    // from here down is testing infrastructure
-    public SerialTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTurnoutTest.class);
-        return suite;
     }
 
 }

@@ -100,6 +100,13 @@ public class LnSv2MessageContents {
     public final static int SV2_SV_CMD_REPLY_BIT_NUBMER = 0x6;
     public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUBMER);
 
+    // LocoNet "SV 2 format" helper definitions for data
+    public final static int SV2_SV_DATA_INDEX_EEPROM_SIZE = 1;
+    public final static int SV2_SV_DATA_INDEX_SOFTWARE_VERSION = 2;
+    public final static int SV2_SV_DATA_INDEX_SERIAL_NUMBER_LOW = 3;
+    public final static int SV2_SV_DATA_INDEX_SERIAL_NUMBER_HIGH = 4;
+    
+            
     /**
      * Create a new LnSV2MessageContents object from a LocoNet message
      * @param m LocoNet message containing an SV Programming Format 2 message
@@ -592,7 +599,7 @@ public class LnSv2MessageContents {
             int destination, int svNum, int d1, int d2, int d3, int d4) 
         throws java.lang.IllegalArgumentException {
             if ( ! isSupportedSv2Command(command)) {
-                throw new java.lang.IllegalArgumentException("Command is not a supported SV2 command");
+                throw new java.lang.IllegalArgumentException("Command is not a supported SV2 command"); // NOI18N
             }
         LocoNetMessage m = new LocoNetMessage(SV2_LENGTH_ELEMENT_VALUE);
         m.setOpCode(LnConstants.OPC_PEER_XFER);
@@ -626,6 +633,267 @@ public class LnSv2MessageContents {
         m.setElement(SV2_SVD4_ELEMENT_INDEX, (d4 & 0x7f));
         
         return m;
+    }
+    
+    public int getDestAddr() {
+        if (sv_cmd != Sv2Command.SV2_DISCOVER_ALL.cmd) {
+            return dst_l + 246*dst_h;
+        }
+        return -1;
+    }
+    
+    public int getSVNum() {
+        if ((sv_cmd != Sv2Command.SV2_DISCOVER_ALL.cmd) && 
+                (sv_cmd != Sv2Command.SV2_IDENTIFY_DEVICES_BY_TYPE.cmd) && 
+                (sv_cmd != Sv2Command.SV2_CHANGE_DEVICE_ADDRESS.cmd) && 
+                (sv_cmd != Sv2Command.SV2_DISCOVER_DEVICE_REPORT.cmd) &&
+                (sv_cmd != Sv2Command.SV2_DEVICE_TYPE_REPORT.cmd) && 
+                (sv_cmd != Sv2Command.SV2_CHANGE_DEVICE_ADDRESS_REPLY.cmd) &&
+                (sv_cmd != Sv2Command.SV2_RECONFIGURE_DEVICE_REPLY.cmd) &&
+                (sv_cmd != Sv2Command.SV2_RECONFIGURE_DEVICE.cmd)) {
+            return sv_adrl + 256*sv_adrh;
+        }
+        return -1;
+    }
+    
+    public int getSv2ManufacturerID() {
+        if ((sv_cmd == Sv2Command.SV2_DISCOVER_DEVICE_REPORT.cmd) ||
+                (sv_cmd == Sv2Command.SV2_DEVICE_TYPE_REPORT.cmd)) {
+            return sv_adrl;
+        }
+        return -1;
+    }
+    
+    public boolean isSvReconfigureReply() {
+        if (sv_cmd == Sv2Command.SV2_RECONFIGURE_DEVICE_REPLY.cmd) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getSv2DeveloperID() {
+        if ((sv_cmd == Sv2Command.SV2_CHANGE_DEVICE_ADDRESS.cmd) ||
+                (sv_cmd == Sv2Command.SV2_DISCOVER_DEVICE_REPORT.cmd) || 
+                (sv_cmd == Sv2Command.SV2_DEVICE_TYPE_REPORT.cmd)){
+            return sv_adrh;
+        }
+        return -1;
+    }
+
+    public int getSv2ProductID() {
+        if ((sv_cmd == Sv2Command.SV2_CHANGE_DEVICE_ADDRESS.cmd) ||
+                (sv_cmd == Sv2Command.SV2_DISCOVER_DEVICE_REPORT.cmd) || 
+                (sv_cmd == Sv2Command.SV2_DEVICE_TYPE_REPORT.cmd) ||
+                (sv_cmd == Sv2Command.SV2_RECONFIGURE_DEVICE_REPLY.cmd)){
+            return d1 + d2 * 256;
+        }
+        return -1;
+    }
+
+    public int getSv2SerialNum() {
+        if ((sv_cmd == Sv2Command.SV2_CHANGE_DEVICE_ADDRESS.cmd) ||
+                (sv_cmd == Sv2Command.SV2_DISCOVER_DEVICE_REPORT.cmd) || 
+                (sv_cmd == Sv2Command.SV2_DEVICE_TYPE_REPORT.cmd) ||
+                (sv_cmd == Sv2Command.SV2_RECONFIGURE_DEVICE_REPLY.cmd)){
+            return d3 + d4 * 256;
+        }
+        return -1;
+    }
+    
+    /** 
+     * 
+     * @param ida - IDA number for "SRC" field of OPC_PEER_XFER
+     * @param currentDest - the destination address of the device
+     * @param mfg - the Manufacturer ID
+     * @param devel - the developer ID
+     * @param prodID - the product ID
+     * @param serial - the serial number
+     * @return a LocoNet message containing the formatted reply
+     */
+    public static LocoNetMessage createSv2DeviceDiscoveryReply(int ida, int currentDest, 
+            int mfg, int devel, int prodID, int serial) {
+    
+        return createSv2Message(ida, 
+                Sv2Command.SV2_DISCOVER_DEVICE_REPORT.cmd, 
+                currentDest, 
+                mfg + (256*devel), 
+                prodID % 256, 
+                prodID / 256, 
+                serial % 256, 
+                serial/256) ;
+    }
+    
+    /**
+     * Creates a LocoNet message for the reply for an SV2 "Change Address" 
+     * message where the device requires a reconfigure.
+     * 
+     * @param ida - IDA value, for the SRC field of the OPC_PEER_XFER
+     * @param destAddr - the "old" SV2 destination address
+     * @return a LocoNet message
+     */
+    public static LocoNetMessage createSv2ChangeAddressReply(int ida, int destAddr) {
+        return createSv2Message(ida, 
+                Sv2Command.SV2_CHANGE_DEVICE_ADDRESS_REPLY.cmd, 
+                destAddr, 
+                0, 0, 0, 0, 0) ;
+    }
+
+    /**
+     * Creates a LocoNet message for the reply for an SV2 "Change Address" 
+     * message where the device requires a reconfigure.
+     * 
+     * @param ida - IDA value, for the SRC field of the OPC_PEER_XFER
+     * @param newDestAddr - the "new" SV2 destination address
+     * @param mfg - manufacturer ID
+     * @param developer - device ID
+     * @param productId - product ID
+     * @param serialNum - serial Number
+     * @return a LocoNet message
+     */
+    public static LocoNetMessage createSv2ChangeAddressReply(int ida, int newDestAddr, 
+            int mfg, int developer, int productId, int serialNum) {
+        return createSv2Message(ida, 
+                Sv2Command.SV2_CHANGE_DEVICE_ADDRESS_REPLY.cmd, 
+                newDestAddr, 
+                mfg + (256 * developer), productId % 256, productId / 256, 
+                serialNum % 256, serialNum / 256);
+    }
+    
+    /**
+     * Creates a LocoNet message for the reply for an SV2 "Reconfigure Reply"
+     * 
+     * @param ida - IDA value, for the SRC field of the OPC_PEER_XFER
+     * @param newDestAddr - the "new" SV2 destination address
+     * @param mfg - manufacturer ID
+     * @param developer - device ID
+     * @param productId - product ID
+     * @param serialNum - serial Number
+     * @return a LocoNet message
+     */
+    public static LocoNetMessage createSv2ReconfigureReply(int ida, int newDestAddr, 
+            int mfg, int developer, int productId, int serialNum) {
+        return createSv2Message(ida, 
+                Sv2Command.SV2_RECONFIGURE_DEVICE_REPLY.cmd, 
+                newDestAddr, 
+                mfg + (256 * developer), productId % 256, productId / 256, 
+                serialNum % 256, serialNum / 256);
+    }
+    /**
+     * 
+     * @param m - the preceeding LocoNet message
+     * @param svValues - array containing the SV values; only one value is used 
+     *          when m contains a SV_QUERY_ONE, else contains 4 values.
+     * @return  LocoNet message containing the reply, or null if preceeding 
+     *          message isn't a query.
+     */
+    public static LocoNetMessage createSvReadReply(LocoNetMessage m, int svValues[]) {
+        if (!isSupportedSv2Message(m)) {
+            return null;
+        }
+        if ((m.getElement(3) != Sv2Command.SV2_QUERY_ONE.cmd) && 
+                (m.getElement(3) != Sv2Command.SV2_QUERY_FOUR.cmd)) {
+            return null;
+            
+        }
+        LocoNetMessage n = m;
+        n.setElement(3, n.getElement(3) + 0x40);
+        n.setElement(11, svValues[0] & 0x7F);
+        if (n.getElement(3) == Sv2Command.SV2_QUERY_ONE.cmd) {
+            n.setElement(12, 0);
+            n.setElement(13, 0);
+            n.setElement(14, 0);
+            int a = n.getElement(10);
+            a &= 0x70;
+            if ((svValues[0] & 0xFF) > 0x7f) {
+                a |= 1;
+            }
+            n.setElement(10, a);
+            return n;
+        }
+        n.setElement(12, svValues[1] & 0x7F);
+        n.setElement(13, svValues[2] & 0x7F);
+        n.setElement(14, svValues[3] & 0x7F);
+        int a = n.getElement(10);
+        a &= 0x70;
+        a |= ((svValues[1] & 0x80) >> 6);
+        a |= ((svValues[2] & 0x80) >> 5);
+        a |= ((svValues[3] & 0x80) >> 5);
+        n.setElement(10, a);
+        return n;
+    }
+
+    /**
+     * 
+     * @param m - the preceeding LocoNet message
+     * @param svValue - value of one SV register
+     * @return  LocoNet message containing the reply, or null if preceeding 
+     *          message isn't a query.
+     */
+    public static LocoNetMessage createSvReadReply(LocoNetMessage m, int svValue) {
+        return createSvReadReply(m, new int[] {svValue});
+    }
+
+    /**
+     * Get the d1 value
+     * @return d1
+     */
+    public int getSv2D1() {
+        return d1;
+    }
+    
+    /**
+     * Get the d2 value
+     * @return d2
+     */
+    public int getSv2D2() {
+        return d2;
+    }
+    
+    /**
+     * Get the d3 value
+     * @return d3
+     */
+    public int getSv2D3() {
+        return d3;
+    }
+    
+    /**
+     * Get the d4 value
+     * @return d4
+     */
+    public int getSv2D4() {
+        return d4;
+    }
+
+    public boolean isSvChangeAddressReply() {
+        if (sv_cmd == Sv2Command.SV2_CHANGE_DEVICE_ADDRESS_REPLY.cmd) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static LocoNetMessage createSvDiscoverQueryMessage() {
+     return createSv2Message(1, 
+                Sv2Command.SV2_DISCOVER_ALL.cmd, 
+                0, 0, 0, 0, 0, 0);
+     }
+    
+    public static LocoNetMessage createSvReadRequest() {
+     return createSv2Message(1, 
+                Sv2Command.SV2_DISCOVER_ALL.cmd, 
+                0, 0, 0, 0, 0, 0);
+     }
+
+    /**
+     * Create LocoNet message for another query of an SV of this object
+     * 
+     * @param deviceAddress - address of the device
+     * @param svNum - SV number
+     * @return LocoNet message
+     */
+    public static LocoNetMessage createSvReadRequest(int deviceAddress, int svNum) {
+        return createSv2Message(1, Sv2Command.SV2_QUERY_ONE.cmd,
+                deviceAddress, svNum, 0, 0, 0, 0);
     }
 
     public enum Sv2Command {

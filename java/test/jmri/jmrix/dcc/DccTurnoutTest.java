@@ -1,23 +1,23 @@
-/**
- * DccTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.dcc.DccTurnout class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.dcc;
 
 import jmri.CommandStation;
 import jmri.InstanceManager;
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
 
-public class DccTurnoutTest extends AbstractTurnoutTest {
+/**
+ * Tests for the jmri.jmrix.dcc.DccTurnout class
+ *
+ * @author	Bob Jacobsen
+ */
+public class DccTurnoutTest extends AbstractTurnoutTestBase {
 
     CommandStationScaffold tcis;
 
+    @Override
+    @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         tcis = new CommandStationScaffold();
@@ -25,49 +25,38 @@ public class DccTurnoutTest extends AbstractTurnoutTest {
         t = new DccTurnout(4);
     }
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "[-127, -2, 127]", java.util.Arrays.toString(tcis.outbound.get(tcis.outbound.size() - 1)));  // THROWN message
     }
 
+    @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "[-127, -1, 126]", java.util.Arrays.toString(tcis.outbound.get(tcis.outbound.size() - 1)));  // CLOSED message
-    }
-
-    // from here down is testing infrastructure
-    public DccTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DccTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DccTurnoutTest.class);
-        return suite;
     }
 
     class CommandStationScaffold implements CommandStation {
 
         java.util.ArrayList<byte[]> outbound = new java.util.ArrayList<byte[]>();
 
+        @Override
         public void sendPacket(byte[] packet, int repeats) {
             outbound.add(packet);
         }
 
+        @Override
         public String getUserName() {
             return "";
         }
 
+        @Override
         public String getSystemPrefix() {
             return "";
         }
@@ -78,7 +67,8 @@ public class DccTurnoutTest extends AbstractTurnoutTest {
     }
 
     // The minimal setup for log4J
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
 

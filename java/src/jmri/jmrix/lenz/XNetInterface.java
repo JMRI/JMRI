@@ -22,7 +22,7 @@ package jmri.jmrix.lenz;
  * that messages will be returned in any particular thread. See the XNetListener
  * doc for more background.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrix.lenz.XNetListener
  * @see jmri.jmrix.lenz.XNetTrafficController
  *
@@ -115,7 +115,7 @@ public interface XNetInterface {
     public static final int CONSIST = 32;
 
     /**
-     * Mask value to request notification of messages associated with consists
+     * Mask value to request notification of messages associated with the interface
      *
      */
     public static final int INTERFACE = 64;
@@ -123,4 +123,4 @@ public interface XNetInterface {
 }
 
 
-/* @(#)XNetInterface.java */
+

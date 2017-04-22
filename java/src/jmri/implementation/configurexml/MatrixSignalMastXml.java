@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for a DefaultSignalMastManager object.
+ * Handle XML configuration for DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: (C) 2009
- * @author Egbert Broerse Copyright: (C) 2016
+ * @author Egbert Broerse Copyright: (C) 2016, 2017
  */
 public class MatrixSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -27,10 +27,11 @@ public class MatrixSignalMastXml
      * @param o Object to store, of type MatrixSignalMast
      * @return e Element containing the complete info
      */
+    @Override
     public Element store(Object o) { // from mast p to XML
         MatrixSignalMast p = (MatrixSignalMast) o;
 
-        Element e = new Element("signalmast");
+        Element e = new Element("matrixsignalmast");
         e.setAttribute("class", this.getClass().getName());
 
         // include content
@@ -66,7 +67,7 @@ public class MatrixSignalMastXml
             e.addContent(outps);
         }
 
-        // string of max. 5 chars "00101" describing matrix row per aspect
+        // string of max. 6 chars "001010" describing matrix row per aspect
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
             Element bss = new Element("bitStrings");
@@ -144,7 +145,7 @@ public class MatrixSignalMastXml
         if (bss != null) {
             List<Element> list = bss.getChildren("bitString"); // singular
             for (Element bs : list) {
-                m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
+                m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText()); // OK if value is null
             }
         }
 
@@ -159,6 +160,7 @@ public class MatrixSignalMastXml
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

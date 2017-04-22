@@ -1,22 +1,4 @@
 package jmri.jmrit.vsdecoder.swing;
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author			Mark Underwood Copyright (C) 2011
- * 
- */
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -36,12 +18,26 @@ import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
+ */
 public class ManageLocationsAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1147171842579642617L;
     private ManageLocationsFrame f = null;
     private HashMap<String, PhysicalLocation> reporterMap;
     private HashMap<String, PhysicalLocation> blockMap;
@@ -52,6 +48,7 @@ public class ManageLocationsAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             // Handle the Listener
@@ -139,7 +136,7 @@ public class ManageLocationsAction extends AbstractAction {
         f.setExtendedState(Frame.NORMAL);
     }
 
-    static private Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(ManageLocationsAction.class.getName());
 
 }

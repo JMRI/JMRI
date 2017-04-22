@@ -1,4 +1,3 @@
-// MarklinMessage.java
 package jmri.jmrix.marklin;
 
 
@@ -8,7 +7,7 @@ package jmri.jmrix.marklin;
  * The {@link MarklinReply} class handles the response from the command station.
  * <P>
  *
- * @author	Kevin Dickerson Copyright (C) 2001, 2008
+ * @author Kevin Dickerson Copyright (C) 2001, 2008
  */
 /*Packages of length 13 are interpreted as can-bus packages: 4 bytes
  Can-bus-ID (BigEndian or network order), 1-byte length and 8 bytes of data, if necessary with null bytes
@@ -288,4 +287,4 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
     }
 }
 
-/* @(#)MarklinMessage.java */
+

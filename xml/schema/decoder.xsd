@@ -226,7 +226,15 @@
                   </xs:sequence>
                   <xs:attribute name="nmraListDate" type="xs:string"/>                  
                   <xs:attribute name="updated" type="xs:string"/>                  
-                  <xs:attribute name="lastadd" type="xs:int"/>                  
+                  <xs:attribute name="lastadd" type="xs:string">                  
+                    <xs:annotation><xs:documentation>
+                        Comma-separated list of numbers recently added; next time
+                        you update, check to see if these entries have had 
+                        names changed to correct NMRA transcription errors. Also can be 
+                        useful to look near these values for new additions to the
+                        NMRA list. 
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
               <xs:element name="familyList" minOccurs="1" maxOccurs="1" >
@@ -432,6 +440,7 @@
                 <xs:enumeration value="NMRAmedium"/>
                 <xs:enumeration value="NMRAlarge"/>
                 <xs:enumeration value="9pin"/>
+                <xs:enumeration value="Wires"/>
                 <xs:enumeration value="21MTC"/>
                 <xs:enumeration value="Next18"/>
                 <xs:enumeration value="PluX8"/>

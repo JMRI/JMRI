@@ -38,7 +38,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _num = num;
         _cvName = cvName;
         if (cvName == null) {
-            log.error("cvName == null in ctor num: " + num);
+            log.error("cvName == null in ctor num: " + num); // NOI18N
         }
         _piCv = piCv;
         _piVal = piVal;
@@ -51,6 +51,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
 
+    @Override
     public String toString() {
         return "CvValue _num=" + _num + " _cvName=" + _cvName + " _piCv=" + _piCv + " _siCv=" + _siCv
                 + " _iCv=" + _iCv;
@@ -130,9 +131,8 @@ public class CvValue extends AbstractValue implements ProgListener {
      * form a GUI, not for internal uses, as it sets the state to EDITED
      */
     public void setValue(int value) {
-        if (log.isDebugEnabled()) {
-            log.debug("CV " + number() + " value changed from " + _value + " to " + value);
-        }
+        log.debug("CV {} value changed from {} to {}", number(), _value, value); // NOI18N
+
         setState(EDITED);
         if (_value != value) {
             _value = value;
@@ -161,8 +161,8 @@ public class CvValue extends AbstractValue implements ProgListener {
      * Set state value and send notification. Also sets GUI color as needed.
      */
     public void setState(int state) {
-        if (log.isDebugEnabled()) {
-            log.debug("cv " + number() + " set state from " + stateToString(_state) + " to " + stateToString(state));
+        if (log.isDebugEnabled()) {  // stateToString overhead
+            log.debug("cv " + number() + " set state from " + stateToString(_state) + " to " + stateToString(state)); // NOI18N
         }
         int oldstate = _state;
         _state = state;
@@ -189,7 +189,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 setColor(COLOR_DIFF);
                 break;
             default:
-                log.error("Inconsistent state: " + _state);
+                log.error("Inconsistent state: " + _state); // NOI18N
         }
         if (oldstate != state) {
             prop.firePropertyChange("State", Integer.valueOf(oldstate), Integer.valueOf(state));
@@ -216,7 +216,7 @@ public class CvValue extends AbstractValue implements ProgListener {
             case DIFF:
                 return "DIFF";
             default:
-                log.error("Inconsistent state: " + _state);
+                log.error("Inconsistent state: " + _state); // NOI18N
                 return "ERROR!!";
         }
     }
@@ -233,9 +233,8 @@ public class CvValue extends AbstractValue implements ProgListener {
      * is the only thing changing
      */
     private void setBusy(boolean busy) {
-        if (log.isDebugEnabled()) {
-            log.debug("setBusy from " + _busy + " to " + busy + " state " + _state);
-        }
+        log.debug("setBusy from {} to {} state {}", _busy, busy, _state); // NOI18N
+
         boolean oldBusy = _busy;
         _busy = busy;
         notifyBusyChange(oldBusy, busy);
@@ -245,9 +244,8 @@ public class CvValue extends AbstractValue implements ProgListener {
      * Notify of changes to the busy state
      */
     private void notifyBusyChange(boolean oldBusy, boolean newBusy) {
-        if (log.isDebugEnabled()) {
-            log.debug("notifyBusy from " + oldBusy + " to " + newBusy + " current state " + _state);
-        }
+        log.debug("notifyBusyChange from {} to {} current state {}", oldBusy, newBusy, _state); // NOI18N
+
         if (oldBusy != newBusy) {
             prop.firePropertyChange("Busy",
                     oldBusy ? Boolean.TRUE : Boolean.FALSE,
@@ -259,6 +257,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     // color management
     Color _defaultColor;
 
+    @Override
     void setColor(Color c) {
         if (c != null) {
             _tableEntry.setBackground(c);
@@ -329,6 +328,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         return _writeOnly;
     }
 
+    @Override
     public void setToRead(boolean state) {
         if (getInfoOnly() || getWriteOnly()) {
             state = false;
@@ -336,11 +336,13 @@ public class CvValue extends AbstractValue implements ProgListener {
         _toRead = state;
     }
 
+    @Override
     public boolean isToRead() {
         return _toRead;
     }
     private boolean _toRead = false;
 
+    @Override
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly()) {
             state = false;
@@ -348,6 +350,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _toWrite = state;
     }
 
+    @Override
     public boolean isToWrite() {
         return _toWrite;
     }
@@ -358,9 +361,8 @@ public class CvValue extends AbstractValue implements ProgListener {
     private boolean _confirm = false;
 
     public void read(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("read call with Cv number " + _num + " and programmer " + mProgrammer);
-        }
+        log.debug("read call with Cv number {} and programmer {}", _num, mProgrammer); // NOI18N
+
         setToRead(false);
         // get a programmer reference and write
         _status = status;
@@ -386,14 +388,14 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     new Object[]{e.toString()}));
                 }
 
-                log.warn("Exception during CV read: " + e);
+                log.warn("Exception during CV read: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
@@ -425,14 +427,14 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringIndexedRead"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during IndexedCV read: " + e);
+                log.warn("Exception during IndexedCV read: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
@@ -464,21 +466,20 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringIndexedRead"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during IndexedCV read: " + e);
+                log.warn("Exception during IndexedCV read: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
     public void confirm(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("confirm call with Cv number " + _num);
-        }
+        log.debug("confirm call with Cv number {}", _num); // NOI18N
+
         // get a programmer reference and write
         _status = status;
 
@@ -502,21 +503,20 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringConfirm"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during CV read: " + e);
+                log.warn("Exception during CV read: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
     public void write(JLabel status) {
-        if (log.isDebugEnabled()) {
-            log.debug("write call with Cv number " + _num);
-        }
+        log.debug("write call with Cv number {}", _num); // NOI18N
+
         setToWrite(false);
         // get a programmer reference and write
         _status = status;
@@ -542,21 +542,21 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during write CV '" + _num + "' to '" + _value + "'", e);
+                log.warn("Exception during write CV '" + _num + "' to '" + _value + "'", e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
     @Deprecated // since 3.7.1
     public void writePI(JLabel status) {
         if (log.isDebugEnabled()) {
-            log.debug("write call with PI number " + _piVal);
+            log.debug("write call with PI number " + _piVal); // NOI18N
         }
         // get a programmer reference and write to the primary index
         _status = status;
@@ -581,21 +581,21 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during CV write of '" + _piCv + "' to '" + _piVal + "'", e);
+                log.warn("Exception during CV write of '" + _piCv + "' to '" + _piVal + "'", e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
     @Deprecated // since 3.7.1
     public void writeSI(JLabel status) {
         if (log.isDebugEnabled()) {
-            log.debug("write call with SI number " + _siVal);
+            log.debug("write call with SI number " + _siVal); // NOI18N
         }
         // get a programmer reference and write to the secondary index
         _status = status;
@@ -624,21 +624,21 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during CV write: " + e);
+                log.warn("Exception during CV write: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
     @Deprecated // since 3.7.1
     public void writeIcV(JLabel status) {
         if (log.isDebugEnabled()) {
-            log.debug("write call with IndexedCv number " + _iCv);
+            log.debug("write call with IndexedCv number " + _iCv); // NOI18N
         }
         setToWrite(false);
         // get a programmer reference and write the indexed CV
@@ -666,26 +666,27 @@ public class CvValue extends AbstractValue implements ProgListener {
                                     Bundle.getMessage("StateExceptionDuringIndexedWrite"),
                                     new Object[]{e.toString()}));
                 }
-                log.warn("Exception during CV write: " + e);
+                log.warn("Exception during CV write: " + e); // NOI18N
                 setBusy(false);
             }
         } else {
             if (status != null) {
                 status.setText(Bundle.getMessage("StateNoProgrammer"));
             }
-            log.error("No programmer available!");
+            log.error("No programmer available!"); // NOI18N
         }
     }
 
+    @Override
     public void programmingOpReply(int value, int retval) {
         if (log.isDebugEnabled()) {
             log.debug("CV progOpReply for CV " + _num + " with retval " + retval
                     + " during "
                     + (_reading ? "read sequence"
-                            : (_confirm ? "confirm sequence" : "write sequence")));
+                            : (_confirm ? "confirm sequence" : "write sequence")));  // NOI18N
         }
         if (!_busy) {
-            log.error("opReply when not busy!");
+            log.error("opReply when not busy!"); // NOI18N
         }
         boolean oldBusy = _busy;
         if (retval == OK) {
@@ -698,9 +699,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                 _tableEntry.setText(Integer.toString(value));
                 notifyValueChange(value);
                 setState(READ);
-                if (log.isDebugEnabled()) {
-                    log.debug("CV setting not busy on end read");
-                }
+                log.debug("CV setting not busy on end read"); // NOI18N
                 _busy = false;
                 notifyBusyChange(oldBusy, _busy);
             } else if (_confirm) {
@@ -727,8 +726,9 @@ public class CvValue extends AbstractValue implements ProgListener {
                                 new Object[]{mProgrammer.decodeErrorCode(retval)}));
             }
 
-            // delay to ensure that the message appears!
+            // delay setting not Busy to ensure that the message appears to the user
             javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     errorTimeout();
                 }
@@ -737,25 +737,20 @@ public class CvValue extends AbstractValue implements ProgListener {
             timer.setRepeats(false);
             timer.start();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("CV progOpReply end of handling CV " + _num);
-        }
+            
+        log.debug("CV progOpReply end of handling CV {}", _num); // NOI18N
     }
 
     void errorTimeout() {
         setState(UNKNOWN);
-        if (log.isDebugEnabled()) {
-            log.debug("CV setting not busy on error reply");
-        }
+        log.debug("CV setting not busy on error reply"); // NOI18N
         _busy = false;
         notifyBusyChange(true, _busy);
     }
 
     // clean up connections when done
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose"); // NOI18N
     }
 
     // initialize logging

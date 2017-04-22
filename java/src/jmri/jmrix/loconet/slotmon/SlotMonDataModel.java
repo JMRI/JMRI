@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7189862416509314863L;
     static public final int SLOTCOLUMN = 0;
     static public final int ESTOPCOLUMN = 1;
     static public final int ADDRCOLUMN = 2;
@@ -73,6 +69,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * This should probably use a local cache instead of counting/searching each
      * time.
      */
+    @Override
     public int getRowCount() {
         if (_allSlots) {
             // will show the entire set, so don't bother counting
@@ -99,10 +96,12 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         return n;
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -148,6 +147,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -178,6 +178,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ESTOPCOLUMN:
@@ -201,6 +202,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static final Boolean True = Boolean.valueOf(true);
     static final Boolean False = Boolean.valueOf(false);
 
+    @Override
     public Object getValueAt(int row, int col) {
         LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
         String t;
@@ -347,6 +349,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         int status = 0;
 
@@ -578,6 +581,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton()) {
+            @Override
             public void mousePressed(MouseEvent e) {
                 stopCellEditing();
             }
@@ -590,6 +594,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     }
 
     // methods to communicate with SlotManager
+    @Override
     public synchronized void notifyChangedSlot(LocoNetSlot s) {
         // update model from this slot
         int slotNum = s.getSlot();
@@ -626,6 +631,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             _model = model;
         }
 
+        @Override
         public void run() {
             if (-1 == _row) {  // notify about entire table
                 _model.fireTableDataChanged();  // just that row

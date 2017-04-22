@@ -1,107 +1,38 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
-import jmri.LightManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the ProxyReporterManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author	Mark Underwood 2012
+ * @author	Paul Bender 2016
  */
-public class ProxyReporterManagerTest extends TestCase {
+public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
 
-    public String getSystemName(int i) {
+    @Override
+    public String getSystemName(String i) {
         return "IR" + i;
     }
 
-    protected ReporterManager l = null;	// holds objects under test
-
-    static protected boolean listenerResult = false;
-
-    protected class Listen implements PropertyChangeListener {
-
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            listenerResult = true;
-        }
-    }
-
-    public void testDispose() {
-        l.dispose();  // all we're really doing here is making sure the method exists
-    }
-
+    @Test
     public void testReporterPutGet() {
         // create
-        Reporter t = l.newReporter(getSystemName(getNumToTest1()), "mine");
+        Reporter t = l.newReporter(getSystemName(getNameToTest1()), "mine");
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
     }
 
-    public void testDefaultSystemName() {
-        // create
-        Reporter t = l.provideReporter("" + getNumToTest3());
-        // check
-        Assert.assertTrue("real object returned ", t != null);
-        t = l.getBySystemName(getSystemName(getNumToTest3()));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest3())));
-    }
-
-    public void testProvideFailure() {
-        boolean correct = false;
-        try {
-            Reporter t = l.provideReporter("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            correct = true;
-        }
-        Assert.assertTrue("Exception thrown properly", correct);
-        
-    }
-
-    public void testSingleObject() {
-        // test that you always get the same representation
-        Reporter t1 = l.newReporter(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
-
-        Reporter t2 = l.newReporter(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
-        // check
-        Assert.assertTrue("same new ", t1 == t2);
-    }
-
-    public void testMisses() {
-        // try to get nonexistant lights
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
-    }
-
-    public void testUpperLower() {
-        Reporter t = l.provideReporter("" + getNumToTest2());
-        String name = t.getSystemName();
-        Assert.assertNull(l.getReporter(name.toLowerCase()));
-    }
-
-    public void testRename() {
-        // get light
-        Reporter t1 = l.newReporter(getSystemName(getNumToTest1()), "before");
-        Assert.assertNotNull("t1 real object ", t1);
-        t1.setUserName("after");
-        Reporter t2 = l.getByUserName("after");
-        Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
-    }
-
+    @Test
     public void testTwoNames() {
         Reporter ir211 = l.provideReporter("LR211");
         Reporter lr211 = l.provideReporter("IR211");
@@ -111,6 +42,7 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertTrue(ir211 != lr211);
     }
 
+    @Test
     public void testDefaultNotInternal() {
         Reporter lut = l.provideReporter("211");
 
@@ -118,6 +50,7 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertEquals("IR211", lut.getSystemName());
     }
 
+    @Test
     public void testProvideUser() {
         Reporter l1 = l.provideReporter("211");
         l1.setUserName("user 1");
@@ -135,71 +68,53 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertNull(l4);
     }
 
+    @Test
+    public void testNormalizeName() {
+        // create
+        String name = l.provideReporter("" + getNameToTest1()).getSystemName();
+        // check
+        Assert.assertEquals(name, l.normalizeSystemName(name));
+    }
+
+    @Test
     public void testInstanceManagerIntegration() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
 
-        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initReporterManager();
 
-        Assert.assertTrue(InstanceManager.getDefault(LightManager.class) instanceof ProxyLightManager);
+        Assert.assertTrue(InstanceManager.getDefault(ReporterManager.class) instanceof ProxyReporterManager);
 
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1"));
 
-        InternalLightManager m = new InternalLightManager() {
+        InternalReporterManager m = new InternalReporterManager() {
 
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }
         };
-        InstanceManager.setLightManager(m);
+        InstanceManager.setReporterManager(m);
 
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("JL1"));
-        Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL2"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("JR1"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR2"));
     }
 
-    /**
-     * Number of light to test. Made a separate method so it can be overridden
-     * in subclasses that do or don't support various numbers
-     */
-    protected int getNumToTest1() {
-        return 9;
-    }
-
-    protected int getNumToTest2() {
-        return 7;
-    }
-
-    protected int getNumToTest3() {
-        return 5;
-    }
-
-    // from here down is testing infrastructure
-    public ProxyReporterManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ProxyReporterManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ProxyReporterManagerTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // create and register the manager object
         l = InstanceManager.getDefault(jmri.ReporterManager.class);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

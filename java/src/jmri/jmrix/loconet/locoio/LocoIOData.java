@@ -92,7 +92,7 @@ public class LocoIOData
         if (tc != null) {
             tc.addLocoNetListener(~0, this);
         } else {
-            log.error("No LocoNet interface available");
+            log.error("No LocoNet interface available"); // NOI18N
         }
     }
 
@@ -104,10 +104,11 @@ public class LocoIOData
         dataListeners.removePropertyChangeListener(pcl);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        String s = "LocoIOData: " + evt.getPropertyName()
-                + " := " + evt.getNewValue()
-                + " from " + evt.getSource();
+        String s = "LocoIOData: " + evt.getPropertyName() // NOI18N
+                + " := " + evt.getNewValue() // NOI18N
+                + " from " + evt.getSource(); // NOI18N
         System.out.println(s);
     }
 
@@ -130,12 +131,12 @@ public class LocoIOData
     }
 
     public synchronized void setUnitAddress(int unit) {
-        dataListeners.firePropertyChange("UnitAddress", Integer.valueOf(unitAddress), Integer.valueOf(0x0100 | (unit & 0x07F)));
+        dataListeners.firePropertyChange("UnitAddress", Integer.valueOf(unitAddress), Integer.valueOf(0x0100 | (unit & 0x07F))); // NOI18N
         unitAddress = 0x0100 | (unit & 0x07F);  // protect against high bits set
     }
 
     public synchronized void setUnitSubAddress(int unitSub) {
-        dataListeners.firePropertyChange("UnitSubAddress", Integer.valueOf(unitSubAddress), Integer.valueOf(unitSub & 0x07F));
+        dataListeners.firePropertyChange("UnitSubAddress", Integer.valueOf(unitSubAddress), Integer.valueOf(unitSub & 0x07F)); // NOI18N
         unitSubAddress = unitSub & 0x07F;
     }
 
@@ -162,7 +163,7 @@ public class LocoIOData
                 // bit 2 left at zero
                 ((isServo & 0x01) << 0x03) | // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
-        dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0));
+        dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0)); // NOI18N
         sv0 = newsv0;
     }
 
@@ -172,7 +173,7 @@ public class LocoIOData
 
     public void setLBVersion(String version) {
         locoBufferVersion = version;
-        dataListeners.firePropertyChange("LBVersionChange", "", locoBufferVersion);
+        dataListeners.firePropertyChange("LBVersionChange", "", locoBufferVersion); // NOI18N
     }
 
     public String getLBVersion() {
@@ -181,7 +182,7 @@ public class LocoIOData
 
     public void setLIOVersion(String version) {
         locoIOVersion = version;
-        dataListeners.firePropertyChange("LIOVersionChange", "", locoIOVersion);
+        dataListeners.firePropertyChange("LIOVersionChange", "", locoIOVersion); // NOI18N
     }
 
     public String getLIOVersion() {
@@ -190,7 +191,7 @@ public class LocoIOData
 
     public void setStatus(String msg) {
         status = msg;
-        dataListeners.firePropertyChange("StatusChange", "", status);
+        dataListeners.firePropertyChange("StatusChange", "", status); // NOI18N
     }
 
     public String getStatus() {
@@ -199,7 +200,7 @@ public class LocoIOData
 
     public void setSV(int channel, int value) {
         sv[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
     }
 
     public int getSV(int channel) {
@@ -212,7 +213,7 @@ public class LocoIOData
 
     public void setV1(int channel, int value) {
         v1[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
     }
 
     public int getV1(int channel) {
@@ -225,7 +226,7 @@ public class LocoIOData
 
     public void setV2(int channel, int value) {
         v2[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
     }
 
     public int getV2(int channel) {
@@ -240,7 +241,7 @@ public class LocoIOData
      */
     public void setAddr(int channel, int value) {
         addr[channel] = value & 0x7FF;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
     }
 
     public int getAddr(int channel) {
@@ -249,7 +250,7 @@ public class LocoIOData
 
     public void setMode(int channel, String m) {
         mode[channel] = m;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
     }
 
     public String getMode(int channel) {
@@ -270,7 +271,7 @@ public class LocoIOData
 
     public void setLIM(int channel, LocoIOMode m) {
         lim[channel] = m;
-        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel)); // NOI18N
     }
 
     public LocoIOMode getLIM(int channel) {
@@ -362,7 +363,7 @@ public class LocoIOData
         int x = val;
         StringBuffer ret = new StringBuffer();
         if (val == 0) {
-            return "0";
+            return "0"; // NOI18N
         }
         while (x != 0) {
             dit = x % 10;
@@ -387,6 +388,7 @@ public class LocoIOData
      * <P>
      * @param m Incoming message
      */
+    @Override
     public synchronized void message(LocoNetMessage m) {
         // sort out the opCode
         int opCode = m.getOpCode();
@@ -409,7 +411,7 @@ public class LocoIOData
                     stopTimer();
                     replyReceived(); // advance state
 
-                    String fw = ((packet[2] != 0) ? dotme(packet[2]) : "1.3.2");
+                    String fw = ((packet[2] != 0) ? dotme(packet[2]) : "1.3.2"); // NOI18N
                     setLIOVersion(fw);
                     if (packet[0] == LocoIO.LOCOIO_SV_READ || reading) {  // read command
                         // get data and store
@@ -419,47 +421,47 @@ public class LocoIOData
                             int data = (packet[2] != 0) ? packet[5] : packet[7];
                             int channel = (lastOpCv / 3) - 1;
                             if (channel < 0) {
-                                log.warn("... channel is less than zero!!!");
+                                log.warn("... channel is less than zero!!!"); // NOI18N
                                 channel = 0;
                             }
                             int type = lastOpCv - (channel * 3 + 3);
                             // type = 0 for cv, 1 for value1, 2 for value2
                             // We can't update the mode until we have all three values
                             // Sequence (from state machine below) is V2, V1, Mode
-                            log.debug("... updating port " + channel
-                                    + " SV" + type
-                                    + "("
-                                    + (type == 1 ? "value1"
-                                            : type == 2 ? "value2"
-                                                    : type == 0 ? "mode"
-                                                            : "unknown")
-                                    + ") = 0x"
+                            log.debug("... updating port " + channel // NOI18N
+                                    + " SV" + type // NOI18N
+                                    + "(" // NOI18N
+                                    + (type == 1 ? "value1" // NOI18N
+                                            : type == 2 ? "value2" // NOI18N
+                                                    : type == 0 ? "mode" // NOI18N
+                                                            : "unknown") // NOI18N
+                                    + ") = 0x" // NOI18N
                                     + Integer.toHexString(data));
                             if (type == 2) {            // v2
                                 setV2(channel, data);
-                                setMode(channel, "<none>");
+                                setMode(channel, "<none>"); // NOI18N
                             } else if (type == 1) {     // v1
                                 setV1(channel, data);
-                                setMode(channel, "<none>");
+                                setMode(channel, "<none>"); // NOI18N
                             } else if (type == 0) {       // cv
                                 setSV(channel, data);
                                 // Now that we have all the pieces, recalculate mode
                                 LocoIOMode lim = validmodes.getLocoIOModeFor(getSV(channel), getV1(channel), getV2(channel));
                                 if (lim == null) {
-                                    setMode(channel, "<none>");
+                                    setMode(channel, "<none>"); // NOI18N
                                     setAddr(channel, 0);
-                                    log.debug("Could not find mode!");
+                                    log.debug("Could not find mode!"); // NOI18N
                                 } else {
                                     setMode(channel, lim.getFullMode());
                                     setAddr(channel, validmodes.valuesToAddress(lim.getOpcode(), getSV(channel), getV1(channel), getV2(channel)));
                                 }
-                                log.debug("... decoded address ("
-                                        + "cv=" + Integer.toHexString(getSV(channel)) + " "
-                                        + "v1=" + Integer.toHexString(getV1(channel)) + " "
-                                        + "v2=" + Integer.toHexString(getV2(channel)) + ") "
-                                        + "is " + getAddr(channel) + "(0x" + Integer.toHexString(getAddr(channel)) + ")");
+                                log.debug("... decoded address (" // NOI18N
+                                        + "cv=" + Integer.toHexString(getSV(channel)) + " " // NOI18N
+                                        + "v1=" + Integer.toHexString(getV1(channel)) + " " // NOI18N
+                                        + "v2=" + Integer.toHexString(getV2(channel)) + ") " // NOI18N
+                                        + "is " + getAddr(channel) + "(0x" + Integer.toHexString(getAddr(channel)) + ")"); // NOI18N
                             } else {
-                                log.warn("OPC_PEER_XFR: Type (" + type + ") is not {0,1,2} for channel " + channel);
+                                log.warn("OPC_PEER_XFR: Type (" + type + ") is not {0,1,2} for channel " + channel); // NOI18N
                             }
                         } else {
                             // log.error("last CV recorded is invalid: "+lastOpCv);
@@ -474,13 +476,13 @@ public class LocoIOData
                 }
             case LnConstants.OPC_INPUT_REP: // Block Sensors and other general sensor codes
                 if (log.isDebugEnabled()) {
-                    log.debug(LnConstants.OPC_NAME(opCode) + " received");
+                    log.debug(LnConstants.OPC_NAME(opCode) + " received"); // NOI18N
                 }
                 // these might require capture
                 for (int i = 0; i < _numRows; i++) {
                     if (capture[i]) {
                         if (log.isDebugEnabled()) {
-                            log.debug("row set for capture: " + i);
+                            log.debug("row set for capture: " + i); // NOI18N
                         }
                         // This is a capture request, get address bytes
                         int val1 = m.getElement(1);
@@ -496,13 +498,13 @@ public class LocoIOData
 
             case LnConstants.OPC_SW_REQ:    // Turnout SWITCH Request
                 if (log.isDebugEnabled()) {
-                    log.debug(LnConstants.OPC_NAME(opCode) + " received");
+                    log.debug(LnConstants.OPC_NAME(opCode) + " received"); // NOI18N
                 }
                 // these might require capture
                 for (int i = 0; i < _numRows; i++) {
                     if (capture[i]) {
                         if (log.isDebugEnabled()) {
-                            log.debug("row set for capture: " + i);
+                            log.debug("row set for capture: " + i); // NOI18N
                         }
                         // This is a capture request, get address bytes
                         int val1 = m.getElement(1);
@@ -544,7 +546,7 @@ public class LocoIOData
                 readState[currentPin] = NONE;
                 return;
             default:
-                log.error("Pin " + currentPin + " unexpected read state, can't advance " + readState[currentPin]);
+                log.error("Pin " + currentPin + " unexpected read state, can't advance " + readState[currentPin]); // NOI18N
                 readState[currentPin] = NONE;
                 return;
         }
@@ -565,7 +567,7 @@ public class LocoIOData
                 writeState[currentPin] = NONE;
                 return;
             default:
-                log.error("Pin " + currentPin + " unexpected write state, can't advance " + writeState[currentPin]);
+                log.error("Pin " + currentPin + " unexpected write state, can't advance " + writeState[currentPin]); // NOI18N
                 writeState[currentPin] = NONE;
                 return;
         }
@@ -611,7 +613,7 @@ public class LocoIOData
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     default:
-                        log.error("found an unexpected state: " + readState[1] + " on port " + i);
+                        log.error("found an unexpected state: " + readState[1] + " on port " + i); // NOI18N
                         return;
                 }
             }
@@ -649,7 +651,7 @@ public class LocoIOData
                         return;
 
                     default:
-                        log.error("found an unexpected state: " + writeState[1] + " on port " + i);
+                        log.error("found an unexpected state: " + writeState[1] + " on port " + i); // NOI18N
                         return;
                 }
             }
@@ -675,7 +677,7 @@ public class LocoIOData
      */
     synchronized protected void timeout() {
         if (log.isDebugEnabled()) {
-            log.debug("timeout!");
+            log.debug("timeout!"); // NOI18N
         }
         setStatus("Timeout");
         if (timeoutcounter++ == 5) {
@@ -684,7 +686,7 @@ public class LocoIOData
                 writeState[i] = NONE;
             }
             setStatus("Aborted");
-            setLIOVersion("<unknown>");
+            setLIOVersion("<unknown>"); // NOI18N
             timeoutcounter = 0;
             stopTimer();
         } else {
@@ -714,6 +716,7 @@ public class LocoIOData
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }
@@ -757,7 +760,7 @@ public class LocoIOData
 
     public void dispose() {
         if (log.isDebugEnabled()) {
-            log.debug("dispose");
+            log.debug("dispose"); // NOI18N
         }
         // disconnect from future events
         stopTimer();

@@ -1,5 +1,6 @@
 package jmri.jmrix.mrc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
 import java.util.Date;
 import jmri.InstanceManager;
@@ -29,12 +30,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ken Cameron Copyright (C) 2014
  * @author Dave Duchamp Copyright (C) 2007
- * @author	Bob Jacobsen, Alex Shepherd
+ * @author Bob Jacobsen, Alex Shepherd
  */
 public class MrcClockControl extends DefaultClockControl implements MrcTrafficListener {
 
     /**
      * Create a ClockControl object for a Mrc clock
+     * @param tc traffic control for connection
+     * @param prefix system prefix for connection
      */
     public MrcClockControl(MrcTrafficController tc, String prefix) {
         super();
@@ -62,8 +65,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     private MrcTrafficController tc = null;
 
     /* constants, variables, etc */
-    private static final boolean DEBUG_SHOW_PUBLIC_CALLS = true;	// enable debug for each public interface
-    private static final boolean DEBUG_SHOW_SYNC_CALLS = false;	// enable debug for sync logic
+    private static final boolean DEBUG_SHOW_PUBLIC_CALLS = true; // enable debug for each public interface
+    private static final boolean DEBUG_SHOW_SYNC_CALLS = false; // enable debug for sync logic
 
     public static final int CS_CLOCK_SCALE = 0x00;
     public static final int CS_CLOCK_MINUTES = 0x03;
@@ -78,9 +81,9 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     public static final int CMD_MEM_SET_REPLY_SIZE = 0x01;
     public static final int MAX_ERROR_ARRAY = 4;
     public static final double TARGET_SYNC_DELAY = 55;
-    public static final int SYNCMODE_OFF = 0;				//0 - clocks independent
-    public static final int SYNCMODE_MRC_MASTER = 1;		//1 - Mrc sets Internal
-    public static final int SYNCMODE_INTERNAL_MASTER = 2;	//2 - Internal sets Mrc
+    public static final int SYNCMODE_OFF = 0;    //0 - clocks independent
+    public static final int SYNCMODE_MRC_MASTER = 1;  //1 - Mrc sets Internal
+    public static final int SYNCMODE_INTERNAL_MASTER = 2; //2 - Internal sets Mrc
     public static final int WAIT_CMD_EXECUTION = 1000;
 
     DecimalFormat fiveDigits = new DecimalFormat("0.00000");
@@ -97,8 +100,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     private boolean mrcLastAmPm;
     private boolean mrcLast1224;
 
-    private int mrcSyncInitStateCounter = 0;	// MRC master sync initialization state machine
-    private int mrcSyncRunStateCounter = 0;	// MRC master sync runtime state machine
+    private int mrcSyncInitStateCounter = 0; // MRC master sync initialization state machine
+    private int mrcSyncRunStateCounter = 0; // MRC master sync runtime state machine
 
     Timebase internalClock;
     javax.swing.Timer alarmSyncUpdate = null;
@@ -121,6 +124,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         return;
     }
 
+    @Override
     public synchronized void notifyXmit(Date timestamp, MrcMessage m) {
     }
 
@@ -147,6 +151,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * Mrc clock runs stable enough
      */
+    @Override
     public boolean canCorrectHardwareClock() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getHardwareClockName"); //IN18N
@@ -157,6 +162,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * Mrc clock supports 12/24 operation
      */
+    @Override
     public boolean canSet12Or24HourClock() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("canSet12Or24HourClock"); //IN18N
@@ -167,6 +173,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * sets Mrc clock speed, must be 1 to 60
      */
+    @Override
     public void setRate(double newRate) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("setRate: " + newRate); //IN18N
@@ -182,6 +189,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * Mrc only supports integer rates
      */
+    @Override
     public boolean requiresIntegerRate() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("requiresIntegerRate"); //IN18N
@@ -192,6 +200,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     /**
      * last known ratio from Mrc clock
      */
+    @Override
     public double getRate() {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("getRate: {}", mrcLastRatio); //IN18N
@@ -203,6 +212,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      * set the time, the date part is ignored
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void setTime(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("setTime: {}", now); //IN18N
@@ -214,13 +224,14 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      * returns the current Mrc time, does not have a date component
      */
     @SuppressWarnings("deprecation")
+    @Override
     public Date getTime() {
         Date now = internalClock.getTime();
         if (lastClockReadPacket != null) {
-            if (mrcLast1224) {	// is 24 hour mode
+            if (mrcLast1224) { // is 24 hour mode
                 now.setHours(mrcLastHour);
             } else {
-                if (mrcLastAmPm) {	// is AM
+                if (mrcLastAmPm) { // is AM
                     now.setHours(mrcLastHour);
                 } else {
                     now.setHours(mrcLastHour + 12);
@@ -239,6 +250,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
      * set Mrc clock and start clock
      */
     @SuppressWarnings("deprecation")
+    @Override
     public void startHardwareClock(Date now) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
             log.debug("startHardwareClock: {}", now); //IN18N
@@ -246,7 +258,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         issueClockTime(now.getHours(), now.getMinutes());
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for any change from previous value")
+    @SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for any change from previous value")
+    @Override
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         // clockMode controls what we are doing: SYNCMODE_OFF, SYNCMODE_INTERNAL_MASTER, SYNCMODE_MRC_MASTER
         boolean synchronizeWithInternalClock = internalClock.getSynchronize();
@@ -311,10 +324,10 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             mrcLastAmPm = false;
         }
         Date now = internalClock.getTime();
-        if (mrcLast1224) {	// is 24 hour mode
+        if (mrcLast1224) { // is 24 hour mode
             now.setHours(mrcLastHour);
         } else {
-            if (mrcLastAmPm) {	// is AM
+            if (mrcLastAmPm) { // is AM
                 now.setHours(mrcLastHour);
             } else {
                 now.setHours(mrcLastHour + 12);

@@ -46,6 +46,32 @@ public class DCCppSensorTest extends TestCase {
 
     }
 
+    // DCCppSensor test for incoming status message
+    public void testDCCppSensorInvertStatusMsg() {
+        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        Assert.assertNotNull("exists", xnis);
+
+        DCCppSensor t = new DCCppSensor("DCCPPS04", xnis);
+        DCCppReply m;
+
+        // Verify this was created in UNKNOWN state
+        Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
+        
+        // Set the inverted flag
+        t.setInverted(true);
+
+        // notify the Sensor that somebody else changed it...
+        m = DCCppReply.parseDCCppReply("Q 4");
+        t.message(m);
+        Assert.assertEquals("Known state after activate ", jmri.Sensor.INACTIVE, t.getKnownState());
+
+        m = DCCppReply.parseDCCppReply("q 4");
+        t.message(m);
+
+        Assert.assertEquals("Known state after inactivate ", jmri.Sensor.ACTIVE, t.getKnownState());
+
+    }
+
     // DCCppSensor test for setting state
     public void testDCCppSensorSetState() throws jmri.JmriException {
         DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -100,11 +126,13 @@ public class DCCppSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

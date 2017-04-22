@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend jmri.AbstractSensor for CBUS controls.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusSensor extends AbstractSensor implements CanListener {
 
@@ -71,6 +71,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * <p>
      * There is no known way to do this, so the request is just ignored.
      */
+    @Override
     public void requestUpdateFromLayout() {
     }
 
@@ -80,6 +81,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * should use setOwnState to handle internal sets and bean notifies.
      *
      */
+    @Override
     public void setKnownState(int s) throws jmri.JmriException {
         CanMessage m;
         if (s == Sensor.ACTIVE) {
@@ -97,6 +99,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * Track layout status from messages being sent to CAN
      *
      */
+    @Override
     public void message(CanMessage f) {
         if (addrActive.match(f)) {
             setOwnState(Sensor.ACTIVE);
@@ -109,6 +112,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * Track layout status from messages being received from CAN
      *
      */
+    @Override
     public void reply(CanReply f) {
         if (addrActive.match(f)) {
             setOwnState(Sensor.ACTIVE);
@@ -117,6 +121,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         }
     }
 
+    @Override
     public void dispose() {
         tc.removeCanListener(this);
         super.dispose();

@@ -3,7 +3,6 @@ package jmri.jmrix.lenz;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,30 +13,28 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2008-2016
  */
 public class XNetThrottleTest{
+
+    private XNetInterfaceScaffold tc = null;
+    private XNetSystemConnectionMemo memo = null;
  
     @Test(timeout=1000)
     public void testCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), tc);
+        XNetThrottle t = new XNetThrottle(memo, tc);
         Assert.assertNotNull(t);
     }
 
     // Test the constructor with an address specified.
     @Test(timeout=1000)
     public void testCtorWithArg() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         Assert.assertNotNull(t);
     }
 
     // Test the initilization sequence.
     @Test(timeout=1000)
-    public void testInitSequence() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+    public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         Assert.assertNotNull(t);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
@@ -82,14 +79,387 @@ public class XNetThrottleTest{
 
         Assert.assertEquals("Throttle in THROTTLEIDLE state", XNetThrottle.THROTTLEIDLE, t.requestState);
 
+        // and verify all the data was set correctly.
+
+        // getSpeedStepMode returns the right mode and
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode128,t.getSpeedStepMode());
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_128_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+
+        // test that the speed value is the expected value
+        Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
+
+        // test that the direction value is the expected value
+        Assert.assertFalse("Direction Reverse",t.getIsForward());
+
+        // function getters return the right values (f0-f12).
+        Assert.assertFalse("F0 off",t.getF0());
+        Assert.assertFalse("F1 off",t.getF1());
+        Assert.assertFalse("F2 off",t.getF2());
+        Assert.assertFalse("F3 off",t.getF3());
+        Assert.assertFalse("F4 off",t.getF4());
+        Assert.assertFalse("F5 off",t.getF5());
+        Assert.assertFalse("F6 off",t.getF6());
+        Assert.assertFalse("F7 off",t.getF7());
+        Assert.assertFalse("F8 off",t.getF8());
+        Assert.assertFalse("F9 off",t.getF9());
+        Assert.assertFalse("F10 off",t.getF10());
+        Assert.assertFalse("F11 off",t.getF11());
+        Assert.assertFalse("F12 off",t.getF12());
+    }
+
+    @Test(timeout=1000)
+    public void initSequenceNormalUnitSpeedStep14() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, XNetConstants.LOCO_INFO_NORMAL_UNIT);
+        m.setElement(1, 0x00);  // speed step mode and availablility
+        m.setElement(2, 0x00);  //speed and direction
+        m.setElement(3, 0x00);  // function info f0-f7
+        m.setElement(4, 0x00);  // function info f8-f12
+        m.setElement(5, 0xE4);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	    // Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are just checking for proper initilization.
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode14,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_14_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+
+        // test that the speed value is the expected value
+        Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
+
+        // test that the direction value is the expected value
+        Assert.assertFalse("Direction Reverse",t.getIsForward());
+
+        // function getters return the right values (f0-f12).
+        Assert.assertFalse("F0 off",t.getF0());
+        Assert.assertFalse("F1 off",t.getF1());
+        Assert.assertFalse("F2 off",t.getF2());
+        Assert.assertFalse("F3 off",t.getF3());
+        Assert.assertFalse("F4 off",t.getF4());
+        Assert.assertFalse("F5 off",t.getF5());
+        Assert.assertFalse("F6 off",t.getF6());
+        Assert.assertFalse("F7 off",t.getF7());
+        Assert.assertFalse("F8 off",t.getF8());
+        Assert.assertFalse("F9 off",t.getF9());
+        Assert.assertFalse("F10 off",t.getF10());
+        Assert.assertFalse("F11 off",t.getF11());
+    }
+
+    @Test(timeout=1000)
+    public void initSequenceMUAddress28SpeedStep() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, XNetConstants.LOCO_INFO_MU_ADDRESS);
+        m.setElement(1, 0x02);  // speed step mode and availablility
+        m.setElement(2, 0x00);  //speed and direction
+        m.setElement(3, 0xE6);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	    // Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are just checking for proper initilization.
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode28,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_28_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+
+        // test that the speed value is the expected value
+        Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
+
+        // test that the direction value is the expected value
+        Assert.assertFalse("Direction Reverse",t.getIsForward());
+    }
+
+    @Test(timeout=1000)
+    public void initSequenceMuedUnitSpeedStep128() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, XNetConstants.LOCO_INFO_MUED_UNIT);
+        m.setElement(1, 0x04);  // speed step mode and availablility
+        m.setElement(2, 0x00);  //speed and direction
+        m.setElement(3, 0x00);  // function info f0-f7
+        m.setElement(4, 0x00);  // function info f8-f12
+        m.setElement(5, 0x05);  // consist address
+        m.setElement(6, 0xE4);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	    // Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are just checking for proper initilization.
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode128,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_128_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+
+        // test that the speed value is the expected value
+        Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
+
+        // test that the direction value is the expected value
+        Assert.assertFalse("Direction Reverse",t.getIsForward());
+
+        // function getters return the right values (f0-f12).
+        Assert.assertFalse("F0 off",t.getF0());
+        Assert.assertFalse("F1 off",t.getF1());
+        Assert.assertFalse("F2 off",t.getF2());
+        Assert.assertFalse("F3 off",t.getF3());
+        Assert.assertFalse("F4 off",t.getF4());
+        Assert.assertFalse("F5 off",t.getF5());
+        Assert.assertFalse("F6 off",t.getF6());
+        Assert.assertFalse("F7 off",t.getF7());
+        Assert.assertFalse("F8 off",t.getF8());
+        Assert.assertFalse("F9 off",t.getF9());
+        Assert.assertFalse("F10 off",t.getF10());
+        Assert.assertFalse("F11 off",t.getF11());
+    }
+
+    @Test(timeout=1000)
+    public void initSequenceDHUnitSpeedStep27() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, XNetConstants.LOCO_INFO_DH_UNIT);
+        m.setElement(1, 0x01);  // speed step mode and availablility
+        m.setElement(2, 0x00);  //speed and direction
+        m.setElement(3, 0x00);  // function info f0-f7
+        m.setElement(4, 0x00);  // function info f8-f12
+        m.setElement(5, 0x00);  // Other DH address high
+        m.setElement(6, 0x05);  // Other DH address low
+        m.setElement(6, 0xE7);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	    // Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are just checking for proper initilization.
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode27,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_27_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+
+        // test that the speed value is the expected value
+        Assert.assertEquals("Speed 0.0",0.0,t.getSpeedSetting(),0.0);
+
+        // test that the direction value is the expected value
+        Assert.assertFalse("Direction Reverse",t.getIsForward());
+
+        // function getters return the right values (f0-f12).
+        Assert.assertFalse("F0 off",t.getF0());
+        Assert.assertFalse("F1 off",t.getF1());
+        Assert.assertFalse("F2 off",t.getF2());
+        Assert.assertFalse("F3 off",t.getF3());
+        Assert.assertFalse("F4 off",t.getF4());
+        Assert.assertFalse("F5 off",t.getF5());
+        Assert.assertFalse("F6 off",t.getF6());
+        Assert.assertFalse("F7 off",t.getF7());
+        Assert.assertFalse("F8 off",t.getF8());
+        Assert.assertFalse("F9 off",t.getF9());
+        Assert.assertFalse("F10 off",t.getF10());
+        Assert.assertFalse("F11 off",t.getF11());
     }
 
     @Test(timeout=1000)
     public void testSendStatusInformationRequest() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -171,10 +541,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionStatusInformationRequest() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -258,10 +627,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionHighStatusInformationRequest() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -345,10 +713,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo,new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -432,10 +799,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionGroup1() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -517,10 +883,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionGroup2() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -603,9 +968,8 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionGroup3() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -668,9 +1032,8 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
    public void testSendFunctionGroup4() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -738,9 +1101,8 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionGroup4V35() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -795,9 +1157,8 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionGroup5() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -864,9 +1225,8 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendFunctionGroup5v35() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -922,10 +1282,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup1() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1007,10 +1366,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup2() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1092,10 +1450,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup3() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1177,10 +1534,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
    public void testSendMomentaryFunctionGroup4() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1267,10 +1623,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup5() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1356,39 +1711,34 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void testGetDccAddress(){
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         Assert.assertEquals("XNetThrottle getDccAddress()",3,t.getDccAddress());
     }
 
     @Test(timeout=1000)
     public void testGetDccAddressLow(){
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         Assert.assertEquals("XNetThrottle getDccAddressLow()",3,t.getDccAddressLow());
     }
 
     @Test(timeout=1000)
     public void testGetDccAddressHigh(){
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         Assert.assertEquals("XNetThrottle getDccAddressHigh()",0,t.getDccAddressHigh());
     }
 
     @Test(timeout=1000)
     public void testGetLocoAddress(){
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         Assert.assertEquals("XNetThrottle getLocoAddress()",
                      new jmri.DccLocoAddress(3,false),t.getLocoAddress());
     }
 
     @Test(timeout=1000)
     public void setReverse() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1473,10 +1823,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void setForward() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1561,10 +1910,9 @@ public class XNetThrottleTest{
 
     @Test(timeout=1000)
     public void sendEmergencyStop() throws Exception {
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
-        XNetThrottle t = new XNetThrottle(new XNetSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
+        XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         while (n == tc.outbound.size()) {
         } // busy loop.  Wait for
         // outbound size to change.
@@ -1644,11 +1992,369 @@ public class XNetThrottleTest{
         // which sets the status back state back to idle..
     }
 
+    @Test(timeout=1000)
+    public void setSpeedStep128() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a request to change the speed step mode.
+
+        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode128);
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a throttle set speed message.
+        Assert.assertEquals("Throttle Set Speed Message", "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message is a command successfully received message.
+        m = new XNetReply();
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x05);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode128,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_128_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+    }
+
+    @Test(timeout=1000)
+    public void setSpeedStep28() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a request to change the speed step mode.
+
+        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode28);
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a throttle set speed message.
+        Assert.assertEquals("Throttle Set Speed Message", "E4 12 00 03 00 F5", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message is a command successfully received message.
+        m = new XNetReply();
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x05);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode28,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_28_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+    }
+
+    @Test(timeout=1000)
+    public void setSpeedStep27() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a request to change the speed step mode.
+
+        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode27);
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a throttle set speed message.
+        Assert.assertEquals("Throttle Set Speed Message", "E4 11 00 03 00 F6", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message is a command successfully received message.
+        m = new XNetReply();
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x05);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode27,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_27_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+    }
+
+    @Test(timeout=1000)
+    public void setSpeedStep14() throws Exception {
+        tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
+        int n = tc.outbound.size();
+        XNetThrottle t = new XNetThrottle(memo , new jmri.DccLocoAddress(3, false), tc);
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+        //The first thing on the outbound queue should be a request for status.
+
+        // And the response to this is a message with the status.
+        XNetReply m = new XNetReply();
+        m.setElement(0, 0xE4);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0xE0);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // which we're going to get a request for function momentary status in response to.
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        // And the response to this message with the status.
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+	// Sending the not supported message should make the throttle send a 
+        // request for the high function status information.  
+        // We're just going to make sure this is there and respond with not supported.
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        m = new XNetReply();
+        m.setElement(0, 0x61);
+        m.setElement(1, 0x82);
+        m.setElement(2, 0xE3);
+
+        n = tc.outbound.size();
+        t.message(m);
+
+        // consume the error messge.
+        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+
+
+	// Sending the not supported message should make the throttle change
+        // state to idle, and then we can test what we really want to.
+
+        // in this case, we are sending a request to change the speed step mode.
+
+        t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode14);
+
+        while (n == tc.outbound.size()) {
+        } // busy loop.  Wait for
+        // outbound size to change.
+
+        //The first thing on the outbound queue should be a throttle set speed message.
+        Assert.assertEquals("Throttle Set Speed Message", "E4 10 00 03 00 F7", tc.outbound.elementAt(n).toString());
+
+        // And the response to this message is a command successfully received message.
+        m = new XNetReply();
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x04);
+        m.setElement(2, 0x05);
+
+        n = tc.outbound.size();
+        t.message(m);
+        // which sets the status back state back to idle..
+
+        // and finaly, verify that getSpeedStepMode returns the right mode and
+        // get speedIncrement reports the correct value.
+        Assert.assertEquals("SpeedStepMode",jmri.DccThrottle.SpeedStepMode14,t.getSpeedStepMode());
+        Assert.assertEquals("SpeedStep Increment",jmri.jmrix.AbstractThrottle.SPEED_STEP_14_INCREMENT,t.getSpeedIncrement(),0.0); // the speed increments are constants, so if there is deviation, that is an error.
+    }
 
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        // infrastructure objects
+        tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        memo = new XNetSystemConnectionMemo(tc);
     }
 
     @After

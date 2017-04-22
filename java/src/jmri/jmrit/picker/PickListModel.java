@@ -127,6 +127,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     /**
      * override BeanTableDataModel only lists SystemName
      */
+    @Override
     protected synchronized void updateNameList() {
         makePickList();
     }
@@ -161,14 +162,17 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         }
     }
 
+    @Override
     public NamedBean getBySystemName(String name) {
         return getManager().getBeanBySystemName(name);
     }
 
+    @Override
     protected NamedBean getByUserName(String name) {
         return getManager().getBeanByUserName(name);
     }
 
+    @Override
     abstract public Manager getManager();
 
     /**
@@ -184,21 +188,26 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     abstract public boolean canAddBean();
 
     // these BeanTableDataModel abstract methods not needed
+    @Override
     protected String getMasterClassName() {
         return "PickListModel";
     }
 
+    @Override
     public void clickOn(NamedBean t) {
     }
 
+    @Override
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
 
+    @Override
     public int getColumnCount() {
         return 2;
     }
 
+    @Override
     public String getColumnName(int c) {
         if (c == SNAME_COLUMN) {
             return Bundle.getMessage("ColumnSystemName");
@@ -208,14 +217,17 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return "";
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         return false;
     }
 
+    @Override
     public int getRowCount() {
         return _pickList.size();
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         // some error checking
         if (r >= _pickList.size()) {
@@ -230,10 +242,12 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return null;
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
     }
 
     // these BeanTableDataModel abstract methods not needed
+    @Override
     public String getValue(String systemName) {
         return systemName;
     }
@@ -242,6 +256,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return _name;
     }
 
+    @Override
     protected String getBeanType() {
         return _name;
     }
@@ -249,6 +264,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     /**
      * override. only interested in additions and deletions
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a NamedBean added or deleted
@@ -276,7 +292,14 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public JTable makePickTable() {
         this.init();
         _sorter = new TableRowSorter<>(this);
-        _table = new JTable(this);
+        _table = new JTable(this) {
+            /**
+             * Overridden to prevent empty cells from being selected
+             */
+            public void changeSelection(int row, int col, boolean toggle, boolean extend) {
+                if (this.getValueAt(row, col) != null)
+                    super.changeSelection(row, col, toggle, extend);
+        }};
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
 
@@ -317,6 +340,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return _table;
     }
 
+    @Override
     public void dispose() {
         getManager().removePropertyChangeListener(this);
     }
@@ -352,7 +376,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     public static PickListModel signalHeadPickModelInstance() {
-        Integer num = _listMap.get("sensor");
+        Integer num = _listMap.get("signalhead");
         if (num != null) {
             _listMap.put("signalhead", Integer.valueOf(num.intValue() + 1));
         } else {
@@ -461,19 +485,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleTurnoutTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.turnoutManagerInstance();
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideTurnout(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.newTurnout(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return true;
         }
@@ -487,19 +515,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleSensorTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.sensorManagerInstance();
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideSensor(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.newSensor(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return true;
         }
@@ -513,6 +545,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             super();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == POSITION_COL) {
                 return _position.get(Integer.valueOf(r));
@@ -520,6 +553,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return super.getValueAt(r, c);
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == POSITION_COL) {
                 _position.put(Integer.valueOf(r), (String) type);
@@ -535,15 +569,18 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleSignalTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) {
             return manager.getSignalHead(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             SignalHead sh = manager.getSignalHead(userName);
             if (sh == null) {
@@ -552,6 +589,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return sh;
         }
 
+        @Override
         public boolean canAddBean() {
             return false;
         }
@@ -565,15 +603,18 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleSignalMastTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.getDefault(jmri.SignalMastManager.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideSignalMast(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) throws IllegalArgumentException {
             SignalMast sm = manager.getSignalMast(userName);
             if (sm == null) {
@@ -582,6 +623,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return sm;
         }
 
+        @Override
         public boolean canAddBean() {
             return false;
         }
@@ -595,19 +637,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleMemoryTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.memoryManagerInstance();
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideMemory(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.newMemory(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return true;
         }
@@ -621,19 +667,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleBlockTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.getDefault(jmri.BlockManager.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideBlock(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewBlock(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return true;
         }
@@ -647,19 +697,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleReporterTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.getDefault(jmri.ReporterManager.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideReporter(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.newReporter(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return true;
         }
@@ -673,19 +727,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleLightTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.lightManagerInstance();
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideLight(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.newLight(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return true;
         }
@@ -699,19 +757,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleBlockTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideOBlock(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewOBlock(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return true;
         }
@@ -725,19 +787,23 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleWarrantTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.getDefault(WarrantManager.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) throws IllegalArgumentException {
             return manager.provideWarrant(name);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewWarrant(sysName, userName, false, 0);
         }
 
+        @Override
         public boolean canAddBean() {
             return false;
         }
@@ -751,23 +817,28 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleConditionalTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = InstanceManager.getDefault(jmri.ConditionalManager.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) {
             return manager.createNewConditional(name, null);
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewConditional(sysName, userName);
         }
 
+        @Override
         public boolean canAddBean() {
             return false;
         }
 
+        @Override
         public JTable makePickTable() {
             JTable table = super.makePickTable();
             TableColumn column = new TableColumn(PickListModel.POSITION_COL);
@@ -778,6 +849,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             return table;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == POSITION_COL) {
                 jmri.Logix l = manager.getParentLogix(_pickList.get(r).getSystemName());
@@ -797,23 +869,28 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             _name = rb.getString("TitleEntryExitTable");
         }
 
+        @Override
         public Manager getManager() {
             manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
             return manager;
         }
 
+        @Override
         public NamedBean addBean(String name) {
             return null;
         }
 
+        @Override
         public NamedBean addBean(String sysName, String userName) {
             return null;
         }
 
+        @Override
         public boolean canAddBean() {
             return false;
         }
 
+        @Override
         public String getColumnName(int c) {
             if (c == SNAME_COLUMN) {
                 return "Unique Id";

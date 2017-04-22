@@ -1,22 +1,22 @@
 package jmri.jmrix.dccpp;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * <p>
  * Title: DCCppPacketizerTest </p>
  * <p>
- * Description: </p>
- * <p>
- * Copyright: Copyright (c) 2002, 2015</p>
  *
- * @author Bob Jacobsen
- * @author Mark Underwood
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Mark Underwood Copyright(C) 2015
  */
-public class DCCppPacketizerTest extends TestCase {
+public class DCCppPacketizerTest extends DCCppTrafficControllerTest{
 
     /**
      * Local test class to make DCCppPacketizer more felicitous to test
@@ -33,19 +33,22 @@ public class DCCppPacketizerTest extends TestCase {
         }
 
         // methods removed for testing
+        @Override
         protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
         } // don't care about timeout
 
+        @Override
         protected void reportReceiveLoopException(Exception e) {
         }
 
+        @Override
         protected void portWarn(Exception e) {
         }
     }
 
+    @Test
     public void testOutbound() throws Exception {
-        DCCppCommandStation lcs = new DCCppCommandStation();
-        StoppingDCCppPacketizer c = new StoppingDCCppPacketizer(lcs);
+        DCCppPacketizer c = (DCCppPacketizer)tc;
         // connect to iostream via port controller scaffold
         DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
         c.connectPort(p);
@@ -67,9 +70,9 @@ public class DCCppPacketizerTest extends TestCase {
         Assert.assertEquals("remaining ", 0, p.tostream.available());
     }
 
+    @Test
     public void testInbound() throws Exception {
-        DCCppCommandStation lcs = new DCCppCommandStation();
-        StoppingDCCppPacketizer c = new StoppingDCCppPacketizer(lcs);
+        DCCppPacketizer c = (DCCppPacketizer)tc;
 
 	log.debug("Running testInbound() test");
 
@@ -104,119 +107,7 @@ public class DCCppPacketizerTest extends TestCase {
         Assert.assertEquals("Char 4 ", ' ', l.rcvdRply.getElement(4) & 0xFF);
         Assert.assertEquals("Char 5 ", '1', l.rcvdRply.getElement(5) & 0xFF);
     }
-    /*
-    public void testInterference() throws Exception {
-        // This test checks to make sure that when two listeners register for events
-        // at the same time, the first listener is still the active listener until
-        // it receives a message.
-        DCCppCommandStation lcs = new DCCppCommandStation();
-        StoppingDCCppPacketizer c = new StoppingDCCppPacketizer(lcs);
 
-        // connect to iostream via port controller
-        DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
-        c.connectPort(p);
-
-        // We need three objects to receive messages.
-        // The first one recieves broadcast messages. 
-        // The others only receive directed messages.
-        DCCppListenerScaffold l = new DCCppListenerScaffold();
-        DCCppListenerScaffold l1 = new DCCppListenerScaffold();
-        DCCppListenerScaffold l2 = new DCCppListenerScaffold();
-        c.addDCCppListener(~0, l);
-
-        // we're going to loop through this, because we're trying to catch
-        // a threading/synchronization issue in AbstractMRTrafficController.
-        for (int i = 0; i < 5; i++) {
-
-            l.rcvdRply = null;
-            l1.rcvdRply = null;
-            l2.rcvdRply = null;
-
-            // first, we send an unsolicited message
-	    p.tistream.write('<');
-	    p.tistream.write('H');
-	    p.tistream.write(' ');
-	    p.tistream.write('1');
-	    p.tistream.write('2');
-	    p.tistream.write(' ');
-	    p.tistream.write('1');
-	    p.tistream.write('>');
-
-
-            // check that the message was picked up by the read thread.
-            Assert.assertTrue("iteration " + i + " reply received ", waitForReply(l));
-            Assert.assertEquals("iteration " + i + " first char of broadcast reply to l", 'H', l.rcvdRply.getElement(0));
-
-
-            // now we need to send a message with both the second and third listeners 
-            // as reply receiver.
-            DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(22, true);
-            c.sendDCCppMessage(m, l1);
-
-            DCCppMessage m1 = DCCppMessage.makeTurnoutCommandMsg(23, true);
-            c.sendDCCppMessage(m1, l2);
-
-            jmri.util.JUnitUtil.releaseThread(this); // Allow time for messages to process into the system
-
-            // and now we verify l1 is the last sender.
-            //Assert.assertEquals("itteration " + i + " Last Sender l1, before l1 reply", l1, c.getLastSender());
-
-            l.rcvdRply = null;
-            l1.rcvdRply = null;
-            l2.rcvdRply = null;
-
-            // Now we reply to the messages above
-	    p.tistream.write('<');
-	    p.tistream.write('K'); // Nonsense character for testing purposes.
-	    p.tistream.write(' ');
-	    p.tistream.write('2');
-	    p.tistream.write('2');
-	    p.tistream.write(' ');
-	    p.tistream.write('1');
-	    p.tistream.write('>');
-
-            // check that the message was picked up by the read thread.
-            Assert.assertTrue("itteration " + i + " reply received ", waitForReply(l1));
-            Assert.assertEquals("itteration " + i + " first char of reply to l1", 'K', l1.rcvdRply.getElement(0));
-
-            Assert.assertNotNull("itteration " + i + " broadcast reply after l1 message",l.rcvdRply);
-            Assert.assertNotNull("itteration " + i + " l1 reply after l1 message",l1.rcvdRply);
-            Assert.assertNull("itteration " + i + " l2 reply after l1 message",l2.rcvdRply);
-
-            jmri.util.JUnitUtil.releaseThread(this); // Allow time for messages to process into the system
-
-            // and now we verify l2 is the last sender.
-            Assert.assertEquals("Last Sender l2", l2, c.getLastSender());
-            l.rcvdRply = null;
-            l1.rcvdRply = null;
-            l2.rcvdRply = null;
-
-	    p.tistream.write('<');
-	    p.tistream.write('J'); // Nonsense character for testing purposes.
-	    p.tistream.write(' ');
-	    p.tistream.write('2');
-	    p.tistream.write('3');
-	    p.tistream.write(' ');
-	    p.tistream.write('1');
-	    p.tistream.write('>');
-
-            // check that the message was picked up by the read thread.
-            Assert.assertTrue("itteration " + i + " reply received ", waitForReply(l2));
-
-            Assert.assertEquals("itteration " + i + " first char of reply to l2", 'J', l2.rcvdRply.getElement(0));
- 
-            Assert.assertNotNull("itteration " + i + " broadcast reply after l2 message",l.rcvdRply);
-            Assert.assertNull("itteration " + i + " l1 reply after l2 message",l1.rcvdRply);
-            Assert.assertNotNull("itteration " + i + " l2 reply after l2 message",l2.rcvdRply);
-
-            l.rcvdRply = null;
-            l1.rcvdRply = null;
-            l2.rcvdRply = null;
-            Assert.assertEquals("itteration " + i + " l received count ", 3 * (i + 1), l.rcvCount);
-        }
-
-    }
-*/
     private boolean waitForReply(DCCppListenerScaffold l) {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
@@ -233,22 +124,19 @@ public class DCCppPacketizerTest extends TestCase {
         return i < 100;
     }
 
-    public DCCppPacketizerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppPacketizerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    @Override
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        DCCppCommandStation lcs = new DCCppCommandStation();
+        tc = new StoppingDCCppPacketizer(lcs);
     }
 
-    protected void tearDown() {
+    @After
+    @Override
+    public void tearDown() {
+        tc = null;
         apps.tests.Log4JFixture.tearDown();
     }
 

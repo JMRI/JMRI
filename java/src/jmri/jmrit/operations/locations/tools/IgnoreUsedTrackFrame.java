@@ -1,35 +1,40 @@
-//IgnoreUsedTrackAction.java
+
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.TrackEditFrame;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to allow a user to define how much used track space is to be ignored
- * by the program when placing new rolling stock to a track.
+ * Planned Pick ups.
+ * Frame to allow a user to define how much used track space is to be ignored
+ * by the program when placing new rolling stock onto a track.
  *
- * @author Daniel Boudreau Copyright (C) 2012
+ * @author Daniel Boudreau Copyright (C) 2012, 2017
  * 
  */
 class IgnoreUsedTrackFrame extends OperationsFrame {
 
     // radio buttons
     JRadioButton zeroPercent = new JRadioButton(Bundle.getMessage("Disabled"));
-    JRadioButton twentyfivePercent = new JRadioButton("25%");	// NOI18N
-    JRadioButton fiftyPercent = new JRadioButton("50%");		// NOI18N
-    JRadioButton seventyfivePercent = new JRadioButton("75%");	// NOI18N
-    JRadioButton hundredPercent = new JRadioButton("100%");		// NOI18N
+    JRadioButton twentyfivePercent = new JRadioButton("25%"); // NOI18N
+    JRadioButton fiftyPercent = new JRadioButton("50%");  // NOI18N
+    JRadioButton seventyfivePercent = new JRadioButton("75%"); // NOI18N
+    JRadioButton hundredPercent = new JRadioButton("100%");  // NOI18N
 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
@@ -75,14 +80,26 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         fiftyPercent.setSelected(percentage >= 50);
         seventyfivePercent.setSelected(percentage >= 75);
         hundredPercent.setSelected(percentage >= 100);
+        
+        // warning text for planned pick ups.
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
+        p2.add(new JLabel(Bundle.getMessage("PPWarningMessage")));
+        p2.add(new JLabel(Bundle.getMessage("PPWarningMessage2")));
+        
+        JPanel pW = new JPanel();
+        pW.setLayout(new GridBagLayout());
+        addItem(pW, p2, 0, 1);
+        addItem(pW, saveButton, 0, 2);
 
         getContentPane().add(p1);
-        getContentPane().add(saveButton);
+        getContentPane().add(pW);
 
         addButtonAction(saveButton);
+        
+        addHelpMenu("package.jmri.jmrit.operations.Operations_PlannedPickUps", true); // NOI18N
 
-        pack();
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight200));
     }
 
     @Override

@@ -15,14 +15,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame displaying (and logging) OpenLCB (CAN) frames
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2010
+ * @author Bob Jacobsen Copyright (C) 2009, 2010
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2953838883575771579L;
 
     public MonitorPane() {
         super();
@@ -32,12 +27,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
@@ -49,13 +46,16 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         setFixedWidthFont();
     }
 
+    @Override
     public String getTitle() {
         return "OpenLCB Monitor";
     }
 
+    @Override
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
         super.dispose();
@@ -105,6 +105,17 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     formatted = prefix + ": (Start of Datagram)";
                 } else if ((header & 0x0F000000) == 0x0C000000) {
                     formatted = prefix + ": (Middle of Datagram)";
+                } else if (((header & 0x0FFFF000) == 0x09A08000) && (content.length > 0)) {
+                    // SNIP multi frame reply
+                    if ((content[0] & 0xF0) == 0x10) {
+                        formatted = prefix + ": SNIP Reply 1st frame";
+                    } else if ((content[0] & 0xF0) == 0x20) {
+                        formatted = prefix + ": SNIP Reply last frame";
+                    } else if ((content[0] & 0xF0) == 0x30) {
+                        formatted = prefix + ": SNIP Reply middle frame";
+                    } else {
+                        formatted = prefix + ": SNIP Reply unknown";
+                    }
                 } else {
                     formatted = prefix + ": Unknown message " + raw;
                 }
@@ -141,6 +152,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         nextLine(formatted + "\n", raw);
     }
 
+    @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) {
             log.debug("Message: " + l.toString());
@@ -148,6 +160,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         format("S", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
+    @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) {
             log.debug("Reply: " + l.toString());
@@ -159,11 +172,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5753208779918899593L;
 
         public Default() {
             super("Openlcb Monitor",

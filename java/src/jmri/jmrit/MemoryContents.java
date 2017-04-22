@@ -134,7 +134,7 @@ import org.slf4j.LoggerFactory;
  *     <li>:00000001FF
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2005, 2008
+ * @author Bob Jacobsen Copyright (C) 2005, 2008
  * @author B. Milhaupt Copyright (C) 2014
  */
 public class MemoryContents {
@@ -1453,6 +1453,7 @@ public class MemoryContents {
     /**
      * Summarize contents
      */
+    @Override
     public String toString() {
         StringBuffer retval = new StringBuffer("Pages occupied: ");
         for (int page=0; page<PAGES; page++) {

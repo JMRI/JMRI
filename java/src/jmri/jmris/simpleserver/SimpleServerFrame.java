@@ -1,4 +1,3 @@
-// SimpleServerFrame.java
 package jmri.jmris.simpleserver;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,9 @@ import javax.swing.JToggleButton;
 /**
  * Frame displaying start/stop buttons for the JMRI server.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author Paul Bender Copyright (C) 2009
   */
 public class SimpleServerFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8501305524191992037L;
 
     public SimpleServerFrame() {
         this("Jmri Simple Server Starter");
@@ -39,6 +33,7 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
 
         // install start button handler
         startButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 startSimpleServer();
             }
@@ -47,6 +42,7 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
 
         // install stop button handler
         stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 stopSimpleServer();
             }
@@ -55,6 +51,7 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -74,6 +71,7 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
         dispose();
     }
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

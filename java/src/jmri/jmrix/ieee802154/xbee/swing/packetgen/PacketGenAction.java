@@ -1,10 +1,10 @@
 /**
  * PacketGenAction.java
  *
- * Description:	Swing action to create and register a IEEE802154 PacketGenFrame
+ * Description: Swing action to create and register a IEEE802154 PacketGenFrame
  * object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 package jmri.jmrix.ieee802154.xbee.swing.packetgen;
 
@@ -40,6 +40,7 @@ public class PacketGenAction extends AbstractAction {
         this("Send XBee Message");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame();
@@ -57,4 +58,4 @@ public class PacketGenAction extends AbstractAction {
 }
 
 
-/* @(#)LocoGenAction.java */
+

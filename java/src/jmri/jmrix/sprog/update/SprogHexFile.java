@@ -1,11 +1,13 @@
 package jmri.jmrix.sprog.update;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * hardware device via some bootloading process.
  *
  * @author	Andrew Crosland Copyright (C) 2010
-  */
+ */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 
     private File file;
@@ -53,6 +55,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     /**
      * @return name of the open file
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -119,7 +122,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      *
      * @return int the data length of the record, or 0 if no data
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // False positive
     public int read() {
         // Make space for the the maximum size record to be read
@@ -353,10 +356,8 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      *
      * @return byte[] array of data bytes
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
-    // Happy to pass a reference to internal data
     public int[] getData() {
-        return data;
+        return Arrays.copyOf(data, data.length);
     }
 
     /**

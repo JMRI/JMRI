@@ -1,5 +1,7 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -13,13 +15,16 @@ import junit.framework.TestSuite;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class ReporterIconTest extends jmri.util.SwingTestCase {
 
     ReporterIcon to = null;
     jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShowSysName() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -45,6 +50,9 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
     }
 
     public void testShowNumericAddress() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -86,21 +94,26 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test ReporterIcon Panel");
+        if (!GraphicsEnvironment.isHeadless()) {
+            panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test ReporterIcon Panel");
+        }
     }
 
+    @Override
     protected void tearDown() {
         // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        if (panel != null) {
+            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+            for (WindowListener listener : listeners) {
+                panel.getTargetFrame().removeWindowListener(listener);
+            }
+            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
 }

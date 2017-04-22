@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Reporter;
 import jmri.InstanceManager;
 import jmri.RailComManager;
@@ -23,6 +24,8 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
      *             is associated with.
      *
      */
+@SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
+            justification = "False positive from findbugs.  The Value may not be null if there is another railcom manager installed")
     public Z21ReporterManager(Z21SystemConnectionMemo memo){
         _memo = memo;
         if(InstanceManager.getDefault(RailComManager.class)==null){
@@ -57,6 +60,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
         return r;
     }
 
+    @Override
     public void dispose(){
         super.dispose();
     }

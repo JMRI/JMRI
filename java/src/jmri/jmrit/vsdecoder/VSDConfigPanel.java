@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 @SuppressWarnings("deprecation")
 public class VSDConfigPanel extends JmriPanel {
@@ -216,6 +216,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         // Connect to the VSDecoderManager, so we know when the Profile list changes.
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
+            @Override
             public void eventAction(VSDManagerEvent e) {
                 if (e.getType() == VSDManagerEvent.EventType.PROFILE_LIST_CHANGE) {
                     log.debug("Received Decoder List Change Event");
@@ -259,6 +260,7 @@ public class VSDConfigPanel extends JmriPanel {
         rosterSaveButton = new javax.swing.JButton();
         rosterSaveButton.setText("Save");
         rosterSaveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 rosterSaveButtonAction(e);
             }
@@ -287,6 +289,7 @@ public class VSDConfigPanel extends JmriPanel {
         profileComboBox.setSelectedItem(loadProfilePrompt);
         profile_selected = false;
         profileComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 profileComboBoxActionPerformed(evt);
             }
@@ -301,6 +304,7 @@ public class VSDConfigPanel extends JmriPanel {
 
         addressSetButton.setText("Set");
         addressSetButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addressSetButtonActionPerformed(evt);
             }
@@ -502,6 +506,7 @@ public class VSDConfigPanel extends JmriPanel {
                 return (main_pane.getDecoder(profileComboBox.getSelectedItem().toString()));
             }
 
+            @Override
             protected void done() {
                 busy_dialog.finish();
             }

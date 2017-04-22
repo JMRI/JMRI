@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.dcc4pc.swing.packetgen;
 
 import java.awt.Dimension;
@@ -11,15 +10,11 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 /**
  * Frame for user input of Dcc4Pc messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3220732618500304699L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -29,6 +24,7 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
@@ -50,6 +46,7 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             add(sendButton);
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -57,14 +54,17 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.dcc4pc.swing.packetgen.PacketGenFrame";
     }
 
+    @Override
     public String getTitle() {
         return "Send DCC4PC command";
     }
 
+    @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -107,15 +107,19 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
     }
 
+    @Override
     public void handleTimeout(Dcc4PcMessage m) {
     }
 
+    @Override
     public void message(Dcc4PcMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(Dcc4PcReply r) {
     } // ignore replies
 
+    @Override
     public void processingData() {
     }
 
@@ -123,11 +127,6 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -82246637685914738L;
 
         public Default() {
             super("Dcc4PC Command Monitor",

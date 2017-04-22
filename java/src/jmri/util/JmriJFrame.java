@@ -1,5 +1,6 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Insets;
@@ -38,13 +39,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Features:
  * <ul>
- * <LI>Size limited to the maximum available on the screen, after removing any
+ * <li>Size limited to the maximum available on the screen, after removing any
  * menu bars (Mac) and taskbars (Windows)
- * <LI>Cleanup upon closing the frame: When the frame is closed (WindowClosing
+ * <li>Cleanup upon closing the frame: When the frame is closed (WindowClosing
  * event), the dispose() method is invoked to do cleanup. This is inherited from
  * JFrame itself, so super.dispose() needs to be invoked in the over-loading
  * methods.
- * <LI>Maintains a list of existing JmriJFrames
+ * <li>Maintains a list of existing JmriJFrames
  * </ul>
  *
  * <h3>Window Closing</h3>
@@ -158,8 +159,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     /**
-     * Remove this window from e.g. the Windows Menu by removing it from the
-     * list of active JmriJFrames
+     * Remove this window from the Windows Menu by removing it from the list of
+     * active JmriJFrames.
      */
     public void makePrivateWindow() {
         synchronized (list) {
@@ -241,6 +242,29 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
         super.pack();
         reSizeToFitOnScreen();
+    }
+
+    /**
+     * Remove any decoration, such as the title bar or close window control,
+     * from the JFrame.
+     * <p>
+     * JmriJFrames are often built internally and presented to the user before
+     * any scripting action can interact with them. At that point it's too late
+     * to directly invoke setUndecorated(true) because the JFrame is already
+     * displayable. This method uses dispose() to drop the windowing resources,
+     * sets undecorated, and then redisplays the window.
+     */
+    public void undecorate() {
+        boolean visible = isVisible();
+
+        setVisible(false);
+        super.dispose();
+
+        setUndecorated(true);
+        getRootPane().setWindowDecorationStyle(javax.swing.JRootPane.NONE);
+
+        pack();
+        setVisible(visible);
     }
 
     /**
@@ -340,7 +364,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      *
      * @param ref    JHelp reference for the desired window-specific help page
      * @param direct true if the help menu goes directly to the help system,
-     *               e.g. there are no items in the help menu
+     *               such as when there are no items in the help menu
      */
     public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
@@ -362,6 +386,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         // modelled after code in JavaDev mailing list item by Bill Tschumy <bill@otherwise.com> 08 Dec 2004
         AbstractAction act = new AbstractAction() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // log.debug("keystroke requested close window ", JmriJFrame.this.getTitle());
                 JmriJFrame.this.processWindowEvent(new java.awt.event.WindowEvent(JmriJFrame.this,
@@ -443,6 +468,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         if (closesWindow) {
             setEscapeKeyAction(new AbstractAction() {
 
+                @Override
                 public void actionPerformed(ActionEvent ae) {
                     JmriJFrame.this.processWindowEvent(new java.awt.event.WindowEvent(JmriJFrame.this,
                             java.awt.event.WindowEvent.WINDOW_CLOSING));
@@ -474,6 +500,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * implementations, however, so this will return the superclasses's maximum
      * size if the algorithm used here fails.
      */
+    @Override
     public Dimension getMaximumSize() {
         // adjust maximum size to full screen minus any toolbars
         try {
@@ -542,6 +569,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * The preferred size must fit on the physical screen, so calculate the
      * lesser of either the preferred size from the layout or the screen size.
      */
+    @Override
     public Dimension getPreferredSize() {
         // limit preferred size to size of screen (from getMaximumSize())
         Dimension screen = getMaximumSize();
@@ -620,6 +648,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     // handle resizing when first shown
     private boolean mShown = false;
 
+    @Override
     public void addNotify() {
         super.addNotify();
         // log.debug("addNotify window ({})", getTitle());
@@ -683,6 +712,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * A frame is considered "modified" if it has changes that have not been
      * stored.
      */
+    @Override
     public void setModifiedFlag(boolean flag) {
         this.modifiedFlag = flag;
         // mark the window in the GUI
@@ -694,6 +724,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * <p>
      * Not a bound parameter
      */
+    @Override
     public boolean getModifiedFlag() {
         return modifiedFlag;
     }
@@ -704,7 +735,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Handle closing a window or quiting the program while the modified bit was
      * set.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "LI_LAZY_INIT_STATIC", justification = "modified is only on Swing thread")
+    @SuppressFBWarnings(value = "LI_LAZY_INIT_STATIC", justification = "modified is only on Swing thread")
     protected void handleModified() {
         if (getModifiedFlag()) {
             this.setVisible(true);
@@ -733,28 +764,36 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     // Window methods
+    @Override
     public void windowOpened(java.awt.event.WindowEvent e) {
     }
 
+    @Override
     public void windowClosed(java.awt.event.WindowEvent e) {
     }
 
+    @Override
     public void windowActivated(java.awt.event.WindowEvent e) {
     }
 
+    @Override
     public void windowDeactivated(java.awt.event.WindowEvent e) {
     }
 
+    @Override
     public void windowIconified(java.awt.event.WindowEvent e) {
     }
 
+    @Override
     public void windowDeiconified(java.awt.event.WindowEvent e) {
     }
 
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         handleModified();
     }
 
+    @Override
     public void componentHidden(java.awt.event.ComponentEvent e) {
     }
 
@@ -776,6 +815,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         });
     }
 
+    @Override
     public void componentShown(java.awt.event.ComponentEvent e) {
     }
 
@@ -918,18 +958,21 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
     protected transient WindowInterface windowInterface = null;
 
+    @Override
     public void show(JmriPanel child, JmriAbstractAction action) {
         if (null != windowInterface) {
             windowInterface.show(child, action);
         }
     }
 
+    @Override
     public void show(JmriPanel child, JmriAbstractAction action, Hint hint) {
         if (null != windowInterface) {
             windowInterface.show(child, action, hint);
         }
     }
 
+    @Override
     public boolean multipleInstances() {
         if (null != windowInterface) {
             return windowInterface.multipleInstances();
@@ -945,6 +988,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return windowInterface;
     }
 
+    @Override
     public Set<String> getPropertyNames() {
         HashSet<String> names = new HashSet<>();
         names.addAll(properties.keySet());
@@ -965,5 +1009,5 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return this;
     }
 
-    static private Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
 }

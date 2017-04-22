@@ -1,4 +1,3 @@
-// AutomationsTableAction.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Frame;
@@ -26,8 +25,8 @@ public class AutomationsTableFrameAction extends AbstractAction {
             f = new AutomationsTableFrame();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)AutomationsTableAction.java */
+

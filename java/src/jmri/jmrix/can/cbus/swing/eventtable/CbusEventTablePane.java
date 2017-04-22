@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.swing.eventtable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +22,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * Frame providing a Cbus event table. Menu code copied from BeanTableFrame
  * <P>
  *
- * @author	Andrew Crosland (C) 2009
- * @author	Kevin Dickerson (C) 2012
+ * @author Andrew Crosland (C) 2009
+ * @author Kevin Dickerson (C) 2012
  *
  * @since 2.99.2
  */
@@ -40,6 +41,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         "Enter Comments in this column"
     };
 
+    @Override
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " Event table");
@@ -61,16 +63,18 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // There can only be one instance
     public void init() {
 
         eventTable = new JTable(eventModel) {
 
             // Override JTable Header to implement table header tool tips.
+            @Override
             protected JTableHeader createDefaultTableHeader() {
                 return new JTableHeader(columnModel) {
 
+                    @Override
                     public String getToolTipText(MouseEvent e) {
                         java.awt.Point p = e.getPoint();
                         int index = columnModel.getColumnIndexAtX(p.x);
@@ -111,10 +115,12 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         self = this;
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.CbusEventTablePane";
     }
 
+    @Override
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
 
@@ -126,6 +132,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         JMenuItem saveItem = new JMenuItem(rb.getString("MenuItemSave"));
         fileMenu.add(saveItem);
         saveItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 eventModel.saveAsTable();
             }
@@ -134,6 +141,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         JMenuItem saveAsItem = new JMenuItem(rb.getString("MenuItemSaveAs"));
         fileMenu.add(saveAsItem);
         saveAsItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 eventModel.saveTable();
             }
@@ -144,6 +152,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         fileMenu.add(printItem);
 
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
@@ -159,6 +168,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
         fileMenu.add(previewItem);
         previewItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 HardcopyWriter writer = null;
                 try {
@@ -175,6 +185,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         return menuList;
     }
 
+    @Override
     public void initComponents() {
 
     }
@@ -195,6 +206,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     private boolean mShown = false;
 
+    @Override
     public void addNotify() {
         super.addNotify();
 
@@ -213,6 +225,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         mShown = true;
     }
 
+    @Override
     public void dispose() {
         eventModel.dispose();
         eventModel = null;

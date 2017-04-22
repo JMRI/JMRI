@@ -1,11 +1,10 @@
-// MarklinInterface.java
 package jmri.jmrix.marklin;
 
 /**
  * Define interface for sending and receiving messages to the ECOS command
  * station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public interface MarklinInterface {
 
@@ -29,4 +28,4 @@ public interface MarklinInterface {
     void sendMarklinMessage(MarklinMessage m, MarklinListener l);
 }
 
-/* @(#)MarklinInterface.java */
+

@@ -61,6 +61,12 @@
 
   
 <li>
+<a href="package/apps/SystemConsole.shtml">System Console </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/setup/Errors.shtml">Error Codes </a>
 <ul></ul>
 </li>
@@ -319,13 +325,13 @@
 <ul>
      
 <li>
-<a href="">Set Up </a>
+<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Set Up </a>
 <ul></ul>
 </li>
 
      
 <li>
-<a href="">Choose Decoder </a>
+<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Choose Decoder </a>
 <ul></ul>
 </li>
 
@@ -372,7 +378,7 @@
 
      
 <li>
-<a href="">What Next? </a>
+<a href="manual/DecoderPro3/Basic_BasicPane.shtml#DoMore">What Next? </a>
 <ul></ul>
 </li>
 
@@ -727,6 +733,12 @@
 <ul></ul>
 </li>
 
+  
+<li>
+<a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors </a>
+<ul></ul>
+</li>
+
  
 </ul>
 </li>
@@ -829,7 +841,7 @@
 
    
 <li>
-<a href="">Add/Edit Blocks </a>
+<a href="html/tools/Blocks.shtml#addBlock">Add/Edit Blocks </a>
 <ul></ul>
 </li>
 
@@ -1285,7 +1297,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/logix/SCWarrant.shtml">Signal Controlled Warrants </a>
+<a href="">Signal Controlled Warrants </a>
 <ul></ul>
 </li>
 
@@ -1416,7 +1428,7 @@
 
    
 <li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 Configuration Tool </a>
+<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 Configuration Tool </a>
 <ul></ul>
 </li>
 
@@ -1703,7 +1715,13 @@
 
    
 <li>
-<a href="html/doc/Technical/IntroStructure.shtml">JMRI Program Structure </a>
+<a href="html/doc/Technical/IntroStructure.shtml">JMRI Library Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/AppStructure.shtml">JMRI Program Structure </a>
 <ul></ul>
 </li>
 
@@ -1727,7 +1745,13 @@
 
    
 <li>
-<a href="html/doc/Technical/Threads.shtml">External Connection Structure </a>
+<a href="html/doc/Technical/SystemStructure.shtml">External Connection Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Threads.shtml">Threads and Threading </a>
 <ul></ul>
 </li>
 
@@ -1739,7 +1763,7 @@
 
    
 <li>
-<a href="html/doc/Technical/JavaDoc.shtml">Documentation with JavaDoc and UML </a>
+<a href="html/doc/Technical/Javadoc.shtml">Documentation with Javadoc and UML </a>
 <ul></ul>
 </li>
 

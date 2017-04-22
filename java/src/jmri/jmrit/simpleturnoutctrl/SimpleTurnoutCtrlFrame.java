@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame controlling a single turnout
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -49,6 +49,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         throwButton.setToolTipText("Press to set turnout '"
                 + InstanceManager.turnoutManagerInstance().getThrownText() + "'");
         throwButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 throwButtonActionPerformed(e);
             }
@@ -59,6 +60,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         closeButton.setToolTipText("Press to set turnout '"
                 + InstanceManager.turnoutManagerInstance().getClosedText() + "'");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 closeButtonActionPerformed(e);
             }
@@ -78,6 +80,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         lockButton.setEnabled(false);
         lockButton.setToolTipText("When locked, turnout can not be changed by cabs");
         lockButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 lockButtonActionPerformed(e);
             }
@@ -91,6 +94,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         lockPushButton.setEnabled(false);
         lockPushButton.setToolTipText("When locked, turnout pushbuttons are disabled");
         lockPushButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 lockPushButtonActionPerformed(e);
             }
@@ -276,6 +280,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     }
 
     // update state field in GUI as state of turnout changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // If the Commanded State changes, show transition state as "<inconsistent>" 
         if (e.getPropertyName().equals("CommandedState")) {

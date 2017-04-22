@@ -1,4 +1,3 @@
-// SerialNode.java
 package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRListener;
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * on the serial bus. E.g. you can manually change a state via an icon, and not
  * have it change back the next time that node is polled.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, revised for Maple, 2009
   */
@@ -31,7 +30,7 @@ public class SerialNode extends AbstractNode {
 
     // class constants
     // node definition instance variables (must persist between runs)
-//	protected int pulseWidth = 500;				// Pulse width for pulsed turnout control (milliseconds)
+// protected int pulseWidth = 500;    // Pulse width for pulsed turnout control (milliseconds)
     private int _address = 0;
 
     // operational instance variables  (should not be preserved between runs)
@@ -59,6 +58,7 @@ public class SerialNode extends AbstractNode {
      * Public method to return state of Sensors. Note: returns 'true' since at
      * least one sensor is defined
      */
+    @Override
     public boolean getSensorsActive() {
         return true;
     }
@@ -67,6 +67,7 @@ public class SerialNode extends AbstractNode {
      * Check valid node address, must match value configured in the Maple HMI
      * Allowed values are 1-99
      */
+    @Override
     protected boolean checkNodeAddress(int address) {
         return (address > 0) && (address <= 99);
     }
@@ -83,6 +84,7 @@ public class SerialNode extends AbstractNode {
      * node Note: Maple Systems devices do not need initialization. This is here
      * for completion.
      */
+    @Override
     public AbstractMRMessage createInitPacket() {
         return null;
     }
@@ -91,6 +93,7 @@ public class SerialNode extends AbstractNode {
      * Public Method to create an Transmit packet (SerialMessage) Not used in
      * Maple.
      */
+    @Override
     public AbstractMRMessage createOutPacket() {
         return null;
     }
@@ -111,6 +114,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
+    @Override
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         // increment timeout count
         timeout++;
@@ -118,6 +122,7 @@ public class SerialNode extends AbstractNode {
         return false;
     }
 
+    @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
             log.debug("Reset " + timeout + " timeout count");
@@ -132,4 +137,4 @@ public class SerialNode extends AbstractNode {
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class.getName());
 }
 
-/* @(#)SerialNode.java */
+

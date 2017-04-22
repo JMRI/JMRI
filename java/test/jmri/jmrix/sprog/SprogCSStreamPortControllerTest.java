@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.util.JUnitUtil;
 
 
 /**
@@ -18,11 +19,19 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2014-2016
  */
-public class SprogCSStreamPortControllerTest{
+public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
     @Test
     public void testCtor() {
+       Assert.assertNotNull("exists", apc);
+    }
 
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         try {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
@@ -30,21 +39,16 @@ public class SprogCSStreamPortControllerTest{
             tempPipe = new PipedInputStream();
             DataInputStream istream = new DataInputStream(tempPipe);
 
-            SprogCSStreamPortController xspc = new SprogCSStreamPortController(istream, ostream, "Test");
-            Assert.assertNotNull("exists", xspc);
+            apc = new SprogCSStreamPortController(istream, ostream, "Test");
         } catch (java.io.IOException ioe) {
             Assert.fail("IOException creating stream");
         }
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-    }
-
     @After
-    public void tearDown() throws Exception {
+    @Override
+    public void tearDown() {
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

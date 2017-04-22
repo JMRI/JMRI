@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -13,6 +14,8 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.ErrorHandler;
+import jmri.configurexml.ErrorMemo;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
@@ -34,8 +37,8 @@ import org.slf4j.LoggerFactory;
 public class ConnectionConfigManager extends AbstractPreferencesManager implements Iterable<ConnectionConfig> {
 
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
-    private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
-    private final String CONNECTIONS = "connections"; // NOI18N
+    private final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd"; // NOI18N
+    public final static String CONNECTIONS = "connections"; // NOI18N
     public final static String CONNECTION = "connection"; // NOI18N
     public final static String CLASS = "class"; // NOI18N
     public final static String USER_NAME = "userName"; // NOI18N
@@ -49,7 +52,6 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
-            InitializationException initializationException = null;
             try {
                 sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
             } catch (NullPointerException ex) {
@@ -86,35 +88,43 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                     }
                     try {
                         log.debug("Creating connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
-                        ((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode);
+                        XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
+                        ConnectionConfigManagerErrorHandler handler = new ConnectionConfigManagerErrorHandler();
+                        adapter.setExceptionHandler(handler);
+                        if (!adapter.load(shared, perNode)) {
+                            log.error("Unable to create {} for {}, load returned false", className, shared);
+                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
+                            String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
+                            this.addInitializationException(profile, new InitializationException(english, localized));
+                        }
+                        handler.exceptions.forEach((exception) -> {
+                            this.addInitializationException(profile, exception);
+                        });
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
-                        if (initializationException == null) {
-                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
-                            String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
-                            initializationException = new InitializationException(english, localized, ex);
-                        } else {
-                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
-                            String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
-                            initializationException = new InitializationException(english, localized);
-                        }
+                        String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
+                        String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
+                        this.addInitializationException(profile, new InitializationException(english, localized, ex));
                     } catch (Exception ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
-                        if (initializationException == null) {
-                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
-                            String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
-                            initializationException = new InitializationException(english, localized, ex);
-                        } else {
-                            String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
-                            String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
-                            initializationException = new InitializationException(english, localized);
-                        }
+                        String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
+                        String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
+                        this.addInitializationException(profile, new InitializationException(english, localized, ex));
                     }
                 }
             }
             setInitialized(profile, true);
-            if (initializationException != null) {
-                throw initializationException;
+            List<Exception> exceptions = this.getInitializationExceptions(profile);
+            if (exceptions.size() == 1) {
+                if (exceptions.get(0) instanceof InitializationException) {
+                    throw (InitializationException) exceptions.get(0);
+                } else {
+                    throw new InitializationException(exceptions.get(0));
+                }
+            } else if (exceptions.size() > 1) {
+                String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
+                String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
+                throw new InitializationException(english, localized);
             }
             log.debug("Initialized...");
         }
@@ -370,5 +380,33 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             return manufacturers.toArray(new String[manufacturers.size()]);
         }
 
+    }
+
+    private static class ConnectionConfigManagerErrorHandler extends ErrorHandler {
+
+        ArrayList<InitializationException> exceptions = new ArrayList<>();
+
+        public ConnectionConfigManagerErrorHandler() {
+            super();
+        }
+
+        /**
+         * Capture ErrorMemos as initialization exceptions. {@inheritDoc}
+         */
+        @Override
+        // The memo has a generic message (since the real cause never makes it this far anyway)
+        // If the memo reliably had an exception, we could make a decision about
+        // how to handle that, but since it doesn't all we can do is log it
+        public void handle(ErrorMemo memo) {
+            if (memo.exception != null) {
+                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description), memo.exception));
+            } else {
+                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description) + memo.description));
+            }
+        }
+
+        public List<InitializationException> getExceptions() {
+            return this.exceptions;
+        }
     }
 }

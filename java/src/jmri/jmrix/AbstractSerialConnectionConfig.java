@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -147,11 +146,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         for (String i : options.keySet()) {
             final String item = i;
             if (options.get(i).getComponent() instanceof JComboBox) {
-                ((JComboBox<?>) options.get(i).getComponent()).addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        adapter.setOptionState(item, options.get(item).getItem());
-                    }
+                ((JComboBox<?>) options.get(i).getComponent()).addActionListener((ActionEvent e) -> {
+                    adapter.setOptionState(item, options.get(item).getItem());
                 });
             }
         }
@@ -174,9 +170,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-    protected JComboBox<String> portBox = new JComboBox<String>();
+    protected JComboBox<String> portBox = new JComboBox<>();
     protected JLabel portBoxLabel;
-    protected JComboBox<String> baudBox = new JComboBox<String>();
+    protected JComboBox<String> baudBox = new JComboBox<>();
     protected JLabel baudBoxLabel;
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
@@ -218,10 +214,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             Vector<String> v2 = getPortNames();
             if (v2.equals(originalList)) {
                 log.debug("List of valid Ports has not changed, therefore we will not refresh the port list");
+                // but we will insist on setting the current value into the port
+                adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
                 return;
             }
             log.debug("List of valid Ports has been changed, therefore we will refresh the port list");
-            v = new Vector<String>();
+            v = new Vector<>();
             v.setSize(v2.size());
             Collections.copy(v, v2);
         }
@@ -234,7 +232,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         /* as we make amendments to the list of port in vector v, we keep a copy of it before
          modification, this copy is then used to validate against any changes in the port lists.
          */
-        originalList = new Vector<String>();
+        originalList = new Vector<>();
         originalList.setSize(v.size());
         Collections.copy(originalList, v);
         if (portBox.getActionListeners().length > 0) {
@@ -263,26 +261,33 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         }
         updateSerialPortNames(portName, portBox, v);
+
+        // If there's no name selected, select one that seems most likely
+        boolean didSetName = false;
         if (portName == null || portName.equals(rb.getString("noneSelected")) || portName.equals(rb.getString("noPortsFound"))) {
             for (int i = 0; i < portBox.getItemCount(); i++) {
-                outerloop:
                 for (String friendlyName : getPortFriendlyNames()) {
                     if ((portBox.getItemAt(i)).contains(friendlyName)) {
                         portBox.setSelectedIndex(i);
                         adapter.setPort(PortNameMapper.getPortFromName(portBox.getItemAt(i)));
-                        break outerloop;
+                        didSetName = true;
+                        break;
                     }
                 }
             }
-        }
-
-        portBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String port = PortNameMapper.getPortFromName((String) portBox.getSelectedItem());
-                adapter.setPort(port);
+            // if didn't set name, don't leave it hanging
+            if (!didSetName) {
+                portBox.setSelectedIndex(0);
             }
-        });
+        }
+        // finally, insist on synchronization of selected port name with underlying port
+        adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
+        
+        // add a listener for later changes
+        portBox.addActionListener((ActionEvent e) -> {
+            String port = PortNameMapper.getPortFromName((String) portBox.getSelectedItem());
+            adapter.setPort(port);
+        });  
     }
 
     String value;
@@ -295,16 +300,17 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (!init) {
             //Build up list of options
             String[] optionsAvailable = adapter.getOptions();
-            options = new Hashtable<String, Option>();
+            options = new Hashtable<>();
             for (String i : optionsAvailable) {
-                JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
+                JComboBox<String> opt = new JComboBox<>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
                 // check that it worked
                 if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
                     // no, set 1st option choice
                     opt.setSelectedIndex(0);
-                    adapter.setOptionState(i, (String) opt.getSelectedItem());
+                    // log before setting new value to show old value
                     log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
+                    adapter.setOptionState(i, (String) opt.getSelectedItem());
                 }
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
@@ -371,13 +377,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
-        showAdvanced.addItemListener(
-                new ItemListener() {
-                    @Override
-                    public void itemStateChanged(ItemEvent e) {
-                        showAdvancedItems();
-                    }
-                });
+        showAdvanced.addItemListener((ItemEvent e) -> {
+            showAdvancedItems();
+        });
         showAdvancedItems();
         init = false;       // need to reload action listeners
         checkInitDone();
@@ -588,6 +590,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
     }
 
+    /**
+     * Handle friendly port names. Note that this 
+     * changes the selection in portCombo, so 
+     * that should be tracked after this returns.
+     * 
+     * @param portName The currently-selected port name
+     * @param portCombo The combo box that's displaying the available ports
+     * @param portList The list of valid (unfriendly) port names
+     */
     @SuppressWarnings("UseOfObsoleteCollectionType")
     protected synchronized static void updateSerialPortNames(String portName, JComboBox<String> portCombo, Vector<String> portList) {
         for (Entry<String, SerialPortFriendlyName> en : PortNameMapper.getPortNameMap().entrySet()) {
@@ -606,14 +617,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 portCombo.setSelectedIndex(i);
             }
         }
-
     }
 
     @SuppressWarnings({"unchecked", "UseOfObsoleteCollectionType"})
     protected Vector<String> getPortNames() {
         //reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen
-        Vector<String> portNameVector = new Vector<String>();
+        Vector<String> portNameVector = new Vector<>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {

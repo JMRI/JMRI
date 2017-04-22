@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.SlotManager;
  * supported by IB-COM or Intellibox II
  *
  * @see jmri.ProgrammerManager
- * @author	Lisby Copyright (C) 2014
+ * @author Lisby Copyright (C) 2014
  * 
  */
 public class UhlenbrockProgrammerManager extends LnProgrammerManager {
@@ -19,6 +19,7 @@ public class UhlenbrockProgrammerManager extends LnProgrammerManager {
         super(pSlotManager, memo);
     }
 
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }

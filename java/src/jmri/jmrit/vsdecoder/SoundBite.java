@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  */
 import java.util.ArrayList;
 import jmri.AudioException;
@@ -45,32 +45,23 @@ class SoundBite extends VSDSound {
     BufferMode bufferMode;
     ArrayList<AudioBuffer> loopBufferList = new ArrayList<AudioBuffer>();
 
+    // Constructor for QUEUE_MODE.
     public SoundBite(String name) {
-        this(name, BufferMode.BOUND_MODE);
-    }
-
-    // Constructor to replace QueueSoundBite, really.
-    public SoundBite(String name, BufferMode mode) {
         super(name);
-        this.filename = null;
         system_name = VSDSound.SrcSysNamePrefix + name;
         user_name = VSDSound.SrcUserNamePrefix + name;
-        bufferMode = mode;
-        initialized = init(null, mode);
+        bufferMode = BufferMode.QUEUE_MODE;
+        initialized = init(null, bufferMode);
     }
 
-    // Constructor for backward compatibility
+    // Constructor for BOUND_MODE.
     public SoundBite(VSDFile vf, String filename, String sname, String uname) {
-        this(BufferMode.BOUND_MODE, vf, filename, sname, uname);
-    }
-
-    public SoundBite(BufferMode mode, VSDFile vf, String filename, String sname, String uname) {
         super(uname);
         this.filename = filename;
         system_name = sname;
         user_name = uname;
-        bufferMode = mode;
-        initialized = init(vf, mode);
+        bufferMode = BufferMode.BOUND_MODE;
+        initialized = init(vf, bufferMode);
     }
 
     public String getFileName() {
@@ -100,7 +91,8 @@ class SoundBite extends VSDSound {
                     sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix + system_name);
                     sound_buf.setUserName(BufUserNamePrefix + user_name);
                     if (vf == null) {
-                        sound_buf.setURL(vsd_file_base + filename);
+                        log.debug("VSD file is null! Filename: {}", filename);
+                        sound_buf.setURL(filename); // Path must be provided by caller.
                     } else {
                         java.io.InputStream ins = vf.getInputStream(filename);
                         if (ins != null) {
@@ -223,9 +215,11 @@ class SoundBite extends VSDSound {
         sound_src.setFadeOut(out);
     }
 
+    @Override
     public void shutdown() {
     }
 
+    @Override
     public void mute(boolean m) {
         if (m) {
             volume = sound_src.getGain();
@@ -235,21 +229,25 @@ class SoundBite extends VSDSound {
         }
     }
 
+    @Override
     public void setVolume(float v) {
         volume = v * gain;
         sound_src.setGain(volume);
     }
 
+    @Override
     public void play() {
         sound_src.play();
         is_playing = true;
     }
 
+    @Override
     public void loop() {
         sound_src.play();
         is_playing = true;
     }
 
+    @Override
     public void stop() {
         sound_src.stop();
         is_playing = false;
@@ -264,6 +262,7 @@ class SoundBite extends VSDSound {
         sound_src.rewind();
     }
 
+    @Override
     public void fadeOut() {
         // Skip the fade action if the fade out time is zero.
         if (sound_src.getFadeOut() == 0) {
@@ -274,6 +273,7 @@ class SoundBite extends VSDSound {
         is_playing = false;
     }
 
+    @Override
     public void fadeIn() {
         // Skip the fade action if the fade in time is zero.
         if (sound_src.getFadeIn() == 0) {
@@ -292,8 +292,7 @@ class SoundBite extends VSDSound {
 
     public void setURL(String filename) {
         this.filename = filename;
-        sound_buf.setURL(vsd_file_base + filename);
-
+        sound_buf.setURL(filename); // Path must be provided by caller.
     }
 
     public long getLength() {
@@ -324,7 +323,7 @@ class SoundBite extends VSDSound {
     }
 
     public static long calcLength(AudioBuffer buf) {
-	// Assumes later getBuffer() will find the buffer from AudioManager instead
+ // Assumes later getBuffer() will find the buffer from AudioManager instead
         // of the current local reference... that's why I'm not directly using sound_buf here.
 
         // Required buffer functions not yet implemented

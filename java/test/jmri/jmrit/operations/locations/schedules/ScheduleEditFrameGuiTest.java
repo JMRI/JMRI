@@ -1,21 +1,18 @@
 //ScheduleEditFrameTest.java
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.schedules.LocationTrackPair;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleEditFrame;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -26,7 +23,9 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
+    @Test
     public void testScheduleEditFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationManager lManager = LocationManager.instance();
         Location l2 = lManager.newLocation("Test Loc C");
         l2.setLength(1003);
@@ -39,7 +38,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         f.setTitle("Test Schedule Frame");
         f.scheduleNameTextField.setText("Test Schedule A");
         f.commentTextField.setText("Test Comment");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addScheduleButton));
+        enterClickAndLeave(f.addScheduleButton);
 
         // was the schedule created?
         ScheduleManager m = ScheduleManager.instance();
@@ -48,16 +47,16 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
         // now add some car types to the schedule
         f.typeBox.setSelectedItem("Boxcar");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
+        enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem("Flatcar");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
+        enterClickAndLeave(f.addTypeButton);
         f.typeBox.setSelectedItem("Coilcar");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
+        enterClickAndLeave(f.addTypeButton);
         // put Tank Food at start of list
         f.typeBox.setSelectedItem("Tank Food");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addLocAtTop));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addTypeButton));
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveScheduleButton));
+        enterClickAndLeave(f.addLocAtTop);
+        enterClickAndLeave(f.addTypeButton);
+        enterClickAndLeave(f.saveScheduleButton);
 
         List<ScheduleItem> list = s.getItemsBySequenceList();
         Assert.assertEquals("number of items", 4, list.size());
@@ -71,15 +70,16 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         si = list.get(3);
         Assert.assertEquals("3rd type", "Coilcar", si.getTypeName());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteScheduleButton));
+        enterClickAndLeave(f.deleteScheduleButton);
         // Yes to pop up
-        pressDialogButton(f, "Yes");
+        pressDialogButton(f,Bundle.getMessage("DeleteSchedule?"), "Yes");
         s = m.getScheduleByName("Test Schedule A");
         Assert.assertNull("Test Schedule A exists", s);
 
         f.dispose();
     }
 
+    @Test
     public void testScheduleComboBoxes() {
         LocationManager lm = LocationManager.instance();
         Location l = lm.newLocation("new test location");
@@ -157,31 +157,17 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
         loadLocations();
     }
 
-    public ScheduleEditFrameGuiTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ScheduleEditFrameGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ScheduleEditFrameGuiTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 }

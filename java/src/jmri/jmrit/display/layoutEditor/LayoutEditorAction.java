@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 /**
  * Start a LayoutEditor.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.display.panelEditor.PanelEditorAction
  */
 public class LayoutEditorAction extends AbstractAction {
@@ -19,6 +19,7 @@ public class LayoutEditorAction extends AbstractAction {
         this("New Panel");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String name = "My Layout";
         for (int i = 2; i < 100; i++) {

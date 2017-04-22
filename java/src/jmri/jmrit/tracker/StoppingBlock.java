@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * it not restart? Optional restart?)
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
   */
 public class StoppingBlock {
 
@@ -37,6 +37,7 @@ public class StoppingBlock {
 
         // set a listener in the block
         block.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleBlockChange(e);
             }
@@ -98,6 +99,7 @@ public class StoppingBlock {
         direction = dir;
 
         sig1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleSignalChange(e);
             }
@@ -108,6 +110,7 @@ public class StoppingBlock {
         addSignal(s1, dir);
         sig2 = s2;
         sig2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleSignalChange(e);
             }

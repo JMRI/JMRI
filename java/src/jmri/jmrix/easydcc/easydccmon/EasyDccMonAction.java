@@ -1,4 +1,3 @@
-// EasyDccMonAction.java
 package jmri.jmrix.easydcc.easydccmon;
 
 import java.awt.event.ActionEvent;
@@ -9,14 +8,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a EasyDccMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccMonAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3642371717181525383L;
 
     public EasyDccMonAction() {
         this("EasyDCC Command Monitor");
@@ -26,6 +20,7 @@ public class EasyDccMonAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a EasyDccMonFrame
         EasyDccMonFrame f = new EasyDccMonFrame();
@@ -40,6 +35,3 @@ public class EasyDccMonAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(EasyDccMonAction.class.getName());
 
 }
-
-
-/* @(#)EasyDccMonAction.java */

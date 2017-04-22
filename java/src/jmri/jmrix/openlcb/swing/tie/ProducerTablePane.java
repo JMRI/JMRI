@@ -1,4 +1,3 @@
-// ProducerTablePane.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.util.ResourceBundle;
@@ -13,15 +12,10 @@ import javax.swing.table.TableRowSorter;
 /**
  * Pane for showing the producer table
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
   * @since 2.3.7
  */
 public class ProducerTablePane extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -892441860659962671L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
@@ -59,5 +53,3 @@ public class ProducerTablePane extends JPanel {
     }
 
 }
-
-/* @(#)ProducerTablePane.java */
