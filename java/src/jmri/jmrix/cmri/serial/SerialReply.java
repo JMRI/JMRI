@@ -9,7 +9,6 @@ package jmri.jmrix.cmri.serial;
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002
  * @author	Chuck Catania Copyright (C) 2014, 2015, 2016  CMRInet changes
- * @version     $Revision: 17977 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -42,9 +41,6 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // recognize format
-    public boolean isRcv()  { return getElement(1)==0x52;}
-    public int getUA() { return getElement(0)-65; }
-    
     // CMRI-E  Extended Protocol Messages  c2
     public boolean isEOT()     { return (getElement(1)==0x45); }   // 'E'
     public boolean isQUERY()   { return (getElement(1)==0x51); }   // 'Q'

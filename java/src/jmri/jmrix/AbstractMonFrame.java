@@ -84,11 +84,7 @@ public abstract class AbstractMonFrame extends JmriJFrame {
     String timeStampCheck = this.getClass().getName() + ".TimeStamp"; // NOI18N
     String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop"; // NOI18N
     String autoScrollCheck = this.getClass().getName() + ".AutoScroll"; // NOI18N
-    String rawDataCheck = this.getClass().getName()+".RawData";
-    String timeStampCheck = this.getClass().getName()+".TimeStamp";
-    String deltaTCheck = this.getClass().getName()+".DeltaT";
-    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
-    String autoScrollCheck = this.getClass().getName()+".AutoScroll";
+    String deltaTCheck = this.getClass().getName()+".DeltaT"; //NOI18N
     jmri.UserPreferencesManager p;
     
     protected Border packetDisplayBorder = BorderFactory.createEtchedBorder();

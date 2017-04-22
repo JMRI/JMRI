@@ -31,7 +31,6 @@ import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author	Chuck Catania Copyright (C) 2014,2016 CMRInet extensions
- * @version	$Revision: 17977 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 

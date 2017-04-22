@@ -92,7 +92,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
      // Test if message is for a monitored node
      //----------------------------------------
        SerialNode monitorNode = null;       
-       monitorNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(l.getUA());
+       monitorNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(l.getUA());
        if (monitorNode == null) return;       
        if (!monitorNode.getMonitorNodePackets()) return;
 
@@ -189,7 +189,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public synchronized void reply(SerialReply l) 
     { 
        SerialNode monitorNode = null;       
-       monitorNode = (SerialNode) SerialTrafficController.instance().getNodeFromAddress(l.getUA());
+       monitorNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(l.getUA());
        if (monitorNode == null) return;
        if (!monitorNode.getMonitorNodePackets()) return;
 

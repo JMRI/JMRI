@@ -281,7 +281,7 @@ public class SerialNode extends AbstractNode {
         {
           case SMINI:      if (result!=1)
                            {
-                            warn("CMRI SMINI "+"(Node "+nodeID+") with "+result+" INPUT cards");
+                            warn("CMRI SMINI with "+result+" INPUT cards");
                            }
           break;
           case USIC_SUSIC: if(result>=MAXCARDLOCATIONBYTES)
