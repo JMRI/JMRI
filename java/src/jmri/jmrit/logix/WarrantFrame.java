@@ -1339,6 +1339,7 @@ public class WarrantFrame extends WarrantRoute {
 
         if (_isSCWarrant.isSelected()) {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
+            ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
         _warrant.setDccAddress(getTrainId());
         _warrant.setTrainName(getTrainName());
