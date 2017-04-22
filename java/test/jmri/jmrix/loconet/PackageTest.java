@@ -90,7 +90,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(Ib1ThrottleTest.class));
         suite.addTest(new JUnit4TestAdapter(Ib2ThrottleManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(Ib2ThrottleTest.class));
-        suite.addTest(new JUnit4TestAdapter(LNCPSignalMast.class));
+        suite.addTest(new JUnit4TestAdapter(LNCPSignalMastTest.class));
         suite.addTest(new JUnit4TestAdapter(LnLightManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(LnLightTest.class));
         suite.addTest(new JUnit4TestAdapter(LnMessageManagerTest.class));

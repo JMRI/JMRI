@@ -16,7 +16,7 @@ public class LNCPSignalMastTest {
 
     @Test
     public void testCTor() {
-        LNCPSignalMast t = new LNCPSignalMast("LS1234");
+        LNCPSignalMast t = new LNCPSignalMast("LF$lncpsm:basic:one-searchlight(123)");
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +25,10 @@ public class LNCPSignalMastTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        jmri.InstanceManager.store(lnis,jmri.jmrix.loconet.LnTrafficController.class);
+        SlotManager s = new SlotManager(lnis);
+        jmri.InstanceManager.store(s,jmri.CommandStation.class);
     }
 
     @After
