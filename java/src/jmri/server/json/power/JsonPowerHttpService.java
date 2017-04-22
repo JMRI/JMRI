@@ -64,7 +64,7 @@ public class JsonPowerHttpService extends JsonHttpService {
             }
             data.put(DEFAULT, false);
             if (manager.equals(InstanceManager.getDefault(PowerManager.class))) {
-                data.put(DEFAULT, false);
+                data.put(DEFAULT, true);
             }
         } catch (JmriException e) {
             log.error("Unable to get Power state.", e);
