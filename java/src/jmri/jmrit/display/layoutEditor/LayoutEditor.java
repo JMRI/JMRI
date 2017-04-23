@@ -1844,18 +1844,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         switch (toolBarSide) {
             case eTOP:
-            case eLEFT:
+            case eLEFT: {
                 contentPane.add(editToolBarContainer, 0);
                 break;
+            }
 
             case eBOTTOM:
-            case eRIGHT:
+            case eRIGHT: {
                 contentPane.add(editToolBarContainer);
                 break;
-                
-            default:
-                // fall through
-                break;
+            }
         }   //switch
 
         if (toolBarIsVertical) {
@@ -4747,7 +4745,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     /**
      * Add a layout turntable at location specified
-     * @param pt x,y placement for turntable
      */
     public void addTurntable(Point2D pt) {
         numLayoutTurntables++;
@@ -4810,7 +4807,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     /**
      * Allow external set of dirty bit
-     * @param val true/false for panelChanged
      */
     public void setDirty(boolean val) {
         panelChanged = val;
@@ -9801,9 +9797,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             case LayoutTrack.TRACK:
 
                 return ((TrackSegment) o).getLayoutBlock();
-            default:
-                log.warn("Unhandled track type: {}", type);
-                break;
         }   //switch
         return null;
     }   //getAffectedBlock

@@ -1531,9 +1531,6 @@ public class SectionTableAction extends AbstractTableAction {
                     } else {
                         return Bundle.getMessage("BeanStateUnknown");
                     }
-                default:
-                    // fall through
-                    break;
             }
             return null;
         }

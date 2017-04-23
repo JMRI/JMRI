@@ -1,36 +1,40 @@
 package jmri.jmrix.loconet.ds64;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.util.Collections;
+import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
+import javax.swing.JToggleButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
-import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.jmrix.loconet.AbstractBoardProgPanel;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.swing.ValidatedTextField;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.util.JmriJFrame;
+import jmri.jmrix.loconet.LocoNetMessage;
+import java.util.Collections;
+import jmri.jmrix.loconet.ds64.SimpleTurnoutStateEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Window;
+import java.awt.event.ItemEvent;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import jmri.jmrix.loconet.LnConstants;
+import javax.swing.JScrollPane;
 
 /**
  * A "tabbed" swing panel to display and modify Digitrax DS64 board
@@ -379,9 +383,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 break;
             case 21:
                 localSensorType.setSelectedIndex(opsw[21] ? 1 : 0);
-                break;
-            default:
-                log.warn("Unhandled state code: {}", state);
                 break;
         }
         updateUI();

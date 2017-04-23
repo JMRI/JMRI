@@ -93,7 +93,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
-     * @param listener handle of listener to add
      *
      */
     public void addControllerListener(ControllerInterface listener) {
@@ -308,7 +307,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     /**
      * send all function states, primarily for initial status Current Format:
      * RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
-     * @param t throttle to send functions to
      */
     public void sendAllFunctionStates(DccThrottle t) {
 
@@ -443,9 +441,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
                     case 'q':       //v>=2.0
                         handleRequest(inPackage.substring(1));
-                        break;
-                    default:
-                        log.warn("Unhandled code: {}", inPackage.charAt(0));
                         break;
                 }
             } catch (NullPointerException e) {
@@ -634,7 +629,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     /**
      * Get the string representation of this throttles address. Returns 'Not
      * Set' if no address in use.
-     * @return string value of throttle address
      */
     public String getCurrentAddressString() {
         if (isAddressSet) {
@@ -803,9 +797,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 sendAllMomentaryStates(throttle);
                 break;
             }
-            default:
-                log.warn("Unhandled code: {}", inPackage.charAt(0));
-                break;
         }
 
     }

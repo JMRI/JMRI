@@ -283,9 +283,6 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
                         mc.setSize(mc.getPreferredSize().width, mc.getPreferredSize().height);
                         mc.setLevel(Editor.MEMORIES);
                         return mc;
-                    default:
-                        // fall through
-                        break;
                     }
                 } else if (DataFlavor.stringFlavor.equals(flavor)) {
                     StringBuilder sb = new StringBuilder(_itemType);

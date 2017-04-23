@@ -731,7 +731,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     /**
      * Set the RosterEntry for this throttle.
-     * @param entry roster entry selected for throttle
      */
     public void setRosterEntry(RosterEntry entry) {
         rosterBox.setSelectedItem(entry);
@@ -1250,9 +1249,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     statusLabel.setText(rb.getString("ProgRdComplete"));
                     readState = ProgState.IDLE;
                     break;
-                default:
-                    log.warn("Unhandled read state: {}", readState);
-                    break;
+
             }
         } else {
             // Error during programming

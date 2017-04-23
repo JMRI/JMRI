@@ -292,7 +292,7 @@ public class DefaultLogix extends AbstractNamedBean
                     NamedBeanHandle<?> namedBean = variable.getNamedBean();
                     int varType = variable.getType();
                     int signalAspect = -1;
-                    // Get Listener type from variable type
+                    // Get Listener type from varible type
                     switch (varType) {
                         case Conditional.TYPE_SENSOR_ACTIVE:
                         case Conditional.TYPE_SENSOR_INACTIVE:
@@ -370,9 +370,6 @@ public class DefaultLogix extends AbstractNamedBean
                         case Conditional.TYPE_ENTRYEXIT_ACTIVE:
                         case Conditional.TYPE_ENTRYEXIT_INACTIVE:
                             varListenerType = LISTENER_TYPE_ENTRYEXIT;
-                            break;
-                        default:
-                            log.warn("Unhandled conditional variable type: {}", varType);
                             break;
                     }
                     int positionOfListener = getPositionOfListener(varListenerType, varType, varName);
@@ -699,7 +696,7 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                     break;
                 }
-                nb = namedBeanHandle.getBean();
+                nb = (NamedBean) namedBeanHandle.getBean();
                 nb.addPropertyChangeListener(listener, namedBeanHandle.getName(), "Logix " + getDisplayName());
                 return;
         }
@@ -767,7 +764,7 @@ public class DefaultLogix extends AbstractNamedBean
                         }
                         break;
                     }
-                    nb = namedBeanHandle.getBean();
+                    nb = (NamedBean) namedBeanHandle.getBean();
                     nb.removePropertyChangeListener(listener);
                     return;
             }

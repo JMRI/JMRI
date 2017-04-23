@@ -87,9 +87,6 @@ public class JsonClientLight extends AbstractLight implements JsonClientListener
             case JSON.UNKNOWN:
                 this.notifyStateChange(this.mState, Light.UNKNOWN);
                 break;
-            default:
-                log.warn("Unhandled state: {}", state);
-                break;
         }
     }
 

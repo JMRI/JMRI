@@ -150,9 +150,6 @@ public class LevelXing extends LayoutTrack {
             case POINTD:
                 namedBean = signalDHeadNamed;
                 break;
-            default:
-                log.warn("Unhandled loc: {}", loc);
-                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -175,9 +172,6 @@ public class LevelXing extends LayoutTrack {
             case POINTD:
                 namedBean = signalDMastNamed;
                 break;
-            default:
-                log.warn("Unhandled loc: {}", loc);
-                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -199,9 +193,6 @@ public class LevelXing extends LayoutTrack {
                 break;
             case POINTD:
                 namedBean = sensorDNamed;
-                break;
-            default:
-                log.warn("Unhandled loc: {}", loc);
                 break;
         }
         if (namedBean != null) {
@@ -588,9 +579,6 @@ public class LevelXing extends LayoutTrack {
                 return connectC;
             case LEVEL_XING_D:
                 return connectD;
-            default:
-                log.warn("Unhandled loc: {}", location);
-                break;
         }
         log.error("Invalid Point Type " + location); //I18IN
         throw new jmri.JmriException("Invalid Point");

@@ -289,9 +289,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 log.debug("Data Available");
                 handleOneIncomingReply();
                 break;
-            default:
-                log.warn("Unhandled serial port event code: {}", event.getEventType());
-                break;
         }
     }
 
