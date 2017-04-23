@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.locomon;
 
+import static jmri.jmrix.loconet.LnConstants.PCMD_BYTE_MODE;
+
 import java.time.LocalTime;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
@@ -2603,9 +2605,6 @@ public class Llnmon {
                     break;
                 case LnConstants.RE_MULTI_SENSE_DEV_TYPE_DS64:
                     device = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_DEV_RPT_HELPER_DS64");
-                    break;
-                default:
-                    log.warn("Unhandled device type: {}", deviceType);
                     break;
             }
 

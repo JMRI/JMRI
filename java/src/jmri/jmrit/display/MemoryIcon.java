@@ -451,9 +451,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 case CENTRE:
                     super.setLocation(getOriginalX() - (maxWidth() / 2), getOriginalY());
                     break;
-                default:
-                    log.warn("Unhandled justification code: {}", _popupUtil.getJustification());
-                    break;
             }
             setSize(maxWidth(), maxHeight());
         } else {

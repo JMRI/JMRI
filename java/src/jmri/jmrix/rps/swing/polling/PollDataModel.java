@@ -175,10 +175,6 @@ public class PollDataModel extends AbstractTableModel implements MeasurementList
                 return;
             case TYPECOL:
                 log.error("Got " + ((JComboBox<?>) value).getSelectedItem() + " but did not act");
-                break;
-            default:
-                log.warn("Unhandled col {}", c);
-                break;
         }
     }
 

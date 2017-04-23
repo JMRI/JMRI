@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.ecos;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,17 +7,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.TrafficControllerScaffold;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusDccOpsModeProgrammerTest {
+public class EcosPowerManagerTest {
 
     @Test
     public void testCTor() {
-        CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,new TrafficControllerScaffold());
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosPowerManager t = new EcosPowerManager(tc);
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +34,6 @@ public class CbusDccOpsModeProgrammerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosPowerManagerTest.class.getName());
 
 }

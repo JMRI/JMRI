@@ -35,7 +35,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Constructor
-     * @param memo connection details
      *
      * @param slot The LocoNetSlot this throttle will talk on.
      */
@@ -108,9 +107,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             case LnConstants.DEC_MODE_14:
                 setSpeedStepMode(DccThrottle.SpeedStepMode14);
                 break;
-            default:
-                log.warn("Unhandled decoder type: {}", slot.decoderType());
-                break;
         }
 
         // listen for changes
@@ -124,8 +120,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Convert a LocoNet speed integer to a float speed value
-     * @param lSpeed LocoNet style speed value
-     * @return speed as float 0-&gt;1.0
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -162,9 +156,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 return (int) ((fSpeed * 28) * 4) + 12;
             case DccThrottle.SpeedStepMode14:
                 return (int) ((fSpeed * 14) * 8) + 8;
-            default:
-                log.warn("Unhandled speed step: {}", this.getSpeedStepMode());
-                break;
         }
         return speed;
     }

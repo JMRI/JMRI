@@ -1,4 +1,4 @@
-package jmri.jmrix.cmri.serial;
+package jmri.jmrix.ecos.swing;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,15 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SerialLightManagerTest {
-
-    private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
-    private SerialTrafficControlScaffold tcis = null;
-    private SerialNode n = null;
+public class EcosComponentFactoryTest {
 
     @Test
     public void testCTor() {
-        SerialLightManager t = new SerialLightManager(memo);
+        EcosComponentFactory t = new EcosComponentFactory(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,11 +25,7 @@ public class SerialLightManagerTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
-        memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
-        memo.setTrafficController(tcis);
-        n = new SerialNode(0, SerialNode.SMINI,tcis);
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
@@ -42,6 +34,6 @@ public class SerialLightManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosComponentFactoryTest.class.getName());
 
 }

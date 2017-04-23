@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.easydcc;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,17 +7,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusCommandStationTest {
+public class EasyDccCommandStationTest {
 
     @Test
     public void testCTor() {
-        CbusCommandStation t = new CbusCommandStation(new CanSystemConnectionMemo());
+        EasyDccCommandStation t = new EasyDccCommandStation(new EasyDccSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +33,6 @@ public class CbusCommandStationTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusCommandStationTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStationTest.class.getName());
 
 }

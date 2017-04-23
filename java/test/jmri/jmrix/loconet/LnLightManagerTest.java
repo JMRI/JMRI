@@ -1,4 +1,4 @@
-package jmri.jmrix.dcc4pc;
+package jmri.jmrix.loconet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,19 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Dcc4PcSensorManagerTest {
+public class LnLightManagerTest {
 
     @Test
     public void testCTor() {
-        Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
-          @Override
-          public void sendDcc4PcMessage(Dcc4PcMessage m,Dcc4PcListener reply) {
-          }
-       };
-       Dcc4PcSystemConnectionMemo memo = new Dcc4PcSystemConnectionMemo(tc);
-
-       Dcc4PcSensorManager t = new Dcc4PcSensorManager(tc,memo);
-       Assert.assertNotNull("exists",t);
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        LnLightManager t = new LnLightManager(lnis,"L");
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -40,6 +34,6 @@ public class Dcc4PcSensorManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLightManagerTest.class.getName());
 
 }

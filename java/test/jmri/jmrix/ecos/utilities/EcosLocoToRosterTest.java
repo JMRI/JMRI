@@ -1,4 +1,4 @@
-package jmri.jmrix.dcc4pc;
+package jmri.jmrix.ecos.utilities;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,16 +7,21 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.ecos.EcosTrafficController;
+import jmri.jmrix.ecos.EcosInterfaceScaffold;
+import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Dcc4PcSensorTest {
+public class EcosLocoToRosterTest {
 
     @Test
     public void testCTor() {
-        Dcc4PcSensor t = new Dcc4PcSensor("DS1","test");
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
+        EcosLocoToRoster t = new EcosLocoToRoster(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +38,6 @@ public class Dcc4PcSensorTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRosterTest.class.getName());
 
 }

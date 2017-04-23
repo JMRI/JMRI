@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.util.MathUtil.fourth;
-import static jmri.util.MathUtil.midpoint;
-import static jmri.util.MathUtil.third;
+import static jmri.util.MathUtil.*;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -464,9 +462,6 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             case POINTD2:
                 signalHead = signalD2HeadNamed;
-                break;
-            default:
-                log.warn("Unhandled point type: {}", loc);
                 break;
         }
         if (signalHead != null) {
@@ -1126,8 +1121,6 @@ public class LayoutTurnout extends LayoutTrack {
                 return connectC;
             case TURNOUT_D:
                 return connectD;
-            default:
-                // fall out
         }
         log.error("Invalid Point Type " + location); //I18IN
         throw new jmri.JmriException("Invalid Point");

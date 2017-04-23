@@ -1943,9 +1943,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     return r.text2;
                 case 41:
                     return r.lastChange;
-                default:
-                    log.error("Unhandled column number: {}", col);
-                    break;
             }
             return null;
         }

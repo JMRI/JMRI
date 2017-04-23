@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import javax.annotation.Nonnull;
+
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammerFacade;
@@ -162,7 +163,6 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
                 }
                 // can't read or it's already being done
                 // deliberately fall through to normal completion
-                //$FALL-THROUGH$
             case READING: // done, forward the return code and data
                 // the programmingOpReply handler might send an immediate reply, so
                 // clear the current listener _first_

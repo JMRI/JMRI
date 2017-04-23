@@ -209,8 +209,6 @@ public class PositionablePolygon extends PositionableShape {
                             _editor.moveItem(this, _width - SIZE, 0);
                         }
                         break;
-                    default:
-                        log.warn("Unhandled direction code: {}", _hitIndex);
                 }
                 if (path != null) {
                     setShape(path);
@@ -268,9 +266,6 @@ public class PositionablePolygon extends PositionableShape {
                     break;
                 case PathIterator.SEG_CLOSE:
                     path.closePath();
-                    break;
-                default:
-                    log.warn("Unhandled path iterator type: {}", type);
                     break;
             }
 //      log.debug("type= "+type+"  x= "+coord[0]+", y= "+ coord[1]);

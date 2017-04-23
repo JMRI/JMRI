@@ -96,9 +96,6 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                                 }
                                 msg = new LocoNetMessage(byte2);
                                 break;
-                            default:
-                                log.warn("Unhandled msg length: {}", (opCode & 0x60) >> 5);
-                                break;
                         }
                         if (msg == null) {
                             log.error("msg is null!");

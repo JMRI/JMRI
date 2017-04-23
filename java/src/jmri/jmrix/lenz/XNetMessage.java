@@ -1563,7 +1563,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                                 LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                         break;
                     }
-                    //$FALL-THROUGH$
+                //fall through
                 default:
                     text = toString();
             }

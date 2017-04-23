@@ -1,4 +1,4 @@
-package jmri.jmrix.can;
+package jmri.jmrix.ecos;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CanConfigurationManagerTest {
+public class EcosReporterTest {
 
     @Test
     public void testCTor() {
-        CanConfigurationManager t = new CanConfigurationManager(new CanSystemConnectionMemo());
+        EcosReporter t = new EcosReporter("UR1","Test");
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +33,6 @@ public class CanConfigurationManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanConfigurationManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosReporterTest.class.getName());
 
 }
