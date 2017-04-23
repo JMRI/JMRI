@@ -656,9 +656,6 @@ public class ConnectivityUtil {
                                 tr = null;
                             }
                             break;
-                        default:
-                            log.warn("Unhandled crossover type: {}", cType);
-                            break;
                     }
                 } else if ((tType == LayoutTurnout.RH_TURNOUT) || (tType == LayoutTurnout.LH_TURNOUT)
                         || (tType == LayoutTurnout.WYE_TURNOUT)) {

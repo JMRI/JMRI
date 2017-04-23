@@ -322,9 +322,6 @@ public class SignalTableModel extends AbstractTableModel {
                 return Bundle.getMessage("Offset");
             case UNITSCOL:
                 return "  ";
-            default:
-                // fall through
-                break;
         }
         return "";
     }
@@ -375,9 +372,6 @@ public class SignalTableModel extends AbstractTableModel {
                 return signalRow.isMetric();
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
-            default:
-                // fall through
-                break;
         }
         return "";
     }
@@ -649,10 +643,7 @@ public class SignalTableModel extends AbstractTableModel {
                     deleteSignal(signalRow);
                     _signalList.remove(signalRow);
                     fireTableDataChanged();
-                    break;
-                default:
-                    // fall through
-                    break;
+
             }
         }
 
@@ -730,9 +721,6 @@ public class SignalTableModel extends AbstractTableModel {
                 return new JTextField(2).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
-            default:
-                // fall through
-                break;
         }
         return 5;
     }

@@ -2803,9 +2803,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             case NONE: {
                 return "None routing updates will be passed";
             }
-            default:
-                log.warn("Unhandled packet flow value: {}", value);
-                break;
         }
         return "Unknown";
     }

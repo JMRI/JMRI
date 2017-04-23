@@ -968,8 +968,6 @@ public class SignalGroupSubTableAction {
 
         /**
          * Create a Sensor item for this Signal Head by the name of the Control Sensor
-         * @param sysName system name for new signal group sensor
-         * @param userName user name for new signal group sensor
          */
         SignalGroupSensor(String sysName, String userName) {
             super(sysName, userName);
@@ -986,9 +984,6 @@ public class SignalGroupSubTableAction {
                     return SET_TO_INACTIVE;
                 case Sensor.ACTIVE:
                     return SET_TO_ACTIVE;
-                default:
-                    // fall through
-                    break;
             }
             return "";
         }
@@ -1026,8 +1021,6 @@ public class SignalGroupSubTableAction {
 
         /**
          * Create a Turnout item for this Signal Head by the name of the Control Turnout
-         * @param sysName system name for new signal group turnout
-         * @param userName user name for new signal group turnout
          */
         SignalGroupTurnout(String sysName, String userName) {
             super(sysName, userName);
@@ -1044,9 +1037,6 @@ public class SignalGroupSubTableAction {
                     return SET_TO_CLOSED;
                 case Turnout.THROWN:
                     return SET_TO_THROWN;
-                default:
-                    // fall through
-                    break;
             }
             return "";
         }

@@ -1,8 +1,6 @@
 package jmri.jmrix.loconet.sdf;
 
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement the LOAD_MODIFIER macro from the Digitrax sound definition language
@@ -55,7 +53,6 @@ public class LoadModifier extends SdfMacro {
     /**
      * Format the three bytes as simple numbers, for lack of anything better
      * right now
-     * @return 3 digit string
      */
     String argVal() {
         String arg1Val = "" + arg1;
@@ -248,9 +245,6 @@ public class LoadModifier extends SdfMacro {
                 arg3Val = "" + arg3;
 
                 return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n'; // NOI18N
-            default:
-                log.warn("Unhandled modifyer type code: {}", modType);
-                break;
         }
         return "<could not parse, should not happen>"; // NOI18N
     }
@@ -259,6 +253,4 @@ public class LoadModifier extends SdfMacro {
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(LoadModifier.class.getName());
 }

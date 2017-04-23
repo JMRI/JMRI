@@ -85,9 +85,6 @@ public class LnSensorAddress {
                         case 'D':
                             d = 3;
                             break;
-                        default:
-                            log.warn("Unhandled addr code: {}", c);
-                            break;
                     }
                     int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length() - 2)) * 16 + d * 4
                             + Integer.parseInt(s.substring(s.length() - 1, s.length()));

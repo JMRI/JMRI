@@ -488,9 +488,6 @@ public class PositionablePopupUtil {
                     case BORDER_COLOR:
                         setBorderColor(desiredColor);
                         break;
-                    default:
-                        log.warn("Unhandled color type code: {}", colorType);
-                        break;
                 }
                 _parent.getEditor().setAttributes(_self, _parent);
             }
@@ -522,10 +519,6 @@ public class PositionablePopupUtil {
                     color = defaultBorderColor;
                 }
                 setColorButton(getBorderColor(), color, r);
-                break;
-            default:
-                log.warn("Unhandled color type code: {}", colorType);
-                break;
         }
         colorButtonGroup.add(r);
         menu.add(r);

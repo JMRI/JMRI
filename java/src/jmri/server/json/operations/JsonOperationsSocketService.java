@@ -47,7 +47,6 @@ public class JsonOperationsSocketService extends JsonSocketService {
                     this.trainListeners.put(id, new TrainListener(id));
                     TrainManager.instance().getTrainById(id).addPropertyChangeListener(this.trainListeners.get(id));
                 }
-                //$FALL-THROUGH$
             default:
                 this.connection.sendMessage(this.service.doPost(type, id, data, locale));
         }

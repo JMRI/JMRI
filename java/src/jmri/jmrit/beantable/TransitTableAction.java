@@ -1795,8 +1795,6 @@ public class TransitTableAction extends AbstractTableAction {
                 whenStringField.setVisible(true);
                 whenStringField.setToolTipText(rbx.getString("HintSensorEntry"));
                 break;
-            default:
-                log.warn("Unhandled transit action code: {}", code);
         }
         addEditActionFrame.pack();
         addEditActionFrame.setVisible(true);
@@ -1873,9 +1871,6 @@ public class TransitTableAction extends AbstractTableAction {
             case TransitSectionAction.RELEASESIGNAL:
                 whatStringField.setVisible(true);
                 whatStringField.setToolTipText(rbx.getString("HintSignalEntry"));
-                break;
-            default:
-                log.warn("Unhandled transit section action: {}", code);
                 break;
         }
         addEditActionFrame.pack();
@@ -2102,9 +2097,6 @@ public class TransitTableAction extends AbstractTableAction {
                     return false;
                 }
                 break;
-            default:
-                log.warn("Unhandled transit section action code: {}", tWhat);
-                break;
         }
         return true;
     }
@@ -2193,9 +2185,6 @@ public class TransitTableAction extends AbstractTableAction {
                 return rbx.getString("OnSensorActive");
             case TransitSectionAction.SENSORINACTIVE:
                 return rbx.getString("OnSensorInactive");
-            default:
-                log.warn("Unhandled transit section action code: {}", i);
-                break;
         }
         return "WHEN";
     }
@@ -2239,9 +2228,6 @@ public class TransitTableAction extends AbstractTableAction {
                 return rbx.getString("HoldSignal");
             case TransitSectionAction.RELEASESIGNAL:
                 return rbx.getString("ReleaseSignal");
-            default:
-                log.warn("Unhandled transit section action code: {}", i);
-                break;
         }
         return "WHAT";
     }
@@ -2347,9 +2333,6 @@ public class TransitTableAction extends AbstractTableAction {
                 }
                 return java.text.MessageFormat.format(rbx.getString("OnSensorInactiveFull"),
                         new Object[]{tsa.getStringWhen()});
-            default:
-                log.warn("Unhandled transit section action when code: {}", tsa.getWhenCode());
-                break;
         }
         return "WHEN";
     }
@@ -2407,9 +2390,6 @@ public class TransitTableAction extends AbstractTableAction {
             case TransitSectionAction.RELEASESIGNAL:
                 return java.text.MessageFormat.format(rbx.getString("ReleaseSignalFull"),
                         new Object[]{tsa.getStringWhat()});
-            default:
-                log.warn("Unhandled transit section action what code: {}", tsa.getWhatCode());
-                break;
         }
         return "WHAT";
     }
@@ -2504,9 +2484,6 @@ public class TransitTableAction extends AbstractTableAction {
                     return new JTextField(12).getPreferredSize().width;
                 case ALTERNATE_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
-                default:
-                    // fall through
-                    break;
             }
             return new JTextField(5).getPreferredSize().width;
         }
@@ -2638,9 +2615,6 @@ public class TransitTableAction extends AbstractTableAction {
                     return new JTextField(8).getPreferredSize().width;
                 case REMOVE_COLUMN:
                     return new JTextField(8).getPreferredSize().width;
-                default:
-                    // fall through
-                    break;
             }
             return new JTextField(8).getPreferredSize().width;
         }

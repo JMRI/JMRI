@@ -42,7 +42,6 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanConnectionTypeListTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanConstantsTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(CanSystemConnectionMemoTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(CanConfigurationManagerTest.class));
         return suite;
     }
 

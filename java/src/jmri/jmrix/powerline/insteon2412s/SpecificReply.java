@@ -3,8 +3,6 @@ package jmri.jmrix.powerline.insteon2412s;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -66,9 +64,6 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                                 break;
                             case Constants.FLAG_TYPE_GBCLEANNAK:
                                 text.append(" Group Broadcast Cleanup NAK");
-                                break;
-                            default:
-                                log.warn("Unhandled msg type: {}, getElement(5) & Constants.FLAG_MASK_MSGTYPE");
                                 break;
                         }
                         text.append(" message,");
@@ -150,7 +145,6 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         }
         return text + "\n";
     }
-    static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName()); // NOI18N
 
 }
 

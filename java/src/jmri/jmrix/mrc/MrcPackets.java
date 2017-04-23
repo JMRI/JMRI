@@ -2,7 +2,6 @@ package jmri.jmrix.mrc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
-import org.python.jline.internal.Log;
 
 /**
  * Some of the message formats used in this class are Copyright MRC, Inc. and
@@ -472,9 +471,6 @@ public class MrcPackets {
                         + Bundle.getMessage("MrcPacketsClockTimeSep")
                         + twoDigits.format(m.getElement(4))
                         + Bundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
-                break;
-            default:
-                Log.warn("Unhandled clock mode code: {}", clockModeBits);
                 break;
         }
     }

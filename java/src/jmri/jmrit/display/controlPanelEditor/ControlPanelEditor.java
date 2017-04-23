@@ -1076,9 +1076,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             case SCROLL_VERTICAL:
                 scrollVertical.setSelected(true);
                 break;
-            default:
-                log.warn("Unhandled scroll state: {}", _scrollState);
-                break;
         }
         log.debug("InitView done");
     }

@@ -1277,9 +1277,6 @@ public class NmraPacket {
 
                 // case turnout accessory decoder
                 return getAccDecoderPktAddress(packet);
-            default:
-                log.error("Unhandled address type {}", extractAddressType(packet));
-                break;
         }
         return -1;
     }
@@ -1303,8 +1300,6 @@ public class NmraPacket {
             case LOCO_LONG_ADDRESS:
             case ACCESSORY_ADDRESS:
                 return packet[2] & 0xFF;
-            default:
-                log.warn("Unhandled address type: {}", extractAddressType(packet));
         }
         return 0;
     }
