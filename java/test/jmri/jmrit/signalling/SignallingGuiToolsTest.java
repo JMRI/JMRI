@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrit.signalling;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,18 +7,19 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.TrafficControllerScaffold;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusTurnoutTest {
+public class SignallingGuiToolsTest {
+
+    // the class under test is a collection of static methods for dealing with
+    // signals in GUIs.
 
     @Test
-    public void testCTor() {
-        CbusTurnout t = new CbusTurnout("MT","+1;-1",new TrafficControllerScaffold());
-        Assert.assertNotNull("exists",t);
+    @Ignore("needs more thought")
+    public void testRemoveAlreadyAssignedSignalmastLogic() {
     }
 
     // The minimal setup for log4J
@@ -34,6 +35,6 @@ public class CbusTurnoutTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignallingGuiToolsTest.class.getName());
 
 }

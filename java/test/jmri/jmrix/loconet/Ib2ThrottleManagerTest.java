@@ -1,4 +1,4 @@
-package jmri.jmrix.dcc4pc;
+package jmri.jmrix.loconet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -10,13 +10,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2027	
  */
-public class Dcc4PcReporterTest {
+public class Ib2ThrottleManagerTest {
 
     @Test
     public void testCTor() {
-        Dcc4PcReporter t = new Dcc4PcReporter("DR1","test");
+        Ib2ThrottleManager t = new Ib2ThrottleManager(new LocoNetSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +33,6 @@ public class Dcc4PcReporterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Ib2ThrottleManagerTest.class.getName());
 
 }

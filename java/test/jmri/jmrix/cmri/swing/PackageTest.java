@@ -6,7 +6,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   CMRIComponentFactoryTest.class
 })
 /**
  * Tests for the jmri.jmrix.cmri.swing package

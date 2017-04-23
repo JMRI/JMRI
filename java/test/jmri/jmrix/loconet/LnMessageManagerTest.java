@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.loconet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,17 +7,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusConfigurationManagerTest {
+public class LnMessageManagerTest {
 
     @Test
     public void testCTor() {
-        CbusConfigurationManager t = new CbusConfigurationManager(new CanSystemConnectionMemo());
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        LnMessageManager t = new LnMessageManager(lnis);
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +34,6 @@ public class CbusConfigurationManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusConfigurationManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageManagerTest.class.getName());
 
 }

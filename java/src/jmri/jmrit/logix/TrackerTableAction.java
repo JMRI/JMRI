@@ -610,9 +610,6 @@ public class TrackerTableAction extends AbstractAction {
                 case Tracker.ERROR_BLOCK:
                     // tracker wrote error message
                     break;
-                default:
-                    log.warn("Unhandled tracker move: {}", tracker.move(block, state));
-                    break;
             }
         }
 
@@ -705,9 +702,6 @@ public class TrackerTableAction extends AbstractAction {
                     return Bundle.getMessage("TrainName");
                 case STATUS_COL:
                     return Bundle.getMessage("status");
-                default:
-                    // fall out
-                    break;
             }
             return "";
         }
@@ -721,9 +715,6 @@ public class TrackerTableAction extends AbstractAction {
                     return _trackerList.get(rowIndex).getStatus();
                 case STOP_COL:
                     return Bundle.getMessage("Stop");
-                default:
-                    // fall out
-                    break;
             }
             return "";
         }
@@ -762,9 +753,6 @@ public class TrackerTableAction extends AbstractAction {
                     return new JTextField(60).getPreferredSize().width;
                 case STOP_COL:
                     return new JButton("STOPIT").getPreferredSize().width;
-                default:
-                    // fall out
-                    break;
             }
             return 5;
         }

@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.easydcc;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,17 +7,19 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.TrafficControllerScaffold;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusDccProgrammerTest {
+public class EasyDccThrottleManagerTest {
 
     @Test
     public void testCTor() {
-        CbusDccProgrammer t = new CbusDccProgrammer(new TrafficControllerScaffold());
+        // infrastructure objects
+        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold();
+        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
+        EasyDccThrottleManager t = new EasyDccThrottleManager(memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +36,6 @@ public class CbusDccProgrammerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccThrottleManagerTest.class.getName());
 
 }

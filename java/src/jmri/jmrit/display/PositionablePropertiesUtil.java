@@ -624,9 +624,6 @@ public class PositionablePropertiesUtil {
             case 2:
                 pop.setJustification(0x04);
                 break;
-            default:
-                log.warn("Unhandled combo index: {}", _justificationCombo.getSelectedIndex());
-                break;
         }
         _parent.rotate(deg);
     }
@@ -667,9 +664,6 @@ public class PositionablePropertiesUtil {
                 break;
             case 2:
                 hoz = (0x00);
-                break;
-            default:
-                log.warn("Unhandled combo index: {}", _justificationCombo.getSelectedIndex());
                 break;
         }
 

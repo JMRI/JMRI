@@ -1,23 +1,25 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.ecos.swing;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusReporterTest {
+public class EcosMenuTest {
 
     @Test
     public void testCTor() {
-        CbusReporter t = new CbusReporter(1,new TrafficControllerScaffold(),"Test");
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EcosMenu t = new EcosMenu(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 
@@ -26,6 +28,7 @@ public class CbusReporterTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
@@ -34,6 +37,6 @@ public class CbusReporterTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusReporterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosMenuTest.class.getName());
 
 }

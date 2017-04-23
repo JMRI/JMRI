@@ -29,10 +29,12 @@ import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import jmri.Block;
 import jmri.InstanceManager;
@@ -47,7 +49,6 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.RowComboBoxPanel; // access to RowComboBoxPanel() for valid Signal Mast Aspects and other states
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.signalling.SignallingPanel.SignalMastModel;
 import jmri.swing.RowSorterUtil;
 import jmri.util.SystemNameComparator;
 import jmri.util.swing.JmriBeanComboBox;
@@ -1336,9 +1337,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     return SET_TO_OCCUPIED;
                 case Block.UNOCCUPIED:
                     return SET_TO_UNOCCUPIED;
-                default:
-                    // fall out
-                    break;
             }
             return SET_TO_ANY;
         }
@@ -1387,9 +1385,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     return SET_TO_THROWN;
                 case Turnout.CLOSED:
                     return SET_TO_CLOSED;
-                default:
-                    // fall out
-                    break;
             }
             return SET_TO_ANY;
         }
@@ -1438,9 +1433,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     return SET_TO_INACTIVE;
                 case Sensor.ACTIVE:
                     return SET_TO_ACTIVE;
-                default:
-                    // fall out
-                    break;
             }
             return "";
         }
@@ -1722,9 +1714,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     return rb.getString("ColumnSpeed");
                 case PERMISSIVE_COLUMN:
                     return rb.getString("ColumnPermissive");
-                default:
-                    // fall out
-                    break;
             }
             return super.getColumnName(col);
         }
@@ -2309,9 +2298,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                     return rb.getString("ColumnSpeed");
                 case PERMISSIVE_COLUMN:
                     return rb.getString("ColumnPermissive");
-                default:
-                    // fall out
-                    break;
             }
             return super.getColumnName(col);
         }

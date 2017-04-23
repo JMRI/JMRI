@@ -1,4 +1,4 @@
-package jmri.jmrix.cmri.serial;
+package jmri.jmrix.grapevine;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,19 +14,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialSensorTest {
 
-    private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
-    private SerialTrafficControlScaffold tcis = null;
-    private SerialNode n = null;
-
     @Test
     public void testCTor() {
-        SerialSensor t = new SerialSensor("CS4");
-        Assert.assertNotNull("exists",t);
-    }
-
-    @Test
-    public void test2ParamCTor() {
-        SerialSensor t = new SerialSensor("CS4","Test");
+        SerialSensor t = new SerialSensor("GS1");
         Assert.assertNotNull("exists",t);
     }
 
@@ -35,11 +25,6 @@ public class SerialSensorTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
-        memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
-        memo.setTrafficController(tcis);
-        n = new SerialNode(0, SerialNode.SMINI,tcis);
     }
 
     @After

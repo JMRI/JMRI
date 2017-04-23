@@ -50,7 +50,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * Main constructor method
-     * @param at active train
      */
     public AutoActiveTrain(ActiveTrain at) {
         _activeTrain = at;
@@ -223,7 +222,6 @@ public class AutoActiveTrain implements ThrottleListener {
     /**
      * Initialize new Auto Active Train or get a new throttle after WORKING Sets
      * up the DCC address and initiates creation of a throttle to run the train.
-     * @return false if bad details or throttle failed 
      */
     public boolean initialize() {
         //clear all flags
@@ -367,7 +365,6 @@ public class AutoActiveTrain implements ThrottleListener {
     /**
      * Notification methods Handle notification of change in state and occupancy
      * of Sections and Blocks to track the train around the Transit
-     * @param as allocation section
      */
     protected void handleSectionStateChange(AllocatedSection as) {
         if (!isInAllocatedList(as)) {
@@ -749,9 +746,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 case SignalHead.FLASHLUNAR:
                     setTargetSpeedState(RESTRICTED_SPEED);
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
-                    break;
-                default:
-                    log.warn("Unhandled signal appearance code: {}", _controllingSignal.getAppearance());
                     break;
             }
         } else {
@@ -1242,8 +1236,6 @@ public class AutoActiveTrain implements ThrottleListener {
     /**
      * Pauses the auto active train for a specified number of fast clock minutes
      * Pausing operation is performed in a separate thread
-     * @param fastMinutes number of fast minutes to pause
-     * @return null if already pausing, new thread doing the pause if not paused
      */
     public Thread pauseTrain(int fastMinutes) {
         if (_pausingActive) {
@@ -1323,7 +1315,6 @@ public class AutoActiveTrain implements ThrottleListener {
         /**
          * A runnable that executes a pause train for a specified number of Fast
          * Clock minutes
-         * @param fastMinutes number of fast minutes to pause
          */
         public PauseTrain(int fastMinutes) {
             _fastMinutes = fastMinutes;
@@ -1546,7 +1537,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
          * Flag from user's control Note: Halt here invokes immediate stop.
-         * @param halt true for immediate stop
          */
         public synchronized void setHalt(boolean halt) {
             _halt = halt;
@@ -1558,7 +1548,6 @@ public class AutoActiveTrain implements ThrottleListener {
         /**
          * set the train speed directly, bypassing ramping, 
          * Input is float speed (0.0 - 1.0)
-         * @param speed 0.0 to 1.0
          */
         public synchronized void setSpeedImmediate(float speed) {
             log.trace("{}: setting speed directly to {}%", _activeTrain.getTrainName(), (int) (speed * 100));
@@ -1569,7 +1558,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
          * Allow user to test if train is moving or stopped
-         * @return true if speed not zero
          */
         public synchronized boolean isStopped() {
             if (_currentSpeed > 0.01f) {
@@ -1580,7 +1568,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
         /**
          * Allow user to test if train is moving at its current requested speed
-         * @return true if at target speed
          */
         public synchronized boolean isAtSpeed() {
             if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.01) {
@@ -1684,9 +1671,6 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
                 case 28:
                     _throttle.setF28(isSet);
-                    break;
-                default:
-                    log.error("Unhandled cmdNum: {}", cmdNum);
                     break;
             }
         }

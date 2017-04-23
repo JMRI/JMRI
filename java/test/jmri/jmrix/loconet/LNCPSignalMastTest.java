@@ -1,4 +1,4 @@
-package jmri.jmrix.dcc4pc;
+package jmri.jmrix.loconet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,12 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Dcc4PcOpsModeProgrammerTest {
+public class LNCPSignalMastTest {
 
     @Test
     public void testCTor() {
-        Dcc4PcProgrammerManager pm = new Dcc4PcProgrammerManager(jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class));
-        Dcc4PcOpsModeProgrammer t = new Dcc4PcOpsModeProgrammer(false,5,pm);
+        LNCPSignalMast t = new LNCPSignalMast("LF$lncpsm:basic:one-searchlight(123)");
         Assert.assertNotNull("exists",t);
     }
 
@@ -26,7 +25,10 @@ public class Dcc4PcOpsModeProgrammerTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        jmri.InstanceManager.store(lnis,jmri.jmrix.loconet.LnTrafficController.class);
+        SlotManager s = new SlotManager(lnis);
+        jmri.InstanceManager.store(s,jmri.CommandStation.class);
     }
 
     @After
@@ -35,6 +37,6 @@ public class Dcc4PcOpsModeProgrammerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMastTest.class.getName());
 
 }

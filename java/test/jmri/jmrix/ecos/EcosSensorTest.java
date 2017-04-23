@@ -1,4 +1,4 @@
-package jmri.jmrix.dcc4pc;
+package jmri.jmrix.ecos;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Dcc4PcMessageTest {
+public class EcosSensorTest {
 
     @Test
     public void testCTor() {
-        Dcc4PcMessage t = new Dcc4PcMessage(5);
+        EcosSensor t = new EcosSensor("US1","Test");
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +33,6 @@ public class Dcc4PcMessageTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosSensorTest.class.getName());
 
 }

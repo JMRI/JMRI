@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrit.logix;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,18 +7,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.TrafficControllerScaffold;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusLightTest {
+public class OpSessionLogTest {
 
     @Test
-    public void testCTor() {
-        CbusLight t = new CbusLight("ML","+1;-1",new TrafficControllerScaffold());
-        Assert.assertNotNull("exists",t);
+    @Ignore("needs more thought")
+    public void makeLogFileCheck() {
+       // This is going to be a graphical check.
+       // make sure the log file is correctly chosen and created.
     }
 
     // The minimal setup for log4J
@@ -34,6 +34,6 @@ public class CbusLightTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusLightTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OpSessionLogTest.class.getName());
 
 }

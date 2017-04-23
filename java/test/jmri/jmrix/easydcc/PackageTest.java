@@ -53,6 +53,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(EasyDccPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDCCMenuTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccCommandStationTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccOpsModeProgrammerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccProgrammerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccThrottleTest.class));
 
         return suite;
     }

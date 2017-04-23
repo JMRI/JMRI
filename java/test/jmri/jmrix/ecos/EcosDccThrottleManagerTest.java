@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.ecos;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -7,21 +7,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusLightManagerTest {
+public class EcosDccThrottleManagerTest {
 
     @Test
     public void testCTor() {
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tc);
-        CbusLightManager t = new CbusLightManager(memo);
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosDccThrottleManager t = new EcosDccThrottleManager(new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc));
         Assert.assertNotNull("exists",t);
     }
 
@@ -38,6 +34,6 @@ public class CbusLightManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManagerTest.class.getName());
 
 }

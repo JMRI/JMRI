@@ -192,9 +192,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 }
 
                 break;
-            default:
-                log.warn("Unhandled event type: {}", event.getEventType());
-                break;
         }
     }
 
