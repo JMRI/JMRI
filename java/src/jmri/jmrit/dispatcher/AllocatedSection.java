@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,11 +40,15 @@ import org.slf4j.LoggerFactory;
 public class AllocatedSection {
 
     /**
-     * Main constructor method
+     * Create an AllocatedSection.
      *
-     * @param s cannot be null
+     * @param s         the section to allocation
+     * @param at        the train to allocate the section to
+     * @param seq       the sequence location of the section in the route
+     * @param next      the following section
+     * @param nextSeqNo the sequence location of the following section
      */
-    public AllocatedSection(jmri.Section s, ActiveTrain at, int seq, jmri.Section next, int nextSeqNo) {
+    public AllocatedSection(@Nonnull jmri.Section s, ActiveTrain at, int seq, jmri.Section next, int nextSeqNo) {
         mSection = s;
         mActiveTrain = at;
         mSequence = seq;
@@ -92,9 +97,9 @@ public class AllocatedSection {
     private jmri.Sensor mReverseStoppingSensor = null;
     private javax.swing.event.EventListenerList listenerList;
 
-    /**
-     * Access methods
-     */
+    //
+    // Access methods
+    //
     public jmri.Section getSection() {
         return mSection;
     }
@@ -178,9 +183,9 @@ public class AllocatedSection {
     private ArrayList<jmri.Block> mBlockList = null;
     private ArrayList<jmri.Block> mActiveBlockList = new ArrayList<jmri.Block>();
 
-    /**
-     * Access methods for automatic running instance variables
-     */
+    //
+    // Access methods for automatic running instance variables
+    //
     public void setIndex(int i) {
         mIndex = i;
     }
@@ -247,12 +252,11 @@ public class AllocatedSection {
             }
         }
 
- //       if (mEntered && !mExited && mActiveTrain.getResetWhenDone() && mActiveTrain.getDelayedRestart() != ActiveTrain.NODELAY) {
- //           if (getSequence() == mActiveTrain.getEndBlockSectionSequenceNumber()) {
- //               mActiveTrain.setRestart();
- //           }
- //       }
-
+        //       if (mEntered && !mExited && mActiveTrain.getResetWhenDone() && mActiveTrain.getDelayedRestart() != ActiveTrain.NODELAY) {
+        //           if (getSequence() == mActiveTrain.getEndBlockSectionSequenceNumber()) {
+        //               mActiveTrain.setRestart();
+        //           }
+        //       }
         DispatcherFrame.instance().sectionOccupancyChanged();
     }
 
