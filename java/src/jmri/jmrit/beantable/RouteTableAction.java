@@ -2189,6 +2189,9 @@ public class RouteTableAction extends AbstractTableAction {
                     return SET_TO_ACTIVE;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
+                default:
+                    log.warn("Unhandled route state: {}", _setToState);
+                    break;
             }
             return "";
         }
@@ -2220,6 +2223,9 @@ public class RouteTableAction extends AbstractTableAction {
                     return SET_TO_THROWN;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
