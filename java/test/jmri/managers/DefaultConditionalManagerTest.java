@@ -7,6 +7,7 @@ import junit.framework.Assert;
 
 import jmri.Conditional;
 import jmri.ConditionalManager;
+import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 
@@ -23,30 +24,22 @@ public class DefaultConditionalManagerTest extends TestCase {
 
     public void testCreate() {
         ConditionalManager m = new DefaultConditionalManager();
-        LogixManager x = new DefaultLogixManager();
-        Logix lgx = x.createNewLogix("IX01", "Test 1");
 
         Conditional c1 = m.createNewConditional("IX01C01", "");        
         Conditional c2 = m.createNewConditional("IX01C02", "");
-        
-        Assert.assertTrue(lgx.getUserName().equals("Test 1"));
+
         Assert.assertFalse(c1 == c2);
         Assert.assertFalse(c1.equals(c2));
-        
     }
 
     public void testUserNameOverlap() {
         ConditionalManager m = new DefaultConditionalManager();
-        LogixManager x = new DefaultLogixManager();
-        Logix lgx = x.createNewLogix("IX02", "Test 2");
 
         Conditional c1 = m.createNewConditional("IX02C01", "Foo");        
         Conditional c2 = m.createNewConditional("IX02C02", "Foo");
-        
-        Assert.assertTrue(lgx.getUserName().equals("Test 2"));
+
         Assert.assertTrue(c1.getUserName().equals("Foo"));
         Assert.assertTrue(c2.getUserName().equals("Foo"));
-        
     }
 
     // from here down is testing infrastructure
@@ -66,7 +59,14 @@ public class DefaultConditionalManagerTest extends TestCase {
         jmri.util.JUnitUtil.initIdTagManager();
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initConditionalManager();
-        LogixManager x = new DefaultLogixManager();
+
+        Logix x1 = new jmri.implementation.DefaultLogix("IX01");
+        assertNotNull("Logix x1 is null!", x1);
+        InstanceManager.getDefault(jmri.LogixManager.class).register(x1);
+
+        Logix x2 = new jmri.implementation.DefaultLogix("IX02");
+        assertNotNull("Logix x2 is null!", x2);
+        InstanceManager.getDefault(jmri.LogixManager.class).register(x2);
     }
 
     @Override
