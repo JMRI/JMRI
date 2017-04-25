@@ -34,7 +34,11 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.cmri.serial.packetgen.PackageTest.class,
    SerialNetworkPortAdapterTest.class,
    SerialPortAdapterTest.class,
-   SerialReplyTest.class
+   SerialReplyTest.class,
+   SerialTurnoutTest.class,
+   SerialLightTest.class,
+   SerialLightManagerTest.class,
+   SerialSensorTest.class
 })
 
 public class PackageTest{
