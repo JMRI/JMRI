@@ -3,7 +3,6 @@ package jmri.jmrit.dispatcher;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,9 +78,6 @@ public class AllocatedSection {
         }
         listenerList = new javax.swing.event.EventListenerList();
     }
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // instance variables
     private jmri.Section mSection = null;

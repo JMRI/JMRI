@@ -1,6 +1,5 @@
 package jmri.jmrit.dispatcher;
 
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -22,9 +21,6 @@ public class TrainInfo {
 
     public TrainInfo() {
     }
-
-    private static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // instance variables for both manual and automatic operation
     private String transitName = "";
@@ -55,7 +51,7 @@ public class TrainInfo {
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
     private float maxSpeed = 0.6f;
-    private String rampRate = rb.getString("RAMP_NONE");
+    private String rampRate = Bundle.getMessage("RAMP_NONE");
     private boolean resistanceWheels = true;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;

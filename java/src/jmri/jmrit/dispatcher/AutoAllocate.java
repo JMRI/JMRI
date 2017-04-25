@@ -1,7 +1,6 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.Section;
 import jmri.Transit;
@@ -66,9 +65,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2011
  */
 public class AutoAllocate {
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     public AutoAllocate(DispatcherFrame d) {
         _dispatcher = d;

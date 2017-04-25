@@ -1,7 +1,6 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -32,9 +31,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2008-2009
  */
 public class AutoTurnouts {
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     public AutoTurnouts(DispatcherFrame d) {
         _dispatcher = d;
