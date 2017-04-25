@@ -3,6 +3,7 @@ package jmri.util;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.junit.Assert;
+import org.python.jline.internal.Log;
 
 /**
  * Log4J Appender that works with JUnit tests to check for expected vs
@@ -90,12 +91,19 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         switch (severity.toInt()) {
             case Level.INFO_INT:
                 unexpectedInfoSeen = false;
+                //$FALL-THROUGH$
             case Level.WARN_INT:
                 unexpectedWarnSeen = false;
+                //$FALL-THROUGH$
             case Level.ERROR_INT:
                 unexpectedErrorSeen = false;
+                //$FALL-THROUGH$
             case Level.FATAL_INT:
                 unexpectedFatalSeen = false;
+                break;
+            default:
+                Log.warn("Unhandled serverity code: {}", severity.toInt());
+                break;
         }
     }
 

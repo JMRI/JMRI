@@ -296,6 +296,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     case 2:
                         drop = 1; //italic
                         break;
+                    default:
+                        // fall through
+                        break;
                 }
                 util.setFontStyle(style, drop);
             }
