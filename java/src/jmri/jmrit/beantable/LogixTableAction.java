@@ -6832,7 +6832,7 @@ public class LogixTableAction extends AbstractTableAction {
 
     /**
      * Creates the conditional reference where used list. The source is
-     * {@link InstanceManager.getDefault(jmri.ConditionalManager.class)#conditionalWhereUsed}
+     * {@link jmri.managers.DefaultConditionalManager#conditionalWhereUsed}
      * @since 4.7.4
      */
     void buildWhereUsedListing() {

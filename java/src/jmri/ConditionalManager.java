@@ -91,7 +91,8 @@ public interface ConditionalManager extends Manager {
     void deleteConditional(Conditional c);
 
     /**
-     * Return a copy of the entire map.  Used by {@link LogixTableAction#buildWhereUsedListing}
+     * Return a copy of the entire map.  Used by
+     * {@link jmri.jmrit.beantable.LogixTableAction#buildWhereUsedListing}
      * @since 4.7.4
      */
     public HashMap<String, ArrayList<String>> getWhereUsedMap();
@@ -100,7 +101,7 @@ public interface ConditionalManager extends Manager {
      * Add a conditional reference to the array indicated by the target system name.
      * @since 4.7.4
      * @param target The system name for the target conditional
-     * @paran reference The system name of the conditional that contains the conditional reference
+     * @param reference The system name of the conditional that contains the conditional reference
      */
     public void addWhereUsed(String target, String reference);
 
@@ -116,7 +117,7 @@ public interface ConditionalManager extends Manager {
      * Remove a conditional reference from the array indicated by the target system name.
      * @since 4.7.4
      * @param target The system name for the target conditional
-     * @paran reference The system name of the conditional that contains the conditional reference
+     * @param reference The system name of the conditional that contains the conditional reference
      */
     public void removeWhereUsed(String target, String reference);
 

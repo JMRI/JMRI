@@ -295,7 +295,7 @@ public class DefaultLogix extends AbstractNamedBean
      * In addition to setting the GUI name, any state variable references are changed to
      * conditional system names.  This converts the XML system/user name field to the system name
      * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
-     * Called by {@link DefaultLogixManager#activateAllLogixs}
+     * Called by {@link jmri.managers.DefaultLogixManager#activateAllLogixs}
      * @since 4.7.4
      */
     @Override
