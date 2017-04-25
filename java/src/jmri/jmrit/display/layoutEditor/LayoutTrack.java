@@ -46,6 +46,8 @@ public abstract class LayoutTrack {
     public static final int SLIP_RIGHT = 26;
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
+    protected String ident = "";
+
     // dashed line parameters
     //private static int minNumDashes = 3;
     //private static double maxDashLength = 10;
@@ -65,21 +67,14 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * accessor method
+     * accessor methods
      */
-    public static void setDefaultTrackColor(Color color) {
-        defaultTrackColor = color;
+    public String getID() {
+        return ident;
     }
 
-    //NOTE: not public because "center" is a member variable
-    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
-        double cX = center.getX();
-        double cY = center.getY();
-        double deltaX = p.getX() - cX;
-        double deltaY = p.getY() - cY;
-        double x = cX + cosineRot * deltaX - sineRot * deltaY;
-        double y = cY + sineRot * deltaX + cosineRot * deltaY;
-        return new Point2D.Double(x, y);
+    public static void setDefaultTrackColor(Color color) {
+        defaultTrackColor = color;
     }
 
     /**
@@ -104,6 +99,25 @@ public abstract class LayoutTrack {
 
     public void setHidden(boolean hide) {
         hidden = hide;
+    }
+
+    /**
+     * non-accessor methods
+     */
+
+    //NOTE: not public because "center" is a member variable
+    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
+        double cX = center.getX();
+        double cY = center.getY();
+        double deltaX = p.getX() - cX;
+        double deltaY = p.getY() - cY;
+        double x = cX + cosineRot * deltaX - sineRot * deltaY;
+        double y = cY + sineRot * deltaX + cosineRot * deltaY;
+        return new Point2D.Double(x, y);
+    }
+
+    public void reCheckBlockBoundary() {
+        log.error("virtual method: override in sub-classes; don't call [super ...].");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());

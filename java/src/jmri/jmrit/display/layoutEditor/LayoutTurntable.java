@@ -86,7 +86,6 @@ public class LayoutTurntable extends LayoutTrack {
     private boolean dccControlledTurnTable = false;
 
     // persistent instance variables (saved between sessions)
-    private String ident = "";
     private double radius = 25.0;
     private Point2D center = new Point2D.Double(50.0, 50.0);
     private ArrayList<RayTrack> rayList = new ArrayList<RayTrack>(); // list of Ray Track objects.
