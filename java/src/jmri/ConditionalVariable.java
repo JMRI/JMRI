@@ -43,8 +43,8 @@ public class ConditionalVariable {
 
     private boolean _not = false;
     // Not a variable attribute, but retained as an artifact of previous releases.  This will be used
-    // as the default operator immediately to the left of this variable in the antecedent statement. 
-    // It may be over written by the antecedent statement in the Conditional to which this variable 
+    // as the default operator immediately to the left of this variable in the antecedent statement.
+    // It may be over written by the antecedent statement in the Conditional to which this variable
     // belongs.
     private int _opern = Conditional.OPERATOR_NONE;
     private int _type = Conditional.TYPE_NONE;
@@ -52,12 +52,13 @@ public class ConditionalVariable {
     private String _dataString = "";
     private int _num1 = 0;
     private int _num2 = 0;
+    private String _guiName = "";       // Contains the user name of the referenced conditional
     private NamedBeanHandle<?> _namedBean = null;
     //private NamedBeanHandle<Sensor> _namedSensorBean = null;
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     // Name clarification: Formerly was named '_triggersCalculation' because it controlled whether
     // a listener was installed for this device and thus trigger calcuation of the Conditional.
-    // Now named '_triggersActions' because listeners are always installed for activated Logix 
+    // Now named '_triggersActions' because listeners are always installed for activated Logix
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
@@ -72,6 +73,7 @@ public class ConditionalVariable {
         _type = type;
         _name = name;
         _triggersActions = trigger;
+        _guiName = "";
         try {
             int itemType = Conditional.TEST_TO_ITEM[_type];
             switch (itemType) {
@@ -328,6 +330,24 @@ public class ConditionalVariable {
     public void setNum2(int num) {
         _num2 = num;
     }
+
+     /**
+     * @since 4.7.4
+     * @return the GUI name for the referenced conditional.
+     */
+    public String getGuiName() {
+        return _guiName;
+    }
+
+    /**
+     * Set the GUI name for the conditional state variable.
+     * @since 4.7.4
+     * @param guiName The referenced Conditional user name.
+     */
+    public void setGuiName(String guiName) {
+        _guiName = guiName;
+    }
+
 
     /**
      * If change of state of this object causes a change of state of the
@@ -1037,7 +1057,7 @@ public class ConditionalVariable {
                 }
             case Conditional.ITEM_TYPE_CONDITIONAL:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("BeanNameConditional"), getName(), type}); // NOI18N
+                        new Object[]{Bundle.getMessage("BeanNameConditional"), getGuiName(), type}); // NOI18N
             case Conditional.ITEM_TYPE_WARRANT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{rbx.getString("WarrantRoute"), getName(), type});
