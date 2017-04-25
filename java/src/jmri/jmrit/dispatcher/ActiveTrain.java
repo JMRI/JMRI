@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * This class holds information and options for an ActiveTrain, that is a train
  * that has been linked to a Transit and activated for transit around the
  * layout.
- * <P>
+ * <p>
  * An ActiveTrain may be assigned one of the following modes, which specify how
  * the active train will be run through its transit: AUTOMATIC - indicates the
  * ActiveTrain will be run under automatic control of the computer. (Automatic
@@ -28,46 +28,58 @@ import org.slf4j.LoggerFactory;
  * will allocate Sections to the ActiveTrain as needed, control optional signals
  * using a CTC panel or computer logic, and arbitrate any conflicts between
  * ActiveTrains. (Human Dispatcher).
- * <P>
- * An ActiveTrain will have one of the following statuses: RUNNING - Actively
- * running on the layout, according to its mode of operation. PAUSED - Paused
- * waiting for a user-specified number of fast clock minutes. The Active Train
- * is expected to move to either RUNNING or WAITING once the specified number of
- * minutes has elapsed. This is intended for automatic station stops. (automatic
- * trains only) WAITING - Stopped waiting for a Section allocation. This is the
- * state the Active Train is in when it is created in Dispatcher. WORKING -
- * Performing work under control of a human engineer. This is the state an
- * Active Train assumes when an engineer is picking up or setting out cars at
- * industries. (automatic trains only) READY - Train has completed WORKING, and
- * is awaiting a restart - dispatcher clearance to resume running. (automatic
- * trains only) STOPPED - Train was stopped by the dispatcher. Dispatcher must
- * resume. (automatic trains only) DONE - Train has completed its transit of the
- * layout and is ready to be terminated by the dispatcher, or Restart pressed to
- * repeat the automated run. Status is a bound property.
- * <P>
+ * <p>
+ * An ActiveTrain will have one of the following statuses:
+ * <dl>
+ * <dt>RUNNING<dt><dd>Actively running on the layout, according to its mode of
+ * operation.</dd>
+ * <dt>PAUSED<dt><dd>Paused waiting for a user-specified number of fast clock
+ * minutes. The Active Train is expected to move to either RUNNING or WAITING
+ * once the specified number of minutes has elapsed. This is intended for
+ * automatic station stops. (automatic trains only)</dd>
+ * <dt>WAITING<dt><dd>Stopped waiting for a Section allocation. This is the
+ * state the Active Train is in when it is created in Dispatcher.</dd>
+ * <dt>WORKING<dt><dd>Performing work under control of a human engineer. This is
+ * the state an Active Train assumes when an engineer is picking up or setting
+ * out cars at industries. (automatic trains only)</dd>
+ * <dt>READY<dt><dd>Train has completed WORKING, and is awaiting a restart -
+ * dispatcher clearance to resume running. (automatic trains only)</dd>
+ * <dt>STOPPED<dt><dd>Train was stopped by the dispatcher. Dispatcher must
+ * resume. (automatic trains only)</dd>
+ * <dt>DONE<dt><dd>Train has completed its transit of the layout and is ready to
+ * be terminated by the dispatcher, or Restart pressed to repeat the automated
+ * run.</dd>
+ * </dl>
+ * Status is a bound property.
+ * <p>
  * The ActiveTrain status should maintained (setStatus) by the running class, or
  * if running in DISPATCHED mode, by Dispatcher. When an ActiveTrain is WAITING,
  * and the dispatcher allocates a section to it, the status of the ActiveTrain
  * is automatically set to RUNNING. So an autoRun class can listen to the status
  * of the ActiveTrain to trigger start up if the train has been waiting for the
  * dispatcher. Note: There is still more to be programmed here.
- * <P>
+ * <p>
  * Train information supplied when the ActiveTrain is created can come from any
- * of the following: ROSTER - The train was selected from the JMRI roster menu
- * OPERATIONS - The train was selected from trains available from JMRI
- * operations USER - Neither menu was used--the user entered a name and DCC
- * address. Train source information is recorded when an ActiveTrain is created,
+ * of the following:
+ * <dl>
+ * <dt>ROSTER<dt><dd>The train was selected from the JMRI roster menu</dd>
+ * <dt>OPERATIONS<dt><dd>The train was selected from trains available from JMRI
+ * operations</dd>
+ * <dt>USER<dt><dd>Neither menu was used--the user entered a name and DCC
+ * address.</dd>
+ * </dl>
+ * Train source information is recorded when an ActiveTrain is created,
  * and may be referenced by getTrainSource if it is needed by other objects. The
  * train source should be specified in the Dispatcher Options window prior to
  * creating an ActiveTrain.
- * <P>
+ * <p>
  * ActiveTrains are referenced via a list in DispatcherFrame, which serves as a
  * manager for ActiveTrain objects.
- * <P>
+ * <p>
  * ActiveTrains are transient, and are not saved to disk. Active Train
  * information can be saved to disk, making set up with the same options, etc
  * very easy.
- * <P>
+ * <p>
  * An ActiveTrain runs through its Transit in the FORWARD direction, until a
  * Transit Action reverses the direction of travel in the Transit. When running
  * with its Transit reversed, the Active Train returns to its starting Section.
@@ -75,17 +87,17 @@ import org.slf4j.LoggerFactory;
  * automatically set back to the forward direction. If AutoRestart is set, the
  * run is repeated. The direction of travel in the Transit is maintained here.
  *
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
