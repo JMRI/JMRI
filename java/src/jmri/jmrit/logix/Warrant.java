@@ -666,6 +666,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 return Bundle.getMessage("ManualRun");
                 
             default:
+                log.warn("Unhandled warrant mode: {}", _runMode);
+                break;
         }
         return "ERROR mode= " + MODES[_runMode];
     }
