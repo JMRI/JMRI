@@ -27,6 +27,9 @@ public class StagingTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("StagingName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }

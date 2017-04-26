@@ -180,8 +180,9 @@ public class NceTurnout extends AbstractTurnout {
             return false;
         }
         // check to see if push button lock is enabled and valid decoder
+        String dn = getDecoderName();
         if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0 && _enablePushButtonLockout
-                && !getDecoderName().equals(PushbuttonPacket.unknown)) {
+                && dn != null && !dn.equals(PushbuttonPacket.unknown)) {
             return true;
         }
         // check to see if cab lockout is enabled

@@ -535,6 +535,9 @@ public class PositionableShape extends PositionableJComponent
                     }
                     setWidth(width);
                     break;
+                default:
+                    log.warn("Unhandled dir: {}", _hitIndex);
+                    break;
             }
             if (_editFrame!=null) {
                 _editFrame.setDisplayWidth(_width);
