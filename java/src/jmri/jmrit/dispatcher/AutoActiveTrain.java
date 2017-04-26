@@ -755,6 +755,9 @@ public class AutoActiveTrain implements ThrottleListener {
                     setTargetSpeedState(RESTRICTED_SPEED);
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
                     break;
+                default:
+                    log.warn("Unhandled signal appearance code: {}", _controllingSignal.getAppearance());
+                    break;
             }
         } else {
             //Set speed using SignalMasts;           
@@ -1244,7 +1247,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * Pause the auto active train for a specified number of fast clock minutes.
      *
      * @param fastMinutes the number of minutes to pause the train
-     * @return the thread waiting on the pause
+     * @return the thread waiting on the pause or null if already paused
      */
     public Thread pauseTrain(int fastMinutes) {
         if (_pausingActive) {
@@ -1698,6 +1701,9 @@ public class AutoActiveTrain implements ThrottleListener {
                     break;
                 case 28:
                     _throttle.setF28(isSet);
+                    break;
+                default:
+                    log.error("Unhandled cmdNum: {}", cmdNum);
                     break;
             }
         }

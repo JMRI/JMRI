@@ -2511,6 +2511,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return new JTextField(17).getPreferredSize().width;
                 case ALLOCATEBUTTON_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(5).getPreferredSize().width;
         }
@@ -2658,6 +2661,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return new JTextField(12).getPreferredSize().width;
                 case CANCELBUTTON_COLUMN:
                     return new JTextField(10).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(5).getPreferredSize().width;
         }
@@ -2798,6 +2804,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                     return new JTextField(15).getPreferredSize().width;
                 case RELEASEBUTTON_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(5).getPreferredSize().width;
         }
