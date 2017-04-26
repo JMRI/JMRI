@@ -63,9 +63,9 @@ public class AllocationPlan {
     private int _tSectionOneSeq = 0;
     private int _tSectionTwoSeq = 0;
 
-    /**
-     * Access methods
-     */
+    //
+    // Access methods
+    //
     protected int getPlanNum() {
         return _planNum;
     }
@@ -127,9 +127,9 @@ public class AllocationPlan {
         return 0;
     }
 
-    /**
-     * Other Methods
-     */
+    //
+    // Other Methods
+    //
     protected boolean isComplete() {
         if ((_atOne == null) || (_atTwo == null)) {
             return false;
