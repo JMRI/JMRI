@@ -25,6 +25,10 @@ public class SE8cSignalHeadTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        SlotManager slotmanager = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        jmri.InstanceManager.setDefault(LnTrafficController.class,lnis);
     }
 
     @After

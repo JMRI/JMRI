@@ -20,6 +20,13 @@ public class LnPr2ThrottleManagerTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testSetAndGettActiveAddress() { 
+        LnPr2ThrottleManager t = new LnPr2ThrottleManager(new LocoNetSystemConnectionMemo());
+        t.requestThrottleSetup(new jmri.DccLocoAddress(3,false));
+        Assert.assertEquals("activeAddress",new jmri.DccLocoAddress(3,false),t.getActiveAddress());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
