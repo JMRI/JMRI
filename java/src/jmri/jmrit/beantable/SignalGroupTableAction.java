@@ -1563,6 +1563,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return Bundle.getMessage("SignalHeadStateFlashingGreen");
                 case SignalHead.FLASHLUNAR:
                     return Bundle.getMessage("SignalHeadStateFlashingLunar");
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1592,6 +1595,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return Bundle.getMessage("SignalHeadStateFlashingGreen");
                 case SignalHead.FLASHLUNAR:
                     return Bundle.getMessage("SignalHeadStateFlashingLunar");
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }

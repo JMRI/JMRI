@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Note this is an 'after thought' manager. Portals have been in use since 2009.
  * Their use has now expanded well beyond what was expected. A Portal factory is
  * needed for development to continue.
- * </p><p>
+ *
  * Portal system names will be numbers and they will not be shown to users. The
  * UI will treat Portal names as it does now as user names.
  *
@@ -95,8 +94,7 @@ public class PortalManager extends AbstractManager
         return portal;
     }
 
-    @SuppressFBWarnings(value = " ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "there is only one instance of PortalManager")
-    private String generateSystemName() {
+    public String generateSystemName() {
         String name;
         do {
             name = "IP" + Integer.toString(_nextSName++);
@@ -135,7 +133,7 @@ public class PortalManager extends AbstractManager
         if (name == null || name.trim().length() == 0) {
             return null;
         }
-        Portal portal = getPortal(name);
+        Portal portal = getByUserName(name);
         if (portal == null) {
             portal = createNewPortal(null, name);
         }

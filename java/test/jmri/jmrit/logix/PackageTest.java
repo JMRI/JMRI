@@ -54,6 +54,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(TrackerTest.class));
         suite.addTest(new JUnit4TestAdapter(BlockOrderTest.class));
         suite.addTest(new JUnit4TestAdapter(ControlPanelTest.class));
+        suite.addTest(new JUnit4TestAdapter(OpSessionLogTest.class));
         return suite;
     }
 

@@ -27,6 +27,9 @@ public class SpurTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("SpurName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }
