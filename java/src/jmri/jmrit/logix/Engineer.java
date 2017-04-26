@@ -440,6 +440,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (speedType == null) {
             return false;
         }
+        if (speedType.equals(Warrant.Stop) || speedType.equals(Warrant.EStop)) {
+            _waitForClear = true;                
+        }
         Float speed = getSpeed();
         if (Math.abs(speed - modifySpeed(_normalSpeed, speedType)) < 0.0001f) {
             // already at speed, no need to reset throttle
@@ -450,11 +453,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         synchronized (this) {
             if (speedType.equals(Warrant.EStop)) {
-                _waitForClear = true;
                 setSpeed(-0.1f);        // always do immediate EStop
                 return false;
             } else if (speedType.equals(Warrant.Stop)) {
-                _waitForClear = true;
                 return true;
             } else {
                 _speedType = speedType;
