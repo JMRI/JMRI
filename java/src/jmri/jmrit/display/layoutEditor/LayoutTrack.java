@@ -101,11 +101,10 @@ public abstract class LayoutTrack {
         hidden = hide;
     }
 
-    /**
+    /*
      * non-accessor methods
      */
 
-    //NOTE: not public because "center" is a member variable
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
