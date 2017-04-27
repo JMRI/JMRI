@@ -1049,11 +1049,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             BlockOrder bo = _orders.get(i);
             OBlock block = bo.getBlock();
             _message = block.allocate(this);
-           if (!block.isAllocatedTo(this) || ((block.getState() & OBlock.OCCUPIED) != 0)) {
-               setStoppingBlock(block);
-               _totalAllocated = false;
-               return _message;
-           }
+            // loop back routes may enter a block a second time
+            // Do not make current block a stopping block
+            OBlock currentBlock = getBlockOrderAt(_idxCurrentOrder).getBlock();
+            if (!currentBlock.equals(block)) {
+                if (!block.isAllocatedTo(this) || 
+                        ((block.getState() & OBlock.OCCUPIED) != 0)) {
+                    setStoppingBlock(block);
+                    _totalAllocated = false;
+                    return _message;                   
+                }                
+            }
         }
         if (!_partialAllocate) {
             _totalAllocated = true;            
