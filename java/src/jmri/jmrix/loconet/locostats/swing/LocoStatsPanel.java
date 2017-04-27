@@ -51,20 +51,39 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     
     LocoStatsFunc stats;
 
+    /**
+     * Provides a path to the help html for this tool
+     * 
+     * @return path
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; // NOI18N
     }
 
+    /**
+     * Provides the string for the title of the window
+     * 
+     * This is pulled from the properties file for the LocoNet menu entry for
+     * this tool, to ensure consistency between the menu and the window title.
+     * 
+     * @return an internationalized string containing the tool's LocoNet menu name
+     */
     @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemLocoStats"));
     }
 
+    /**
+     * Constructor
+     */
     public LocoStatsPanel() {
         super();
     }
 
+    /**
+     * GUI initializations
+     */
     @Override
     public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -140,6 +159,11 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         // will connect when memo is available
     }
 
+    /**
+     * Configure LocoNet connection
+     * 
+     * @param memo - specifies which LocoNet connection is used by this tool
+     */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -193,7 +217,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JButton updateButton = new JButton(Bundle.getMessage("ButtonTextUpdate"));
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these tools using old-style defaults
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
