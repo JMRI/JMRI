@@ -360,13 +360,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _defaultToolTip = dtt;
     }
 
-    /*
-     * *************** setting the main panel and frame ***************
-     */
+    //
+    // *************** setting the main panel and frame ***************
+    //
     /**
+     * Set the target panel.
+     *
      * An Editor may or may not choose to use 'this' as its frame or the
      * interior class 'TargetPane' for its targetPanel.
      *
+     * @param targetPanel the panel to be edited
+     * @param frame       the frame to embed the panel in
      */
     protected void setTargetPanel(JLayeredPane targetPanel, JmriJFrame frame) {
         if (targetPanel == null) {
@@ -414,18 +418,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Allow public access to the target (content) panel
-     * for external modification, particularly
-     * from scripts
+     * Allow public access to the target (content) panel for external
+     * modification, particularly from scripts
      */
     public final JComponent getTargetPanel() {
         return _targetPanel;
     }
 
     /**
-     * Allow public access to the scroll pane
-     * for external control of position, particularly
-     * from scripts
+     * Allow public access to the scroll pane for external control of position,
+     * particularly from scripts
      */
     public final JScrollPane getPanelScrollPane() {
         return _panelScrollPane;
@@ -807,9 +809,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Control whether target panel items are controlling layout items.
      * <p>
-     * Does this by invoking the {@link Positionable#setControlling} function
-     * of each item on the target panel. This also controls the relevant
-     * pop-up menu items.
+     * Does this by invoking the {@link Positionable#setControlling} function of
+     * each item on the target panel. This also controls the relevant pop-up
+     * menu items.
      *
      * @param state true for controlling.
      */
@@ -867,7 +869,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      *
      * @param state true for show coodinates.
      */
-    /*
+ /*
      public void setShowCoordinates(boolean state) {
      _showCoordinates = state;
      for (int i = 0; i<_contents.size(); i++) {
@@ -1452,7 +1454,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * *********************** End Popup Methods **********************
      */
-    /*
+ /*
      * ****************** Marker Menu ***************************
      */
     protected void locoMarkerFromRoster() {
@@ -1562,7 +1564,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * *********************** End Marker Menu Methods **********************
      */
-    /*
+ /*
      * ************ Adding content to the panel **********************
      */
     public PositionableLabel setUpBackground(String name) {
@@ -2383,7 +2385,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * ****************** end adding content ********************
      */
-    /*
+ /*
      * ********************* Icon Editors utils ***************************
      */
     public static class JFrameItem extends JmriJFrame {

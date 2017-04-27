@@ -104,18 +104,60 @@ public interface Positionable extends Cloneable {
      */
     public String getNameString();
 
+    /**
+     * Add additional menu items to the menu.
+     *
+     * @param popup the menu to add
+     * @return true if adding items; false otherwise
+     */
     public boolean setRotateOrthogonalMenu(JPopupMenu popup);
 
+    /**
+     * Add additional menu items to the menu.
+     *
+     * @param popup the menu to add
+     * @return true if adding items; false otherwise
+     */
     public boolean setRotateMenu(JPopupMenu popup);
 
+    /**
+     * Add additional menu items to the menu.
+     *
+     * @param popup the menu to add
+     * @return true if adding items; false otherwise
+     */
     public boolean setScaleMenu(JPopupMenu popup);
 
+    /**
+     * Add additional menu items to the menu.
+     *
+     * @param popup the menu to add
+     * @return true if adding items; false otherwise
+     */
     public boolean setEditIconMenu(JPopupMenu popup);
 
+    /**
+     * Add additional menu items to the menu.
+     *
+     * @param popup the menu to add
+     * @return true if adding items; false otherwise
+     */
     public boolean setEditItemMenu(JPopupMenu popup);
 
+    /**
+     * Add additional menu items to the menu.
+     *
+     * @param popup the menu to add
+     * @return true if adding items; false otherwise
+     */
     public boolean setDisableControlMenu(JPopupMenu popup);
 
+    /**
+     * Add additional menu items to the menu.
+     *
+     * @param popup the menu to add
+     * @return true if adding items; false otherwise
+     */
     public boolean setTextEditMenu(JPopupMenu popup);
 
     public boolean showPopUp(JPopupMenu popup);
