@@ -1,4 +1,4 @@
-package jmri.jmrix.dccpp.dccppovertcp;
+package jmri.jmrix.loconet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,27 +12,29 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ClientRxHandlerTest {
-    
+public class LnClockControlTest {
+
     @Test
     public void testCTor() {
-        ClientRxHandler t = new ClientRxHandler("127.0.0.1",new java.net.Socket());
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        SlotManager slotmanager = new SlotManager(lnis);
+        LnClockControl t = new LnClockControl(slotmanager,lnis);
         Assert.assertNotNull("exists",t);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
-    
+
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(ClientRxHandlerTest.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(LnClockControlTest.class.getName());
 
 }
