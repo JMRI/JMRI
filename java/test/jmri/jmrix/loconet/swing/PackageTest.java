@@ -11,7 +11,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    jmri.jmrix.loconet.swing.throttlemsg.PackageTest.class
+    jmri.jmrix.loconet.swing.throttlemsg.PackageTest.class,
+    LnComponentFactoryTest.class,
+    LocoNetMenuTest.class
 })
 public class PackageTest {
 }

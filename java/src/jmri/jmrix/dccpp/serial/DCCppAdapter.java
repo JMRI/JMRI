@@ -54,45 +54,45 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
-
+            
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                          + " " + activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
                 log.info("failed to set serial timeout: " + et);
             }
-
+            
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
-
+            
             // purge contents, if any
             purgeStream(serialStream);
-
+            
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
                 log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                         + activeSerialPort.getBaudRate() + " baud with"
+                         + " DTR: " + activeSerialPort.isDTR()
+                         + " RTS: " + activeSerialPort.isRTS()
+                         + " DSR: " + activeSerialPort.isDSR()
+                         + " CTS: " + activeSerialPort.isCTS()
+                         + "  CD: " + activeSerialPort.isCD()
+                         );
             }
             if (log.isDebugEnabled()) {
                 // report additional status
                 log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
+                          + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             }
             // arrange to notify later
             activeSerialPort.addEventListener(new SerialPortEventListener() {
-                @Override
-                public void serialEvent(SerialPortEvent e) {
-                    int type = e.getEventType();
-                    switch (type) {
+                    @Override
+                    public void serialEvent(SerialPortEvent e) {
+                        int type = e.getEventType();
+                        switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
                             if (log.isDebugEnabled()) {
                                 log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
@@ -149,10 +149,10 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                                 log.debug("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
                             }
                             return;
+                        }
                     }
                 }
-            }
-            );
+                );
             try {
                 activeSerialPort.notifyOnFramingError(true);
             } catch (Exception e) {
@@ -160,7 +160,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                     log.debug("Could not notifyOnFramingError: " + e);
                 }
             }
-
+            
             try {
                 activeSerialPort.notifyOnBreakInterrupt(true);
             } catch (Exception e) {
@@ -168,7 +168,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                     log.debug("Could not notifyOnBreakInterrupt: " + e);
                 }
             }
-
+            
             try {
                 activeSerialPort.notifyOnParityError(true);
             } catch (Exception e) {
@@ -184,7 +184,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                     log.debug("Could not notifyOnOutputEmpty: " + e);
                 }
             }
-
+            
             try {
                 activeSerialPort.notifyOnOverrunError(true);
             } catch (Exception e) {
@@ -192,9 +192,9 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
                     log.debug("Could not notifyOnOverrunError: " + e);
                 }
             }
-
+            
             opened = true;
-
+            
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
@@ -202,10 +202,10 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
-
+        
         return null; // normal operation
     }
-
+    
     /**
      * set up all of the other objects to operate with a DCC++ Device connected to this
      * port
@@ -213,16 +213,16 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
- DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+        DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
         packets.connectPort(this);
 
         // start operation
         // packets.startThreads();
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
-
+        
         new DCCppInitializationManager(this.getSystemConnectionMemo());
     }
-
+    
     // base class methods for the XNetSerialPortController interface
     public BufferedReader getInputStreamBR() {
         if (!opened) {
@@ -231,11 +231,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         }
         return new BufferedReader(new InputStreamReader(serialStream));
     }
-
+    
     @Override
     public DataInputStream getInputStream() {
- //log.error("Not Using DataInputStream version anymore!");
-     //return(null);
+        //log.error("Not Using DataInputStream version anymore!");
+        //return(null);
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
         }
@@ -246,7 +246,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         }
         return null;
     }
-
+    
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -277,49 +277,49 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             }
         }
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
-                SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1,
-                SerialPort.PARITY_NONE);
-
+                                       SerialPort.DATABITS_8,
+                                       SerialPort.STOPBITS_1,
+                                       SerialPort.PARITY_NONE);
+        
         // set RTS high, DTR high - done early, so flow control can be configured after
         activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
         activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
-
+        
         // find and configure flow control
         //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
         int flow = SerialPort.FLOWCONTROL_NONE;
-//        if (!getOptionState(option1Name).equals(validOption1[0])) {
-//            flow = SerialPort.FLOWCONTROL_NONE;
-//        }
+        //        if (!getOptionState(option1Name).equals(validOption1[0])) {
+        //            flow = SerialPort.FLOWCONTROL_NONE;
+        //        }
         activeSerialPort.setFlowControlMode(flow);
         //if (getOptionState(option2Name).equals(validOption2[0]))
         //    checkBuffer = true;
     }
-
+    
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
-
+    
     protected String[] validSpeeds = new String[]{"115,200 baud"};
     protected int[] validSpeedValues = new int[]{115200};
-
+    
     // meanings are assigned to these above, so make sure the order is consistent
-//    protected String[] validOption1 = new String[]{"hardware flow control", "no flow control"};
+    //    protected String[] validOption1 = new String[]{"hardware flow control", "no flow control"};
     protected String[] validOption1 = new String[]{"no flow control"};
-
+    
     private boolean opened = false;
     InputStream serialStream = null;
-
+    
     @Deprecated
- static public DCCppAdapter instance() {
+    static public DCCppAdapter instance() {
         if (mInstance == null) {
             mInstance = new DCCppAdapter();
         }
         return mInstance;
     }
     static volatile DCCppAdapter mInstance = null; // TODO: Rename this?
-
+    
     private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class.getName());
 
 }
