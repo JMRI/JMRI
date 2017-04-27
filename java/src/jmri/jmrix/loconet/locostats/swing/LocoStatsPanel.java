@@ -17,6 +17,7 @@ import jmri.jmrix.loconet.locostats.RawStatus;
 import jmri.jmrix.loconet.locostats.PR3MS100ModeStatus;
 import jmri.jmrix.loconet.swing.LnPanel;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -146,17 +147,23 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         stats = new LocoStatsFunc(memo);
         stats.addLocoNetInterfaceStatsListener(this);
 
-        // request data
-        stats.sendLocoNetInterfaceStatusQueryMessage();
+        // request interface data from interface device
+        requestUpdate();
     }
-
-    void report(String msg) {
-        log.error(msg);
-    }
-
+    
+    /**
+     * Send LocoNet request for interface status.
+     * 
+     * Performs the send from the "Layout" thread, to avoid GUI-related 
+     * threading problems.
+     */
     public void requestUpdate() {
-        stats.sendLocoNetInterfaceStatusQueryMessage();
+        // Invoke the Loconet request send on the layout thread, not the GUI thread!
+        // Note - there is no guarantee that the LocoNet message will be sent 
+        // before execution returns to this method (but it might).
+        ThreadingUtil.runOnLayoutEventually(()->{  stats.sendLocoNetInterfaceStatusQueryMessage(); });
         updateRequestPending = true;
+        log.debug("Sending a ping");
     }
 
     JTextField r1 = new JTextField(5);
