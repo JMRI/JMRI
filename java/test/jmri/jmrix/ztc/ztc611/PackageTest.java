@@ -9,7 +9,10 @@ import org.junit.runners.Suite;
    jmri.jmrix.ztc.ztc611.configurexml.PackageTest.class,
    ConnectionConfigTest.class,
    ZTC611AdapterTest.class,
-   ZTC611XNetPacketizerTest.class
+   ZTC611XNetPacketizerTest.class,
+   ZTC611XNetTurnoutTest.class,
+   ZTC611XNetTurnoutManagerTest.class,
+   ZTC611XNetInitializationManagerTest.class
 })
 
 /**

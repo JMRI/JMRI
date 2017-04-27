@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.SerialUtil;
@@ -220,7 +219,7 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         // start operation
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new ZTC611XNetInitializationManager(this.getSystemConnectionMemo());
     }
 
     // base class methods for the XNetSerialPortController interface
