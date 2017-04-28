@@ -440,12 +440,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (speedType == null) {
             return false;
         }
-        if (speedType.equals(Warrant.Stop) || speedType.equals(Warrant.EStop)) {
+/*        if (speedType.equals(Warrant.Stop) || speedType.equals(Warrant.EStop)) {
             _waitForClear = true;                
-        }
+        }*/
         Float speed = getSpeed();
         if (Math.abs(speed - modifySpeed(_normalSpeed, speedType)) < 0.0001f) {
             // already at speed, no need to reset throttle
+            _speedType = speedType;
             return false;
         }
         
