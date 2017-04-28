@@ -2790,7 +2790,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        String newName = firstTurnoutComboBox.getUserName();
+        String newName = firstTurnoutComboBox.getDisplayName();
         if (!turnoutName.equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
@@ -2804,7 +2804,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if (additionalTurnout.isSelected()) {
-            newName = secondTurnoutComboBox.getSelectedItem().toString();
+            newName = secondTurnoutComboBox.getDisplayName();
             if (!secondTurnoutName.equals(newName)) {
                 if ((type == DOUBLE_XOVER)
                         || (type == RH_XOVER)
