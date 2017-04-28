@@ -8547,7 +8547,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        String turnoutName = turnoutNameComboBox.getUserName();
+        String turnoutName = turnoutNameComboBox.getDisplayName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8561,7 +8561,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.getEditor().setItem("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
-        turnoutName = extraTurnoutNameComboBox.getUserName();
+        turnoutName = extraTurnoutNameComboBox.getDisplayName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8644,7 +8644,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         o.setContinuingSense(Turnout.CLOSED);
 
         //check on a physical turnout
-        String turnoutName = turnoutNameComboBox.getUserName();
+        String turnoutName = turnoutNameComboBox.getDisplayName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
