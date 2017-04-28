@@ -1672,11 +1672,11 @@
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
+            <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
-            <link href="http://www.javadoc.io/doc/org.openlcb/openlcb/0.7.11"/>
+            <link href="http://static.javadoc.io/org.openlcb/openlcb/0.7.11"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
     </target>
