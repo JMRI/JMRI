@@ -576,7 +576,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     int mode = readChar & 0x02;
                     // USB doesn't use the 28/128 bit
                     cabData[currCabId].mode = "";
-                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) && (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
+                    if (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                         if (mode > 0) {
                             cabData[currCabId].mode = "128";
                         } else {
@@ -941,7 +941,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     int mode = readChar & 0x02;
                     // USB doesn't use the 28/128 bit
                     cabData[currCabId].mode = "";
-                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) && (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
+                    if (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                         if (mode > 0) {
                             cabData[currCabId].mode = "128";
                         } else {

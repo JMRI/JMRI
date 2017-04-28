@@ -98,6 +98,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(SystemConnectionMemoTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(AbstractThrottleManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(JmrixConfigPaneTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.ztc.PackageTest.class));
         return suite;
 
     }

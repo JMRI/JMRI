@@ -1,4 +1,4 @@
-package jmri.jmrix.lenz.ztc640;
+package jmri.jmrix.ecos;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,11 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ZTC640ConnectionTypeListTest {
+public class EcosProgrammerManagerTest {
 
     @Test
     public void testCTor() {
-        ZTC640ConnectionTypeList t = new ZTC640ConnectionTypeList();
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
+        EcosProgrammerManager t = new EcosProgrammerManager(new EcosProgrammer(tc),memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,6 +35,6 @@ public class ZTC640ConnectionTypeListTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC640ConnectionTypeListTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosProgrammerManagerTest.class.getName());
 
 }

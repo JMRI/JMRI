@@ -24,10 +24,6 @@ public class LocoStatsFrameTest {
             public void requestUpdate() {  // replace actual transmit
                 updateRequestPending = true;
             }
-
-            @Override
-            public void report(String m) {
-            }  // suppress messages
         };
         p.initComponents();
         f.getContentPane().add(p);
