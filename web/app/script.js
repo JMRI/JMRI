@@ -25,10 +25,13 @@ angular.module('jmri.app').config(['$routeProvider', '$logProvider',
 ]);
 
 // add the navigation menu controller to the jmri.app module
-angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$jsonSocket', '$log', '$interval',
-  function ($scope, $http, $jsonSocket, $log, $interval) {
+angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$jsonSocket', '$log', '$interval', '$rootScope', 'Notifications',
+  function ($scope, $http, $jsonSocket, $log, $interval, $rootScope, Notifications) {
     // navigation items %3$s
 
+    // notification service
+    $rootScope.toastNotifications = Notifications.data;
+    
     // about display
     $http.get('/app/about').then(function (response) {
       $scope.additionalInfo = response.data.additionalInfo;

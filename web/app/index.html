@@ -21,6 +21,11 @@
     <body ng-app="jmri.app">
         %4$s
         <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout" ng-controller="NavigationCtrl">
+            <div data-pf-toast-notification-list
+                 data-notifications="toastNotifications"
+                 data-show-close="showToastNotificationClose"
+                 data-close-callback="handleToastNotificationClose"
+                 data-update-viewing="updateToastNotificationViewing"></div>
             <div data-pf-vertical-navigation data-items="navigationItems" data-brand-alt="%1$s"
                  data-show-badges="true" data-persistent-secondary="true" 
                  data-navigate-callback="handleNavigateClick">
@@ -31,10 +36,10 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-power" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <span title="%9$s" class="fa fa-power-off" ></span>
-                                <span class="carat fa {{defaultPowerState | powerTriState}} small"></span>
+                                <span class="carat fa {{defaultPowerState| powerTriState}} small"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-power">
-                                <li ng-repeat="pm in power | orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="fa fa-fw {{pm.state | powerTriState}}"></span> {{pm.name}} <span ng-show="pm.default === true">(default)</span></a></li>
+                                <li ng-repeat="pm in power| orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="fa fa-fw {{pm.state| powerTriState}}"></span> {{pm.name}} <span ng-show="pm.default === true">(default)</span></a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
