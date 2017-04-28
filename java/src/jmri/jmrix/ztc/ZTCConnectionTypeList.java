@@ -1,13 +1,14 @@
-package jmri.jmrix.lenz.ztc640;
+package jmri.jmrix.ztc;
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
+ * Returns a list of valid ZTC Connection Types.  Note that
+ * most ZTC Connection types are Lenz ( ZTC uses XpressNet )
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
-public class ZTC640ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
+public class ZTCConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String ZTC = "ZTC";
 
@@ -16,7 +17,7 @@ public class ZTC640ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
         String[] masterList = new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses();
 
         String[] tempList = new String[masterList.length + 1];
-        tempList[0] = "jmri.jmrix.lenz.ztc640.ConnectionConfig";
+        tempList[0] = "jmri.jmrix.ztc.ztc611.ConnectionConfig";
         int x = 1;
         for (int i = 0; i < masterList.length; i++) {
             tempList[x] = masterList[i];
