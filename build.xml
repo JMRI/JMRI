@@ -1957,6 +1957,9 @@
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
+        <copy todir="${dist.windows}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
+        </copy>
         <mkdir dir="${dist.windows}/JMRI/lib"/>
         <copy todir="${dist.windows}/JMRI/lib" flatten="true">
             <path>
@@ -1996,6 +1999,9 @@
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
@@ -2066,6 +2072,9 @@
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
         <copy todir="${dist.linux}/JMRI/lib" flatten="true">

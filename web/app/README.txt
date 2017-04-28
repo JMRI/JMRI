@@ -39,6 +39,12 @@ information as a WebManifest.
 
 TBD
 
+## package.files
+
+List of files in this directory that are included in the JMRI distribution. This
+list is maintained due to the extreme size of the dependencies installed using
+npm.
+
 [1]: https://angularjs.org
 [2]: https://www.npmjs.com
 [3]: http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html
