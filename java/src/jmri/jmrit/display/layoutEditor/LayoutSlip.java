@@ -563,7 +563,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     /**
      * Initialization method The above variables are initialized by
-     * PositionablePointXml, then the following method is called after the
+     * LayoutSlipXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
     @Override
