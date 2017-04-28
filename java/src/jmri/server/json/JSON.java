@@ -185,6 +185,10 @@ public final class JSON {
     /**
      * {@value #UNIQUE_ID}
      */
+    public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
     public static final String UNIQUE_ID = "uniqueId"; // NOI18N
     /**
      * {@value #IS_ACTIVE_PROFILE}
@@ -238,6 +242,10 @@ public final class JSON {
      * {@value #LAYOUT_PANEL}
      */
     public static final String LAYOUT_PANEL = "Layout"; // NOI18N
+    /**
+     * {@value #SWITCHBOARD_PANEL}
+     */
+    public static final String SWITCHBOARD_PANEL = "Switchboard"; // NOI18N
     /**
      * {@value #PANEL_PANEL}
      */

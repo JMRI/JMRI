@@ -32,8 +32,6 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        // create the master object
-        SerialSensorManager.instance();
         // load individual sensors
         return loadSensors(shared);
     }

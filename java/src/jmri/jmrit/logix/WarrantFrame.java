@@ -32,6 +32,8 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +56,7 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantFrame extends WarrantRoute {
 
-    static int ROW_HEIGHT;
-
+    int _rowHeight;
     private Warrant _warrant;
     private Warrant _saveWarrant;
     private ThrottleTableModel _commandModel;
@@ -145,12 +146,10 @@ public class WarrantFrame extends WarrantRoute {
             _TTP = ((SCWarrant)warrant).getTimeToPlatform();
             _forward = ((SCWarrant)warrant).getForward();
         }
-        if (tList!=null) {
-            for (int i = 0; i < tList.size(); i++) {
-                ThrottleSetting ts = new ThrottleSetting(tList.get(i));
-                _throttleCommands.add(ts);
-            }                
-        }
+        for (int i = 0; i < tList.size(); i++) {
+            ThrottleSetting ts = new ThrottleSetting(tList.get(i));
+            _throttleCommands.add(ts);
+        }                
        _shareRouteBox.setSelected(warrant.getShareRoute());
         _warrant.setShareRoute(warrant.getShareRoute());
         _noRampBox.setSelected(warrant.getNoRamp());
@@ -367,6 +366,9 @@ public class WarrantFrame extends WarrantRoute {
             case Warrant.MODE_RUN:
             case Warrant.MODE_MANUAL:
                 return _warrant.getRunningMessage();
+            default:
+                // fall through
+                break;
         }        
         return Bundle.getMessage("Idle");
     }
@@ -377,7 +379,7 @@ public class WarrantFrame extends WarrantRoute {
         Component[] components = panel.getComponents();
 
         for(int i = 0; i < components.length; i++) {
-            if(components[i].getClass().getName() == "javax.swing.JPanel") {
+            if("javax.swing.JPanel".equals(components[i].getClass().getName()))  {
                 setPanelEnabled((JPanel) components[i], isEnabled);
             }
 
@@ -435,7 +437,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         JLabel l = new JLabel(Bundle.getMessage(Bundle.getMessage("TTP")));
-        _TTPtextField.setValue(new Long(_TTP));
+        _TTPtextField.setValue(Long.valueOf(_TTP));
         _TTPtextField.setColumns(6);
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         _TTPtextField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
@@ -591,6 +593,7 @@ public class WarrantFrame extends WarrantRoute {
         group.add(_halt);
         group.add(_resume);
         group.add(_eStop);
+        group.add(_abort);
         group.add(_invisible);
         panel.add(_halt);
         panel.add(_resume);
@@ -724,9 +727,9 @@ public class WarrantFrame extends WarrantRoute {
             _commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _throttlePane = new JScrollPane(_commandTable);
-        ROW_HEIGHT = _commandTable.getRowHeight();
+        _rowHeight = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
-        dim.height = ROW_HEIGHT * 8;
+        dim.height = _rowHeight * 8;
         _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel buttonPanel = new JPanel();
@@ -862,7 +865,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private void doControlCommand(int cmd) {
         if (log.isDebugEnabled()) {
-            log.debug("actionPerformed on doControlCommand  cmd= " + cmd);
+            log.debug("actionPerformed on doControlCommand  cmd= {}", cmd);
         }
         int runMode = _warrant.getRunMode();
         if (runMode == Warrant.MODE_NONE) {
@@ -1110,9 +1113,9 @@ public class WarrantFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
-                                            "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
-                                            " source= "+e.getSource().getClass().getName());
+        if (log.isDebugEnabled()) 
+            log.debug("propertyChange \"{}\" old= {} new= {} source= {}",
+                    property, e.getOldValue(), e.getNewValue(), e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
             doAction(e.getSource());
         } else if (e.getSource() instanceof Warrant && _warrant.equals(e.getSource())) {
@@ -1248,6 +1251,7 @@ public class WarrantFrame extends WarrantRoute {
                         color = Color.red;
                     }
                     break;
+                default:
             }
             setStatusText(msg, color);
         }
@@ -1278,7 +1282,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private void scrollCommandTable(int row) {
         JScrollBar bar = _throttlePane.getVerticalScrollBar();
-        bar.setValue(row * ROW_HEIGHT);
+        bar.setValue(row * _rowHeight);
 //        bar.setValue(bar.getMaximum());
     }
     
@@ -1298,13 +1302,13 @@ public class WarrantFrame extends WarrantRoute {
         msg = checkLocoAddress();
         if (msg==null && !_isSCWarrant.isSelected()) {
             if (_throttleCommands.size() <= getOrders().size() || 
-                    !_throttleCommands.get(_throttleCommands.size()-1).getBlockName().equals(getOrders().get( getOrders().size()-1).getBlock().getDisplayName())) {
+                    !_throttleCommands.get(_throttleCommands.size()-1).getBeanDisplayName().equals(getOrders().get( getOrders().size()-1).getBlock().getDisplayName())) {
                 msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
             } else {
                 for (int i=0; i<_throttleCommands.size(); i++) {
                     ThrottleSetting ts = _throttleCommands.get(i);
-                    if (ts.getValue()==null || ts.getCommand()==null || ts.getBlockName()==null) {
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("BadThrottleSetting", i+1)+" - "+ts.toString(),
+                    if (ts.getValue()==null || ts.getCommand()==null || ts.getNamedBeanHandle()==null) {
+                        JOptionPane.showMessageDialog(this, Bundle.getMessage("BadThrottleSetting", i+1, ts.toString()),
                                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         return false;
                     }
@@ -1335,6 +1339,7 @@ public class WarrantFrame extends WarrantRoute {
 
         if (_isSCWarrant.isSelected()) {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
+            ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
         _warrant.setDccAddress(getTrainId());
         _warrant.setTrainName(getTrainName());
@@ -1348,7 +1353,8 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
         
-        if (log.isDebugEnabled()) log.debug("warrant saved _train "+getTrainId()+", name= "+getTrainName());
+        if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
+                _warrant.getDisplayName(), getTrainId(), getTrainName());
         WarrantTableAction.updateWarrantMenu();
         WarrantTableFrame.getInstance().getModel().fireTableDataChanged();
         return true;
@@ -1367,7 +1373,7 @@ public class WarrantFrame extends WarrantRoute {
             f.initComponents();
             f.concatenate(_saveWarrant, null);
         } catch (Exception ex) {
-            log.error("error making CreateWarrantFrame", ex);
+            log.error("error making CreateWarrantFrame {}", ex);
         }
         dispose();
     }
@@ -1417,6 +1423,9 @@ public class WarrantFrame extends WarrantRoute {
                     return Bundle.getMessage("ValueCol");
                 case BLOCK_COLUMN:
                     return Bundle.getMessage("BlockCol");
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1446,6 +1455,9 @@ public class WarrantFrame extends WarrantRoute {
                     return new JTextField(8).getPreferredSize().width;
                 case BLOCK_COLUMN:
                     return new JTextField(40).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(12).getPreferredSize().width;
         }
@@ -1454,7 +1466,8 @@ public class WarrantFrame extends WarrantRoute {
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _throttleCommands.size()) {
-                if (log.isDebugEnabled()) log.debug("row is greater than throttle command size");
+                if (log.isDebugEnabled()) log.debug("row {} is greater than throttle command size {}",
+                        row, _throttleCommands.size());
                 return "";
             }
             ThrottleSetting ts = _throttleCommands.get(row);
@@ -1475,7 +1488,10 @@ public class WarrantFrame extends WarrantRoute {
                     }
                     return ts.getValue();
                 case BLOCK_COLUMN:
-                    return ts.getBlockName();
+                    return ts.getBeanDisplayName();
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1519,7 +1535,7 @@ public class WarrantFrame extends WarrantRoute {
                             } else {
                                 ts.setCommand(cmd);
                             }
-                        } catch (Exception e) {
+                        } catch (NumberFormatException e) {
                             msg = Bundle.getMessage("badFunctionNum");
                         }
                     } else if (cmd.startsWith("LOCKF")) {
@@ -1530,7 +1546,7 @@ public class WarrantFrame extends WarrantRoute {
                             } else {
                                 ts.setCommand(cmd);
                             }
-                        } catch (Exception e) {
+                        } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("badLockFNum");
                         }
                     } else if ("NOOP".equals(cmd)) {
@@ -1641,7 +1657,7 @@ public class WarrantFrame extends WarrantRoute {
                         ts.setValue(null);                        
                     }
                     if (resetBlockColumn) {
-                        ts.setBlockName(getPreviousBlockName(row));
+                        ts.setNamedBeanHandle(getPreviousBlockHandle(row));
                     }
                     break;
                 case BLOCK_COLUMN:
@@ -1650,7 +1666,7 @@ public class WarrantFrame extends WarrantRoute {
                         try {
                             jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor((String) value);
                             if (s != null) {
-                                ts.setBlockName((String) value);
+                                ts.setNamedBean(cmd, (String) value);
                             } else {
                                 msg = Bundle.getMessage("BadSensor", (String) value);
                             }
@@ -1663,7 +1679,7 @@ public class WarrantFrame extends WarrantRoute {
                         try {
                             Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant((String) value);
                             if (w != null) {
-                                ts.setBlockName((String) value);
+                                ts.setNamedBean(cmd, (String) value);
                             } else {
                                 msg = Bundle.getMessage("BadWarrant", (String) value);
                             }
@@ -1671,13 +1687,17 @@ public class WarrantFrame extends WarrantRoute {
                             msg = Bundle.getMessage("BadWarrant", value, cmd) + ex;
                         }
                     } else {
-                        String name = getPreviousBlockName(row);
-                        if (!name.equals(value)) {
-                            msg = Bundle.getMessage("commandInBlock", name);
-                            ts.setBlockName(name);
+                        NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
+                        if (bh != null) {
+                            String name = bh.getBean().getDisplayName();
+                            if (!name.equals(value)) {
+                                msg = Bundle.getMessage("commandInBlock", name);
+                                ts.setNamedBeanHandle(bh);
+                            }                            
                         }
                     }
                     break;
+                default:
             }
             if (msg != null) {
                 showWarning(msg);
@@ -1686,15 +1706,14 @@ public class WarrantFrame extends WarrantRoute {
             }
         }
 
-        private String getPreviousBlockName(int row) {
+        private NamedBeanHandle <? extends NamedBean> getPreviousBlockHandle(int row) {
             for (int i = row; i > 0; i--) {
-                String name = _throttleCommands.get(i - 1).getBlockName();
-                OBlock b = InstanceManager.getDefault(OBlockManager.class).getOBlock(name);
-                if (b != null) {
-                    return name;
+                NamedBeanHandle <? extends NamedBean> bh = _throttleCommands.get(i - 1).getNamedBeanHandle();
+                if (bh != null && (bh.getBean() instanceof OBlock)) {
+                    return bh;
                 }
             }
-            return "StartBlock";
+            return null;
         }
 
     }

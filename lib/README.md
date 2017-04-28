@@ -69,7 +69,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
 
 ##### openlcb.jar
-- 0.7.12 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.12/openlcb-0.7.12.jar or the maven central repository.
+- 0.7.14 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.14/openlcb-0.7.14.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -226,9 +226,13 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
     - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
 - used in ant warnings target
 
-##### WinRegistry4-4.jar
-- Version 4.4
-- https://sourceforge.net/projects/java-registry/
+##### jna-4.4.0.jar
+- Java Native Access library
+- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna%7C4.4.0%7Cjar
+
+##### jna-platform-4.4.0.jar
+- Java Native Access platform-specific utilities library
+- from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
 
 ##### xAPlib.jar
 - xAP automation protocol support

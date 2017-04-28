@@ -25,7 +25,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for port-busy case
+     * Standard error handling for port-busy case.
+     * @param p the exception being handled, if additional information from it is desired
+     * @param portName name of the port being accessed
+     * @param log where to log a status message
+     * @return Localized message, in case separate presentation to user is desired
      */
     @Override
     public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log) {
@@ -54,6 +58,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     @Override
     public void setPort(String port) {
+        log.debug("Setting port to "+port);
         mPort = port;
     }
     protected String mPort = null;
@@ -107,10 +112,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Convert a baud rate string to a number.
+     * Convert a baud rate String to a int number,e.g. "9,600" to 9600.
      *
      * Uses the validBaudNumber and validBaudRates methods to do this.
      *
+     * @param currentBaudRate a rate from validBaudRates
      * @return -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {

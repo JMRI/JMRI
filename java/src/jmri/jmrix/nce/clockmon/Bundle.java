@@ -23,7 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.nce.Bundle {
 
-    private final static String name = "jmri.jmrix.nce.clockmon.ClockMonBundle"; // NOI18N
+    @Nullable
+    private static final String name = "jmri.jmrix.nce.clockmon.ClockMonBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

@@ -468,13 +468,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private void generateReadCSStatusReply() {
         /*
- String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
- DCCppReply r = new DCCppReply(s);
- writeReply(r);
- if (log.isDebugEnabled()) {
-     log.debug("Simulator Thread sent Reply" + r.toString());
- }
-         */
+          String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
+          DCCppReply r = new DCCppReply(s);
+          writeReply(r);
+          if (log.isDebugEnabled()) {
+          log.debug("Simulator Thread sent Reply" + r.toString());
+          }
+        */
 
         DCCppReply r = DCCppReply.parseDCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         writeReply(r);
@@ -486,7 +486,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread sent Reply" + r.toString());
         }
-
+        
         // Generate the other messages too...
     }
 
@@ -496,16 +496,16 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         int sensorNum = sNumGenerator.nextInt(10); // Generate a random sensor number between 0 and 9
         Random valueGenerator = new Random();
         int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
-
+        
         String reply = (value == 1 ? "Q " : "q ") + Integer.toString(sensorNum);
-
+        
         DCCppReply r = DCCppReply.parseDCCppReply(reply);
         writeReply(r);
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread sent Reply" + r.toString());
         }
     }
-
+    
     private void writeReply(DCCppReply r) {
         int i;
         int len = r.getLength();  // opCode+Nbytes+ECC

@@ -1074,7 +1074,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
 
-                //log.info("{}.toolBarSide is {}", windowFrameRef, prefsProp);
+                //log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
                 if (prefsProp != null) {
                     eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
                     setToolBarSide(newToolBarSide);
@@ -1083,28 +1083,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //Note: since prefs default to false and we want wide to be the default
                 //we invert it and save it as thin
                 boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
-                log.info("{}.toolBarThin is {}", windowFrameRef, prefsProp);
+                log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
                 setToolBarWide(prefsToolBarIsWide);
 
                 boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
 
-                //log.info("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
+                //log.debug("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
                 setShowHelpBar(prefsShowHelpBar);
 
                 boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
 
-                //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
+                //log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
                 setAntialiasingOn(prefsAntialiasingOn);
 
                 boolean prefsHighlightSelectedBlockFlag =
                     prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
 
-                //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+                //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
                 prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
 
-                //log.info("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
+                //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
 
                 if (null != prefsProp) {
                     float toolBarFontSize = Float.parseFloat(prefsProp.toString());
@@ -1115,8 +1115,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //this doesn't work as expected (1st one called messes up 2nd?)
                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
                 Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                log.info("prefsMgr.prefsWindowLocation({}) is {}",   windowFrameRef, prefsWindowLocation);
-                log.info("prefsMgr.prefsWindowSize is({}) {}",       windowFrameRef, prefsWindowSize);
+                log.debug("prefsMgr.prefsWindowLocation({}) is {}",   windowFrameRef, prefsWindowLocation);
+                log.debug("prefsMgr.prefsWindowSize is({}) {}",       windowFrameRef, prefsWindowSize);
 
                 //Point prefsWindowLocation = null;
                 //Dimension prefsWindowSize = null;
@@ -1124,7 +1124,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //use this instead?
                 if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
                     prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                    log.info("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
+                    log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
 
                     if (null != prefsProp) {
                         Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
@@ -1844,16 +1844,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         switch (toolBarSide) {
             case eTOP:
-            case eLEFT: {
+            case eLEFT:
                 contentPane.add(editToolBarContainer, 0);
                 break;
-            }
 
             case eBOTTOM:
-            case eRIGHT: {
+            case eRIGHT:
                 contentPane.add(editToolBarContainer);
                 break;
-            }
+
+            default:
+                // fall through
+                break;
         }   //switch
 
         if (toolBarIsVertical) {
@@ -1929,7 +1931,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (toolBarFontSize != newToolBarFontSize) {
             toolBarFontSize = newToolBarFontSize;
 
-            log.info("Font size: " + newToolBarFontSize);
+            log.debug("Font size: " + newToolBarFontSize);
 
             toolBarFont = zoomLabel.getFont();
             toolBarFont = toolBarFont.deriveFont(newToolBarFontSize);
@@ -1988,7 +1990,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     @Override
     public void setSize(int w, int h) {
         super.setSize(w, h);
-        log.info("Frame size: {w:" + width + ", h:" + height + "}");
+        log.debug("Frame size: {w:" + width + ", h:" + height + "}");
     }
 
     @Override
@@ -2038,7 +2040,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 String key = name.substring(3);
 
-                //log.info("VTCode[{}]:'{}'", key, code);
+                //log.debug("VTCode[{}]:'{}'", key, code);
                 stringsToVTCodes.put(key, code);
             }
         }
@@ -3154,7 +3156,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
         String zoomInAccelerator = rb.getString("zoomInAccelerator");
 
-        //log.info("zoomInAccelerator: " + zoomInAccelerator);
+        //log.debug("zoomInAccelerator: " + zoomInAccelerator);
         zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
         zoomMenu.add(zoomInItem);
         ActionListener pressedZoomInActionListener = (ActionEvent event) -> {
@@ -4458,7 +4460,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
                 prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
-                log.info("testing prefsProp: " + prefsProp);
+                log.debug("testing prefsProp: " + prefsProp);
             }
         });
 
@@ -4745,6 +4747,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     /**
      * Add a layout turntable at location specified
+     * @param pt x,y placement for turntable
      */
     public void addTurntable(Point2D pt) {
         numLayoutTurntables++;
@@ -4807,6 +4810,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     /**
      * Allow external set of dirty bit
+     * @param val true/false for panelChanged
      */
     public void setDirty(boolean val) {
         panelChanged = val;
@@ -8853,7 +8857,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * LayoutBlockManager if needed.
      */
     public LayoutBlock provideLayoutBlock(String inBlockName) {
-        //log.info("provideLayoutBlock :: '{}'", inBlockName);
+        //log.debug("provideLayoutBlock :: '{}'", inBlockName);
         LayoutBlock result = null, newBlk = null;   //assume failure (pessimist!)
 
         if (inBlockName.length() < 1) {
@@ -8881,7 +8885,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //if we created a new block
         if (newBlk != null) {
             //initialize the new block
-            //log.info("provideLayoutBlock :: Init new block {}", inBlockName);
+            //log.debug("provideLayoutBlock :: Init new block {}", inBlockName);
             newBlk.initializeLayoutBlock();
             newBlk.initializeLayoutBlockRouting();
             newBlk.setBlockTrackColor(defaultTrackColor);
@@ -9797,6 +9801,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             case LayoutTrack.TRACK:
 
                 return ((TrackSegment) o).getLayoutBlock();
+            default:
+                log.warn("Unhandled track type: {}", type);
+                break;
         }   //switch
         return null;
     }   //getAffectedBlock

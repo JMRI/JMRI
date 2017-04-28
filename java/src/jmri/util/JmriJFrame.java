@@ -39,13 +39,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Features:
  * <ul>
- * <LI>Size limited to the maximum available on the screen, after removing any
+ * <li>Size limited to the maximum available on the screen, after removing any
  * menu bars (Mac) and taskbars (Windows)
- * <LI>Cleanup upon closing the frame: When the frame is closed (WindowClosing
+ * <li>Cleanup upon closing the frame: When the frame is closed (WindowClosing
  * event), the dispose() method is invoked to do cleanup. This is inherited from
  * JFrame itself, so super.dispose() needs to be invoked in the over-loading
  * methods.
- * <LI>Maintains a list of existing JmriJFrames
+ * <li>Maintains a list of existing JmriJFrames
  * </ul>
  *
  * <h3>Window Closing</h3>
