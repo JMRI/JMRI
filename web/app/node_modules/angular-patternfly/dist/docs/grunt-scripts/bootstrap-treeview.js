@@ -42,6 +42,7 @@
 		checkedIcon: 'glyphicon glyphicon-check',
 		partiallyCheckedIcon: 'glyphicon glyphicon-expand',
 		uncheckedIcon: 'glyphicon glyphicon-unchecked',
+		tagsClass: 'badge',
 
 		color: undefined,
 		backColor: undefined,
@@ -970,6 +971,11 @@
 			$.each(node.tags, $.proxy(function addTag(id, tag) {
 				node.$el
 					.append(this._template.badge.clone()
+						.addClass(
+							typeof node.tagsClass[id] === 'string' ?
+								node.tagsClass[id] :
+								this._options.tagsClass
+						)
 						.append(tag)
 					);
 			}, this));
@@ -1153,7 +1159,7 @@
 			empty: $('<span class="icon"></span>')
 		},
 		image: $('<span class="image"></span>'),
-		badge: $('<span class="badge"></span>'),
+		badge: $('<span></span>'),
 		text: $('<span class="text"></span>')
 	};
 
@@ -1900,6 +1906,9 @@
 	$.fn[pluginName] = function (options, args) {
 
 		var result;
+		if (this.length == 0) {
+			throw "No element has been found!";
+		}
 
 		this.each(function () {
 			var _this = $.data(this, pluginName);

@@ -1,6 +1,6 @@
 {
   "name": "angular-patternfly",
-  "version": "3.23.2",
+  "version": "3.23.3",
   "dependencies": {
     "angular": {
       "version": "1.5.11",
@@ -33,9 +33,9 @@
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
     },
     "patternfly": {
-      "version": "3.23.2",
-      "from": "patternfly@>=3.23.2 <3.24.0",
-      "resolved": "https://registry.npmjs.org/patternfly/-/patternfly-3.23.2.tgz",
+      "version": "3.23.3",
+      "from": "patternfly@>=3.23.3 <3.24.0",
+      "resolved": "https://registry.npmjs.org/patternfly/-/patternfly-3.23.3.tgz",
       "dependencies": {
         "bootstrap": {
           "version": "3.3.7",
@@ -134,9 +134,9 @@
           }
         },
         "font-awesome": {
-          "version": "4.6.3",
-          "from": "font-awesome@>=4.6.3 <4.7.0",
-          "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.6.3.tgz"
+          "version": "4.7.0",
+          "from": "font-awesome@4.7.0",
+          "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz"
         },
         "google-code-prettify": {
           "version": "1.0.5",

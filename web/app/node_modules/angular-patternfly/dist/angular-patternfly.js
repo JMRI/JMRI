@@ -3203,6 +3203,7 @@ angular.module('patternfly.filters').directive('pfFilterFields', function () {
 
       scope.onValueKeyPress = function (keyEvent) {
         if (keyEvent.which === 13) {
+          keyEvent.preventDefault();
           scope.addFilterFn(scope.currentField, scope.config.currentValue);
           scope.config.currentValue = undefined;
         }
