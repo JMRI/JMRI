@@ -176,6 +176,56 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     }
 
+    public void testGetUserName() {
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
+
+        Element e = new Element("test");
+        Assert.assertEquals(null, x.getUserName(e));
+        
+        e = new Element("test");
+        Element e2 = new Element("userName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        Assert.assertEquals("foo", x.getUserName(e));
+        
+        e = new Element("test");
+        e.setAttribute("userName", "bar");
+        Assert.assertEquals("bar", x.getUserName(e));
+
+        e = new Element("test");
+        e2 = new Element("userName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        e.setAttribute("userName", "bar");
+        Assert.assertEquals("foo", x.getUserName(e));
+
+    }
+
+    public void testGetSystemName() {
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
+
+        Element e = new Element("test");
+        Assert.assertEquals(null, x.getSystemName(e));
+        
+        e = new Element("test");
+        Element e2 = new Element("systemName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        Assert.assertEquals("foo", x.getSystemName(e));
+        
+        e = new Element("test");
+        e.setAttribute("systemName", "bar");
+        Assert.assertEquals("bar", x.getSystemName(e));
+
+        e = new Element("test");
+        e2 = new Element("systemName");
+        e2.addContent("foo");
+        e.addContent(e2);
+        e.setAttribute("systemName", "bar");
+        Assert.assertEquals("foo", x.getSystemName(e));
+
+    }
+    
     // from here down is testing infrastructure
     public AbstractNamedBeanManagerConfigXMLTest(String s) {
         super(s);
