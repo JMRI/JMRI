@@ -11,7 +11,7 @@ angular.module('jmri.app', [
 ]);
 
 // configure the jmri.app module
-angular.module('jmri.app').config(['$routeProvider', '$logProvider',
+angular.module('jmri.app').config(
   function ($routeProvider, $logProvider) {
     'use strict';
 
@@ -22,11 +22,11 @@ angular.module('jmri.app').config(['$routeProvider', '$logProvider',
     
     $logProvider.debugEnabled = false;
   }
-]);
+);
 
 // add the navigation menu controller to the jmri.app module
-angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$jsonSocket', '$log', '$interval', '$rootScope', 'Notifications',
-  function ($scope, $http, $jsonSocket, $log, $interval, $rootScope, Notifications) {
+angular.module('jmri.app').controller('NavigationCtrl',
+  function ($scope, $http, jmriWebSocket, $log, $interval, $rootScope, Notifications) {
     // navigation items %3$s
 
     // notification service
@@ -56,7 +56,7 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
       }
       $log.info("Starting heartbeat every " + heartbeat + " ms.");
       $scope.heartbeat = $interval(function() {
-        $jsonSocket.ping();
+        jmriWebSocket.ping();
       }, heartbeat);
     };
     $scope.stopHeartbeat = function() {
@@ -66,13 +66,13 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
       }
     };
     $scope.power = [];
-    $scope.defaultPowerState = $jsonSocket.UNKNOWN;
+    $scope.defaultPowerState = jmriWebSocket.UNKNOWN;
     $scope.setPower = function(name, state) {
-      $jsonSocket.setPower(name, (state === $jsonSocket.POWER_ON) ? $jsonSocket.POWER_OFF : $jsonSocket.POWER_ON);
+      jmriWebSocket.setPower(name, (state === jmriWebSocket.POWER_ON) ? jmriWebSocket.POWER_OFF : jmriWebSocket.POWER_ON);
     };
-    $jsonSocket.register({
+    jmriWebSocket.register({
       open: function() {
-        $jsonSocket.list('power');
+        jmriWebSocket.list('power');
       },
       power: function(data, method) {
         $log.debug('got ' + (data.default ? 'default ' : '') + 'power ' + data.name + " (" + data.state + ")");
@@ -84,9 +84,9 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
             }
           }
         }
-        if (!$jsonSocket.mergePush($scope.power, data)) {
+        if (!jmriWebSocket.mergePush($scope.power, data)) {
           // express a desire to listen for changes in the object state
-          $jsonSocket.getPower(data.name);
+          jmriWebSocket.getPower(data.name);
         }
         if (data.default) {
           $scope.defaultPowerState = data.state;
@@ -107,22 +107,22 @@ angular.module('jmri.app').controller('NavigationCtrl', ['$scope', '$http', '$js
     // set the browser locale
     // TODO: read cookie with locale if one exists
     // TODO: move this into the factory
-    if (!$jsonSocket.socket.readyState) {
+    if (!jmriWebSocket.socket.readyState) {
       var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
-      $jsonSocket.get('locale', {locale: locale});
+      jmriWebSocket.get('locale', {locale: locale});
     }
-    $jsonSocket.list('power');
+    jmriWebSocket.list('power');
 
   }
-]);
+);
 
-angular.module('jmri.app').filter('powerTriState', function($jsonSocket) {
+angular.module('jmri.app').filter('powerTriState', function(jmriWebSocket) {
   return function(input) {
     switch(input) {
-      case $jsonSocket.POWER_OFF:
+      case jmriWebSocket.POWER_OFF:
         return 'fa-circle-o';
         break;
-      case $jsonSocket.POWER_ON:
+      case jmriWebSocket.POWER_ON:
         return 'fa-bolt';
         break;
       default: // unknown

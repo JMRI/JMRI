@@ -8,7 +8,7 @@
  * @argument {angularService} $log AngularJS logging service
  * @type AngularJS Service Factory
  */
-angular.module('jmri.app').factory('$jsonSocket', function($websocket, $log) {
+angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
   // Open a WebSocket connection
   var parts = document.URL.split('/');
   var url = parts[0] + '//' + parts[2] + '/json/';
