@@ -409,6 +409,7 @@ knows to look for routes of this name.
         understand what the program is trying to do.</li>
       </ul>
       
+      <a name="programmers" id="programmers"></a>
       <h2>For Programmers</h2>
       
           The code to make sure that names are in normal form 
@@ -433,7 +434,7 @@ knows to look for routes of this name.
         <li>JComboBox format:
             <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75"/></a>
             
-            <pre><code>
+            <code><pre>
         import jmri.util.swing.JmriBeanComboBox;
 
         // the first argument is the manager, the 2nd is a bean to select or null
@@ -444,11 +445,11 @@ knows to look for routes of this name.
         
         // to get the selected item
         selectComboBox.getSelectedItem()                                         
-            </code></pre>
+            </pre></code>
 
         <li>Table format:
             <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
-            <pre><code>
+            <code><pre>
 
         import jmri.jmrit.picker.*;
         <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
@@ -463,7 +464,7 @@ knows to look for routes of this name.
         public void valueChanged(ListSelectionEvent e) {
             System.out.println("  Selected: "+panel.getSelectedBeanHandle());
         }
-            </code></pre>
+            </pre></code>
         This allows the user to select either the system name or (non-blank) user name in a row,
         which then becomes the preferred name for the resulting 
         <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.
