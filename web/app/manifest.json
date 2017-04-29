@@ -46,6 +46,7 @@
     }
   ],
   "sources":[
-    "web/app/scripts/websocket.js"
+    "web/app/scripts/websocket.js",
+    "web/app/scripts/util.js"
   ]
 }
