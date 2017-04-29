@@ -1,4 +1,4 @@
-package jmri.jmrix.lenz.ztc640;
+package jmri.jmrix.loconet;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ZTC640ConnectionTypeListTest {
+public class SE8cSignalHeadTest {
 
     @Test
     public void testCTor() {
-        ZTC640ConnectionTypeList t = new ZTC640ConnectionTypeList();
+        SE8cSignalHead t = new SE8cSignalHead(5);
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,6 +25,10 @@ public class ZTC640ConnectionTypeListTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        SlotManager slotmanager = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        jmri.InstanceManager.setDefault(LnTrafficController.class,lnis);
     }
 
     @After
@@ -33,6 +37,6 @@ public class ZTC640ConnectionTypeListTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC640ConnectionTypeListTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadTest.class.getName());
 
 }

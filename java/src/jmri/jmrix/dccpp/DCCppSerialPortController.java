@@ -71,7 +71,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
             }
         }
     }
-
+    
     /**
      * we need a way to say if the output buffer is empty or full this should
      * only be set to false by external processes
@@ -81,14 +81,17 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     synchronized public void setOutputBufferEmpty(boolean s) {
         OutputBufferEmpty = s;
     }
-
-
+    
+    
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
-     was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
+       was used for the "check buffer status when sending" If this is still set
+       in a configuration file, we need to handle it, but we are not writing it
+       to new configuration files. */
     /*public String getCurrentOption2Setting() {
-     if(getOptionState(option2Name)==null) return("no");
+      if(getOptionState(option2Name)==null) return("no");
      else return getOptionState(option2Name);
      }*/
+
     protected String[] validOption2 = new String[]{"yes", "no"};
     private boolean checkBuffer = false;
 
@@ -96,7 +99,7 @@ public abstract class DCCppSerialPortController extends jmri.jmrix.AbstractSeria
     protected void setCheckBuffer(boolean b) {
         checkBuffer = b;
     }
-
+    
     @Override
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();

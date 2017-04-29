@@ -94,6 +94,15 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LnLightManagerTest.class));
         suite.addTest(new JUnit4TestAdapter(LnLightTest.class));
         suite.addTest(new JUnit4TestAdapter(LnMessageManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnPr2ThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(Pr2ThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnClockControlTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnProgrammerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetConsistManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SE8cSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotTest.class));
         return suite;
     }
 
