@@ -12,7 +12,7 @@ angular.module('jmri.app', [
 
 // configure the jmri.app module
 angular.module('jmri.app').config(
-  function ($routeProvider, $logProvider) {
+  function($routeProvider, $logProvider) {
     'use strict';
 
     $routeProvider
@@ -26,14 +26,17 @@ angular.module('jmri.app').config(
 
 // add the navigation menu controller to the jmri.app module
 angular.module('jmri.app').controller('NavigationCtrl',
-  function ($scope, $http, jmriWebSocket, $log, $interval, $rootScope, Notifications) {
+  function($scope, $http, jmriWebSocket, $log, $interval, $rootScope, Notifications) {
     // navigation items %3$s
 
     // notification service
-    $rootScope.toastNotifications = Notifications.data;
+    $scope.toastNotifications = Notifications.data;
+    $scope.tnCloseCallback = function(data) {
+       Notifications.remove(data);
+    }
     
     // about display
-    $http.get('/app/about').then(function (response) {
+    $http.get('/app/about').then(function(response) {
       $scope.additionalInfo = response.data.additionalInfo;
       $scope.copyright = response.data.copyright;
       $scope.imgAlt = response.data.imgAlt;
@@ -41,7 +44,7 @@ angular.module('jmri.app').controller('NavigationCtrl',
       $scope.title = response.data.title;
       $scope.productInfo = response.data.productInfo;
     });
-    $scope.openAboutModal = function () {
+    $scope.openAboutModal = function() {
       $scope.isAboutModalOpen = true;
     };
     $scope.onAboutModalClose = function() {
