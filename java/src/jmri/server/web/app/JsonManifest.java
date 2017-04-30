@@ -6,11 +6,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
 import jmri.server.web.spi.WebMenuItem;
 import jmri.util.FileUtil;
@@ -29,7 +28,7 @@ public class JsonManifest implements WebManifest {
     private final List<String> scripts = new ArrayList<>();
     private final List<String> styles = new ArrayList<>();
     private final List<String> dependencies = new ArrayList<>();
-    private final Map<String, String> routes = new HashMap<>();
+    private final Set<AngularRoute> routes = new HashSet<>();
     private final List<URL> sources = new ArrayList<>();
     private final static Logger log = LoggerFactory.getLogger(JsonManifest.class);
 
@@ -58,7 +57,7 @@ public class JsonManifest implements WebManifest {
     }
 
     @Override
-    public Map<String, String> getAngularRoutes() {
+    public Set<AngularRoute> getAngularRoutes() {
         this.initialize();
         return this.routes;
     }
@@ -100,8 +99,10 @@ public class JsonManifest implements WebManifest {
                     root.path("routes").forEach((route) -> {
                         String when = route.path("when").asText(); // NOI18N
                         String template = route.path("template").asText(); // NOI18N
-                        if (when != null && template != null) {
-                            this.routes.put(when, template);
+                        String controller = route.path("controller").asText(); // NOI18N
+                        String redirection = route.path("redirection").asText(); // NOI18N
+                        if (when != null) {
+                            this.routes.add(new AngularRoute(when, template, controller, redirection));
                         }
                     });
                     root.path("sources").forEach((source) -> {

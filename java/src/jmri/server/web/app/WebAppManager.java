@@ -17,13 +17,16 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.Set;
 import java.util.StringJoiner;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
 import jmri.server.web.spi.WebMenuItem;
 import jmri.util.FileUtil;
@@ -284,12 +287,16 @@ public class WebAppManager extends AbstractPreferencesManager {
 
     public String getAngularRoutes(Profile profile, Locale locale) {
         StringJoiner routes = new StringJoiner("\n", "\n", ""); // NOI18N
-        Map<String, String> items = new HashMap<>();
+        Set<AngularRoute> items = new HashSet<>();
         this.getManifests(profile).forEach((WebManifest manifest) -> {
-            items.putAll(manifest.getAngularRoutes());
+            items.addAll(manifest.getAngularRoutes());
         });
-        items.forEach((String when, String template) -> {
-            routes.add(String.format("      .when('%s', { redirectTo: '%s' })", when, template)); // NOI18N
+        items.forEach((route) -> {
+            if (route.getRedirection() != null) {
+                routes.add(String.format("      .when('%s', { redirectTo: '%s' })", route.getWhen(), route.getRedirection())); // NOI18N
+            } else if (route.getTemplate() != null && route.getController() != null) {
+                routes.add(String.format("      .when('%s', { templateUrl: '%s', controller: '%s' })", route.getWhen(), route.getTemplate(), route.getController())); // NOI18N
+            }
         });
         return routes.toString();
     }

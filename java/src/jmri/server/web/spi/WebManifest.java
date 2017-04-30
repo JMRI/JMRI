@@ -2,7 +2,6 @@ package jmri.server.web.spi;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
@@ -60,7 +59,7 @@ public interface WebManifest {
      * @return a map of angular path to angular routing instructions
      */
     @Nonnull
-    public Map<String, String> getAngularRoutes();
+    public Set<AngularRoute> getAngularRoutes();
 
     /**
      * Get the sources for the Angular module components required by the servlet
