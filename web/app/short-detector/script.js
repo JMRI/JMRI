@@ -1,13 +1,17 @@
 /**
  * Create a running short detection service.
- * 
+ *
  * @type type undefined
  */
 angular.module('jmri.app').run(function shortDetector($rootScope, $http, $log, Notifications, jmriWebSocket) {
 
   // create an object for configuration and data retention in the rootScope
   // this allows controllers in the jmri.app module to access it
-  $rootScope.shortDetector = {};
+  $rootScope.shortDetector = {
+    active: [],
+    detectors: [],
+    regex: undefined
+  };
 
   // register a listener for sensors with the jmriWebSocket service
   // this listener determines if a notification needs to be shown or cleared
@@ -22,6 +26,7 @@ angular.module('jmri.app').run(function shortDetector($rootScope, $http, $log, N
           } else {
             $log.error('Short detection sensor "' + data.userName + '" is missing comment.');
           }
+          $rootScope.shortDetector.active.push(data.name);
         // clear any existing notifications is the sensor went any state other
         // than active
         } else {
@@ -31,6 +36,7 @@ angular.module('jmri.app').run(function shortDetector($rootScope, $http, $log, N
             }
           });
           $log.info('Short cleared at ' + data.userName);
+          $rootScope.shortDetector.active.pop(data.name);
         }
       }
     }
@@ -45,21 +51,24 @@ angular.module('jmri.app').run(function shortDetector($rootScope, $http, $log, N
       $rootScope.shortDetector.regex = new RegExp(response.data.data.value);
       // get a list of sensors
       $http.get('/json/sensors').then(
-         // handle a successful get for the list of sensors
-         function(response) {
-           // iteate over the list
-           response.data.forEach(function onSensor(sensor) {
-             if (sensor.type === 'sensor' && $rootScope.shortDetector.regex.test(sensor.data.userName)) {
-               // if the sensors username matches, get the sensor and listen to it
-               jmriWebSocket.getSensor(sensor.data.name);
-             }
-           });
-         },
-         // handle a failed get for the list of sensors
-         function(response) {
-           // something went wrong
-           $log.error('Unable to retrieve list of sensors');
-         }
+        // handle a successful get for the list of sensors
+        function(response) {
+          // iterate over the list
+          response.data.forEach(function onSensor(sensor) {
+            if (sensor.type === 'sensor'
+                && $.inArray(sensor.data.name, $rootScope.shortDetector.detectors) === -1
+                && $rootScope.shortDetector.regex.test(sensor.data.userName)) {
+              // if the sensors username matches, get the sensor and listen to it
+              jmriWebSocket.getSensor(sensor.data.name);
+              $rootScope.shortDetector.detectors.push(sensor.data.name);
+            }
+          });
+        },
+        // handle a failed get for the list of sensors
+        function(response) {
+          // something went wrong
+          $log.error('Unable to retrieve list of sensors');
+        }
       );
     },
     // handle a failed get for the memory
