@@ -37,13 +37,18 @@ information as a WebManifest.
 
 ### Format
 
-TBD
+manifest.json is a JSON object with the following properties:
+- navigation
+- scripts
+- styles
+- dependencies
+- sources
 
 ## package.files
 
 List of files in this directory that are included in the JMRI distribution. This
 list is maintained due to the extreme size of the dependencies installed using
-npm.
+npm. This file is only used by JMRI developers and can otherwise be ignored.
 
 [1]: https://angularjs.org
 [2]: https://www.npmjs.com

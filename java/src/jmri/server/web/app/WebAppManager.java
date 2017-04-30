@@ -193,21 +193,27 @@ public class WebAppManager extends AbstractPreferencesManager {
         });
         items.sort((WebMenuItem o1, WebMenuItem o2) -> o1.getPath().compareToIgnoreCase(o2.getPath()));
         // TODO: get order correct
-        items.forEach((item) -> {
-            ObjectNode navItem = mapper.createObjectNode();
-            navItem.put("title", item.getTitle(locale));
-            if (item.getIconClass() != null) {
-                navItem.put("iconClass", item.getIconClass());
+        for (int i = 0; i < items.size(); i++) {
+            WebMenuItem item = items.get(i);
+            ObjectNode navItem = this.getMenuItem(item, mapper, locale);
+            ArrayNode children = mapper.createArrayNode();
+            for (int j = i + 1; j < items.size(); j++) {
+                if (!items.get(j).getPath().startsWith(item.getPath())) {
+                    break;
+                }
+                // TODO: add children to arbitrary depth
+                ObjectNode child = this.getMenuItem(items.get(j), mapper, locale);
+                children.add(child);
+                i++;
             }
-            if (item.getHref() != null) {
-                navItem.put("href", item.getHref());
-            }
-            // TODO: add children
+            navItem.set("children", children);
             // TODO: add badges
-            // TODO: handle separator before
-            navigation.add(navItem);
-            // TODO: handle separator after
-        });
+            if (item.getHref() != null || children.size() != 0) {
+                // TODO: handle separator before
+                navigation.add(navItem);
+                // TODO: handle separator after
+            }
+        }
         return mapper.writeValueAsString(navigation);
     }
 
@@ -245,6 +251,18 @@ public class WebAppManager extends AbstractPreferencesManager {
             }
         });
         return navigation.toString();
+    }
+
+    private ObjectNode getMenuItem(WebMenuItem item, ObjectMapper mapper, Locale locale) {
+        ObjectNode navItem = mapper.createObjectNode();
+        navItem.put("title", item.getTitle(locale));
+        if (item.getIconClass() != null) {
+            navItem.put("iconClass", item.getIconClass());
+        }
+        if (item.getHref() != null) {
+            navItem.put("href", item.getHref());
+        }
+        return navItem;
     }
 
     public String getAngularDependencies(Profile profile, Locale locale) {

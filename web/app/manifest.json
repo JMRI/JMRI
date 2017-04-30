@@ -3,6 +3,14 @@
     {
       "path": "help/about",
       "href": "ng-click:openAboutModal()"
+    },
+    {
+      "path": "panel",
+      "iconClass": "fa fa-map-o"  
+    },
+    {
+      "path": "layout",
+      "iconClass": "fa fa-map-signs"
     }
   ],
   "scripts":[
