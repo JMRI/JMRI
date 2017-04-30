@@ -44,7 +44,7 @@ public class WebAppManager extends AbstractPreferencesManager {
 
     private WatchService watcher = null;
     private final static Logger log = LoggerFactory.getLogger(WebAppManager.class);
-    private Map<WatchKey, Path> watchPaths = new HashMap<>();
+    private final Map<WatchKey, Path> watchPaths = new HashMap<>();
     private boolean watching = false;
     private final HashMap<Profile, List<WebManifest>> manifests = new HashMap<>();
 
@@ -203,7 +203,9 @@ public class WebAppManager extends AbstractPreferencesManager {
                 }
                 // TODO: add children to arbitrary depth
                 ObjectNode child = this.getMenuItem(items.get(j), mapper, locale);
-                children.add(child);
+                if (items.get(j).getHref() != null) {
+                    children.add(child);
+                }
                 i++;
             }
             navItem.set("children", children);
