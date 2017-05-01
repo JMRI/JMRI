@@ -4610,7 +4610,10 @@ public class LogixTableAction extends AbstractTableAction {
         // Get the current Logix name for selecting the current combo box row
         String cdlName = _curVariable.getName();
         String lgxName;
-        if (cdlName.length() == 0 || _curVariable.getType() != Conditional.ITEM_TYPE_CONDITIONAL) {
+        if (cdlName.length() == 0 || (
+                _curVariable.getType() != Conditional.TYPE_CONDITIONAL_TRUE &&
+                _curVariable.getType() != Conditional.TYPE_CONDITIONAL_FALSE)
+                ) {
             // Use the current logix name for "add" state variable
             lgxName = _curLogix.getSystemName();
         } else {
