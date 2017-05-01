@@ -176,6 +176,15 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     }
     
     /**
+     * Destructor
+     */
+    @Override
+    public void dispose() {
+        // unregister listener
+        stats.removeLocoNetInterfaceStatsListener(this);
+    }
+    
+    /**
      * Send LocoNet request for interface status.
      * 
      * Performs the send from the "Layout" thread, to avoid GUI-related 
