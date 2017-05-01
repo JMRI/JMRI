@@ -155,9 +155,9 @@ public class LayoutTurnout extends LayoutTrack {
     //Second turnout is used to either throw a second turnout in a cross over or if one turnout address is used to throw two physical ones
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
     protected LayoutBlock block = null;
-    private LayoutBlock blockB = null;  // Xover - second block, if there is one
-    private LayoutBlock blockC = null;  // Xover - third block, if there is one
-    private LayoutBlock blockD = null;  // Xover - fourth block, if there is one
+    protected LayoutBlock blockB = null;  // Xover - second block, if there is one
+    protected LayoutBlock blockC = null;  // Xover - third block, if there is one
+    protected LayoutBlock blockD = null;  // Xover - fourth block, if there is one
     protected LayoutEditor layoutEditor = null;
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
@@ -1864,7 +1864,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-            //If the turnout is set for straigh over, we need to deal with the straight over connecting blocks
+            //If the turnout is set for straight over, we need to deal with the straight over connecting blocks
             if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {
                 if ((block.getOccupancy() == LayoutBlock.OCCUPIED) && (blockB.getOccupancy() == LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + blockName + " & " + blockBName + " are Occupied");
@@ -2773,7 +2773,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        String newName = firstTurnoutComboBox.getDisplayName();
+        String newName = firstTurnoutComboBox.getUserName();
         if (!turnoutName.equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
@@ -2787,7 +2787,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if (additionalTurnout.isSelected()) {
-            newName = secondTurnoutComboBox.getDisplayName();
+            newName = secondTurnoutComboBox.getUserName();
             if (!secondTurnoutName.equals(newName)) {
                 if ((type == DOUBLE_XOVER)
                         || (type == RH_XOVER)

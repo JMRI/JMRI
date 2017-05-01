@@ -78,8 +78,11 @@ public class LayoutSlip extends LayoutTurnout {
 
     public int currentState = UNKNOWN;
 
-    private String turnoutBName = "";
-    private NamedBeanHandle<Turnout> namedTurnoutB = null;
+    // @Deprecated since 4.7.? use @link{secondTurnoutName} instead.
+    //private String turnoutBName = "";
+    // @Deprecated since 4.7.? use @link{secondNamedTurnout} instead.
+    //private NamedBeanHandle<Turnout> namedTurnoutB = null;
+
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     /**
@@ -92,7 +95,7 @@ public class LayoutSlip extends LayoutTurnout {
         center = c;
         dispC = new Point2D.Double(-20.0, 0.0);
         dispB = new Point2D.Double(-14.0, 14.0);
-        setTurnoutType(type);
+        setSlipType(type);
         rotateCoords(rot);
     }
 
@@ -106,20 +109,19 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void setSlipType(int slipType) {
-        if (type == slipType) {
-            return;
-        }
-        type = slipType;
-        if (type == DOUBLE_SLIP) {
-            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
-            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-            turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-        } else {
-            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
-            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
-            turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
-            turnoutStates.remove(STATE_BC);
+        if (type != slipType) {
+            type = slipType;
+            if (type == DOUBLE_SLIP) {
+                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
+                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+                turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+            } else {
+                turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+                turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
+                turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
+                turnoutStates.remove(STATE_BC);
+            }
         }
     }
 
@@ -131,38 +133,28 @@ public class LayoutSlip extends LayoutTurnout {
         return currentState;
     }
 
+    /*
+     * @Deprecated since 4.7.? use @link{getSecondTurnoutName()} instead.
+     */
+    @Deprecated
     public String getTurnoutBName() {
-        if (namedTurnoutB != null) {
-            return namedTurnoutB.getName();
-        }
-        return turnoutBName;
+        return getSecondTurnoutName();
     }
 
+    /*
+     * @Deprecated since 4.7.? use @link{getSecondTurnout()} instead.
+     */
+    @Deprecated
     public Turnout getTurnoutB() {
-        if (namedTurnoutB == null) {
-            // set physical turnout if possible and needed
-            setTurnoutB(turnoutBName);
-            if (namedTurnoutB == null) {
-                return null;
-            }
-        }
-        return namedTurnoutB.getBean();
+        return getSecondTurnout();
     }
 
+    /*
+     * @Deprecated since 4.7.? use @link{setSecondTurnout()} instead.
+     */
+    @Deprecated
     public void setTurnoutB(String tName) {
-        if (namedTurnoutB != null) {
-            deactivateTurnout();
-        }
-        turnoutBName = tName;
-        Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().
-                getTurnout(turnoutBName);
-        if (turnout != null) {
-            namedTurnoutB = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutBName, turnout);
-            activateTurnout();
-        } else {
-            turnoutBName = "";
-            namedTurnoutB = null;
-        }
+        setSecondTurnout(tName);
     }
 
     @Override
@@ -213,11 +205,11 @@ public class LayoutSlip extends LayoutTurnout {
         String name = "Slip :";
         if (getTurnoutName() != null) {
             name += "(" + getTurnoutName();
-            if (getTurnoutBName() != null) {
-                name += ":" + getTurnoutBName() + ")";
+            if (getSecondTurnoutName() != null) {
+                name += ":" + getSecondTurnoutName() + ")";
             }
-        } else if (getTurnoutBName() != null) {
-            name += "(" + getTurnoutBName() + ")";
+        } else if (getSecondTurnoutName() != null) {
+            name += "(" + getSecondTurnoutName() + ")";
         }
         return name;
     }
@@ -319,8 +311,8 @@ public class LayoutSlip extends LayoutTurnout {
         if (getTurnout() != null) {
             getTurnout().setCommandedState(ts.getTurnoutAState());
         }
-        if (getTurnoutB() != null) {
-            getTurnoutB().setCommandedState(ts.getTurnoutBState());
+        if (getSecondTurnout() != null) {
+            getSecondTurnout().setCommandedState(ts.getTurnoutBState());
         }
     }
 
@@ -334,19 +326,19 @@ public class LayoutSlip extends LayoutTurnout {
                         updateState();
                     }, namedTurnout.getName(), "Layout Editor Slip");
         }
-        if (namedTurnoutB != null) {
-            namedTurnoutB.getBean().addPropertyChangeListener(mTurnoutListener
+        if (secondNamedTurnout != null) {
+            secondNamedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
                     = (java.beans.PropertyChangeEvent e) -> {
                         updateState();
-                    }, namedTurnoutB.getName(), "Layout Editor Slip");
+                    }, secondNamedTurnout.getName(), "Layout Editor Slip");
         }
     }
 
     private void deactivateTurnout() {
         if (mTurnoutListener != null) {
             namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
-            if (namedTurnoutB != null) {
-                namedTurnoutB.getBean().removePropertyChangeListener(mTurnoutListener);
+            if (secondNamedTurnout != null) {
+                secondNamedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
             }
             mTurnoutListener = null;
         }
@@ -505,7 +497,9 @@ public class LayoutSlip extends LayoutTurnout {
      */
     public boolean isMainline() {
         if (((connectA != null) && (((TrackSegment) connectA).getMainline()))
-                || ((connectB != null) && (((TrackSegment) connectB).getMainline()))) {
+                || ((connectB != null) && (((TrackSegment) connectB).getMainline()))
+                || ((connectC != null) && (((TrackSegment) connectC).getMainline()))
+                || ((connectD != null) && (((TrackSegment) connectD).getMainline()))) {
             return true;
         } else {
             return false;
@@ -572,13 +566,76 @@ public class LayoutSlip extends LayoutTurnout {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
+
         if (tBlockName.length() > 0) {
             block = p.getLayoutBlock(tBlockName);
             if (block != null) {
                 blockName = tBlockName;
                 block.incrementUse();
             } else {
-                log.error("bad blocknameac '" + tBlockName + "' in slip " + ident);
+                log.error("bad blockname '" + tBlockName + "' in layoutturnout " + ident);
+            }
+        }
+
+        if (tBlockBName.length() > 0) {
+            blockB = p.getLayoutBlock(tBlockBName);
+            if (blockB != null) {
+                blockBName = tBlockBName;
+                if (block != blockB) {
+                    blockB.incrementUse();
+                }
+            } else {
+                log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + ident);
+            }
+        }
+
+        if (tBlockCName.length() > 0) {
+            blockC = p.getLayoutBlock(tBlockCName);
+            if (blockC != null) {
+                blockCName = tBlockCName;
+                if ((block != blockC) && (blockB != blockC)) {
+                    blockC.incrementUse();
+                }
+            } else {
+                log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + ident);
+            }
+        }
+
+        if (tBlockDName.length() > 0) {
+            blockD = p.getLayoutBlock(tBlockDName);
+            if (blockD != null) {
+                blockDName = tBlockDName;
+                if ((block != blockD) && (blockB != blockD)
+                        && (blockC != blockD)) {
+                    blockD.incrementUse();
+                }
+            } else {
+                log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + ident);
+            }
+        }
+
+        // Do the second one first then the activate is only called the once
+        if (tSecondTurnoutName.length() > 0) {
+            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tSecondTurnoutName);
+            if (turnout != null) {
+                secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
+                secondTurnoutName = tSecondTurnoutName;
+            } else {
+                log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutturnout " + ident);
+                secondTurnoutName = "";
+                secondNamedTurnout = null;
+            }
+        }
+        if (tTurnoutName.length() > 0) {
+            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tTurnoutName);
+            if (turnout != null) {
+                namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tTurnoutName, turnout);
+                turnoutName = tTurnoutName;
+                activateTurnout();
+            } else {
+                log.error("bad turnoutname '" + tTurnoutName + "' in layoutturnout " + ident);
+                turnoutName = "";
+                namedTurnout = null;
             }
         }
     }
@@ -805,7 +862,7 @@ public class LayoutSlip extends LayoutTurnout {
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
             turnoutBComboBox = new JmriBeanComboBox(
-                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
             contentPane.add(panel1a);
@@ -848,13 +905,7 @@ public class LayoutSlip extends LayoutTurnout {
             JLabel block1NameLabel = new JLabel(rb.getString("BlockID"));
             panel3.add(block1NameLabel);
             panel3.add(blockNameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(blockNameComboBox, false, true);
-            } else {
-                blockNameComboBox.setEditable(true);
-                blockNameComboBox.getEditor().setItem("");
-                blockNameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
 
             contentPane.add(panel3);
@@ -1077,8 +1128,8 @@ public class LayoutSlip extends LayoutTurnout {
         ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
         /*if(getTurnout()!=null)
          getTurnout().setCommandedState(turnAState);
-         if(getTurnoutB()!=null)
-         getTurnoutB().setCommandedState(turnBState);*/
+         if(getSecondTurnout()!=null)
+         getSecondTurnout().setCommandedState(turnBState);*/
         if (testPanel != null) {
             testPanel.repaint();
         }
@@ -1097,7 +1148,7 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        String newName = turnoutAComboBox.getDisplayName();
+        String newName = turnoutAComboBox.getUserName();
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1107,14 +1158,14 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = turnoutBComboBox.getDisplayName();
-        if (!turnoutBName.equals(newName)) {
+        newName = turnoutBComboBox.getUserName();
+        if (!secondTurnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
                 setTurnoutB(newName);
             } else {
-                namedTurnoutB = null;
-                turnoutBName = "";
+                secondNamedTurnout = null;
+                secondTurnoutName = "";
             }
             needRedraw = true;
         }
@@ -1260,7 +1311,7 @@ public class LayoutSlip extends LayoutTurnout {
     //Internal call to update the state of the slip depending upon the turnout states.
     void updateState() {
         int state_a = getTurnout().getKnownState();
-        int state_b = getTurnoutB().getKnownState();
+        int state_b = getSecondTurnout().getKnownState();
         for (Entry<Integer, TurnoutState> en : turnoutStates.entrySet()) {
             if (en.getValue().getTurnoutAState() == state_a) {
                 if (en.getValue().getTurnoutBState() == state_b) {
@@ -1279,88 +1330,115 @@ public class LayoutSlip extends LayoutTurnout {
             Point2D pointC = getCoordsC();
             Point2D pointD = getCoordsD();
 
-            Color mainColour;
-            Color subColour;
             LayoutBlock b = getLayoutBlock();
+            Color mainColourA = defaultTrackColor;
+            Color subColourA = defaultTrackColor;
             if (b != null) {
-                mainColour = b.getBlockColor();
-                subColour = b.getBlockTrackColor();
-            } else {
-                mainColour = defaultTrackColor;
-                subColour = defaultTrackColor;
+                mainColourA = b.getBlockColor();
+                subColourA = b.getBlockTrackColor();
+            }
+
+            b = getLayoutBlockB();
+            Color mainColourB = defaultTrackColor;
+            Color subColourB = defaultTrackColor;
+            if (b != null) {
+                mainColourB = b.getBlockColor();
+                subColourB = b.getBlockTrackColor();
+            }
+
+            b = getLayoutBlockC();
+            Color mainColourC = defaultTrackColor;
+            Color subColourC = defaultTrackColor;
+            if (b != null) {
+                mainColourC = b.getBlockColor();
+                subColourC = b.getBlockTrackColor();
+            }
+
+            b = getLayoutBlockD();
+            Color mainColourD = defaultTrackColor;
+            Color subColourD = defaultTrackColor;
+            if (b != null) {
+                mainColourD = b.getBlockColor();
+                subColourD = b.getBlockTrackColor();
             }
 
             float w = layoutEditor.setTrackStrokeWidth(g2, isMainline());
 
-            g2.setColor(subColour);
+            boolean isMainA = (connectA != null) && (((TrackSegment) connectA).getMainline());
+            boolean isMainB = (connectA != null) && (((TrackSegment) connectB).getMainline());
+            boolean isMainC = (connectA != null) && (((TrackSegment) connectC).getMainline());
+            boolean isMainD = (connectA != null) && (((TrackSegment) connectD).getMainline());
 
-            g2.draw(new Line2D.Double(pointA, third(pointA, pointC)));
-            g2.draw(new Line2D.Double(pointC, third(pointC, pointA)));
+            if (getSlipState() == STATE_AC) {
+                g2.setColor(mainColourA);
+                layoutEditor.setTrackStrokeWidth(g2, isMainA);
+                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointC)));
 
-            g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
-            g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
-
-            if (getSlipType() == DOUBLE_SLIP) {
-                if (getSlipState() == STATE_AC) {
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
-
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(pointA, pointC));
-
-                } else if (getSlipState() == STATE_BD) {
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
-
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(pointB, pointD));
-
-                } else if (getSlipState() == STATE_AD) {
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
-
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(pointA, pointD));
-                } else if (getSlipState() == STATE_BC) {
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
-
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(pointB, pointC));
-                } else {
-                    g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
-                    g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
-                }
+                g2.setColor(mainColourC);
+                layoutEditor.setTrackStrokeWidth(g2, isMainC);
+                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointA)));
             } else {
+                g2.setColor(subColourA);
+                layoutEditor.setTrackStrokeWidth(g2, isMainA);
+                g2.draw(new Line2D.Double(pointA, third(pointA, pointC)));
+
+                g2.setColor(subColourC);
+                layoutEditor.setTrackStrokeWidth(g2, isMainC);
+                g2.draw(new Line2D.Double(pointC, third(pointC, pointA)));
+            }
+
+            if (getSlipState() == STATE_BD) {
+                g2.setColor(mainColourB);
+                layoutEditor.setTrackStrokeWidth(g2, isMainB);
+                g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointD)));
+
+                g2.setColor(mainColourD);
+                layoutEditor.setTrackStrokeWidth(g2, isMainD);
+                g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointB)));
+            } else {
+                g2.setColor(subColourB);
+                layoutEditor.setTrackStrokeWidth(g2, isMainB);
+                g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
+
+                g2.setColor(subColourD);
+                layoutEditor.setTrackStrokeWidth(g2, isMainD);
+                g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
+            }
+
+            if (getSlipState() == STATE_AD) {
+                g2.setColor(mainColourA);
+                layoutEditor.setTrackStrokeWidth(g2, isMainA);
+                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointD)));
+
+                g2.setColor(mainColourD);
+                layoutEditor.setTrackStrokeWidth(g2, isMainD);
+                g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointA)));
+            } else {
+                g2.setColor(subColourA);
+                layoutEditor.setTrackStrokeWidth(g2, isMainA);
                 g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+
+                g2.setColor(subColourD);
+                layoutEditor.setTrackStrokeWidth(g2, isMainD);
                 g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
-                if (getSlipState() == STATE_AD) {
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(pointA, pointD));
-                } else if (getSlipState() == STATE_BD) {
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(pointB, pointD));
-                    if (singleSlipStraightEqual()) {
-                        g2.setColor(mainColour);
-                        g2.draw(new Line2D.Double(pointA, pointC));
-                    }
-                } else if (getSlipState() == STATE_AC) {
-                    g2.setColor(mainColour);
-                    g2.draw(new Line2D.Double(pointA, pointC));
-                    if (singleSlipStraightEqual()) {
-                        g2.setColor(mainColour);
-                        g2.draw(new Line2D.Double(pointB, pointD));
-                    }
-                } else {
-                    g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
-                    g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
-                }
+            }
+
+            if (getSlipState() == STATE_BC) {
+                g2.setColor(mainColourB);
+                layoutEditor.setTrackStrokeWidth(g2, isMainB);
+                g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointC)));
+
+                g2.setColor(mainColourC);
+                layoutEditor.setTrackStrokeWidth(g2, isMainC);
+                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointB)));
+            } else if (getSlipType() == DOUBLE_SLIP) {
+                g2.setColor(subColourB);
+                layoutEditor.setTrackStrokeWidth(g2, isMainB);
+                g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
+
+                g2.setColor(subColourC);
+                layoutEditor.setTrackStrokeWidth(g2, isMainC);
+                g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
             }
         }   // if (!(getHidden() && !layoutEditor.isEditable()))
     }
