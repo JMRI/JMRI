@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     jmri.server.web.app.PackageTest.class,
-    jmri.server.web.spi.WebServerConfigurationTest.class,
+    jmri.server.web.spi.PackageTest.class,
     AbstractWebServerConfigurationTest.class,
     DefaultWebServerConfigurationTest.class
 })
