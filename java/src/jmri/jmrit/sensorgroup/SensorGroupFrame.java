@@ -335,10 +335,13 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
     void deleteGroup(boolean showMsg) {
         String group = _nameField.getText();
+
         if (group == null || group.equals("")) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "'View' the group or enter the group name in the 'Group Name' field before selecting 'Undo Group'",
-                    "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            if (showMsg) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "'View' the group or enter the group name in the 'Group Name' field before selecting 'Undo Group'",
+                        "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
             return;
         }
         String prefix = (namePrefix + group + nameDivider).toUpperCase();

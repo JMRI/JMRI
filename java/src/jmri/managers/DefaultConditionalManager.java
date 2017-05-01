@@ -141,24 +141,33 @@ public class DefaultConditionalManager extends AbstractManager
             return null;
         }
 
-        String lgxName = "";
         if (name.startsWith(SensorGroupFrame.ConditionalSystemPrefix)) {
-            lgxName = "SYS";
+            return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("SYS");
         } else {
-            String pattern = "(.*?)(C\\d+)";                            // Default pattern: ???Cn
+            String pattern = "(.*?)(C\\d+$)";                            // Default pattern: ???Cn
             if (name.startsWith(LRouteTableAction.LOGIX_SYS_NAME)) {    // LRoutes and exported Routes
-                pattern = "(.*?)(\\d+[ALT])";                           // Pattern: ???nA, nL or nT
+                pattern = "(.*?)([1-9]{1}[ALT]$)";                      // Pattern: ???nA, nL or nT (one digit, 1-9)
             }
             Pattern r = Pattern.compile(pattern);
             Matcher m = r.matcher(name);
             if (m.find()) {
-                lgxName = m.group(1);
-            } else {
-                //Unable to match parent logix name
-                return null;
+                Logix lgx = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
+                if (lgx != null) {
+                    return lgx;
+                }
+            }
+            // Old style LRoutes can have more than 9 conditionals
+            if (name.startsWith(LRouteTableAction.LOGIX_SYS_NAME)) {
+                // Try again with 2 digits (10-99)
+                pattern = "(.*?)([0-9]{2}[ALT]$)";
+                r = Pattern.compile(pattern);
+                m = r.matcher(name);
+                if (m.find()) {
+                    return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
+                }
             }
         }
-        return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(lgxName);
+        return null;
     }
 
     /**

@@ -1332,7 +1332,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @return false if name has length &lt; 1 after displaying a dialog
      */
     boolean checkLogixSysName() {
-        String sName = _systemName.getText().trim(); // N11N
+        String sName = _systemName.getText().toUpperCase().trim(); // N11N
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
             javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
@@ -1404,7 +1404,6 @@ public class LogixTableAction extends AbstractTableAction {
         if (uName.length() == 0) {
             uName = null;
         }
-        String sName = _systemName.getText().trim(); // N11N
         if (_autoSystemName.isSelected()) {
             if (!checkLogixUserName(uName)) {
                 return;
@@ -1414,8 +1413,8 @@ public class LogixTableAction extends AbstractTableAction {
             if (!checkLogixSysName()) {
                 return;
             }
-            // Refresh sName, IX may have been added by checkLogixSysName
-            sName = _systemName.getText().trim(); // N11N
+            // Get validated system name
+            String sName = _systemName.getText(); // N11N
             // check if a Logix with this name already exists
             Logix x = null;
             try {
@@ -4635,7 +4634,12 @@ public class LogixTableAction extends AbstractTableAction {
             }
             Logix x = _logixManager.getLogix(xName);
             String uName = x.getUserName();
-            String itemName = uName + " ( " + xName + " )";
+            String itemName = "";
+            if (uName == null || uName.length() < 1) {
+                itemName = xName;
+            } else {
+                itemName = uName + " ( " + xName + " )";
+            }
             _selectLogixBox.addItem(itemName);
             _selectLogixList.add(xName);
             if (lgxName.equals(xName)) {
@@ -4678,7 +4682,12 @@ public class LogixTableAction extends AbstractTableAction {
                 continue;
             }
             String uName = c.getUserName();
-            String itemName = uName + " ( " + cName + " )";
+            String itemName = "";
+            if (uName == null || uName.length() < 1) {
+                itemName = cName;
+            } else {
+                itemName = uName + " ( " + cName + " )";
+            }
             _selectConditionalBox.addItem(itemName);
             _selectConditionalList.add(cName);
             if (cdlName.equals(cName)) {
@@ -5018,7 +5027,11 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _curVariable.setName(name);
                 Conditional c = _conditionalManager.getBySystemName(name);
-                _curVariable.setGuiName(c.getUserName());
+                if (c.getUserName().length() > 0) {
+                    _curVariable.setGuiName(c.getUserName());
+                } else {
+                    _curVariable.setGuiName(c.getSystemName());
+                }
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
                 name = validateLightReference(name);
@@ -6451,7 +6464,11 @@ public class LogixTableAction extends AbstractTableAction {
                             for (ConditionalVariable var : varList) {
                                 // Find the affected conditional variable
                                 if (var.getName().equals(sName)) {
-                                    var.setGuiName(uName);
+                                    if (uName.length() > 0) {
+                                        var.setGuiName(uName);
+                                    } else {
+                                        var.setGuiName(sName);
+                                    }
                                 }
                             }
                             cRef.setStateVariables(varList);
