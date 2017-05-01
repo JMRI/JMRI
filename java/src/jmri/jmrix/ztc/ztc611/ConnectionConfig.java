@@ -7,21 +7,22 @@ package jmri.jmrix.ztc.ztc611;
  * This uses the {@link ZTC611Adapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  *
+ *
  * @see ZTC611Adapter
  */
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with an existing adapter.
+     *
+     * @param p the associated adapter
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Create a connection configuration without an existing adapter.
      */
     public ConnectionConfig() {
         super();
