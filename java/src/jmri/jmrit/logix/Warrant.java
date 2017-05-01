@@ -612,7 +612,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     return Bundle.getMessage("LostTrain", _trainName, block.getDisplayName());
                 }
                 String blockName = block.getDisplayName();
-                String speed = _engineer.getSpeedRestriction();
+                String speed = _engineer.getSpeedMessage();
                 
                 switch (_engineer.getRunState()) {
                     case Warrant.HALT:
@@ -1100,7 +1100,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (log.isDebugEnabled()) {
             log.debug("deallocated Route for warrant \"{}\".", getDisplayName());
         }
-//        firePropertyChange("deallocate", Boolean.valueOf(old), Boolean.valueOf(false));
     }
     
     /**
@@ -1300,20 +1299,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         } else {
             if (!_waitForBlock && _engineer !=null) {
                 _engineer.setWaitforClear(false);
+                firePropertyChange("SpeedChange", _idxCurrentOrder, _idxCurrentOrder);
             }
             _waitForSignal = false;
         }
         return true;
-    }
-
-    private void clearStoppingSignal() {
-        if (_protectSignal != null) {
-            _protectSignal.removePropertyChangeListener(this);
-            log.debug("Warrant \"{}\" Cleared _protectSignal= \"{}\".",
-                    getDisplayName(), _protectSignal.getDisplayName());               
-            _protectSignal = null;
-            _idxProtectSignal = -1;
-        }
     }
 
     /**
@@ -1426,34 +1416,39 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private void setStoppingSignal(int idx) {
         BlockOrder blkOrder = getBlockOrderAt(idx);
         NamedBean signal = blkOrder.getSignal();
-        if (signal == null || idx < _idxLastOrder) {
-            return;
-        }
+
         if (_protectSignal != null) {
-            if (signal.equals(_protectSignal)) {
+            if (_protectSignal.equals(signal)) {
                 // Must be the route coming back to the same block
                 if (_idxProtectSignal < idx && idx >= 0) {
                     _idxProtectSignal = idx;
                 }
                 return;
             } else {
-                if (_idxProtectSignal < _idxCurrentOrder && !_waitForSignal) {
+                if (_idxProtectSignal <= _idxCurrentOrder && !_waitForSignal) {
                     _protectSignal.removePropertyChangeListener(this);
                 } else {
                     return;
                 }
             }
         }
+
         NamedBean prevSignal = _protectSignal;
-        _protectSignal = signal;
-        _idxProtectSignal = idx;
-        _protectSignal.addPropertyChangeListener(this);
+        if (signal != null) {
+            _protectSignal = signal;
+            _idxProtectSignal = idx;
+            _protectSignal.addPropertyChangeListener(this);
+        }
         if (log.isDebugEnabled()) {
-            String msg = "Warrant \"{}\" sets _protectSignal= \"{}\"";
-            if (prevSignal != null) {
-                msg = msg + ", removes \"{}\"";
+            String msg = "Signal at block \"{}\" Warrant \"{}\"";
+            if (_protectSignal != null) {
+                msg = msg + " sets _protectSignal= \"{}\"";
             }
-            log.debug( msg, getDisplayName(), _protectSignal.getDisplayName(),
+            if (prevSignal != null) {
+                msg = msg + ", removes signal= \"{}\"";
+            }
+            log.debug( msg,  blkOrder.getBlock().getDisplayName(), getDisplayName(),
+                    (signal == null ? "" : _protectSignal.getDisplayName()),
                     (prevSignal == null ? "" : prevSignal.getDisplayName()));
         }
     }
@@ -1564,6 +1559,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     activeIdx, _idxCurrentOrder);
             return;
         }
+        if (_engineer != null) {
+            _engineer.clearWaitForSync();
+        }
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);
         block._entryTime = System.currentTimeMillis();
@@ -1585,20 +1583,19 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             allocateFromIndex(_idxCurrentOrder + 1);
             BlockOrder bo = getBlockOrderAt(_idxCurrentOrder + 1);
             bo.setPath(this);
+        } else { // train is in last block. past all signals
+            if (_protectSignal != null) {
+                _protectSignal.removePropertyChangeListener(this);
+                _protectSignal = null;
+                _idxProtectSignal = -1;
+            }
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("end of goingActive. leaving \"{}\" entered \"{}\". warrant {}",
+                    getBlockAt(activeIdx-1).getDisplayName(), block.getDisplayName(), getDisplayName());
         }
         setMovement(BEG);
-
-//        if (_idxCurrentOrder == activeIdx) {  ALWAYS TRUE HERE
-            // fire notification last so engineer's state can be documented in whatever GUI is listening.
-            if (log.isDebugEnabled()) {
-                log.debug("end of goingActive. leaving \"{}\" entered \"{}\". warrant {}",
-                        getBlockAt(activeIdx-1).getDisplayName(), block.getDisplayName(), getDisplayName());
-            }
-            firePropertyChange("blockChange", getBlockAt(activeIdx-1), block);
-//        }
-/*        if (_tempRunBlind && _idxCurrentOrder>0) {     WHY   NECESSARY???
-            goingInactive(getBlockAt(_idxCurrentOrder-1));            
-        }*/
+        firePropertyChange("blockChange", getBlockAt(activeIdx-1), block);
     }       //end goingActive
 
     /**
@@ -1965,6 +1962,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if(log.isDebugEnabled())
                 log.debug("Hold train at block \"{}\" runState= {}, speed= {}.warrant {}",
                         curBlock.getDisplayName(), RUN_STATE[runState], _engineer.getSpeed(), getDisplayName());
+            firePropertyChange("SpeedChange", _idxCurrentOrder-1, _idxCurrentOrder);    // message reason for hold
             return true;
         }
 

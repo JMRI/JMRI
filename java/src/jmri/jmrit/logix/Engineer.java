@@ -565,9 +565,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     /**
      * Calculates the scale speed of the current throttle setting for display
-     * @return text messgae
+     * @return text message
      */
-    public String getSpeedRestriction() {
+    public String getSpeedMessage() {
         float curSpeed = getSpeed();
         float speed = getTrackSpeed(curSpeed) * _speedMap.getLayoutScale();
 
