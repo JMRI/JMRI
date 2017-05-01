@@ -107,7 +107,7 @@ public interface Positionable extends Cloneable {
     /**
      * Add additional menu items to the menu.
      *
-     * @param popup the menu to add
+     * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
     public boolean setRotateOrthogonalMenu(JPopupMenu popup);
@@ -115,7 +115,7 @@ public interface Positionable extends Cloneable {
     /**
      * Add additional menu items to the menu.
      *
-     * @param popup the menu to add
+     * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
     public boolean setRotateMenu(JPopupMenu popup);
@@ -123,7 +123,7 @@ public interface Positionable extends Cloneable {
     /**
      * Add additional menu items to the menu.
      *
-     * @param popup the menu to add
+     * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
     public boolean setScaleMenu(JPopupMenu popup);
@@ -131,7 +131,7 @@ public interface Positionable extends Cloneable {
     /**
      * Add additional menu items to the menu.
      *
-     * @param popup the menu to add
+     * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
     public boolean setEditIconMenu(JPopupMenu popup);
@@ -139,7 +139,7 @@ public interface Positionable extends Cloneable {
     /**
      * Add additional menu items to the menu.
      *
-     * @param popup the menu to add
+     * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
     public boolean setEditItemMenu(JPopupMenu popup);
@@ -147,7 +147,7 @@ public interface Positionable extends Cloneable {
     /**
      * Add additional menu items to the menu.
      *
-     * @param popup the menu to add
+     * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
     public boolean setDisableControlMenu(JPopupMenu popup);
@@ -155,7 +155,7 @@ public interface Positionable extends Cloneable {
     /**
      * Add additional menu items to the menu.
      *
-     * @param popup the menu to add
+     * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
     public boolean setTextEditMenu(JPopupMenu popup);
