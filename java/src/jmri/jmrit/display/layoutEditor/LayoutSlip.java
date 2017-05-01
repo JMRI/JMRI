@@ -1128,8 +1128,8 @@ public class LayoutSlip extends LayoutTurnout {
         ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
         /*if(getTurnout()!=null)
          getTurnout().setCommandedState(turnAState);
-         if(getSecondTurnout()!=null)
-         getSecondTurnout().setCommandedState(turnBState);*/
+         if (getSecondTurnout()!=null)
+             getSecondTurnout().setCommandedState(turnBState);*/
         if (testPanel != null) {
             testPanel.repaint();
         }
@@ -1148,7 +1148,7 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
-        String newName = turnoutAComboBox.getUserName();
+        String newName = turnoutAComboBox.getDisplayName();
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1158,7 +1158,7 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
-        newName = turnoutBComboBox.getUserName();
+        newName = turnoutBComboBox.getDisplayName();
         if (!secondTurnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
