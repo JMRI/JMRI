@@ -80,7 +80,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void getInstance() {
         if(adapter == null) {
            adapter = new SerialDriverAdapter();
-           adapter.configure(); // sets the memo and traffic controller.
         } 
     }
 

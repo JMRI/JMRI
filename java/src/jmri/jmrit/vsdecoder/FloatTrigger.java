@@ -15,7 +15,7 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 import java.beans.PropertyChangeEvent;
@@ -52,6 +52,7 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
         return (compare_type);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         Float next;
         boolean compare = false;

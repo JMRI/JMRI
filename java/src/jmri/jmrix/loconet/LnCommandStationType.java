@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  */
 @net.jcip.annotations.Immutable
 public enum LnCommandStationType {
@@ -75,6 +75,7 @@ public enum LnCommandStationType {
         return canRead;
     }
 
+    @Override
     public String toString() {
         return name;
     }

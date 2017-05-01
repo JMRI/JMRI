@@ -258,6 +258,6 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         useWiFiConsist = value;
     }
 
-    private static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
+    private final static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class);
 
 }

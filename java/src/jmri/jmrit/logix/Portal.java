@@ -54,7 +54,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     public boolean addPath(OPath path) {
         Block block = path.getBlock();
         if (block == null) {
-            log.error("Path \"" + path.getName() + "\" has no block.");
+            log.error("Path \"{}\" has no block.",  path.getName());
             return false;
         }
         if (!this.equals(path.getFromPortal())
@@ -99,7 +99,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     public void removePath(OPath path) {
         Block block = path.getBlock();
         if (block == null) {
-            log.error("Path \"" + path.getName() + "\" has no block.");
+            log.error("Path \"{}\" has no block.", path.getName());
             return;
         }
         //if (log.isDebugEnabled()) log.debug("removePath: "+toString());
@@ -253,17 +253,19 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (protectedBlock == null) {
             return false;
         }
-        if (_fromBlock.equals(protectedBlock)) {
+        if (_fromBlock!=null && _fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
             _toSignalOffset = length;
+            if (log.isDebugEnabled()) log.debug("setProtectSignal: _toSignal= \"{}\", protectedBlock= {}",
+                    signal.getDisplayName(), protectedBlock.getDisplayName());
             return true;
-            //log.debug("setSignal: _toSignal= \""+name+", protectedBlock= "+protectedBlock);
         }
-        if (_toBlock.equals(protectedBlock)) {
+        if (_toBlock!=null && _toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
             _fromSignalOffset = length;
+            if (log.isDebugEnabled()) log.debug("setProtectSignal: _fromSignal= \"{}\", protectedBlock= {}",
+                    signal.getDisplayName(), protectedBlock.getDisplayName());
             return true;
-            //log.debug("setSignal: _fromSignal= \""+name+", protectedBlock= "+protectedBlock);
         }
         return false;
     }
@@ -376,12 +378,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
     }
 
+    @Override
     public void setState(int s) throws JmriException {
         int old = _state;
         _state = s;
         firePropertyChange("Direction", old, _state);
     }
 
+    @Override
     public int getState() {
         return _state;
     }
@@ -427,11 +431,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 }
             }
         } else {
-            log.error("Block \"" + blockName + "\" is not in Portal \"" + getUserName() + "\".");
+            log.error("Block \"{}\" is not in Portal \"{}\".", blockName, getUserName());
         }
         if (log.isDebugEnabled() && speed != null) {
-            log.debug("Portal \"" + getUserName() + "\","
-                    + " has ENTRANCE speed= " + speed + " into \"" + blockName + "\" from signal.");
+            log.debug("Portal \"{}\" has ENTRANCE speed= {} into \"{}\" from signal.",
+                    getUserName(), speed, blockName);
         }
         // no signals, proceed at recorded speed
         return speed;
@@ -481,11 +485,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 }
             }
         } else {
-            log.error("Block \"" + blockName + "\" is not in Portal \"" + getUserName() + "\".");
+            log.error("Block \"{}\" is not in Portal \"{}\".", blockName, getUserName());
         }
         if (log.isDebugEnabled() && speed != null) {
-            log.debug("Portal \"" + getUserName() + "\","
-                    + " has EXIT speed= " + speed + " into \"" + blockName + "\" from signal.");
+            log.debug("Portal \"{}\" has EXIT speed= {} into \"{}\" from signal.",
+                    getUserName(), speed,  blockName);
         }
         // no signals, proceed at recorded speed
         return speed;
@@ -495,13 +499,13 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         int appearance = signal.getAppearance();
         String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
         if (speed == null) {
-            log.error("SignalHead \"" + signal.getDisplayName() + "\" has no speed specified for appearance \""
-                    + signal.getAppearanceName(appearance) + "\"! - Restricting Movement!");
+            log.error("SignalHead \"{}\" has no speed specified for appearance \"{}\"! - Restricting Movement!",
+                    signal.getDisplayName(), signal.getAppearanceName(appearance));
             speed = "Restricted";
         }
         if (log.isDebugEnabled()) {
-            log.debug("Signal " + signal.getDisplayName() + " has speed notch= " + speed + " from appearance \""
-                    + signal.getAppearanceName(appearance) + "\"");
+            log.debug("Signal \"{}\" has speed notch= {} from appearance \"{}\".",
+                    signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
         }
         return speed;
     }
@@ -510,13 +514,13 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         String aspect = signal.getAspect();
         String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, signal.getSignalSystem());
         if (speed == null) {
-            log.error("SignalMast \"Signal " + signal.getDisplayName() + "\" has no speed specified for aspect \""
-                    + aspect + "\"! - Restricting Movement!");
+            log.error("SignalMast \"{}\" has no speed specified for aspect \"{}\"! - Restricting Movement!",
+                    signal.getDisplayName(), aspect);
             speed = "Restricted";
         }
         if (log.isDebugEnabled()) {
-            log.debug(signal.getDisplayName() + " has speed notch= " + speed
-                    + " from aspect \"" + aspect + "\"");
+            log.debug("SignalMast {} has speed notch= {} from aspect \"{}\"",
+                    signal.getDisplayName(), speed, aspect);
         }
         return speed;
     }
@@ -525,13 +529,13 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         int appearance = signal.getAppearance();
         String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
         if (speed == null) {
-            log.error("SignalHead \"" + signal.getDisplayName() + "\" has no (exit) speed specified for appearance \""
-                    + signal.getAppearanceName(appearance) + "\"! - Restricting Movement!");
+            log.error("SignalHead \"{}\" has no (exit) speed specified for appearance \"{}\"! - Restricting Movement!",
+                    signal.getDisplayName(), signal.getAppearanceName(appearance));
             speed = "Restricted";
         }
         if (log.isDebugEnabled()) {
-            log.debug(signal.getDisplayName() + " has exit speed notch= " + speed
-                    + " from appearance \"" + signal.getAppearanceName(appearance) + "\"");
+            log.debug("\"{}\" has exit speed notch= {} from appearance \"{}\"",
+                    signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
         }
         return speed;
     }
@@ -540,13 +544,13 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         String aspect = signal.getAspect();
         String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(aspect, signal.getSignalSystem());
         if (speed == null) {
-            log.error("SignalMast \"" + signal.getDisplayName() + "\" has no exit speed specified for aspect \""
-                    + aspect + "\"! - Restricting Movement!");
+            log.error("SignalMast \"{}\" has no exit speed specified for aspect \"{}\"! - Restricting Movement!",
+                    signal.getDisplayName(), aspect);
             speed = "Restricted";
         }
         if (log.isDebugEnabled()) {
-            log.debug(signal.getDisplayName() + " has exit speed notch= "
-                    + speed + " from aspect \"" + aspect + "\"");
+            log.debug("\"{}\" has exit speed notch= {} from aspect \"{}\"",
+                    signal.getDisplayName(), speed, aspect);
         }
         return speed;
     }
@@ -570,7 +574,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Check if path connects to Portal
-     *
+     * @param path OPath to test
+     * @return true if valid
      */
     public boolean isValidPath(OPath path) {
         String name = path.getName();
@@ -590,7 +595,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     /**
      * Check portal has both blocks and they are different blocks
      * 
-     * @return check
+     * @return true if valid
      */
     public boolean isValid() {
         if (_toBlock == null || _fromBlock==null) {
@@ -621,9 +626,17 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     @Override
     public String toString() {
-        return ("Portal \"" + getUserName() + "\" from block \"" + getFromBlockName() + "\" to block \"" + getToBlockName() + "\"");
+        StringBuilder sb = new StringBuilder("Portal \"");
+        sb.append(getUserName());
+        sb.append("\" from block \"");
+        sb.append(getFromBlockName());
+        sb.append("\" to block \"");
+        sb.append(getToBlockName());
+        sb.append("\"");
+        return sb.toString();
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNamePortal");
     }

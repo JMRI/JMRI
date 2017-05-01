@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.PackageTest");  // no tests in this class itself
         suite.addTest(jmri.jmrix.loconet.LocoNetThrottledTransmitterTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.locostats.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.locostats.swing.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.sdf.PackageTest.suite());
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.loconet.sdfeditor.PackageTest.class));
         suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
@@ -84,6 +84,25 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(LnPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(LocoNetMessageExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnConstantsTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib1ThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib1ThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib2ThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(Ib2ThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(LNCPSignalMastTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnLightManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnLightTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnMessageManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnPr2ThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(Pr2ThrottleTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnClockControlTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnProgrammerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LnThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(LocoNetConsistManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(SE8cSignalHeadTest.class));
+        suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(UhlenbrockSlotTest.class));
         return suite;
     }
 

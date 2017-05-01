@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager {
@@ -27,10 +27,12 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {

@@ -1,10 +1,7 @@
 package jmri.jmrit.logix;
 
-import jmri.managers.AbstractManager;
-
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckReturnValue;
+import jmri.managers.AbstractManager;
 
 /**
  * Basic Implementation of a OBlockManager.
@@ -38,14 +35,17 @@ public class OBlockManager extends AbstractManager
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
     }
 
-    @Nonnull public String getSystemPrefix() {
+    @Nonnull@Override
+ public String getSystemPrefix() {
         return "O";
     }
 
+    @Override
     public char typeLetter() {
         return 'B';
     }
@@ -66,7 +66,7 @@ public class OBlockManager extends AbstractManager
         }
         String sName = systemName.toUpperCase();
         if (!sName.startsWith("OB")) {
-            sName = "OB" + sName;
+            return null;
         }
         if (sName.length() < 3) {
             return null;
@@ -126,15 +126,7 @@ public class OBlockManager extends AbstractManager
         return ob;
     }
 
-    static OBlockManager _instance = null;
-
-    static public OBlockManager instance() {
-        if (_instance == null) {
-            _instance = new OBlockManager();
-        }
-        return (_instance);
-    }
-
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameOBlock");
     }

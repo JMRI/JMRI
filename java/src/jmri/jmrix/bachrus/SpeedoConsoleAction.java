@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SpeedoConsoleFrame object
  *
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SpeedoConsoleAction extends AbstractAction {
 
@@ -19,6 +19,7 @@ public class SpeedoConsoleAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SpeedoConsoleFrame f = new SpeedoConsoleFrame(_memo);
         try {

@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author Daniel Boudreau Copyright (C) 2012 added human readable format
  */
 public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListener, NcePanelInterface {
 
@@ -24,10 +24,12 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
 
     NceMonBinary nceMon = new NceMonBinary();
 
+    @Override
     public String getHelpTarget() {
         return null;
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -40,6 +42,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         return x.toString();
     }
 
+    @Override
     public void dispose() {
         // disconnect from the NceTrafficController
         try {
@@ -51,17 +54,20 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         super.dispose();
     }
 
+    @Override
     public void init() {
     }
 
     NceSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
             initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the NceTrafficController
@@ -73,6 +79,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         }
     }
 
+    @Override
     public synchronized void message(NceMessage m) {  // receive a message and log it
         if (m.isBinary()) {
             nextLine(nceMon.displayMessage(m), m.toString());
@@ -81,6 +88,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         }
     }
 
+    @Override
     public synchronized void reply(NceReply r) {  // receive a reply message and log it
         String raw = "";
         for (int i = 0; i < r.getNumDataElements(); i++) {

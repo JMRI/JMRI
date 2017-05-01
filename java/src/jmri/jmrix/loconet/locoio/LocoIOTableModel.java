@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * The timeout code is modelled after that in jmri,jmrix.AbstractProgrammer,
  * though there are significant modifications.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LocoIOTableModel
         extends javax.swing.table.AbstractTableModel
@@ -83,6 +83,7 @@ public class LocoIOTableModel
         ldata.addPropertyChangeListener(this);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // String s = "LocoIOTableModel: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
         if (evt.getPropertyName().equals("PortChange")) { // NOI18N
@@ -96,14 +97,17 @@ public class LocoIOTableModel
     }
 
     // basic methods for AbstractTableModel implementation
+    @Override
     public int getRowCount() {
         return _numRows;
     }
 
+    @Override
     public int getColumnCount() {
         return HIGHESTCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case PINCOLUMN:
@@ -129,6 +133,7 @@ public class LocoIOTableModel
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case PINCOLUMN:
@@ -154,6 +159,7 @@ public class LocoIOTableModel
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case PINCOLUMN:
@@ -179,6 +185,7 @@ public class LocoIOTableModel
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case PINCOLUMN:
@@ -227,6 +234,7 @@ public class LocoIOTableModel
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == MODECOLUMN) {
             if (liodata.getLocoIOModeList().isValidModeValue(value)) {

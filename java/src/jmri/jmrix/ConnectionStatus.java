@@ -226,13 +226,13 @@ public class ConnectionStatus {
      * ConnectionKey is an internal class containing the port name and system
      * name of a connection.
      * <p>
-     * ConnectionKey is used as a key in a hashmap of the connections on the
+     * ConnectionKey is used as a key in a HashMap of the connections on the
      * system.
      * <p>
      * It is allowable for either the port name or the system name to be null,
      * but not both.
      */
-    private class ConnectionKey {
+    static private class ConnectionKey {
 
         String portName = null;
         String systemName = null;

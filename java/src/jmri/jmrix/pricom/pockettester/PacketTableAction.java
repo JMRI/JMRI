@@ -21,6 +21,7 @@ public abstract class PacketTableAction extends AbstractAction {
         putValue(javax.swing.Action.NAME, rb.getString("ActionPacketTable"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create the frame & show

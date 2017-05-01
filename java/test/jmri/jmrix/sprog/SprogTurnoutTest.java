@@ -3,8 +3,6 @@ package jmri.jmrix.sprog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * <P>
@@ -12,7 +10,7 @@ import org.junit.Test;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
    private SprogTrafficControlScaffold stcs = null;
 
@@ -35,6 +33,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
     // The minimal setup for log4J
     @Before
+   @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // prepare an interface

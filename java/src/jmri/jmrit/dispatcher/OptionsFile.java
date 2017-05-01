@@ -2,7 +2,6 @@ package jmri.jmrit.dispatcher;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.Scale;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
@@ -32,12 +31,9 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2008
+ * @author Dave Duchamp Copyright (C) 2008
  */
 public class OptionsFile extends jmri.jmrit.XmlFile {
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     public OptionsFile() {
         super();

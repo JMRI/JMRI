@@ -6,7 +6,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * Extend jmri.jmrix.XNetTurnout to handle turnouts on Hornby Elite
  * connections. See XNetTurnout for further documentation.
  *
- * @author	Paul Bender Copyright (C) 2008
+ * @author Paul Bender Copyright (C) 2008
   */
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 
@@ -18,6 +18,7 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
     }
 
     /* Send an "Off" message to the decoder for this output  */
+    @Override
     protected synchronized void sendOffMessage() {
         // The Elite appears to react to the on and off messages
         // in the same manner, and does not handle feedback properly

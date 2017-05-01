@@ -20,10 +20,12 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.secsi.configurexml.SerialSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

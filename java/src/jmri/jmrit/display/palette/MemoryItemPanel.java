@@ -38,6 +38,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         super(parentFrame, type, family, model, editor);
     }
 
+    @Override
     public void init() {
         if (!_initialized) {
             add(initTablePanel(_model, _editor));
@@ -76,6 +77,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     MemorySpinnerIcon _spinMem;
     MemoryComboIcon _comboMem;
 
+    @Override
     protected void initIconFamiliesPanel() {
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
@@ -87,6 +89,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _iconFamilyPanel.add(_dragIconPanel);
     }
 
+    @Override
     protected void makeDndIconPanel(java.util.HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
@@ -165,6 +168,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     /*
      * Set column width for InputMemoryIcon
      */
+    @Override
     public void stateChanged(ChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("stateChanged: class= " + _spinner.getValue().getClass().getName()
@@ -178,6 +182,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     /**
      * ListSelectionListener action from table
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
@@ -218,6 +223,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             _memType = type;
         }
         
+        @Override
         protected boolean okToDrag() {
             NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
@@ -228,6 +234,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             return true;
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
@@ -276,6 +283,9 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
                         mc.setSize(mc.getPreferredSize().width, mc.getPreferredSize().height);
                         mc.setLevel(Editor.MEMORIES);
                         return mc;
+                    default:
+                        // fall through
+                        break;
                     }
                 } else if (DataFlavor.stringFlavor.equals(flavor)) {
                     StringBuilder sb = new StringBuilder(_itemType);

@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  */
 public class SensorTextEdit extends JmriJFrame {
 
-    SensorIcon pl; 	// layout positional label tracked by this frame
+    SensorIcon pl;  // layout positional label tracked by this frame
     static final String INIT = null;
     String oldActive = INIT;
     String oldInactive = INIT;
@@ -51,6 +51,7 @@ public class SensorTextEdit extends JmriJFrame {
         super();
     }
 
+    @Override
     public void windowClosed(java.awt.event.WindowEvent e) {
         super.windowClosed(e);
     }
@@ -146,6 +147,7 @@ public class SensorTextEdit extends JmriJFrame {
 
     private void addButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionPerformed(e);
             }

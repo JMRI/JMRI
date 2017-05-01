@@ -3,7 +3,6 @@ package jmri.jmrit.roster.swing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class CreateRosterGroupAction extends JmriAbstractAction {
 
@@ -81,6 +80,7 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

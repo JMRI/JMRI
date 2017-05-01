@@ -10,7 +10,7 @@ import javax.swing.JToggleButton;
 /**
  * Frame displaying start/stop buttons for the JMRI server.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author Paul Bender Copyright (C) 2009
   */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
@@ -34,6 +34,7 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
         // install start button handler
         startButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 startSRCPServer();
             }
@@ -42,6 +43,7 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
         // install stop button handler
         stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 stopSRCPServer();
             }
@@ -50,6 +52,7 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -69,6 +72,7 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
         dispose();
     }
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

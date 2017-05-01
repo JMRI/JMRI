@@ -12,7 +12,7 @@ import jmri.jmrix.JmrixConfigPane;
  * <P>
  * This uses the {@link XnTcpAdapter} class to do the actual connection.
  *
- * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob
+ * @author Giorgio Terdina Copyright (C) 2008-2011, based on LI100 Action by Bob
  * Jacobsen, Copyright (C) 2003
  *  GT - May 2008 - Added possibility of manually
  * defining the IP address and the TCP port number GT - May 2011 - Fixed
@@ -49,6 +49,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "XnTcp";
     }
@@ -95,6 +96,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
         if (options.get("XnTcpInterface").getComponent() instanceof JComboBox) {
             ((JComboBox<Option>) options.get("XnTcpInterface").getComponent()).addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     enableInput();
                 }
@@ -102,6 +104,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    @Override
     protected void showAdvancedItems() {
         super.showAdvancedItems();
         enableInput();
@@ -135,6 +138,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         manufacturerName = manu;
     }
 
+    @Override
     public boolean isHostNameAdvanced() {
         return true;
     }

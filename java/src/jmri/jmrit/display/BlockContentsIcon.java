@@ -65,6 +65,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         return super.finishClone(pos);
     }
 
+    @Override
     public void resetDefaultIcon() {
         defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
                 "resources/icons/misc/X-red.gif");
@@ -114,14 +115,17 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         return namedBlock.getBean();
     }
 
+    @Override
     public jmri.NamedBean getNamedBean() {
         return getBlock();
     }
 
+    @Override
     public java.util.HashMap<String, NamedIcon> getMap() {
         return map;
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (namedBlock == null) {
@@ -134,6 +138,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         return name;
     }
 
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable() && selectable) {
             popup.add(new JSeparator());
@@ -143,6 +148,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                 String key = iterator.next();
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
                         setValue(key);
@@ -153,6 +159,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         }  // end of selectable
         if (re != null) {
             popup.add(new AbstractAction("Open Throttle") {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                     tf.toFront();
@@ -165,11 +172,13 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                 final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
                 if (at != null) {
                     popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             df.terminateActiveTrain(at);
                         }
                     });
                     popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             //Just brings up the standard allocate extra frame, this could be expanded in the future 
                             //As a point and click operation.
@@ -178,6 +187,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                     });
                     if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
                         popup.add(new AbstractAction("Restart") {
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 at.allocateAFresh();
                             }
@@ -185,6 +195,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                     }
                 } else {
                     popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             if (!df.getNewTrainActive()) {
                                 df.getActiveTrainFrame().initiateTrain(e, re, getBlock());
@@ -205,8 +216,10 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     /**
      * Text edits cannot be done to Block text - override
      */
+    @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("EditBlockValue")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 editBlockValue();
             }
@@ -217,6 +230,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     /**
      * Drive the current state of the display from the state of the Block Value
      */
+    @Override
     public void displayState() {
         if (log.isDebugEnabled()) {
             log.debug("displayState");
@@ -234,9 +248,11 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         displayState(key);
     }
 
+    @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameBlock"));
         popup.add(new AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -244,10 +260,12 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         return true;
     }
 
+    @Override
     protected void edit() {
         makeIconEditorFrame(this, "Block", true, null); // NOI18N
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.blockPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 editBlock();
             }
@@ -265,6 +283,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         invalidate();
     }
 
+    @Override
     public void dispose() {
         if (getBlock() != null) {
             getBlock().removePropertyChangeListener(this);
@@ -277,6 +296,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         super.dispose();
     }
 
+    @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
             editBlockValue();
@@ -301,6 +321,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         updateSize();
     }
 
+    @Override
     protected Object getValue() {
         if (getBlock() == null) {
             return null;
@@ -308,6 +329,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         return getBlock().getValue();
     }
 
+    @Override
     protected void setValue(Object val) {
         getBlock().setValue(val);
     }

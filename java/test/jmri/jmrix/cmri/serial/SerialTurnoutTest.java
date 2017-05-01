@@ -1,17 +1,15 @@
 package jmri.jmrix.cmri.serial;
 
-import jmri.implementation.AbstractTurnoutTest;
-import org.junit.After;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  *
  * @author	Bob Jacobsen
  */
-public class SerialTurnoutTest extends AbstractTurnoutTest {
+public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;

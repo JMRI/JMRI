@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
   */
 public class LnReporter extends AbstractReporter implements LocoNetListener, PhysicalLocationReporter {
 
@@ -55,10 +55,11 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //					      	Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //            Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
+    @Override
     public void message(LocoNetMessage l) {
         // check message type
         if ((l.getOpCode() == 0xD0) && ((l.getElement(1) & 0xC0) == 0)) {
@@ -125,15 +126,18 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
      *
      * @return -1 if the last message specified exiting
      */
+    @Override
     public int getState() {
         return lastLoco;
     }
 
+    @Override
     public void setState(int s) {
         lastLoco = s;
     }
     int lastLoco = -1;
 
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
         super.dispose();
@@ -159,6 +163,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 
     // Parses out a (possibly old) LnReporter-generated report string to extract the address from the front.
     // Assumes the LocoReporter format is "NNNN [enter|exit]"
+    @Override
     public LocoAddress getLocoAddress(String rep) {
         // Extract the number from the head of the report string
         log.debug("report string: " + rep);
@@ -173,6 +178,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 
     // Parses out a (possibly old) LnReporter-generated report string to extract the direction from the end.
     // Assumes the LocoReporter format is "NNNN [enter|exit]"
+    @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // Extract the direction from the tail of the report string
         log.debug("report string: " + rep); // NOI18N
@@ -193,11 +199,13 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         }
     }
 
+    @Override
     public PhysicalLocation getPhysicalLocation() {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     // Does not use the parameter S.
+    @Override
     public PhysicalLocation getPhysicalLocation(String s) {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }

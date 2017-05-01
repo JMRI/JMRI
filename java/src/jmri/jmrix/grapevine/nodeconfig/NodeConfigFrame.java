@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user configuration of serial nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -69,6 +69,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
+    @Override
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
 
@@ -128,6 +129,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         addButton.setVisible(true);
         addButton.setToolTipText(rb.getString("TipAddButton"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 addButtonActionPerformed();
             }
@@ -138,6 +140,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         editButton.setToolTipText(rb.getString("TipEditButton"));
         panel4.add(editButton);
         editButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editButtonActionPerformed();
             }
@@ -148,6 +151,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         deleteButton.setToolTipText(rb.getString("TipDeleteButton"));
         panel4.add(deleteButton);
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 deleteButtonActionPerformed();
             }
@@ -159,6 +163,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setToolTipText(rb.getString("TipDoneButton"));
         panel4.add(doneButton);
         doneButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doneButtonActionPerformed();
             }
@@ -170,6 +175,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setToolTipText(rb.getString("TipUpdateButton"));
         panel4.add(updateButton);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateButtonActionPerformed();
             }
@@ -182,6 +188,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         initButton.setToolTipText(rb.getString("TipInitButton"));
         panel4.add(initButton);
         initButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 initButtonActionPerformed();
             }
@@ -194,6 +201,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cancelButton.setToolTipText(rb.getString("TipCancelButton"));
         panel4.add(cancelButton);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 cancelButtonActionPerformed();
             }
@@ -404,7 +412,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -430,7 +438,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again 
         nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
@@ -442,6 +450,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Do the done action if the window is closed early.
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
     }

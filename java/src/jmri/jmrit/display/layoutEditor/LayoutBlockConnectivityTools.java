@@ -18,7 +18,7 @@ import org.slf4j.MDC;
  * the advanced layout block routing has been enabled. These tools can determine
  * if a path from a source to destination bean is valid. If a route between two
  * layout blocks is usable and free.
- * 
+ *
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockConnectivityTools {
@@ -294,10 +294,10 @@ public class LayoutBlockConnectivityTools {
             }
             if (proCount < desCount) {
                 /*Need to do a more advanced check in this case as the destBlockn1
-                 could be reached via a different route and therefore have a smaller 
+                 could be reached via a different route and therefore have a smaller
                  hop count we need to therefore step through each block until we reach
                  the end.
-                 We also need to perform a more advanced check if the destBlockn1 
+                 We also need to perform a more advanced check if the destBlockn1
                  is null as this indicates that the destination signal mast is assigned
                  on an end bumper*/
                 log.debug("proCount is less than destination");
@@ -776,7 +776,7 @@ public class LayoutBlockConnectivityTools {
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
-            throw new JmriException("routing not stablised");
+            throw new JmriException("routing not stabilised");
         }
         ArrayList<NamedBean> validDestBean = new ArrayList<NamedBean>();
         for (int j = 0; j < blockList.size(); j++) {

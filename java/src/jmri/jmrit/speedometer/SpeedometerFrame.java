@@ -38,24 +38,24 @@ import org.slf4j.LoggerFactory;
  * and displayed.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2007
  * @author Adapted for metric system - S.K. Bosch
  * @author Matthew Harris Copyright (c) 2011
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     final String blank = "       ";
-    JTextField startSensor = new JTextField(5);
+    JTextField startSensor = new JTextField(5); // N11N
     javax.swing.ButtonGroup startGroup = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton startOnExit = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    JTextField stopSensor1 = new JTextField(5);
+    JTextField stopSensor1 = new JTextField(5);  // N11N
     javax.swing.ButtonGroup stopGroup1 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    public JTextField stopSensor2 = new JTextField(5);
+    public JTextField stopSensor2 = new JTextField(5);  // N11N
     javax.swing.ButtonGroup stopGroup2 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
@@ -246,18 +246,21 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
         // add the actions to the config button
         dimButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 dim();
             }
         });
 
         startButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setup();
             }
         });
 
         clearButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 time1.setText(blank);
                 time2.setText(blank);
@@ -267,6 +270,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         });
 
         saveButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 doStore();
             }
@@ -274,17 +278,20 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
         // start displaying the sensor status when the number is entered
         startSensor.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 startSensorIcon.setSensor(startSensor.getText());
             }
         });
         stopSensor1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 stopSensorIcon1.setSensor(stopSensor1.getText());
             }
         });
 
         stopSensor2.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 stopSensorIcon2.setSensor(stopSensor2.getText());
             }
@@ -347,6 +354,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         s = InstanceManager.sensorManagerInstance().
                 provideSensor(startSensor.getText());
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 SpeedometerFrame.log.debug("start sensor fired");
                 if (e.getPropertyName().equals("KnownState")) {
@@ -367,6 +375,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         s = InstanceManager.sensorManagerInstance().
                 provideSensor(stopSensor1.getText());
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 SpeedometerFrame.log.debug("stop sensor fired");
                 if (e.getPropertyName().equals("KnownState")) {
@@ -420,6 +429,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                 provideSensor(stopSensor2.getText());
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             // handle change in stop sensor
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 SpeedometerFrame.log.debug("stop sensor fired");
                 if (e.getPropertyName().equals("KnownState")) {

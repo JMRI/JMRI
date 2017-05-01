@@ -7,10 +7,6 @@ import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.packet.common.RemoteATCommandResponsePacket;
-import com.digi.xbee.api.packet.common.IODataSampleRxIndicatorPacket;
 import com.digi.xbee.api.RemoteXBeeDevice;
 
 import jmri.Sensor;
@@ -21,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend jmri.AbstractSensor for XBee connections.
  * <P>
- * @author	Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013
  */
 public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
@@ -114,6 +110,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     /**
      * request an update on status by sending an XBee message
      */
+    @Override
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
         // attached to.  
@@ -137,6 +134,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
 
     // IIOSampleReceiveListener methods
+    @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
             log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
@@ -156,6 +154,45 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         return;
     }
 
+
+    /**
+     * Set the pull resistance
+     * <p>
+     * In this default implementation, the input value is ignored.
+     *
+     * @param r PullResistance value to use.
+     */
+    @Override
+    public void setPullResistance(PullResistance r){
+       try { 
+          node.setPRParameter(pin,r);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
+    }
+
+    /**
+     * Get the pull resistance
+     *
+     * @return the currently set PullResistance value.
+     */
+    @Override
+    public PullResistance getPullResistance(){
+       try {
+          return node.getPRValueForPin(pin);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
+       return PullResistance.PULL_UP; // return the default if we get this far.
+    }
+
+
+
+    @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
         super.dispose();

@@ -28,7 +28,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 public class VSDOptionsDialog extends JDialog {
@@ -55,6 +55,7 @@ public class VSDOptionsDialog extends JDialog {
         closeButton.setEnabled(true);
         closeButton.setToolTipText(Bundle.getMessage("ToolTipCloseDialog"));
         closeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 closeButtonActionPerformed(e);
             }

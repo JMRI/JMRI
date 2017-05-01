@@ -49,17 +49,25 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialdriver.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(GrapevineMenuTest.class));
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialmon.SerialMonTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.serialmon.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(GrapevineSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.nodeconfig.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.nodetable.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.packetgen.PackageTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialSensorTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialSignalHeadTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

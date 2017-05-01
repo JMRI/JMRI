@@ -1,8 +1,5 @@
 package jmri.jmrix.marklin;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -18,7 +15,10 @@ import org.slf4j.LoggerFactory;
    MarklinConnectionTypeListTest.class,
    MarklinSystemConnectionMemoTest.class,
    MarklinTrafficControllerTest.class,
-   MarklinPortControllerTest.class
+   MarklinPortControllerTest.class,
+   MarklinConstantsTest.class,
+   MarklinMessageTest.class,
+   MarklinReplyTest.class
 })
 /**
  * Tests for the jmri.jmrix.marklin package

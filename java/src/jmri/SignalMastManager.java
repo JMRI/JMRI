@@ -2,7 +2,6 @@ package jmri;
 
 import java.util.List;
 
-import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -29,6 +28,7 @@ import javax.annotation.Nonnull;
 public interface SignalMastManager extends Manager {
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -49,7 +49,7 @@ public interface SignalMastManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if SignalMast doesn't already exist and
      *                                  the manager cannot create the SignalMast
-     *                                  due to e.g. an illegal name or name that
+     *                                  due to an illegal name or name that
      *                                  can't be parsed.
      */
     @Nonnull public SignalMast provideSignalMast(@Nonnull String name);
@@ -66,6 +66,7 @@ public interface SignalMastManager extends Manager {
     /**
      * Get a list of all SignalMast system names.
      */
-    @Nonnull public List<String> getSystemNameList();
+    @Nonnull@Override
+ public List<String> getSystemNameList();
 
 }

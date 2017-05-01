@@ -1,17 +1,15 @@
 package jmri.jmrix.grapevine;
 
-import jmri.implementation.AbstractTurnoutTest;
-import org.junit.After;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, middle bank.
  *
  * @author	Bob Jacobsen
   */
-public class SerialTurnoutTest1 extends AbstractTurnoutTest {
+public class SerialTurnoutTest1 extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
 

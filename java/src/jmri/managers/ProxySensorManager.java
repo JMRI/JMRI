@@ -18,6 +18,7 @@ public class ProxySensorManager extends AbstractProxyManager
         super();
     }
 
+    @Override
     protected AbstractManager makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getSensorManager();
     }
@@ -27,15 +28,18 @@ public class ProxySensorManager extends AbstractProxyManager
      *
      * @return Null if nothing by that name exists
      */
+    @Override
     public Sensor getSensor(String name) {
         return (Sensor) super.getNamedBean(name);
     }
 
+    @Override
     protected Sensor makeBean(int i, String systemName, String userName) throws IllegalArgumentException {
         log.debug("makeBean({}, \"{}\", \"{}\"", i, systemName, userName);
         return ((SensorManager) getMgr(i)).newSensor(systemName, userName);
     }
 
+    @Override
     public Sensor provideSensor(String sName) throws IllegalArgumentException {
         return (Sensor) super.provideNamedBean(sName);
     }
@@ -46,6 +50,7 @@ public class ProxySensorManager extends AbstractProxyManager
      *
      * @return requested Turnout object or null if none exists
      */
+    @Override
     public Sensor getBySystemName(String sName) {
         return (Sensor) super.getBeanBySystemName(sName);
     }
@@ -56,6 +61,7 @@ public class ProxySensorManager extends AbstractProxyManager
      *
      * @return requested Turnout object or null if none exists
      */
+    @Override
     public Sensor getByUserName(String userName) {
         return (Sensor) super.getBeanByUserName(userName);
     }
@@ -88,14 +94,17 @@ public class ProxySensorManager extends AbstractProxyManager
      *
      * @return requested Sensor object (never null)
      */
+    @Override
     public Sensor newSensor(String systemName, String userName) {
         return (Sensor) newNamedBean(systemName, userName);
     }
 
     // null implementation to satisfy the SensorManager interface
+    @Override
     public void updateAll() {
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -104,6 +113,7 @@ public class ProxySensorManager extends AbstractProxyManager
         return ((SensorManager) getMgr(0)).allowMultipleAdditions(systemName);
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
             if (prefix.equals(
@@ -119,6 +129,7 @@ public class ProxySensorManager extends AbstractProxyManager
         throw new jmri.JmriException("Sensor Manager could not be found for System Prefix " + prefix);
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
             if (prefix.equals(
@@ -133,33 +144,53 @@ public class ProxySensorManager extends AbstractProxyManager
         return null;
     }
 
+    @Override
     public long getDefaultSensorDebounceGoingActive() {
         return ((SensorManager) getMgr(0)).getDefaultSensorDebounceGoingActive();
     }
 
+    @Override
     public long getDefaultSensorDebounceGoingInActive() {
         return ((SensorManager) getMgr(0)).getDefaultSensorDebounceGoingInActive();
     }
 
+    @Override
     public void setDefaultSensorDebounceGoingActive(long timer) {
         for (int i = 0; i < nMgrs(); i++) {
             ((SensorManager) getMgr(i)).setDefaultSensorDebounceGoingActive(timer);
         }
     }
 
+    @Override
     public void setDefaultSensorDebounceGoingInActive(long timer) {
         for (int i = 0; i < nMgrs(); i++) {
             ((SensorManager) getMgr(i)).setDefaultSensorDebounceGoingInActive(timer);
         }
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.SENSORS;
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSensor");
     }
+
+    /**
+     * Do the sensor objects provided by this manager support configuring
+     * an internal pullup or pull down resistor?
+     * <p>
+     * Return false to satisfy the SensorManager interface.
+     *
+     * @return true if pull up/pull down configuration is supported.
+     */
+    @Override
+    public boolean isPullResistanceConfigurable(){
+       return false;
+    }
+
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());

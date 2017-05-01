@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import com.digi.xbee.api.connection.IConnectionInterface;
-import com.digi.xbee.api.exceptions.OperationNotSupportedException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
@@ -39,9 +38,9 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
         // setup the mock XBee Connection.
         // Mock the local device.
-        localDevice = PowerMockito.mock(XBeeDevice.class);
-        Mockito.when(localDevice.getConnectionInterface()).thenReturn(Mockito.mock(IConnectionInterface.class));
-        Mockito.when(localDevice.getXBeeProtocol()).thenReturn(XBeeProtocol.ZIGBEE);
+        XBeeAdapter a = PowerMockito.mock((XBeeAdapter.class));
+        Mockito.when(a.isOpen()).thenReturn(true);
+        localDevice = new XBeeDevice(a);
 
         // Mock the remote device 1.
         remoteDevice1 = Mockito.mock(RemoteXBeeDevice.class);
@@ -69,6 +68,12 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
    public XBeeDevice getXBee() {
         return localDevice;
    }
+
+    // allow classes to get remoteDevice1
+    public RemoteXBeeDevice getRemoteDevice1(){
+       return remoteDevice1;
+    }
+
 
     /**
      * record XBee messages sent, provide access for making sure they are OK
@@ -107,15 +112,18 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 

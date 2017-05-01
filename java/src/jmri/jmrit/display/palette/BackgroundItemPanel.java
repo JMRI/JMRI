@@ -31,6 +31,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         _level = Editor.BKG;
     }
 
+    @Override
     public void init() {
         if (!_initialized) {
             if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
@@ -42,6 +43,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         }
     }
 
+    @Override
     protected JPanel instructions(boolean isBackGround) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel panel = super.instructions(isBackGround);
@@ -56,6 +58,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         JPanel bottomPanel = new JPanel();
         JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
         backgroundButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 hideCatalog();
                 new ColorDialog(_editor);
@@ -107,6 +110,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             doneButton.addActionListener(new ActionListener() {
                 ColorDialog dialog;
 
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     _editor.setBackgroundColor(_chooser.getColor());
                     dialog.dispose();
@@ -123,6 +127,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             cancelButton.addActionListener(new ActionListener() {
                 ColorDialog dialog;
 
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     dialog.dispose();
                 }
@@ -137,6 +142,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             return panel;
         }
 
+        @Override
         public void stateChanged(ChangeEvent e) {
             if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             _preview.setBackground(_chooser.getColor());

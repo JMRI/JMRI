@@ -1,51 +1,40 @@
 package jmri.util;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test that always fails
  *
- * Do not put this in any package-level test suite.  
- * Run this class to test how your testing infrastructure (e.g. CI engine)
- * handles failing tests.
+ * Do not put this in any package-level test suite. Run this class to test how
+ * your testing infrastructure (e.g. CI engine) handles failing tests.
  *
- * @author	Bob Jacobsen Copyright 2015
+ * @author Bob Jacobsen Copyright 2015
  */
-public class FailTest extends TestCase {
+public class FailTest {
 
+    @Test
     public void testAlwaysFails() {
         Assert.fail("This test always fails");
     }
 
-    // from here down is testing infrastructure
-    public FailTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", FailTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FailTest.class);
-        return suite;
+    @Test
+    public void testErrorMessage() {
+        LoggerFactory.getLogger(FailTest.class).error("This message should cause a failure");
     }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
     }
 
 }

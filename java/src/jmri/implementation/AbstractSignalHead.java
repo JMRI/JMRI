@@ -9,7 +9,7 @@ import jmri.Turnout;
  * <p>
  * SignalHead system names are always upper case.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
         implements SignalHead, java.io.Serializable, java.beans.VetoableChangeListener {
@@ -47,9 +47,9 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //						Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //      Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state
     /**
      * By default, signals are lit.
@@ -58,6 +58,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Default behavior for "lit" parameter is to track value and return it.
+     *
      * @return is lit
      */
     @Override
@@ -81,7 +82,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Implement a shorter name for setAppearance.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use setAppearance instead.
      * The is provided to make Jython script access easier to read.
      * @param s new state
@@ -93,7 +94,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Implement a shorter name for getAppearance.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use getAppearance instead.
      * The is provided to make Jython script access easier to read.
      * @return current state
@@ -111,6 +112,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
+    /**
+     * Get a localized text describing appearance from the corresponding state index.
+     *
+     * @param appearance the index of the appearance
+     * @return translated name for appearance
+     */
     public static String getDefaultStateName(int appearance) {
         String ret = jmri.util.StringUtil.getNameFromState(
                 appearance, getDefaultValidStates(), getDefaultValidStateNames());
@@ -145,14 +152,20 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     @Override
     public int[] getValidStates() {
-        return Arrays.copyOf(validStates, validStates.length);
+        return Arrays.copyOf(validStates, validStates.length); // includes int for Lunar
     }
 
     @Override
     public String[] getValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length);
+        return Arrays.copyOf(validStateNames, validStateNames.length); // includes Lunar
     }
 
+    /**
+     * Check if a given turnout is used on this head.
+     *
+     * @param t Turnout object to check
+     * @return true if turnout is configured as output or driver of head
+     */
     abstract boolean isTurnoutUsed(Turnout t);
 
     @Override
@@ -163,7 +176,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("not clear DoDelete operated? {}", getSystemName()); //IN18N
+            log.warn("not clear DoDelete operated? {}", getSystemName()); //NOI18N
         }
     }
 

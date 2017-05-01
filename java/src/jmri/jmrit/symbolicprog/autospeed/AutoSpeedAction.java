@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class AutoSpeedAction extends AbstractAction {
 
@@ -46,6 +46,7 @@ public class AutoSpeedAction extends AbstractAction {
 
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if (log.isInfoEnabled()) {
@@ -65,6 +66,7 @@ public class AutoSpeedAction extends AbstractAction {
         // known loco on main track
         JPanel pane1 = new KnownLocoSelPane(false) {  // no ident in ops mode yet
 
+            @Override
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                     String filename) {
                 String title = "Set speed info for " + re.getId() + " on main track";

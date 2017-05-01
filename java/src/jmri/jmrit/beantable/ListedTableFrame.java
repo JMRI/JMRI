@@ -43,8 +43,8 @@ import org.slf4j.LoggerFactory;
  * Provide access to the various tables via a listed pane. Based upon the
  * apps.gui3.TabbedPreferences.java by Bob Jacoben
  * <P>
- * @author	Kevin Dickerson Copyright 2010
- * @author	Bob Jacobsen Copyright 2010
+ * @author Kevin Dickerson Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class ListedTableFrame extends BeanTableFrame {
 
@@ -102,6 +102,7 @@ public class ListedTableFrame extends BeanTableFrame {
         }
     }
 
+    @Override
     public void initComponents() {
         actionList = new ActionJList(this);
 
@@ -157,6 +158,7 @@ public class ListedTableFrame extends BeanTableFrame {
         cardHolder.addPropertyChangeListener(new PropertyChangeListener() {
             @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "We only intend to use/save the last position of the Split frame")
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("dividerLocation")) {
                     lastdivider = (Integer) e.getNewValue();
@@ -228,6 +230,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));
         fileMenu.add(newItem);
         newItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 actionList.openNewTableWindow(list.getSelectedIndex());
             }
@@ -238,6 +241,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
@@ -262,6 +266,7 @@ public class ListedTableFrame extends BeanTableFrame {
             JMenuItem viewItem = new JMenuItem(itemList.getItemString());
             viewMenu.add(viewItem);
             viewItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     gotoListItem(itemList.getClassAsString());
                 }
@@ -285,6 +290,7 @@ public class ListedTableFrame extends BeanTableFrame {
      * are deprecated then this can be re-written
      */
     //@TODO Sort out the procedure to add to bottom box
+    @Override
     protected void addToBottomBox(Component comp, String c) {
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             if (tabbedTableArray.get(x).getClassAsString().equals(c)) {
@@ -325,7 +331,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JTable dataTable;
         JScrollPane dataScroll;
         Box bottomBox;
-        int bottomBoxIndex;	// index to insert extra stuff
+        int bottomBoxIndex; // index to insert extra stuff
         static final int bottomStrutWidth = 20;
 
         boolean standardModel = true;
@@ -400,6 +406,7 @@ public class ListedTableFrame extends BeanTableFrame {
                 JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton);
                 addButton.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         tableAction.addPressed(e);
                     }
@@ -507,6 +514,7 @@ public class ListedTableFrame extends BeanTableFrame {
             menuItem = new JMenuItem("Open in New Window"); // TODO I18N
             popUp.add(menuItem);
             menuItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     openNewTableWindow(mouseItem);
                 }
@@ -525,12 +533,14 @@ public class ListedTableFrame extends BeanTableFrame {
         int clickDelay = 500;
         int currentItemSelected = -1;
 
+        @Override
         public void mousePressed(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopUp(e);
             }
         }
 
+        @Override
         public void mouseReleased(MouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopUp(e);
@@ -551,6 +561,7 @@ public class ListedTableFrame extends BeanTableFrame {
             currentItemSelected = current;
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
 
             mouseItem = list.locationToIndex(e.getPoint());
@@ -563,6 +574,7 @@ public class ListedTableFrame extends BeanTableFrame {
             }
             if (clickTimer == null) {
                 clickTimer = new Timer(clickDelay, new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         selectListItem(mouseItem);
                     }
@@ -588,6 +600,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     item = tItem;
                 }
 
+                @Override
                 public void run() {
                     ListedTableAction tmp = new ListedTableAction(item.getItemString(), item.getClassAsString(), cardHolder.getDividerLocation());
                     tmp.actionPerformed();

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * PowerManager implementation for controlling layout power.
  *
- * @author	Kevin Dickerson (C) 2012
+ * @author Kevin Dickerson (C) 2012
  */
 public class MarklinPowerManager implements PowerManager, MarklinListener {
 
@@ -21,12 +21,14 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
 
     MarklinTrafficController tc;
 
+    @Override
     public String getUserName() {
         return "Marklin";
     }
 
     int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -42,11 +44,13 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeMarklinListener(this);
         tc = null;
@@ -61,6 +65,7 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -69,11 +74,13 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
     // to listen for status changes from Marklin system
+    @Override
     public void reply(MarklinReply m) {
         // power message?
         if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() == MarklinConstants.SYSCOMMANDSTART && m.getAddress() == 0x0000) {
@@ -94,6 +101,7 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
         }
     }
 
+    @Override
     public void message(MarklinMessage m) {
         // messages are ignored
     }

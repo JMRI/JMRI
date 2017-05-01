@@ -19,7 +19,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Slots 102 through 127 are normally not used for loco control, so are shown
  * separately.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -44,6 +44,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         super();
     }
 
+    @Override
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -67,12 +68,14 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // add listener object so checkboxes function
         showAllCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.showAllSlots(showAllCheckBox.isSelected());
                 slotModel.fireTableDataChanged();
             }
         });
         showSystemCheckBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.showSystemSlots(showSystemCheckBox.isSelected());
                 slotModel.fireTableDataChanged();
@@ -81,30 +84,37 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // add listener object so stop all button functions
         estopAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.estopAll();
             }
         });
         estopAllButton.addMouseListener(new MouseListener() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 slotModel.estopAll();
             }
 
+            @Override
             public void mouseExited(MouseEvent e) {
             }
 
+            @Override
             public void mouseEntered(MouseEvent e) {
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
             }
 
+            @Override
             public void mouseClicked(MouseEvent e) {
             }
         });
 
         //Jeffrey 6/29/2013
         clearAllButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 slotModel.clearAllSlots();
             }
@@ -136,14 +146,17 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSlotMonitor"));
     }
 
+    @Override
     public void dispose() {
         slotModel.dispose();
         slotModel = null;

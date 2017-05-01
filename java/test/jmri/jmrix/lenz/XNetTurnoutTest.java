@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
+public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     @Override
     public int numListeners() {

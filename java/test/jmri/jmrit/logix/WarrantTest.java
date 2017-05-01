@@ -13,10 +13,10 @@ import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Warrant creation
@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
  * 
  * todo - test error conditions
  */
-public class WarrantTest extends TestCase {
+public class WarrantTest {
 
     OBlockManager _OBlockMgr;
     PortalManager _portalMgr;
@@ -37,7 +37,8 @@ public class WarrantTest extends TestCase {
      * So this will be one large test.
      */
 
-    public void testWarrant() throws Exception {
+    @Test
+    public void testWarrant() {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         OBlock bWest = _OBlockMgr.createNewOBlock("OB1", "West");
         OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
@@ -224,6 +225,7 @@ public class WarrantTest extends TestCase {
         WarrantListener( Warrant w) {
             warrant = w;
         }
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
 //            String property = e.getPropertyName();
 //            System.out.println("propertyChange \""+property+
@@ -243,45 +245,20 @@ public class WarrantTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public WarrantTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", WarrantTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        return new TestSuite(WarrantTest.class);
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initMemoryManager();
-        JUnitUtil.initOBlockManager();
-        JUnitUtil.initLogixManager();
-        JUnitUtil.initConditionalManager();
-        JUnitUtil.initWarrantManager();
+//        JUnitUtil.initWarrantManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

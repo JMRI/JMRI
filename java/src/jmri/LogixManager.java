@@ -29,7 +29,7 @@ public interface LogixManager extends Manager {
      *
      * @param systemName the system name
      * @param userName   the user name
-     * @return a new Logix or null if unable to create
+     * @return a new Logix or null if unable to create: An error, or the Logix already exists
      */
     public Logix createNewLogix(String systemName, String userName);
 

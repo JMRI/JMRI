@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * The reporter will decode the rail com packets and add the information to the
  * rail com tag.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocationReporter {
 
@@ -36,15 +36,18 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      *
      * @return -1 if the last message specified exiting
      */
+    @Override
     public int getState() {
         return lastLoco;
     }
 
+    @Override
     public void setState(int s) {
         lastLoco = s;
     }
     int lastLoco = -1;
 
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -475,6 +478,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * the address from the front. Assumes the LocoReporter format is "NNNN
      * [enter|exit]"
      */
+    @Override
     public LocoAddress getLocoAddress(String rep) {
         // Matcher stops at the DCC loco address.
         // m.group(1) is the orientation
@@ -500,6 +504,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * the direction from the end. Assumes the LocoReporter format is "NNNN
      * [enter|exit]"
      */
+    @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // TEMPORARY:  Assume we're always Entering, if asked.
         return (PhysicalLocationReporter.Direction.ENTER);
@@ -511,6 +516,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * Returns the PhysicalLocation of this Reporter. Assumed to be the location
      * of the locomotive being reported about
      */
+    @Override
     public PhysicalLocation getPhysicalLocation() {
         return (getPhysicalLocation(null));
     }
@@ -521,6 +527,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * Returns the PhysicalLocation of this Reporter. Assumed to be the location
      * of the locomotive being reported about. Does not use the parameter s.
      */
+    @Override
     public PhysicalLocation getPhysicalLocation(String s) {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }

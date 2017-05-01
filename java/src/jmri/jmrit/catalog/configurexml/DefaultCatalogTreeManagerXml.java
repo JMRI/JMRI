@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.configurexml.AbstractXmlAdapter */ {
 
-    private static String defaultFileName = FileUtil.getUserFilesPath() + "catalogTrees.xml";
+    private final static String DEFAULT_FILE_NAME = FileUtil.getUserFilesPath() + "catalogTrees.xml";
 
     public DefaultCatalogTreeManagerXml() {
     }
@@ -76,7 +76,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/tree-values.xsl"?>
-            java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+            java.util.Map<String, String> m = new java.util.HashMap<>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation + "panelfile.xsl");
             org.jdom2.ProcessingInstruction p = new org.jdom2.ProcessingInstruction("xml-stylesheet", m);
@@ -85,15 +85,15 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
             store(root, trees);
 
             try {
-                if (!checkFile(defaultFileName)) {
+                if (!checkFile(DEFAULT_FILE_NAME)) {
                     // file does not exist, create it
-                    File file = new File(defaultFileName);
+                    File file = new File(DEFAULT_FILE_NAME);
                     if (!file.createNewFile()) {
                         log.error("createNewFile failed");
                     }
                 }
                 // write content to file
-                writeXML(findFile(defaultFileName), doc);
+                writeXML(findFile(DEFAULT_FILE_NAME), doc);
                 // memory consistent with file
                 jmri.jmrit.catalog.ImageIndexEditor.indexChanged(false);
             } catch (java.io.IOException ioe) {
@@ -143,7 +143,10 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
     }
 
     /**
-     * Recursively store a CatalogTree
+     * Recursively store a CatalogTree.
+     *
+     * @param parent the element to store node in
+     * @param node   the root node of the tree
      */
     public void storeNode(Element parent, CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
@@ -172,6 +175,9 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
     /**
      * This is invoked as part of the "store all" mechanism, which is not used
      * for these objects. Hence this is implemented to do nothing.
+     *
+     * @param o the object to store
+     * @return null
      */
     public Element store(Object o) {
         return null;
@@ -187,18 +193,16 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
         //CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         try {
             // check if file exists
-            if (checkFile(defaultFileName)) {
-                Element root = rootFromName(defaultFileName);
+            if (checkFile(DEFAULT_FILE_NAME)) {
+                Element root = rootFromName(DEFAULT_FILE_NAME);
                 if (root != null) {
                     load(root);
                 }
             } else if (log.isDebugEnabled()) {
-                log.debug("File: " + defaultFileName + " not Found");
+                log.debug("File: " + DEFAULT_FILE_NAME + " not Found");
             }
-        } catch (org.jdom2.JDOMException jde) {
+        } catch (org.jdom2.JDOMException | java.io.IOException jde) {
             log.error("Exception reading CatalogTrees: " + jde);
-        } catch (java.io.IOException ioe) {
-            log.error("Exception reading CatalogTrees: " + ioe);
         }
     }
 
@@ -219,6 +223,8 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
 
     /**
      * Utility method to load the individual CatalogTree objects.
+     *
+     * @param catalogTrees element containing trees
      */
     public void loadCatalogTrees(Element catalogTrees) {
         List<Element> catList = catalogTrees.getChildren("catalogTree");
@@ -235,7 +241,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
                 continue;
             }
             String sysName = attr.getValue();
-            String userName = null;
+            String userName;
             attr = elem.getAttribute("userName");
             if (attr == null) {
                 log.warn("unexpected null userName. attrs= " + elem.getAttributes());
@@ -279,7 +285,11 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
     }
 
     /**
-     * Recursively load a CatalogTree
+     * Recursively load a CatalogTree.
+     *
+     * @param element element containing the node to load
+     * @param parent  the parent node of the node in element
+     * @param model   the tree model containing the tree to add the node to
      */
     public void loadNode(Element element, CatalogTreeNode parent, DefaultTreeModel model) {
         List<Element> nodeList = element.getChildren("node");

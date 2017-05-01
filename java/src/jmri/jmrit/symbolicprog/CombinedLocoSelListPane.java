@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * that there was no selection in that box. Here, the lack of a selection
  * indicates there's no selection.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane {
 
@@ -56,6 +56,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         mMfgList.clearSelection();
         mMfgList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mMfgListener = new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!mMfgList.isSelectionEmpty()) {
                     // manufacturer selected, update decoder list
@@ -80,6 +81,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
         mDecoderList.clearSelection();
         mDecoderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mDecoderListener = new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!mDecoderList.isSelectionEmpty()) {
                     // decoder selected - reset and disable loco selection
@@ -108,6 +110,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
         }
         iddecoder.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("identify decoder pressed");
@@ -249,6 +252,7 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
     /**
      * Set the decoder selection to a specific decoder from a selected Loco
      */
+    @Override
     void setDecoderSelectionFromLoco(String loco) {
         // if there's a valid loco entry...
         RosterEntry locoEntry = Roster.getDefault().entryFromTitle(loco);

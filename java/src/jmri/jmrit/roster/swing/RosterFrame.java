@@ -104,13 +104,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A window for Roster management.
- *
+ * <p>
  * TODO: Several methods are copied from PaneProgFrame and should be refactored
- * No programmer support yet (dummy object below) Color only covering borders No
+ * No programmer support yet (dummy object below). Color only covering borders. No
  * reset toolbar support yet No glass pane support (See DecoderPro3Panes class
- * and usage below) Special panes (Roster entry, attributes, graphics) not
- * included How do you pick a programmer file? (hardcoded) Initialization needs
- * partial deferal, too for 1st pane to appear
+ * and usage below). Special panes (Roster entry, attributes, graphics) not
+ * included. How do you pick a programmer file? (hardcoded) Initialization needs
+ * partial deferal, too for 1st pane to appear.
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
@@ -365,13 +365,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         updateProgrammerStatus();
         ConnectionStatus.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
             if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
-                log.debug("Received property {} with value {} ",e.getPropertyName(), e.getNewValue() );
+                log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
                 updateProgrammerStatus();
             }
         });
         InstanceManager.addPropertyChangeListener((PropertyChangeEvent e) -> {
             if (e.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(ProgrammerManager.class))) {
-                log.debug("Received property {} with value {} ",e.getPropertyName(), e.getNewValue() );
+                log.debug("Received property {} with value {} ", e.getPropertyName(), e.getNewValue());
                 updateProgrammerStatus();
             }
         });
@@ -488,7 +488,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         //Set all the sort and width details of the table first.
         String rostertableref = getWindowFrameRef() + ":roster";
         rtable.getTable().setName(rostertableref);
-        
+
         // Allow only one column to be sorted at a time - 
         // Java allows multiple column sorting, but to effectly persist that, we
         // need to be intelligent about which columns can be meaningfully sorted
@@ -784,16 +784,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
-        try {
-            // create menu and standard items
-            JMenu helpMenu = HelpUtil.makeHelpMenu("package.apps.gui3.dp3.DecoderPro3", true);
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-            // use as main help menu
-            menuBar.add(helpMenu);
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help: " + e3);
-        }
+        // create menu and standard items
+        JMenu helpMenu = HelpUtil.makeHelpMenu("package.apps.gui3.dp3.DecoderPro3", true);
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        // use as main help menu
+        menuBar.add(helpMenu);
     }
 
     protected void hideGroups() {
@@ -873,12 +869,26 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         firePropertyChange("closewindow", "setEnabled", true);
     }
 
+    /**
+     * Prepare a roster entry to be printed, and display a selection list.
+     *
+     * @see jmri.jmrit.roster.PrintRosterEntry#printPanes(boolean)
+     * @param boo true if output should got to a Preview pane on screen, false to output to a printer (dialog)
+     */
     protected void printLoco(boolean boo) {
+        log.debug("Selected entry: {}", re.getDisplayName());
         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer2 + ".xml");
+        // uses Basic programmer (programmer2) when printing a selected entry from (this) top Roster frame
+        // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
         pre.printPanes(boo);
     }
 
-    //Matches the first argument in the array against a locally-known method
+    /**
+     * Match the first argument in the array against a locally-known method.
+     *
+     * @param args Array of arguments, we take with element 0
+     */
+
     @Override
     public void remoteCalls(String[] args) {
         args[0] = args[0].toLowerCase();
@@ -1126,7 +1136,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     protected void selectLoco(int dccAddress, boolean isLong, int mfgId, int modelId) {
         // raise the button again
-        //idloco.setSelected(false);
+        // idloco.setSelected(false);
         // locate that loco
         inStartProgrammer = false;
         if (re != null) {
@@ -1188,9 +1198,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Simple method to change over the progDebugger buttons, this should be
-     * implemented button with the buttons in their own class etc, but this will
-     * work for now.
+     * Simple method to change over the progDebugger buttons.
+     * <p>
+     * TODO This should be implemented with the buttons in their own class etc.
+     * but this will work for now.
      *
      * @param buttonId   1 or 2; use 1 for basic programmer; 2 for comprehensive
      *                   programmer
@@ -1274,6 +1285,25 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
+
+        menuItem = new JMenuItem(Bundle.getMessage("PrintSelection"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            printLoco(false);
+        });
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
+        popupMenu.add(menuItem);
+        menuItem = new JMenuItem(Bundle.getMessage("PreviewSelection"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            printLoco(true);
+        });
+        if (re == null) {
+            menuItem.setEnabled(false);
+        }
+        popupMenu.add(menuItem);
+        popupMenu.addSeparator();
+
         menuItem = new JMenuItem(Bundle.getMessage("Duplicateddd"));
         menuItem.addActionListener((ActionEvent e1) -> {
             copyLoco();
@@ -1293,8 +1323,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Identify loco button pressed, start the identify operation This defines
-     * what happens when the identify is done.
+     * Start the identify operation after [Identify Loco] button pressed.
+     * <p>
+     * This defines what happens when the identify is done.
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
@@ -1396,14 +1427,16 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         inStartProgrammer = false;
     }
 
-    /*
-     * This status bar needs sorting out properly
+    /**
+     * Create and display a status bar along the bottom edge of the Roster main pane.
+     * <p>
+     * TODO This status bar needs sorting out properly
      */
     protected void statusBar() {
         addToStatusBox(serviceModeProgrammerLabel, null);
         addToStatusBox(operationsModeProgrammerLabel, null);
         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
-        statusField.setText(Bundle.getMessage("Idle"));
+        statusField.setText(Bundle.getMessage("StateIdle"));
         addToStatusBox(programmerStatusLabel, statusField);
         addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())), null);
     }
@@ -1431,8 +1464,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         } else {
             filename.setText(re.getFileName());
             dateUpdated.setText((re.getDateModified() != null)
-                ? DateFormat.getDateTimeInstance().format(re.getDateModified())
-                : re.getDateUpdated());
+                    ? DateFormat.getDateTimeInstance().format(re.getDateModified())
+                    : re.getDateUpdated());
             decoderModel.setText(re.getDecoderModel());
             decoderFamily.setText(re.getDecoderFamily());
             dccAddress.setText(re.getDccAddress());
@@ -1470,7 +1503,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /*
-     * this handles setting up and updating the GUI for the types of progDebugger
+     * Handle setting up and updating the GUI for the types of progDebugger
      * available.
      */
     protected void updateProgrammerStatus() {
@@ -1482,7 +1515,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         GlobalProgrammerManager gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
-            log.debug("GlobalProgrammerManager found of class {} name {} ",gpm.getClass(),serviceModeProgrammerName);
+            log.debug("GlobalProgrammerManager found of class {} name {} ", gpm.getClass(), serviceModeProgrammerName);
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
                 log.debug("Checking connection name {}", connection.getConnectionName());
                 if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
@@ -1496,7 +1529,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         AddressedProgrammerManager apm = InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
-            log.debug("AddressedProgrammerManager found of class {} name {} ",apm.getClass(),opsModeProgrammerName);
+            log.debug("AddressedProgrammerManager found of class {} name {} ", apm.getClass(), opsModeProgrammerName);
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
                 log.debug("Checking connection name {}", connection.getConnectionName());
                 if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
@@ -1507,7 +1540,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(),serModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(), serModeProCon.getInfo())) {
                 log.debug("GPM Connection online");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
@@ -1525,7 +1558,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
-        } else if(gpm!=null && gpm.isGlobalProgrammerAvailable()) {
+        } else if (gpm != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
                 log.debug("GPM Connection online");
                 serviceModeProgrammerLabel.setText(
@@ -1562,7 +1595,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(),opsModeProCon.getInfo())) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(), opsModeProCon.getInfo())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
@@ -1580,7 +1613,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 ops.setVisible(true);
                 firePropertyChange("setprogops", "setEnabled", true);
             }
-        } else if (apm!=null && apm.isAddressedModePossible()) {
+        } else if (apm != null && apm.isAddressedModePossible()) {
             if (ConnectionStatus.instance().isSystemOk(apm.getUserName())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(

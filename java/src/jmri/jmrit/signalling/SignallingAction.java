@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SignallingFrame object
+ * Swing action to create and register a SignallingFrame object.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignallingAction extends AbstractAction {
 
@@ -26,12 +26,12 @@ public class SignallingAction extends AbstractAction {
     public void setMast(jmri.SignalMast source, jmri.SignalMast dest) {
         this.source = source;
         this.dest = dest;
-
     }
 
     jmri.SignalMast source = null;
     jmri.SignalMast dest = null;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SignallingFrame f = new SignallingFrame();
         try {

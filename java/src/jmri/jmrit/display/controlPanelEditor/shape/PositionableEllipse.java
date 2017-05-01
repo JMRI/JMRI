@@ -27,6 +27,7 @@ public class PositionableEllipse extends PositionableRectangle {
      * this class must be overridden by its subclasses and executed only after
      * its parameters have been set
      */
+    @Override
     public void makeShape() {
         setShape(new Ellipse2D.Double(0, 0, _width, _height));
     }
@@ -43,9 +44,11 @@ public class PositionableEllipse extends PositionableRectangle {
         return super.finishClone(pos);
     }*/
 
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("Ellipse"));
         popup.add(new javax.swing.AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
                     _editFrame = new DrawEllipse("editShape", "Ellipse", null);

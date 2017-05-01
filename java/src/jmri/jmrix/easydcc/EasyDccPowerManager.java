@@ -6,7 +6,7 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 
@@ -23,6 +23,7 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 
     String userName = "EasyDcc";
 
+    @Override
     public String getUserName() {
         return userName;
     }
@@ -32,6 +33,7 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
     boolean waiting = false;
     int onReply = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -54,11 +56,13 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeEasyDccListener(this);
         tc = null;
@@ -73,6 +77,7 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -81,6 +86,7 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -88,6 +94,7 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
     EasyDccTrafficController tc = null;
 
     // to listen for status changes from EasyDcc system
+    @Override
     public void reply(EasyDccReply m) {
         if (waiting) {
             power = onReply;
@@ -96,6 +103,7 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
         waiting = false;
     }
 
+    @Override
     public void message(EasyDccMessage m) {
         if (m.isKillMain()) {
             // configure to wait for reply

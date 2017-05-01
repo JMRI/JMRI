@@ -10,7 +10,7 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -64,10 +64,12 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         AcelaTrafficController.instance().setTurnoutManager(t);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.acela.AcelaActionListBundle");
     }
 
+    @Override
     public void dispose() {
         tc = null;
         InstanceManager.deregister(this, AcelaSystemConnectionMemo.class);

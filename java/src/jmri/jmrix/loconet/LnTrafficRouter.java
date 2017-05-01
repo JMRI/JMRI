@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * at the remote node, all of the routing of messages to multiple consumers can
  * be done without traffic over the connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
@@ -30,6 +30,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
     // removeLocoNetListener, notify
     boolean connected = false;
 
+    @Override
     public boolean status() {
         return connected;
     }
@@ -39,6 +40,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         // update statistics
         transmittedMsgCount++;
@@ -51,6 +53,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      * Receive a LocoNet message from upstream and forward it to all the local
      * clients.
      */
+    @Override
     public void message(LocoNetMessage m) {
         notify(m);
     }
@@ -91,6 +94,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      *
      * @return true if busy, false if nothing waiting to send
      */
+    @Override
     public boolean isXmtBusy() {
         return false;
     }

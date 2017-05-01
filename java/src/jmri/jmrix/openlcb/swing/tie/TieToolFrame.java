@@ -18,13 +18,14 @@ import javax.swing.border.Border;
  * For historical reasons, this refers to Events as Ties.
  * That really has to change sometime soon
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
  * @since 2.3.7
  */
 public class TieToolFrame extends jmri.util.JmriJFrame {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
+    @Override
     public void initComponents() throws Exception {
 
         // set the frame's initial state

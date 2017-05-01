@@ -62,6 +62,7 @@ public class TrackerTableAction extends AbstractAction {
         return _instance;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (_frame != null) {
             _frame.setVisible(true);
@@ -141,8 +142,8 @@ public class TrackerTableAction extends AbstractAction {
             table.setTransferHandler(new jmri.util.DnDTableExportHandler());
             JScrollPane tablePane = new JScrollPane(table);
             Dimension dim = table.getPreferredSize();
-            table.getRowHeight(new JButton("STOPIT").getPreferredSize().height);
-            dim.height = table.getRowHeight() * 2;
+            int height = new JButton("STOPIT").getPreferredSize().height;
+            dim.height = height * 2;
             tablePane.getViewport().setPreferredSize(dim);
 
             JPanel tablePanel = new JPanel();
@@ -163,6 +164,7 @@ public class TrackerTableAction extends AbstractAction {
             p = new JPanel();
             JButton button = new JButton(Bundle.getMessage("MenuNewTracker"));
             button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     newTrackerDialog();
                 }
@@ -172,6 +174,7 @@ public class TrackerTableAction extends AbstractAction {
 
             button = new JButton(Bundle.getMessage("MenuRefresh"));
             button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     _model.fireTableDataChanged();
                 }
@@ -181,6 +184,7 @@ public class TrackerTableAction extends AbstractAction {
 
             button = new JButton(Bundle.getMessage("MenuBlockPicker"));
             button.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     openPickList();
                 }
@@ -192,6 +196,7 @@ public class TrackerTableAction extends AbstractAction {
             tablePanel.add(panel, BorderLayout.CENTER);
 
             addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     dispose();
                 }
@@ -199,6 +204,7 @@ public class TrackerTableAction extends AbstractAction {
             setContentPane(tablePanel);
 
             addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
                     _model.fireTableDataChanged();
@@ -282,6 +288,7 @@ public class TrackerTableAction extends AbstractAction {
             JButton doneButton;
             doneButton = new JButton(Bundle.getMessage("ButtonDone"));
             doneButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     if (doDoneAction()) {
                         _dialog.dispose();
@@ -369,8 +376,8 @@ public class TrackerTableAction extends AbstractAction {
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-//	        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
-//	        blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
+//         blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName")));
+//         blurb.add(new JLabel(Bundle.getMessage("DragErrorName")));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
             JPanel panel = new JPanel();
             panel.add(blurb);
@@ -379,7 +386,7 @@ public class TrackerTableAction extends AbstractAction {
             content.add(new PickPanel(models));
 
             _pickFrame.setContentPane(content);
-            /*	        _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            /*         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
              public void windowClosing(java.awt.event.WindowEvent e) {
              closePickList();                   
              }
@@ -441,7 +448,7 @@ public class TrackerTableAction extends AbstractAction {
                 OBlock b = iter.next();
                 if (oldRange.contains(b)) {
                     oldRange.remove(b);
-                    continue;	// held in common. keep listener	    			
+                    continue; // held in common. keep listener        
                 }
                 addBlockListener(b, tracker);       // new block.  Add Listener
             }
@@ -481,6 +488,7 @@ public class TrackerTableAction extends AbstractAction {
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals("state")) {
                 OBlock b = (OBlock) evt.getSource();
@@ -493,9 +501,9 @@ public class TrackerTableAction extends AbstractAction {
                 // The following washes out the extra notifications
 /*                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (OBlock.UNOCCUPIED | OBlock.RUNNING)) {
                     b.setState(state & ~OBlock.RUNNING);
-                    return;		// will do the tracker.move() on the next (repeat call
+                    return;  // will do the tracker.move() on the next (repeat call
                 } else if ((state & OBlock.RUNNING) != 0) {
-                    return;		// repeats previous call that was completed.	            	
+                    return;  // repeats previous call that was completed.              
                 }*/
                 if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.UNOCCUPIED | OBlock.RUNNING))
                         && (state & (OBlock.OCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.OCCUPIED | OBlock.RUNNING))) {
@@ -602,6 +610,9 @@ public class TrackerTableAction extends AbstractAction {
                 case Tracker.ERROR_BLOCK:
                     // tracker wrote error message
                     break;
+                default:
+                    log.warn("Unhandled tracker move: {}", tracker.move(block, state));
+                    break;
             }
         }
 
@@ -614,7 +625,7 @@ public class TrackerTableAction extends AbstractAction {
                 t.removeBlock(b);
             }
             list = t.getBlocksOccupied();
-//			removeBlockListeners(list, t);
+//   removeBlockListeners(list, t);
             iter = list.iterator();
             while (iter.hasNext()) {
                 OBlock b = iter.next();
@@ -626,6 +637,7 @@ public class TrackerTableAction extends AbstractAction {
             setStatus(Bundle.getMessage("TrackerStopped", t.getTrainName()));
         }
 
+        @Override
         public void mouseClicked(MouseEvent event) {
             javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
             for (int i = _statusHistory.size() - 1; i >= 0; i--) {
@@ -634,15 +646,19 @@ public class TrackerTableAction extends AbstractAction {
             popup.show(_status, 0, 0);
         }
 
+        @Override
         public void mousePressed(MouseEvent event) {
         }
 
+        @Override
         public void mouseEntered(MouseEvent event) {
         }
 
+        @Override
         public void mouseExited(MouseEvent event) {
         }
 
+        @Override
         public void mouseReleased(MouseEvent event) {
         }
 
@@ -672,24 +688,31 @@ public class TrackerTableAction extends AbstractAction {
             _parent = f;
         }
 
+        @Override
         public int getColumnCount() {
             return NUMCOLS;
         }
 
+        @Override
         public int getRowCount() {
             return _trackerList.size();
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case NAME_COL:
                     return Bundle.getMessage("TrainName");
                 case STATUS_COL:
                     return Bundle.getMessage("status");
+                default:
+                    // fall out
+                    break;
             }
             return "";
         }
 
+        @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch (columnIndex) {
                 case NAME_COL:
@@ -698,10 +721,14 @@ public class TrackerTableAction extends AbstractAction {
                     return _trackerList.get(rowIndex).getStatus();
                 case STOP_COL:
                     return Bundle.getMessage("Stop");
+                default:
+                    // fall out
+                    break;
             }
             return "";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == STOP_COL) {
                 Tracker t = _trackerList.get(row);
@@ -711,6 +738,7 @@ public class TrackerTableAction extends AbstractAction {
             }
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             if (col == STOP_COL) {
                 return true;
@@ -718,6 +746,7 @@ public class TrackerTableAction extends AbstractAction {
             return false;
         }
 
+        @Override
         public Class<?> getColumnClass(int col) {
             if (col == STOP_COL) {
                 return JButton.class;
@@ -733,6 +762,9 @@ public class TrackerTableAction extends AbstractAction {
                     return new JTextField(60).getPreferredSize().width;
                 case STOP_COL:
                     return new JButton("STOPIT").getPreferredSize().width;
+                default:
+                    // fall out
+                    break;
             }
             return 5;
         }

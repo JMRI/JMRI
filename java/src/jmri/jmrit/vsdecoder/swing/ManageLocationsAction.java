@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
  * 
  */
 public class ManageLocationsAction extends AbstractAction {
@@ -48,6 +48,7 @@ public class ManageLocationsAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             // Handle the Listener
@@ -135,7 +136,7 @@ public class ManageLocationsAction extends AbstractAction {
         f.setExtendedState(Frame.NORMAL);
     }
 
-    static private Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(ManageLocationsAction.class.getName());
 
 }

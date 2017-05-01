@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -47,10 +47,12 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     boolean logDebug = false;
 
     // The methods to implement the SerialInterface
+    @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeSerialListener(SerialListener l) {
         this.removeListener(l);
     }
@@ -96,11 +98,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         log.warn("enterProgMode doesnt make sense for grapevine serial");
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -108,6 +112,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SerialListener) client).message((SerialMessage) m);
     }
@@ -115,6 +120,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a SerialReply to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((SerialListener) client).reply((SerialReply) m);
     }
@@ -131,6 +137,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * Handles initialization, output and polling for Grapevine from within the
      * running thread
      */
+    @Override
     protected synchronized AbstractMRMessage pollMessage() {
         // ensure validity of call
         if (getNumNodes() <= 0) {
@@ -175,6 +182,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return null;
     }
 
+    @Override
     protected synchronized void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         // inform node, and if it resets then reinitialize 
         if (getNode(curSerialNodeIndex) != null) {
@@ -186,12 +194,14 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
+    @Override
     protected synchronized void resetTimeout(AbstractMRMessage m) {
         // inform node
         getNode(curSerialNodeIndex).resetTimeout(m);
 
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
     }
@@ -199,6 +209,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
     }
@@ -229,10 +240,12 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         self = this;
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // our version of loadChars doesn't invoke this, so it shouldn't be called
         log.error("Not using endOfMessage, should not be called");
@@ -243,6 +256,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     int nextReplyLen = 4;
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         nextReplyLen = ((SerialMessage) m).getReplyLen();
         super.forwardToPort(m, reply);
@@ -251,6 +265,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     byte[] buffer = new byte[4];
     int state = 0;
 
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         while (doNextStep(msg, istream)) {
         }
@@ -368,6 +383,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         msg.setElement(3, buffer[3]);
     }
 
+    @Override
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
         // does nothing
     }
@@ -378,6 +394,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    @Override
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
         return 0;  // Do nothing
     }
@@ -390,6 +407,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param offset the first byte not yet used
      * @param m      the original message
      */
+    @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
         currentAddr = ((SerialMessage) m).getAddr();
         return;
@@ -402,6 +420,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param m The message to be sent
      * @return Number of bytes
      */
+    @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
         return m.getNumDataElements(); // All are same length as message
     }

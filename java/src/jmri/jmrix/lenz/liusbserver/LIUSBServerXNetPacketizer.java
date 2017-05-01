@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * In particular, LIUSBServerXNetPacketizer counts the number of commands
  * received.
  *
- * @author	Paul Bender, Copyright (C) 2009
+ * @author Paul Bender, Copyright (C) 2009
  *
  */
 public class LIUSBServerXNetPacketizer extends XNetPacketizer {
@@ -35,6 +35,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT"},
              justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("forwardToPort message: [{}]", m);

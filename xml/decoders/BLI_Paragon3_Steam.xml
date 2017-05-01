@@ -17,9 +17,16 @@
   <!-- Version 1 New file from 0.13 manual and BLI_Paragon2_steam v5 -->
   <version author="Michael Mosher" version="2" lastUpdated="20151203"/>
   <!-- General cleanup, more use of external files to go along with P3 file -->
+  <version author="Michael Mosher" version="3" lastUpdated="20170216"/>
+  <!-- Add model Steam w/depleting coal, whistle smoke and CV182,183,215  -->
   <decoder>
     <family name="Paragon 3" mfg="Broadway Limited Imports, LLC">
-      <model model="Steam" numOuts="3" numFns="30" connector="9pin">
+      <model model="Steam" numOuts="3" numFns="30" connector="other">
+        <versionCV lowVersionID="32" highVersionID="63"/>
+        <output name="1" label="headlight"/>
+        <output name="2" label="rearlight"/>
+      </model>
+      <model model="Steam w/depleting coal, whistle smoke" numOuts="3" numFns="30" connector="other">
         <versionCV lowVersionID="32" highVersionID="63"/>
         <output name="1" label="headlight"/>
         <output name="2" label="rearlight"/>
@@ -150,6 +157,19 @@
       </variable>
       <variable CV="61" default="18" minFn="28" item="F28 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="182" default="110" item="Whistle Smoke Unit Heater Power" include="Steam w/depleting coal, whistle smoke">
+        <decVal max="110"/>
+        <label>Whistle Smoke Unit Heater Power</label>
+      </variable>
+      <variable CV="183" default="255" item="Whistle Smoke Unit Fan Power" include="Steam w/depleting coal, whistle smoke">
+        <decVal/>
+        <label>Whistle Smoke Unit Fan Power</label>
+      </variable>
+      <variable CV="215" default="10" item="Depleting Coal Drop Time" include="Steam w/depleting coal, whistle smoke">
+        <decVal/>
+        <label>Depleting Coal Drop Time</label>
+        <tooltip>Time in sec between downward movements</tooltip>
       </variable>
       <variable CV="218" default="70" item="Smoke Unit Idle Heater Power">
         <decVal/>

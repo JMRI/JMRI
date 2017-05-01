@@ -16,7 +16,7 @@ import jmri.util.JmriJFrame;
 /**
  * Display memory usage on request
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2012
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -46,6 +46,7 @@ public class MemoryFrameAction extends AbstractAction {
 
     java.text.NumberFormat nf;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         nf = java.text.NumberFormat.getInstance();
@@ -79,18 +80,21 @@ public class MemoryFrameAction extends AbstractAction {
         p.add(testButton);
 
         updateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 updateDisplay();
             }
         });
         gcButton.addActionListener(new ActionListener() {
             @SuppressFBWarnings(value = "DM_GC")  // Garbage collection OK here
+            @Override
             public void actionPerformed(ActionEvent event) {
                 Runtime.getRuntime().gc();
                 updateDisplay();
             }
         });
         testButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 Roster.getDefault();
                 DecoderIndexFile.instance();

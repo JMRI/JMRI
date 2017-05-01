@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -47,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  */
 public class ActivateTrainFrame {
 
@@ -55,9 +54,6 @@ public class ActivateTrainFrame {
         _dispatcher = d;
         _tiFile = new TrainInfoFile();
     }
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // operational instance variables
     private DispatcherFrame _dispatcher = null;
@@ -124,8 +120,12 @@ public class ActivateTrainFrame {
     boolean transitsFromSpecificBlock = false;
 
     /**
-     * Open up a new train window, for a given roster entry located in a
-     * specific block
+     * Open up a new train window for a given roster entry located in a
+     * specific block.
+     * 
+     * @param e the action event triggering the new window
+     * @param re the roster entry to open the new window for
+     * @param b the block where the train is located
      */
     public void initiateTrain(ActionEvent e, RosterEntry re, Block b) {
         initiateTrain(e);
@@ -162,10 +162,11 @@ public class ActivateTrainFrame {
     }
 
     /**
-     * Displays a window that allows a new ActiveTrain to be activated
+     * Displays a window that allows a new ActiveTrain to be activated.
      *
      * Called by Dispatcher in response to the dispatcher clicking the New Train
-     * button
+     * button.
+     * @param e the action event triggering the window display
      */
     protected void initiateTrain(ActionEvent e) {
         // set Dispatcher defaults
@@ -184,6 +185,7 @@ public class ActivateTrainFrame {
             p0.setLayout(new FlowLayout());
             p0.add(loadButton = new JButton(Bundle.getMessage("LoadButton")));
             loadButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     loadTrainInfo(e);
                 }
@@ -191,6 +193,7 @@ public class ActivateTrainFrame {
             loadButton.setToolTipText(Bundle.getMessage("LoadButtonHint"));
             p0.add(saveButton = new JButton(Bundle.getMessage("SaveButton")));
             saveButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     saveTrainInfo(e);
                 }
@@ -198,6 +201,7 @@ public class ActivateTrainFrame {
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
             p0.add(deleteButton = new JButton(Bundle.getMessage("ButtonDelete")));
             deleteButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     deleteTrainInfo(e);
                 }
@@ -211,6 +215,7 @@ public class ActivateTrainFrame {
             p1.add(new JLabel(Bundle.getMessage("TransitBoxLabel") + " :"));
             p1.add(transitSelectBox);
             transitSelectBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleTransitSelectionChanged(e);
                 }
@@ -233,6 +238,7 @@ public class ActivateTrainFrame {
             p2.setLayout(new FlowLayout());
             p2.add(inTransitBox);
             inTransitBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleInTransitClick(e);
                 }
@@ -245,6 +251,7 @@ public class ActivateTrainFrame {
             p3.add(startingBlockBox);
             startingBlockBox.setToolTipText(Bundle.getMessage("StartingBlockBoxHint"));
             startingBlockBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleStartingBlockSelectionChanged(e);
                 }
@@ -265,6 +272,7 @@ public class ActivateTrainFrame {
             p6.setLayout(new FlowLayout());
             p6.add(resetWhenDoneBox);
             resetWhenDoneBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleResetWhenDoneClick(e);
                 }
@@ -277,6 +285,7 @@ public class ActivateTrainFrame {
             p6a.add(delayedReStartLabel);
             p6a.add(delayedReStartBox);
             delayedReStartBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleResetWhenDoneClick(e);
                 }
@@ -303,6 +312,7 @@ public class ActivateTrainFrame {
             reverseAtEndBox.setToolTipText(Bundle.getMessage("ReverseAtEndBoxHint"));
             initiatePane.add(p10);
             reverseAtEndBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleReverseAtEndBoxClick(e);
                 }
@@ -331,6 +341,7 @@ public class ActivateTrainFrame {
             p9.add(delayedStartBox);
             delayedStartBox.setToolTipText(Bundle.getMessage("DelayedStartHint"));
             delayedStartBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleDelayStartClick(e);
                 }
@@ -360,6 +371,7 @@ public class ActivateTrainFrame {
             p5.setLayout(new FlowLayout());
             p5.add(autoRunBox);
             autoRunBox.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     handleAutoRunClick(e);
                 }
@@ -375,6 +387,7 @@ public class ActivateTrainFrame {
             JButton cancelButton = null;
             p7.add(cancelButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelInitiateTrain(e);
                 }
@@ -382,6 +395,7 @@ public class ActivateTrainFrame {
             cancelButton.setToolTipText(Bundle.getMessage("CancelButtonHint"));
             p7.add(addNewTrainButton = new JButton(Bundle.getMessage("AddNewTrainButton")));
             addNewTrainButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     addNewTrain(e);
                 }
@@ -458,8 +472,8 @@ public class ActivateTrainFrame {
         if ((!reverseAtEndBox.isSelected()) && resetWhenDoneBox.isSelected()
                 && (!selectedTransit.canBeResetWhenDone())) {
             resetWhenDoneBox.setSelected(false);
-            javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
-                    .getString("NoResetMessage"), Bundle.getMessage("InformationTitle"),
+            javax.swing.JOptionPane.showMessageDialog(initiateFrame, Bundle
+                    .getMessage("NoResetMessage"), Bundle.getMessage("InformationTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
@@ -818,6 +832,7 @@ public class ActivateTrainFrame {
             }
             if (trainSelectBoxListener == null) {
                 trainSelectBoxListener = new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         RosterEntry r = trainBoxList.get(trainSelectBox.getSelectedIndex());
                         if (transitsFromSpecificBlock) {
@@ -1014,7 +1029,7 @@ public class ActivateTrainFrame {
         try {
             _tiFile.writeTrainInfo(info, fileName);
         } //catch (org.jdom2.JDOMException jde) { 
-        //	log.error("JDOM exception writing Train Info: "+jde); 
+        // log.error("JDOM exception writing Train Info: "+jde); 
         //}                           
         catch (java.io.IOException ioe) {
             log.error("IO exception writing Train Info: " + ioe);

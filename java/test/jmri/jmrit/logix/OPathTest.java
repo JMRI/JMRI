@@ -1,23 +1,26 @@
 package jmri.jmrit.logix;
 
+import java.util.ArrayList;
+import jmri.BeanSetting;
 import jmri.Block;
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the OPath class
  *
  * @author	Bob Jacobsen Copyright 2010
  */
-public class OPathTest extends TestCase {
+public class OPathTest {
     
     OBlockManager _blkMgr;
     PortalManager _portalMgr;
     jmri.TurnoutManager _turnoutMgr;
 
+    @Test
     public void testCtor() {
         Block b = new Block("IB1");
 
@@ -27,6 +30,7 @@ public class OPathTest extends TestCase {
         Assert.assertEquals("block", b, op.getBlock());
     }
 
+    @Test
     public void testNullBlockCtor() {
 
         OPath op = new OPath(null, "name");
@@ -35,6 +39,7 @@ public class OPathTest extends TestCase {
         Assert.assertEquals("block", null, op.getBlock());
     }
 
+    @Test
     public void testSetBlockNonNull() {
         Block b1 = new Block("IB1");
         Block b2 = new Block("IB2");
@@ -45,6 +50,7 @@ public class OPathTest extends TestCase {
         Assert.assertEquals("block", b2, op.getBlock());
     }
 
+    @Test
     public void testSetBlockWasNull() {
         Block b = new Block("IB1");
 
@@ -54,6 +60,7 @@ public class OPathTest extends TestCase {
         Assert.assertEquals("block", b, op.getBlock());
     }
 
+    @Test
     public void testSetBlockToNull() {
         Block b1 = new Block("IB1");
 
@@ -63,6 +70,7 @@ public class OPathTest extends TestCase {
         Assert.assertEquals("block", null, op.getBlock());
     }
 
+    @Test
     public void testEquals() {
         Block b1 = new Block("IB1");
 
@@ -78,15 +86,18 @@ public class OPathTest extends TestCase {
         Assert.assertTrue("on contents", op1.equals(op2));
     }
     
+    @Test
     public void testPortals() {
         Portal entryP = _portalMgr.providePortal("entryP");
         Portal exitP = _portalMgr.providePortal("exitP");
         OBlock blk = _blkMgr.provideOBlock("OB0");
-        OPath path = new OPath("path", blk, entryP, exitP, null);
+        ArrayList<BeanSetting> ats = new ArrayList<BeanSetting>();
+        OPath path = new OPath("path", blk, entryP, exitP, ats);
         Assert.assertEquals("Get entry portal", entryP, path.getFromPortal());
         Assert.assertEquals("Get exit portal", exitP, path.getToPortal());
     }
     
+    @Test
     public void testNameChange() {
         Portal exitP = _portalMgr.providePortal("exitP");
         OBlock blk = _blkMgr.provideOBlock("OB0");
@@ -103,23 +114,9 @@ public class OPathTest extends TestCase {
     }
     
     // from here down is testing infrastructure
-    public OPathTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OPathTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        return new TestSuite(OPathTest.class);
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         _blkMgr = new OBlockManager();
@@ -127,7 +124,9 @@ public class OPathTest extends TestCase {
         _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

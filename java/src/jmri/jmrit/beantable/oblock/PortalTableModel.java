@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
 public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
@@ -112,6 +112,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return Bundle.getMessage("PortalName");
             case TO_BLOCK_COLUMN:
                 return Bundle.getMessage("BlockName");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -144,6 +147,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     return portal.getToBlockName();
                 case DELETE_COL:
                     return Bundle.getMessage("ButtonDelete");
+                default:
+                    // fall through
+                    break;
             }
         }
         return "";
@@ -277,6 +283,10 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 if (deletePortal(portal)) {
                     fireTableDataChanged();
                 }
+                break;
+            default:
+                log.warn("Unhandled column: {}", col);
+                break;
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
@@ -324,6 +334,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return new JTextField(20).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }

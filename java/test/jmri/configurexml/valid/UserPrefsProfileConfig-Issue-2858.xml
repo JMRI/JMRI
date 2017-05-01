@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>3</minor>
+    <test>4</test>
+    <modifier>.4ish</modifier>
+  </jmriversion>
+  <UserMessagePreferences class="jmri.managers.configurexml.DefaultUserMessagePreferencesXml">
+    <windowDetails class="jmri.jmrit.beantable.ListedTableAction$1$1:Sensors">
+      <locX>75.0</locX>
+      <locY>34.0</locY>
+      <width>1297.0</width>
+      <height>543.0</height>
+    </windowDetails>
+    <windowDetails class="jmri.jmrit.beantable.ListedTableAction$1$1:Reporters">
+      <locX>65.0</locX>
+      <locY>202.0</locY>
+      <width>1295.0</width>
+      <height>543.0</height>
+    </windowDetails>
+    <windowDetails class="apps.gui3.TabbedPreferencesAction$1:Preferences">
+      <locX>75.0</locX>
+      <locY>90.0</locY>
+      <width>913.0</width>
+      <height>385.0</height>
+    </windowDetails>
+    <windowDetails class="jmri.jmrix.ieee802154.swing.mon.IEEE802154MonFrame:1">
+      <locX>65.0</locX>
+      <locY>52.0</locY>
+      <width>887.0</width>
+      <height>289.0</height>
+    </windowDetails>
+    <windowDetails class="Edit Track Segment">
+      <locX>75.0</locX>
+      <locY>62.0</locY>
+    </windowDetails>
+    <windowDetails class="Add/Edit Id Tag">
+      <locX>23.0</locX>
+      <locY>23.0</locY>
+    </windowDetails>
+    <windowDetails class="jmri.jmrix.sprog.sprogmon.SprogMonFrame">
+      <locX>111.0</locX>
+      <locY>89.0</locY>
+      <width>881.0</width>
+      <height>290.0</height>
+    </windowDetails>
+    <windowDetails class="jmri.jmrix.ieee802154.swing.mon.IEEE802154MonFrame">
+      <locX>700.0</locX>
+      <locY>367.0</locY>
+      <width>887.0</width>
+      <height>317.0</height>
+    </windowDetails>
+    <windowDetails class="jmri.jmrit.display.layoutEditor.LayoutEditor:XBee Switching Demo">
+      <locX>843.0</locX>
+      <locY>56.0</locY>
+    </windowDetails>
+    <windowDetails class="jmri.jmrit.roster.Roster">
+      <locX>0.0</locX>
+      <locY>0.0</locY>
+      <properties>
+        <property>
+          <key class="java.lang.String">defaultRosterGroup</key>
+        </property>
+      </properties>
+    </windowDetails>
+    <windowDetails class="Add Reporter Label">
+      <locX>75.0</locX>
+      <locY>34.0</locY>
+      <width>263.0</width>
+      <height>124.0</height>
+    </windowDetails>
+    <windowDetails class="PanelPro">
+      <locX>343.0</locX>
+      <locY>271.0</locY>
+      <width>671.0</width>
+      <height>251.0</height>
+    </windowDetails>
+    <windowDetails class="jmri.jmrit.beantable.ListedTableAction$1$1:Id Tags">
+      <locX>118.0</locX>
+      <locY>130.0</locY>
+      <width>1756.0</width>
+      <height>545.0</height>
+    </windowDetails>
+    <windowDetails class="jmri.jmrit.logix.NXFrame">
+      <locX>65.0</locX>
+      <locY>24.0</locY>
+    </windowDetails>
+    <windowDetails class="jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigFrame">
+      <locX>100.0</locX>
+      <locY>34.0</locY>
+      <width>1259.0</width>
+      <height>570.0</height>
+    </windowDetails>
+    <windowDetails class="jmri.jmrit.beantable.ListedTableAction$1$1:ID Tags">
+      <locX>75.0</locX>
+      <locY>34.0</locY>
+      <width>1295.0</width>
+      <height>543.0</height>
+    </windowDetails>
+    <tableDetails>
+      <table name="jmri.jmrit.beantable.RouteTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Enabled">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="Locked">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.LightTableAction:All">
+        <column name="Intensity">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>180</width>
+        </column>
+        <column name="Enabled">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>67</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SignalGroupTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Enabled">
+          <order>4</order>
+          <width>70</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>2</order>
+          <width>70</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.ReporterTableAction">
+        <column name="Report">
+          <order>2</order>
+          <width>246</width>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Last Report">
+          <order>5</order>
+          <width>246</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.LogixTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>191</width>
+        </column>
+        <column name="Enabled">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>136</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.TurnoutTableAction:All">
+        <column name="Thrown Speed">
+          <order>17</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="Sensor 2">
+          <order>11</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Sensor 1">
+          <order>10</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="Closed Speed">
+          <order>16</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Cmd">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Lock Mode">
+          <order>14</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Automate">
+          <order>12</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Locked">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="Feedback">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Mode">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Decoder">
+          <order>15</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.BlockTableAction">
+        <column name="Speed">
+          <order>14</order>
+          <width>81</width>
+        </column>
+        <column name="Reporter">
+          <order>11</order>
+          <width>92</width>
+        </column>
+        <column name="Edit">
+          <order>5</order>
+          <width>81</width>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="Length">
+          <order>7</order>
+          <width>81</width>
+        </column>
+        <column name="Sensor">
+          <order>10</order>
+          <width>92</width>
+        </column>
+        <column name="Use Current?">
+          <order>12</order>
+          <width>81</width>
+        </column>
+        <column name="Value">
+          <order>2</order>
+          <width>246</width>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Curvature">
+          <order>8</order>
+          <width>92</width>
+        </column>
+        <column name="Permissive">
+          <order>13</order>
+          <width>81</width>
+        </column>
+        <column name="State">
+          <order>9</order>
+          <width>92</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Direction">
+          <order>6</order>
+          <width>81</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SensorTableAction:XBee">
+        <column name="Use Global Delay">
+          <order>7</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>48</width>
+        </column>
+        <column name="Active Delay">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="InActive Delay">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.TurnoutTableAction:XBee">
+        <column name="Thrown Speed">
+          <order>17</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="Sensor 2">
+          <order>11</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Sensor 1">
+          <order>10</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="Closed Speed">
+          <order>16</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Cmd">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Lock Mode">
+          <order>14</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Automate">
+          <order>12</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Locked">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="Feedback">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Mode">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Decoder">
+          <order>15</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SectionTableAction">
+        <column name="Last Block">
+          <order>6</order>
+          <width>169</width>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>191</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>70</width>
+        </column>
+        <column name="First Block">
+          <order>5</order>
+          <width>169</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>103</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.TransitTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>191</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>70</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>103</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.LRouteTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>279</width>
+        </column>
+        <column name="Enabled">
+          <order>2</order>
+          <width>59</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>224</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>279</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.TurnoutTableAction:Internal">
+        <column name="Thrown Speed">
+          <order>17</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="Sensor 2">
+          <order>11</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Sensor 1">
+          <order>10</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="Closed Speed">
+          <order>16</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Cmd">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Lock Mode">
+          <order>14</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Automate">
+          <order>12</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Locked">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="Feedback">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Mode">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Decoder">
+          <order>15</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SensorTableAction:All">
+        <column name="Use Global Delay">
+          <order>7</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>48</width>
+        </column>
+        <column name="Active Delay">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="InActive Delay">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>127</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SensorTableAction:Rfid">
+        <column name="Use Global Delay">
+          <order>7</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>48</width>
+        </column>
+        <column name="Active Delay">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="InActive Delay">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.LightTableAction:Internal">
+        <column name="Intensity">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>180</width>
+        </column>
+        <column name="Enabled">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>67</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.LightTableAction:XBee">
+        <column name="Intensity">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>180</width>
+        </column>
+        <column name="Enabled">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>67</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SignalHeadTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Held">
+          <order>6</order>
+          <width>48</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>84</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="Lit">
+          <order>5</order>
+          <width>48</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SensorTableAction:Internal">
+        <column name="Use Global Delay">
+          <order>7</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="State">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>48</width>
+        </column>
+        <column name="Active Delay">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="InActive Delay">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.MemoryTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Value">
+          <order>2</order>
+          <width>246</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SignalMastTableAction">
+        <column name="Edit Logic">
+          <order>6</order>
+          <width>92</width>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Held">
+          <order>8</order>
+          <width>48</width>
+        </column>
+        <column name="Edit">
+          <order>5</order>
+          <width>92</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="Lit">
+          <order>7</order>
+          <width>48</width>
+        </column>
+        <column name="Aspect">
+          <order>2</order>
+          <width>126</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.TurnoutTableAction:Sprog">
+        <column name="Thrown Speed">
+          <order>17</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Inverted">
+          <order>5</order>
+          <width>70</width>
+        </column>
+        <column name="Sensor 2">
+          <order>11</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Sensor 1">
+          <order>10</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="Closed Speed">
+          <order>16</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Cmd">
+          <order>2</order>
+          <width>126</width>
+        </column>
+        <column name="Lock Mode">
+          <order>14</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Automate">
+          <order>12</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Locked">
+          <order>6</order>
+          <width>70</width>
+        </column>
+        <column name="Feedback">
+          <order>8</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="Mode">
+          <order>9</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>59</width>
+          <sort>1</sort>
+        </column>
+        <column name="Decoder">
+          <order>15</order>
+          <width>75</width>
+          <hidden>yes</hidden>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.SignalMastLogicTableAction">
+        <column name="Enabled">
+          <order>6</order>
+          <width>59</width>
+        </column>
+        <column name="Edit">
+          <order>7</order>
+          <width>59</width>
+        </column>
+        <column name="Destination">
+          <order>2</order>
+          <width>114</width>
+        </column>
+        <column name="Source">
+          <order>0</order>
+          <width>114</width>
+          <sort>1</sort>
+        </column>
+        <column name="Delete">
+          <order>5</order>
+          <width>85</width>
+        </column>
+        <column name="Appearance">
+          <order>1</order>
+          <width>114</width>
+        </column>
+        <column name="Comment">
+          <order>4</order>
+          <width>75</width>
+        </column>
+      </table>
+      <table name="jmri.jmrit.beantable.IdTagTableAction">
+        <column name="User Name">
+          <order>1</order>
+          <width>169</width>
+        </column>
+        <column name="Where seen">
+          <order>5</order>
+          <width>136</width>
+        </column>
+        <column name="System Name">
+          <order>0</order>
+          <width>136</width>
+          <sort>1</sort>
+        </column>
+        <column name="Tag ID">
+          <order>2</order>
+          <width>114</width>
+        </column>
+        <column name="Comment">
+          <order>3</order>
+          <width>169</width>
+        </column>
+        <column name="When seen">
+          <order>6</order>
+          <width>136</width>
+        </column>
+      </table>
+    </tableDetails>
+  </UserMessagePreferences>
+  <!--Written by JMRI version 4.3.4ish-201603012013-paul-Ra55be8a on Tue Mar 01 15:19:55 EST 2016 $Id$-->
+</layout-config>

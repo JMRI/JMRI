@@ -91,6 +91,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
@@ -207,6 +208,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // display format
+    @Override
     public String toString(){
        // default to not SIIBootMode being false.
        return this.toString(false);
@@ -283,6 +285,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    // [AC] 23/01/17 This was never actually required by a SPROG. Was copied
+    // from some other interface type. No longer used by SprogProgrammer
+    @Deprecated
     static public SprogMessage getProgMode() {
         SprogMessage m = new SprogMessage(1);
         m.setOpCode('P');
@@ -291,6 +296,9 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     // [AC] 11/09/2002 Leave SPROG in programmer mode. Don't want to go
     // to booster mode as this would power up the track.
+    // [AC] 23/01/17 This was never actually required by a SPROG. Was copied
+    // from some other interface type. No longer used by SprogProgrammer
+    @Deprecated
     static public SprogMessage getExitProgMode() {
         SprogMessage m = new SprogMessage(1);
         m.setOpCode(' ');

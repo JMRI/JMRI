@@ -20,7 +20,7 @@ import jmri.jmrix.cmri.serial.SerialReply;
 /**
  * Frame for running CMRI diagnostics
  *
- * @author	Dave Duchamp Copyright (C) 2004
+ * @author Dave Duchamp Copyright (C) 2004
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -95,6 +95,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         _memo=memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         // set the frame's initial state
@@ -182,6 +183,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         continueButton.setVisible(true);
         continueButton.setToolTipText("Continue Current Test");
         continueButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 continueButtonActionPerformed(e);
             }
@@ -192,6 +194,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         stopButton.setToolTipText("Stop Test");
         panel4.add(stopButton);
         stopButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 stopButtonActionPerformed(e);
             }
@@ -201,6 +204,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         runButton.setToolTipText("Run Test");
         panel4.add(runButton);
         runButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 runButtonActionPerformed(e);
             }
@@ -441,6 +445,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected void runOutputTest() {
         // Set up timer to update output pattern periodically
         outTimer = new Timer(obsDelay, new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evnt) {
                 if (testRunning && outTest) {
                     short[] outBitPattern = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
@@ -555,6 +560,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
         // Set up timer to update output pattern periodically
         wrapTimer = new Timer(100, new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evnt) {
                 if (testRunning && !testSuspended) {
                     if (waitingOnInput) {
@@ -719,12 +725,14 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Message notification method to implement SerialListener interface
      */
+    @Override
     public void message(SerialMessage m) {
     }  // Ignore for now 
 
     /**
      * Reply notification method to implement SerialListener interface
      */
+    @Override
     public synchronized void reply(SerialReply l) {
         // Test if waiting on this input
         if (waitingOnInput && (l.isRcv()) && (ua == l.getUA())) {
@@ -740,6 +748,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Stop operation when window closing
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         if (testRunning) {
             if (outTest) {

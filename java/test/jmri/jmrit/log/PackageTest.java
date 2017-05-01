@@ -6,7 +6,11 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    Log4JTreePaneTest.class
+    Log4JTreePaneTest.class,
+    LogActionTest.class,
+    LogFrameTest.class,
+    LogPanelTest.class,
+    LogOutputWindowActionTest.class
 })
 /**
  * Invokes complete set of tests in the jmri.jmrit.log tree

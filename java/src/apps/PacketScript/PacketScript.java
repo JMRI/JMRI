@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  */
 public class PacketScript extends Apps {
 
@@ -45,6 +45,7 @@ public class PacketScript extends Apps {
         debugMenu(menuBar, wi);
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("PacketScriptVersionCredit"),
                 new Object[]{jmri.Version.name()});

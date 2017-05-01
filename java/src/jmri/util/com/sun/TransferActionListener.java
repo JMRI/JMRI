@@ -60,6 +60,7 @@ public class TransferActionListener implements ActionListener,
         manager.addPropertyChangeListener("permanentFocusOwner", this);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         Object o = e.getNewValue();
         if (o instanceof JComponent) {
@@ -69,6 +70,7 @@ public class TransferActionListener implements ActionListener,
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (focusOwner == null) {
             return;

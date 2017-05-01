@@ -72,17 +72,17 @@ package jmri.jmrix.direct;
  * shareware and private applications.
  *
  * Please report bugs, fixes, etc to me at:
- *	kenr@xis.xerox.com
+ * kenr@xis.xerox.com
  * or
- *	73577,1653 (compuserve)
+ * 73577,1653 (compuserve)
  *
- * Created	02/08/93
- * 			03/05/93	Works for all 3 byte packets. Still errors for 4 byte.
- *			07/01/93	Renamed to makepckt.c to be nice to dos users.
- *			10/23/93	Added backtracking and max length.
+ * Created 02/08/93
+ *    03/05/93 Works for all 3 byte packets. Still errors for 4 byte.
+ *   07/01/93 Renamed to makepckt.c to be nice to dos users.
+ *   10/23/93 Added backtracking and max length.
  * </pre>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  */
 public class MakePacket {
@@ -270,7 +270,7 @@ public class MakePacket {
      *
      * This routine find the next largest (ie longest lenght) child
      * at this node.
-     * ThisNode	- (INPUT/OUTPUT) determine if there is another child
+     * ThisNode - (INPUT/OUTPUT) determine if there is another child
      *                if so update node with ie the Bit
      *                pattern and its associated lenght.
      *
@@ -334,10 +334,10 @@ public class MakePacket {
      * This routine find the first largest (ie longest length) child
      * at this node          
      *
-     * BS		- (INPUT) Bit stream array
+     * BS  - (INPUT) Bit stream array
      * offset       - Offset in to buffer
-     * validBits	- (INPUT) number of valid bits in the bit stream.
-     * ThisNode	- (OUTPUT) where to put largest child found ie the Bit
+     * validBits - (INPUT) number of valid bits in the bit stream.
+     * ThisNode - (OUTPUT) where to put largest child found ie the Bit
      *                pattern and its associated lenght.
      *
      * Return false if one doesnt exist otherwise returns true.

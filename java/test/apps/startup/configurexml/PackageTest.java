@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
    ScriptButtonModelXmlTest.class,
    StartupActionsPreferencesPanelXmlTest.class,
    StartupPauseModelXmlTest.class,
-   TriggerRouteModelXmlTest.class
+   TriggerRouteModelXmlTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the apps.startup.configurexml package.

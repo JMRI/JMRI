@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
@@ -71,24 +70,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public TrainManager() {
     }
 
-    /**
-     * record the single instance *
-     */
-    private static TrainManager _instance = null;
     private int _id = 0; // train ids
 
     public static synchronized TrainManager instance() {
-        if (_instance == null) {
+        TrainManager instance = jmri.InstanceManager.getNullableDefault(TrainManager.class);
+        if (instance == null) {
             log.debug("TrainManager creating instance");
             // create and load
-            _instance = new TrainManager();
+            instance = new TrainManager();
+            jmri.InstanceManager.setDefault(TrainManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             TrainManagerXml.instance(); // load trains
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("TrainManager returns instance " + _instance);
+            log.debug("TrainManager returns instance " + instance);
         }
-        return _instance;
+        return instance;
     }
 
     /**
@@ -272,12 +269,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         }
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "for testing")
     public void dispose() {
         _trainHashTable.clear();
         _id = 0;
-        _instance = null; // we need to reset the instance for testing purposes
     }
 
     // stores known Train instances by id

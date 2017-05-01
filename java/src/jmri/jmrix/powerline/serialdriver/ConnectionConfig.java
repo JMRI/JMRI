@@ -13,6 +13,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p port adapter for connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -25,6 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
 
@@ -37,9 +39,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         // add another button
         //JButton b = new JButton("Configure nodes");
         //details.add(b);
-        //b.addActionListener(new NodeConfigAction());		
+        //b.addActionListener(new NodeConfigAction());  
     }
 
+    @Override
     public String name() {
         return "Powerline Device Connection";
     }
@@ -48,6 +51,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

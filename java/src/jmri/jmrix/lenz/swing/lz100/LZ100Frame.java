@@ -12,7 +12,7 @@ import javax.swing.JToggleButton;
  * This is a container for the LZ100 configuration utility. The actual utiliy is
  * defined in {@link LZ100InternalFrame}
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
   */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
@@ -40,6 +40,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
         // install close button handler
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
                 dispose();
@@ -51,6 +52,7 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
 
     JToggleButton closeButton = new JToggleButton("Close");
 
+    @Override
     public void dispose() {
         // take apart the JFrame
         super.dispose();

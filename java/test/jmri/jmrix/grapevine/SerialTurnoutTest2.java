@@ -1,10 +1,8 @@
 package jmri.jmrix.grapevine;
 
-import jmri.implementation.AbstractTurnoutTest;
-import org.junit.After;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, high part of 24 port
@@ -12,7 +10,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
   */
-public class SerialTurnoutTest2 extends AbstractTurnoutTest {
+public class SerialTurnoutTest2 extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
 

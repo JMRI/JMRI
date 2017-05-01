@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * dependent initilization for XPressNet. It adds the appropriate Managers via
  * the Initialization Manager based on the Command Station Type.
  *
- * @author	Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2010
   */
 abstract public class AbstractXNetInitializationManager {
 
@@ -82,6 +82,7 @@ abstract public class AbstractXNetInitializationManager {
             // Initialize and start initilization timeout timer.
             javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
                     new java.awt.event.ActionListener() {
+                        @Override
                         public void actionPerformed(
                                 java.awt.event.ActionEvent e) {
                                     /* If the timer times out, notify any 
@@ -98,6 +99,7 @@ abstract public class AbstractXNetInitializationManager {
             return retVal;
         }
 
+        @Override
         public void run() {
         }
 
@@ -120,6 +122,7 @@ abstract public class AbstractXNetInitializationManager {
         }
 
         // listen for the responses from the LI100/LI101
+        @Override
         public void message(XNetReply l) {
             // Check to see if this is a response with the Command Station 
             // Version Info
@@ -138,10 +141,12 @@ abstract public class AbstractXNetInitializationManager {
         }
 
         // listen for the messages to the LI100/LI101
+        @Override
         public void message(XNetMessage l) {
         }
 
         // Handle a timeout notification
+        @Override
         public void notifyTimeout(XNetMessage msg) {
             if (log.isDebugEnabled()) {
                 log.debug("Notified of timeout on message" + msg.toString());

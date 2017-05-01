@@ -79,10 +79,12 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     //The hash table simply holds the object number against the TamsSensor ref.
     private Hashtable<Integer, Hashtable<Integer, TamsSensor>> _ttams = new Hashtable<Integer, Hashtable<Integer, TamsSensor>>(); // stores known Tams Obj
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         TamsSensor s = new TamsSensor(systemName, userName);
         //log.info("Creating new TamsSensor: " + systemName);
@@ -133,6 +135,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         return s;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
             log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
@@ -171,6 +174,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     int board = 0;
     int port = 0;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -229,11 +233,13 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
      * numerical order eg 1 to 16, primarily used to enable/disable the add
      * range box in the add sensor panel
      */
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
     // to listen for status changes from Tams system
+    @Override
     public void reply(TamsReply r) {
         //log.info("*** TamsReply ***");
         if(tmq.isEmpty()){
@@ -303,6 +309,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             sm = tsm;
         }
 
+        @Override
         public void run() {
             while (true) {
                 new jmri.util.WaitHandler(this);
@@ -332,6 +339,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
+    @Override
     public void message(TamsMessage m) {
         // messages are ignored
     }

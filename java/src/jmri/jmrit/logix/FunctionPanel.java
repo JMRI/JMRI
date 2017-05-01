@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener {
 
     public static final int NUM_FUNCTION_BUTTONS = 29;
-    public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
+    public static final int NUM_FUNC_BUTTONS_INIT = 16; //only show 16 function buttons at start
     private DccThrottle _throttle;
     private RosterEntry _rosterEntry;
     private LearnThrottleFrame _throttleFrame;
@@ -65,7 +65,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                         functionButton[i].setText(text);
                         // adjust button width for text
                         int butWidth = functionButton[i].getFontMetrics(functionButton[i].getFont()).stringWidth(text);
-                        butWidth = butWidth + 20;	// pad out the width a bit
+                        butWidth = butWidth + 20; // pad out the width a bit
                         if (butWidth < FunctionButton.getButtonWidth()) {
                             butWidth = FunctionButton.getButtonWidth();
                         }
@@ -85,6 +85,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         _throttle.addPropertyChangeListener(this);
     }
 
+    @Override
     public void dispose() {
         if (_throttle != null) {
             _throttle.removePropertyChangeListener(this);
@@ -100,6 +101,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * @param functionNumber The function that has changed (0-9).
      * @param isSet          True if the function is now active (or set).
      */
+    @Override
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet) {
         if (log.isDebugEnabled()) {
             log.debug("notifyFunctionStateChanged: functionNumber= "
@@ -193,6 +195,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 28:
                 _throttle.setF28(isSet);
                 break;
+            default:
         }
     }
 
@@ -203,6 +206,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * @param isLockable     True if the function is now Lockable (continuously
      *                       active).
      */
+    @Override
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable) {
         if (log.isDebugEnabled()) {
             log.debug("notifyFunctionLockableChanged: functionNumber= "
@@ -301,12 +305,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 28:
                 _throttle.setF28Momentary(!isLockable);
                 break;
+            default:
         }
     }
 
     /**
      * Enable or disable all the buttons
      */
+    @Override
     public void setEnabled(boolean isEnabled) {
         super.setEnabled(isEnabled);
         for (int i = 0; i < NUM_FUNCTION_BUTTONS; i++) {
@@ -320,7 +326,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      functionButton = null;
      initGUI();
      setEnabled(true);
-     }	*/
+     } */
     JPanel mainPanel = new JPanel();
 
     /**
@@ -352,6 +358,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         alt1Button.setPreferredSize(new Dimension(FunctionButton.getButtonWidth(), FunctionButton.getButtonHeight()));
         alt1Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Push_for_alternate_set_of_function_keys"));
         alt1Button.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionCmdPerformed();
             }
@@ -390,7 +397,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         functionButton[22].setKeyCode(KeyEvent.VK_F22);
         functionButton[23].setKeyCode(KeyEvent.VK_F23);
         functionButton[24].setKeyCode(KeyEvent.VK_F24);
-        functionButton[25].setKeyCode(0xF00C);			// keycodes 25 - 28 don't exist in KeyEvent
+        functionButton[25].setKeyCode(0xF00C);   // keycodes 25 - 28 don't exist in KeyEvent
         functionButton[26].setKeyCode(0xF00D);
         functionButton[27].setKeyCode(0xF00E);
         functionButton[28].setKeyCode(0xF00F);
@@ -451,6 +458,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
          *
          * @param e Description of the Parameter
          */
+        @Override
         public void keyPressed(KeyEvent e) {
             if (log.isDebugEnabled()) {
                 log.debug("keyPressed: KeyCode= " + e.getKeyCode());
@@ -468,10 +476,12 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             keyReleased = false;
         }
 
+        @Override
         public void keyTyped(KeyEvent e) {
             //if (log.isDebugEnabled())log.debug("Typed");
         }
 
+        @Override
         public void keyReleased(KeyEvent e) {
             if (log.isDebugEnabled()) {
                 log.debug("keyReleased: KeyCode= " + e.getKeyCode());
@@ -489,6 +499,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
     // update the state of this panel if any of the properties change
     // did not add f13 - f28 dboudreau, maybe I should have? 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String functionName = e.getPropertyName();
         if (!functionName.startsWith("F")) {

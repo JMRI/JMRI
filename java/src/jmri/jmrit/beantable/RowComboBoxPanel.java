@@ -98,6 +98,7 @@ public abstract class RowComboBoxPanel
         //show the combobox if the mouse clicks at the panel
         this.editor.addMouseListener (new MouseAdapter ()
         {
+            @Override
             public final void mousePressed (MouseEvent evt)
             {
                 eventEditorMousePressed();
@@ -139,6 +140,7 @@ public abstract class RowComboBoxPanel
             this.table = table;
             this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener ()
             {
+                @Override
                 public final void valueChanged(ListSelectionEvent evt)
                 {
                     eventTableSelectionChanged ();
@@ -171,6 +173,7 @@ public abstract class RowComboBoxPanel
         }
         editorbox.addActionListener(new ActionListener ()
         {
+            @Override
             public final void actionPerformed(ActionEvent evt) {
                 Object choice = editorbox.getSelectedItem();
                 log.debug("actionPerformed (event={}, choice={}", evt.toString(), choice.toString());
@@ -205,6 +208,7 @@ public abstract class RowComboBoxPanel
             this.table = table;
             this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener ()
             {
+                @Override
                 public final void valueChanged(ListSelectionEvent evt)
                 {
                     eventTableSelectionChanged ();
@@ -266,6 +270,7 @@ public abstract class RowComboBoxPanel
         return super.isCellEditable(evt);
     }
 
+    @Override
     public Object getCellEditorValue() {
         log.debug("getCellEditorValue, prevItem: {}; me = {})", prevItem, this.toString());
         return prevItem;

@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.StringUtil;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
@@ -16,7 +15,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 /**
  * Frame for user input of CMRI serial messages
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003
+ * @author Bob Jacobsen Copyright (C) 2002, 2003
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -35,6 +34,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         _memo = memo;
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -61,6 +61,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -79,6 +80,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 pollButtonActionPerformed(e);
             }
@@ -111,9 +113,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
+    @Override
     public void message(SerialMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(SerialReply r) {
     } // ignore replies
 }

@@ -19,6 +19,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -29,7 +30,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         sendButton.setVisible(true);
         sendButton.setToolTipText("Send packet");
 
-        packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
+        packetTextField.setToolTipText("Enter packet as hex pairs, for example, 82 7D");
         packetTextField.setMaximumRowCount(5); // set the maximum number of items in the history.
         packetTextField.setEditable(true);
         setTitle("Send Packet");
@@ -41,6 +42,7 @@ public abstract class AbstractPacketGenFrame extends jmri.util.JmriJFrame {
         getContentPane().add(Box.createVerticalGlue());
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
                 packetTextField.addItem((String) packetTextField.getSelectedItem());

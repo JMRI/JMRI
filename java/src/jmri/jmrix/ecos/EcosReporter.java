@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * The reporter will decode the rail com packets and add the information to the
  * rail com tag.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class EcosReporter extends AbstractReporter implements PhysicalLocationReporter {
 
@@ -36,10 +36,12 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
      *
      * @return -1 if the last message specified exiting
      */
+    @Override
     public int getState() {
         return lastLoco;
     }
 
+    @Override
     public void setState(int s) {
         lastLoco = s;
     }
@@ -85,6 +87,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
      * Note: We ignore the string passed in, because Ecos Reporters don't send
      * String type reports.
      */
+    @Override
     public LocoAddress getLocoAddress(String rep) {
         // For now, we assume the current report.
         // IdTag.getTagID() is a system-name-ized version of the loco address. I think.
@@ -109,6 +112,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
      * Gets the direction (ENTER/EXIT) of the report. Because of the way Ecos
      * Reporters work (or appear to), all reports are ENTER type.
      */
+    @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // TEMPORARY:  Assume we're always Entering, if asked.
         return (PhysicalLocationReporter.Direction.ENTER);
@@ -122,6 +126,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
      * Reports its own location, for now. Not sure if that's the right thing or
      * not. NOT DONE YET
      */
+    @Override
     public PhysicalLocation getPhysicalLocation() {
         return (this.getPhysicalLocation(null));
     }
@@ -133,6 +138,7 @@ public class EcosReporter extends AbstractReporter implements PhysicalLocationRe
      *
      * Does not use the parameter s.
      */
+    @Override
     public PhysicalLocation getPhysicalLocation(String s) {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }

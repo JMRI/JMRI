@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <a href="http://jmri.org/help/en/html/tools/automation/viaJava.shtml">JMRI
  * Layout Automation in Java page</a>.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @see jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -60,6 +60,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     int locoNumber = 77;
     boolean locoLong = false;
 
+    @Override
     protected void init() {
         // get references to sample layout objects
 
@@ -81,6 +82,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
      *
      * @return Always returns true to continue operation
      */
+    @Override
     protected boolean handle() {
 
         // we're supposed to be moving forward here

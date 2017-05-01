@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 /**
  * Open a window to recieve Log4J output
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * @see jmri.util.JLogoutputFrame
  * @see jmri.util.JTextPaneAppender
  */
@@ -17,6 +17,7 @@ public class LogOutputWindowAction extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFrame f = jmri.util.JLogoutputFrame.getInstance().getMainFrame();
         f.setVisible(true);

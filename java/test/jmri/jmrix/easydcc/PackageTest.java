@@ -47,18 +47,28 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.configurexml.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.class));
         suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());
-        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.class));
+        suite.addTest(new JUnit4TestAdapter(jmri.jmrix.easydcc.packetgen.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccNetworkPortControllerTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccSystemConnectionMemoTest.class));
         suite.addTest(new JUnit4TestAdapter(EasyDccPortControllerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDCCMenuTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccConnectionTypeListTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccCommandStationTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccOpsModeProgrammerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccProgrammerManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccThrottleManagerTest.class));
+        suite.addTest(new JUnit4TestAdapter(EasyDccThrottleTest.class));
+
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

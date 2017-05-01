@@ -24,12 +24,15 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     public void testSendAscii() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -58,12 +61,15 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     public void testSendBinary() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -91,12 +97,15 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     public void testMonitor() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -131,12 +140,15 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     public void xtestRcvReply() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
+            @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -200,10 +212,12 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
             rcvdMsg = null;
         }
 
+        @Override
         public void message(NceMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(NceReply r) {
             rcvdReply = r;
         }
@@ -214,17 +228,21 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     // internal class to simulate a NcePortController
     class NcePortControllerScaffold extends NcePortController {
 
+        @Override
         public java.util.Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -241,16 +259,19 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }

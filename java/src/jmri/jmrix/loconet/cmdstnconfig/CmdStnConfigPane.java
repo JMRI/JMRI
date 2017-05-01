@@ -41,8 +41,8 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Alex Shepherd Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Alex Shepherd Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
@@ -74,10 +74,12 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     JLabel[] labels = new JLabel[MAX_OPTION];
     boolean[] isReserved = new boolean[MAX_OPTION];
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         String uName = "";
         if (memo != null) {
@@ -91,6 +93,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         return uName + Bundle.getMessage("MenuItemCmdStnConfig");
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -195,16 +198,19 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         }
 
         optionBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateVisibility(optionBox.isSelected());
             }
         });
         readButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 readButtonActionPerformed(e);
             }
         });
         writeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 writeButtonActionPerformed(e);
             }
@@ -287,6 +293,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     /**
      * Process the incoming message to look for Slot 127 Read
      */
+    @Override
     public void message(LocoNetMessage msg) {
         if (msg.getOpCode() != LnConstants.OPC_SL_RD_DATA) {
             return;
@@ -324,6 +331,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         log.debug("Config Slot Data: " + msg.toString());
     }
 
+    @Override
     public void dispose() {
         // disconnect from LnTrafficController
         memo.getLnTrafficController().removeLocoNetListener(~0, this);

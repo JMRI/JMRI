@@ -126,7 +126,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
     static public void loadIcons(Editor ed) {
         if (_iconMaps == null) {
-//        	long t = System.currentTimeMillis();
+//         long t = System.currentTimeMillis();
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
             _iconMaps = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
             _indicatorTOMaps
@@ -355,9 +355,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 //        long t = System.currentTimeMillis();
         loadIcons(editor);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePanels(e);
-                ImageIndexEditor.checkImageIndex();
             }
         });
 
@@ -382,7 +382,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
         ItemPanel itemPanel = new TableItemPanel(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance(), editor);
-        itemPanel.init();		// show panel on start
+        itemPanel.init();  // show panel on start
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameTurnout"));
         _tabIndex.put("Turnout", itemPanel);
 
@@ -434,7 +434,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         _tabIndex.put("Text", iconPanel);
 
         iconPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
-//        itemPanel.init();		// show panel on start
+//        itemPanel.init();  // show panel on start
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSReporter"));
         _tabIndex.put("RPSReporter", iconPanel);
 
@@ -456,9 +456,10 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         _tabIndex.put("Portal", itemPanel);
 
         _tabPane.addChangeListener(palette);
-//        _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);    	
+//        _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);     
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
 //        long t = System.currentTimeMillis();
@@ -470,9 +471,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             _currentItemPanel.closeDialogs();
         }
         _currentItemPanel = p;
-//    	java.awt.Dimension dim = p.getPreferredSize();
-//    	setSize(dim.width+30, dim.height+50);
-//    	repaint();
+//     java.awt.Dimension dim = p.getPreferredSize();
+//     setSize(dim.width+30, dim.height+50);
+//     repaint();
 //        System.out.println("Panel "+p._itemType+" built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
     }
 
@@ -486,6 +487,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         editItem.addActionListener(new ActionListener() {
             Editor editor;
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 ImageIndexEditor ii = ImageIndexEditor.instance(editor);
                 ii.pack();
@@ -502,28 +504,21 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
         JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
         openItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                DirectorySearcher.instance().openDirectory(false);
+                DirectorySearcher.instance().openDirectory();
             }
         });
         findIcon.add(openItem);
-        /*
+
          JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
          searchItem.addActionListener(new ActionListener() {
-         IconAdder ea;
-         public void actionPerformed(ActionEvent e) {
-         File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-         if (dir != null) {
-         ea.addDirectoryToCatalog(dir);
-         }
-         }
-         ActionListener init() {
-         //                ea = ed;
-         return this;
-         }
-         }.init());
+             public void actionPerformed(ActionEvent e) {
+                 jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+             }
+         });
          findIcon.add(searchItem);
-         */
+        
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }
@@ -573,7 +568,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (ItemPalette.getFamilyMaps(type) == null) {
             HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<String, HashMap<String, NamedIcon>>();
             _iconMaps.put(type, typeMap);
-//    		typeMap.put(family, iconMap);
+//      typeMap.put(family, iconMap);
         }
         Iterator<String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
         if (familyNameOK(frame, type, family, iter)) {

@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.sdf;
 
 import jmri.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement the LOAD_MODIFIER macro from the Digitrax sound definition language
@@ -8,7 +10,7 @@ import jmri.util.StringUtil;
  * Arg1: Upper 4 bits - math modifiers FMATH_LODE et al Arg2: Arg3:
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class LoadModifier extends SdfMacro {
 
@@ -20,6 +22,7 @@ public class LoadModifier extends SdfMacro {
         this.arg3 = arg3;
     }
 
+    @Override
     public String name() {
         return "LOAD_MODIFIER"; // NOI18N
     }
@@ -28,6 +31,7 @@ public class LoadModifier extends SdfMacro {
     int modType;
     int arg1, arg2, arg3;
 
+    @Override
     public int length() {
         return 4;
     }
@@ -51,6 +55,7 @@ public class LoadModifier extends SdfMacro {
     /**
      * Format the three bytes as simple numbers, for lack of anything better
      * right now
+     * @return 3 digit string
      */
     String argVal() {
         String arg1Val = "" + arg1;
@@ -62,6 +67,7 @@ public class LoadModifier extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte0);
@@ -73,10 +79,12 @@ public class LoadModifier extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return "Set Modifier " + modTypeVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         String args;
         String arg1Val;
@@ -240,11 +248,17 @@ public class LoadModifier extends SdfMacro {
                 arg3Val = "" + arg3;
 
                 return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n'; // NOI18N
+            default:
+                log.warn("Unhandled modifyer type code: {}", modType);
+                break;
         }
         return "<could not parse, should not happen>"; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(LoadModifier.class.getName());
 }

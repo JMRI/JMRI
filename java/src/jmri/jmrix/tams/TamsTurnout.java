@@ -77,6 +77,7 @@ public class TamsTurnout extends AbstractTurnout
     TamsTrafficController tc;
 
     // Handle a request to change state by sending a turnout command
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         log.debug("*** forwardCommandChangeToLayout ***");
         // sort out states
@@ -102,7 +103,7 @@ public class TamsTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newCommandedState" to indicate it's
      * taken place. Must be followed by "newKnownState" to complete the turnout
      * action.
@@ -122,7 +123,7 @@ public class TamsTurnout extends AbstractTurnout
     /**
      * Set the turnout known state to reflect what's been observed from the
      * command station messages. A change there means that somebody commanded a
-     * state change (e.g. somebody holding a throttle), and that command has
+     * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
      * <P>
@@ -136,6 +137,7 @@ public class TamsTurnout extends AbstractTurnout
         newKnownState(state);
     }
 
+    @Override
     public void turnoutPushbuttonLockout(boolean b) {
     }
 
@@ -164,6 +166,7 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     // to listen for status changes from Tams system
+    @Override
     public void reply(TamsReply m) {
         log.debug("*** TamsReply ***");
         log.debug("m.match(\"T\") = " + Integer.toString(m.match("T")));
@@ -214,11 +217,13 @@ public class TamsTurnout extends AbstractTurnout
         super.setFeedbackMode(mode);
     }
 
+    @Override
     public void message(TamsMessage m) {
         log.debug("*** message ***");
         // messages are ignored
     }
 
+    @Override
     public void dispose() {
         log.debug("*** dispose ***");
         TamsMessage m = new TamsMessage("xT " + _number + ",,1");

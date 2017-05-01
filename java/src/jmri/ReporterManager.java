@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * Each Reporter has a two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
- * (e.g. LocoNet, NCE, etc) and address within that system.
+ * (for example LocoNet or NCE) and address within that system.
  * <P>
  * Much of the book-keeping is implemented in the AbstractReporterManager class,
  * which can form the basis for a system-specific implementation.
@@ -33,7 +33,7 @@ import javax.annotation.Nonnull;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
@@ -50,7 +50,7 @@ public interface ReporterManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Reporter doesn't already exist and
      *                                  the manager cannot create the Reporter
-     *                                  due to e.g. an illegal name or name that
+     *                                  due to an illegal name or name that
      *                                  can't be parsed.
      */
     @Nonnull public
@@ -122,7 +122,7 @@ public interface ReporterManager extends Manager {
      * @param userName   the user name
      * @return requested Reporter object (never null)
      * @throws IllegalArgumentException if cannot create the Reporter due to
-     *                                  e.g. an illegal name or name that can't
+     *                                  an illegal name or name that can't
      *                                  be parsed.
      */
     @Nonnull public

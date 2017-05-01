@@ -72,6 +72,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      *
      * @param s new state value
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s == Turnout.THROWN) {
@@ -83,6 +84,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         }
     }
 
+    @Override
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
             newCommandedState(THROWN);
@@ -91,6 +93,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         }
     }
 
+    @Override
     public void reply(CanReply f) {
         if (addrThrown.match(f)) {
             newCommandedState(THROWN);
@@ -99,6 +102,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 

@@ -5,7 +5,7 @@ package jmri.jmrix.oaktree;
  * Contains the data payload of a serial reply packet. Note that its _only_ the
  * payload.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -32,6 +32,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return getElement(0);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;

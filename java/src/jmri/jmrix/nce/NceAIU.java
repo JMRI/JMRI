@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * on the cab bus. E.g. you can manually change a state via an icon, and not
  * have it change back the next time that AIU is polled.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2005
+ * @author Bob Jacobsen Copyright (C) 2003, 2005
   */
 public class NceAIU {
 
@@ -83,6 +83,8 @@ public class NceAIU {
 
     /**
      * The numbers here are 0 to 15, not 1 to 16
+     * @param s bit within the AIU card
+     * @param i index for AIU card
      *
      */
     public void registerSensor(Sensor s, int i) {

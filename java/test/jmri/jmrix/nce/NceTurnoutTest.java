@@ -1,20 +1,15 @@
+package jmri.jmrix.nce;
+
+import jmri.implementation.AbstractTurnoutTestBase;
+import org.junit.Assert;
+import org.junit.Before;
+
 /**
- * NceTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.nce.NceTurnout class
+ * Tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
   */
-package jmri.jmrix.nce;
-
-import jmri.implementation.AbstractTurnoutTest;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import junit.framework.TestSuite;
-
-public class NceTurnoutTest extends AbstractTurnoutTest {
+public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;
 

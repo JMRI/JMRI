@@ -37,6 +37,19 @@ public class PackageTest extends TestCase {
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosSensorManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosTurnoutManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(EcosPortControllerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosConnectionTypeListTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosMessageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosReplyTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosDccThrottleManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosDccThrottleTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosLocoAddressManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosLocoAddressTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosPowerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosProgrammerManagerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosProgrammerTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosReporterTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosSensorTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosTurnoutTest.class));
 
         return suite;
     }

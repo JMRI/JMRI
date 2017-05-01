@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a NodeTableFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class NodeTableAction extends AbstractAction {
 
@@ -20,6 +20,7 @@ public class NodeTableAction extends AbstractAction {
         this("Configure Grapevine Nodes");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeTableFrame f = new NodeTableFrame();
         try {

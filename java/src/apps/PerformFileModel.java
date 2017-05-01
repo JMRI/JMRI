@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A PerformFileModel object loads an xml file when the program is started.
  * <P>
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  * @author Randall Wood (c) 2016
  * @see apps.startup.PerformFileModelFactory
  */
@@ -29,7 +29,7 @@ public class PerformFileModel extends AbstractStartupModel {
 
     @Override
     public void performAction() throws JmriException {
-        log.info("Loading file {}" + this.getFileName());
+        log.info("Loading file {}", this.getFileName());
 
         // load the file
         File file = new File(this.getFileName());

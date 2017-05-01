@@ -8,7 +8,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
  * <P>
  * The {@link LIUSBConfigFrame} is a configuration tool.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author Paul Bender Copyright (C) 2009
  */
 public class LIUSBConfigAction extends AbstractXPressNetAction {
 
@@ -20,6 +20,7 @@ public class LIUSBConfigAction extends AbstractXPressNetAction {
         this("LIUSB Configuration Manager", memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create an LIUSBConfigFrame
         LIUSBConfigFrame f = new LIUSBConfigFrame(_memo);

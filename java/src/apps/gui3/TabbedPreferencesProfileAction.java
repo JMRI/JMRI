@@ -4,7 +4,7 @@ package apps.gui3;
 /**
  * Tabbed Preferences Action for going direct to Profiles
  * <P>
- * @author	Bob Jacobsen (C) 2014
+ * @author Bob Jacobsen (C) 2014
  */
 public class TabbedPreferencesProfileAction extends TabbedPreferencesAction {
 

@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
  * Provide access to IEEE802.15.4 devices via a serial comm port. Derived from
  * the oaktree code.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
+ * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
@@ -38,6 +38,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         this.manufacturerName = jmri.jmrix.ieee802154.SerialConnectionTypeList.IEEE802154;
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
@@ -81,6 +82,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             if (log.isDebugEnabled()) {
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
+                    @Override
                     public void serialEvent(SerialPortEvent e) {
                         int type = e.getEventType();
                         switch (type) {
@@ -189,6 +191,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     // base class methods for the SerialPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -197,6 +200,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -209,6 +213,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -224,8 +229,8 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+        activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
@@ -240,6 +245,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Set the baud rate.
      */
+    @Override
     public void configureBaudRate(String rate) {
         log.debug("configureBaudRate: " + rate);
         selectedSpeed = rate;

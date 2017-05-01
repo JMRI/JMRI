@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 
 import java.util.ResourceBundle;
@@ -14,7 +13,7 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnectionMemo {
 
@@ -87,6 +86,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
      * Configure the common managers for the connection. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         InstanceManager.setSensorManager(
@@ -151,10 +151,12 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         olcbInterface = iface;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.openlcb.OlcbActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, OlcbSystemConnectionMemo.class);
         if (cf != null) {

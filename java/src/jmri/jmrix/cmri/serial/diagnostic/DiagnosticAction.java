@@ -24,6 +24,7 @@ public class DiagnosticAction extends AbstractAction {
         this("Run C/MRI Diagnostic",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         DiagnosticFrame f = new DiagnosticFrame(_memo);
         try {

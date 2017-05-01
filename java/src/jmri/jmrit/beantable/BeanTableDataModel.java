@@ -43,7 +43,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -60,9 +59,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of NamedBean manager contents
+ * Table data model for display of NamedBean manager contents.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author  Dennis Miller Copyright (C) 2006
  */
 abstract public class BeanTableDataModel extends AbstractTableModel implements PropertyChangeListener {
@@ -333,9 +332,11 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
 
     /**
      * Delete the bean after all the checking has been done.
-     * <P>
+     * <p>
      * Separate so that it can be easily subclassed if other functionality is
      * needed.
+     *
+     * @param bean NamedBean to delete
      */
     void doDelete(NamedBean bean) {
         try {
@@ -470,7 +471,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
                 if (value == null) {
                     columnStrings[j] = spaces.toString();
                 } else if (value instanceof JComboBox<?>) {
-                    columnStrings[j] = (String) ((JComboBox<String>) value).getSelectedItem();
+                    columnStrings[j] = ((JComboBox<String>) value).getSelectedItem().toString();
                 } else {
                     // Boolean or String
                     columnStrings[j] = value.toString();
@@ -642,16 +643,16 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         String oldName = nBean.getUserName();
         JTextField _newName = new JTextField(20);
         _newName.setText(oldName);
-        Object[] renameBeanOption = {"Cancel", "OK", _newName};
+        Object[] renameBeanOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), _newName};
         int retval = JOptionPane.showOptionDialog(null,
-                "Rename UserName From " + oldName, "Rename " + getBeanType(),
+                Bundle.getMessage("RenameFrom", oldName), Bundle.getMessage("RenameTitle", getBeanType()),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 renameBeanOption, renameBeanOption[2]);
 
         if (retval != 1) {
             return;
         }
-        String value = _newName.getText().trim();
+        String value = _newName.getText().trim(); // N11N
 
         if (value.equals(oldName)) {
             //name not changed.
@@ -734,7 +735,7 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         int retval = JOptionPane.showOptionDialog(null,
                 "Move " + getBeanType() + " " + currentName + " from " + oldNameBean.getSystemName(), "Move UserName",
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", box}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null); // TODO I18N
         log.debug("Dialog value " + retval + " selected " + box.getSelectedIndex() + ":"
                 + box.getSelectedItem());
         if (retval != 1) {
@@ -899,9 +900,9 @@ abstract public class BeanTableDataModel extends AbstractTableModel implements P
         public Void doInBackground() throws Exception {
             StringBuilder message = new StringBuilder();
             try {
-                getManager().deleteBean(t, "CanDelete");  //IN18N
+                getManager().deleteBean(t, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
-                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
+                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //NOI18N
                     log.warn(e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),

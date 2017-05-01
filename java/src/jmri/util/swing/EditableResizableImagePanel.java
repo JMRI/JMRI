@@ -73,18 +73,16 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
     //
     // For contextual menu remove
-    class MyMouseAdapter implements MouseListener {
+    static class MyMouseAdapter implements MouseListener {
 
         private final JPopupMenu popUpMenu;
         private final JMenuItem removeMenuItem;
-        private ResizableImagePanel rip;
 
         public MyMouseAdapter(ResizableImagePanel resizableImagePanel) {
-            rip = resizableImagePanel;
             popUpMenu = new JPopupMenu();
             removeMenuItem = new JMenuItem("Remove");
             removeMenuItem.addActionListener((ActionEvent e) -> {
-                rip.setImagePath(null);
+                resizableImagePanel.setImagePath(null);
             });
             popUpMenu.add(removeMenuItem);
         }
@@ -158,5 +156,5 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         setImagePath(dest.getPath());
     }
 
-    static private Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class.getName());
 }

@@ -3,7 +3,7 @@ package jmri.jmrix.loconet.sdf;
 /**
  * Implement the BRANCH_TO macro from the Digitrax sound definition language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class BranchTo extends SdfMacro {
 
@@ -14,10 +14,12 @@ public class BranchTo extends SdfMacro {
         this.byte2 = byte2;
     }
 
+    @Override
     public String name() {
         return "BRANCH_TO"; // NOI18N
     }
 
+    @Override
     public int length() {
         return 2;
     }
@@ -39,6 +41,7 @@ public class BranchTo extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte1);
@@ -48,14 +51,17 @@ public class BranchTo extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return "Branch\n"; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + ' ' + addr + "; from base of " + skemebase + '\n'; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }

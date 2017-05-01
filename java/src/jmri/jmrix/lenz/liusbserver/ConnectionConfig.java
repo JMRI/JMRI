@@ -9,7 +9,7 @@ import javax.swing.JTextField;
  * <P>
  * This uses the {@link LIUSBServerAdapter} class to do the actual connection.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author Paul Bender Copyright (C) 2009
   *
  * @see LIUSBServerAdapter
  */
@@ -31,6 +31,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
     }
 
+    @Override
     public String name() {
         return "Lenz LIUSB Server";
     }
@@ -39,12 +40,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LIUSBServerAdapter();
         }
     }
 
+    @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
         hostNameField.setText(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);

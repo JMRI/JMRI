@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
  * Table Action for dealing with all the tables in a single view with a list
  * option to the left hand side.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class ListedTableAction extends AbstractAction {
 
@@ -24,6 +24,7 @@ public class ListedTableAction extends AbstractAction {
      * resulting frame. Perhaps this should be changed?
      *
      * @param s title of the action
+     * @param selection item representing this table in de index to the left side of the containing frame
      */
     public ListedTableAction(String s, String selection) {
         super(s);
@@ -61,6 +62,7 @@ public class ListedTableAction extends AbstractAction {
         /* create the frame outside of swing so that we do not 
          hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 f = new ListedTableFrame(title) {};
                 f.initComponents();
@@ -85,6 +87,7 @@ public class ListedTableAction extends AbstractAction {
         thr.start();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }

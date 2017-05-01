@@ -30,9 +30,11 @@ public class ArithmeticQualifierTest extends TestCase {
             super(watchedVal, value, relation);
         }
 
+        @Override
         public void setWatchedAvailable(boolean t) {
         }
 
+        @Override
         public boolean currentAvailableState() {
             return true;
         }
@@ -144,10 +146,12 @@ public class ArithmeticQualifierTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

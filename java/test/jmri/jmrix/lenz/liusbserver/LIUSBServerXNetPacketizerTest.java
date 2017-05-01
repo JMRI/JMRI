@@ -1,9 +1,7 @@
 package jmri.jmrix.lenz.liusbserver;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +15,7 @@ import org.junit.Test;
 public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
     @Test
+    @Override
     public void testOutbound() throws Exception {
         LIUSBServerXNetPacketizer c = (LIUSBServerXNetPacketizer)tc;
         // connect to iostream via port controller scaffold
@@ -51,7 +50,11 @@ public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketize
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new LIUSBServerXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
+        tc = new LIUSBServerXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()) {
+            @Override
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
+            }
+        };
     }
 
     @After

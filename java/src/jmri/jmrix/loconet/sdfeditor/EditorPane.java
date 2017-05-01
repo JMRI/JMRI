@@ -28,7 +28,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * edit panel. The edit panel has a small detailed view of the instruction over
  * a larger detailed view.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
   */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
@@ -69,6 +69,7 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     /**
      * Handle tree selection
      */
+    @Override
     public void valueChanged(TreeSelectionEvent e) {
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 

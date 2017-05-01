@@ -9,7 +9,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
 /**
  * Frame for user input of EasyDcc messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   */
 public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.easydcc.EasyDccListener {
 
@@ -22,6 +22,7 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         super();
     }
 
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
 
@@ -48,6 +49,7 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -66,9 +68,11 @@ public class EasyDccPacketGenFrame extends jmri.util.JmriJFrame implements jmri.
         EasyDccTrafficController.instance().sendEasyDccMessage(m, this);
     }
 
+    @Override
     public void message(EasyDccMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(EasyDccReply r) {
     } // ignore replies
 }

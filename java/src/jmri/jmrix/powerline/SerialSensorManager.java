@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
  * System names are: Powerline - "PSann", where a is the house code and nn is
  * the unit number without padding.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
   */
@@ -28,11 +28,13 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * Return the system letter
      */
+    @Override
     public String getSystemPrefix() {
         return tc.getAdapterMemo().getSystemPrefix();
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -70,6 +72,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * Dummy routine
      */
+    @Override
     public void message(SerialMessage r) {
         // this happens during some polls from sensor messages
         //log.warn("unexpected message");
@@ -78,12 +81,15 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * Process a reply to a poll of Sensors of one node
      */
+    @Override
     abstract public void reply(SerialReply r);
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         //If the hardware address past does not already exist then this can

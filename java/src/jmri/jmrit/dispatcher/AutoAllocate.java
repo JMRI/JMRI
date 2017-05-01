@@ -1,7 +1,6 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.Block;
 import jmri.Section;
 import jmri.Transit;
@@ -63,12 +62,9 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Dave Duchamp Copyright (C) 2011
+ * @author Dave Duchamp Copyright (C) 2011
  */
 public class AutoAllocate {
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     public AutoAllocate(DispatcherFrame d) {
         _dispatcher = d;
@@ -93,7 +89,7 @@ public class AutoAllocate {
     /**
      * This is the entry point to AutoAllocate when it is triggered.
      *
-     * Returns 'true' if a Section has been allocated, returns 'false' if not.
+     * @param list list to scan
      */
     protected void scanAllocationRequestList(ArrayList<AllocationRequest> list) {
         if (list.size() <= 0) {
@@ -129,7 +125,7 @@ public class AutoAllocate {
                         // requested Section is currently free and not occupied
                         ArrayList<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
                         if (activeTrainsList.size() == 1) {
-                        // this is the only ActiveTrain
+                            // this is the only ActiveTrain
                             if (allocateIfLessThanThreeAhead(ar)) {
                                 return;
                             }
@@ -139,11 +135,11 @@ public class AutoAllocate {
                             ArrayList<ActiveTrain> neededByTrainList = new ArrayList<ActiveTrain>();
                             for (int j = 0; j < activeTrainsList.size(); j++) {
                                 ActiveTrain at = activeTrainsList.get(j);
-                                    if (at != ar.getActiveTrain()) {
-                                        if (sectionNeeded(ar, at)) {
-                                            neededByTrainList.add(at);
-                                        }
+                                if (at != ar.getActiveTrain()) {
+                                    if (sectionNeeded(ar, at)) {
+                                        neededByTrainList.add(at);
                                     }
+                                }
                             }
                             if (neededByTrainList.size() <= 0) {
                                 // no other ActiveTrain needs this Section, any LevelXings?
@@ -203,7 +199,7 @@ public class AutoAllocate {
                     }
                 }
             } catch (Exception e) {
-                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??"+e.toString());
+                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??" + e.toString());
                 continue;
             }
         }
@@ -212,8 +208,10 @@ public class AutoAllocate {
     /**
      * Entered to request a choice of Next Section when a Section is being
      * allocated and there are alternate Section choices for the next Section.
-     * sList contains the possible next Sections, and ar is the section being
-     * allocated when a choice is needed.
+     *
+     * @param sList the possible next Sections
+     * @param ar    the section being allocated when a choice is needed
+     * @return the allocated section
      */
     protected Section autoNextSectionChoice(ArrayList<Section> sList, AllocationRequest ar) {
         // check if AutoAllocate has prepared for this question
@@ -232,17 +230,17 @@ public class AutoAllocate {
         AllocationPlan ap = getPlanThisTrain(at);
         Section as = null;
         if (ap != null) {
-            if      (ap.getActiveTrain(1) == at) {
+            if (ap.getActiveTrain(1) == at) {
                 as = ap.getTargetSection(1);
-            }
-            else if (ap.getActiveTrain(2) == at) {
+            } else if (ap.getActiveTrain(2) == at) {
                 as = ap.getTargetSection(2);
-            }
-            else {
+            } else {
                 return null;
             }
             for (int i = 0; i < sList.size(); i++) {
-                if (as != null && as == sList.get(i)) return as;
+                if (as != null && as == sList.get(i)) {
+                    return as;
+                }
             }
         }
         // If our end block section is on the list of choices
@@ -254,7 +252,7 @@ public class AutoAllocate {
             if (at.getEndBlockSection().getSystemName().equals(sList.get(i).getSystemName())) {
                 return sList.get(i);
             }
-        }        
+        }
         // no prepared choice, or prepared choice failed, is there an unoccupied Section available
         for (int i = 0; i < sList.size(); i++) {
             if ((sList.get(i).getOccupancy() == Section.UNOCCUPIED)
@@ -381,7 +379,7 @@ public class AutoAllocate {
         if (ar.getActiveTrain().getAllocateAllTheWay()) {
             _dispatcher.allocateSection(ar, null);
             return true;
-        }        
+        }
         // test how far ahead of occupied track this requested section is
         ArrayList<AllocatedSection> aSectionList = ar.getActiveTrain().getAllocatedSectionList();
         if (aSectionList.size() >= 4) {
@@ -429,7 +427,7 @@ public class AutoAllocate {
                 }
             }
         }
-        log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(), 
+        log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(),
                 ar.getSectionName());
         _dispatcher.allocateSection(ar, null);
         return true;
@@ -683,10 +681,10 @@ public class AutoAllocate {
 
     private boolean isThereConflictingPlan(ActiveTrain at, Section aSec, int aSecSeq,
             ActiveTrain nt, Section nSec, int nSecSeq, int type) {
-        // returns 'true' if there is a conflicting	plan that may result in gridlock 
+        // returns 'true' if there is a conflicting plan that may result in gridlock 
         //    if this plan is set up, return 'false' if not.
         // Note: may have to add other tests to this method in the future to prevent gridlock 
-        //	  situations not currently tested for.
+        //   situations not currently tested for.
         if (_planList.size() == 0) {
             return false;
         }
@@ -1139,8 +1137,8 @@ public class AutoAllocate {
                 log.error("{}: ActiveTrain has no occupied Section. Halting immediately to avoid runaway.", at.getTrainName());
                 at.getAutoActiveTrain().getAutoEngineer().setHalt(true);
             } else {
-                log.debug("{}: ActiveTrain has no occupied Section, running in Manual mode.", at.getTrainName());                
-            }           
+                log.debug("{}: ActiveTrain has no occupied Section, running in Manual mode.", at.getTrainName());
+            }
         } else {
             curSection = temSection;
         }
@@ -1277,4 +1275,3 @@ public class AutoAllocate {
 
     private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
 }
-

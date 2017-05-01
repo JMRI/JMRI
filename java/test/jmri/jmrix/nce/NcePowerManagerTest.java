@@ -1,10 +1,7 @@
 package jmri.jmrix.nce;
 
-import java.util.Vector;
 import jmri.JmriException;
-import jmri.jmrix.AbstractPowerManagerTest;
-import org.junit.After;
-import org.junit.Assert;
+import jmri.jmrix.AbstractPowerManagerTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,7 +11,7 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
   */
-public class NcePowerManagerTest extends AbstractPowerManagerTest {
+public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
 
     // service routines to simulate receiving on, off from interface
     @Override

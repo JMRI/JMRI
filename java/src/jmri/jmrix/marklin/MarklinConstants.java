@@ -3,9 +3,9 @@ package jmri.jmrix.marklin;
 /**
  * LnConstants.java
  *
- * Description:	Constants to represent values seen in Marklin traffic
+ * Description: Constants to represent values seen in Marklin traffic
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
 public final class MarklinConstants {

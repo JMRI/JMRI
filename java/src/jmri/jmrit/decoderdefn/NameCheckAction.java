@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Check the names in an XML decoder file against the names.xml definitions
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -115,7 +115,12 @@ public class NameCheckAction extends AbstractAction {
     }
 
     /**
-     * Ask SAX to read and verify a file
+     * Read and verify an XML file.
+     *
+     * @param file the file to read
+     * @return the root element in the file
+     * @throws org.jdom2.JDOMException if the file cannot be parsed
+     * @throws java.io.IOException     if the file cannot be read
      */
     Element readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile() {

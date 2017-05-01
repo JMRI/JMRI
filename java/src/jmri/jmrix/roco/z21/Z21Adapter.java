@@ -107,6 +107,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
      * Check that this object is ready to operate. This is a question of
      * configuration, not transient hardware status.
      */
+    @Override
     public boolean status() {
         return opened;
     }
@@ -130,6 +131,7 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
             keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     // If the timer times out, send a request for status
                     Z21Adapter.this.getSystemConnectionMemo().getTrafficController()
@@ -148,6 +150,12 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     @Override
     public void dispose(){
        super.dispose();
+       keepAliveTimer.stop();
+       keepAliveTimer = null;
+       socket.close();
+       opened = false;
+       allowConnectionRecovery = false; // disposing of the object should 
+                                        // result in not allowing reconnection.
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class.getName());

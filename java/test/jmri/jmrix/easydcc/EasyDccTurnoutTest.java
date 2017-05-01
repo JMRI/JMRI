@@ -1,19 +1,16 @@
-/**
- * EasyDccTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.nce.EasyDccTurnout class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.easydcc;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
-public class EasyDccTurnoutTest extends AbstractTurnoutTest {
+/**
+ * Tests for the jmri.jmrix.nce.EasyDccTurnout class
+ *
+ * @author	Bob Jacobsen
+ */
+public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
 
     private EasyDccTrafficControlScaffold tcis = null;
 

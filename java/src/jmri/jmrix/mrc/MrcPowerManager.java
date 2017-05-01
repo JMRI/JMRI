@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact Mrc Inc
  * for separate permission.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
 public class MrcPowerManager
@@ -36,6 +36,7 @@ public class MrcPowerManager
 
     protected int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         //power = UNKNOWN;
         int old = power;
@@ -52,6 +53,7 @@ public class MrcPowerManager
         firePropertyChange("Power", old, power); //IN18N
     }
 
+    @Override
     public int getPower() {
         return power;
     }
@@ -71,6 +73,7 @@ public class MrcPowerManager
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         if (tc != null) {
             tc.removeTrafficListener(MrcInterface.POWER, this);
@@ -86,10 +89,13 @@ public class MrcPowerManager
         }
     }
 
+    @Override
     public void notifyRcv(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
+    @Override
     public void notifyXmit(Date timestamp, MrcMessage m) {/* message(m);*/ }
 
+    @Override
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
     private final static Logger log = LoggerFactory.getLogger(MrcPowerManager.class.getName());

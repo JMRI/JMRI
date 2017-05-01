@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * Note that ctor starts a listener thread; if you subclass this class, be sure
  * that initialization is in the right order.
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
   */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
@@ -154,6 +154,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         pack();
 
         writeSettingsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 writeLV102Settings();
                 writeSettingsButton.setSelected(false);
@@ -163,6 +164,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         // install reset button handler
         resetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 resetLV102Settings();
                 resetButton.setSelected(false);
@@ -172,6 +174,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         // install reset to defaults button handler
         defaultButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 defaultLV102Settings();
                 defaultButton.setSelected(false);
@@ -182,6 +185,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         // install a handler to set the status line when the selected item 
         // changes in the e-Line box
         eLineBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 synchronized (CurrentStatus) {
                     CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
@@ -196,6 +200,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         // install a handler to set the status line when the selected item 
         // changes in the RailCom box
         railComBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 synchronized (CurrentStatus) {
                     CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
@@ -210,6 +215,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         // install a handler to set the status line when the selected item 
         // changes in the RailComMode box
         railComModeBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 synchronized (CurrentStatus) {
                     CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
@@ -224,6 +230,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         // install a handler to set the status line when the selected item 
         // changes in the RailComTiming box
         railComTimingBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 synchronized (CurrentStatus) {
                     CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
@@ -238,6 +245,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         // install a handler to set the status line when the selected item 
         // changes in the volt box
         voltBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 synchronized (CurrentStatus) {
                     CurrentStatus.setText(Bundle.getMessage("LV102StatusChanged"));
@@ -637,6 +645,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         }
     }
 
+    @Override
     public void dispose() {
         // take apart the JInternalFrame
         super.dispose();
@@ -646,9 +655,10 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
         //private Object parent = null;
         progReplyListener(Object Parent) {
-            //parent = Parent;	
+            //parent = Parent; 
         }
 
+        @Override
         public void run() {
         }
 
@@ -658,6 +668,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
          */
         @SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
 
+        @Override
         public void programmingOpReply(int value, int status) {
             if (log.isDebugEnabled()) {
                 log.debug("Programming Operation reply recieved, value is " + value + " ,status is " + status);

@@ -1,5 +1,6 @@
 package jmri.server.web.spi;
 
+import apps.tests.Log4JFixture;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,24 +17,26 @@ import org.junit.Test;
  * @author Randall Wood (C) 2016
  */
 public class WebServerConfigurationTest {
-    
+
     public WebServerConfigurationTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
+        Log4JFixture.setUp();
     }
-    
+
     @After
     public void tearDown() {
+        Log4JFixture.tearDown();
     }
 
     /**
@@ -83,5 +86,5 @@ public class WebServerConfigurationTest {
             return new ArrayList<>();
         }
     }
-    
+
 }

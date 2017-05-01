@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -29,8 +28,8 @@ import javax.annotation.Nonnull;
  * where n = the number of binary outputs, between 1 and mastBitNum (= 6)</li>
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
+ * @author Egbert Broerse Copyright (C) 2016
  */
 public class MatrixSignalMast extends AbstractSignalMast {
     /**
@@ -161,6 +160,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
 
+    @Override
     public void setLit(boolean newLit) {
         if (!allowUnLit() || newLit == getLit()) {
             return;
@@ -192,7 +192,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     /**
-     *  provide to panel for edit
+     *  Provide Unlit bits to panel for editing.
+     *
+     *  @return char[] containing a series of 1's and 0's set for Unlit mast
      */
     @Nonnull public char[] getUnLitBits() {
         if (unLitBits != null) {
@@ -380,6 +382,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      * If the signal mast driver requires the previous state to be cleared down
      * before the next state is set.
+     *
+     * @param boo true to configure for intermediate reset step
      */
     public void resetPreviousStates(boolean boo) {
         resetPreviousStates = boo;
@@ -426,6 +430,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //NOI18N
             if (evt.getOldValue() instanceof Turnout) {
@@ -459,6 +464,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return mastBitNum;
     }
 
+    @Override
     public void setAspectDisabled(String aspect) {
         if (aspect == null || aspect.equals("")) {
             return;
@@ -473,6 +479,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }

@@ -5,10 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.jdom2.JDOMException;
+import org.junit.Assert;
 
 /**
  * Tests for the jmrit.roster.RosterEntry class.
@@ -63,6 +64,7 @@ public class RosterEntryTest extends TestCase {
                 .setAttribute("fileName", "file here"); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -91,6 +93,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -105,6 +108,20 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("family ", "91", r.getDecoderFamily());
     }
 
+    public void testFromFile() throws JDOMException, IOException {
+        
+        //create a RosterEntry from a test xml file
+        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+
+        // check for various values
+        Assert.assertEquals("file name ", "ACL1012.xml", r.getFileName());
+        Assert.assertEquals("DCC Address ", "1012", r.getDccAddress());
+        Assert.assertEquals("road name ", "Atlantic Coast Line", r.getRoadName());
+        Assert.assertEquals("road number ", "1012", r.getRoadNumber());
+        Assert.assertEquals("model ", "Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin", r.getDecoderModel());
+        Assert.assertEquals("family ", "Brilliance Sound Decoders", r.getDecoderFamily());
+    }
+
     public void testStoreFunctionLabel() {
         RosterEntry r = new RosterEntry("file here");
 
@@ -112,6 +129,15 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("tree", r.getFunctionLabel(3));
         Assert.assertEquals(null, r.getFunctionLabel(4));
 
+    }
+
+    public void testModifyDate() {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        r.setDateUpdated("unparseable date");
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\"."); 
     }
 
     public void testStoreFunctionLockable() {
@@ -146,6 +172,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -184,6 +211,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -322,6 +350,7 @@ public class RosterEntryTest extends TestCase {
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -372,11 +401,13 @@ public class RosterEntryTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

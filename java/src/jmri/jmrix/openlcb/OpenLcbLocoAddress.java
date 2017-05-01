@@ -11,7 +11,7 @@ import org.openlcb.NodeID;
  * This should not be a child of DccLocoAddress, but rather of LocoAddress. But
  * the code isn't up to that right now.
  *
- * @author	Bob Jacobsen Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2012
   */
 public class OpenLcbLocoAddress extends DccLocoAddress {
 
@@ -20,6 +20,7 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         this.node = node;
     }
 
+    @Override
     public boolean equals(Object a) {
         if (a == null) {
             return false;
@@ -32,6 +33,7 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         }
     }
 
+    @Override
     public int hashCode() {
         return node.hashCode();
     }

@@ -7,6 +7,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.LightManager;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
+import jmri.jmrix.cmri.serial.*;
 
 /**
  * Minimal SystemConnectionMemo for C/MRI systems.
@@ -22,27 +23,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         register(); // registers general type
         jmri.InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
 
-        // create and register the CMRIComponentFactory
+        // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new jmri.jmrix.cmri.swing.CMRIComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
-
-
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
-
-    @Override
-    protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
-    }
-
-    public void dispose() {
-        InstanceManager.deregister(this, CMRISystemConnectionMemo.class);
-        if (cf != null) {
-            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
-        }
-        super.dispose();
-    }
 
     /*
      * Set the traffic controller instance associated with this connection memo.
@@ -50,60 +36,21 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * @param s jmri.jmrix.cmri.serial.SerialTrafficController object to use.
      */
     public void setTrafficController(SerialTrafficController s){
-       tc = s;
+        tc = s;
     }
 
     /*
      * Get the traffic controller instance associated with this connection memo.
      */
     public SerialTrafficController  getTrafficController(){
-       return tc;
+        if (tc == null) {
+            setTrafficController(new SerialTrafficController());
+            log.debug("Auto create of SerialTrafficController for initial configuration");
+        }
+        return tc;
     }
 
-    /*
-     * Provides access to the Sensor Manager for this particular connection.
-     * NOTE: Sensor manager defaults to NULL
-     */
-    public SensorManager getSensorManager() {
-        return sensorManager;
-
-    }
-
-    public void setSensorManager(SensorManager s) {
-        sensorManager = s;
-    }
-
-    private SensorManager sensorManager = null;
-
-    /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
-     */
-    public TurnoutManager getTurnoutManager() {
-        return turnoutManager;
-
-    }
-
-    public void setTurnoutManager(TurnoutManager t) {
-        turnoutManager = t;
-    }
-
-    private TurnoutManager turnoutManager = null;
-
-    /*
-     * Provides access to the Light Manager for this particular connection.
-     * NOTE: Light manager defaults to NULL
-     */
-    public LightManager getLightManager() {
-        return lightManager;
-    }
-
-    public void setLightManager(LightManager l) {
-        lightManager = l;
-    }
-
-    private LightManager lightManager = null;
-
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -119,6 +66,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -140,20 +88,76 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * common manager config in one place.
      */
     public void configureManagers() {
-       jmri.jmrix.cmri.serial.SerialTurnoutManager t = new jmri.jmrix.cmri.serial.SerialTurnoutManager(this);
-        jmri.InstanceManager.setTurnoutManager(t);
-        setTurnoutManager(t);
+        InstanceManager.setSensorManager(
+                getSensorManager());
+        getTrafficController().setSensorManager(getSensorManager());
 
-        jmri.jmrix.cmri.serial.SerialLightManager l = new jmri.jmrix.cmri.serial.SerialLightManager(this);
-        jmri.InstanceManager.setLightManager(l);
-        setLightManager(l);
+        InstanceManager.setTurnoutManager(
+                getTurnoutManager());
 
-        jmri.jmrix.cmri.serial.SerialSensorManager s = new jmri.jmrix.cmri.serial.SerialSensorManager(this);
-        jmri.InstanceManager.setSensorManager(s);
-        tc.setSensorManager(s);
-        setSensorManager(s);
-
+        InstanceManager.setLightManager(
+                getLightManager());
     }
 
 
+    protected SerialTurnoutManager turnoutManager;
+
+    public SerialTurnoutManager getTurnoutManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (turnoutManager == null) {
+            turnoutManager = new SerialTurnoutManager(this);
+        }
+        return turnoutManager;
+    }
+
+    protected SerialSensorManager sensorManager;
+
+    public SerialSensorManager getSensorManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (sensorManager == null) {
+            sensorManager = new SerialSensorManager(this);
+        }
+        return sensorManager;
+    }
+
+    protected SerialLightManager lightManager;
+
+    public SerialLightManager getLightManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (lightManager == null) {
+            lightManager = new SerialLightManager(this);
+        }
+        return lightManager;
+    }
+
+    @Override
+    protected ResourceBundle getActionModelResourceBundle() {
+        return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
+    }
+
+    @Override
+    public void dispose() {
+        InstanceManager.deregister(this, CMRISystemConnectionMemo.class);
+        if (cf != null) {
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        }
+        if (turnoutManager != null) {
+            InstanceManager.deregister(turnoutManager, jmri.jmrix.cmri.serial.SerialTurnoutManager.class);
+        }
+        if (lightManager != null) {
+            InstanceManager.deregister(lightManager, jmri.jmrix.cmri.serial.SerialLightManager.class);
+        }
+        if (sensorManager != null) {
+            InstanceManager.deregister(sensorManager, jmri.jmrix.cmri.serial.SerialSensorManager.class);
+        }
+        super.dispose();
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRISystemConnectionMemo.class.getName());
 }

@@ -24,10 +24,10 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  *
- * @author	Bob Coleman Copyright (C) 2007. 2008 Based on CMRI serial example,
+ * @author Bob Coleman Copyright (C) 2007. 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {
@@ -51,10 +51,12 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     // The methods to implement the AcelaInterface
+    @Override
     public synchronized void addAcelaListener(AcelaListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeAcelaListener(AcelaListener l) {
         this.removeListener(l);
     }
@@ -218,11 +220,13 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         return (-1);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         log.warn("enterProgMode does NOT make sense for Acela serial");
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         // can happen during error recovery, null is OK
         return null;
@@ -231,6 +235,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     /**
      * Forward a AcelaMessage to all registered AcelaInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((AcelaListener) client).message((AcelaMessage) m);
     }
@@ -238,6 +243,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     /**
      * Forward a AcelaReply to all registered AcelaInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((AcelaListener) client).reply((AcelaReply) m);
     }
@@ -258,6 +264,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      * Handles initialization, output and polling for Acela Nodes from within
      * the running thread
      */
+    @Override
     protected synchronized AbstractMRMessage pollMessage() {
         // Need to wait until we have read config file
         if (!reallyReadyToPoll) {
@@ -364,6 +371,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
+    @Override
     protected synchronized void handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // inform node, and if it resets then reinitialize        
@@ -372,12 +380,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
+    @Override
     protected synchronized void resetTimeout(AbstractMRMessage m) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // and inform node
         getNode(curAcelaNodeIndex).resetTimeout(m);
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
     }
@@ -385,6 +395,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     /**
      * Forward a pre-formatted message to the actual interface.
      */
+    @Override
     public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
         sendMessage(m, reply);
     }
@@ -412,15 +423,18 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         //log.error("Deprecated method setInstance called");
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         return new AcelaReply();
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         // our version of loadChars doesn't invoke this, so it shouldn't be called
         return true;
     }
 
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int char1 = readByteProtected(istream)&0xFF;
         if (char1 == 0x00) {  // 0x00 means command processed OK.
@@ -462,6 +476,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
+    @Override
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
         // Just return
     }

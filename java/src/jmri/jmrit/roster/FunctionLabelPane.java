@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Display and edit the function labels in a RosterEntry
+ * Display and edit the function labels in a RosterEntry.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Randall Wood Copyright (C) 2014
@@ -155,9 +155,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     /**
-     * Do the GUI contents agree with a RosterEntry?
+     * Check if panel contents differ with a RosterEntry.
      *
-     * @return true if GUI differs from RosterEntry
+     * @param r the roster entry to check
+     * @return true if panel contents differ; false otherwise
      */
     public boolean guiChanged(RosterEntry r) {
         if (labels != null) {
@@ -223,9 +224,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
 
     /**
-     * Fill a RosterEntry object from GUI contents
+     * Update a RosterEntry object from panel contents.
      *
      *
+     * @param r the roster entry to update
      */
     public void update(RosterEntry r) {
         if (labels != null) {
@@ -284,13 +286,13 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                 spaces.append(" ");
             }
             // start with pane name in bold
-            String heading1 = "Function";
-            String heading2 = "Description";
+            String heading1 = Bundle.getMessage("ColumnHeadingFunction");
+            String heading2 = Bundle.getMessage("ColumnHeadingDescription");
             String s;
             int interval = spaces.length() - heading1.length();
             w.setFontStyle(Font.BOLD);
             // write the section name and dividing line
-            s = "FUNCTION LABELS";
+            s = Bundle.getMessage("HeadingFunctionLabels");
             w.write(s, 0, s.length());
             w.writeBorders();
             //Draw horizontal dividing line for each Pane section

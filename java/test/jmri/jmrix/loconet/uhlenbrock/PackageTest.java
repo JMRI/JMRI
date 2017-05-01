@@ -9,7 +9,13 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.uhlenbrock.configurexml.PackageTest.class
+   jmri.jmrix.loconet.uhlenbrock.configurexml.PackageTest.class,
+   UhlenbrockAdapterTest.class,
+   UhlenbrockConnectionTypeListTest.class,
+   UhlenbrockPacketizerTest.class,
+   UhlenbrockSystemConnectionMemoTest.class,
+   UhlenbrockProgrammerManagerTest.class,
+   UhlenbrockLnThrottleManagerTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.uhlenbrock package.

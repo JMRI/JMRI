@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * Implements SerialPortAdapter for the LAWICELL protocol.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -28,6 +28,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         String[] baudRates = validBaudRates();
         int[] baudValues = validBaudValues();
@@ -57,8 +58,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -105,6 +106,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
      * set up all of the other objects to operate with a CAN RS adapter
      * connected to this port
      */
+    @Override
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
@@ -129,6 +131,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     // base class methods for the PortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -137,6 +140,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -149,6 +153,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }

@@ -22,10 +22,12 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.acela.configurexml.AcelaSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -36,8 +38,8 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         try {
             AcelaSensorManager.instance();
         } catch (Exception e) {
-            creationErrorEncountered("Could not create Acela Sensor Manager",
-                    null, null, null);
+            handleException("Could not create Acela Sensor Manager",
+                    null, null, null, null);
 
             return false;
         }

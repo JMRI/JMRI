@@ -1,7 +1,6 @@
 package jmri.jmrix.rfid;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,12 +13,12 @@ import jmri.Reporter;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTest {
+public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     RfidTrafficController tc = null;
 
     @Override
-    public String getSystemName(int i) {
+    public String getSystemName(String i) {
         return "RR" + i;
     }
 
@@ -34,6 +33,30 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     @Ignore("Abstract Class under test, test does not apply")
     public void testDefaultSystemName(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testReporterProvideReporter(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testReporterGetByDisplayName(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testReporterGetBySystemName(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testReporterGetByUserName(){
     }
 
     @Test

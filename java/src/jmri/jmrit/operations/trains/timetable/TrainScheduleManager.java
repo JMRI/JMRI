@@ -36,20 +36,21 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     /**
      * record the single instance *
      */
-    private static TrainScheduleManager _instance = null;
     private int _id = 0;
 
     public static synchronized TrainScheduleManager instance() {
-        if (_instance == null) {
+        TrainScheduleManager instance = jmri.InstanceManager.getNullableDefault(TrainScheduleManager.class);;
+        if (instance == null) {
             log.debug("TrainScheduleManager creating instance");
             // create and load
-            _instance = new TrainScheduleManager();
+            instance = new TrainScheduleManager();
+            jmri.InstanceManager.setDefault(TrainScheduleManager.class,instance);
             TrainManagerXml.instance(); // load trains
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("TrainScheduleManager returns instance " + _instance);
+            log.debug("TrainScheduleManager returns instance " + instance);
         }
-        return _instance;
+        return instance;
     }
 
     public void dispose() {
@@ -227,8 +228,12 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      * Update a JComboBox with the latest schedules.
      *
      * @param box the JComboBox needing an update.
+     * @throws IllegalArgumentException if box is null
      */
     public void updateComboBox(JComboBox<TrainSchedule> box) {
+        if(box==null) {
+           throw new IllegalArgumentException("Attempt to update non-existant comboBox");
+        }
         box.removeAllItems();
         for (TrainSchedule sch : getSchedulesByNameList()) {
             box.addItem(sch);

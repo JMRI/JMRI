@@ -1,11 +1,8 @@
 package jmri.jmrix.powerline;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.powerline.SerialTurnout class
@@ -13,7 +10,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
   */
-public class SerialTurnoutTest extends AbstractTurnoutTest {
+public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialSystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tc = null;

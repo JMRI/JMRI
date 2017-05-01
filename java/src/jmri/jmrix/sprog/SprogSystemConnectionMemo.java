@@ -65,6 +65,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Set the SPROG mode for this connection
+     * @param mode selected mode
      * 
      */
     public void setSprogMode(SprogMode mode) {
@@ -92,6 +93,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Set the SPROG version object for this connection
+     * @param version type and version class
      */
     public void setSprogVersion(SprogVersion version) {
         sprogVersion = version;
@@ -112,6 +114,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     * @return current tc for this connection
      */
     public SprogTrafficController getSprogTrafficController() {
         return st;
@@ -139,6 +142,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 slotThread.start();
                 break;
             case SERVICE:
+                break;
+            default:
+                log.error("Unhandled sprogMode: {}", sprogMode);
                 break;
         }
     }
@@ -183,6 +189,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     return true;
                 case SERVICE:
                     return false;
+                default:
+                    log.error("Unhandled sprogMode: {}", sprogMode);
+                    break;
             }
         }
         return false; // nothing, by default
@@ -245,7 +254,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 sprogThrottleManager = new jmri.jmrix.sprog.SprogThrottleManager(this);
                 jmri.InstanceManager.setThrottleManager(sprogThrottleManager);
                 break;
-
+            default:
+                log.warn("Unhandled programming mode: {}", sprogMode);
+                break;
         }
 
     }
@@ -281,6 +292,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 return sprogCSThrottleManager;
             case SERVICE:
                 return sprogThrottleManager;
+            default:
+                log.warn("Unhandled programming mode: {}", sprogMode);
+                break;
         }
         return null;
     }
@@ -289,11 +303,13 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return sprogTurnoutManager;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
     }
 
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, SprogSystemConnectionMemo.class);

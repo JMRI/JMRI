@@ -12,7 +12,7 @@ import jmri.InstanceManager;
  * each of the CAN Bus systems. Any requests for provision or configuration is
  * passed on to the relevant ConfigurationManager to handle.
  * <p>
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -98,6 +98,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         if (manager == null) {
             return null;
@@ -105,6 +106,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return manager.getActionModelResourceBundle();
     }
 
+    @Override
     public void dispose() {
         if (manager != null) {
             manager.dispose();

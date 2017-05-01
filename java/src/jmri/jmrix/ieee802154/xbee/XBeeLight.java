@@ -4,7 +4,6 @@ import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.io.IOLine;
-import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOValue;
 import jmri.Light;
 import jmri.implementation.AbstractLight;
@@ -103,6 +102,7 @@ public class XBeeLight extends AbstractLight {
         }
     }
 
+    @Override
     protected void doNewState(int oldState, int newState) {
         try  {
             if((newState == Light.ON) ) {

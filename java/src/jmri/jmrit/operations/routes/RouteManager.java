@@ -26,24 +26,22 @@ public class RouteManager {
     public RouteManager() {
     }
 
-    /**
-     * record the single instance *
-     */
-    private static RouteManager _instance = null;
     private int _id = 0;
 
     public static synchronized RouteManager instance() {
-        if (_instance == null) {
+        RouteManager instance = jmri.InstanceManager.getNullableDefault(RouteManager.class);
+        if (instance == null) {
             log.debug("RouteManager creating instance");
             // create and load
-            _instance = new RouteManager();
+            instance = new RouteManager();
+            jmri.InstanceManager.setDefault(RouteManager.class,instance);
             OperationsSetupXml.instance(); // load setup
             RouteManagerXml.instance(); // load routes
         }
         if (Control.SHOW_INSTANCE) {
-            log.debug("RouteManager returns instance {}", _instance);
+            log.debug("RouteManager returns instance {}", instance);
         }
-        return _instance;
+        return instance;
     }
 
     public void dispose() {

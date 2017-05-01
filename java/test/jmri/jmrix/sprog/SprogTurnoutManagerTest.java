@@ -3,7 +3,6 @@ package jmri.jmrix.sprog;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -12,7 +11,7 @@ import org.junit.Test;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-public class SprogTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SprogTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
    private SprogSystemConnectionMemo m = null;
 
    @Override

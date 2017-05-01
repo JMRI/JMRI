@@ -32,14 +32,17 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return mInstance;
     }
 
+    @Override
     public void reply(TamsReply m) {
         //We are not sending commands from here yet!
     }
 
+    @Override
     public void message(TamsMessage m) {
         // messages are ignored
     }
 
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         /*Here we do not set notifythrottle, we simply create a new Tams throttle.
          The Tams throttle in turn will notify the throttle manager of a successful or
@@ -57,6 +60,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
      * Address 100 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -65,6 +69,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
      * Address 99 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -72,6 +77,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }
@@ -93,6 +99,7 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             TamsThrottle lnt = (TamsThrottle) t;

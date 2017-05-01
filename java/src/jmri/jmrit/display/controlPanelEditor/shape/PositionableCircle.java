@@ -23,6 +23,7 @@ public class PositionableCircle extends PositionableShape {
         super(editor, shape);
     }
 
+    @Override
     public void setHeight(int h) {
         super.setHeight(h);
         _width = _height;
@@ -32,6 +33,7 @@ public class PositionableCircle extends PositionableShape {
      * this class must be overridden by its subclasses and executed only after
      * its parameters have been set
      */
+    @Override
     public void makeShape() {
         setShape(new Ellipse2D.Double(0, 0, _width, _width));
     }
@@ -42,15 +44,18 @@ public class PositionableCircle extends PositionableShape {
         return finishClone(pos);
     }
 
+    @Override
     protected Positionable finishClone(PositionableShape pos) {
         pos._width = _width;
         pos._height = _height;
         return super.finishClone(pos);
     }
 
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("Circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (_editFrame == null) {
                     _editFrame = new DrawCircle("editShape", "Circle", null);

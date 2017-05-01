@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
   * @see jmri.jmrix.nce.NceMessage
  *
  */
@@ -115,6 +115,7 @@ public class LocoNetMessage implements Serializable {
     /**
      * Get a String representation of the entire message in hex
      */
+    @Override
     public String toString() {
         int val;
         StringBuffer sb = new StringBuffer();
@@ -244,6 +245,7 @@ public class LocoNetMessage implements Serializable {
      *
      * @return true if objects contain the same message contents
      */
+    @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;
@@ -263,6 +265,7 @@ public class LocoNetMessage implements Serializable {
         return true;
     }
 
+    @Override
     public int hashCode() {
         int r = _nDataBytes;
         if (_nDataBytes > 0) {
@@ -380,7 +383,7 @@ public class LocoNetMessage implements Serializable {
     public int sensorAddr() {
         int sw1 = getElement(1);
         int sw2 = getElement(2);
-        int as = sw2 & 0x20;		// should be a LocoNet constant?
+        int as = sw2 & 0x20;  // should be a LocoNet constant?
         int high = sw2 & 0x0F;
         int low = sw1 & 0x7F;
         return high * 256 + low * 2 + (as != 0 ? 1 : 0);

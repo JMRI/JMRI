@@ -33,10 +33,12 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(jmri.progdebugger.DebugProgrammerTest.suite());
         suite.addTest(jmri.progdebugger.DebugProgrammerManagerTest.suite());
+        suite.addTest(new junit.framework.JUnit4TestAdapter(ProgDebuggerTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
@@ -44,6 +46,7 @@ public class PackageTest extends TestCase {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();

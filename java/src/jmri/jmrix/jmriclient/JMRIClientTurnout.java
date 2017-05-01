@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
  * JMRIClient implementation of the Turnout interface.
  * <P>
  *
- * Description:	extend jmri.AbstractTurnout for JMRIClient layouts
+ * Description: extend jmri.AbstractTurnout for JMRIClient layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
  */
 public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientListener {
 
@@ -89,6 +89,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 
     // Handle a request to change state by sending a formatted packet
     // to the server.
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -107,6 +108,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         }
     }
 
+    @Override
     public boolean canInvert() {
         return true;
     }
@@ -119,6 +121,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + prefix + _number);
@@ -140,6 +143,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     }
 
     // to listen for status changes from JMRIClient system
+    @Override
     public void reply(JMRIClientReply m) {
         String message = m.toString();
         if (!message.contains(transmitName + " ")) {
@@ -154,6 +158,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         }
     }
 
+    @Override
     public void message(JMRIClientMessage m) {
     }
 

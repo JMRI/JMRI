@@ -3,11 +3,11 @@
  *
  * Description:	Stands in for the XpaTrafficController class
  *
- * @author	Bob Jacobsen
-  */
+ * @author Bob Jacobsen
+ */
 package jmri.jmrix.xpa;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +20,7 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
     }
 
     // override some XpaTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -27,14 +28,15 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
     /**
      * record messages sent, provide access for making sure they are OK
      */
-    public Vector<XpaMessage> outbound = new Vector<XpaMessage>();  // public OK here, so long as this is a test class
+    public ArrayList<XpaMessage> outbound = new ArrayList<>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendXpaMessage [" + m + "]");
         }
         // save a copy
-        outbound.addElement(m);
+        outbound.add(m);
         // we don't return an echo so that the processing before the echo can be
         // separately tested
     }
@@ -42,6 +44,9 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
     // test control member functions
     /**
      * forward a message to the listeners, e.g. test receipt
+     *
+     * @param m the test message
+     * @param l the listener to notify
      */
     protected void sendTestMessage(XpaMessage m, XpaListener l) {
         // forward a test message to NceListeners
@@ -49,7 +54,6 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
             log.debug("sendTestMessage    [" + m + "]");
         }
         notifyMessage(m, l);
-        return;
     }
 
     /*

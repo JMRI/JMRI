@@ -24,10 +24,12 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         super();
     }
 
+    @Override
     public String name() {
         return "CAN Simulation";
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new Port();

@@ -12,7 +12,7 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest {
+public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private XNetPowerManager pm = null;
     private XNetInterfaceScaffold tc = null;
@@ -253,6 +253,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();

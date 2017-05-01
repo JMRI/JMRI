@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnSensorManager extends jmri.managers.AbstractSensorManager implements LocoNetListener {
 
@@ -29,22 +29,26 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     protected LnTrafficController tc;
     protected String prefix = "L";
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
         super.dispose();
     }
 
     // LocoNet-specific methods
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         return new LnSensor(systemName, userName, tc, prefix);
     }
 
     // listen for sensors, creating them as needed
+    @Override
     public void message(LocoNetMessage l) {
         // parse message type
         LnSensorAddress a;
@@ -82,6 +86,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     /**
      * Requests status updates from all layout sensors.
      */
+    @Override
     public void updateAll() {
         if (!busy) {
             setUpdateBusy();
@@ -107,10 +112,12 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     private boolean busy = false;
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             int board = 0;
@@ -153,6 +160,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
     int iName;
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
@@ -202,6 +210,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
          * sensors per LocoNet PE Specs, page 12-13 Thread waits 500 msec
          * between commands.
          */
+        @Override
         public void run() {
             sm.setUpdateBusy();
             byte sw1[] = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};

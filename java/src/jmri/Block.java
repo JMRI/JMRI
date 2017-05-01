@@ -112,7 +112,7 @@ import org.slf4j.LoggerFactory;
  * in millimeter units. A length of 0.0 indicates no entry of length by the
  * user.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
  * @author Dave Duchamp Copywright (C) 2009
  */
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
@@ -134,6 +134,30 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     static final public int GRADUAL = 0x01;
     static final public int TIGHT = 0x02;
     static final public int SEVERE = 0x04;
+
+    // this should only be used for debugging…
+    public String toString() {
+        String result = getFullyFormattedDisplayName() + " ";
+        switch (getState()) {
+            case UNDETECTED: {
+                    result += "UNDETECTED";
+                break;
+            }
+            case UNOCCUPIED: {
+                    result += "UNOCCUPIED";
+                break;
+            }
+            case OCCUPIED: {
+                    result += "OCCUPIED";
+                break;
+            }
+            default: {
+                    result += "unknown " + getState();
+                break;
+            }
+        }
+        return result;
+    }
 
     /*
      * return true if a Sensor is set
@@ -312,10 +336,10 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public void setValue(Object value) {
         //ignore if unchanged
         if (value != _value) {
-            log.debug("Block {} value changed from '{}' to '{}'", getSystemName(), _value, value);
-            Object old = _value;
+            log.debug("Block {} value changed from '{}' to '{}'", getDisplayName(), _value, value);
+            _previousValue = _value;
             _value = value;
-            firePropertyChange("value", old, _value);
+            firePropertyChange("value", _previousValue, _value);
         }
     }
 
@@ -326,7 +350,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public void setDirection(int direction) {
         //ignore if unchanged
         if (direction != _direction) {
-            log.debug("Block {} direction changed from {} to {}", getSystemName(), Path.decodeDirection(_direction), Path.decodeDirection(direction));
+            log.debug("Block {} direction changed from {} to {}", getDisplayName(), Path.decodeDirection(_direction), Path.decodeDirection(direction));
             int oldDirection = _direction;
             _direction = direction;
             // this is a bound parameter
@@ -551,6 +575,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     private NamedBeanHandle<Sensor> _namedSensor = null;
     private PropertyChangeListener _sensorListener = null;
     private Object _value;
+    private Object _previousValue;
     private int _direction;
     private int _curvature = NONE;
     private float _length = 0.0f;  // always stored in millimeters
@@ -572,7 +597,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             if (CandidateBlock == b) {
                 setValue(CandidateBlock.getValue());
                 setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
-                log.info("Block {} gets LATE new value from {}, direction= {}", getSystemName(), CandidateBlock.getSystemName(), Path.decodeDirection(getDirection()));
+                log.info("Block {} gets LATE new value from {}, direction= {}", getDisplayName(), CandidateBlock.getDisplayName(), Path.decodeDirection(getDirection()));
                 ResetCandidateEntrancePaths();
                 return true;
             }
@@ -606,15 +631,15 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             }
         }
     }
-    
+
     public void goingUnknown() {
         setValue(null);
-        setState(UNKNOWN);       
+        setState(UNKNOWN);
     }
-    
+
     public void goingInconsistent() {
         setValue(null);
-        setState(INCONSISTENT);        
+        setState(INCONSISTENT);
     }
 
     /**
@@ -633,7 +658,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * Handles Block sensor going INACTIVE: this block is empty
      */
     public void goingInactive() {
-        log.debug("Block {} goes UNOCCUPIED", getSystemName());
+        log.debug("Block {} goes UNOCCUPIED", getDisplayName());
         int currPathCnt = paths.size();
         for (int i = 0; i < currPathCnt; i++) {
             Block b = paths.get(i).getBlock();
@@ -657,7 +682,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         if (getState() == OCCUPIED) {
             return;
         }
-        log.debug("Block {} goes OCCUPIED", getSystemName());
+        log.debug("Block {} goes OCCUPIED", getDisplayName());
         ResetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
@@ -689,40 +714,47 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         // sort on number of neighbors
         switch (count) {
             case 0:
-                if (infoMessageCount < maxInfoMessages) {
-                    log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getSystemName() + ". Value not set.");
-                    infoMessageCount++;
+                if (null != _previousValue) {
+                    setValue(_previousValue);
+                    if (infoMessageCount < maxInfoMessages) {
+                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getDisplayName() + ". Restoring previous value.");
+                        infoMessageCount++;
+                    }
+                } else {
+                    if (infoMessageCount < maxInfoMessages) {
+                        log.info("Sensor ACTIVE came out of nowhere, no neighbors active for block " + getDisplayName() + ". Value not set.");
+                        infoMessageCount++;
+                    }
                 }
                 break;
             case 1:
                 // simple case
-
                 if ((next != null) && (next.getBlock() != null)) {
                     // normal case, transfer value object
                     setValue(next.getBlock().getValue());
                     setDirection(next.getFromBlockDirection());
                     log.debug("Block {} gets new value '{}' from {}, direction={}",
-                            getSystemName(),
+                            getDisplayName(),
                             next.getBlock().getValue(),
-                            next.getBlock().getSystemName(),
+                            next.getBlock().getDisplayName(),
                             Path.decodeDirection(getDirection()));
                 } else if (next == null) {
-                    log.error("unexpected next==null processing block " + getSystemName());
+                    log.error("unexpected next==null processing block " + getDisplayName());
                 } else if (next.getBlock() == null) {
-                    log.error("unexpected next.getBlock()=null processing block " + getSystemName());
+                    log.error("unexpected next.getBlock()=null processing block " + getDisplayName());
                 }
                 break;
             default:
                 // count > 1, check for one with proper direction
                 // this time, count ones with proper direction
-                log.debug("Block {} has {} active linked blocks, comparing directions", getSystemName(), count);
+                log.debug("Block {} has {} active linked blocks, comparing directions", getDisplayName(), count);
                 next = null;
                 count = 0;
                 for (int i = 0; i < currPathCnt; i++) {
                     if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
                         log.debug("comparing {} ({}) to {} ({})",
                                 pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
-                                getSystemName(), Path.decodeDirection(pFromDir[i]));
+                                getDisplayName(), Path.decodeDirection(pFromDir[i]));
                         if ((pDir[i] & pFromDir[i]) > 0) { //use bitwise comparison to support combination directions such as "North, West"
                             count++;
                             next = pList[i];
@@ -742,11 +774,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                     setValue(next.getBlock().getValue());
                     setDirection(next.getFromBlockDirection());
                     log.debug("Block {} gets new value '{}' from {}, direction {}",
-                            getSystemName(), next.getBlock().getValue(),
-                            next.getBlock().getSystemName(), Path.decodeDirection(getDirection()));
+                            getDisplayName(), next.getBlock().getValue(),
+                            next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
                 } else {
                     // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                    log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName()
+                    log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getDisplayName()
                             + " but maybe it can be determined when another block becomes free");
                     pListOfPossibleEntrancePaths = new Path[currPathCnt];
                     CntOfPossibleEntrancePaths = 0;
@@ -805,14 +837,14 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         } else {
             // count > 1, check for one with proper direction
             // this time, count ones with proper direction
-            log.debug("Block {} - count of active linked blocks = {}", getSystemName(), count);
+            log.debug("Block {} - count of active linked blocks = {}", getDisplayName(), count);
             next = null;
             count = 0;
             for (int i = 0; i < currPathCnt; i++) {
                 if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
                     log.debug("comparing {} ({}) to {} ({})",
                             pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
-                            getSystemName(), Path.decodeDirection(pFromDir[i]));
+                            getDisplayName(), Path.decodeDirection(pFromDir[i]));
                     if ((pDir[i] & pFromDir[i]) > 0) { //use bitwise comparison to support combination directions such as "North, West"
                         count++;
                         next = pList[i];
@@ -826,18 +858,18 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 // found one block with proper direction, assume that
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                log.warn("count of " + count + " ACTIVE neighbors with proper direction can't be handled for block " + getSystemName());
+                log.warn("count of " + count + " ACTIVE neighbors with proper direction can't be handled for block " + getDisplayName());
             }
         }
         // in any case, go OCCUPIED
         if (log.isDebugEnabled()) { // avoid potentially expensive non-logging
-            log.debug("Block {} with direction {} gets new value from {} + (informational. No state change)", getSystemName(), Path.decodeDirection(getDirection()), (next != null ? next.getBlock().getSystemName() : "(no next block)"));
+            log.debug("Block {} with direction {} gets new value from {} + (informational. No state change)", getDisplayName(), Path.decodeDirection(getDirection()), (next != null ? next.getBlock().getDisplayName() : "(no next block)"));
         }
         return (next);
     }
 
     /*
-     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an 
+     * This allows the layout block to inform any listeners to the block that the higher level layout block has been set to "useExtraColor" which is an
      * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
      * trigger a propertyChangeEvent.
      */

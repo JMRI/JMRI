@@ -105,6 +105,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (!findErrors()) {
                     closingEvent();
@@ -145,6 +146,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 clearListSelection();
             }
@@ -163,6 +165,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         panel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addPath();
             }
@@ -172,6 +175,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 changePathName();
             }
@@ -181,6 +185,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePath"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deletePath();
             }
@@ -198,6 +203,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 false, _length, "Length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
         _length.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent event) {
                 _pathChange = true;
             }            
@@ -205,6 +211,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _units = new JToggleButton("", !_block.isMetric());
         _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
         _units.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 changeUnits();
             }
@@ -275,6 +282,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private static class PathCellRenderer extends JLabel implements ListCellRenderer<OPath> {
 
+        @Override
         public Component getListCellRendererComponent(
                 JList<? extends OPath> list, // the list
                 OPath value, // value to display
@@ -300,10 +308,12 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     class PathListModel extends AbstractListModel<OPath> {
 
+        @Override
         public int getSize() {
             return _block.getPaths().size();
         }
 
+        @Override
         public OPath getElementAt(int index) {
             return (OPath) _block.getPaths().get(index);
         }
@@ -313,6 +323,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
     }
 
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         clearPath();
         OPath path = _pathList.getSelectedValue();
@@ -470,11 +481,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                     }
                 }
             }
-        } else if (toPortal2 == null) {	//i.e. toPortal2 matches toPortal1==null
+        } else if (toPortal2 == null) { //i.e. toPortal2 matches toPortal1==null
             if (fromPortal1 != null && fromPortal1.equals(fromPortal2)) {
                 testSettings = true;
             }
-        } else if (fromPortal2 == null) {	//i.e. fromPortal2 matches toPortal1==null
+        } else if (fromPortal2 == null) { //i.e. fromPortal2 matches toPortal1==null
             if (fromPortal1 != null && fromPortal1.equals(toPortal2)) {
                 testSettings = true;
             }
@@ -486,7 +497,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             if (setting1.size() != setting2.size()) {
                 return false;
             }
-            if (setting1.size() == 0) {		// no turnouts in paths, but portals the same
+            if (setting1.size() == 0) {  // no turnouts in paths, but portals the same
                 return true;
             }
             Iterator<BeanSetting> it = setting1.iterator();
@@ -640,7 +651,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
         OPath path = makeOPath(name, _pathGroup, true);
         if (path == null) {
-            return;		// proper OPath cannot be made
+            return;  // proper OPath cannot be made
         }
         if (otherPath == null) {
             // is this path already defined?
@@ -656,7 +667,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         // match icons to current selections
         changePathNameInIcons(name, path);
 
-        if (otherPath != null) {		// same path
+        if (otherPath != null) {  // same path
             if (!sameName) {
                 int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("samePath",
                         otherPath.getName(), name), Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION,
@@ -696,7 +707,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 fromPortal.addPath(oldPath);                
             }
         } else {
-            _block.addPath(path);		// OBlock adds path to portals and checks for duplicate path names
+            _block.addPath(path);  // OBlock adds path to portals and checks for duplicate path names
             setPathLength(path);
         }
         _pathList.setSelectedValue(path, true);

@@ -68,6 +68,7 @@ public class AlignmentPanel extends javax.swing.JPanel
         vs.setText("0.01345");
         p.add(calc);
         calc.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 calculate();
             }
@@ -111,6 +112,7 @@ public class AlignmentPanel extends javax.swing.JPanel
         JButton b1;
         b1 = new JButton("Store...");
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 store();
             }
@@ -119,6 +121,7 @@ public class AlignmentPanel extends javax.swing.JPanel
 
         b1 = new JButton("Load...");
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 load();
             }
@@ -352,6 +355,7 @@ public class AlignmentPanel extends javax.swing.JPanel
 
     }
 
+    @Override
     public void notify(Reading r) {
         // update lines
         for (int i = 0; i < lines.length; i++) {
@@ -498,6 +502,7 @@ public class AlignmentPanel extends javax.swing.JPanel
             add(acquire);
             JButton reset = new JButton("Reset");
             reset.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     reset();
                 }

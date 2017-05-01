@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  * This object doesn't listen to the Grapevine serial communications. It
  * probably should, however, in case
  *
- * Description:	extend jmri.AbstractSignalHead for grapevine serial signals
+ * Description: extend jmri.AbstractSignalHead for grapevine serial signals
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
   */
 public class SerialSignalHead extends DefaultSignalHead {
 
@@ -51,6 +51,7 @@ public class SerialSignalHead extends DefaultSignalHead {
     /**
      * Handle a request to change state on layout
      */
+    @Override
     protected void updateOutput() {
         SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
         if (tNode == null) {
@@ -122,9 +123,11 @@ public class SerialSignalHead extends DefaultSignalHead {
 
     // flashing is done on the cards, so we don't have to
     // do it manually
+    @Override
     public void startFlash() {
     }
 
+    @Override
     public void stopFlash() {
     }
 

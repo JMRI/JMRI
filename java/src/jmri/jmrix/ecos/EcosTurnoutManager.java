@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         implements EcosListener {
@@ -60,10 +60,12 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
@@ -79,6 +81,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     }
 
     // to listen for status changes from Ecos system
+    @Override
     public void reply(EcosReply m) {
         log.debug("reply "+m);
         // is this a list of turnouts?
@@ -418,6 +421,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                     container.add(button);
 
                     noButton.addActionListener(new ActionListener() {
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             if (remember.isSelected()) {
                                 p.setRemoveTurnoutsFromJMRI(0x01);
@@ -429,6 +433,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                     yesButton.addActionListener(new ActionListener() {
                         final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
+                        @Override
                         public void actionPerformed(ActionEvent e) {
                             if (remember.isSelected()) {
                                 p.setRemoveTurnoutsFromJMRI(0x02);
@@ -504,6 +509,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         return result.toString();
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }
@@ -559,6 +565,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         container.add(button);
 
                         noButton.addActionListener(new ActionListener() {
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 if (remember.isSelected()) {
                                     p.setRemoveTurnoutsFromEcos(0x01);
@@ -568,6 +575,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         });
 
                         yesButton.addActionListener(new ActionListener() {
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 if (remember.isSelected()) {
                                     p.setRemoveTurnoutsFromEcos(0x02);

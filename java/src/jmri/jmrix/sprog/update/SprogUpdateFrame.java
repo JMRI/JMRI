@@ -92,6 +92,7 @@ abstract public class SprogUpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
+    @Override
     public void dispose() {
         tc = null;
         _memo = null;
@@ -104,6 +105,7 @@ abstract public class SprogUpdateFrame
      * This is expected to be subclassed, so it doesn't set up the help menu
      * here
      */
+    @Override
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
         programButton.setText("Program");
@@ -152,18 +154,21 @@ abstract public class SprogUpdateFrame
         getContentPane().add(paneA);
 
         openFileChooserButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 openFileChooserButtonActionPerformed(e);
             }
         });
 
         programButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 programButtonActionPerformed(e);
             }
         });
 
         setSprogModeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setSprogModeButtonActionPerformed(e);
             }
@@ -179,11 +184,13 @@ abstract public class SprogUpdateFrame
 //        pack();
     }
 
+    @Override
     public void notifyMessage(SprogMessage m) {
     }
 
     // State machine to catch replies that calls functions to handle each state.
     // These functions can be overridden for each SPROG type
+    @Override
     synchronized public void notifyReply(SprogReply m) {
         reply = m;
         frameCheck();
@@ -379,6 +386,7 @@ abstract public class SprogUpdateFrame
     synchronized protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }

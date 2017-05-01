@@ -152,7 +152,7 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 
     @Override
     protected void radioButtonActionPerformed(ActionEvent ae) {
-        setBuildReportRouterRadioButton();	// enable detailed and very detailed if needed
+        setBuildReportRouterRadioButton(); // enable detailed and very detailed if needed
     }
 
     private void setBuildReportRadioButton() {

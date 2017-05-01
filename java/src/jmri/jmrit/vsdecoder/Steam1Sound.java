@@ -509,8 +509,6 @@ class Steam1Sound extends EngineSound {
                 b = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix + sname + filename);
                 b.setUserName(VSDSound.BufUserNamePrefix + uname);
                 if (vf == null) {
-                    // Need to fix this.
-                    //buf.setURL(vsd_file_base + filename);
                     log.warn("No VSD File");
                     return null;
                 } else {
@@ -547,19 +545,12 @@ class Steam1Sound extends EngineSound {
         }
 
         static public java.io.InputStream getWavStream(VSDFile vf, String filename) {
-            if (vf == null) {
-                // Need to fix this.
-                //buf.setURL(vsd_file_base + filename);
-                log.warn("No VSD File");
-                return null;
+            java.io.InputStream ins = vf.getInputStream(filename);
+            if (ins != null) {
+                return ins;
             } else {
-                java.io.InputStream ins = vf.getInputStream(filename);
-                if (ins != null) {
-                    return ins;
-                } else {
-                    log.warn("input Stream failed for {}", filename);
-                    return null;
-                }
+                log.warn("input Stream failed for {}", filename);
+                return null;
             }
         }
 
@@ -636,7 +627,7 @@ class Steam1Sound extends EngineSound {
             coast_notch = null;
             helper_notch = null;
             // Sound for queueing.
-            _sound = new SoundBite(s + "_QUEUE", SoundBite.BufferMode.QUEUE_MODE);
+            _sound = new SoundBite(s + "_QUEUE");
             _sound.setGain(VSDSound.default_gain); // All chuff sounds will have this gain
             _parent = d;
             _top_speed = ts;
@@ -810,6 +801,7 @@ class Steam1Sound extends EngineSound {
         //
         //   LOOP-PLAYER
         //
+        @Override
         public void run() {
             try {
                 while (is_running) {

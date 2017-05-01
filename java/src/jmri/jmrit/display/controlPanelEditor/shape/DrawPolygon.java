@@ -34,6 +34,7 @@ public class DrawPolygon extends DrawFrame {
         _editing = false;
     }
 
+    @Override
     protected JPanel makeParamsPanel(PositionableShape ps) {
         JPanel panel = super.makeParamsPanel(ps);
        _pShape = (PositionablePolygon)ps;
@@ -104,7 +105,7 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    /*	@Override
+    /* @Override
      public void paint(Graphics g) {
      super.paint(g);
      if (_editing) {
@@ -120,22 +121,22 @@ public class DrawPolygon extends DrawFrame {
      if (hitIndex==0) {
      Point p0 = _vertices.get(1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);			
+     path.lineTo(_curX, _curY);   
      } else if (hitIndex==_vertices.size()-1) {
      Point p0 = _vertices.get(hitIndex-1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);						
+     path.lineTo(_curX, _curY);      
      } else {
      Point p0 = _vertices.get(hitIndex-1);
      Point p1 = _vertices.get(hitIndex+1);
      path.moveTo(p0.x, p0.y);
-     path.lineTo(_curX, _curY);			
-     path.lineTo(p1.x, p1.y);						
+     path.lineTo(_curX, _curY);   
+     path.lineTo(p1.x, p1.y);      
      }
-     g2d.draw(path);    		    			
+     g2d.draw(path);             
      }
      }
-     }		
+     }  
      /**
      * Create a new PositionableShape 
      */
@@ -161,7 +162,7 @@ public class DrawPolygon extends DrawFrame {
             Point p = new Point(event.getX(), event.getY());
             if (hitPolygonVertex(p)) {
                 if (near(_vertices.get(0), p)) {
-                    _vertices.add(p);	// close polygon    			
+                    _vertices.add(p); // close polygon       
                 }
                 Editor ed = _parent.getEditor();
                 Point spt = getStartPoint();
@@ -229,8 +230,10 @@ public class DrawPolygon extends DrawFrame {
         return false;
     }
 
+    @Override
     void setDisplayWidth(int w) {
     }
+    @Override
     void setDisplayHeight(int h) {
     }
 

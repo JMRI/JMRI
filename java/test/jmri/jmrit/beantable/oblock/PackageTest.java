@@ -30,15 +30,23 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockPathTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PathTurnoutTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(TableFramesTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(OBlockTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(BlockPortalTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(PortalTableModelTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SignalTableModelTest.class));
         return suite;
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

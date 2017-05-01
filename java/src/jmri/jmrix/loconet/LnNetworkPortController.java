@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for classes representing a LocoNet communications port
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -94,6 +94,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
      * Set the third port option. Only to be used after construction, but before
      * the openPort call
      */
+    @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
         log.debug("configureOption3: " + value);

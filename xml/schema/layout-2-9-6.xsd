@@ -74,6 +74,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/editors.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/switchboardeditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/entryexitpair.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
 
@@ -214,6 +215,30 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="class" type="classType" use="required"/>
                 <xs:attribute name="verifyBeforeWrite" type="yesNoType" default="no"/>
                 <xs:attribute name="showEmptyPanes" type="yesNoType" default="yes" />
+                <xs:attribute name="canCacheDefault" type="yesNoType" default="yes">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Defines default for whether to cache index CV writes,
+                      which can be overridden in a decoder definition file if desired.
+                    </xs:documentation>
+                    <xs:appinfo>
+                      <jmri:usingclass configurexml="yes">jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml</jmri:usingclass>
+                      <jmri:usingclass configurexml="no">jmri.jmrix.AbstractProgrammerFacade</jmri:usingclass>
+                    </xs:appinfo>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="doConfirmWrite" type="yesNoType" default="yes">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Defines default for whether index CVs should be read for confirmation after being written,
+                      which can be overridden in a decoder definition file if desired.
+                    </xs:documentation>
+                    <xs:appinfo>
+                      <jmri:usingclass configurexml="yes">jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml</jmri:usingclass>
+                      <jmri:usingclass configurexml="no">jmri.jmrix.AbstractProgrammerFacade</jmri:usingclass>
+                    </xs:appinfo>
+                  </xs:annotation>
+                </xs:attribute>
                 <xs:attribute name="defaultFile" type="xs:string" default="Basic.xml"/>
             </xs:complexType>
         </xs:element>
@@ -326,6 +351,7 @@ signals - obsolete, EMPTY, never used
         <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="switchboardeditor" type="SwitchboardEditorType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" >
             <xs:key name="layoutEditorElementIdent">
               <xs:annotation><xs:documentation>Insist that each element ident attribute value in LayoutEditor is unique</xs:documentation></xs:annotation>
@@ -378,7 +404,11 @@ signals - obsolete, EMPTY, never used
       </xs:unique>
       <xs:key name="turnoutName">
         <xs:annotation><xs:documentation>Insist that all turnout user and system names are unique</xs:documentation></xs:annotation>
+        <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
+             workaround this by merely duplicating the turnoutSystemName constraints
         <xs:selector xpath="./turnouts/turnout/systemName | ./turnouts/turnout/userName"/> 
+        -->
+        <xs:selector xpath="./turnouts/turnout/systemName"/> 
         <xs:field xpath="."/>           
       </xs:key>
 
@@ -394,7 +424,11 @@ signals - obsolete, EMPTY, never used
       </xs:unique>
       <xs:unique name="sensorName">
         <xs:annotation><xs:documentation>Insist that all sensor user and system names are unique</xs:documentation></xs:annotation>
+        <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
+             workaround this by merely duplicating the sensorSystemName constraints
         <xs:selector xpath="./sensors/sensor/systemName | ./sensors/sensor/userName "/> 
+        -->
+        <xs:selector xpath="./sensors/sensor/systemName"/> 
         <xs:field xpath="."/>           
       </xs:unique>
 
@@ -410,15 +444,21 @@ signals - obsolete, EMPTY, never used
       </xs:unique>
       <xs:unique name="signalHeadName">
         <xs:annotation><xs:documentation>Insist that all user and system names are unique</xs:documentation></xs:annotation>
+        <!-- because not enforced internally in JMRI, invalidates otherwise usable panel
+             workaround this by merely duplicating the signalHeadSystemName constraints
         <xs:selector xpath="./signalheads/signalhead/systemName | ./signalheads/signalhead/userName "/> 
+        -->
+        <xs:selector xpath="./signalheads/signalhead/systemName"/> 
         <xs:field xpath="."/>           
       </xs:unique>
 
+      <!-- depends on turnout user names being unique from turnout system names
       <xs:keyref name="signalElementTurnoutPresent" refer="turnoutName">
         <xs:annotation><xs:documentation>Insist that watchedturnout be defined in signalelement</xs:documentation></xs:annotation>
         <xs:selector xpath="./signalelements/signalelement"/> 
         <xs:field xpath="@watchedturnout"/>           
       </xs:keyref>
+      -->
 
   </xs:element>
 </xs:schema>

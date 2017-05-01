@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -53,8 +53,8 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);  // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);  // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -154,6 +154,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
     /**
      * Return array of valid baud rates as integers.
      */
+    @Override
     public int[] validBaudNumber() {
         return new int[]{38400};
     }

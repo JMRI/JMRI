@@ -9,7 +9,11 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.pr2.configurexml.PackageTest.class
+   jmri.jmrix.loconet.pr2.configurexml.PackageTest.class,
+   LnPr2PacketizerTest.class,
+   PR2AdapterTest.class,
+   PR2SystemConnectionMemoTest.class,
+   LnPr2PowerManagerTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.pr2 package.

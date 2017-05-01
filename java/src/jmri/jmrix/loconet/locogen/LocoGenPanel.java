@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
   */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
@@ -47,14 +47,17 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton("Go");
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
+    @Override
     public void initComponents() throws Exception {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -80,6 +83,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(Box.createVerticalGlue());
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -111,12 +115,14 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 runButtonActionPerformed(e);
             }
         });
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -138,6 +144,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendNextItem();
                 }
@@ -177,6 +184,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Process the incoming message to look for the needed echo
      *
      */
+    @Override
     public void message(LocoNetMessage m) {
         log.debug("message"); // NOI18N
         // are we running?
@@ -255,6 +263,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * When the window closes, stop any sequences running
      */
+    @Override
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();

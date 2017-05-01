@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame displaying (and logging) OpenLCB (CAN) frames
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2010
+ * @author Bob Jacobsen Copyright (C) 2009, 2010
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
 
@@ -27,12 +27,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
@@ -44,13 +46,16 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         setFixedWidthFont();
     }
 
+    @Override
     public String getTitle() {
         return "OpenLCB Monitor";
     }
 
+    @Override
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
         super.dispose();
@@ -147,6 +152,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         nextLine(formatted + "\n", raw);
     }
 
+    @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) {
             log.debug("Message: " + l.toString());
@@ -154,6 +160,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         format("S", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
+    @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) {
             log.debug("Reply: " + l.toString());

@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright 2002
+ * @author Bob Jacobsen Copyright 2002
  */
 public class CatalogPane extends JPanel {
 
@@ -77,8 +77,8 @@ public class CatalogPane extends JPanel {
                 public void valueChanged(TreeSelectionEvent e) {
                     if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null) {
                         // somebody has been selected
-                        log.debug("Selection event with " + dTree.getSelectionPath().toString());
-                        log.debug("          icon: " + getSelectedIcon());
+                        log.debug("Selection event with {}", dTree.getSelectionPath());
+                        log.debug("          icon: {}", getSelectedIcon());
                     }
                 }
             });
@@ -92,37 +92,40 @@ public class CatalogPane extends JPanel {
     }
 
     public NamedIcon getSelectedIcon() {
-        if (!dTree.isSelectionEmpty() && dTree.getSelectionPath() != null) {
-            // somebody has been selected
-            log.debug("getSelectedIcon with " + dTree.getSelectionPath().toString());
-            TreePath path = dTree.getSelectionPath();
-            int level = path.getPathCount();
-            if (level < 3) {
-                return null;
-            }
-            if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("resources")) {
-                // process a .jar icon
-                StringBuilder buf = new StringBuilder(CatalogTreeModel.resourceRoot);
-                for (int i = 2; i < level; i++) {
-                    buf.append("/");
-                    buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
-                }
-                log.debug("attempt to load resource from {}", buf);
-                return NamedIcon.getIconByName(buf.toString());
-            } else if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("files")) {
-                // process a file
-                StringBuilder buf = new StringBuilder("file:").append(((DefaultMutableTreeNode) path.getPathComponent(2)).getUserObject());
-                for (int i = 3; i < level; i++) {
-                    buf.append(File.separator).append(((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
-                }
-                log.debug("attempt to load file from {}", buf);
-                //return new NamedIcon(name, "file:"+name);
-                return NamedIcon.getIconByName(buf.toString());
-            } else {
-                log.error("unexpected first element on getSelectedIcon: " + path.getPathComponent(1));
-            }
+        if (dTree.isSelectionEmpty() || dTree.getSelectionPath() == null) {
+            return null;
         }
-        return null;
+        // somebody has been selected
+        if (log.isDebugEnabled()) log.debug("getSelectedIcon with {}", dTree.getSelectionPath());
+        TreePath path = dTree.getSelectionPath();
+        int level = path.getPathCount();
+        if (level < 3) {
+            return null;
+        }
+        StringBuilder buf;
+        String name;
+        if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("resources")) {
+            // process a .jar icon
+            buf = new StringBuilder(CatalogTreeModel.resourceRoot);
+            for (int i = 2; i < level; i++) {
+                buf.append("/");
+                buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
+            }
+        } else if (((DefaultMutableTreeNode) path.getPathComponent(1)).getUserObject().equals("files")) {
+            // process a file
+            buf = new StringBuilder(CatalogTreeModel.fileRoot);
+            buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(2)).getUserObject());
+            for (int i = 3; i < level; i++) {
+                buf.append(File.separator);
+                buf.append((String) ((DefaultMutableTreeNode) path.getPathComponent(i)).getUserObject());
+            }
+        } else {
+            log.error("unexpected first element on getSelectedIcon: {}", path.getPathComponent(1));
+            return null;
+        }
+        name = buf.toString();
+        if (log.isDebugEnabled()) log.debug("attempt to load file from {}", name);
+        return NamedIcon.getIconByName(name);
     }
 
     JTree dTree;

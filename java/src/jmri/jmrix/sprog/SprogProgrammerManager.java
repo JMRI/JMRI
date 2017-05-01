@@ -37,6 +37,7 @@ public class SprogProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         if (mode == SprogMode.OPS) {
             return true;
@@ -45,6 +46,7 @@ public class SprogProgrammerManager extends DefaultProgrammerManager {
         }
     }
 
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         if (mode == SprogMode.SERVICE) {
             return true;
@@ -53,10 +55,12 @@ public class SprogProgrammerManager extends DefaultProgrammerManager {
         }
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new SprogOpsModeProgrammer(pAddress, pLongAddress, adapterMemo);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }

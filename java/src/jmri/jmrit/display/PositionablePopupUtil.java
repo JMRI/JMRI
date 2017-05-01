@@ -84,6 +84,7 @@ public class PositionablePopupUtil {
         return util;
     }
 
+    @Override
     public String toString() {
         return _parent.getNameString() + ": fixedWidth= " + fixedWidth + ", fixedHeight= " + fixedHeight
                 + ", margin= " + margin + ", borderSize= " + borderSize;
@@ -413,7 +414,7 @@ public class PositionablePopupUtil {
     }
 
     public void setFontStyle(int style) {
-        _textComponent.setFont(jmri.util.FontUtil.deriveFont(_textComponent.getFont(), style));
+        _textComponent.setFont(_textComponent.getFont().deriveFont(style));
         _parent.updateSize();
     }
 
@@ -426,7 +427,7 @@ public class PositionablePopupUtil {
         if (italic != null) {
             italic.setSelected((styleValue & Font.ITALIC) != 0);
         }
-        _textComponent.setFont(jmri.util.FontUtil.deriveFont(_textComponent.getFont(), styleValue));
+        _textComponent.setFont(_textComponent.getFont().deriveFont(styleValue));
 
         //setSize(getPreferredSize().width, getPreferredSize().height);
         _parent.updateSize();
@@ -487,6 +488,9 @@ public class PositionablePopupUtil {
                     case BORDER_COLOR:
                         setBorderColor(desiredColor);
                         break;
+                    default:
+                        log.warn("Unhandled color type code: {}", colorType);
+                        break;
                 }
                 _parent.getEditor().setAttributes(_self, _parent);
             }
@@ -518,6 +522,10 @@ public class PositionablePopupUtil {
                     color = defaultBorderColor;
                 }
                 setColorButton(getBorderColor(), color, r);
+                break;
+            default:
+                log.warn("Unhandled color type code: {}", colorType);
+                break;
         }
         colorButtonGroup.add(r);
         menu.add(r);

@@ -90,6 +90,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         setDnd(false);
     }
 
+    @Override
     public void setBackground(Color bckCol) {
         super.setBackground(bckCol);
         setScaledImage();
@@ -130,6 +131,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             popUpMenu = new JPopupMenu();
             removeMenuItem = new JMenuItem("Remove");
             removeMenuItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     rip.setImagePath(null);
                     removeMenuItem.setEnabled(false);
@@ -145,21 +147,26 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             removeMenuItem.setEnabled(b);
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
             maybeShowPopup(e);
         }
 
+        @Override
         public void mousePressed(MouseEvent e) {
             maybeShowPopup(e);
         }
 
+        @Override
         public void mouseReleased(MouseEvent e) {
             maybeShowPopup(e);
         }
 
+        @Override
         public void mouseEntered(MouseEvent e) {
         }
 
+        @Override
         public void mouseExited(MouseEvent e) {
         }
 
@@ -256,6 +263,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     //
     // componentListener methods, for auto resizing and scaling
     //
+    @Override
     public void componentResized(ComponentEvent e) {
         if (!(isResizingContainer())) {
             if (e.getComponent().isVisible()) {
@@ -273,9 +281,11 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         }
     }
 
+    @Override
     public void componentMoved(ComponentEvent e) {
     }
 
+    @Override
     public void componentShown(ComponentEvent e) {
         if (isResizingContainer()) {
             resizeContainer();
@@ -287,6 +297,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         }
     }
 
+    @Override
     public void componentHidden(ComponentEvent e) {
         log.debug("Component hidden");
         if (isResizingContainer()) {
@@ -317,6 +328,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     }
 
     //override paintComponent
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (scaledImage != null) {
@@ -401,6 +413,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     /**
      * Callback for the dnd listener
      */
+    @Override
     public void filesDropped(File[] files) {
         if (files == null) {
             return;
@@ -423,5 +436,5 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         setImagePath(dest.getPath());
     }
 
-    static private Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
 }

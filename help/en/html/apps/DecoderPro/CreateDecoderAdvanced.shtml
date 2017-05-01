@@ -66,9 +66,14 @@ displayed from the text in the "label" attribute, which is:
 
       <p>This provides only HTML5 support, so if something isn't
       displaying as you expect, see if an approach using simpler
-      HTML will work.</p><a name="id" id="id"></a>
+      HTML will work.</p>
 
-      <h3>Identification</h3>Three pieces:
+      <a name="id" id="id"></a>
+      <h3>Identification</h3>
+      When "Read Type from Decoder" is used to determine the correct
+      decoder definition file, several pieces of information
+      are read from the decoder and used to attempt a match
+      to a family and model:
 
       <dl>
         <dt>Manufacturer:</dt>
@@ -88,20 +93,55 @@ displayed from the text in the "label" attribute, which is:
         <dt>Product ID code:</dt>
 
         <dd>
-          originally a numerical value read from a
-          manufacturer-specific CV or CVs; this only works for
-          certain manufacturers. The read process is handled in the
-          code (the <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrit/decoderdefn/IdentifyDecoder.html">
-          jmri.jmrit.decoderdefn.IdentifyDecoder</a> class) and has
-          to be updated each time a manufacturer starts providing
-          values in one or more new CVs. When the product code is
-          present, it should break any degeneracy between
-          overlapping CV7 values within a decoder family.
+        Originally a numerical value read from a
+        manufacturer-specific CV or CVs; this only works for
+        certain manufacturers. The read process is handled in the
+        code (the <a href=
+        "/JavaDoc/doc/jmri/jmrit/decoderdefn/IdentifyDecoder.html" target="_blank">
+        jmri.jmrit.decoderdefn.IdentifyDecoder</a> class) and has
+        to be updated each time a manufacturer starts providing
+        values in one or more new CVs. When the product code is
+        present, it should break any degeneracy between
+        overlapping CV7 values within a decoder family.
+        For example:
+        <pre style="font-family: monospace;">
+  &lt;decoder&gt;
+    &lt;family name="My Decoder Family" mfg="NMRA"&gt;
+      &lt;model model="Model A" lowVersionID="16" highVersionID="23" productID="400" /&gt;
+      &lt;/model&gt;
+      &lt;model model="Model B" lowVersionID="21" highVersionID="27" productID="401" /&gt;
+      &lt;/model&gt;
+    &lt;/family&gt;
+    &#8230;
+  &lt;/decoder&gt;</pre>
+
+        <p>Some decoders can have multiple possible stored Product IDs for
+        otherwise-identical decoders. In this case multiple comma-separated
+        values can be specified in the Product ID field and a match to any
+        value in the list will identify the decoder uniquely. For example, the ESU
+        series usesthe RailCom&reg; Product ID CVs, but the
+        Product ID is updated for various production batches of the same model:</p>
+        <pre style="font-family: monospace;">
+  &lt;decoder&gt;
+    &lt;family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255"&gt;
+      &lt;model model="LokSound V4.0" numOuts="92" numFns="40" extFnsESU="yes" productID="33554493,33554503,33554538"&gt;
+      &lt;/model&gt;
+      &lt;model model="LokSound V4.0 M4" numOuts="92" numFns="40" extFnsESU="yes" productID="33554500,33554536"&gt;
+      &lt;/model&gt;
+    &lt;/family&gt;
+    &#8230;
+  &lt;/decoder&gt;</pre>
+
+      <a name="idwarn" id="idwarn"></a>
+          <p><strong>Warning:</strong> Do not use multiple possible stored Product IDs for
+          similar decoders that need different
+          <a href="#conditional">conditional expansion</a>.
+          It will not work, for reasons explained <a href="#prodidwarn">in a section below</a>.
+          In this case, each Product ID must be assigned a different model name, as in the first example above.
 
           <p>Support is also being added to find this value using
           the <a href=
-          "../../hardware/loconet/Addressing.shtml#SVs">LocoNet SV2
+          "../../hardware/loconet/Addressing.shtml#SVs" target="_blank">LocoNet SV2
           protocol</a> some time during the JMRI 4.1 release
           series. See the release notes for more info on the
           progress.</p>
@@ -116,21 +156,21 @@ displayed from the text in the "label" attribute, which is:
           to avoid conflicts with the numeric ones found in
           CVs.</p>
         </dd>
-      </dl>For example:
-      <pre style="font-family: monospace;">
-  &lt;decoder&gt;
-    &lt;family name="My Decoder Family" mfg="NMRA"&gt;
-      &lt;model model="Model A" lowVersionID="16" highVersionID="19" productID="400" /&gt;
-      &lt;/model&gt;
-      &lt;model model="Model B" lowVersionID="21" highVersionID="22" productID="401" /&gt;
-      &lt;/model&gt;
-  &lt;/decoder&gt;
-</pre>If the user selects a decoder model manually, that selection
-sets all three values for use by when the decoder definition is
-expanded for programming (see section <a href=
-"#conditional">Conditional Decoder Definitions</a> below).
-      <a name="pane_considerations" id="pane_considerations"></a>
+      </dl>
+        <p>When a decoder model is selected,
+        either manually or as the result of the identification process,
+        the family and model names are stored in the roster entry being created
+        and are used for future linkage of a roster entry to a decoder definition.</p>
 
+        <p>It is important to note that the Manufacturer, Version Code or
+        Product ID are not stored in the roster entry, as the values are not
+        reliably determined in all instances (e.g. manual selection). This has implications for when the
+        decoder definition is expanded for programming
+        (<a href="#conditional">Conditional Decoder Definitions</a>)
+        or updated
+        (<a href="#update">Updates and Migration</a>).</p>
+
+      <a name="pane_considerations" id="pane_considerations"></a>
       <h3>Pane Considerations</h3>Programmer panes are used to
       split and organise decoder variables into convenient named
       categories.
@@ -333,9 +373,11 @@ decoders directory in your preferences directory for the fragment
 file to be found.
 
       <p>Use an existing file as an example for the top elements
-      &amp; format needed. <a name="update" id="update"></a></p>
+      &amp; format needed.</p>
 
-      <h3>Updates and Migration</h3>Sometimes, we replace a decoder
+    <a name="update" id="update"></a>
+      <h3>Updates and Migration</h3>
+      Sometimes, we replace a decoder
       definition with a better one. The old one is in use, but we'd
       like to move those users to the new one eventually. There are
       model-level attributes that can be added to the old (not the
@@ -351,7 +393,11 @@ to the specified replacement decoder definition instead. This lets
 people keep using their old, comfortable decoder definition (the
 old file remains in JMRI) until they decide to move forward to a
 new one.
-
+<p>Note that updates are unconditional; if the family and model attributes match
+a roster entry, it will be updated to the new family/model.
+Conditional updates based on versionID or productID are not possible as these values
+are <a href="#id">not stored</a> in the roster entry.
+</p>
       <p>The model element "show" attribute helps ensure that new
       users starts with the new definition. Its possible values
       are:</p>
@@ -388,7 +434,8 @@ new one.
         a new locomotive version exists)</li>
       </ol>
 
-      <h3>Programming Capabilities</h3>Some decoders can do extra
+      <a name="capability" id="capability"></a><h3>Programming Capabilities</h3>
+      Some decoders can do extra
       programming operations, for example bypassing limitations on
       CV programming in the command station. "Capability" elements
       are used to tell DecoderPro about these.
@@ -553,8 +600,9 @@ selects the different algorithm needed here.
 
         <li>"Indicator" - value added to the value being stored to
         High Address CV to tell the decoder to use this mode.</li>
-      </ul><a id="accessoryops" name="accessoryops"></a>
+      </ul>
 
+      <a id="accessoryops" name="accessoryops"></a>
       <h4>Accessory Decoder Ops Mode</h4>Special programming
       packets are used by certain accessory decoders to configure
       their CVs from the DCC track signal. The capability to do
@@ -562,13 +610,23 @@ selects the different algorithm needed here.
       <pre style="font-family: monospace;">
         &lt;capability&gt;
             &lt;name&gt;Ops Mode Accessory Programming&lt;/name&gt;
+            &lt;parameter name="Address Type"&gt;decoder&lt;/name&gt;
         &lt;/capability&gt;
-</pre>There are no parameters. Note that this only works for
-ops-mode writes; these particular NMRA DCC packets do not perform
-read operations, nor do they work in the service mode (programming
-track).
+</pre>The "Address Type" parameter is optional:
+      <ul>
+          <li>If it is "decoder" or omitted, the current address is interpreted as a 9-bit decoder address.</li>
+          <li>If it is "accessory" or "output", the current address is interpreted as an 11-bit accessory address.</li>
+      </ul>
+      <p>
+        Note that this only works for
+        ops-mode writes; these particular NMRA DCC packets do not perform
+        read operations, nor do they work in the service mode (programming
+        track).
+      </p>
 
-      <h4>Indexed CV Access</h4>To access indexed CVs, include this
+      <a name="indexedcap" id="indexedcap"></a></a>
+      <h4>Indexed CV Access</h4>
+      To access indexed CVs, include this
       capability element:
       <pre style="font-family: monospace;">
         &lt;capability&gt;
@@ -576,11 +634,17 @@ track).
             &lt;parameter name="PI"&gt;31&lt;/parameter&gt;
             &lt;parameter name="SI"&gt;32&lt;/parameter&gt;
             &lt;parameter name="cvFirst"&gt;false&lt;/parameter&gt;
+            &lt;parameter name="skipDupIndexWrite"&gt;true&lt;/parameter&gt;
         &lt;/capability&gt;
-</pre>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
-by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
-ESU.
-
+</pre>
+      <p>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
+        by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
+        ESU.
+      <p>If skipDupIndexWrite is true, certain writes to the PI and SI
+        CVs can be skipped if the user selects skipping them. This speeds up access.
+        Some decoders  require that the CVs be written for each operation, 
+        in which case this should be set to false.  The default is true.
+      
       <p>If both this and the "access to high CV" capabilities are
       present, this one should be listed second.</p>
 
@@ -588,8 +652,9 @@ ESU.
       <a href=
       "https://github.com/JMRI/JMRI/blob/master/xml/decoders/ESU_LokSoundV4_0.xml"
       target="_blank">xml/decoders/ESU_LokSoundV4_0.xml</a> file.
-      <a id="tcsaccess" name="tcsaccess"></a></p>
+      </p>
 
+        <a id="tcsaccess" name="tcsaccess"></a>
       <h4>TCS WOW decoder access</h4>The TCS WOW decoders use
       several unique (to say the least) CV access methods. JMRI
       accommodates them via a special capability element:
@@ -647,13 +712,13 @@ ESU.
 </pre>
 
       <p>For an example, see the <a href=
-      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6."
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/SPROG_DCC_Servo6.xml"
       target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a>
       file.</p>
 
       <p>For details and more advanced features, see this <a href=
       "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html"
-      target="_blank">JavaDoc page</a></p><a name="conditional" id=
+      target="_blank">Javadoc page</a></p><a name="conditional" id=
       "conditional"></a>
 
       <h3>Conditional Decoder Definitions</h3>To reduce the number
@@ -754,9 +819,38 @@ ESU.
 </pre>
 
       <p>The text will be created only when expanding the decoder
-      definition for ModelA or product ID 400.</p><a name="qualify"
-      id="qualify"></a>
+      definition for ModelA or product ID 400.</p>
 
+      <a name="prodidwarn" id="prodidwarn"></a>
+      <h4>Warning Regarding Use of Product ID in Include/Exclude</h4>
+      Care must be exercised when attempting to match against product ID in include or
+      exclude attributes. The product ID is not matched against any value read from the
+      decoder during
+      <a href="#id">identification<a>
+      but against the productID attribute specified in the decoder definition.
+      This can particularly be a problem if the productID attribute has multiple values.
+        For example:
+        <pre style="font-family: monospace;">
+  &lt;decoder&gt;
+    &lt;family name="My Big Family" mfg="NMRA"&gt;
+      &lt;model model="My Model" productID="400,401" /&gt;
+      &lt;/model&gt;
+    &lt;/family&gt;
+    &#8230;
+  &lt;/decoder&gt;
+  &lt;pane label="My 400 Pane" include="400"&gt;
+    &#8230;
+  &lt;/pane&gt;
+  &lt;pane label="My 401 Pane" include="401"&gt;
+    &#8230;
+  &lt;/pane&gt;</pre>
+
+      Both panes will always be created.
+      If the definitions need to differ between product IDs, you will need to create two
+      models, as per
+      <a href="#id">the first example under Identification</a>.
+
+      <a name="qualify" id="qualify"></a>
       <h4>Run-time Qualification of Variables</h4>
 
       <h5>Qualifying Variables</h5>A "qualifier" element on a

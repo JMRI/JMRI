@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * changed via some other mechanism.
  *
  * @author Suzie Tall based on Bob Jacobsen's work
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
 public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     public TripleOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> blue, NamedBeanHandle<Turnout> red) {
@@ -39,6 +39,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
 
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -99,6 +100,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mBlue = null;
         super.dispose();
@@ -148,6 +150,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
         return Arrays.copyOf(validStateNames, validStateNames.length);
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (super.isTurnoutUsed(t)) {
             return true;
@@ -157,6 +160,12 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
         }
         return false;
     }
+
+    /**
+     * Disables the feedback mechanism of the DoubleTurnoutSignalHead.
+     */
+    @Override
+    void readOutput() { }
 
     private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
 }

@@ -59,6 +59,7 @@ public class SerialLight extends AbstractLight {
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         if (newState == ON) {
             OutputBits.instance().setOutputBit(mBit, false);

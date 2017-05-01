@@ -61,13 +61,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the individual panes for the TabbedPaneProgrammer. Note that this is
- * not only the panes carrying variables, but also the special purpose panes for
- * the CV table, etc.
+ * Provide the individual panes for the TabbedPaneProgrammer.
+ * <p>
+ * Note that this is not only the panes carrying variables, but also the special
+ * purpose panes for the CV table, etc.
  * <P>
  * This class implements PropertyChangeListener so that it can be notified when
  * a variable changes its busy status at the end of a programming read/write
- * operation
+ * operation.
  *
  * There are four read and write operation types, all of which have to be
  * handled carefully:
@@ -95,7 +96,6 @@ import org.slf4j.LoggerFactory;
  * @author Howard G. Penny Copyright (C) 2005
  * @author Dave Heap Copyright (C) 2014
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
- *
  */
 /*
  * @startuml jmri/jmrit/symbolicprog/tabbedframe/doc-files/PaneProgPane-ReadAllSequenceDiagram.png
@@ -173,7 +173,7 @@ import org.slf4j.LoggerFactory;
  * deactivate replyWhileProgrammingVar
  * deactivate propertyChange 
  * deactivate Programmer
- * == callaback triggered repeat occurs until no more values ==
+ * == Callback triggered repeat occurs until no more values ==
  * @enduml 
  */
 public class PaneProgPane extends javax.swing.JPanel
@@ -201,11 +201,15 @@ public class PaneProgPane extends javax.swing.JPanel
 
     boolean isCvTablePane = false;
 
+    /**
+     * Store name of this programmer Tab (pane)
+     */
     String mName = "";
 
     /**
-     * Create a null object. Normally only used for tests and to pre-load
-     * classes.
+     * Construct a null object.
+     * <p>
+     * Normally only used for tests and to pre-load classes.
      */
     public PaneProgPane() {
     }
@@ -247,7 +251,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // laid-out JPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // Add tooltip if present
+        // Add tooltip (if available)
         setToolTipText(jmri.util.jdom.LocaleSelector.getAttribute(pane, "tooltip"));
 
         // find out whether to display "label" (false) or "item" (true)
@@ -327,83 +331,75 @@ public class PaneProgPane extends javax.swing.JPanel
         enableReadButtons();
 
         // add read button listeners
-        readChangesButton.addItemListener(l1 = new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadChangesSheet"));
-                    if (container.isBusy() == false) {
-                        prepReadPane(true);
-                        prepGlassPane(readChangesButton);
-                        container.getBusyGlassPane().setVisible(true);
-                        readPaneChanges();
-                    }
-                } else {
-                    stopProgramming();
-                    readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
-                    if (container.isBusy()) {
-                        readChangesButton.setEnabled(false);
-                    }
+        readChangesButton.addItemListener(l1 = (ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadChangesSheet"));
+                if (container.isBusy() == false) {
+                    prepReadPane(true);
+                    prepGlassPane(readChangesButton);
+                    container.getBusyGlassPane().setVisible(true);
+                    readPaneChanges();
+                }
+            } else {
+                stopProgramming();
+                readChangesButton.setText(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
+                if (container.isBusy()) {
+                    readChangesButton.setEnabled(false);
                 }
             }
         });
-        readAllButton.addItemListener(l2 = new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    readAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadSheet"));
-                    if (container.isBusy() == false) {
-                        prepReadPane(false);
-                        prepGlassPane(readAllButton);
-                        container.getBusyGlassPane().setVisible(true);
-                        readPaneAll();
-                    }
-                } else {
-                    stopProgramming();
-                    readAllButton.setText(SymbolicProgBundle.getMessage("ButtonReadFullSheet"));
-                    if (container.isBusy()) {
-                        readAllButton.setEnabled(false);
-                    }
+        readAllButton.addItemListener(l2 = (ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                readAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadSheet"));
+                if (container.isBusy() == false) {
+                    prepReadPane(false);
+                    prepGlassPane(readAllButton);
+                    container.getBusyGlassPane().setVisible(true);
+                    readPaneAll();
+                }
+            } else {
+                stopProgramming();
+                readAllButton.setText(SymbolicProgBundle.getMessage("ButtonReadFullSheet"));
+                if (container.isBusy()) {
+                    readAllButton.setEnabled(false);
                 }
             }
         });
 
         writeChangesButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteHighlightedSheet"));
-        writeChangesButton.addItemListener(l3 = new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteChangesSheet"));
-                    if (container.isBusy() == false) {
-                        prepWritePane(true);
-                        prepGlassPane(writeChangesButton);
-                        container.getBusyGlassPane().setVisible(true);
-                        writePaneChanges();
-                    }
-                } else {
-                    stopProgramming();
-                    writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonWriteChangesSheet"));
-                    if (container.isBusy()) {
-                        writeChangesButton.setEnabled(false);
-                    }
+        writeChangesButton.addItemListener(l3 = (ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteChangesSheet"));
+                if (container.isBusy() == false) {
+                    prepWritePane(true);
+                    prepGlassPane(writeChangesButton);
+                    container.getBusyGlassPane().setVisible(true);
+                    writePaneChanges();
+                }
+            } else {
+                stopProgramming();
+                writeChangesButton.setText(SymbolicProgBundle.getMessage("ButtonWriteChangesSheet"));
+                if (container.isBusy()) {
+                    writeChangesButton.setEnabled(false);
                 }
             }
         });
 
         writeAllButton.setToolTipText(SymbolicProgBundle.getMessage("TipWriteAllSheet"));
-        writeAllButton.addItemListener(l4 = new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteSheet"));
-                    if (container.isBusy() == false) {
-                        prepWritePane(false);
-                        prepGlassPane(writeAllButton);
-                        container.getBusyGlassPane().setVisible(true);
-                        writePaneAll();
-                    }
-                } else {
-                    stopProgramming();
-                    writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWriteFullSheet"));
-                    if (container.isBusy()) {
-                        writeAllButton.setEnabled(false);
-                    }
+        writeAllButton.addItemListener(l4 = (ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteSheet"));
+                if (container.isBusy() == false) {
+                    prepWritePane(false);
+                    prepGlassPane(writeAllButton);
+                    container.getBusyGlassPane().setVisible(true);
+                    writePaneAll();
+                }
+            } else {
+                stopProgramming();
+                writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWriteFullSheet"));
+                if (container.isBusy()) {
+                    writeAllButton.setEnabled(false);
                 }
             }
         });
@@ -413,41 +409,37 @@ public class PaneProgPane extends javax.swing.JPanel
         enableConfirmButtons();
 
         // add confirm button listeners
-        confirmChangesButton.addItemListener(l5 = new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopConfirmChangesSheet"));
-                    if (container.isBusy() == false) {
-                        prepConfirmPane(true);
-                        prepGlassPane(confirmChangesButton);
-                        container.getBusyGlassPane().setVisible(true);
-                        confirmPaneChanges();
-                    }
-                } else {
-                    stopProgramming();
-                    confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmChangesSheet"));
-                    if (container.isBusy()) {
-                        confirmChangesButton.setEnabled(false);
-                    }
+        confirmChangesButton.addItemListener(l5 = (ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonStopConfirmChangesSheet"));
+                if (container.isBusy() == false) {
+                    prepConfirmPane(true);
+                    prepGlassPane(confirmChangesButton);
+                    container.getBusyGlassPane().setVisible(true);
+                    confirmPaneChanges();
+                }
+            } else {
+                stopProgramming();
+                confirmChangesButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmChangesSheet"));
+                if (container.isBusy()) {
+                    confirmChangesButton.setEnabled(false);
                 }
             }
         });
-        confirmAllButton.addItemListener(l6 = new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopConfirmSheet"));
-                    if (container.isBusy() == false) {
-                        prepConfirmPane(false);
-                        prepGlassPane(confirmAllButton);
-                        container.getBusyGlassPane().setVisible(true);
-                        confirmPaneAll();
-                    }
-                } else {
-                    stopProgramming();
-                    confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmFullSheet"));
-                    if (container.isBusy()) {
-                        confirmAllButton.setEnabled(false);
-                    }
+        confirmAllButton.addItemListener(l6 = (ItemEvent e) -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopConfirmSheet"));
+                if (container.isBusy() == false) {
+                    prepConfirmPane(false);
+                    prepGlassPane(confirmAllButton);
+                    container.getBusyGlassPane().setVisible(true);
+                    confirmPaneAll();
+                }
+            } else {
+                stopProgramming();
+                confirmAllButton.setText(SymbolicProgBundle.getMessage("ButtonConfirmFullSheet"));
+                if (container.isBusy()) {
+                    confirmAllButton.setEnabled(false);
                 }
             }
         });
@@ -470,10 +462,12 @@ public class PaneProgPane extends javax.swing.JPanel
         }
     }
 
+    @Override
     public String getName() {
         return mName;
     }
 
+    @Override
     public String toString() {
         return getName();
     }
@@ -565,7 +559,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @return the total number of CV reads/writes needed for this pane
      */
     public int countOpsNeeded(boolean read, boolean changes) {
-        Set<Integer> set = new HashSet<Integer>(cvList.size() + varList.size() + 50);
+        Set<Integer> set = new HashSet<>(cvList.size() + varList.size() + 50);
         return makeOpsNeededSet(read, changes, set).size();
     }
 
@@ -587,7 +581,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // scan the variable list
         for (int i = 0; i < varList.size(); i++) {
 
-            int varNum = varList.get(i).intValue();
+            int varNum = varList.get(i);
             VariableValue var = _varModel.getVariable(varNum);
 
             // must decide whether this one should be counted
@@ -595,9 +589,8 @@ public class PaneProgPane extends javax.swing.JPanel
                     || var.isChanged()) {
 
                 CvValue[] cvs = var.usesCVs();
-                for (int j = 0; j < cvs.length; j++) {
+                for (CvValue cv : cvs) {
                     // always of interest
-                    CvValue cv = cvs[j];
                     if (!changes || VariableValue.considerChanged(cv)) {
                         set.add(Integer.valueOf(cv.number()));
                     }
@@ -706,7 +699,7 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Set the "ToRead" parameter in all variables and CVs on this pane
+     * Set the "ToRead" parameter in all variables and CVs on this pane.
      *
      * @param justChanges  true if this is read changes, false if read all
      * @param startProcess true if this is the start of processing, false if
@@ -717,7 +710,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 || // the frame has already setToRead
                 (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
             for (int i = 0; i < varList.size(); i++) {
-                int varNum = varList.get(i).intValue();
+                int varNum = varList.get(i);
                 VariableValue var = _varModel.getVariable(varNum);
                 if (justChanges) {
                     if (var.isChanged()) {
@@ -777,7 +770,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 (!startProcess)) {  // we want to setToWrite false if the pane's process is being stopped
             log.debug("about to start setToWrite of varList");
             for (int i = 0; i < varList.size(); i++) {
-                int varNum = varList.get(i).intValue();
+                int varNum = varList.get(i);
                 VariableValue var = _varModel.getVariable(varNum);
                 if (justChanges) {
                     if (var.isChanged()) {
@@ -876,7 +869,7 @@ public class PaneProgPane extends javax.swing.JPanel
             log.debug("nextRead scans " + varList.size() + " variables");
         }
         while ((varList.size() > 0) && (varListIndex < varList.size())) {
-            int varNum = varList.get(varListIndex).intValue();
+            int varNum = varList.get(varListIndex);
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
@@ -934,7 +927,7 @@ public class PaneProgPane extends javax.swing.JPanel
             log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
         }
         while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
-            int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
+            int indxVarNum = indexedCvList.get(indexedCvListIndex);
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
                 log.debug(
@@ -1022,7 +1015,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // found no CVs needing read, try indexed CVs
         while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
-            int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
+            int indxVarNum = indexedCvList.get(indexedCvListIndex);
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
                 log.debug(
@@ -1134,7 +1127,7 @@ public class PaneProgPane extends javax.swing.JPanel
         log.debug("start nextWrite");
         // look for possible variables
         while ((varList.size() > 0) && (varListIndex < varList.size())) {
-            int varNum = varList.get(varListIndex).intValue();
+            int varNum = varList.get(varListIndex);
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
             if (log.isDebugEnabled()) {
@@ -1184,7 +1177,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
         while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
-            int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
+            int indxVarNum = indexedCvList.get(indexedCvListIndex);
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
                 log.debug(
@@ -1344,7 +1337,10 @@ public class PaneProgPane extends javax.swing.JPanel
      * to false at the end of a programming operation. If we're in a programming
      * operation, we then continue it by reinvoking the nextRead/writePane
      * operation.
+     *
+     * @param e the event to respond to
      */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // check for the right event & condition
         if (_programmingVar == null && _programmingCV == null && _programmingIndexedCV == null) {
@@ -1376,7 +1372,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             }
             replyWhileProgrammingVar();
-            return;
         } else if (e.getSource() == _programmingCV
                 && e.getPropertyName().equals("Busy")
                 && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -1393,7 +1388,6 @@ public class PaneProgPane extends javax.swing.JPanel
             //    }
             //}
             replyWhileProgrammingCV();
-            return;
         } else if (e.getSource() == _programmingIndexedCV
                 && e.getPropertyName().equals("Busy")
                 && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -1406,13 +1400,11 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             }
             replyWhileProgrammingIndxCV();
-            return;
         } else {
             if (log.isDebugEnabled() && e.getPropertyName().equals("Busy")) {
                 log.debug("ignoring change of Busy " + e.getNewValue()
                         + " " + (((Boolean) e.getNewValue()).equals(Boolean.FALSE)));
             }
-            return;
         }
     }
 
@@ -1491,7 +1483,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a new group from the JDOM group Element
      *
      * @param element     element containing group contents
-     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param showStdName show the name following the rules for the
+     * <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -1560,7 +1553,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
                     String sz = "CV" + _indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indexedCvList.add(Integer.valueOf(in));
+                    indexedCvList.add(in);
                 }
 
                 _cvTable = true;
@@ -1624,10 +1617,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle qualification if any
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 c.addPropertyChangeListener(qc);
             }
@@ -1644,7 +1639,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param c           the panel to create the grid in
      * @param g           the layout manager for the panel
      * @param globs       properties to configure g
-     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param showStdName show the name following the rules for the
+     * <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      */
     protected void newGridGroup(Element element, final JPanel c, GridBagLayout g, GridGlobals globs, boolean showStdName, Element modelElem) {
@@ -1673,10 +1669,12 @@ public class PaneProgPane extends javax.swing.JPanel
 //                     globs.gridConstraints.gridwidth = 1;
                     // handle qualification if any
                     QualifierAdder qa = new QualifierAdder() {
+                        @Override
                         protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                             return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
                         }
 
+                        @Override
                         protected void addListener(java.beans.PropertyChangeListener qc) {
                             l.addPropertyChangeListener(qc);
                         }
@@ -1702,7 +1700,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single column from the JDOM column Element.
      *
      * @param element     element containing column contents
-     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param showStdName show the name following the rules for the
+     * <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -1770,7 +1769,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
                     String sz = "CV" + _indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indexedCvList.add(Integer.valueOf(in));
+                    indexedCvList.add(in);
                 }
 
                 _cvTable = true;
@@ -1834,10 +1833,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle qualification if any
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 c.addPropertyChangeListener(qc);
             }
@@ -1851,7 +1852,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a single row from the JDOM column Element
      *
      * @param element     element containing row contents
-     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param showStdName show the name following the rules for the
+     * <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -1920,7 +1922,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
                     String sz = "CV" + _indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indexedCvList.add(Integer.valueOf(in));
+                    indexedCvList.add(in);
                 }
 
                 _cvTable = true;
@@ -1984,10 +1986,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle qualification if any
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 c.addPropertyChangeListener(qc);
             }
@@ -2001,7 +2005,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a grid from the JDOM Element.
      *
      * @param element     element containing group contents
-     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param showStdName show the name following the rules for the
+     * <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @return a panel containing the group
      */
@@ -2049,10 +2054,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle qualification if any
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 c.addPropertyChangeListener(qc);
             }
@@ -2074,7 +2081,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * Create a grid item from the JDOM Element
      *
      * @param element     element containing grid item contents
-     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param showStdName show the name following the rules for the
+     * <em>nameFmt</em> element
      * @param modelElem   element containing the decoder model
      * @param globs       properties to configure the layout
      * @return a panel containing the group
@@ -2082,7 +2090,7 @@ public class PaneProgPane extends javax.swing.JPanel
     public JPanel newGridItem(Element element, boolean showStdName, Element modelElem, GridGlobals globs) {
 
         List<Attribute> itemAttList = element.getAttributes(); // get item-level attributes
-        List<Attribute> attList = new ArrayList<Attribute>(globs.gridAttList);
+        List<Attribute> attList = new ArrayList<>(globs.gridAttList);
         attList.addAll(itemAttList); // merge grid and item-level attributes
 //                log.info("New gridtiem -----------------------------------------------");
 //                log.info("Attribute list:"+attList);
@@ -2148,54 +2156,61 @@ public class PaneProgPane extends javax.swing.JPanel
                 log.error("Unrecognised attribute \"" + attribName + "\", skipping");
                 continue;
             }
-            if (constraintType.equals("int")) {
-                int attribValue;
-                try {
-                    attribValue = Integer.valueOf(attribRawValue);
-                    constraint.set(globs.gridConstraints, attribValue);
-                } catch (IllegalAccessException ey) {
-                    log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
-                } catch (NumberFormatException ex) {
+            switch (constraintType) {
+                case "int": {
+                    int attribValue;
                     try {
-                        Field constant = globs.gridConstraints.getClass().getDeclaredField(attribRawValue);
-                        constant.setAccessible(true);
-                        attribValue = (Integer) GridBagConstraints.class.getField(attribRawValue).get(constant);
+                        attribValue = Integer.valueOf(attribRawValue);
                         constraint.set(globs.gridConstraints, attribValue);
-                    } catch (NoSuchFieldException ey) {
-                        log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
                     } catch (IllegalAccessException ey) {
                         log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                    } catch (NumberFormatException ex) {
+                        try {
+                            Field constant = globs.gridConstraints.getClass().getDeclaredField(attribRawValue);
+                            constant.setAccessible(true);
+                            attribValue = (Integer) GridBagConstraints.class.getField(attribRawValue).get(constant);
+                            constraint.set(globs.gridConstraints, attribValue);
+                        } catch (NoSuchFieldException ey) {
+                            log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
+                        } catch (IllegalAccessException ey) {
+                            log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                        }
                     }
+                    break;
                 }
-            } else if (constraintType.equals("double")) {
-                double attribValue;
-                try {
-                    attribValue = Double.valueOf(attribRawValue);
-                    constraint.set(globs.gridConstraints, attribValue);
-                } catch (IllegalAccessException ey) {
-                    log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
-                } catch (NumberFormatException ex) {
-                    log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
-                }
-            } else if (constraintType.equals("class java.awt.Insets")) {
-                try {
-                    String[] insetStrings = attribRawValue.split(",");
-                    if (insetStrings.length == 4) {
-                        Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]), Integer.valueOf(insetStrings[1]), Integer.valueOf(insetStrings[2]), Integer.valueOf(insetStrings[3]));
+                case "double": {
+                    double attribValue;
+                    try {
+                        attribValue = Double.valueOf(attribRawValue);
                         constraint.set(globs.gridConstraints, attribValue);
-                    } else {
+                    } catch (IllegalAccessException ey) {
+                        log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                    } catch (NumberFormatException ex) {
+                        log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
+                    }
+                    break;
+                }
+                case "class java.awt.Insets":
+                    try {
+                        String[] insetStrings = attribRawValue.split(",");
+                        if (insetStrings.length == 4) {
+                            Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]), Integer.valueOf(insetStrings[1]), Integer.valueOf(insetStrings[2]), Integer.valueOf(insetStrings[3]));
+                            constraint.set(globs.gridConstraints, attribValue);
+                        } else {
+                            log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
+                            log.error("Value should be four integers of the form \"top,left,bottom,right\"");
+                        }
+                    } catch (IllegalAccessException ey) {
+                        log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
+                    } catch (NumberFormatException ex) {
                         log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
                         log.error("Value should be four integers of the form \"top,left,bottom,right\"");
                     }
-                } catch (IllegalAccessException ey) {
-                    log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
-                } catch (NumberFormatException ex) {
-                    log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
-                    log.error("Value should be four integers of the form \"top,left,bottom,right\"");
-                }
-            } else {
-                log.error("Required \"" + constraintType + "\" handler for attribute \"" + attribName + "\" not defined in JMRI code");
-                log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
+                    break;
+                default:
+                    log.error("Required \"" + constraintType + "\" handler for attribute \"" + attribName + "\" not defined in JMRI code");
+                    log.error("Please file a JMRI bug report at https://sourceforge.net/p/jmri/bugs/new/");
+                    break;
             }
         }
 //                log.info("Updated globs.GridBagConstraints.gridx="+globs.gridConstraints.gridx+";globs.GridBagConstraints.gridy="+globs.gridConstraints.gridy);
@@ -2263,7 +2278,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 for (int j = 0; j < _indexedCvModel.getRowCount(); j++) {
                     String sz = "CV" + _indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indexedCvList.add(Integer.valueOf(in));
+                    indexedCvList.add(in);
                 }
 
                 _cvTable = true;
@@ -2332,10 +2347,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle qualification if any
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new JComponentQualifier(c, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 c.addPropertyChangeListener(qc);
             }
@@ -2371,10 +2388,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle qualification if any
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 l.addPropertyChangeListener(qc);
             }
@@ -2409,10 +2428,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // handle qualification if any
         QualifierAdder qa = new QualifierAdder() {
+            @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
                 return new JComponentQualifier(l, var, Integer.parseInt(value), relation);
             }
 
+            @Override
             protected void addListener(java.beans.PropertyChangeListener qc) {
                 l.addPropertyChangeListener(qc);
             }
@@ -2424,7 +2445,7 @@ public class PaneProgPane extends javax.swing.JPanel
     void makeCvTable(GridBagConstraints cs, GridBagLayout g, JPanel c) {
         log.debug("starting to build CvTable pane");
 
-        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(_cvModel);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(_cvModel);
 
         JTable cvTable = new JTable(_cvModel);
 
@@ -2464,7 +2485,7 @@ public class PaneProgPane extends javax.swing.JPanel
     void setCvListFromTable() {
         // remember which CVs to read/write
         for (int j = 0; j < _cvModel.getRowCount(); j++) {
-            cvList.add(Integer.valueOf(j));
+            cvList.add(j);
         }
     }
 
@@ -2520,7 +2541,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param col         column to insert label into
      * @param g           panel layout manager
      * @param cs          constraints on layout manager
-     * @param showStdName show the name following the rules for the <em>nameFmt</em> element
+     * @param showStdName show the name following the rules for the
+     * <em>nameFmt</em> element
      */
     public void newVariable(Element var, JComponent col,
             GridBagLayout g, GridBagConstraints cs, boolean showStdName) {
@@ -2557,7 +2579,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
-        varList.add(Integer.valueOf(i));
+        varList.add(i);
 
         // create the paired label
         JLabel l = new WatchingLabel(label, rep);
@@ -2566,63 +2588,59 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // now handle the four orientations
         // assemble v from label, rep
-        if (layout.equals("left")) {
-            cs.anchor = GridBagConstraints.EAST;
-            cs.ipadx = spaceWidth;
-            g.setConstraints(l, cs);
-            col.add(l);
-            cs.ipadx = 0;
-
-            cs.gridx++;
-            cs.anchor = GridBagConstraints.WEST;
-            g.setConstraints(rep, cs);
-            col.add(rep);
-
-        } else if (layout.equals("right")) {
-            cs.anchor = GridBagConstraints.EAST;
-            g.setConstraints(rep, cs);
-            col.add(rep);
-
-            cs.gridx++;
-            cs.anchor = GridBagConstraints.WEST;
-            cs.ipadx = spaceWidth;
-            g.setConstraints(l, cs);
-            col.add(l);
-            cs.ipadx = 0;
-
-        } else if (layout.equals("below")) {
-            // variable in center of upper line
-            cs.anchor = GridBagConstraints.CENTER;
-            g.setConstraints(rep, cs);
-            col.add(rep);
-
-            // label aligned like others
-            cs.gridy++;
-            cs.anchor = GridBagConstraints.WEST;
-            cs.ipadx = spaceWidth;
-            g.setConstraints(l, cs);
-            col.add(l);
-            cs.ipadx = 0;
-
-        } else if (layout.equals("above")) {
-            // label aligned like others
-            cs.anchor = GridBagConstraints.WEST;
-            cs.ipadx = spaceWidth;
-            g.setConstraints(l, cs);
-            col.add(l);
-            cs.ipadx = 0;
-
-            // variable in center of lower line
-            cs.gridy++;
-            cs.anchor = GridBagConstraints.CENTER;
-            g.setConstraints(rep, cs);
-            col.add(rep);
-
-        } else {
-            log.error("layout internally inconsistent: " + layout);
-            return;
-        }
+        switch (layout) {
+            case "left":
+                cs.anchor = GridBagConstraints.EAST;
+                cs.ipadx = spaceWidth;
+                g.setConstraints(l, cs);
+                col.add(l);
+                cs.ipadx = 0;
+                cs.gridx++;
+                cs.anchor = GridBagConstraints.WEST;
+                g.setConstraints(rep, cs);
+                col.add(rep);
+                break;
 //        log.info("Exit item="+name+";cs.gridx="+cs.gridx+";cs.gridy="+cs.gridy+";cs.anchor="+cs.anchor+";cs.ipadx="+cs.ipadx);
+            case "right":
+                cs.anchor = GridBagConstraints.EAST;
+                g.setConstraints(rep, cs);
+                col.add(rep);
+                cs.gridx++;
+                cs.anchor = GridBagConstraints.WEST;
+                cs.ipadx = spaceWidth;
+                g.setConstraints(l, cs);
+                col.add(l);
+                cs.ipadx = 0;
+                break;
+            case "below":
+                // variable in center of upper line
+                cs.anchor = GridBagConstraints.CENTER;
+                g.setConstraints(rep, cs);
+                col.add(rep);
+                // label aligned like others
+                cs.gridy++;
+                cs.anchor = GridBagConstraints.WEST;
+                cs.ipadx = spaceWidth;
+                g.setConstraints(l, cs);
+                col.add(l);
+                cs.ipadx = 0;
+                break;
+            case "above":
+                // label aligned like others
+                cs.anchor = GridBagConstraints.WEST;
+                cs.ipadx = spaceWidth;
+                g.setConstraints(l, cs);
+                col.add(l);
+                cs.ipadx = 0;
+                // variable in center of lower line
+                cs.gridy++;
+                cs.anchor = GridBagConstraints.CENTER;
+                g.setConstraints(rep, cs);
+                col.add(rep);
+                break;
+            default:
+                log.error("layout internally inconsistent: " + layout);
+        }
     }
 
     /**
@@ -2774,7 +2792,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @return bit numbers or empty string
      */
     public static String getMaskDescription(String mask) {
-        String maskDescString = "";
+        StringBuilder maskDescString = new StringBuilder("");
 
         // generate bit numbers from bitmask if applicable
         if ((mask != null) && (mask.contains("X"))) {
@@ -2782,35 +2800,35 @@ public class PaneProgPane extends javax.swing.JPanel
             int lastV = -2;
             if (mask.contains("V")) {
                 if (mask.indexOf('V') == mask.lastIndexOf('V')) {
-                    maskDescString = maskDescString + "bit " + (lastBit - mask.indexOf('V'));
+                    maskDescString.append("bit ").append(lastBit - mask.indexOf('V'));
                 } else {
-                    maskDescString = maskDescString + "bits ";
+                    maskDescString.append("bits ");
                     for (int i = 0; i <= lastBit; i++) {
                         char descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
                         if (mask.charAt(lastBit - i) == 'V') {
                             if (descStringLastChar == ' ') {
-                                maskDescString = maskDescString + i;
+                                maskDescString.append(i);
                             } else if (lastV == (i - 1)) {
                                 if (descStringLastChar != '-') {
-                                    maskDescString = maskDescString + "-";
+                                    maskDescString.append("-");
                                 }
                             } else {
-                                maskDescString = maskDescString + "," + i;
+                                maskDescString.append(",").append(i);
                             }
                             lastV = i;
                         }
                         descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
                         if ((descStringLastChar == '-') && ((mask.charAt(lastBit - i) != 'V') || (i == lastBit))) {
-                            maskDescString = maskDescString + lastV;
+                            maskDescString.append(lastV);
                         }
                     }
                 }
             } else {
-                maskDescString = maskDescString + "no bits";
+                maskDescString.append("no bits");
             }
             log.trace("{} Mask:{}", maskDescString, mask);
         }
-        return maskDescString;
+        return maskDescString.toString();
     }
 
     JComponent getRep(int i, String format) {
@@ -2977,7 +2995,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 String value = var.getTextValue();
                 String originalName = name;
                 String originalValue = value;
-                name = name + " (CV" + var.getCvNum() + ")";
+                name = name + " (CV" + var.getCvNum() + ")"; // NO I18N
 
                 //define index values for name and value substrings
                 int nameLeftIndex = 0;
@@ -3095,11 +3113,11 @@ public class PaneProgPane extends javax.swing.JPanel
                         barCvLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
                         speedWindow.getContentPane().add(barCvLabel);
                     }
-                    JLabel cvLabel = new JLabel("Value");
+                    JLabel cvLabel = new JLabel(Bundle.getMessage("Value"));
                     cvLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
                     cvLabel.setBounds(25, 4, 26, 15);
                     speedWindow.getContentPane().add(cvLabel);
-                    JLabel valueLabel = new JLabel("CV");
+                    JLabel valueLabel = new JLabel("CV"); // I18N seems undesirable for support
                     valueLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
                     valueLabel.setBounds(37, 150, 13, 15);
                     speedWindow.getContentPane().add(valueLabel);
@@ -3120,12 +3138,14 @@ public class PaneProgPane extends javax.swing.JPanel
 //            Check how many Cvs there are to print
                 int cvCount = cvList.size();
                 w.setFontStyle(Font.BOLD); //set font to Bold
-                // print a simple heading
-                s = "                 Value                       Value                       Value";
+                // print a simple heading with I18N
+                s = String.format("%1$21s", Bundle.getMessage("Value")) + String.format("%1$28s", Bundle.getMessage("Value")) +
+                        String.format("%1$28s", Bundle.getMessage("Value"));
                 w.write(s, 0, s.length());
                 w.writeBorders();
                 s = "\n";
                 w.write(s, 0, s.length());
+                // NO I18N
                 s = "            CV  Dec Hex                 CV  Dec Hex                 CV  Dec Hex";
                 w.write(s, 0, s.length());
                 w.writeBorders();
@@ -3225,21 +3245,21 @@ public class PaneProgPane extends javax.swing.JPanel
         // note we want Short Address first, as it might change others
         iVar = _varModel.findVarIndex("Short Address");
         if (iVar >= 0) {
-            varList.add(Integer.valueOf(iVar));
+            varList.add(iVar);
         } else {
             log.debug("addDccAddressPanel did not find Short Address");
         }
 
         iVar = _varModel.findVarIndex("Address Format");
         if (iVar >= 0) {
-            varList.add(Integer.valueOf(iVar));
+            varList.add(iVar);
         } else {
             log.debug("addDccAddressPanel did not find Address Format");
         }
 
         iVar = _varModel.findVarIndex("Long Address");
         if (iVar >= 0) {
-            varList.add(Integer.valueOf(iVar));
+            varList.add(iVar);
         } else {
             log.debug("addDccAddressPanel did not find Long Address");
         }
@@ -3247,7 +3267,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // included here because CV1 can modify it, even if it doesn't show on pane;
         iVar = _varModel.findVarIndex("Consist Address");
         if (iVar >= 0) {
-            varList.add(Integer.valueOf(iVar));
+            varList.add(iVar);
         } else {
             log.debug("addDccAddressPanel did not find CV19 Consist Address");
         }

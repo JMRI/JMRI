@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of Digitrax SPJ files
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dennis Miller Copyright (C) 2006
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
@@ -54,15 +54,18 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         this.file = file;
     }
 
+    @Override
     public int getRowCount() {
         // The 0th header is not displayed
         return file.numHeaders() - 1;
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case HEADERCOL:
@@ -87,6 +90,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case HEADERCOL:
@@ -106,6 +110,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case REPLACEBUTTONCOL:
@@ -116,6 +121,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case HEADERCOL:
@@ -192,6 +198,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == PLAYBUTTONCOL) {
             // button fired, handle
