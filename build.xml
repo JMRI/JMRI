@@ -1984,35 +1984,13 @@
         <delete dir="${dist.macosx}"/>
         <mkdir dir="${dist.macosx}/JMRI"/>
         <copy todir="${dist.macosx}/JMRI">
-            <fileset dir="${jartarget}"
-                     includes="jmri.jar"/>
-            <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
-            <fileset dir="scripts"
-                     includes="default.lcf,COPYING"/>
-            <fileset dir="."
-                     includes="python.properties,jmri.conf"/>
-        </copy>
-        <mkdir dir="${dist.macosx}/JMRI/lib"/>
-        <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
-            <path>
-                <pathelement path="${runtime.class.jars}"/>
-            </path>
-            <fileset file="${libdir}/security.policy"/>
-            <fileset file="${libdir}/README.md"/>
-        </copy>
-        <mkdir dir="${dist.macosx}/JMRI/lib/macosx"/>
-        <copy todir="${dist.macosx}/JMRI/lib/macosx">
-            <fileset dir="${libdir}/macosx"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/"/>
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.macosx}/JMRI">
                 <include name="DecoderPro.app/Contents/MacOS/StartJMRI"/>
-                <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
@@ -2133,6 +2111,29 @@
             <make-startup-script script.name="@{script.name}"
                                  script.class="@{script.class}"
                                  dest="${dist.apps}/@{script.name}.app/Contents/MacOS/StartJMRI"/>
+            <copy todir="${dist.apps}/@{script.name}.app/Contents/Resources">
+                <fileset dir="${jartarget}"
+                         includes="jmri.jar"/>
+                <fileset dir="."
+                         includes="xml/,resources/,help/,web/,jython/"
+                         excludes="help/en/manual/**" />
+                <fileset dir="scripts"
+                         includes="default.lcf,COPYING"/>
+                <fileset dir="."
+                         includes="python.properties,jmri.conf"/>
+            </copy>
+            <mkdir dir="${dist.apps}/@{script.name}.app/Contents/Resources/lib"/>
+            <copy todir="${dist.apps}/@{script.name}.app/Contents/Resources/lib" flatten="true">
+                <path>
+                    <pathelement path="${runtime.class.jars}"/>
+                </path>
+                <fileset file="${libdir}/security.policy"/>
+                <fileset file="${libdir}/README.md"/>
+            </copy>
+            <mkdir dir="${dist.apps}/@{script.name}.app/Contents/Resources/lib/macosx"/>
+            <copy todir="${dist.apps}/@{script.name}.app/Contents/Resources/lib/macosx">
+                <fileset dir="${libdir}/macosx"/>
+            </copy>
         </sequential>
     </macrodef>
 
@@ -2159,23 +2160,21 @@
         </sequential>
     </macrodef>
 
-
-    <!-- I dislike how much of these startup-scripts targets are shared.  Maybe they should be combined? -->
-
-    <target name="startup-scripts-linux"> <!-- Internal target to create all of the app specific startup scripts for Linux -->
-        <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
-        <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
-        <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
-        <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
+    <!-- Internal target to create all of the app specific startup scripts for Linux -->
+    <target name="startup-scripts-linux">
+        <make-startup-script script.name="DecoderPro" script.class="apps.gui3.dp3.DecoderPro3"/>
+        <make-startup-script script.name="PanelPro" script.class="apps.PanelPro.PanelPro"/>
+        <make-startup-script script.name="SoundPro" script.class="apps.SoundPro.SoundPro"/>
+        <make-startup-script script.name="InstallTest" script.class="apps.InstallTest.InstallTest"/>
+        <make-startup-script script.name="JmriFaceless" script.class="apps.JmriFaceless"/>
     </target>
 
-    <target name="startup-scripts-macosx"> <!-- Internal target to create all of the app specific startup scripts for Mac OS X -->
-        <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
-                                             script.icon="DecoderPro"/>
-        <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
-        <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
+    <!-- Internal target to create all of the app specific startup scripts for macOS -->
+    <!-- not combined with above because additional launchers in macOS are expensive to create and ship -->
+    <target name="startup-scripts-macosx">
+        <create-macosx-application-directory script.name="DecoderPro" script.class="apps.gui3.dp3.DecoderPro3" script.icon="DecoderPro"/>
+        <create-macosx-application-directory script.name="PanelPro" script.class="apps.PanelPro.PanelPro"/>
+        <create-macosx-application-directory script.name="SoundPro" script.class="apps.SoundPro.SoundPro"/>
     </target>
 
 

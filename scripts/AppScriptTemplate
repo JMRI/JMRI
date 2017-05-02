@@ -360,7 +360,7 @@ if [ -z "${JMRI_HOME}" ] ; then
         # on OS X, the .app bundle is assumed to reside in the default JMRI_HOME
         BUNDLEDIR=$(cd "${SCRIPTDIR}/../.." && pwd)
         if [ -f "${BUNDLEDIR}/Contents/MacOS/StartJMRI" ] ; then
-            JMRI_HOME=$(cd "${BUNDLEDIR}/.." && pwd)
+            JMRI_HOME=$(cd "${BUNDLEDIR}/Contents/Resources" && pwd)
             DEBUG="yes" # default to on, so always available in Console.app
         else
             BUNDLEDIR=""
