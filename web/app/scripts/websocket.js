@@ -41,6 +41,9 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
     $log.debug('Listing ' + type + '...');
     socket.send(m);  
   };
+  var sendState = function sendState(type, name, state) {
+    sendPost(type, {name: name, state: state});
+  };
 
   var methods = {
     // general methods
@@ -50,6 +53,7 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
     post: sendPost,
     put: sendPut,
     list: sendList,
+    setState: sendState,
     ping: function ping() {
       socket.send(JSON.stringify({type: "ping"}));
     },
@@ -91,7 +95,7 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
       sendGet("light", {name: name});
     },
     setLight: function(name, state) {
-      sendPost("light", {name: name, state: state});
+      sendState("light", name, state);
     },
     getMemory: function(name) {
       sendGet("memory", {name: name});
@@ -141,25 +145,25 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
       sendGet("route", {name: name});
     },
     setRoute: function(name, state) {
-      sendPost("route", {name: name, state: state});
+      sendState("route", name, state);
     },
     getSensor: function(name) {
       sendGet("sensor", {name: name});
     },
     setSensor: function(name, state) {
-      sendPost("sensor", {name: name, state: state});
+      sendState("sensor", name, state);
     },
     getSignalHead: function(name) {
       sendGet("signalHead", {name: name});
     },
     setSignalHead: function(name, state) {
-      sendPost("signalHead", {name: name, state: state});
+      sendState("signalHead", name, state);
     },
     getSignalMast: function(name) {
       sendGet("signalMast", {name: name});
     },
     setSignalMast: function(name, state) {
-      sendPost("signalMast", {name: name, state: state});
+      sendState("signalMast", name, state);
     },
     /**
      * Get the current status of the throttle
@@ -194,7 +198,7 @@ angular.module('jmri.app').factory('jmriWebSocket', function($websocket, $log) {
       sendGet("turnout", {name: name});
     },
     setTurnout: function(name, state) {
-      sendPost("turnout", {name: name, state: state});
+      sendState("turnout", name, state);
     },
     // Constants
     UNKNOWN: 0,
