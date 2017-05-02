@@ -96,6 +96,7 @@
 
     </xs:complexType>
 
+
     <xs:attributeGroup name="EditorCommonAttributesGroup">
       <xs:annotation>
         <xs:documentation>

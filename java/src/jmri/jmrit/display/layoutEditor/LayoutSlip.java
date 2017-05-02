@@ -133,26 +133,14 @@ public class LayoutSlip extends LayoutTurnout {
         return currentState;
     }
 
-    /*
-     * @Deprecated since 4.7.? use @link{getSecondTurnoutName()} instead.
-     */
-    @Deprecated
     public String getTurnoutBName() {
         return getSecondTurnoutName();
     }
 
-    /*
-     * @Deprecated since 4.7.? use @link{getSecondTurnout()} instead.
-     */
-    @Deprecated
     public Turnout getTurnoutB() {
         return getSecondTurnout();
     }
 
-    /*
-     * @Deprecated since 4.7.? use @link{setSecondTurnout()} instead.
-     */
-    @Deprecated
     public void setTurnoutB(String tName) {
         setSecondTurnout(tName);
     }

@@ -498,7 +498,7 @@
 <!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
 			levelxing | layoutturnout | reportericon | memoryicon |
-			layoutslip | tracksegment | fastclock)* >
+			tracksegment | fastclock)* >
   <!ATTLIST LayoutEditor class				CDATA #REQUIRED>
   <!ATTLIST LayoutEditor name				CDATA #IMPLIED>
   <!ATTLIST LayoutEditor x					CDATA #REQUIRED>
@@ -565,7 +565,6 @@
 	<!ATTLIST layoutturnout class				CDATA #REQUIRED>
 	<!ATTLIST layoutturnout ident				CDATA #REQUIRED>
 	<!ATTLIST layoutturnout turnoutname			CDATA #IMPLIED>
-	<!ATTLIST layoutturnout secondTurnoutName	CDATA #IMPLIED>
 	<!ATTLIST layoutturnout blockname			CDATA #IMPLIED>
 	<!ATTLIST layoutturnout blockbname			CDATA #IMPLIED>
 	<!ATTLIST layoutturnout blockcname			CDATA #IMPLIED>
@@ -591,37 +590,6 @@
 	<!ATTLIST layoutturnout yc					CDATA #REQUIRED>
 	<!ATTLIST layoutturnout xcen				CDATA #REQUIRED>
 	<!ATTLIST layoutturnout ycen				CDATA #REQUIRED>
-
-  <!ELEMENT layoutslip EMPTY>
-	<!ATTLIST layoutslip class				CDATA #REQUIRED>
-	<!ATTLIST layoutslip ident				CDATA #REQUIRED>
-	<!ATTLIST layoutslip turnoutname		CDATA #IMPLIED>
-	<!ATTLIST layoutslip secondTurnoutName	CDATA #IMPLIED>
-	<!ATTLIST layoutslip blockname			CDATA #IMPLIED>
-	<!ATTLIST layoutslip blockbname			CDATA #IMPLIED>
-	<!ATTLIST layoutslip blockcname			CDATA #IMPLIED>
-	<!ATTLIST layoutslip blockdname			CDATA #IMPLIED>
-	<!ATTLIST layoutslip sliptype			CDATA #REQUIRED>
-	<!ATTLIST layoutslip connectaname		CDATA #IMPLIED>
-	<!ATTLIST layoutslip connectbname		CDATA #IMPLIED>
-	<!ATTLIST layoutslip connectcname		CDATA #IMPLIED>
-	<!ATTLIST layoutslip connectdname		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signala1name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signala2name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signalb1name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signalb2name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signalc1name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signalc2name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signald1name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip signald2name		CDATA #IMPLIED>
-	<!ATTLIST layoutslip continuing			CDATA #REQUIRED>
-	<!ATTLIST layoutslip disabled			(yes|no) "yes">
-	<!ATTLIST layoutslip xb					CDATA #REQUIRED>
-	<!ATTLIST layoutslip yb					CDATA #REQUIRED>
-	<!ATTLIST layoutslip xc					CDATA #REQUIRED>
-	<!ATTLIST layoutslip yc					CDATA #REQUIRED>
-	<!ATTLIST layoutslip xcen				CDATA #REQUIRED>
-	<!ATTLIST layoutslip ycen				CDATA #REQUIRED>
 
   <!ELEMENT levelxing EMPTY>
 	<!ATTLIST levelxing class		 CDATA #REQUIRED>
