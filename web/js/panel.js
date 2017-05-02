@@ -890,7 +890,7 @@ function $handleClick(e) {
         //jmri.log("  layoutSlip-slipType:" + $widget.slipType);
 
         // determine next slip state
-        $newState = $getNextSlipState($widget);
+        $newState = getNextSlipState($widget);
 
         //jmri.log("$handleClick:layoutSlip: change state from: " + $widget.state + ", to: " + $newState + ".");
         //$widget.state = $newState;
@@ -899,11 +899,11 @@ function $handleClick(e) {
         // convert current slip state to current turnout states
         var $oldState1, $oldState2;
 
-        [$oldState1, $oldState2] = $getTurnoutStatesForSlip($widget);
+        [$oldState1, $oldState2] = getTurnoutStatesForSlip($widget);
 
         // convert new slip state to new turnout states
         var $newState1, $newState2;
-        [$newState1, $newState2] = $getTurnoutStatesForSlipState($widget, $newState);
+        [$newState1, $newState2] = getTurnoutStatesForSlipState($widget, $newState);
 
         if ($oldState1 != $newState1) {
             sendElementChange($widget.jsonType, $widget.turnout, $newState1);
@@ -1465,7 +1465,7 @@ function $drawSlip($widget) {
         var rccy = $lerp($widget.ycen, rcy, rf);
         $drawCircle(rccx, rccy, $cr, $gPanel.turnoutcirclecolor, 1);
     }
-}
+}   // function $drawSlip($widget)
 
 function $lerp(value1, value2, amount) {
     return ((1 - amount) * value1) + (amount * value2);
@@ -1824,7 +1824,7 @@ var $setWidgetState = function($id, $newState) {
 
             // convert current slip state to current turnout states
             var $state1, $state2;
-            [$state1, $state2] = $getTurnoutStatesForSlip($widget);
+            [$state1, $state2] = getTurnoutStatesForSlip($widget);
 
             //jmri.log("#### Before slip: " + $slipStateToString($widget.state) +
             //    ", state1: " + $turnoutStateToString($state1) +
@@ -1846,7 +1846,7 @@ var $setWidgetState = function($id, $newState) {
             }
 
             // turn turnout states back into slip state
-            $newState = $getSlipStateForTurnoutStates($widget, $state1, $state2);
+            $newState = getSlipStateForTurnoutStates($widget, $state1, $state2);
             //jmri.log("#### After slip: " + $slipStateToString($newState) +
             //    ", state1: " + $turnoutStateToString($state1) +
             //    ", state2: " + $turnoutStateToString($state2));
@@ -2397,7 +2397,7 @@ $(document).ready(function() {
 });
 
 
-function $getTurnoutStatesForSlipState($slipWidget, $slipState) {
+function getTurnoutStatesForSlipState($slipWidget, $slipState) {
     var $results = [0, 0];
     if (typeof $slipWidget != "undefined") {
         if ($widget.widgetType == "layoutSlip") {
@@ -2418,13 +2418,13 @@ function $getTurnoutStatesForSlipState($slipWidget, $slipState) {
         }
     }
     return $results;
-}   // function $getTurnoutStatesForSlipState
+}   // function getTurnoutStatesForSlipState
 
-function $getTurnoutStatesForSlip($slipWidget) {
-    return $getTurnoutStatesForSlipState($slipWidget, $widget.state);
+function getTurnoutStatesForSlip($slipWidget) {
+    return getTurnoutStatesForSlipState($slipWidget, $widget.state);
 }
 
-function $getSlipStateForTurnoutStates($widget, $state1, $state2) {
+function getSlipStateForTurnoutStates($widget, $state1, $state2) {
     var $result = 0; // unknown
     if (($state1 == $widget.turnout1_AC) && ($state2 == $widget.turnout2_AC)) {
         $result = STATE_AC;
@@ -2438,27 +2438,27 @@ function $getSlipStateForTurnoutStates($widget, $state1, $state2) {
     return $result;
 }
 
-function $getNextSlipState($widget) {
+function getNextSlipState($widget) {
     var $result = 0; // unknown
 
     if ($widget.side == 'left') {
         switch ($widget.state) {
             case STATE_AC:
-                if ($widget.slipType == DOUBLE_SLIP) {
-                    $newState = STATE_BC;
-                } else {
+                if ($widget.slipType == SINGLE_SLIP) {
                     $newState = STATE_BD;
+                } else {
+                    $newState = STATE_BC;
                 }
-                break;
-            case STATE_BD:
-            default:
-                $newState = STATE_AD;
                 break;
             case STATE_AD:
                 $newState = STATE_BD;
                 break;
             case STATE_BC:
+            default:
                 $newState = STATE_AC;
+                break;
+            case STATE_BD:
+                $newState = STATE_AD;
                 break;
         }
     } else if ($widget.side == 'right') {
@@ -2467,20 +2467,20 @@ function $getNextSlipState($widget) {
             default:
                 $newState = STATE_AD;
                 break;
-            case STATE_BD:
-                if ($widget.slipType == DOUBLE_SLIP) {
-                    $newState = STATE_BC;
-                } else {
-                    $newState = STATE_AC;
-                }
-                break;
             case STATE_AD:
                 $newState = STATE_AC;
                 break;
             case STATE_BC:
                 $newState = STATE_BD;
                 break;
+            case STATE_BD:
+                if ($widget.slipType == SINGLE_SLIP) {
+                    $newState = STATE_AC;
+                } else {
+                    $newState = STATE_BC;
+                }
+                break;
         }
     }
     return $newState;
-}   // function $getNextSlipState($widget)
+}   // function getNextSlipState($widget)

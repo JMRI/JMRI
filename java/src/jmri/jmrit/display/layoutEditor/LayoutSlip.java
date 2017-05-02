@@ -34,7 +34,6 @@ import javax.swing.JRootPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
@@ -217,10 +216,6 @@ public class LayoutSlip extends LayoutTurnout {
                         }
                         break;
                     }
-                    case STATE_BD: {
-                        currentState = STATE_AD;
-                        break;
-                    }
                     case STATE_AD: {
                         currentState = STATE_BD;
                         break;
@@ -228,6 +223,10 @@ public class LayoutSlip extends LayoutTurnout {
                     case STATE_BC:
                     default: {
                         currentState = STATE_AC;
+                        break;
+                    }
+                    case STATE_BD: {
+                        currentState = STATE_AD;
                         break;
                     }
                 }
@@ -239,14 +238,6 @@ public class LayoutSlip extends LayoutTurnout {
                         currentState = STATE_AD;
                         break;
                     }
-                    case STATE_BD: {
-                        if (type == SINGLE_SLIP) {
-                            currentState = STATE_AC;
-                        } else {
-                            currentState = STATE_BC;
-                        }
-                        break;
-                    }
                     case STATE_AD: {
                         currentState = STATE_AC;
                         break;
@@ -254,6 +245,14 @@ public class LayoutSlip extends LayoutTurnout {
                     case STATE_BC:
                     default: {
                         currentState = STATE_BD;
+                        break;
+                    }
+                    case STATE_BD: {
+                        if (type == SINGLE_SLIP) {
+                            currentState = STATE_AC;
+                        } else {
+                            currentState = STATE_BC;
+                        }
                         break;
                     }
                 }
