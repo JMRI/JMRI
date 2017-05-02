@@ -45,10 +45,9 @@ import org.slf4j.LoggerFactory;
  */
 public class WebAppManager extends AbstractPreferencesManager {
 
-    private WatchService watcher = null;
+    private final HashMap<Profile, WatchService> watcher = new HashMap<>();
     private final static Logger log = LoggerFactory.getLogger(WebAppManager.class);
     private final Map<WatchKey, Path> watchPaths = new HashMap<>();
-    private boolean watching = false;
     private final HashMap<Profile, List<WebManifest>> manifests = new HashMap<>();
 
     public WebAppManager() {
@@ -68,69 +67,33 @@ public class WebAppManager extends AbstractPreferencesManager {
         WebServer.getDefault().addLifeCycleListener(new LifeCycle.Listener() {
             @Override
             public void lifeCycleStarting(LifeCycle lc) {
-                try {
-                    watcher = FileSystems.getDefault().newWatchService();
-                } catch (IOException ex) {
-                    log.warn("Unable to watch file system for changes.");
-                }
-                File cache = ProfileUtils.getCacheDirectory(profile, this.getClass());
-                savePreferences(profile);
+                WebAppManager.this.lifeCycleStarting(lc, profile);
             }
 
             @Override
             public void lifeCycleStarted(LifeCycle lc) {
-                // register watcher to watch web/app directories everywhere
-                if (watcher != null) {
-                    watching = true;
-                    FileUtil.findFiles("web", ".").stream().filter((file) -> (file.isDirectory())).forEachOrdered((file) -> {
-                        try {
-                            Path path = file.toPath();
-                            WebAppManager.this.watchPaths.put(path.register(watcher,
-                                    StandardWatchEventKinds.ENTRY_CREATE,
-                                    StandardWatchEventKinds.ENTRY_DELETE,
-                                    StandardWatchEventKinds.ENTRY_MODIFY),
-                                    path);
-                        } catch (IOException ex) {
-                            log.error("Unable to watch {} for changes.", file);
-                        }
-                        (new Thread() {
-                            @Override
-                            public void run() {
-                                while (watching) {
-                                    WatchKey key;
-                                    try {
-                                        key = watcher.take();
-                                    } catch (InterruptedException ex) {
-                                        return;
-                                    }
-
-                                    key.pollEvents().stream().filter((event) -> (event.kind() != OVERFLOW)).forEachOrdered((event) -> {
-                                        WebAppManager.this.savePreferences(profile);
-                                    });
-                                    watching = key.reset();
-                                }
-                            }
-                        }).start();
-                    });
-                }
+                WebAppManager.this.lifeCycleStarted(lc, profile);
             }
 
             @Override
             public void lifeCycleFailure(LifeCycle lc, Throwable thrwbl) {
-                watching = false;
+                WebAppManager.this.lifeCycleFailure(lc, thrwbl, profile);
             }
 
             @Override
             public void lifeCycleStopping(LifeCycle lc) {
-                watching = false;
+                WebAppManager.this.lifeCycleStopping(lc, profile);
             }
 
             @Override
             public void lifeCycleStopped(LifeCycle lc) {
-                // stop watching web/app directories
-                watcher = null;
+                WebAppManager.this.lifeCycleStopped(lc, profile);
             }
         });
+        if (WebServer.getDefault().isRunning()) {
+            this.lifeCycleStarting(null, profile);
+            this.lifeCycleStarted(null, profile);
+        }
         this.setInitialized(profile, true);
     }
 
@@ -315,5 +278,66 @@ public class WebAppManager extends AbstractPreferencesManager {
             }
         });
         return sources.toString();
+    }
+
+    private void lifeCycleStarting(LifeCycle lc, Profile profile) {
+        if (this.watcher.get(profile) == null) {
+            try {
+                this.watcher.put(profile, FileSystems.getDefault().newWatchService());
+            } catch (IOException ex) {
+                log.warn("Unable to watch file system for changes.");
+            }
+        }
+    }
+
+    private void lifeCycleStarted(LifeCycle lc, Profile profile) {
+        // register watcher to watch web/app directories everywhere
+        if (this.watcher.get(profile) != null) {
+            FileUtil.findFiles("web", ".").stream().filter((file) -> (file.isDirectory())).forEachOrdered((file) -> {
+                try {
+                    Path path = file.toPath();
+                    WebAppManager.this.watchPaths.put(path.register(this.watcher.get(profile),
+                            StandardWatchEventKinds.ENTRY_CREATE,
+                            StandardWatchEventKinds.ENTRY_DELETE,
+                            StandardWatchEventKinds.ENTRY_MODIFY),
+                            path);
+                } catch (IOException ex) {
+                    log.error("Unable to watch {} for changes.", file);
+                }
+                (new Thread() {
+                    @Override
+                    public void run() {
+                        while (WebAppManager.this.watcher.get(profile) != null) {
+                            WatchKey key;
+                            try {
+                                key = WebAppManager.this.watcher.get(profile).take();
+                            } catch (InterruptedException ex) {
+                                return;
+                            }
+
+                            key.pollEvents().stream().filter((event) -> (event.kind() != OVERFLOW)).forEachOrdered((event) -> {
+                                WebAppManager.this.savePreferences(profile);
+                            });
+                            if (!key.reset()) {
+                                WebAppManager.this.watcher.remove(profile);
+                            }
+                        }
+                    }
+                }).start();
+            });
+        }
+    }
+
+    private void lifeCycleFailure(LifeCycle lc, Throwable thrwbl, Profile profile) {
+        this.watcher.remove(profile);
+    }
+
+    private void lifeCycleStopping(LifeCycle lc, Profile profile) {
+        this.watcher.remove(profile);
+    }
+
+    private void lifeCycleStopped(LifeCycle lc, Profile profile) {
+        // stop watching web/app directories
+        this.watcher.remove(profile);
     }
 }

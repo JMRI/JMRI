@@ -30,7 +30,6 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
@@ -53,12 +52,12 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
  */
-public final class WebServer extends AbstractLifeCycle implements LifeCycle.Listener {
+public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     private static enum Registration {
         DENIAL, REDIRECTION, RESOURCE, SERVLET
     };
-    private Server server;
+    private final Server server;
     private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
     private ShutDownTask shutDownTask = null;
@@ -78,6 +77,10 @@ public final class WebServer extends AbstractLifeCycle implements LifeCycle.List
      * @param preferences the preferences
      */
     protected WebServer(WebServerPreferences preferences) {
+        QueuedThreadPool threadPool = new QueuedThreadPool();
+        threadPool.setName("WebServer");
+        threadPool.setMaxThreads(1000);
+        server = new Server(threadPool);
         this.preferences = preferences;
     }
 
@@ -98,12 +101,8 @@ public final class WebServer extends AbstractLifeCycle implements LifeCycle.List
      * Start the web server.
      */
     @Override
-    public void doStart() {
-        if (server == null) {
-            QueuedThreadPool threadPool = new QueuedThreadPool();
-            threadPool.setName("WebServer");
-            threadPool.setMaxThreads(1000);
-            server = new Server(threadPool);
+    public void start() {
+        if (!server.isRunning()) {
             ServerConnector connector = new ServerConnector(server);
             connector.setIdleTimeout(5 * 60 * 1000); // 5 minutes
             connector.setSoLingerTime(-1);
@@ -132,7 +131,6 @@ public final class WebServer extends AbstractLifeCycle implements LifeCycle.List
             Thread serverThread = new ServerThread(server);
             serverThread.setName("WebServer"); // NOI18N
             serverThread.start();
-
         }
 
     }
@@ -143,7 +141,7 @@ public final class WebServer extends AbstractLifeCycle implements LifeCycle.List
      * @throws Exception if there is an error stopping the server
      */
     @Override
-    public void doStop() throws Exception {
+    public void stop() throws Exception {
         server.stop();
     }
 
@@ -383,6 +381,46 @@ public final class WebServer extends AbstractLifeCycle implements LifeCycle.List
             manager.deregister(shutDownTask);
         });
         log.debug("Web Server stopped");
+    }
+
+    @Override
+    public boolean isRunning() {
+        return this.server.isRunning();
+    }
+
+    @Override
+    public boolean isStarted() {
+        return this.server.isStarted();
+    }
+
+    @Override
+    public boolean isStarting() {
+        return this.server.isStarting();
+    }
+
+    @Override
+    public boolean isStopping() {
+        return this.server.isStopping();
+    }
+
+    @Override
+    public boolean isStopped() {
+        return this.server.isStopped();
+    }
+
+    @Override
+    public boolean isFailed() {
+        return this.server.isFailed();
+    }
+
+    @Override
+    public void addLifeCycleListener(Listener ll) {
+        this.server.addLifeCycleListener(ll);
+    }
+
+    @Override
+    public void removeLifeCycleListener(Listener ll) {
+        this.server.removeLifeCycleListener(ll);
     }
 
     static private class ServerThread extends Thread {
