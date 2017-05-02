@@ -245,6 +245,9 @@ public class FileUtilSupport extends Bean {
                     @Override
                     public FileVisitResult preVisitDirectory(final Path dir,
                             final BasicFileAttributes attrs) throws IOException {
+                        if (name.equals(dir.getFileName().toString())) {
+                            files.add(dir.toFile().getCanonicalFile());
+                        }
                         return FileVisitResult.CONTINUE;
                     }
 
