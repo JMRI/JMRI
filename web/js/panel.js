@@ -595,11 +595,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
                             case "layoutSlip" :
-                            // jmri.log("case layoutSlip:");
-                            // logProperties($widget);
+                                //jmri.log("case layoutSlip:");
+                                //logProperties($widget);
 
-                                $widget['name'] = $widget.turnoutname; //normalize name
-                                $widget['name2nd'] = $widget.secondturnoutname; //normalize name
+                                $widget['turnout'] = $(this).find('turnout:first').text();
+                                $widget['turnoutB'] = $(this).find('turnoutB:first').text();
 
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                 $widget.jsonType = "turnout"; // JSON object type
@@ -607,7 +607,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
 
-                                if ((typeof $widget.name !== "undefined") || (typeof $widget.name2nd !== "undefined")) {
+                                if ((typeof $widget.turnout !== "undefined") || (typeof $widget.turnoutB !== "undefined")) {
                                     //make it clickable (unless no turnouts assigned)
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
@@ -644,7 +644,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 var lccy = $lerp($widget.ycen, lcy, lf);
 
                                 //add an empty, but clickable, div to the panel and position it over the left turnout circle
-                                $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
+                                $hoverText = " title='" + $widget.turnout + "' alt='" + $widget.turnout + "'";
                                 $("#panel-area").append("<div id=" + $widget.id + "r class='" + $widget.classes + "' " + $hoverText + "></div>");
                                 $("#panel-area>#" + $widget.id + "r").css(
                                     {position: 'absolute', left: (lccx - $cr) + 'px', top: (lccy - $cr) + 'px', zIndex: 3,
@@ -660,7 +660,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 var rccy = $lerp($widget.ycen, rcy, rf);
 
                                 //add an empty, but clickable, div to the panel and position it over the right turnout circle
-                                $hoverText = " title='" + $widget.name2nd + "' alt='" + $widget.name2nd + "'";
+                                $hoverText = " title='" + $widget.turnoutB + "' alt='" + $widget.turnoutB + "'";
                                 $("#panel-area").append("<div id=" + $widget.id + "l class='" + $widget.classes + "' " + $hoverText + "></div>");
                                 $("#panel-area>#" + $widget.id + "l").css(
                                     {position: 'absolute', left: (rccx - $cr) + 'px', top: (rccy - $cr) + 'px', zIndex: 3,
@@ -669,12 +669,25 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 // setup notifications (?)
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
-
                                 jmri.getTurnout($widget["systemName"]);
+
                                 if ($widget["occupancysensor"])
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
 
-                                jmri.getTurnout($widget["name2nd"]);
+                                jmri.getTurnout($widget["turnoutB"]);
+
+                                // add turnout to whereUsed array
+                                if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
+                                   whereUsed[$widget.turnout] = new Array();
+                                }
+                                whereUsed[$widget.turnout][whereUsed[$widget.turnout].length] = $widget.id;
+
+                                // add turnoutB to whereUsed array
+                                if (!($widget.turnoutB in whereUsed)) {  //set where-used for this new turnout
+                                   whereUsed[$widget.turnoutB] = new Array();
+                                }
+                                whereUsed[$widget.turnoutB][whereUsed[$widget.turnoutB].length] = $widget.id;
+
                                 break;
                             case "tracksegment" :
                                 //set widget occupancy sensor from block to speed affected changes later
@@ -881,14 +894,14 @@ function $handleClick(e) {
                 $newState1 = THROWN;
                 break;
         }
-        sendElementChange($widget.jsonType, $widget.systemName, $newState1);
-        sendElementChange($widget.jsonType, $widget.name2nd, $newState2);
+        sendElementChange($widget.jsonType, $widget.turnout, $newState1);
+        sendElementChange($widget.jsonType, $widget.turnoutB, $newState2);
         //$drawSlip($widget); //draw the slip
     } else {
         var $newState = $getNextState($widget);  //determine next state from current state
         sendElementChange($widget.jsonType, $widget.systemName, $newState);
-        if (typeof $widget.name2nd !== "undefined") {  //TODO: put this in a more logical place?
-            sendElementChange($widget.jsonType, $widget.name2nd, $newState);  //also send 2nd turnout
+        if (typeof $widget.turnoutB !== "undefined") {  //TODO: put this in a more logical place?
+            sendElementChange($widget.jsonType, $widget.turnoutB, $newState);  //also send 2nd turnout
         }
     }
 }
@@ -1812,7 +1825,7 @@ var $setWidgetState = function($id, $newState) {
                 if ($widget.widgetType == "layoutturnout") {
                     $drawTurnout($widget);
                 } else if ($widget.widgetType == "layoutSlip") {
-//                     $drawSlip($widget);
+                    $drawSlip($widget);
                     $newState = $oldState;      // so widget state doesn't change for slips (we set it when we click)
                     $widget.state = $oldState;
                 }
