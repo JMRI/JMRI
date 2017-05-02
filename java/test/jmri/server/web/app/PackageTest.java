@@ -11,6 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
+    JsonMenuItemTest.class,
     WebAppConfigurationTest.class
 })
 public class PackageTest {

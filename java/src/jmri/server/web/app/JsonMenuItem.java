@@ -2,6 +2,8 @@ package jmri.server.web.app;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Locale;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import jmri.server.web.spi.WebMenuItem;
 
 /**
@@ -27,8 +29,9 @@ public class JsonMenuItem implements WebMenuItem {
      * @throws java.lang.IllegalArgumentException if node does not contain a
      * <em>path</em> node
      */
-    public JsonMenuItem(JsonNode node) throws IllegalArgumentException {
-        this.path = node.path("path").asText(); // NOI18N
+    public JsonMenuItem(@Nonnull JsonNode node) throws IllegalArgumentException {
+        Objects.requireNonNull(node, "cannot parse null object");
+        this.path = node.path("path").asText(null); // NOI18N
         if (this.path == null) {
             throw new IllegalArgumentException("path not specified");
         }
