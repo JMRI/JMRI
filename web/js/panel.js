@@ -881,9 +881,9 @@ function $handleClick(e) {
                 $newState1 = THROWN;
                 break;
         }
-        sendElementChange($widget.jsonType, $widget.name, $newState1);
+        sendElementChange($widget.jsonType, $widget.systemName, $newState1);
         sendElementChange($widget.jsonType, $widget.name2nd, $newState2);
-        $drawSlip($widget); //draw the slip
+        //$drawSlip($widget); //draw the slip
     } else {
         var $newState = $getNextState($widget);  //determine next state from current state
         sendElementChange($widget.jsonType, $widget.systemName, $newState);

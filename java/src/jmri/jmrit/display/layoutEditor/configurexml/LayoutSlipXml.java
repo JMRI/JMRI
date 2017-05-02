@@ -38,14 +38,6 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         element.setAttribute("ident", p.getName());
 
         element.setAttribute("slipType", "" + p.getSlipType());
-
-        if (p.getTurnoutName().length() > 0) {
-            element.setAttribute("turnoutname", p.getTurnoutName());
-        }
-        if (p.getSecondTurnoutName().length() > 0) {
-            element.setAttribute("secondturnoutname", p.getSecondTurnoutName());
-        }
-
         if (p.getBlockName().length() > 0) {
             element.setAttribute("blockname", p.getBlockName());
         }
@@ -199,22 +191,6 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
             l.tBlockName = a.getValue();
-        }
-
-        a = element.getAttribute("turnoutname");
-        if (a != null) {
-            l.tTurnoutName = a.getValue();
-        }
-
-        // this is here for backwards compatibility
-        // it will be saved as secondturnoutname
-        a = element.getAttribute("turnoutBName");
-        if (a != null) {
-            l.tSecondTurnoutName = a.getValue();
-        }
-        a = element.getAttribute("secondturnoutname");
-        if (a != null) {
-            l.tSecondTurnoutName = a.getValue();
         }
 
         a = element.getAttribute("connectaname");

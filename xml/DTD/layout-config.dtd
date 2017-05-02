@@ -43,6 +43,7 @@
 <!ELEMENT parameter (#PCDATA)>	<!-- Character content is parameter value -->
   <!ATTLIST parameter name CDATA #REQUIRED>
 
+
 <!--  Gui section identifies GUI info, e.g. look&feel info-->
 <!ELEMENT gui EMPTY>
   <!ATTLIST gui class CDATA #REQUIRED>
@@ -55,8 +56,8 @@
 <!ELEMENT programmer EMPTY>
   <!ATTLIST programmer class CDATA #REQUIRED>
   <!ATTLIST programmer defaultFile CDATA "Basic.xml">
-  <!ATTLIST programmer showEmptyPanes   (yes | no) "yes" >
-  <!ATTLIST programmer showCvNumbers    (yes | no) "no" >
+  <!ATTLIST programmer showEmptyPanes ( yes | no ) "yes" >
+  <!ATTLIST programmer showCvNumbers ( yes | no ) "no" >
   <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
 
 <!--  Application section identifies roster options -->
@@ -78,7 +79,7 @@
   <!ELEMENT sensor EMPTY >
 	<!ATTLIST sensor systemName CDATA #REQUIRED>  <!-- defines system type -->
 	<!ATTLIST sensor userName	CDATA #IMPLIED>
-	<!ATTLIST sensor inverted	(true | false) "false">
+    <!ATTLIST sensor inverted		(true | false ) "false">
 
 <!ELEMENT turnouts (operations?, turnout*)>
   <!ATTLIST turnouts class		CDATA #REQUIRED>
@@ -111,8 +112,8 @@
 	<!ATTLIST turnout numBits		CDATA #IMPLIED>
 	<!ATTLIST turnout controlType	CDATA #IMPLIED>
 	<!ATTLIST turnout automate		CDATA #IMPLIED>
-	<!ATTLIST turnout inverted		(true | false) "false">
-	<!ATTLIST turnout locked		(true | false) "false">
+    <!ATTLIST turnout inverted		(true | false ) "false">
+    <!ATTLIST turnout locked		(true | false ) "false">
 	<!ATTLIST turnout lockMode		CDATA #IMPLIED>
 	<!ATTLIST turnout decoder		CDATA #IMPLIED>
 
@@ -204,7 +205,7 @@
 
    <!ELEMENT routeSensor EMPTY >
 	<!ATTLIST routeSensor systemName	CDATA #REQUIRED>  <!-- defines control sensor -->
-	<!ATTLIST routeSensor mode			(onActive | onInactive | vetoActive | vetoInactive) "onActive" >	 <!-- defines control sensor -->
+    <!ATTLIST routeSensor mode (onActive | onInactive | vetoActive | vetoInactive ) "onActive" >  <!-- defines control sensor -->
 
    <!ELEMENT routeSoundFile EMPTY>
 	<!ATTLIST routeSoundFile name	CDATA #REQUIRED>  <!-- defines filename-->
@@ -280,7 +281,7 @@
 	<!ATTLIST securityelement onXAReservation	(none|stopOpposite|stopUnreserved) "none" >
 	<!ATTLIST securityelement makeReservation	(none|A|AB|AC|ABC|B|BC|C) "none" >
 
-	<!ATTLIST securityelement calculates		(yes | no) "yes" >
+    <!ATTLIST securityelement calculates		(yes | no ) "yes" >
 
 	<!-- attachXleg is coded 0 for none, 1 for A, 2 for B, 4 for C -->
 	<!ATTLIST securityelement attachAnum		CDATA #IMPLIED>
@@ -348,6 +349,7 @@
 	<!ATTLIST positionablelabel fixed			(true|false) "false">
 	<!ATTLIST positionablelabel showtooltip		(true|false) "true">
 
+
   <!ELEMENT sensoricon EMPTY>
 	<!ATTLIST sensoricon class				CDATA #REQUIRED>
 	<!ATTLIST sensoricon x					CDATA #REQUIRED>
@@ -390,7 +392,7 @@
 	<!ATTLIST memoryicon rotate				CDATA #IMPLIED>
 	<!ATTLIST memoryicon memory				CDATA #IMPLIED>
 	<!ATTLIST memoryicon defaulticon		CDATA #IMPLIED>
-	<!ATTLIST memoryicon selectable			(yes | no) "no" >
+    <!ATTLIST memoryicon selectable ( yes | no ) "no" >
 	<!ATTLIST memoryicon forcecontroloff	(true|false) "false">
 
   <!ELEMENT memorystate EMPTY>
@@ -493,7 +495,7 @@
   <!ATTLIST block limitspeed2		(true|false) "false" >
   <!ATTLIST block distantsignal		(true|false) "false" >
 
-<!ELEMENT LayoutEditor (positionablelabel | sensoricon | layoutblock |
+<!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
 			levelxing | layoutturnout | reportericon | memoryicon |
 			layoutslip | tracksegment | fastclock)* >
@@ -651,5 +653,6 @@
 	<!ATTLIST raytrack connectname		CDATA #IMPLIED>
 	<!ATTLIST raytrack angle			CDATA #IMPLIED>
 	<!ATTLIST raytrack index			CDATA #IMPLIED>
+
 
 <!ELEMENT signals EMPTY >
