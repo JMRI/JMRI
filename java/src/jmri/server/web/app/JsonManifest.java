@@ -101,8 +101,19 @@ public class JsonManifest implements WebManifest {
                         String template = route.path("template").asText(); // NOI18N
                         String controller = route.path("controller").asText(); // NOI18N
                         String redirection = route.path("redirection").asText(); // NOI18N
-                        if (when != null) {
+                        if (template.isEmpty() || controller.isEmpty()) {
+                            template = null;
+                            controller = null;
+                        }
+                        if (redirection.isEmpty()) {
+                            redirection = null;
+                        }
+                        if (when != null && !when.isEmpty()) {
+                            try {
                             this.routes.add(new AngularRoute(when, template, controller, redirection));
+                            } catch (NullPointerException | IllegalArgumentException ex) {
+                                log.error("Unable to add route for {}", when);
+                            }
                         }
                     });
                     root.path("sources").forEach((source) -> {
