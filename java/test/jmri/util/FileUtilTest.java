@@ -332,6 +332,7 @@ public class FileUtilTest {
     @Before
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
         JUnitUtil.waitFor(() -> {
