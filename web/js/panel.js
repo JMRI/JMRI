@@ -617,9 +617,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor;
                                     $widget['occupancystate'] = $gBlks[$widget.blockname].state;
                                 }
-                                $gWidgets[$widget.id] = $widget; //store widget in persistent array
-                                $storeSlipPoints($widget); //also store the slip's 4 end points for other connections
-                                $drawSlip($widget); //draw the slip
 
                                 // convenience variables for points (A, B, C, D)
                                 var ax = $gPts[$widget.ident + SLIP_A].x;
@@ -680,13 +677,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
                                    whereUsed[$widget.turnout] = new Array();
                                 }
-                                whereUsed[$widget.turnout][whereUsed[$widget.turnout].length] = $widget.id;
 
                                 // add turnoutB to whereUsed array
                                 if (!($widget.turnoutB in whereUsed)) {  //set where-used for this new turnout
                                    whereUsed[$widget.turnoutB] = new Array();
                                 }
-                                whereUsed[$widget.turnoutB][whereUsed[$widget.turnoutB].length] = $widget.id;
 
                                 break;
                             case "tracksegment" :
@@ -896,7 +891,6 @@ function $handleClick(e) {
         }
         sendElementChange($widget.jsonType, $widget.turnout, $newState1);
         sendElementChange($widget.jsonType, $widget.turnoutB, $newState2);
-        //$drawSlip($widget); //draw the slip
     } else {
         var $newState = $getNextState($widget);  //determine next state from current state
         sendElementChange($widget.jsonType, $widget.systemName, $newState);
@@ -1799,7 +1793,6 @@ var $reDrawIcon = function($widget) {
 var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
     if ($widget.state !== $newState) {  //don't bother if already this value
-        var $oldState = $widget.state;
         $widget.state = $newState;
         switch ($widget.widgetFamily) {
             case "icon" :
@@ -1826,14 +1819,8 @@ var $setWidgetState = function($id, $newState) {
                     $drawTurnout($widget);
                 } else if ($widget.widgetType == "layoutSlip") {
                     $drawSlip($widget);
-                    $newState = $oldState;      // so widget state doesn't change for slips (we set it when we click)
-                    $widget.state = $oldState;
                 }
                 break;
-        }
-        if ($widget.state !== $newState) {  // only do this if value changed
-            jmri.log("setting " + $id + " for " + $widget.jsonType + " " + $widget.name + ", '" + $oldState + "' --> '" + $newState + "'");
-            $gWidgets[$id].state = $newState;  //update the persistent widget to the new state
         }
 //    } else {
 //        jmri.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
