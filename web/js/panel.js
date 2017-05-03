@@ -654,7 +654,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 // default to this state
                                 $widget['state'] = UNKNOWN;
 
-                                $widget['name'] = $widget.turnout;
+                                $widget['name'] = $widget.ident;
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                 $widget.jsonType = "turnout"; // JSON object type
 
@@ -722,29 +722,23 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         width: $cd + 'px', height: $cd + 'px'});
 
                                 // setup notifications (?)
-                                if (typeof $widget["systemName"] == "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getTurnout($widget["systemName"]);
+                                jmri.getTurnout($widget["turnout"]);
+                                jmri.getTurnout($widget["turnoutB"]);
 
                                 if ($widget["occupancysensor"])
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
 
-                                jmri.getTurnout($widget["turnoutB"]);
-
-                                // Disabled… (don't need this if slip states are propagated directly to slip widgets…)
-                                if (false) {
-                                    // add turnout to whereUsed array
-                                    if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
-                                       whereUsed[$widget.turnout] = new Array();
-                                    }
-                                    whereUsed[$widget.turnout][whereUsed[$widget.turnout].length] = $widget.id + "l";
-
-                                    // add turnoutB to whereUsed array
-                                    if (!($widget.turnoutB in whereUsed)) {  //set where-used for this new turnout
-                                       whereUsed[$widget.turnoutB] = new Array();
-                                    }
-                                    whereUsed[$widget.turnoutB][whereUsed[$widget.turnoutB].length] = $widget.id + "r";
+                                // add turnout to whereUsed array
+                                if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
+                                   whereUsed[$widget.turnout] = new Array();
                                 }
+                                whereUsed[$widget.turnout][whereUsed[$widget.turnout].length] = $widget.id + "r";
+
+                                // add turnoutB to whereUsed array
+                                if (!($widget.turnoutB in whereUsed)) {  //set where-used for this new turnout
+                                   whereUsed[$widget.turnoutB] = new Array();
+                                }
+                                whereUsed[$widget.turnoutB][whereUsed[$widget.turnoutB].length] = $widget.id + "l";
                                 break;
                             case "tracksegment" :
                                 //set widget occupancy sensor from block to speed affected changes later
@@ -1833,14 +1827,14 @@ var $setWidgetState = function($id, $newState) {
             // change appropriate turnout state
             if ($id.endsWith("l")) {
                 if ($state1 != $newState) {
-                    jmri.log("#### Changed $state1 from " + $turnoutStateToString($state1) +
-                        " to " + $turnoutStateToString($newState));
+                    //jmri.log("#### Changed slip " + $widget.name + " $state1 from " + $turnoutStateToString($state1) +
+                    //    " to " + $turnoutStateToString($newState));
                     $state1 = $newState;
                 }
             } else if ($id.endsWith("r")) {
                 if ($state2 != $newState) {
-                    jmri.log("#### Changed $state2 from " + $turnoutStateToString($state2) +
-                        " to " + $turnoutStateToString($newState));
+                    //jmri.log("#### Changed slip " + $widget.name + " $state2 from " + $turnoutStateToString($state2) +
+                    //    " to " + $turnoutStateToString($newState));
                     $state2 = $newState;
                 }
             }
@@ -1851,10 +1845,10 @@ var $setWidgetState = function($id, $newState) {
             //    ", state1: " + $turnoutStateToString($state1) +
             //    ", state2: " + $turnoutStateToString($state2));
 
-            if ($widget.state != $newState) {
-                jmri.log("#### Changeing slip " + slipID + " from " + $slipStateToString($widget.state) +
-                    " to " + $slipStateToString($newState));
-            }
+            //if ($widget.state != $newState) {
+            //    jmri.log("#### Changing slip " + $widget.name + " from " + $slipStateToString($widget.state) +
+            //        " to " + $slipStateToString($newState));
+            //}
 
             // set widget $id to slip id
             $id = slipID;
@@ -1863,16 +1857,15 @@ var $setWidgetState = function($id, $newState) {
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
-        jmri.log("#### $setWidgetState(slip " + $id + ", " + $slipStateToString($newState) +
-            "); (was " + $slipStateToString($widget.state) + ")");
-        //$newState = $widget.state;  // prevent direct slip state change (slip turnouts should change their states instead)
-    } else if ($widget.name == "LT10:SL1-West") {
-        $logProperties($widget);
-        jmri.log("WTF?");
+        //jmri.log("#### $setWidgetState(slip " + $id + ", " + $slipStateToString($newState) +
+        //    "); (was " + $slipStateToString($widget.state) + ")");
+        // JMRI doesn't send slip states… it sends slip turnout states…
+        // so suppress this (incorrect) slip state change
+        $newState = $widget.state;
     }
 
     if ($widget.state !== $newState) {  //don't bother if already this value
-        jmri.log("setting " + $id + " for " + $widget.jsonType + " " + $widget.name + ", '" + $widget.state + "' --> '" + $newState + "'");
+        jmri.log("Changing " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
         $widget.state = $newState;
 
         switch ($widget.widgetFamily) {
@@ -1929,7 +1922,7 @@ var $safeName = function($name) {
 
 //send request for state change
 var sendElementChange = function(type, name, nextState) {
-    jmri.log("sending " + type + " " + name + " --> " + nextState);
+    jmri.log("sending " + type + " '" + name + "' state '" + nextState + "'.");
     jmri.setObject(type, name, nextState);
 };
 
@@ -2398,7 +2391,7 @@ $(document).ready(function() {
 
 
 function getTurnoutStatesForSlipState($slipWidget, $slipState) {
-    var $results = [0, 0];
+    var $results = [0, 0];  // unknown, unknown
     if (typeof $slipWidget != "undefined") {
         if ($widget.widgetType == "layoutSlip") {
             switch ($slipState) {
@@ -2434,6 +2427,16 @@ function getSlipStateForTurnoutStates($widget, $state1, $state2) {
         $result = STATE_BC;
     } else if (($state1 == $widget.turnout1_BD) && ($state2 == $widget.turnout2_BD)) {
         $result = STATE_BD;
+    } else {
+        if (($state1 == $widget.turnout1_AC) || ($state2 == $widget.turnout2_AC)) {
+            $result = STATE_AC;
+        } else if (($state1 == $widget.turnout1_AD) || ($state2 == $widget.turnout2_AD)) {
+            $result = STATE_AD;
+        } else if (($state1 == $widget.turnout1_BC) || ($state2 == $widget.turnout2_BC)) {
+            $result = STATE_BC;
+        } else if (($state1 == $widget.turnout1_BD) || ($state2 == $widget.turnout2_BD)) {
+            $result = STATE_BD;
+        }
     }
     return $result;
 }

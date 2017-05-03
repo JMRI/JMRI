@@ -166,8 +166,8 @@ public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setConnection(int location, Object o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to layoutturnout - " + type);
-            throw new jmri.JmriException("unexpected type of connection to layoutturnout - " + type);
+            log.error("unexpected type of connection to layoutslip - " + type);
+            throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
         }
         switch (location) {
             case SLIP_A:
@@ -560,7 +560,7 @@ public class LayoutSlip extends LayoutTurnout {
                 blockName = tBlockName;
                 block.incrementUse();
             } else {
-                log.error("bad blockname '" + tBlockName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockName + "' in layoutslip:setObjects " + ident);
             }
         }
 
@@ -572,7 +572,7 @@ public class LayoutSlip extends LayoutTurnout {
                     blockB.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockBName + "' in layoutslip:setObjects " + ident);
             }
         }
 
@@ -584,7 +584,7 @@ public class LayoutSlip extends LayoutTurnout {
                     blockC.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockCName + "' in layoutslip:setObjects " + ident);
             }
         }
 
@@ -597,7 +597,7 @@ public class LayoutSlip extends LayoutTurnout {
                     blockD.incrementUse();
                 }
             } else {
-                log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + ident);
+                log.error("bad blockname '" + tBlockDName + "' in layoutslip:setObjects " + ident);
             }
         }
 
@@ -608,7 +608,7 @@ public class LayoutSlip extends LayoutTurnout {
                 secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
                 secondTurnoutName = tSecondTurnoutName;
             } else {
-                log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutturnout " + ident);
+                log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutslip:setObjects " + ident);
                 secondTurnoutName = "";
                 secondNamedTurnout = null;
             }
@@ -620,7 +620,7 @@ public class LayoutSlip extends LayoutTurnout {
                 turnoutName = tTurnoutName;
                 activateTurnout();
             } else {
-                log.error("bad turnoutname '" + tTurnoutName + "' in layoutturnout " + ident);
+                log.error("bad turnoutname '" + tTurnoutName + "' in layoutslip:setObjects " + ident);
                 turnoutName = "";
                 namedTurnout = null;
             }
@@ -969,20 +969,17 @@ public class LayoutSlip extends LayoutTurnout {
         Point2D C = new Point2D.Double(ctrX - ldispA.getX(), ctrY - ldispA.getY());
         Point2D D = new Point2D.Double(ctrX - ldispB.getX(), ctrY - ldispB.getY());
 
-        g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT,
-                BasicStroke.JOIN_ROUND));
+        g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
         g2.draw(new Line2D.Double(A, third(A, C)));
         g2.draw(new Line2D.Double(C, third(C, A)));
 
         if (state == STATE_AC || state == STATE_BD || state == UNKNOWN) {
             g2.draw(new Line2D.Double(A, third(A, D)));
-
             g2.draw(new Line2D.Double(D, third(D, A)));
 
             if (getSlipType() == DOUBLE_SLIP) {
                 g2.draw(new Line2D.Double(B, third(B, C)));
-
                 g2.draw(new Line2D.Double(C, third(C, B)));
             }
         } else {
@@ -997,11 +994,9 @@ public class LayoutSlip extends LayoutTurnout {
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
-
             } else if (state == STATE_BD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
-
             } else if (state == STATE_AD) {
                 g2.draw(new Line2D.Double(B, third(B, C)));
 
@@ -1009,9 +1004,7 @@ public class LayoutSlip extends LayoutTurnout {
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
-
             } else if (state == STATE_BC) {
-
                 g2.draw(new Line2D.Double(A, third(A, D)));
 
                 g2.draw(new Line2D.Double(D, third(D, A)));
@@ -1023,29 +1016,25 @@ public class LayoutSlip extends LayoutTurnout {
             }
         } else {
             g2.draw(new Line2D.Double(A, third(A, D)));
-
             g2.draw(new Line2D.Double(D, third(D, A)));
+
             if (state == STATE_AD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
-
             } else if (state == STATE_AC) {
                 g2.draw(new Line2D.Double(B, third(B, D)));
                 g2.draw(new Line2D.Double(D, third(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
-
             } else if (state == STATE_BD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
-
             } else {
                 g2.draw(new Line2D.Double(B, third(B, D)));
                 g2.draw(new Line2D.Double(D, third(D, B)));
             }
         }
-
     }
 
     class SampleStates extends JPanel {
