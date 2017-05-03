@@ -21,19 +21,21 @@ import org.slf4j.LoggerFactory;
  */
 public class ProfileUtilsTest {
 
+    private static final Logger log = LoggerFactory.getLogger(ProfileUtilsTest.class);
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
-    private static final Logger log = LoggerFactory.getLogger(ProfileUtilsTest.class);
 
     @Before
     public void setUp() {
         Log4JFixture.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
         JUnitUtil.resetProfileManager();
+        Log4JFixture.tearDown();
     }
 
     @Test
