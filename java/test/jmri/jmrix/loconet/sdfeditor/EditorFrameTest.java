@@ -19,7 +19,7 @@ import java.awt.GraphicsEnvironment;
 public class EditorFrameTest {
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws java.io.IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SdfBuffer b = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
         EditorFrame t = new EditorFrame(b);
