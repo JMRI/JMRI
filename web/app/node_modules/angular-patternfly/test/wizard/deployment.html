@@ -1,0 +1,17 @@
+<div ng-controller="DeploymentController">
+  <div pf-wizard-substep step-title="Deploy" step-id="review-progress" step-priority="1" next-enabled="true" prev-enabled="false" ok-to-nav-away="true" wz-disabled="false" on-show="onShow">
+    <div class="wizard-pf-contents" ng-controller="DeploymentController">
+      <div class="wizard-pf-process blank-slate-pf" ng-if="!deploymentComplete">
+        <div class="spinner spinner-lg blank-slate-pf-icon"></div>
+        <h5 class="blank-slate-pf-main-action" id="example_source_deployment-in-progress">Deployment in progress</h5>
+        <p class="blank-slate-pf-secondary-action">Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus, lorem sociosqu eget nunc amet. </p>
+      </div>
+      <div class="wizard-pf-complete blank-slate-pf" ng-if="deploymentComplete">
+        <div class="wizard-pf-success-icon"><span class="glyphicon glyphicon-ok-circle"></span></div>
+        <h5 class="blank-slate-pf-main-action" id="example_source_deployment-was-successful">Deployment was successful</h5>
+        <p class="blank-slate-pf-secondary-action">Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus, lorem sociosqu eget nunc amet. </p>
+        <button type="button" class="btn btn-lg btn-primary">View Deployment</button>
+      </div>
+   </div>
+ </div>
+</div>

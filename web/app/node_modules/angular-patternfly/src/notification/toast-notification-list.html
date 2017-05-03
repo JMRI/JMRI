@@ -1,0 +1,15 @@
+<div class="toast-notifications-list-pf" data-ng-show="notifications.length > 0">
+  <div ng-repeat="notification in notifications">
+    <div pf-toast-notification notification-type="{{notification.type}}"
+         header="{{notification.header}}"
+         message="{{notification.message}}"
+         show-close="{{(showClose || notification.isPersistent === true) && !(notification.menuActions && notification.menuActions.length > 0)}}"
+         close-callback="handleClose"
+         action-title="{{notification.actionTitle}}"
+         action-callback="notification.actionCallback"
+         menu-actions="notification.menuActions"
+         update-viewing="handleViewingChange"
+         data="notification">
+    </div>
+  </div>
+</div>

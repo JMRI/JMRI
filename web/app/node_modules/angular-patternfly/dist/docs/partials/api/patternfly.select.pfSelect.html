@@ -1,0 +1,77 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/select/select.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/select/select.js#L66" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfSelect</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-select-page patternfly-select-pfselect-page"><p>An AngularJS wrapper for the <a href="http://silviomoreto.github.io/bootstrap-select/">Bootstrap-select</a> jQuery plugin which is used
+as a default select decorator in <a href="https://www.patternfly.org/widgets/#bootstrap-select">Patternfly</a>.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;select pf-select
+     ng-model="{string}"
+     [ng-options="{string}"]&gt;
+   ...
+&lt;/select&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ngModel</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-select-page patternfly-select-pfselect-page"><p>Model binding using the <a href="https://docs.angularjs.org/api/ng/type/ngModel.NgModelController/">NgModelController</a> is mandatory.</p>
+</div></td></tr><tr><td>ngOptions <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-select-page patternfly-select-pfselect-page"><p>The <code>&lt;a href=&quot;https://docs.angularjs.org/api/ng/directive/select/&quot;&gt;ngOptions&lt;/a&gt;</code> attribute can be used to dynamically generate a list of <code>&lt;option&gt;</code>
+elements for the <code>&lt;select&gt;</code> element.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-select-page patternfly-select-pfselect-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.select" source-edit-deps="angular.js script.js" source-edit-html="index.html-53" source-edit-css="" source-edit-js="script.js-54" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-53" ng-html-wrap-loaded="patternfly.select angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-53">
+    <div ng-controller="SelectDemoCtrl">
+
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="pet">Preferred pet:</label>
+        <div class="col-sm-10">
+         <select pf-select ng-model="pet" id="pet" ng-options="o as o for o in pets"></select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="fruit">Preferred fruit:</label>
+        <div class="col-sm-10">
+          <select pf-select ng-model="fruit" id="fruit">
+            <option value="orange">Orange</option>
+            <option value="apple" ng-selected="true" selected>Apple</option>
+            <option value="banana">Banana</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="drink">Preferred drink:</label>
+        <div class="col-sm-10">
+          <select pf-select="{ noneSelectedText: 'None' }" ng-model="drink" id="drink" ng-options="o as o for o in drinks">
+            <option value="">No drink selected</option>
+          </select>
+        </div>
+      </div>
+
+    </form>
+
+    <p>Your preferred pet is {{pet}}.</p>
+
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-54"></pre>
+<script type="text/ng-template" id="script.js-54">
+    angular.module( 'patternfly.select' ).controller( 'SelectDemoCtrl', function( $scope ) {
+      $scope.drinks = ['tea', 'coffee', 'water'];
+      $scope.pets = ['Dog', 'Cat', 'Chicken'];
+      $scope.pet = $scope.pets[0];
+      $scope.fruit = 'orange';
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.select" ng-set-html="index.html-53" ng-eval-javascript="script.js-54"></div>
+</div></div>
+</div>

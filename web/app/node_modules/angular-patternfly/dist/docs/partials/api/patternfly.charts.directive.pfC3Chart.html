@@ -1,0 +1,87 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/c3/c3-chart.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/charts/c3/c3-chart.directive.js#L75" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfC3Chart</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfc3chart-page"><p>Directive for wrapping c3 library</p>
+<p>Note: The &#39;patternfly.charts&#39; module is not a dependency in the default angular &#39;patternfly&#39; module.
+In order to use patternfly charts you must add &#39;patternfly.charts&#39; as a dependency in your application.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-c3-chart
+     id="{string}"
+     config="{expression}"
+     [get-chart-callback="{function (chart))}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>id</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfc3chart-page"><p>the ID of the container that the chart should bind to</p>
+</div></td></tr><tr><td>config</td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfc3chart-page"><p>the c3 configuration options for the chart</p>
+</div></td></tr><tr><td>getChartCallback <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function (chart)</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfc3chart-page"><p>the callback user function to be called once the chart is generated, containing the c3 chart object</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfc3chart-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-7" source-edit-css="" source-edit-js="script.js-8" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-7" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-7">
+  <div ng-controller="ChartCtrl">
+     <div pf-c3-chart id="chartId" config="chartConfig" get-chart-callback="getChart"></div>
+
+     <form role="form" style="width:300px">
+       Total = {{total}}, Used = {{used}}, Available = {{available}}
+       <div class="form-group">
+         <label>Used</label>
+         <input type="text" class="form-control" ng-model="newUsed">
+       </div>
+       <input type="button" ng-click="submitform(newUsed)" value="Set Used" />
+       <input type="button" ng-click="focusUsed()" value="Focus Used" />
+     </form>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-8"></pre>
+<script type="text/ng-template" id="script.js-8">
+  angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope ) {
+    $scope.used = 950;
+    $scope.total = 1000;
+    $scope.available =  $scope.total - $scope.used;
+
+    $scope.chartConfig = patternfly.c3ChartDefaults().getDefaultDonutConfig('MHz Used');
+    $scope.chartConfig.data = {
+      type: "donut",
+      columns: [
+        ["Used", $scope.used],
+        ["Available", $scope.total - $scope.used]
+      ],
+      groups: [
+        ["used", "available"]
+      ],
+      order: null
+    };
+
+    $scope.getChart = function (chart) {
+      $scope.chart = chart;
+    }
+
+    $scope.focusUsed = function () {
+      $scope.chart.focus("Used");
+    }
+
+    $scope.updateAvailable = function (val) {
+      $scope.available =  $scope.total - $scope.used;
+    }
+
+    $scope.submitform = function (val) {
+      $scope.used = val;
+      $scope.updateAvailable();
+      $scope.chartConfig.data.columns = [["Used",$scope.used],["Available",$scope.available]];
+    };
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-7" ng-eval-javascript="script.js-8"></div>
+</div></div>
+</div>

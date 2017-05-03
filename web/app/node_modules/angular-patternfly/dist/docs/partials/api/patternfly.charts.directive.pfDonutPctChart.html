@@ -1,0 +1,269 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/donut/donut-pct-chart-directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/charts/donut/donut-pct-chart-directive.js#L260" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfDonutPctChart</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfdonutpctchart-page"><p>Directive for rendering a percentage used donut/radial chart.  The Used Percentage fill starts at 12 o’clock and
+moves clockwise.  Whatever portion of the donut not Used, will be represented as Available, and rendered as a
+gray fill.
+There are three possible fill colors for Used Percentage, dependent on whether or not there are thresholds:<br/></p>
+<p><ul></p>
+<p><li>When no thresholds exist, or if the used percentage has not surpassed any thresholds, the indicator is blue.</p>
+<p><li>When the used percentage has surpassed the warning threshold, but not the error threshold, the indicator is orange.</p>
+<p><li>When the used percentage has surpassed the error threshold, the indicator is is red.
+</ul>
+The directive will calculate the Available Percentage (Total - Used), and display it as a grey radial fill.</p>
+<p><br><br>
+See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> for a full list of C3 chart options.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-donut-pct-chart
+     config="{object}"
+     data="{object}"
+     [center-label="{string}"]
+     [chart-height="{int}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfdonutpctchart-page"><p>configuration properties for the donut chart:<br/></p>
+<ul style='list-style-type: none'>
+<li>.chartId        - the unique id of the donut chart
+<li>.units          - unit label for values, ex: &#39;MHz&#39;,&#39;GB&#39;, etc..
+<li>.thresholds     - warning and error percentage thresholds used to determine the Usage Percentage fill color (optional)
+<li>.tooltipFn(d)   - user defined function to customize the tool tip (optional)
+<li>.centerLabelFn  - user defined function to customize the text of the center label (optional)
+<li>.onClickFn(d,i) - user defined function to handle when donut arc is clicked upon.
+</ul></div></td></tr><tr><td>data</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfdonutpctchart-page"><p>the Total and Used values for the donut chart.  Available is calculated as Total - Used.<br/></p>
+<ul style='list-style-type: none'>
+<li>.used          - number representing the amount used
+<li>.total         - number representing the total amount
+<li>.dataAvailable - Flag if there is data available - default: true
+</ul></div></td></tr><tr><td>center-label <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfdonutpctchart-page"><p>specifies the contents of the donut&#39;s center label.<br/>
+<strong>Values:</strong></p>
+<ul style='list-style-type: none'>
+<li> &#39;used&#39;      - displays the Used amount in the center label (default)
+<li> &#39;available&#39; - displays the Available amount in the center label
+<li> &#39;percent&#39;   - displays the Usage Percent of the Total amount in the center label
+<li> &#39;none&#39;      - does not display the center label
+</ul></div></td></tr><tr><td>chartHeight <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfdonutpctchart-page"><p>height of the donut chart</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfdonutpctchart-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-9" source-edit-css="" source-edit-js="script.js-10" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-9" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-9">
+  <div ng-controller="ChartCtrl">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <label>Error Threshold</label>
+          <div pf-donut-pct-chart config="configErr" data="dataErr"></div>
+        </div>
+        <div class="col-md-3 text-center"">
+          <label>Warning Threshold</label>
+          <div pf-donut-pct-chart config="configWarn" data="dataWarn"></div>
+        </div>
+        <div class="col-md-3 text-center"">
+          <label>Ok</label>
+          <div pf-donut-pct-chart config="configOk" data="dataOk"></div>
+        </div>
+        <div class="col-md-3 text-center"">
+          <label>No Threshold</label>
+          <div pf-donut-pct-chart config="configNoThresh" data="dataNoThresh"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <div pf-donut-pct-chart config="usedConfig" data="usedData" center-label="usedLabel"></div>
+          <label>center-label = 'used'</label>
+        </div>
+        <div class="col-md-3 text-center">
+          <div pf-donut-pct-chart config="availConfig" data="availData" center-label="availLabel"></div>
+          <label>center-label = 'available'</label>
+        </div>
+        <div class="col-md-3 text-center">
+          <div pf-donut-pct-chart config="pctConfig" data="pctData" center-label="pctLabel"></div>
+          <label>center-label = 'percent'</label>
+        </div>
+        <div class="col-md-3 text-center">
+          <div pf-donut-pct-chart config="noneConfig" data="noneData" center-label="noLabel"></div>
+          <label>center-label = ' none'</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <label>Custom Tooltip, Legend, Click handling, and Center Label</label><br>
+          <label><strong>Click on Donut Arc!</strong></label>
+          <div pf-donut-pct-chart config="custConfig" chart-height="custChartHeight" data="custData"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <form role="form"">
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custData.dataAvailable">Data Available</input>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+          <form role="form" >
+            <div class="form-group">
+              <label>Chart Height</label>
+              </br>
+              <input style="height:25px; width:60px;" type="number" ng-model="custChartHeight"></input>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-10"></pre>
+<script type="text/ng-template" id="script.js-10">
+  angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope ) {
+    $scope.configErr = {
+      'chartId': 'chartErr',
+      'units': 'GB',
+      'thresholds':{'warning':'60','error':'90'}
+    };
+
+    $scope.dataErr = {
+      'used': '950',
+      'total': '1000'
+    };
+
+    $scope.configWarn = {
+      'chartId': 'chartWarn',
+      'units': 'GB',
+      'thresholds':{'warning':'60','error':'90'}
+    };
+
+    $scope.dataWarn = {
+      'used': '650',
+      'total': '1000'
+    };
+
+    $scope.configOk = {
+      'chartId': 'chartOk',
+      'units': 'GB',
+      'thresholds':{'warning':'60','error':'90'}
+    };
+
+    $scope.dataOk = {
+      'used': '550',
+      'total': '1000'
+    };
+
+    $scope.configNoThresh = {
+      'chartId': 'chartNoThresh',
+      'units': 'GB',
+    };
+
+    $scope.dataNoThresh = {
+      'used': '750',
+      'total': '1000'
+    };
+
+    $scope.usedConfig = {
+      'chartId': 'usedChart',
+      'units': 'GB',
+      'thresholds':{'warning':'60','error':'90'}
+    };
+
+    $scope.usedData = {
+      'used': '350',
+      'total': '1000'
+    };
+
+    $scope.usedLabel = "used";
+
+    $scope.availConfig = {
+      'chartId': 'availChart',
+      'units': 'GB',
+      'thresholds':{'warning':'60','error':'90'}
+    };
+
+    $scope.availData = {
+       'used': '350',
+       'total': '1000'
+     };
+
+    $scope.availLabel = "available";
+
+    $scope.pctConfig = {
+      'chartId': 'pctChart',
+      'units': 'GB',
+      'thresholds':{'warning':'60','error':'90'}
+    };
+
+    $scope.pctData = {
+      'used': '350',
+      'total': '1000'
+    };
+
+    $scope.pctLabel = "percent";
+
+    $scope.noneConfig = {
+      'chartId': 'noneChart',
+      'units': 'GB',
+      'thresholds':{'warning':'60','error':'90'}
+    };
+
+    $scope.noneData = {
+      'used': '350',
+      'total': '1000'
+    };
+
+    $scope.noLabel = "none";
+
+    $scope.custConfig = {
+      'chartId': 'custChart',
+      'units': 'MHz',
+      'thresholds':{'warning':'60','error':'90'},
+      "legend":{"show":true},
+      'tooltipFn': function (d) {
+        return '<span class="donut-tooltip-pf"style="white-space: nowrap;">' +
+                 d[0].value + ' ' + d[0].name +
+               '</span>';
+        },
+      'centerLabelFn': function () {
+        return $scope.custData.available + " GB";
+        },
+      'onClickFn': function (d, i) {
+        alert("You Clicked On The Donut!");
+        }
+      };
+
+    $scope.custData = {
+      'dataAvailable': true,
+      'used': '670',
+      'total': '1000'
+    };
+
+    $scope.custChartHeight = 200;
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-9" ng-eval-javascript="script.js-10"></div>
+</div></div>
+</div>
