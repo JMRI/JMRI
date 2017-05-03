@@ -190,11 +190,11 @@ public class NceBinaryCommand {
         int addr_l = number & 0xFF;
 
         byte[] retVal = new byte[5];
-        retVal[0] = (byte) (ACC_CMD); // NCE accessory command
-        retVal[1] = (byte) (addr_h);  // high address
-        retVal[2] = (byte) (addr_l);  // low address
-        retVal[3] = op_1;             // command
-        retVal[4] = (byte) 0;         // zero out last byte for acc
+        retVal[0] = (byte) ACC_CMD; // NCE accessory command
+        retVal[1] = (byte) addr_h;  // high address
+        retVal[2] = (byte) addr_l;  // low address
+        retVal[3] = op_1;           // command
+        retVal[4] = (byte) 0;       // zero out last byte for acc
 
         return retVal;
     }
@@ -206,9 +206,9 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (READ16_CMD); // read 16 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        retVal[0] = (byte) READ16_CMD; // read 16 bytes command
+        retVal[1] = (byte) addr_h;     // high address
+        retVal[2] = (byte) addr_l;     // low address
 
         return retVal;
 
@@ -227,9 +227,9 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (READ1_CMD); // read 1 byte command
-        retVal[1] = (byte) (addr_h);    // high address
-        retVal[2] = (byte) (addr_l);    // low address
+        retVal[0] = (byte) READ1_CMD; // read 1 byte command
+        retVal[1] = (byte) addr_h;    // high address
+        retVal[2] = (byte) addr_l;    // low address
 
         return retVal;
 
@@ -242,10 +242,10 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[4 + 16];
-        retVal[0] = (byte) (WRITE_N_CMD); // write n bytes command
-        retVal[1] = (byte) (addr_h);      // high address
-        retVal[2] = (byte) (addr_l);      // low address
-        retVal[3] = (byte) num;           // number of bytes to write
+        retVal[0] = (byte) WRITE_N_CMD; // write n bytes command
+        retVal[1] = (byte) addr_h;      // high address
+        retVal[2] = (byte) addr_l;      // low address
+        retVal[3] = (byte) num;         // number of bytes to write
 
         return retVal;
 
@@ -258,9 +258,9 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3 + 8];
-        retVal[0] = (byte) (WRITE8_CMD); // write 8 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        retVal[0] = (byte) WRITE8_CMD; // write 8 bytes command
+        retVal[1] = (byte) addr_h;     // high address
+        retVal[2] = (byte) addr_l;     // low address
 
         return retVal;
 
@@ -273,9 +273,9 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3 + 4];
-        retVal[0] = (byte) (WRITE4_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        retVal[0] = (byte) WRITE4_CMD; // write 4 bytes command
+        retVal[1] = (byte) addr_h;     // high address
+        retVal[2] = (byte) addr_l;     // low address
 
         return retVal;
     }
@@ -287,9 +287,9 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3 + 2];
-        retVal[0] = (byte) (WRITE2_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        retVal[0] = (byte) WRITE2_CMD; // write 4 bytes command
+        retVal[1] = (byte) addr_h;     // high address
+        retVal[2] = (byte) addr_l;     // low address
 
         return retVal;
     }
@@ -301,9 +301,9 @@ public class NceBinaryCommand {
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3 + 1];
-        retVal[0] = (byte) (WRITE1_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        retVal[0] = (byte) WRITE1_CMD; // write 4 bytes command
+        retVal[1] = (byte) addr_h;     // high address
+        retVal[2] = (byte) addr_l;     // low address
 
         return retVal;
     }
@@ -312,8 +312,8 @@ public class NceBinaryCommand {
     public static byte[] accAiu2Read(int cabId) {
 
         byte[] retVal = new byte[1 + 1];
-        retVal[0] = (byte) (READ_AUI2_CMD); // write 4 bytes command
-        retVal[1] = (byte) (cabId);         // cab address
+        retVal[0] = (byte) READ_AUI2_CMD; // write 4 bytes command
+        retVal[1] = (byte) cabId;         // cab address
 
         return retVal;
     }
@@ -322,8 +322,8 @@ public class NceBinaryCommand {
     public static byte[] usbSetCabId(int cab) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_SET_CAB_CMD); // read N bytes command
-        retVal[1] = (byte) (cab);             // cab number
+        retVal[0] = (byte) USB_SET_CAB_CMD; // read N bytes command
+        retVal[1] = (byte) cab;             // cab number
 
         return retVal;
     }
@@ -332,8 +332,8 @@ public class NceBinaryCommand {
     public static byte[] usbMemoryWrite1(byte data) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_MEM_WRITE_CMD); // write 2 bytes command
-        retVal[1] = (data);                     // data
+        retVal[0] = (byte) USB_MEM_WRITE_CMD; // write 2 bytes command
+        retVal[1] = (data);                   // data
 
         return retVal;
     }
@@ -342,8 +342,8 @@ public class NceBinaryCommand {
     public static byte[] usbMemoryRead(int num) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (USB_MEM_READ_CMD); // read N bytes command
-        retVal[1] = (byte) (num);              // byte count
+        retVal[0] = (byte) USB_MEM_READ_CMD; // read N bytes command
+        retVal[1] = (byte) num;              // byte count
 
         return retVal;
     }
@@ -352,9 +352,9 @@ public class NceBinaryCommand {
     public static byte[] usbMemoryPointer(int cab, int loc) {
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (USB_MEM_POINTER_CMD); // read N bytes command
-        retVal[1] = (byte) (cab);                 // cab number
-        retVal[2] = (byte) (loc);                 // memory offset
+        retVal[0] = (byte) USB_MEM_POINTER_CMD; // read N bytes command
+        retVal[1] = (byte) cab;                 // cab number
+        retVal[2] = (byte) loc;                 // memory offset
 
         return retVal;
     }
@@ -363,7 +363,7 @@ public class NceBinaryCommand {
     public static byte[] accStopClock() {
 
         byte[] retVal = new byte[1];
-        retVal[0] = (byte) (STOP_CLOCK_CMD); // stop clock command
+        retVal[0] = (byte) STOP_CLOCK_CMD; // stop clock command
 
         return retVal;
     }
@@ -372,7 +372,7 @@ public class NceBinaryCommand {
     public static byte[] accStartClock() {
 
         byte[] retVal = new byte[1];
-        retVal[0] = (byte) (START_CLOCK_CMD); // start clock command
+        retVal[0] = (byte) START_CLOCK_CMD; // start clock command
 
         return retVal;
     }
@@ -381,9 +381,9 @@ public class NceBinaryCommand {
     public static byte[] accSetClock(int hours, int minutes) {
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (SET_CLOCK_CMD); // set clock command
-        retVal[1] = (byte) (hours);         // hours
-        retVal[2] = (byte) (minutes);       // minutes
+        retVal[0] = (byte) SET_CLOCK_CMD; // set clock command
+        retVal[1] = (byte) hours;         // hours
+        retVal[2] = (byte) minutes;       // minutes
 
         return retVal;
     }
@@ -396,8 +396,8 @@ public class NceBinaryCommand {
             bit = 1;
         }
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (CLOCK_1224_CMD); // set clock 12/24 command
-        retVal[1] = (byte) (bit);            // 12 - 0, 24 - 1
+        retVal[0] = (byte) CLOCK_1224_CMD; // set clock 12/24 command
+        retVal[1] = (byte) bit;            // 12 - 0, 24 - 1
 
         return retVal;
     }
@@ -406,8 +406,8 @@ public class NceBinaryCommand {
     public static byte[] accSetClockRatio(int ratio) {
 
         byte[] retVal = new byte[2];
-        retVal[0] = (byte) (CLOCK_RATIO_CMD); // set clock command
-        retVal[1] = (byte) (ratio);           // fast clock ratio
+        retVal[0] = (byte) CLOCK_RATIO_CMD; // set clock command
+        retVal[1] = (byte) ratio;           // fast clock ratio
 
         return retVal;
     }
@@ -423,11 +423,11 @@ public class NceBinaryCommand {
         int locoAddr_l = locoAddr & 0xFF;
 
         byte[] retVal = new byte[5];
-        retVal[0] = (byte) (LOCO_CMD);   // NCE Loco command
-        retVal[1] = (byte) (locoAddr_h); // loco high address
-        retVal[2] = (byte) (locoAddr_l); // loco low address
-        retVal[3] = locoSubCmd;          // sub command
-        retVal[4] = locoData;            // sub data
+        retVal[0] = (byte) LOCO_CMD;   // NCE Loco command
+        retVal[1] = (byte) locoAddr_h; // loco high address
+        retVal[2] = (byte) locoAddr_l; // loco low address
+        retVal[3] = locoSubCmd;        // sub command
+        retVal[4] = locoData;          // sub data
 
         return retVal;
     }
@@ -441,7 +441,7 @@ public class NceBinaryCommand {
     @Nonnull
     public static byte[] getNceEpromRev() {
         byte[] retVal = new byte[1];
-        retVal[0] = (byte) (SW_REV_CMD);
+        retVal[0] = (byte) SW_REV_CMD;
         return retVal;
     }
 
@@ -463,12 +463,12 @@ public class NceBinaryCommand {
         int cvAddr_h = cvAddr / 256;
         int cvAddr_l = cvAddr & 0xFF;
 
-        retVal[0] = (byte) (OPS_PROG_LOCO_CMD); // NCE ops mode loco command
-        retVal[1] = (byte) (locoAddr_h);        // loco high address
-        retVal[2] = (byte) (locoAddr_l);        // loco low address
-        retVal[3] = (byte) (cvAddr_h);          // CV high address
-        retVal[4] = (byte) (cvAddr_l);          // CV low address
-        retVal[5] = (byte) (cvData);            // CV data
+        retVal[0] = (byte) OPS_PROG_LOCO_CMD; // NCE ops mode loco command
+        retVal[1] = (byte) locoAddr_h;        // loco high address
+        retVal[2] = (byte) locoAddr_l;        // loco low address
+        retVal[3] = (byte) cvAddr_h;          // CV high address
+        retVal[4] = (byte) cvAddr_l;          // CV low address
+        retVal[5] = (byte) cvData;            // CV data
 
         return retVal;
     }
@@ -490,12 +490,12 @@ public class NceBinaryCommand {
         int cvAddr_h = cvAddr / 256;
         int cvAddr_l = cvAddr & 0xFF;
 
-        retVal[0] = (byte) (OPS_PROG_ACCY_CMD); // NCE ops mode accy command
-        retVal[1] = (byte) (accyAddr_h);        // accy high address
-        retVal[2] = (byte) (accyAddr_l);        // accy low address
-        retVal[3] = (byte) (cvAddr_h);          // CV high address
-        retVal[4] = (byte) (cvAddr_l);          // CV low address
-        retVal[5] = (byte) (cvData);            // CV data
+        retVal[0] = (byte) OPS_PROG_ACCY_CMD; // NCE ops mode accy command
+        retVal[1] = (byte) accyAddr_h;        // accy high address
+        retVal[2] = (byte) accyAddr_l;        // accy low address
+        retVal[3] = (byte) cvAddr_h;          // CV high address
+        retVal[4] = (byte) cvAddr_l;          // CV low address
+        retVal[5] = (byte) cvData;            // CV data
 
         return retVal;
     }
