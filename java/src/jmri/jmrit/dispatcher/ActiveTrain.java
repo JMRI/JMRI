@@ -31,22 +31,22 @@ import org.slf4j.LoggerFactory;
  * <p>
  * An ActiveTrain will have one of the following statuses:
  * <dl>
- * <dt>RUNNING<dt><dd>Actively running on the layout, according to its mode of
+ * <dt>RUNNING</dt><dd>Actively running on the layout, according to its mode of
  * operation.</dd>
- * <dt>PAUSED<dt><dd>Paused waiting for a user-specified number of fast clock
+ * <dt>PAUSED</dt><dd>Paused waiting for a user-specified number of fast clock
  * minutes. The Active Train is expected to move to either RUNNING or WAITING
  * once the specified number of minutes has elapsed. This is intended for
  * automatic station stops. (automatic trains only)</dd>
- * <dt>WAITING<dt><dd>Stopped waiting for a Section allocation. This is the
+ * <dt>WAITING</dt><dd>Stopped waiting for a Section allocation. This is the
  * state the Active Train is in when it is created in Dispatcher.</dd>
- * <dt>WORKING<dt><dd>Performing work under control of a human engineer. This is
+ * <dt>WORKING</dt><dd>Performing work under control of a human engineer. This is
  * the state an Active Train assumes when an engineer is picking up or setting
  * out cars at industries. (automatic trains only)</dd>
- * <dt>READY<dt><dd>Train has completed WORKING, and is awaiting a restart -
+ * <dt>READY</dt><dd>Train has completed WORKING, and is awaiting a restart -
  * dispatcher clearance to resume running. (automatic trains only)</dd>
- * <dt>STOPPED<dt><dd>Train was stopped by the dispatcher. Dispatcher must
+ * <dt>STOPPED</dt><dd>Train was stopped by the dispatcher. Dispatcher must
  * resume. (automatic trains only)</dd>
- * <dt>DONE<dt><dd>Train has completed its transit of the layout and is ready to
+ * <dt>DONE</dt><dd>Train has completed its transit of the layout and is ready to
  * be terminated by the dispatcher, or Restart pressed to repeat the automated
  * run.</dd>
  * </dl>
@@ -62,10 +62,10 @@ import org.slf4j.LoggerFactory;
  * Train information supplied when the ActiveTrain is created can come from any
  * of the following:
  * <dl>
- * <dt>ROSTER<dt><dd>The train was selected from the JMRI roster menu</dd>
- * <dt>OPERATIONS<dt><dd>The train was selected from trains available from JMRI
+ * <dt>ROSTER</dt><dd>The train was selected from the JMRI roster menu</dd>
+ * <dt>OPERATIONS</dt><dd>The train was selected from trains available from JMRI
  * operations</dd>
- * <dt>USER<dt><dd>Neither menu was used--the user entered a name and DCC
+ * <dt>USER</dt><dd>Neither menu was used--the user entered a name and DCC
  * address.</dd>
  * </dl>
  * Train source information is recorded when an ActiveTrain is created,

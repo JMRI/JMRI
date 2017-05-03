@@ -309,7 +309,7 @@ public abstract class RowComboBoxPanel
     }
 
     /**
-     * method for our own VALUECOL row specific JComboBox
+     * Method for our own VALUECOL row specific JComboBox
      * @param choice the selected item (Aspect/Appearance) in the list
      */
     protected void eventRowComboBoxActionPerformed(@Nonnull Object choice) {

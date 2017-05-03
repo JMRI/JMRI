@@ -4,11 +4,13 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
+import gnu.io.UnsupportedCommOperationException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.tmcc.SerialPortController;
 import jmri.jmrix.tmcc.SerialTrafficController;
 import jmri.jmrix.tmcc.TMCCSystemConnectionMemo;
@@ -54,7 +56,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
                         + " " + activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
+            } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: " + et);
             }
 
@@ -83,48 +85,43 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
             if (log.isDebugEnabled()) {
                 // arrange to notify later
-                activeSerialPort.addEventListener(new SerialPortEventListener() {
-                    @Override
-                    public void serialEvent(SerialPortEvent e) {
-                        int type = e.getEventType();
-                        switch (type) {
-                            case SerialPortEvent.DATA_AVAILABLE:
-                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.CTS:
-                                log.info("SerialEvent: CTS is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.DSR:
-                                log.info("SerialEvent: DSR is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.RI:
-                                log.info("SerialEvent: RI is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.CD:
-                                log.info("SerialEvent: CD is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.OE:
-                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.PE:
-                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.FE:
-                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.BI:
-                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                                return;
-                            default:
-                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                                return;
-                        }
+                activeSerialPort.addEventListener((SerialPortEvent e) -> {
+                    int type = e.getEventType();
+                    switch (type) {
+                        case SerialPortEvent.DATA_AVAILABLE:
+                            log.info("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+                            log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.CTS:
+                            log.info("SerialEvent: CTS is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.DSR:
+                            log.info("SerialEvent: DSR is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.RI:
+                            log.info("SerialEvent: RI is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.CD:
+                            log.info("SerialEvent: CD is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.OE:
+                            log.info("SerialEvent: OE (overrun error) is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.PE:
+                            log.info("SerialEvent: PE (parity error) is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.FE:
+                            log.info("SerialEvent: FE (framing error) is {}", e.getNewValue());
+                            return;
+                        case SerialPortEvent.BI:
+                            log.info("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
+                            return;
+                        default:
+                            log.info("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                     }
-                }
-                );
+                });
                 try {
                     activeSerialPort.notifyOnFramingError(true);
                 } catch (Exception e) {
@@ -155,9 +152,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (IOException | TooManyListenersException ex) {
+            log.error("Unexpected exception while opening port {} trace follows: ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -165,7 +161,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Can the port accept additional characters? Yes, always
+     * Can the port accept additional characters?
+     *
+     * @return true
      */
     public boolean okToSend() {
         return true;
@@ -213,7 +211,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
+     *
+     * @throws gnu.io.UnsupportedCommOperationException if unable to configure
+     *                                                  port
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -242,6 +243,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * Set the baud rate.
+     *
+     * @param rate the baud rate
      */
     @Override
     public void configureBaudRate(String rate) {
@@ -256,7 +259,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
-     * options. May not be null, but may have zero entries
+     * options. May not be null, but may have zero entries.
+     *
+     * @return a single element array containing an empty string
      */
     public String[] validOption2() {
         return new String[]{""};
@@ -264,7 +269,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     /**
      * Get a String that says what Option 2 represents May be an empty string,
-     * but will not be null
+     * but will not be null.
+     *
+     * @return an empty string
      */
     public String option2Name() {
         return "";
@@ -275,7 +282,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @return the default adapter
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public SerialDriverAdapter instance() {
@@ -285,7 +294,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return mInstance;
     }
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static SerialDriverAdapter mInstance = null;

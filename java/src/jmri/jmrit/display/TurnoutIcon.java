@@ -121,8 +121,10 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     /**
-     * Place icon by its bean state name key found in
-     * jmri.NamedBeanBundle.properties That is, by its localized bean state name
+     * Place icon by its localized bean state name.
+     *
+     * @param name the state name
+     * @param icon the icon to place
      */
     public void setIcon(String name, NamedIcon icon) {
         if (log.isDebugEnabled()) {
