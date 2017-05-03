@@ -17,24 +17,23 @@ So our releases procedure is, in outline:
 
 * Push the branch back to the JMRI/JMRI repository (you can't use a pull request until the branch exists), then switch back to master so you don't accidentally change the release branch
 
-* Jenkins build from release-n.n.n branch.  (That’s basically the same Jenkins job, except for changing to checkout from Github)
+* Jenkins build from release-n.n.n branch.  
 
-* As needed, bring in any additional commits requested to branch from master - probably use 'git cherry-pick {commit hash}' to do this. Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” works with this. With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, then do final “svn merge” at the appointed time; we might also do this from GitHub. When using 'git merge' would also work we need to be aware of it stamping over 'release.properties'  and the correct procedure to revert that. 
+* If needed, bring in any additional commits requested to branch from master - probably use 'git cherry-pick {commit hash}' to do this. Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” works with this. With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, then do final “svn merge” at the appointed time; we might also do this from GitHub. When using 'git merge' would also work we need to be aware of it stamping over 'release.properties'  and the correct procedure to revert that. 
 
 * After Jenkins has processed the final set of changes, directly publish the files in the usual SF.net way, etc.
 
-* We're also looking at using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist at first.
-
 * Turn off the Jenkins job; this is so it doesn't fail after later steps
+
+* We're also using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist for quite a while
 
 * Put a tag titled vn.n.n (note initial lower case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. 
 
-* Delete the branch (to clean up the list of branches in various GUI tools), which can be done in the main JMRI/JMRI repo via the web interface or in a fork & pushed back
+* Delete the branch (to clean up the list of branches in various GUI tools), which can be done in the main JMRI/JMRI repo via the web interface
 
 
 ### Issues
 
-- [ ] Are we using [GitHub milestones](https://github.com/JMRI/JMRI/milestones)?  How? Only maintainers can set them on pull requests. The list is being referenced in the release note now. Do we have the release builder add milestones on [closed PRs](https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed)?
 
 - [ ] How best to deal with bringing additional commits into the branch from master - do we 'cherry-pick' or 'merge'? Everybody is using pull requests, which makes it pretty easy to get the hash numbers needed for cherry-pick (that can be messy with direct commits, because you’re not always sure which commits go together). We can play this by ear, but if somebody says “can you include PR 123?” I think that lends itself to a cherry pick pretty nicely. Best of all - get people to do their work on a branch, which can be separately merged.
 
@@ -88,8 +87,6 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
 
 - Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls)
-
-- [ ] Do we want to add a step about the use of milestones here?  If we're using them, we should make sure that all closed pull requests have the right one(s) set.
 
 - Bring in all possible [sf.net patches](https://sourceforge.net/p/jmri/patches/), including decoders
 
@@ -194,13 +191,14 @@ We roll some general code maintenance items into the release process.  They can 
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ````
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr%20is%3Aclosed%20merged%3A%3E2016-08-13
+https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+no%3Amilestone
 ````
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
-- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
+- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere)
 
 ```
+        git checkout master
         ant make-test-release-branch
 ```
  
@@ -346,11 +344,9 @@ It still gets a bit tricky if there’s a difference (e.g. due to a conflict wit
 ## Release Files on SF.net
 
 
-- Upload the Linux, Mac OS X and Windows files to sourceforge
+This step uploads the Linux, Mac OS X and Windows files to the SourceForge file distribution system. In the process, it generates checksums and some useful text for announcements.  
 
- - Download from CI, check integrity (make sure compressed files not expanded), then do (replace "user" with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
-
- - (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
+(replace "user" below with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
 
  - (The "./testrelease 4.7.3" local script on shell.sf.net does the following steps, except for the edit, of course)
 ```
@@ -394,6 +390,8 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 
 - Disable the Jenkins release-build job; this is so it doesn't fail after later steps
 
+ - Download all three installers from their build source, check integrity (if you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
+ 
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
 
 - on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
@@ -505,7 +503,7 @@ git push github
 
 - Commit site, push, etc.
 
-- Consider submitting an anti-virus white-list request at:
+- Consider submitting an anti-virus white-list request at, particularly for production versions:
 ```
         https://submit.symantec.com/whitelist/isv/
 ```

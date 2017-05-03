@@ -217,13 +217,17 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
 
     public int type = RH_TURNOUT;
+
     public Object connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
     public Object connectB = null;      // straight leg of LH and RH turnouts
     public Object connectC = null;
     public Object connectD = null;      // double xover, RH Xover, LH Xover only
+
     public int continuingSense = Turnout.CLOSED;
+
     public boolean disabled = false;
     public boolean disableWhenOccupied = false;
+
     public Point2D dispB = new Point2D.Double(20.0, 0.0);
     public Point2D dispC = new Point2D.Double(20.0, 10.0);
     public Point2D pointA = new Point2D.Double(0, 0);
@@ -1907,7 +1911,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Initialization method The above variables are initialized by
-     * PositionablePointXml, then the following method is called after the
+     * LayoutTurnoutXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
     public void setObjects(LayoutEditor p) {
@@ -2253,8 +2257,6 @@ public class LayoutTurnout extends LayoutTrack {
             //This should only be needed where we are looking at a single turnout.
             if (block != null) {
                 LayoutBlock aLBlock = null;
-                LayoutBlock bLBlock = null;
-                LayoutBlock cLBlock = null;
                 if (connectA instanceof TrackSegment) {
                     aLBlock = ((TrackSegment) connectA).getLayoutBlock();
                     if (aLBlock != block) {
@@ -2267,6 +2269,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
 
+                LayoutBlock bLBlock = null;
                 if (connectB instanceof TrackSegment) {
                     bLBlock = ((TrackSegment) connectB).getLayoutBlock();
                     if (bLBlock != block) {
@@ -2278,6 +2281,8 @@ public class LayoutTurnout extends LayoutTrack {
                         }
                     }
                 }
+
+                LayoutBlock cLBlock = null;
                 if ((connectC instanceof TrackSegment) && (((TrackSegment) connectC).getLayoutBlock() != block)) {
                     cLBlock = ((TrackSegment) connectC).getLayoutBlock();
                     if (cLBlock != block) {
@@ -2345,6 +2350,7 @@ public class LayoutTurnout extends LayoutTrack {
                         }
                     }
                 }
+
                 if (connectC instanceof TrackSegment) {
                     cLBlock = ((TrackSegment) connectC).getLayoutBlock();
                     if (cLBlock != block && cLBlock != blockB && cLBlock != blockC) {
@@ -2364,6 +2370,7 @@ public class LayoutTurnout extends LayoutTrack {
                         }
                     }
                 }
+
                 if (connectD instanceof TrackSegment) {
                     dLBlock = ((TrackSegment) connectD).getLayoutBlock();
                     if (dLBlock != block && dLBlock != blockB && dLBlock != blockC && dLBlock != blockD) {
@@ -2500,13 +2507,7 @@ public class LayoutTurnout extends LayoutTrack {
             panel2.setBorder(border);
             panel2.setLayout(new FlowLayout());
             panel2.add(blockNameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(blockNameComboBox, false, true);
-            } else {
-                blockNameComboBox.setEditable(true);
-                blockNameComboBox.getEditor().setItem("");
-                blockNameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(blockNameComboBox, false, true);
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(turnoutEditBlock = new JButton(rb.getString("CreateEdit")));
             turnoutEditBlock.addActionListener((ActionEvent e) -> {
@@ -2519,13 +2520,7 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");
                 panel21.setBorder(borderblk2);
-                if (true) {
-                    layoutEditor.setupComboBox(blockBNameComboBox, false, true);
-                } else {
-                    blockBNameComboBox.setEditable(true);
-                    blockBNameComboBox.getEditor().setItem("");
-                    blockBNameComboBox.setSelectedIndex(-1);
-                }
+                layoutEditor.setupComboBox(blockBNameComboBox, false, true);
                 blockBNameComboBox.setToolTipText(rb.getString("EditBlockBNameHint"));
                 panel21.add(blockBNameComboBox);
 
@@ -2541,13 +2536,7 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");
                 panel22.setBorder(borderblk3);
-                if (true) {
-                    layoutEditor.setupComboBox(blockCNameComboBox, false, true);
-                } else {
-                    blockCNameComboBox.setEditable(true);
-                    blockCNameComboBox.getEditor().setItem("");
-                    blockCNameComboBox.setSelectedIndex(-1);
-                }
+                layoutEditor.setupComboBox(blockCNameComboBox, false, true);
                 blockCNameComboBox.setToolTipText(rb.getString("EditBlockCNameHint"));
                 panel22.add(blockCNameComboBox);
                 panel22.add(turnoutEditBlockC = new JButton(rb.getString("CreateEdit")));
@@ -2562,13 +2551,7 @@ public class LayoutTurnout extends LayoutTrack {
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");
                 panel23.setBorder(borderblk4);
-                if (true) {
-                    layoutEditor.setupComboBox(blockDNameComboBox, false, true);
-                } else {
-                    blockDNameComboBox.setEditable(true);
-                    blockDNameComboBox.getEditor().setItem("");
-                    blockDNameComboBox.setSelectedIndex(-1);
-                }
+                layoutEditor.setupComboBox(blockDNameComboBox, false, true);
                 blockDNameComboBox.setToolTipText(rb.getString("EditBlockDNameHint"));
                 panel23.add(blockDNameComboBox);
                 panel23.add(turnoutEditBlockD = new JButton(rb.getString("CreateEdit")));
@@ -2790,7 +2773,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     void turnoutEditDonePressed(ActionEvent a) {
         // check if Turnout changed
-        String newName = firstTurnoutComboBox.getUserName();
+        String newName = firstTurnoutComboBox.getDisplayName();
         if (!turnoutName.equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
@@ -2804,7 +2787,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         if (additionalTurnout.isSelected()) {
-            newName = secondTurnoutComboBox.getSelectedItem().toString();
+            newName = secondTurnoutComboBox.getDisplayName();
             if (!secondTurnoutName.equals(newName)) {
                 if ((type == DOUBLE_XOVER)
                         || (type == RH_XOVER)
@@ -2982,7 +2965,6 @@ public class LayoutTurnout extends LayoutTrack {
                 sensorBNamed = null;
                 sensorCNamed = null;
                 return;
-
             } else if (((type == DOUBLE_XOVER)
                     || (type == RH_XOVER)
                     || (type == LH_XOVER)) && connectD == null) {

@@ -288,7 +288,7 @@ special classes.
 
       <div class="para">
         <pre>
-<code>jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).load(java.io.File("filename.xml"))</code>
+<code>jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File("filename.xml"))</code>
 </pre>
       </div>That looks for "filename.xml" in the JMRI program
       directory, which is not a good place to keep your files.
@@ -308,7 +308,7 @@ special classes.
 
       <div class="para">
         <pre>
-<code>fullname = FileUtil.getExternalFilename("preference:filename.xml")</code>
+<code>fullname = jmri.util.FileUtil.getExternalFilename("preference:filename.xml")</code>
 </pre>
       </div>The "<code>preference:</code>" means to look for that
       file starting in the preferences directory on the current
@@ -331,9 +331,9 @@ execfile("filename.py")
 
       <div class="para">
         <pre>
-execfile(FileUtil.getExternalFilename("scripts:filename.py"))
+execfile(jmri.util.FileUtil.getExternalFilename("scripts:filename.py"))
 </pre>
-      </div>The call to FileUtil.getExternalFilename(..) translates
+      </div>The call to jmri.util.FileUtil.getExternalFilename(..) translates
       the string using JMRI's standard prefixes. The "scripts:"
       tells JMRI to search in the default scripts directory. You
       can also use other prefixes, see the <a href=
