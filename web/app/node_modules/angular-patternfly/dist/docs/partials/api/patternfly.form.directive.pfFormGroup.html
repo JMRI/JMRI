@@ -1,0 +1,61 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/form/form-group/form-group.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/form/form-group/form-group.directive.js#L47" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfFormGroup</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.form</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-form-directive-page patternfly-form-directive-pfformgroup-page"><p>Encapsulates the structure and styling for a label + input used within a
+Bootstrap3 based form.</p>
+<p>This directive creates new scope.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-form-group
+     pf-label="{string}"
+     pf-field-id="{string}"
+     pf-label-class="{string}"
+     pf-input-class="{string}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pfLabel</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformgroup-page"><p>the text for the <label> element.</p>
+</div></td></tr><tr><td>pfFieldId</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformgroup-page"><p>the id of the form field. Default value is id of the form field element.</p>
+</div></td></tr><tr><td>pfLabelClass</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformgroup-page"><p>the class of the label element. Default value is &quot;col-sm-2&quot;.</p>
+</div></td></tr><tr><td>pfInputClass</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfformgroup-page"><p>the class of the input element. Default value is &quot;col-sm-5&quot;.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-form-directive-page patternfly-form-directive-pfformgroup-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.form" source-edit-deps="angular.js script.js" source-edit-html="index.html-31" source-edit-css="" source-edit-js="script.js-32" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-31" ng-html-wrap-loaded="patternfly.form angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-31">
+    <form class="form-horizontal" ng-controller="FormDemoCtrl">
+
+      <p>Name: {{ item.name }}</p>
+      <p>Description: {{ item.description }}</p>
+      <div pf-form-group pf-label="Name" required>
+        <input id="name" name="name"
+               ng-model="item.name" type="text" required/>
+      </div>
+
+      <div pf-form-group pf-input-class="col-sm-9" pf-label="Description">
+        <textarea id="description" name="description" ng-model="item.description">
+          {{ item.description }}
+        </textarea>
+      </div>
+    </form>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-32"></pre>
+<script type="text/ng-template" id="script.js-32">
+    angular.module( 'patternfly.form' ).controller( 'FormDemoCtrl', function( $scope ) {
+      $scope.item = {
+        name: 'Homer Simpson',
+        description: 'I like donuts and Duff.  Doh!'
+      };
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.form" ng-set-html="index.html-31" ng-eval-javascript="script.js-32"></div>
+</div></div>
+</div>

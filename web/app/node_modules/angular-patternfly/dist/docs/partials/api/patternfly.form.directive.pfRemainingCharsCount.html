@@ -1,0 +1,141 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/form/remaining-chars-count/remaining-chars-count.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/form/remaining-chars-count/remaining-chars-count.directive.js#L124" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfRemainingCharsCount</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.form</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-form-directive-page patternfly-form-directive-pfremainingcharscount-page"><p>Directive for showing a characters remaining count and triggering warning and error</br>
+behavior when passing specified thresholds.  When the <code>chars-warn-remaining</code> threshold is passed, </br>
+the <code>chars-warn-remaining-pf</code> css class is applied to the <code>count-fld</code>, which by default, turns </br>
+the remaining count number <font color='red'>red</font>.</br>
+By default, characters may be entered into the text field after the <code>chars-max-limit</code> limit has been reached,</br>
+the remaining count number will become a negative value. Setting the <code>blockInputAtMaxLimit</code> to <em>true</em>,</br>
+will block additional input into the text field after the max has been reached; additionally a right-click &#39;paste&#39; will only </br>
+paste characters until the maximum character limit is reached.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-remaining-chars-count
+     ng-model="{string}"
+     count-fld="{string}"
+     chars-max-limit="{string}"
+     chars-warn-remaining="{string}"
+     [block-input-at-max-limit="{boolean}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>ng-model</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfremainingcharscount-page"><p>The scope model variable which contains the initial text for the text field.  Required, but</br>
+can be an emptly string (&quot;&quot;).</p>
+</div></td></tr><tr><td>count-fld</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfremainingcharscount-page"><p>The id of the field to display the &#39;characters-remaining&#39; count.</p>
+</div></td></tr><tr><td>chars-max-limit</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfremainingcharscount-page"><p>Number representing the maximum number of characters to allow before dispatching a<br/>
+&#39;overCharsMaxLimit&#39; event.   When the number of characters falls below <code>chars-max-limit</code>, a &#39;underCharsMaxLimit&#39;<br/>
+event is dispatched.</p>
+</div></td></tr><tr><td>chars-warn-remaining</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfremainingcharscount-page"><p>Number of remaining characters to warn upon.  The &#39;chars-warn-remaining-pf&#39;<br/>
+class will be applied to the <code>count-fld</code> when the remaining characters is less than the<br/>
+<code>chars-warn-remaining</code> threshold.  When/if the number of remaining characters becomes greater than the<br/>
+<code>chars-warn-remaining</code> threshold, the &#39;chars-warn-remaining-pf&#39; class is removed from the <code>count-fld</code> field.</p>
+</div></td></tr><tr><td>block-input-at-max-limit <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfremainingcharscount-page"><p>If true, no more characters can be entered into the text field when the<br/>
+<code>chars-max-limit</code> has been reached.  If false (the default), characters may be entered into the text field after the<br/>
+max. limit has been reached, but these additional characters will trigger the &#39;overCharsMaxLimit&#39; event to be<br/>
+dispatched.  When <code>blockInputAtMaxLimit</code> is <em>true</em>, a right-click &#39;paste&#39; will only paste<br/>
+characters until the maximum character limit is reached.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-form-directive-page patternfly-form-directive-pfremainingcharscount-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.example" source-edit-deps="angular.js script.js" source-edit-html="index.html-33" source-edit-css="" source-edit-js="script.js-34" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-33" ng-html-wrap-loaded="patternfly.example angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-33">
+  <div ng-controller="DemoCtrl" style="display:inline-block; width: 100%;">
+
+  <style>
+    textarea {
+      resize: none;
+    }
+  </style>
+
+  <div class="container">
+    <strong>Max limit: 20, warn when 5 or less remaining, disable button after max limit</strong>
+    <div class="row">
+      <div class="col-md-4">
+
+        <form>
+          <div class="form-group">
+            <label for="messageArea"></label>
+            <textarea class="form-control" pf-remaining-chars-count id="messageArea_1" ng-model="messageArea1text" chars-max-limit="20" chars-warn-remaining="5"
+                      count-fld="charRemainingCntFld_1" name="text" placeholder="Type in your message" rows="5"></textarea>
+          </div>
+          <span class="pull-right chars-remaining-pf">
+            <span id="charRemainingCntFld_1"></span>
+            <button id="postBtn_1" ng-disabled="charsMaxLimitExceeded" type="submit" class="btn btn-default">Post New Message</button>
+          </span>
+        </form>
+
+      </div>
+    </div>
+    <br>
+    <strong>Max limit: 10, warn when 2 or less remaining, block input after max limit</strong>
+    <div class="row">
+      <div class="col-md-4">
+       <form>
+          <div class="form-group">
+            <label for="messageArea"></label>
+            <textarea class="form-control" pf-remaining-chars-count id="messageArea_2" ng-model="messageArea2text" chars-max-limit="10" chars-warn-remaining="2"
+                      block-input-at-max-limit="true" count-fld="charRemainingCntFld_2" name="text"
+                      placeholder="Type in your message" rows="5"></textarea>
+          </div>
+          <span class="pull-left">
+            <button id="postBtn_2" type="submit" class="btn btn-default">Submit</button>
+          </span>
+          <span class="pull-right chars-remaining-pf">
+            <span id="charRemainingCntFld_2"></span>
+          </span>
+        </form>
+      </div>
+    </div>
+    <br>
+    <strong>Max limit: 10, warn when 5 or less remaining, block input after max limit</strong>
+    <div class="row">
+      <div class="col-md-4">
+        <input id="input_3" pf-remaining-chars-count chars-max-limit="10" ng-model="messageInput3text" chars-warn-remaining="5" count-fld="charRemainingCntFld_3"
+          block-input-at-max-limit="true"/>
+          <span class="chars-remaining-pf"><span id="charRemainingCntFld_3" style="padding-left: 5px"></span>Remaining</span>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-34"></pre>
+<script type="text/ng-template" id="script.js-34">
+angular.module( 'patternfly.example', ['patternfly.form']);
+
+angular.module( 'patternfly.example' ).controller( 'DemoCtrl', function( $scope ) {
+  $scope.messageArea1text = "Initial Text";
+  $scope.messageArea2text = "";
+  $scope.messageInput3text = "";
+
+  $scope.charsMaxLimitExceeded = false;
+
+  // 'tfId' will equal the id of the text area/input field which
+  // triggered the event
+  $scope.$on('overCharsMaxLimit', function (event, tfId) {
+      if(!$scope.charsMaxLimitExceeded){
+        $scope.charsMaxLimitExceeded = true;
+      }
+  });
+
+  // 'tfId' will equal the id of the text area/input field which
+  // triggered the event
+  $scope.$on('underCharsMaxLimit', function (event, tfId) {
+      if($scope.charsMaxLimitExceeded){
+        $scope.charsMaxLimitExceeded = false;
+      }
+  });
+
+});
+
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.example" ng-set-html="index.html-33" ng-eval-javascript="script.js-34"></div>
+</div></div>
+</div>
