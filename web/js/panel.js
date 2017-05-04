@@ -630,26 +630,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['turnout'] = $(this).find('turnout:first').text();
                                 $widget['turnoutB'] = $(this).find('turnoutB:first').text();
 
-                                $widget['turnout1_AC'] = $(this).find('states').find('A-C').find('turnout').text();
-                                $widget['turnout1_AD'] = $(this).find('states').find('A-D').find('turnout').text();
-                                $widget['turnout1_BC'] = $(this).find('states').find('B-C').find('turnout').text();
-                                $widget['turnout1_BD'] = $(this).find('states').find('B-D').find('turnout').text();
+                                $widget['turnoutA_AC'] = Number($(this).find('states').find('A-C').find('turnout').text());
+                                $widget['turnoutA_AD'] = Number($(this).find('states').find('A-D').find('turnout').text());
+                                $widget['turnoutA_BC'] = Number($(this).find('states').find('B-C').find('turnout').text());
+                                $widget['turnoutA_BD'] = Number($(this).find('states').find('B-D').find('turnout').text());
 
-                                $widget['turnout2_AC'] = $(this).find('states').find('A-C').find('turnoutB').text();
-                                $widget['turnout2_AD'] = $(this).find('states').find('A-D').find('turnoutB').text();
-                                $widget['turnout2_BC'] = $(this).find('states').find('B-C').find('turnoutB').text();
-                                $widget['turnout2_BD'] = $(this).find('states').find('B-D').find('turnoutB').text();
-
-                                // convert to integers
-                                $widget.turnout1_AC = Number($widget.turnout1_AC);
-                                $widget.turnout1_AD = Number($widget.turnout1_AD);
-                                $widget.turnout1_BC = Number($widget.turnout1_BC);
-                                $widget.turnout1_BD = Number($widget.turnout1_BD);
-
-                                $widget.turnout2_AC = Number($widget.turnout2_AC);
-                                $widget.turnout2_AD = Number($widget.turnout2_AD);
-                                $widget.turnout2_BC = Number($widget.turnout2_BC);
-                                $widget.turnout2_BD = Number($widget.turnout2_BD);
+                                $widget['turnoutB_AC'] = Number($(this).find('states').find('A-C').find('turnoutB').text());
+                                $widget['turnoutB_AD'] = Number($(this).find('states').find('A-D').find('turnoutB').text());
+                                $widget['turnoutB_BC'] = Number($(this).find('states').find('B-C').find('turnoutB').text());
+                                $widget['turnoutB_BD'] = Number($(this).find('states').find('B-D').find('turnoutB').text());
 
                                 // default to this state
                                 $widget['state'] = UNKNOWN;
@@ -879,31 +868,24 @@ function $handleClick(e) {
         }
         //jmri.log("  layoutSlip-side:" + $widget.side);
 
-        var $newState = $widget.state;  // assume no change…
-
-        //jmri.log("  layoutSlip-slipType:" + $widget.slipType);
+        // convert current slip state to current turnout states
+        var $oldStateA, $oldStateB;
+        [$oldStateA, $oldStateB] = getTurnoutStatesForSlip($widget);
 
         // determine next slip state
-        $newState = getNextSlipState($widget);
+        var $newState = getNextSlipState($widget);
 
         //jmri.log("$handleClick:layoutSlip: change state from: " + $widget.state + ", to: " + $newState + ".");
-        //$widget.state = $newState;
-        //$gWidgets[$widget.id].state = $newState;
-
-        // convert current slip state to current turnout states
-        var $oldState1, $oldState2;
-
-        [$oldState1, $oldState2] = getTurnoutStatesForSlip($widget);
 
         // convert new slip state to new turnout states
-        var $newState1, $newState2;
-        [$newState1, $newState2] = getTurnoutStatesForSlipState($widget, $newState);
+        var $newStateA, $newStateB;
+        [$newStateA, $newStateB] = getTurnoutStatesForSlipState($widget, $newState);
 
-        if ($oldState1 != $newState1) {
-            sendElementChange($widget.jsonType, $widget.turnout, $newState1);
+        if ($oldStateA != $newStateA) {
+            sendElementChange($widget.jsonType, $widget.turnout, $newStateA);
         }
-        if ($oldState2 != $newState2) {
-            sendElementChange($widget.jsonType, $widget.turnoutB, $newState2);
+        if ($oldStateB != $newStateB) {
+            sendElementChange($widget.jsonType, $widget.turnoutB, $newStateB);
         }
     } else {
         var $newState = $getNextState($widget);  //determine next state from current state
@@ -1817,33 +1799,33 @@ var $setWidgetState = function($id, $newState) {
             $widget = $gWidgets[slipID];
 
             // convert current slip state to current turnout states
-            var $state1, $state2;
-            [$state1, $state2] = getTurnoutStatesForSlip($widget);
+            var $stateA, $stateB;
+            [$stateA, $stateB] = getTurnoutStatesForSlip($widget);
 
             //jmri.log("#### Before slip: " + $slipStateToString($widget.state) +
-            //    ", state1: " + $turnoutStateToString($state1) +
-            //    ", state2: " + $turnoutStateToString($state2));
+            //    ", stateA: " + $turnoutStateToString($stateA) +
+            //    ", stateB: " + $turnoutStateToString($stateB));
 
             // change appropriate turnout state
             if ($id.endsWith("l")) {
-                if ($state1 != $newState) {
-                    //jmri.log("#### Changed slip " + $widget.name + " $state1 from " + $turnoutStateToString($state1) +
+                if ($stateA != $newState) {
+                    //jmri.log("#### Changed slip " + $widget.name + " $stateA from " + $turnoutStateToString($stateA) +
                     //    " to " + $turnoutStateToString($newState));
-                    $state1 = $newState;
+                    $stateA = $newState;
                 }
             } else if ($id.endsWith("r")) {
-                if ($state2 != $newState) {
-                    //jmri.log("#### Changed slip " + $widget.name + " $state2 from " + $turnoutStateToString($state2) +
+                if ($stateB != $newState) {
+                    //jmri.log("#### Changed slip " + $widget.name + " $stateB from " + $turnoutStateToString($stateB) +
                     //    " to " + $turnoutStateToString($newState));
-                    $state2 = $newState;
+                    $stateB = $newState;
                 }
             }
 
             // turn turnout states back into slip state
-            $newState = getSlipStateForTurnoutStates($widget, $state1, $state2);
+            $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
             //jmri.log("#### After slip: " + $slipStateToString($newState) +
-            //    ", state1: " + $turnoutStateToString($state1) +
-            //    ", state2: " + $turnoutStateToString($state2));
+            //    ", stateA: " + $turnoutStateToString($stateA) +
+            //    ", stateB: " + $turnoutStateToString($stateB));
 
             //if ($widget.state != $newState) {
             //    jmri.log("#### Changing slip " + $widget.name + " from " + $slipStateToString($widget.state) +
@@ -2396,16 +2378,16 @@ function getTurnoutStatesForSlipState($slipWidget, $slipState) {
         if ($widget.widgetType == "layoutSlip") {
             switch ($slipState) {
                 case STATE_AC:
-                    $results = [$widget.turnout1_AC, $widget.turnout2_AC];
+                    $results = [$widget.turnoutA_AC, $widget.turnoutB_AC];
                     break;
                 case STATE_AD:
-                    $results = [$widget.turnout1_AD, $widget.turnout2_AD];
+                    $results = [$widget.turnoutA_AD, $widget.turnoutB_AD];
                     break;
                 case STATE_BC:
-                    $results = [$widget.turnout1_BC, $widget.turnout2_BC];
+                    $results = [$widget.turnoutA_BC, $widget.turnoutB_BC];
                     break;
                 case STATE_BD:
-                    $results = [$widget.turnout1_BD, $widget.turnout2_BD];
+                    $results = [$widget.turnoutA_BD, $widget.turnoutB_BD];
                     break;
             }
         }
@@ -2417,24 +2399,24 @@ function getTurnoutStatesForSlip($slipWidget) {
     return getTurnoutStatesForSlipState($slipWidget, $widget.state);
 }
 
-function getSlipStateForTurnoutStates($widget, $state1, $state2) {
+function getSlipStateForTurnoutStates($widget, $stateA, $stateB) {
     var $result = 0; // unknown
-    if (($state1 == $widget.turnout1_AC) && ($state2 == $widget.turnout2_AC)) {
+    if (($stateA == $widget.turnoutA_AC) && ($stateB == $widget.turnoutB_AC)) {
         $result = STATE_AC;
-    } else if (($state1 == $widget.turnout1_AD) && ($state2 == $widget.turnout2_AD)) {
+    } else if (($stateA == $widget.turnoutA_AD) && ($stateB == $widget.turnoutB_AD)) {
         $result = STATE_AD;
-    } else if (($state1 == $widget.turnout1_BC) && ($state2 == $widget.turnout2_BC)) {
+    } else if (($stateA == $widget.turnoutA_BC) && ($stateB == $widget.turnoutB_BC)) {
         $result = STATE_BC;
-    } else if (($state1 == $widget.turnout1_BD) && ($state2 == $widget.turnout2_BD)) {
+    } else if (($stateA == $widget.turnoutA_BD) && ($stateB == $widget.turnoutB_BD)) {
         $result = STATE_BD;
     } else {
-        if (($state1 == $widget.turnout1_AC) || ($state2 == $widget.turnout2_AC)) {
+        if (($stateA == $widget.turnoutA_AC) || ($stateB == $widget.turnoutB_AC)) {
             $result = STATE_AC;
-        } else if (($state1 == $widget.turnout1_AD) || ($state2 == $widget.turnout2_AD)) {
+        } else if (($stateA == $widget.turnoutA_AD) || ($stateB == $widget.turnoutB_AD)) {
             $result = STATE_AD;
-        } else if (($state1 == $widget.turnout1_BC) || ($state2 == $widget.turnout2_BC)) {
+        } else if (($stateA == $widget.turnoutA_BC) || ($stateB == $widget.turnoutB_BC)) {
             $result = STATE_BC;
-        } else if (($state1 == $widget.turnout1_BD) || ($state2 == $widget.turnout2_BD)) {
+        } else if (($stateA == $widget.turnoutA_BD) || ($stateB == $widget.turnoutB_BD)) {
             $result = STATE_BD;
         }
     }
