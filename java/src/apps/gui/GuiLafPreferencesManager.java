@@ -95,7 +95,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
             this.setDirty(false);
-            this.setRestartRequired(false);
+            this.setRestartRequired(true);
             this.initialized = true;
         }
     }
