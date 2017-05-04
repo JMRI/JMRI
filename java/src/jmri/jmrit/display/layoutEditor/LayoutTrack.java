@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip,
- * LayoutTurntable, LevelXing, TrackSegment)
+ * LayoutTurntable, LevelXing, TrackSegment & PositionablePoint)
  *
  * @author George Warner Copyright (c) 2017
  */
@@ -37,7 +37,7 @@ public abstract class LayoutTrack {
     public static final int MULTI_SENSOR = 16;
     public static final int MARKER = 17;
     public static final int TRACK_CIRCLE_CENTRE = 18;
-    public static final int SLIP_CENTER = 20; //
+    public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
     public static final int SLIP_A = 21; // offset for slip connection points
     public static final int SLIP_B = 22; // offset for slip connection points
     public static final int SLIP_C = 23; // offset for slip connection points
@@ -113,6 +113,21 @@ public abstract class LayoutTrack {
         double x = cX + cosineRot * deltaX - sineRot * deltaY;
         double y = cY + sineRot * deltaX + cosineRot * deltaY;
         return new Point2D.Double(x, y);
+    }
+
+    /**
+     * return the connection type for a point
+     * (abstract; should be overridden by sub-classes)
+     *
+     * @since 7.4.?
+     */
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+        return NONE;
+    }
+
+    // optional useRectangles parameter defaults to false
+    public int connectionTypeForPoint(Point2D p) {
+        return connectionTypeForPoint(p, false);
     }
 
     public void reCheckBlockBoundary() {

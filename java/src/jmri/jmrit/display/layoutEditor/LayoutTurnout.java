@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -1565,6 +1566,36 @@ public class LayoutTurnout extends LayoutTrack {
             return ((TrackSegment) connectC).getMainline();
         }
         return false;
+    }
+
+    /**
+     * return the connection type for a point
+     *
+     * @since 7.4.?
+     */
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+        int result = NONE;  // assume point not on connection
+
+        if (useRectangles) {
+            // calculate turnout's control rectangle
+            Rectangle2D r = layoutEditor.turnoutCircleRectAt(getCoordsCenter());
+            if (r.contains(p)) {
+                //point is in this turnout's control rectangle
+                result = TURNOUT_CENTER;
+            }
+        } else {
+            // calculate the distance to the center point of this turnout
+            Double distance = p.distance(getCoordsCenter());
+
+            // calculate radius of turnout control circle
+            // note: 3 is layoutEditor.SIZE (not public)
+            double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
+            if (distance <= circleRadius) {
+                // point is in this turnout's control circle
+                result = TURNOUT_CENTER;
+            }
+        }
+        return result;
     }
 
     /**

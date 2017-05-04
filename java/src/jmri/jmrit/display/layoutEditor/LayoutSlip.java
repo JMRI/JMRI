@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -34,6 +35,7 @@ import javax.swing.JRootPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
@@ -43,11 +45,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A LayoutSlip is two track segment on a layout that cross at an angle.
+ * A LayoutSlip is is a crossing of two straight tracks designed in such a way as to allow
+ * trains to change from one straight track to the other, as well as going straight across.
  * <P>
- * A LayoutSlip has four connection points, designated A, B, C, and D. At the
- * crossing, A-C and B-D are straight segments. A train proceeds through the
- * crossing on either of these segments.
+ * A LayoutSlip has four connection points, designated A, B, C, and D.
+ * A train may proceed between A & D, A & C, B & D and in the case of double-slips, B & C.
+ * <P>
+ *    ==A==-==D==
+ *       \\ //
+ *         X
+ *       // \\
+ *    ==B==-==C==
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
@@ -77,10 +85,8 @@ public class LayoutSlip extends LayoutTurnout {
 
     public int currentState = UNKNOWN;
 
-    // @Deprecated since 4.7.? use @link{secondTurnoutName} instead.
-    //private String turnoutBName = "";
-    // @Deprecated since 4.7.? use @link{secondNamedTurnout} instead.
-    //private NamedBeanHandle<Turnout> namedTurnoutB = null;
+    private String turnoutBName = "";
+    private NamedBeanHandle<Turnout> namedTurnoutB = null;
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
@@ -133,15 +139,36 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public String getTurnoutBName() {
-        return getSecondTurnoutName();
+        if (namedTurnoutB != null) {
+            return namedTurnoutB.getName();
+        }
+        return turnoutBName;
     }
 
     public Turnout getTurnoutB() {
-        return getSecondTurnout();
+    if (namedTurnoutB == null) {
+        // set physical turnout if possible and needed
+        setTurnoutB(turnoutBName);
+            if (namedTurnoutB == null) {
+                 return null;
+            }
+         }
+         return namedTurnoutB.getBean();
     }
 
     public void setTurnoutB(String tName) {
-        setSecondTurnout(tName);
+        if (namedTurnoutB != null) {
+             deactivateTurnout();
+         }
+         turnoutBName = tName;
+         Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutBName);
+         if (turnout != null) {
+             namedTurnoutB = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutBName, turnout);
+             activateTurnout();
+         } else {
+             turnoutBName = "";
+             namedTurnoutB = null;
+         }
     }
 
     @Override
@@ -192,11 +219,11 @@ public class LayoutSlip extends LayoutTurnout {
         String name = "Slip :";
         if (getTurnoutName() != null) {
             name += "(" + getTurnoutName();
-            if (getSecondTurnoutName() != null) {
-                name += ":" + getSecondTurnoutName() + ")";
+            if (getTurnoutBName() != null) {
+                name += ":" + getTurnoutBName() + ")";
             }
-        } else if (getSecondTurnoutName() != null) {
-            name += "(" + getSecondTurnoutName() + ")";
+        } else if (getTurnoutBName() != null) {
+            name += "(" + getTurnoutBName() + ")";
         }
         return name;
     }
@@ -258,48 +285,16 @@ public class LayoutSlip extends LayoutTurnout {
                 }
                 break;
             }
-            case SLIP_CENTER:   //note: this should "go away"
-            //(since SLIP_CENTER should have been replaced by SLIP_LEFT & SLIP_RIGHT everywhere)
-            default:
-            {
-                switch (currentState) {
-                    case STATE_AC: {
-                        if (singleSlipStraightEqual()) {
-                            currentState = STATE_BD;
-                        } else {
-                            currentState = STATE_BC;
-                        }
-                        break;
-                    }
-
-                    case STATE_BD: {
-                        currentState = STATE_AD;
-                        break;
-                    }
-
-                    case STATE_AD: {
-                        currentState = STATE_AC;
-                        break;
-                    }
-
-                    case STATE_BC:
-                    default: {
-                        currentState = STATE_BD;
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        setTurnoutState(turnoutStates.get(currentState));
+        }   // switch
+        setSlipState(turnoutStates.get(currentState));
     }
 
-    void setTurnoutState(TurnoutState ts) {
+    void setSlipState(TurnoutState ts) {
         if (getTurnout() != null) {
             getTurnout().setCommandedState(ts.getTurnoutAState());
         }
-        if (getSecondTurnout() != null) {
-            getSecondTurnout().setCommandedState(ts.getTurnoutBState());
+        if (getTurnoutB() != null) {
+            getTurnoutB().setCommandedState(ts.getTurnoutBState());
         }
     }
 
@@ -491,6 +486,55 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             return false;
         }
+    }
+
+    /**
+     * return the connection type for a point
+     *
+     * @since 7.4.?
+     */
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+        int result = NONE;  // assume point not on connection
+
+        // calculate radius of turnout control circle
+        // note: 3 is layoutEditor.SIZE (not public)
+        double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
+
+        Point2D pt = getCoordsCenter();
+
+        // calculate left center
+        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
+        double leftFract = circleRadius / pt.distance(leftCenter);
+        leftCenter = lerp(pt, leftCenter, leftFract);
+
+        // calculate right center
+        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
+        double rightFract = circleRadius / pt.distance(rightCenter);
+        rightCenter = lerp(pt, rightCenter, rightFract);
+
+        if (useRectangles) {
+            // calculate turnout's left control rectangle
+            Rectangle2D leftRectangle = layoutEditor.turnoutCircleRectAt(leftCenter);
+            if (leftRectangle.contains(p)) {
+                //point is in this turnout's left control rectangle
+                result = SLIP_LEFT;
+            }
+            Rectangle2D rightRectangle = layoutEditor.turnoutCircleRectAt(rightCenter);
+            if (rightRectangle.contains(p)) {
+                //point is in this turnout's right control rectangle
+                result = SLIP_RIGHT;
+            }
+        } else {
+            //check east/west turnout control circles
+            double leftDistance = p.distance(leftCenter);
+            double rightDistance = p.distance(rightCenter);
+
+            if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
+                //mouse was pressed on this slip
+                result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+            }
+        }
+        return result;
     }
 
     /**
@@ -849,7 +893,7 @@ public class LayoutSlip extends LayoutTurnout {
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
             turnoutBComboBox = new JmriBeanComboBox(
-                InstanceManager.turnoutManagerInstance(), getSecondTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
             contentPane.add(panel1a);
@@ -1104,8 +1148,8 @@ public class LayoutSlip extends LayoutTurnout {
         ((Turnout) turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
         /*if(getTurnout()!=null)
          getTurnout().setCommandedState(turnAState);
-         if (getSecondTurnout()!=null)
-             getSecondTurnout().setCommandedState(turnBState);*/
+         if (getTurnoutB()!=null)
+             getTurnoutB().setCommandedState(turnBState);*/
         if (testPanel != null) {
             testPanel.repaint();
         }
@@ -1287,7 +1331,7 @@ public class LayoutSlip extends LayoutTurnout {
     //Internal call to update the state of the slip depending upon the turnout states.
     void updateState() {
         int state_a = getTurnout().getKnownState();
-        int state_b = getSecondTurnout().getKnownState();
+        int state_b = getTurnoutB().getKnownState();
         for (Entry<Integer, TurnoutState> en : turnoutStates.entrySet()) {
             if (en.getValue().getTurnoutAState() == state_a) {
                 if (en.getValue().getTurnoutBState() == state_b) {
@@ -1420,29 +1464,29 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void drawSlipCircles(Graphics2D g2) {
-        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleRadius / center.distance(leftCenter);
+        double leftFract = circleRadius / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleRadius / center.distance(rightCenter);
+        double rightFract = circleRadius / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
     }
 
     public void drawSlipRect(Graphics2D g2) {
-        // draw east/west turnout (control) circles
-        Double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        // draw east/west turnout control circles
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
         Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        Double leftFract = circleRadius / center.distance(leftCenter);
+        double leftFract = circleRadius / center.distance(leftCenter);
         Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
         Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        Double rightFract = circleRadius / center.distance(rightCenter);
+        double rightFract = circleRadius / center.distance(rightCenter);
         Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
 
