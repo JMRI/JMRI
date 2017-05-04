@@ -15,6 +15,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Howard G. Penny" version="1" lastUpdated="20051108"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="2" lastUpdated="20080412"/>
+  <version author="Marc N Fournier forfoum@videotron.ca" version="3" lastUpdated="20170503"/>
+  <!-- Version 1 - Initial release                                    		-->
+  <!-- Version 2 - 													  		-->
+  <!-- Version 3 - Added Decoder Lock pane, Correct output port errors		-->
   <decoder>
     <family name="Function Only, with transponding" mfg="Digitrax">
       <model model="TL1" lowVersionID="250"/>
@@ -36,10 +40,48 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
+	  <variable CV="16" item="Decoder Lock Type" default="0">
+        <enumVal>
+          <enumChoice choice="0 - Unlocked">
+            <choice>0 - Unlocked</choice>
+            <choice xml:lang="it">0 - Non Bloccato</choice>
+          </enumChoice>
+          <enumChoice choice="1 - Motor">
+            <choice>1 - Motor</choice>
+            <choice xml:lang="it">1 - Motore</choice>
+          </enumChoice>
+          <enumChoice choice="2 - Sound">
+            <choice>2 - Sound</choice>
+            <choice xml:lang="it">2 - Suono</choice>
+          </enumChoice>
+          <enumChoice choice="3 - Function (1)">
+            <choice>3 - Function (1)</choice>
+            <choice xml:lang="it">3 - Funzione(1)</choice>
+          </enumChoice>
+          <enumChoice choice="4 - Function (2)">
+            <choice>4 - Function (2)</choice>
+            <choice xml:lang="it">4 - Funzione(2)</choice>
+          </enumChoice>
+          <enumChoice choice="5 - Function (3)">
+            <choice>5 - Function (3)</choice>
+            <choice xml:lang="it">5 - Funzione(3)</choice>
+          </enumChoice>
+          <enumChoice choice="6 - User Defined">
+            <choice>6 - User Defined</choice>
+            <choice xml:lang="it">6 - definita dall'utente</choice>
+          </enumChoice>
+          <enumChoice choice="7 - User Defined">
+            <choice>7 - User Defined</choice>
+            <choice xml:lang="it">7 - definita dall'utente</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Decoder Lock Type</label>
+        <label xml:lang="it">Tipo Blocco decoder</label>
+      </variable>	  
       <variable CV="49" mask="XXXXXVVV" item="Effect Generated">
         <enumVal>
-          <enumChoice choice="Normal on off">
-            <choice>Normal on off</choice>
+          <enumChoice choice="Normal on/off">
+            <choice>Normal on/off</choice>
             <choice xml:lang="it">On-Off Normale</choice>
           </enumChoice>
           <enumChoice choice="Simulated FRED">
@@ -73,6 +115,11 @@
         </enumVal>
         <label>Effect Generated</label>
         <label xml:lang="it">Effetti generati</label>
+      </variable>
+	   <variable CV="54" mask="XVXXXXXX" item="Decoder Lock" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Decoder Lock</label>
+        <label xml:lang="it">Blocco decoder</label>
       </variable>
       <variable CV="61" mask="XXXXXXXV" item="F0 use">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -115,11 +162,10 @@
         </enumVal>
         <label>Effect Rate</label>
       </variable>
-      <variable CV="64" mask="XXXXXXXV" item="ControlFn">
+      <variable CV="64" mask="XXXXXXVV" item="ControlFn">
         <enumVal>
           <enumChoice choice="F0 or F1">
             <choice>F0 or F1</choice>
-            <choice xml:lang="it">F0 o F1</choice>
           </enumChoice>
           <enumChoice choice="F2">
             <choice>F2</choice>
@@ -140,10 +186,6 @@
         <label>Reset All CVs</label>
         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
       </factReset>
-      <factReset label="Reset All CVs except speed table" CV="8" default="9">
-        <label>Reset All CVs except speed table</label>
-        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
-      </factReset>
     </resets>
   </decoder>
   <pane>
@@ -156,5 +198,13 @@
     </column>
     <name>Function Output</name>
     <name xml:lang="it">Uscita Funzione</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Decoder Lock" format="radiobuttons"/>
+      <display item="Decoder Lock Type"/>
+    </column>
+    <name>Decoder Lock</name>
+    <name xml:lang="it">Blocco Decoder</name>
   </pane>
 </decoder-config>
