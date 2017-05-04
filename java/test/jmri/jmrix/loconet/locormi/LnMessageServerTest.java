@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class LnMessageServerTest {
 
     @Test
-    public void testGetInstance() {
+    public void testGetInstance() throws java.rmi.RemoteException {
         LnMessageServer t = LnMessageServer.getInstance();
         Assert.assertNotNull("exists",t);
     }
