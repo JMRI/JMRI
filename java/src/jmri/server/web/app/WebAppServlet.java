@@ -90,7 +90,7 @@ public class WebAppServlet extends HttpServlet {
             // 8 = personal menu contents (in comments)
             // 9 = power menu title
             FileUtil.appendTextToFile(index, String.format(request.getLocale(),
-                    FileUtil.readURL(FileUtil.findURL("web/app/index.html")),
+                    FileUtil.readURL(FileUtil.findURL("web/app/app/index.html")),
                     ServletUtil.getInstance().getRailroadName(false), // railroad name
                     String.format(inComments, manager.getScriptTags(profile)), // scripts (in comments)
                     String.format(inComments, manager.getStyleTags(profile)), // stylesheets (in comments)
@@ -152,7 +152,7 @@ public class WebAppServlet extends HttpServlet {
         if (!script.exists()) {
             WebAppManager manager = getWebAppManager();
             FileUtil.appendTextToFile(script, String.format(request.getLocale(),
-                    FileUtil.readURL(FileUtil.findURL("web/app/script.js")), // NOI18N
+                    FileUtil.readURL(FileUtil.findURL("web/app/app/script.js")), // NOI18N
                     manager.getAngularDependencies(profile, request.getLocale()),
                     manager.getAngularRoutes(profile, request.getLocale()),
                     String.format("\n    $scope.navigationItems = %s;\n", manager.getNavigation(profile, request.getLocale())), // NOI18N

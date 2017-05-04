@@ -44,6 +44,12 @@ manifest.json is a JSON object with the following properties:
 - dependencies
 - sources
 
+# Included with JMRI
+
+## Core app
+
+The core app templates are in the app directory under this one.
+
 ## package.files
 
 List of files in this directory that are included in the JMRI distribution. This
