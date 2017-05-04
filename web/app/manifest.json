@@ -45,10 +45,6 @@
   ],
   "routes":[
     {
-      "when": "/",
-      "redirection": "/dashboard"
-    },
-    {
       "when": "/dashboard",
       "template": "/app/dashboard"
     }
