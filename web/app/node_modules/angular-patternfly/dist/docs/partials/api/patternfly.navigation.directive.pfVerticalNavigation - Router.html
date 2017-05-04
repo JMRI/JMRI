@@ -1,0 +1,188 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/navigation/examples/vertical-navigation-router.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/navigation/examples/vertical-navigation-router.js#L163" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfVerticalNavigation - Router</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.navigation</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>This example shows how to use pfVerticalNavigation with angular-ui-router&#39;s $states and uiSrefs.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-vertical-navigation - -router
+     brand-src="{string}"
+     brand-alt="{string}"
+     show-badges="{boolean}"
+     persistent-secondary="{boolean}"
+     hidden-icons="{boolean}"
+     items="{array}"
+     navigate-callback="{function}"
+     item-click-callback="{function}"
+     update-active-items-on-click="{boolean}"
+     ignore-mobile="{boolean}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>brandSrc</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>src for brand image</p>
+</div></td></tr><tr><td>brandAlt</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>Text for product name when brand image is not available</p>
+</div></td></tr><tr><td>showBadges</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>Flag if badges are used on navigation items, default: false</p>
+</div></td></tr><tr><td>persistentSecondary</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>Flag to use persistent secondary menus, default: false</p>
+</div></td></tr><tr><td>hiddenIcons</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>Flag to not show icons on the primary menu, default: false</p>
+</div></td></tr><tr><td>items</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>List of navigation items</p>
+<ul style='list-style-type: none'>
+<li>.title          - (string) Name of item to be displayed on the menu
+<li>.iconClass      - (string) Classes for icon to be shown on the menu (ex. &quot;fa fa-dashboard&quot;)
+<li>.href           - (string) href link to navigate to on click
+<li>.children       - (array) Submenu items (same structure as top level items)
+<li>.badges         -  (array) Badges to display for the item, badges with a zero count are not displayed.
+  <ul style='list-style-type: none'>
+  <li>.count        - (number) Count to display in the badge
+  <li>.iconClass    - (string) Class to use for showing an icon before the count
+  <li>.tooltip      - (string) Tooltip to display for the badge
+  <li>.badgeClass:  - (string) Additional class(es) to add to the badge container
+  </ul>
+<li>.uiSref         - (string) Optional Angular UI Router state name. If specified, href must be not defined, and vice versa.
+<li>.uiSrefOptions  - (object) Optional object to be passed to Angular UI Router $state.go() function
+</ul></div></td></tr><tr><td>navigateCallback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>function(item) Callback method invoked on a navigation item click (one with no submenus)</p>
+</div></td></tr><tr><td>itemClickCallback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>function(item) Callback method invoked on an item click</p>
+</div></td></tr><tr><td>updateActiveItemsOnClick</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>Flag if active items should be marked on click rather than on navigation change, default: false</p>
+</div></td></tr><tr><td>ignoreMobile</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><p>Flag if mobile state should be ignored (use only if absolutely necessary) default: false</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-navigation-directive-page patternfly-navigation-directive-pfverticalnavigation-router-page"><h4 id="example_source">Source</h4>
+<div source-edit="myApp" source-edit-deps="angular.js patternfly.utils patternfly.filters patternfly.sort patternfly.views script.js hide-show.js" source-edit-html="index.html-39" source-edit-css="" source-edit-js="script.js-40 hide-show.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-39" ng-html-wrap-loaded="myApp angular.js patternfly.utils patternfly.filters patternfly.sort patternfly.views script.js hide-show.js"></pre>
+<script type="text/ng-template" id="index.html-39">
+  <div>
+    <button class="btn btn-primary" id="showVerticalNavWithRouter" onclick="showVerticalNavWithRouter">Show Vertical Navigation with UIRouter</button>
+    <label class="example-info-text">This will display the vertical nav bar and some mock content over the content of this page.</label>
+    <label class="example-info-text">Exit the demo to return back to this page.</label>
+  </div>
+  <div id="verticalNavWithRouterLayout" class="layout-pf layout-pf-fixed faux-layout hidden" ng-controller="vertNavWithRouterController">
+    <div pf-vertical-navigation items="navigationItems" brand-alt="ANGULAR PATTERNFLY"
+        show-badges="true" pinnable-menus="true" update-active-items-on-click="true"
+        navigate-callback="handleNavigateClickRouter">
+      <div>
+        <ul class="nav navbar-nav">
+        <li><button id="hideVerticalNavWithRouter" class="hide-vertical-nav">Exit Vertical Navigation Demo</button></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right navbar-iconic">
+          <li class="dropdown">
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle nav-item-iconic" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span title="Help" class="fa pficon-help"></span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="#">Help</a></li>
+              <li><a href="#">About</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle nav-item-iconic" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span title="Username" class="fa pficon-user"></span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <li><a href="#">Preferences</a></li>
+              <li><a href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical example-page-container">
+      <ui-view>
+        <!-- Content will be added here -->
+      </ui-view>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-40"></pre>
+<script type="text/ng-template" id="script.js-40">
+  angular.module('myApp',['patternfly.navigation', 'ui.router'])
+    .config(function($stateProvider, $urlRouterProvider) {
+      $urlRouterProvider.otherwise('dashboard');
+
+      $stateProvider
+          .state('dashboard', {
+              url: '/dashboard',
+              template: '<div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
+                            <div class="card-pf-body" style="height: 50px;">\
+                              <p class="card-pf-aggregate-status-notifications">\
+                                State: Dashboard\
+                              </p>\
+                            </div>\
+                          </div>'
+          })
+          .state('dolor', {
+              url: '/dolor',
+              template: '<div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
+                            <div class="card-pf-body" style="height: 50px;">\
+                              <p class="card-pf-aggregate-status-notifications">\
+                                State: Dolor\
+                              </p>\
+                            </div>\
+                          </div>'
+          })
+          .state('ipsum', {
+              url: '/ipsum',
+              template: '<div class="card-pf card-pf-accented card-pf-aggregate-status" style="height: 89px;">\
+                            <div class="card-pf-body" style="height: 50px;">\
+                              <p class="card-pf-aggregate-status-notifications">\
+                                State: Ipsum\
+                              </p>\
+                            </div>\
+                          </div>'
+          });
+  })
+    .controller('vertNavWithRouterController', ['$scope',
+      function ($scope) {
+        $scope.navigationItems = [
+          {
+            title: "Dashboard",
+            iconClass: "fa fa-dashboard",
+            uiSref: "dashboard",
+            uiSrefOptions: { someKey: 'SomeValue' }
+          },
+          {
+            title: "Dolor",
+            iconClass : "fa fa-shield",
+            uiSref: "dolor"
+          },
+          {
+            title: "Ipsum",
+            iconClass : "fa fa-space-shuttle",
+            uiSref: "ipsum"
+          },
+          {
+            title: "Exit Demo"
+          }
+        ];
+        $scope.handleNavigateClickRouter = function (item) {
+          if (item.title === "Exit Demo") {
+            angular.element(document.querySelector("#verticalNavWithRouterLayout")).addClass("hidden");
+          }
+        };
+      }
+    ]);
+</script>
+</div>
+<div class="tab-pane" title="hide-show.js">
+<pre class="prettyprint linenums" ng-set-text="hide-show.js"></pre>
+<script type="text/ng-template" id="hide-show.js">
+  $(document).ready(function() {
+    $(document).on('click', '#showVerticalNavWithRouter', function() {
+      $(document.getElementById("verticalNavWithRouterLayout")).removeClass("hidden");
+    });
+    $(document).on('click', '#hideVerticalNavWithRouter', function() {
+      $(document.getElementById("verticalNavWithRouterLayout")).addClass("hidden");
+    });
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="myApp" ng-set-html="index.html-39" ng-eval-javascript="script.js-40 hide-show.js"></div>
+</div></div>
+</div>

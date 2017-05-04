@@ -55,9 +55,10 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (manager.getFontSize() != manager.getDefaultFontSize()) {
             e.setAttribute("fontsize", Integer.toString(manager.getFontSize()));
         }
-
         e.setAttribute("nonStandardMouseEvent",
                 (g.mouseEvent.isSelected() ? "yes" : "no"));
+        e.setAttribute("graphicTableState",
+                (g.graphicStateDisplay.isSelected() ? "yes" : "no"));
         return e;
     }
 
@@ -95,12 +96,16 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
             Locale.setDefault(locale);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(locale);
         }
-
         Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
             boolean nonStandardMouseEvent = clickAttr.getValue().equals("yes");
             jmri.util.swing.SwingSettings.setNonStandardMouseEvent(nonStandardMouseEvent);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
+        }
+        Attribute graphicAttr = shared.getAttribute("graphicTableState");
+        if (graphicAttr != null) {
+            boolean graphicTableState = graphicAttr.getValue().equals("yes");
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicTableState);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
