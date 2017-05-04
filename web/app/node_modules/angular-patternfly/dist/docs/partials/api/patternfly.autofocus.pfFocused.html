@@ -1,0 +1,46 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/autofocus/autofocus.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/autofocus/autofocus.js#L39" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfFocused</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-autofocus-page patternfly-autofocus-pffocused-page"><p>The focus on element is evaluated from given expression. If the expression provided as an attribute to this directive
+is evaluated as true, the element is selected (and focused).</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-focused="{expression}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pfFocused <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-autofocus-page patternfly-autofocus-pffocused-page"><p>If the expression is true, the element is focused and selected (if possible).</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-autofocus-page patternfly-autofocus-pffocused-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.autofocus" source-edit-deps="angular.js" source-edit-html="index.html" source-edit-css="" source-edit-js="" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html" ng-html-wrap-loaded="patternfly.autofocus angular.js"></pre>
+<script type="text/ng-template" id="index.html">
+  <div>
+  <form class="form-horizontal">
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="i1">Focus next input:</label>
+      <div class="col-sm-10">
+        <input id="i1" ng-model="isFocus" type="checkbox"></input>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="i2">Focused input:</label>
+      <div class="col-sm-10">
+        <input class="form-control" id="i1" ng-model="i2" pf-focused="isFocus" placeholder="This will be selected after checking the box above."></input>
+      </div>
+    </div>
+
+  </form>
+  </div>
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.autofocus" ng-set-html="index.html" ng-eval-javascript=""></div>
+</div></div>
+</div>

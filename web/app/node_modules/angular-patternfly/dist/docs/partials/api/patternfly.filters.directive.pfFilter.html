@@ -1,0 +1,185 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/filters/filter-directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/filters/filter-directive.js#L173" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfFilter</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.filters</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-filters-directive-page patternfly-filters-directive-pffilter-page"><p>Directive for a filter bar
+<br><br></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-filter
+     config="{object}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-filters-directive-page patternfly-filters-directive-pffilter-page"><p>configuration settings for the filters:<br/></p>
+<ul style='list-style-type: none'>
+<li>.fields          - (Array) List of filterable fields containing:
+<ul style='list-style-type: none'>
+<li>.id          - (String) Optional unique Id for the filter field, useful for comparisons
+<li>.title       - (String) The title to display for the filter field
+<li>.placeholder - (String) Text to display when no filter value has been entered
+<li>.filterType  - (String) The filter input field type (any html input type, or &#39;select&#39; for a single select box)
+<li>.filterValues - (Array) List of valid select values used when filterType is &#39;select&#39;
+</ul>
+<li>.appliedFilters - (Array) List of the currently applied filters
+<li>.resultsCount   - (int) The number of results returned after the current applied filters have been applied
+<li>.onFilterChange - ( function(array of filters) ) Function to call when the applied filters list changes
+</ul></div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-filters-directive-page patternfly-filters-directive-pffilter-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.filters" source-edit-deps="angular.js patternfly.select script.js" source-edit-html="index.html-23" source-edit-css="" source-edit-js="script.js-24" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-23" ng-html-wrap-loaded="patternfly.filters angular.js patternfly.select script.js"></pre>
+<script type="text/ng-template" id="index.html-23">
+  <div ng-controller="ViewCtrl" class="row example-container">
+    <div class="col-md-12">
+      <div pf-filter id="exampleFilter" config="filterConfig"></div>
+    </div>
+    <hr class="col-md-12">
+    <div class="col-md-12">
+      <label class="events-label">Valid Items: </label>
+    </div>
+    <div class="col-md-12">
+      <div ng-repeat="item in items" class="col-md-12 cfme-row-column">
+        <div class="row">
+          <div class="col-md-3">
+            <span>{{item.name}}</span>
+          </div>
+          <div class="col-md-7">
+            <span>{{item.address}}</span>
+          </div>
+          <div class="col-md-2">
+            <span>{{item.birthMonth}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </br></br>
+    <div class="col-md-12">
+      <label class="events-label">Current Filters: </label>
+    </div>
+    <div class="col-md-12">
+      <textarea rows="5" class="col-md-12">{{filtersText}}</textarea>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-24"></pre>
+<script type="text/ng-template" id="script.js-24">
+  angular.module('patternfly.filters').controller('ViewCtrl', ['$scope',
+    function ($scope) {
+      $scope.filtersText = '';
+
+      $scope.allItems = [
+        {
+          name: "Fred Flintstone",
+          address: "20 Dinosaur Way, Bedrock, Washingstone",
+          birthMonth: 'February'
+        },
+        {
+          name: "John Smith",
+          address: "415 East Main Street, Norfolk, Virginia",
+          birthMonth: 'October'
+        },
+        {
+          name: "Frank Livingston",
+          address: "234 Elm Street, Pittsburgh, Pennsylvania",
+          birthMonth: 'March'
+        },
+        {
+          name: "Judy Green",
+          address: "2 Apple Boulevard, Cincinatti, Ohio",
+          birthMonth: 'December'
+        },
+        {
+          name: "Pat Thomas",
+          address: "50 Second Street, New York, New York",
+          birthMonth: 'February'
+        }
+      ];
+      $scope.items = $scope.allItems;
+
+      var matchesFilter = function (item, filter) {
+        var match = true;
+        var re = new RegExp(filter.value, 'i');
+
+        if (filter.id === 'name') {
+          match = item.name.match(re) !== null;
+        } else if (filter.id === 'address') {
+          match = item.address.match(re) !== null;
+        } else if (filter.id === 'birthMonth') {
+          match = item.birthMonth === filter.value;
+        }
+        return match;
+      };
+
+      var matchesFilters = function (item, filters) {
+        var matches = true;
+
+        filters.forEach(function(filter) {
+          if (!matchesFilter(item, filter)) {
+            matches = false;
+            return false;
+          }
+        });
+        return matches;
+      };
+
+      var applyFilters = function (filters) {
+        $scope.items = [];
+        if (filters && filters.length > 0) {
+          $scope.allItems.forEach(function (item) {
+            if (matchesFilters(item, filters)) {
+              $scope.items.push(item);
+            }
+          });
+        } else {
+          $scope.items = $scope.allItems;
+        }
+        $scope.filterConfig.resultsCount = $scope.items.length;
+      };
+
+      var filterChange = function (filters) {
+      $scope.filtersText = "";
+        filters.forEach(function (filter) {
+          $scope.filtersText += filter.title + " : " + filter.value + "\n";
+        });
+        applyFilters(filters);
+      };
+
+      $scope.filterConfig = {
+        fields: [
+          {
+            id: 'name',
+            title:  'Name',
+            placeholder: 'Filter by Name',
+            filterType: 'text'
+          },
+          {
+            id: 'address',
+            title:  'Address',
+            placeholder: 'Filter by Address',
+            filterType: 'text'
+          },
+          {
+            id: 'birthMonth',
+            title:  'Birth Month',
+            placeholder: 'Filter by Birth Month',
+            filterType: 'select',
+            filterValues: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+          }
+        ],
+        resultsCount: $scope.items.length,
+        appliedFilters: [],
+        onFilterChange: filterChange
+      };
+    }
+  ]);
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.filters" ng-set-html="index.html-23" ng-eval-javascript="script.js-24"></div>
+</div></div>
+</div>

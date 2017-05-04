@@ -1,0 +1,29 @@
+<div ng-class="showTopBorder === 'true' ? 'card-pf card-pf-accented' : 'card-pf'">
+  <div ng-if="showHeader()" ng-class="shouldShowTitlesSeparator ? 'card-pf-heading' : 'card-pf-heading-no-bottom'">
+    <div ng-if="showFilterInHeader()" ng-include="'card/basic/card-filter.html'"></div>
+    <h2 class="card-pf-title">{{headTitle}}</h2>
+  </div>
+
+  <span ng-if="subTitle" class="card-pf-subtitle">{{subTitle}}</span>
+
+  <div class="card-pf-body">
+    <div ng-transclude></div>
+  </div>
+  <div ng-if="footer" class="card-pf-footer">
+    <div ng-if="showFilterInFooter()" ng-include="'card/basic/card-filter.html'"></div>
+    <p>
+      <a ng-if="footer.href" href="{{footer.href}}" ng-class="{'card-pf-link-with-icon':footer.iconClass,'card-pf-link':!footer.iconClass}">
+        <span ng-if="footer.iconClass" class="{{footer.iconClass}} card-pf-footer-text"></span>
+        <span ng-if="footer.text" class="card-pf-footer-text">{{footer.text}}</span>
+      </a>
+      <a ng-if="footer.callBackFn && !footer.href" ng-click="footerCallBackFn()" ng-class="{'card-pf-link-with-icon':footer.iconClass,'card-pf-link':!footer.iconClass}">
+        <span class="{{footer.iconClass}} card-pf-footer-text" ng-if="footer.iconClass"></span>
+        <span class="card-pf-footer-text" ng-if="footer.text">{{footer.text}}</span>
+      </a>
+      <span ng-if="!footer.href && !footer.callBackFn">
+        <span ng-if="footer.iconClass" class="{{footer.iconClass}} card-pf-footer-text" ng-class="{'card-pf-link-with-icon':footer.iconClass,'card-pf-link':!footer.iconClass}"></span>
+        <span ng-if="footer.text" class="card-pf-footer-text">{{footer.text}}</span>
+      </span>
+    </p>
+  </div>
+</div>
