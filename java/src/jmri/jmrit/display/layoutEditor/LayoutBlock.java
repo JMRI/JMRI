@@ -1606,7 +1606,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if (newPacketFlow != TXONLY) {
                 Routes neighRoute = getValidRoute(this.getBlock(), adj.getBlock());
                 //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " valid routes returned as " + neighRoute);
-                //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " " + neighRoute);
                 if (neighRoute == null) {
                     log.info("Null route so will bomb out");
                     return false;
@@ -3135,7 +3134,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> JMRI/master
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
@@ -3205,16 +3208,25 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     Routes getValidRoute(Block nxtBlock, Block dstBlock) {
         if ((null != nxtBlock) && (null != dstBlock)) {
             ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
+<<<<<<< HEAD
 
             if (rtr.size() == 0) {
                 log.info("From {}, no routes returned for getRouteByNeighbour({})",
                         this.getDisplayName(),
                         nxtBlock.getDisplayName());
 
+=======
+
+            if (rtr.size() == 0) {
+                log.debug("From {}, no routes returned for getRouteByNeighbour({})",
+                        this.getDisplayName(),
+                        nxtBlock.getDisplayName());
+>>>>>>> JMRI/master
                 return null;
             }
 
             for (Routes rt : rtr) {
+<<<<<<< HEAD
                 log.trace("From " + this.getDisplayName() + ", found dest " + rt.getDestBlock().getDisplayName()
                         + " " + ((rt.getDestBlock() == dstBlock) ? "matches" : "does not match")
                         + " required dest " + dstBlock.getDisplayName());
@@ -3223,6 +3235,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     return rt;
                 }
             }
+=======
+                if (rt.getDestBlock() == dstBlock) {
+                    log.debug("From " + this.getDisplayName() + ", found dest " + dstBlock.getDisplayName() + ".");
+                    return rt;
+                }
+            }
+            log.debug("From {}, no routes to {}.", this.getDisplayName(), nxtBlock.getDisplayName());
+>>>>>>> JMRI/master
         } else {
             log.warn("getValidRoute({}, {}",
                 (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",

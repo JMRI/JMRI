@@ -1074,7 +1074,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
 
+<<<<<<< HEAD
                 //log.info("{}.toolBarSide is {}", windowFrameRef, prefsProp);
+=======
+                //log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
+>>>>>>> JMRI/master
                 if (prefsProp != null) {
                     eToolBarSide newToolBarSide = eToolBarSide.getName((String) prefsProp);
                     setToolBarSide(newToolBarSide);
@@ -1083,28 +1087,48 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //Note: since prefs default to false and we want wide to be the default
                 //we invert it and save it as thin
                 boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
+<<<<<<< HEAD
                 log.info("{}.toolBarThin is {}", windowFrameRef, prefsProp);
+=======
+                log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
+>>>>>>> JMRI/master
                 setToolBarWide(prefsToolBarIsWide);
 
                 boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
 
+<<<<<<< HEAD
                 //log.info("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
+=======
+                //log.debug("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
+>>>>>>> JMRI/master
                 setShowHelpBar(prefsShowHelpBar);
 
                 boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
 
+<<<<<<< HEAD
                 //log.info("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
+=======
+                //log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
+>>>>>>> JMRI/master
                 setAntialiasingOn(prefsAntialiasingOn);
 
                 boolean prefsHighlightSelectedBlockFlag =
                     prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
 
+<<<<<<< HEAD
                 //log.info("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+=======
+                //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
+>>>>>>> JMRI/master
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
                 prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
 
+<<<<<<< HEAD
                 //log.info("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
+=======
+                //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
+>>>>>>> JMRI/master
 
                 if (null != prefsProp) {
                     float toolBarFontSize = Float.parseFloat(prefsProp.toString());
@@ -1115,8 +1139,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //this doesn't work as expected (1st one called messes up 2nd?)
                 Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
                 Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+<<<<<<< HEAD
                 log.info("prefsMgr.prefsWindowLocation({}) is {}",   windowFrameRef, prefsWindowLocation);
                 log.info("prefsMgr.prefsWindowSize is({}) {}",       windowFrameRef, prefsWindowSize);
+=======
+                log.debug("prefsMgr.prefsWindowLocation({}) is {}",   windowFrameRef, prefsWindowLocation);
+                log.debug("prefsMgr.prefsWindowSize is({}) {}",       windowFrameRef, prefsWindowSize);
+>>>>>>> JMRI/master
 
                 //Point prefsWindowLocation = null;
                 //Dimension prefsWindowSize = null;
@@ -1124,7 +1153,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //use this instead?
                 if (true) { //(Nope, it's not working ether: prefsProp always comes back null)
                     prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+<<<<<<< HEAD
                     log.info("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
+=======
+                    log.debug("prefsMgr.getProperty({}, \"windowRectangle2D\") is {}", windowFrameRef, prefsProp);
+>>>>>>> JMRI/master
 
                     if (null != prefsProp) {
                         Rectangle2D windowRectangle2D = (Rectangle2D) prefsProp;
@@ -1852,7 +1885,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             case eRIGHT:
                 contentPane.add(editToolBarContainer);
                 break;
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> JMRI/master
             default:
                 // fall through
                 break;
@@ -1931,7 +1968,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (toolBarFontSize != newToolBarFontSize) {
             toolBarFontSize = newToolBarFontSize;
 
+<<<<<<< HEAD
             log.info("Font size: " + newToolBarFontSize);
+=======
+            log.debug("Font size: " + newToolBarFontSize);
+>>>>>>> JMRI/master
 
             toolBarFont = zoomLabel.getFont();
             toolBarFont = toolBarFont.deriveFont(newToolBarFontSize);
@@ -1990,7 +2031,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     @Override
     public void setSize(int w, int h) {
         super.setSize(w, h);
+<<<<<<< HEAD
         log.info("Frame size: {w:" + width + ", h:" + height + "}");
+=======
+        log.debug("Frame size: {w:" + width + ", h:" + height + "}");
+>>>>>>> JMRI/master
     }
 
     @Override
@@ -2040,7 +2085,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 String key = name.substring(3);
 
+<<<<<<< HEAD
                 //log.info("VTCode[{}]:'{}'", key, code);
+=======
+                //log.debug("VTCode[{}]:'{}'", key, code);
+>>>>>>> JMRI/master
                 stringsToVTCodes.put(key, code);
             }
         }
@@ -3156,7 +3205,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         int primary_modifier = SystemType.isMacOSX() ? ActionEvent.META_MASK : ActionEvent.CTRL_MASK;
         String zoomInAccelerator = rb.getString("zoomInAccelerator");
 
+<<<<<<< HEAD
         //log.info("zoomInAccelerator: " + zoomInAccelerator);
+=======
+        //log.debug("zoomInAccelerator: " + zoomInAccelerator);
+>>>>>>> JMRI/master
         zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
         zoomMenu.add(zoomInItem);
         ActionListener pressedZoomInActionListener = (ActionEvent event) -> {
@@ -4460,7 +4513,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 Rectangle2D windowRectangle2D = new Rectangle2D.Double(upperLeftX, upperLeftY, windowWidth, windowHeight);
                 prefsMgr.setProperty(windowFrameRef, "windowRectangle2D", windowRectangle2D);
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "windowRectangle2D");
+<<<<<<< HEAD
                 log.info("testing prefsProp: " + prefsProp);
+=======
+                log.debug("testing prefsProp: " + prefsProp);
+>>>>>>> JMRI/master
             }
         });
 
@@ -8547,7 +8604,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
+<<<<<<< HEAD
         String turnoutName = turnoutNameComboBox.getUserName();
+=======
+        String turnoutName = turnoutNameComboBox.getDisplayName();
+>>>>>>> JMRI/master
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8561,7 +8622,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             turnoutNameComboBox.getEditor().setItem("");
             turnoutNameComboBox.setSelectedIndex(-1);
         }
+<<<<<<< HEAD
         turnoutName = extraTurnoutNameComboBox.getUserName();
+=======
+        turnoutName = extraTurnoutNameComboBox.getDisplayName();
+>>>>>>> JMRI/master
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8644,7 +8709,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         o.setContinuingSense(Turnout.CLOSED);
 
         //check on a physical turnout
+<<<<<<< HEAD
         String turnoutName = turnoutNameComboBox.getUserName();
+=======
+        String turnoutName = turnoutNameComboBox.getDisplayName();
+>>>>>>> JMRI/master
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -8857,7 +8926,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * LayoutBlockManager if needed.
      */
     public LayoutBlock provideLayoutBlock(String inBlockName) {
+<<<<<<< HEAD
         //log.info("provideLayoutBlock :: '{}'", inBlockName);
+=======
+        //log.debug("provideLayoutBlock :: '{}'", inBlockName);
+>>>>>>> JMRI/master
         LayoutBlock result = null, newBlk = null;   //assume failure (pessimist!)
 
         if (inBlockName.length() < 1) {
@@ -8885,7 +8958,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //if we created a new block
         if (newBlk != null) {
             //initialize the new block
+<<<<<<< HEAD
             //log.info("provideLayoutBlock :: Init new block {}", inBlockName);
+=======
+            //log.debug("provideLayoutBlock :: Init new block {}", inBlockName);
+>>>>>>> JMRI/master
             newBlk.initializeLayoutBlock();
             newBlk.initializeLayoutBlockRouting();
             newBlk.setBlockTrackColor(defaultTrackColor);

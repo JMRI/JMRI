@@ -221,7 +221,7 @@ public class JsonUtil {
         return root;
     }
 
-    public JsonNode getTrains(Locale locale) throws JsonException {
+    public ArrayNode getTrains(Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (Train train : TrainManager.instance().getTrainsByNameList()) {
             root.add(getTrain(locale, train.getId()));

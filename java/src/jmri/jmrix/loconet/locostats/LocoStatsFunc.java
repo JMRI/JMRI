@@ -107,6 +107,7 @@ public class LocoStatsFunc implements LocoNetListener {
 
         } else if ((msg.getOpCode() == LnConstants.OPC_PEER_XFER)) {
             // raw mode
+<<<<<<< HEAD
             try {
                 int[] data = msg.getPeerXfrData();
                 ifaceStatus = new RawStatus(data[0], data[1], data[2], data[3],
@@ -119,6 +120,20 @@ public class LocoStatsFunc implements LocoNetListener {
             } catch (Exception e) {
                 log.error("Error parsing update: " + msg);
             }
+=======
+//            try {
+            int[] data = msg.getPeerXfrData();
+            ifaceStatus = new RawStatus(data[0], data[1], data[2], data[3],
+                    data[4], data[5], data[6], data[7]
+            );
+
+            updatePending = false;
+            updateListeners();
+            log.debug("Got a LocoNet interface status reply: Raw mode");
+//            } catch (Exception e) {
+//                log.error("Error parsing update: " + msg);
+//            }
+>>>>>>> JMRI/master
         }
     }
     private void updateListeners() {

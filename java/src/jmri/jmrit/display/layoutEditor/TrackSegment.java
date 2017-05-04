@@ -66,7 +66,6 @@ public class TrackSegment extends LayoutTrack {
     private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
-    private String ident = "";
     private String blockName = "";
     private Object connect1 = null;
     private int type1 = 0;
@@ -136,9 +135,6 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
 
     public String getBlockName() {
         return blockName;
@@ -595,6 +591,7 @@ public class TrackSegment extends LayoutTrack {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(rb.getString("BlockID"));
             panel2.add(blockNameLabel);
+<<<<<<< HEAD
             if (true) {
                 layoutEditor.setupComboBox(blockNameComboBox, false, true);
             } else {
@@ -602,6 +599,9 @@ public class TrackSegment extends LayoutTrack {
                 blockNameComboBox.getEditor().setItem("");
                 blockNameComboBox.setSelectedIndex(-1);
             }
+=======
+            layoutEditor.setupComboBox(blockNameComboBox, false, true);
+>>>>>>> JMRI/master
             blockNameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             panel2.add(blockNameComboBox);
 

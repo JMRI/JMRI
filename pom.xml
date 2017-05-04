@@ -738,7 +738,11 @@
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
             <version>4.4.0</version>
+<<<<<<< HEAD
         </dependency>       
+=======
+        </dependency>
+>>>>>>> JMRI/master
         <dependency>
             <groupId>net.java.jinput</groupId>
             <artifactId>jinput</artifactId>
@@ -797,6 +801,7 @@
             <artifactId>xbee-java-library</artifactId>
             <version>1.2.0</version>
             <exclusions>
+<<<<<<< HEAD
                <exclusion>
                   <groupId>org.slf4j</groupId>
                   <artifactId>slf4j-jdk14</artifactId>
@@ -809,6 +814,20 @@
                   <groupId>com.digi</groupId>
                   <artifactId>android-sdk-addon</artifactId>
                </exclusion>
+=======
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.digi</groupId>
+                    <artifactId>android-sdk</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.digi</groupId>
+                    <artifactId>android-sdk-addon</artifactId>
+                </exclusion>
+>>>>>>> JMRI/master
             </exclusions>
         </dependency>
         <dependency>

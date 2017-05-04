@@ -56,6 +56,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.nodetable.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(jmri.jmrix.grapevine.packetgen.PackageTest.class));
         suite.addTest(new JUnit4TestAdapter(SerialConnectionTypeListTest.class));
+<<<<<<< HEAD
+=======
+        suite.addTest(new JUnit4TestAdapter(SerialSensorTest.class));
+        suite.addTest(new JUnit4TestAdapter(SerialSignalHeadTest.class));
+>>>>>>> JMRI/master
         return suite;
     }
 

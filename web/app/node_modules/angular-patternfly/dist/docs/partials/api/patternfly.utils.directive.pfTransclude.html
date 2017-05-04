@@ -1,0 +1,104 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/utils/transclude-directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/utils/transclude-directive.js#L95" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfTransclude</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.utils</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-utils-directive-page patternfly-utils-directive-pftransclude-page"><p>Directive for transcluding in directives and setting up scope of children of parent directives. This is a workaround
+for <a href="https://github.com/angular/angular.js/issues/5489">https://github.com/angular/angular.js/issues/5489</a></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-transclude="{string}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pfTransclude</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-utils-directive-page patternfly-utils-directive-pftransclude-page"><p>specifies the type of transclusion to use.<br/>
+<strong>Values:</strong></p>
+<ul style='list-style-type: none'>
+<li> &#39;sibling&#39; - The transcluded contents scope is a sibling one to the element where transclusion happens (default)
+<li> &#39;parent&#39;  - The transcluded contents scope is that of the element where transclusion happens.
+<li> &#39;child&#39;   - The transcluded contents scope is child scope to the scope of the element where transclusion happens.
+</ul></div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-utils-directive-page patternfly-utils-directive-pftransclude-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.utils" source-edit-deps="angular.js script.js" source-edit-html="index.html-61" source-edit-css="" source-edit-js="script.js-62" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-61" ng-html-wrap-loaded="patternfly.utils angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-61">
+  <div ng-controller="UtilCtrl" class="row pf-transclude-example" style="display:inline-block; width: 100%;">
+    <span>Here the scope id is: <id>{{$id}}</id></span>
+
+    <transclude-sibling class="pf-transclude-example">
+      <pre>This content was transcluded using <b>pf-transclude</b> or <b>pf-transclude="sibling"</b>.</pre><pre>Its scope is: <id>{{$id}}</id> the parent of which is <id>{{$parent.$id}}</id></pre>
+    </transclude-sibling>
+
+    <transclude-parent>
+      <pre>This content was transcluded using <b>pf-transclude="parent"</b>.</pre><pre>Its scope is: <id>{{$id}}</id> the parent of which is <id>{{$parent.$id}}</id></pre>
+    </transclude-parent>
+
+    <transclude-child>
+      <pre>This content was transcluded using <b>pf-transclude="child"</b>.</pre><pre>Its scope is: <id>{{$id}}</id> the parent of which is <id>{{$parent.$id}}</id></pre>
+    </transclude-child>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-62"></pre>
+<script type="text/ng-template" id="script.js-62">
+  angular.module('patternfly.utils')
+    .controller( 'UtilCtrl', function($scope) {
+
+    })
+
+    .config(function($provide){
+        $provide.decorator('ngTranscludeDirective', ['$delegate', function($delegate) {
+            // Remove the original directive
+            $delegate.shift();
+            return $delegate;
+        }]);
+    })
+
+    .directive( 'transcludeSibling', function() {
+      return {
+        restrict: 'E',
+        transclude: true,
+        scope: {},
+        template:
+          '<div>' +
+            '<p>I am a directive with scope <id>{{$id}}</id></p>' +
+            '<span pf-transclude></span>' +
+          '</div>'
+      }
+    })
+
+    .directive( 'transcludeParent', function() {
+      return {
+        restrict: 'E',
+        transclude: true,
+        scope: {},
+        template:
+          '<div>' +
+            '<p>I am a directive with scope <id>{{$id}}</id></p>' +
+            '<span pf-transclude="parent"></span>' +
+          '</div>'
+      }
+    })
+
+    .directive( 'transcludeChild', function() {
+      return {
+        restrict: 'E',
+        transclude: true,
+        scope: {},
+        template:
+          '<div>' +
+            '<p>I am a directive with scope <id>{{$id}}</id></p>' +
+            '<span pf-transclude="child"></span>' +
+          '</div>'
+      }
+    })
+  ;
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.utils" ng-set-html="index.html-61" ng-eval-javascript="script.js-62"></div>
+</div></div>
+</div>

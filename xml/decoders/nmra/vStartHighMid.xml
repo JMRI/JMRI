@@ -70,9 +70,15 @@
     <label xml:lang="it">Velocità Partenza</label>
     <label xml:lang="fr">V démarr.</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <label xml:lang="de">Anfahrspannung</label>
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+    <label xml:lang="cs">Rozjezdové napětí</label>
+    <label xml:lang="de">Abfahrgeschwindigkeit</label>
+    <label xml:lang="nl">Startsnelheid</label>
+>>>>>>> JMRI/master
     <comment>A value of 255 corresponds to 100%</comment>
 =======
  	<comment>A value of 255 corresponds to 100%</comment>

@@ -113,13 +113,13 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     private String _fileName;
     private float _scale = 87.1f;
     private int _searchDepth = 20;      // How many tree nodes (blocks) to walk in finding routes
-    private float _throttleScale = 0.5f;  // factor to approximate throttle setting to track speed
+    private float _throttleScale = 0.75f;  // factor to approximate throttle setting to track speed
 
     private final LinkedHashMap<String, Float> _speedNames = new LinkedHashMap<>();
     private final LinkedHashMap<String, String> _headAppearances = new LinkedHashMap<>();
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
 
-    private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
+    private int _msIncrTime = 500;          // time in milliseconds between speed changes ramping up or down
     private float _throttleIncr = 0.04f;    // throttle increment for each ramp speed change
 
     /**
@@ -213,7 +213,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         setThrottleIncrement(map.getStepIncrement());
     }
 
-    public boolean loadSpeedMap(Element child) {
+    private boolean loadSpeedMap(Element child) {
         if (child == null) {
             return false;
         }
@@ -294,6 +294,16 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         }
         this.setAppearances(heads);
 
+<<<<<<< HEAD
+=======
+        // SignalSpeedMap not fully instanciated at load time. some property changes missed
+        SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
+        speedMap.setRampParams(_msIncrTime, _msIncrTime);
+        speedMap.setDefaultThrottleFactor(_throttleScale);
+        speedMap.setLayoutScale(_scale);
+        speedMap.setAspects(new HashMap<>(this._speedNames), _interpretation);
+        speedMap.setAppearances(new HashMap<>(this._headAppearances));
+>>>>>>> JMRI/master
         return true;
     }
 

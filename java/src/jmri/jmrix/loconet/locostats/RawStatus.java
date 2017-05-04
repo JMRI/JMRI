@@ -19,6 +19,12 @@ public class RawStatus {
     /**
      * raw data
      */
+<<<<<<< HEAD
     public int raw[];
     
 }
+=======
+    public int raw[] = new int[8];
+
+    }
+>>>>>>> JMRI/master

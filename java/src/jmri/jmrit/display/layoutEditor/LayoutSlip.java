@@ -563,7 +563,7 @@ public class LayoutSlip extends LayoutTurnout {
 
     /**
      * Initialization method The above variables are initialized by
-     * PositionablePointXml, then the following method is called after the
+     * LayoutSlipXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
     @Override
@@ -1097,7 +1097,11 @@ public class LayoutSlip extends LayoutTurnout {
     TestState testPanel;
 
     void slipEditDonePressed(ActionEvent a) {
+<<<<<<< HEAD
         String newName = turnoutAComboBox.getUserName();
+=======
+        String newName = turnoutAComboBox.getDisplayName();
+>>>>>>> JMRI/master
         if (!turnoutName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutTurnoutFrame)) {
                 setTurnout(newName);
@@ -1107,7 +1111,11 @@ public class LayoutSlip extends LayoutTurnout {
             }
             needRedraw = true;
         }
+<<<<<<< HEAD
         newName = turnoutBComboBox.getUserName();
+=======
+        newName = turnoutBComboBox.getDisplayName();
+>>>>>>> JMRI/master
         if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {

@@ -68,6 +68,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     private final ButtonGroup LAFGroup = new ButtonGroup();
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
+    public JCheckBox graphicStateDisplay;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -78,6 +79,11 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doClickSelection(p = new JPanel());
         add(p);
+<<<<<<< HEAD
+=======
+        doGraphicState(p = new JPanel());
+        add(p);
+>>>>>>> JMRI/master
         doToolTipDismissDelay(p = new JPanel());
         add(p);
     }
@@ -92,6 +98,19 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(mouseEvent);
     }
 
+<<<<<<< HEAD
+=======
+    void doGraphicState(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        graphicStateDisplay = new JCheckBox(ConfigBundle.getMessage("GUIGraphicTableState"));
+        graphicStateDisplay.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState());
+        graphicStateDisplay.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
+        });
+        panel.add(graphicStateDisplay);
+    }
+
+>>>>>>> JMRI/master
     void doLAF(JPanel panel) {
         // find L&F definitions
         panel.setLayout(new FlowLayout());

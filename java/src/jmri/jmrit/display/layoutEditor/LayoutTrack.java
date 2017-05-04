@@ -46,6 +46,11 @@ public abstract class LayoutTrack {
     public static final int SLIP_RIGHT = 26;
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
+<<<<<<< HEAD
+=======
+    protected String ident = "";
+
+>>>>>>> JMRI/master
     // dashed line parameters
     //private static int minNumDashes = 3;
     //private static double maxDashLength = 10;
@@ -63,6 +68,7 @@ public abstract class LayoutTrack {
      */
     public LayoutTrack() {
     }
+<<<<<<< HEAD
 
     /**
      * accessor method
@@ -72,14 +78,17 @@ public abstract class LayoutTrack {
     }
 
     //NOTE: not public because "center" is a member variable
-    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
-        double cX = center.getX();
-        double cY = center.getY();
-        double deltaX = p.getX() - cX;
-        double deltaY = p.getY() - cY;
-        double x = cX + cosineRot * deltaX - sineRot * deltaY;
-        double y = cY + sineRot * deltaX + cosineRot * deltaY;
-        return new Point2D.Double(x, y);
+=======
+
+    /**
+     * accessor methods
+     */
+    public String getID() {
+        return ident;
+    }
+
+    public static void setDefaultTrackColor(Color color) {
+        defaultTrackColor = color;
     }
 
     /**
@@ -104,6 +113,50 @@ public abstract class LayoutTrack {
 
     public void setHidden(boolean hide) {
         hidden = hide;
+    }
+
+    /*
+     * non-accessor methods
+     */
+
+>>>>>>> JMRI/master
+    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
+        double cX = center.getX();
+        double cY = center.getY();
+        double deltaX = p.getX() - cX;
+        double deltaY = p.getY() - cY;
+        double x = cX + cosineRot * deltaX - sineRot * deltaY;
+        double y = cY + sineRot * deltaX + cosineRot * deltaY;
+        return new Point2D.Double(x, y);
+    }
+
+<<<<<<< HEAD
+    /**
+     * Get the hidden state of the track element.
+     *
+     * @return true if hidden; false otherwise
+     */
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * Get the hidden state of the track element.
+     *
+     * @return true if hidden; false otherwise
+     * @deprecated since 4.7.2; use {@link #isHidden()} instead
+     */
+    @Deprecated // Java standard pattern for boolean getters is "isHidden()"
+    public boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hide) {
+        hidden = hide;
+=======
+    public void reCheckBlockBoundary() {
+        log.error("virtual method: override in sub-classes; don't call [super ...].");
+>>>>>>> JMRI/master
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());

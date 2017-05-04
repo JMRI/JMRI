@@ -12,7 +12,12 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.loconet.pr2.configurexml.PackageTest.class,
    LnPr2PacketizerTest.class,
    PR2AdapterTest.class,
+<<<<<<< HEAD
    PR2SystemConnectionMemoTest.class
+=======
+   PR2SystemConnectionMemoTest.class,
+   LnPr2PowerManagerTest.class
+>>>>>>> JMRI/master
 })
 /**
  * Tests for the jmri.jmrix.loconet.pr2 package.

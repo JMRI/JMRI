@@ -53,7 +53,11 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
  */
+<<<<<<< HEAD
 public class PositionablePoint extends LayoutTrack{
+=======
+public class PositionablePoint extends LayoutTrack {
+>>>>>>> JMRI/master
 
     // Defined text resource
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
@@ -68,7 +72,6 @@ public class PositionablePoint extends LayoutTrack{
     private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
-    private String ident = "";
     private int type = 0;
     private TrackSegment connect1 = null;
     private TrackSegment connect2 = null;

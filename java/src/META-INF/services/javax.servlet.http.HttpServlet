@@ -12,3 +12,7 @@ jmri.web.servlet.panel.PanelServlet
 jmri.web.servlet.roster.RosterServlet
 jmri.web.servlet.simple.SimpleServlet
 jmri.web.servlet.about.AboutServlet
+<<<<<<< HEAD
+=======
+jmri.server.web.app.WebAppServlet
+>>>>>>> JMRI/master
