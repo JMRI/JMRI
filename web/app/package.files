@@ -12,7 +12,6 @@ web/app/node_modules/angular-patternfly/dist/angular-patternfly.min.js
 web/app/node_modules/angular-patternfly/node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js
 web/app/node_modules/angular-websocket/dist/angular-websocket.min.js
 web/app/node_modules/angular-translate/dist/angular-translate.min.js
-web/app/script/**
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly.min.css
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly-additions.min.css
 web/app/node_modules/angular-patternfly/dist/styles/angular-patternfly.min.css
@@ -25,3 +24,6 @@ web/app/node_modules/angular-route/angular-route.min.js.map
 web/app/node_modules/angular-patternfly/node_modules/angular-sanitize/angular-sanitize.min.js.map
 web/app/node_modules/angular/angular.min.js.map
 web/app/node_modules/angular-websocket/dist/angular-websocket.min.js.map
+web/app/script/**
+web/app/app/**
+web/app/short-detector/**
