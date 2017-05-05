@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * trains to change from one straight track to the other, as well as going straight across.
  * <P>
  * A LayoutSlip has four connection points, designated A, B, C, and D.
- * A train may proceed between A & D, A & C, B & D and in the case of double-slips, B & C.
+ * A train may proceed between A &amp; D, A &amp; C, B &amp; D and in the case of double-slips, B &amp; C.
  * <P>
  *    ==A==-==D==
  *       \\ //

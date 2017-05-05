@@ -174,9 +174,9 @@ public class LayoutTurnout extends LayoutTrack {
      */
 
     public String blockName = "";  // name for block, if there is one
-    public String blockBName = "";  // Xover - name for second block, if there is one
-    public String blockCName = "";  // Xover - name for third block, if there is one
-    public String blockDName = "";  // Xover - name for fourth block, if there is one
+    public String blockBName = "";  // Xover/slip - name for second block, if there is one
+    public String blockCName = "";  // Xover/slip - name for third block, if there is one
+    public String blockDName = "";  // Xover/slip - name for fourth block, if there is one
 
     //public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
     //public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
