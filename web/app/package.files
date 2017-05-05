@@ -12,6 +12,8 @@ web/app/node_modules/angular-patternfly/dist/angular-patternfly.min.js
 web/app/node_modules/angular-patternfly/node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js
 web/app/node_modules/angular-websocket/dist/angular-websocket.min.js
 web/app/node_modules/angular-translate/dist/angular-translate.min.js
+web/app/node_modules/angular-translate-handler-log/angular-translate-handler-log.min.js
+web/app/node_modules/angular-translate-loader-partial/angular-translate-loader-partial.min.js
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly.min.css
 web/app/node_modules/angular-patternfly/node_modules/patternfly/dist/css/patternfly-additions.min.css
 web/app/node_modules/angular-patternfly/dist/styles/angular-patternfly.min.css

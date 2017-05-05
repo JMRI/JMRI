@@ -38,7 +38,7 @@
                                 <span class="carat fa {{defaultPowerState| powerTriState}} small"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-power">
-                                <li ng-repeat="pm in power| orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="fa fa-fw {{pm.state| powerTriState}}"></span> {{pm.name}} <span ng-show="pm.default === true">(default)</span></a></li>
+                                <li ng-repeat="pm in power| orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="fa fa-fw {{pm.state| powerTriState}}"></span> {{pm.name}}<span ng-show="pm.default === true"> <span data-translate>POWER.DEFAULT</span></span></a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

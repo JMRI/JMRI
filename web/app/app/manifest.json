@@ -27,6 +27,8 @@
     "/app/node_modules/angular-patternfly/node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js",
     "/app/node_modules/angular-websocket/dist/angular-websocket.min.js",
     "/app/node_modules/angular-translate/dist/angular-translate.min.js",
+    "/app/node_modules/angular-translate-handler-log/angular-translate-handler-log.min.js",
+    "/app/node_modules/angular-translate-loader-partial/angular-translate-loader-partial.min.js",
     "/app/script"
   ],
   "styles":[

@@ -12,8 +12,20 @@ angular.module('jmri.app', [
 
 // configure the jmri.app module
 angular.module('jmri.app').config(
-  function($routeProvider, $logProvider) {
+  function($routeProvider, $logProvider, $translateProvider) {
     'use strict';
+
+    $translateProvider
+    .useMissingTranslationHandlerLog()
+    .useSanitizeValueStrategy('escape')
+    .useLoader('$translatePartialLoader', {
+      urlTemplate: '/{part}/locale-{lang}.json'
+    })
+    .registerAvailableLanguageKeys(['en'], {
+      '*': 'en'
+    })
+    .fallbackLanguage('en')
+    .determinePreferredLanguage();
 
     $routeProvider
     // routes %2$s
@@ -24,11 +36,21 @@ angular.module('jmri.app').config(
   }
 );
 
+// reload the translations whenever a controller changes
+angular.module('jmri.app').run(function($rootScope, $translate) {
+  $rootScope.$on('$translatePartialLoaderStructureChanged', function () {
+    $translate.refresh();
+  });
+});
+
 // add the navigation menu controller to the jmri.app module
 angular.module('jmri.app').controller('NavigationCtrl',
-  function($scope, $http, jmriWebSocket, $log, $interval, $rootScope, Notifications) {
+  function($scope, $http, jmriWebSocket, $log, $interval, $rootScope, Notifications, $translatePartialLoader) {
     // navigation items %3$s
 
+    // translation
+    $translatePartialLoader.addPart('app/app');
+    
     // notification service
     $scope.toastNotifications = Notifications.data;
     $scope.tnCloseCallback = function(data) {
