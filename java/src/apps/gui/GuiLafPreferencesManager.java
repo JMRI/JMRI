@@ -264,7 +264,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         boolean oldNonStandardMouseEvent = this.nonStandardMouseEvent;
         this.nonStandardMouseEvent = nonStandardMouseEvent;
         this.setDirty(true);
-        this.setRestartRequired(false);
+        this.setRestartRequired(true);
         firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
     }
 
