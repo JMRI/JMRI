@@ -133,7 +133,7 @@ public class PortalManager extends AbstractManager
         if (name == null || name.trim().length() == 0) {
             return null;
         }
-        Portal portal = getByUserName(name);
+        Portal portal = getPortal(name);
         if (portal == null) {
             portal = createNewPortal(null, name);
         }
