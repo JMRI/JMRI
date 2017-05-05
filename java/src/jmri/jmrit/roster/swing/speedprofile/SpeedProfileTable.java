@@ -1,11 +1,18 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,17 +31,30 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
     java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
     int interp;
     float scale;
+    JLabel description;
+    String rosterId;
 
-    public SpeedProfileTable(RosterSpeedProfile sp, String rosterId) {
+    public SpeedProfileTable(RosterSpeedProfile sp, String id) {
         super(false, true);
-        setTitle(Bundle.getMessage("SpeedTable"));
+        rosterId = id;
+        setTitle(Bundle.getMessage("SpeedTable", rosterId));
         getContentPane().setLayout(new BorderLayout(15,15));
         
         interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
         scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         SpeedTableModel model = new SpeedTableModel(sp);
         JTable table = new JTable(model);
-//        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.addKeyListener(new KeyListener() {
+            public void keyTyped(KeyEvent ke) {
+                int k = ke.getKeyCode(); 
+                char ch = ke.getKeyChar(); 
+                if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
+                    deleteRow(table);
+                }
+            }
+            public void keyPressed(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+        });
         
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
@@ -49,7 +69,84 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5, 5));
+        java.awt.Font font = table.getFont();
         
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        JLabel label = new JLabel(Bundle.getMessage("units"));
+        label.setFont(font);
+        javax.swing.ButtonGroup bp = new javax.swing.ButtonGroup();
+        JRadioButton mm = new JRadioButton(Bundle.getMessage("mm"));
+        mm.setFont(font);
+        mm.addActionListener((ActionEvent e) -> {
+            update(model, SignalSpeedMap.PERCENT_NORMAL);
+        });
+        JRadioButton mph = new JRadioButton(Bundle.getMessage("mph"));
+        mph.setFont(font);
+        mph.addActionListener((ActionEvent e) -> {
+            update(model, SignalSpeedMap.SPEED_MPH);
+        });
+        JRadioButton kph = new JRadioButton(Bundle.getMessage("kph"));
+        kph.setFont(font);
+        kph.addActionListener((ActionEvent e) -> {
+            update(model, SignalSpeedMap.SPEED_KMPH);
+        });
+        bp.add(mm);
+        bp.add(mph);
+        bp.add(kph);
+        panel.add(Box.createHorizontalGlue());
+        panel.add(label);
+        panel.add(mm);
+        panel.add(mph);
+        panel.add(kph);
+        panel.add(Box.createHorizontalGlue());
+        String str;
+        switch(interp) {
+            case SignalSpeedMap.SPEED_MPH:
+                mph.setSelected(true);
+                str = "scale";
+                break;
+            case SignalSpeedMap.SPEED_KMPH:
+                kph.setSelected(true);
+                str = "scale";
+                break;
+            default:
+                mm.setSelected(true);
+                str = "track";
+        }
+        description = new JLabel(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
+        description.setFont(font);
+        description.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        
+        contentPane.add(description, BorderLayout.NORTH);
+        contentPane.add(panel, BorderLayout.CENTER);
+        JScrollPane pane = new JScrollPane(table);
+        contentPane.add(pane, BorderLayout.SOUTH);
+
+        getContentPane().add(contentPane);
+        pack();
+    }
+
+    private void deleteRow(JTable table) {
+        int row = table.getSelectedRow();
+        if (row >= 0) {
+            SpeedTableModel model = (SpeedTableModel)table.getModel();
+            Map.Entry<Integer, SpeedStep> entry = model.speedArray.get(row);
+            int step = Math.round((float)(entry.getKey()*126)/1000);
+            if ( JOptionPane.YES_OPTION  == JOptionPane.showConfirmDialog(null, 
+                    Bundle.getMessage("DeleteRow", step), Bundle.getMessage("SpeedTable", rosterId),
+                    JOptionPane.YES_NO_OPTION)) {
+                model.speedArray.remove(entry);
+                model.fireTableDataChanged();
+            }
+        }
+    }
+    
+    private void update(SpeedTableModel model, int which) {
+        interp = which;
+        // can't figure out a way to update column names
+        //model.getColumnName(SpeedTableModel.FORWARD_SPEED_COL);
+        //model.getColumnName(SpeedTableModel.REVERSE_SPEED_COL);
         String str;
         switch(interp) {
             case SignalSpeedMap.SPEED_MPH:
@@ -59,13 +156,8 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
             default:
                 str = "track";
         }
-        JLabel prompt = new JLabel(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));
-        contentPane.add(prompt, BorderLayout.NORTH);
-        JScrollPane pane = new JScrollPane(table);
-        contentPane.add(pane, BorderLayout.CENTER);
-
-        getContentPane().add(contentPane);
-        pack();
+        description.setText(Bundle.getMessage("rosterId", Bundle.getMessage(str), rosterId));;
+        model.fireTableDataChanged();
     }
 
     
@@ -88,6 +180,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 entry = speeds.higherEntry(entry.getKey());
             }
         }
+        
         @Override
         public int getColumnCount() {
             return NUMCOLS;
@@ -99,7 +192,8 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         }
         @Override
         public String getColumnName(int col) {
-            String rate;
+            String rate = Bundle.getMessage("speed");
+            /* can't figure out a way to update column names
             switch(interp) {
                 case SignalSpeedMap.SPEED_MPH:
                     rate = "Mph";
@@ -109,7 +203,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                     break;
                 default:
                     rate = "mm/s";
-            }
+            }*/
             switch (col) {
                 case STEP_COL:
                     return Bundle.getMessage("step");

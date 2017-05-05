@@ -38,6 +38,8 @@ import jmri.InstanceManager;
 import jmri.Path;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrit.roster.swing.speedprofile.SpeedProfileTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,6 +87,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JComboBox<String> _rosterBox = new JComboBox<>();
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
+    private JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
+    private SpeedProfileTable spTable = null;
+
 
     /**
      * Only subclasses can create this
@@ -156,6 +161,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(makeTextBoxPanel(false, _rosterBox, "Roster", null));
         panel.add(Box.createVerticalStrut(2));
         panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", null));
+        panel.add(_viewProfile);
         if (comp != null) {
             panel.add(comp);
         }
@@ -191,6 +197,25 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 setTrainInfo(selection);
             }
         });
+        
+        _viewProfile.addActionListener((ActionEvent e) -> {
+            showProfile();
+        });
+    }
+
+    private void showProfile() {
+        if (spTable !=null) {
+            spTable.dispose();
+        }
+        if (_train != null) {
+            RosterSpeedProfile speedProfile = _train.getSpeedProfile();
+            if (speedProfile != null) {
+                spTable = new SpeedProfileTable(speedProfile, _train.getId());
+                spTable.setVisible(true);
+                return;
+            }            
+        }
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
     }
 
     /**
