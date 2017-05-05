@@ -349,7 +349,7 @@
                         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
                     </systemPropertyVariables>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine}</argLine>
+                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)

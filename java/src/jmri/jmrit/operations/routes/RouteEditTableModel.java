@@ -619,7 +619,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             } else {
                 hour = Integer.toString(i);
             }
-            for (int j = 0; j < 60; j = j + 5) {
+            for (int j = 0; j < 60; j += 1) {
                 if (j < 10) {
                     minute = "0" + Integer.toString(j);
                 } else {
