@@ -109,32 +109,6 @@ function $logProperties(obj) {
     if (jmri_logging) jmri.log("$logProperties(obj): " + $propList + ".");
 }
 
-// convert turnout state to string
-function $turnoutStateToString($state) {
-    if ($state == 2)
-        return "CLOSED";
-    else if ($state == 4)
-        return "THROWN";
-    else if ($state == 8)
-        return "INCONSISTENT";
-    else
-        return "UNKNOWN";
-}
-
-// convert slip state to string
-function $slipStateToString($state) {
-    if ($state == STATE_AC)
-        return "STATE_AC";
-    else if ($state == STATE_BD)
-        return "STATE_BD";
-    else if ($state == STATE_AD)
-        return "STATE_AD";
-    else if ($state == STATE_BC)
-        return "STATE_BC";
-    else
-        return "UNKNOWN";
-}
-
 //process the response returned for the requestPanelXML command
 function processPanelXML($returnedData, $success, $xhr) {
 
@@ -625,9 +599,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
                             case "layoutSlip" :
-                                if (jmri_logging) jmri.log("case layoutSlip:");
-                                $logProperties(this);
-                                $logProperties($widget);
+                                if (jmri_logging) {
+                                    jmri.log("case layoutSlip:");
+                                    $logProperties(this);
+                                    $logProperties($widget);
+                                }
 
                                 //save the slip state to turnout state information
                                 $widget['turnout'] = $(this).find('turnout:first').text();
@@ -888,7 +864,7 @@ function $handleClick(e) {
             var $newState = getNextSlipState($widget);
 
             if (jmri_logging) jmri.log("$handleClick:layoutSlip: change state from " +
-                $slipStateToString($widget.state) + " to " + $slipStateToString($newState) + ".");
+                slipStateToString($widget.state) + " to " + slipStateToString($newState) + ".");
 
             // convert new slip state to new turnout states
             var $newStateA, $newStateB;
@@ -1822,35 +1798,39 @@ var $setWidgetState = function($id, $newState) {
             var $stateA, $stateB;
             [$stateA, $stateB] = getTurnoutStatesForSlip($widget);
 
-            if (jmri_logging) jmri.log("#### Before slip: " + $slipStateToString($widget.state) +
-                ", stateA: " + $turnoutStateToString($stateA) +
-                ", stateB: " + $turnoutStateToString($stateB));
+            if (jmri_logging) jmri.log("#### Slip " + $widget.name +
+                " before: " + slipStateToString($widget.state) +
+                ", stateA: " + turnoutStateToString($stateA) +
+                ", stateB: " + turnoutStateToString($stateB));
 
             // change appropriate turnout state
             if ($id.endsWith("r")) {
                 if ($stateA != $newState) {
-                    if (jmri_logging) jmri.log("#### Changed slip " + $widget.name + " $stateA from " + $turnoutStateToString($stateA) +
-                        " to " + $turnoutStateToString($newState));
+                    if (jmri_logging) jmri.log("#### Changed slip " + $widget.name +
+                        " $stateA from " + turnoutStateToString($stateA) +
+                        " to " + turnoutStateToString($newState));
                     $stateA = $newState;
                 }
             } else if ($id.endsWith("l")) {
                 if ($stateB != $newState) {
-                    if (jmri_logging) jmri.log("#### Changed slip " + $widget.name + " $stateB from " + $turnoutStateToString($stateB) +
-                        " to " + $turnoutStateToString($newState));
+                    if (jmri_logging) jmri.log("#### Changed slip " + $widget.name +
+                        " $stateB from " + turnoutStateToString($stateB) +
+                        " to " + turnoutStateToString($newState));
                     $stateB = $newState;
                 }
             }
 
             // turn turnout states back into slip state
             $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
-            if (jmri_logging) jmri.log("#### After slip: " + $slipStateToString($newState) +
-                ", stateA: " + $turnoutStateToString($stateA) +
-                ", stateB: " + $turnoutStateToString($stateB));
+            if (jmri_logging) jmri.log("#### Slip " + $widget.name +
+                " after: " + slipStateToString($newState) +
+                ", stateA: " + turnoutStateToString($stateA) +
+                ", stateB: " + turnoutStateToString($stateB));
 
-            if ($widget.state != $newState) {
-                if (jmri_logging) jmri.log("#### Changing slip " + $widget.name + " from " + $slipStateToString($widget.state) +
-                    " to " + $slipStateToString($newState));
-            }
+            //if ($widget.state != $newState) {
+            //    if (jmri_logging) jmri.log("#### Changing slip " + $widget.name + " from " + slipStateToString($widget.state) +
+            //        " to " + slipStateToString($newState));
+            //}
 
             // set $id to slip id
             $id = slipID;
@@ -1859,8 +1839,8 @@ var $setWidgetState = function($id, $newState) {
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
-        if (jmri_logging) jmri.log("#### $setWidgetState(slip " + $id + ", " + $slipStateToString($newState) +
-            "); (was " + $slipStateToString($widget.state) + ")");
+        if (jmri_logging) jmri.log("#### $setWidgetState(slip " + $id + ", " + slipStateToString($newState) +
+            "); (was " + slipStateToString($widget.state) + ")");
         // JMRI doesn't send slip states… it sends slip turnout states…
         // so ignore this (incorrect) slip state change
         return;
@@ -2393,110 +2373,152 @@ $(document).ready(function() {
     }
 });
 
+// convert turnout state to string
+function turnoutStateToString(state) {
+    result = "UKNONWN"
+    switch (state) {
+        case 2:
+            result = "CLOSED";
+            break;
+        case 4:
+            result = "THROWN";
+            break;
+        case 8:
+            result = "INCONSISTENT";
+            break;
+    }
+    return result;
+}
 
-function getTurnoutStatesForSlipState($slipWidget, $slipState) {
-    var $results = [0, 0];  // unknown, unknown
-    if (typeof $slipWidget != "undefined") {
-        if ($widget.widgetType == "layoutSlip") {
-            switch ($slipState) {
+// convert slip state to string
+function slipStateToString(state) {
+    result = "UNKNOWN";
+    switch (state) {
+        case STATE_AC:
+            result = "STATE_AC";
+            break;
+        case STATE_AD:
+            result = "STATE_AD";
+            break;
+        case STATE_BC:
+            result = "STATE_BC";
+            break;
+        case STATE_BD:
+            result = "STATE_BD";
+            break;
+    }
+    return result;
+}
+
+function getTurnoutStatesForSlipState(slipWidget, slipState) {
+    var results = [0, 0];  // unknown, unknown
+    if (typeof slipWidget != "undefined") {
+        if (slipWidget.widgetType == "layoutSlip") {
+            switch (slipState) {
                 case STATE_AC:
-                    $results = [$widget.turnoutA_AC, $widget.turnoutB_AC];
+                    results = [slipWidget.turnoutA_AC, slipWidget.turnoutB_AC];
                     break;
                 case STATE_AD:
-                    $results = [$widget.turnoutA_AD, $widget.turnoutB_AD];
+                    results = [slipWidget.turnoutA_AD, slipWidget.turnoutB_AD];
                     break;
                 case STATE_BC:
-                    $results = [$widget.turnoutA_BC, $widget.turnoutB_BC];
+                    results = [slipWidget.turnoutA_BC, slipWidget.turnoutB_BC];
                     break;
                 case STATE_BD:
-                    $results = [$widget.turnoutA_BD, $widget.turnoutB_BD];
+                    results = [slipWidget.turnoutA_BD, slipWidget.turnoutB_BD];
                     break;
             }
         }
     }
-    return $results;
+    return results;
 }   // function getTurnoutStatesForSlipState
 
-function getTurnoutStatesForSlip($slipWidget) {
-    return getTurnoutStatesForSlipState($slipWidget, $widget.state);
+function getTurnoutStatesForSlip(slipWidget) {
+    return getTurnoutStatesForSlipState(slipWidget, slipWidget.state);
 }
 
-function getSlipStateForTurnoutStates($widget, $stateA, $stateB) {
-    var $result = 0; // unknown
-    if (($stateA == $widget.turnoutA_AC) && ($stateB == $widget.turnoutB_AC)) {
-        $result = STATE_AC;
-    } else if (($stateA == $widget.turnoutA_AD) && ($stateB == $widget.turnoutB_AD)) {
-        $result = STATE_AD;
-    } else if (($stateA == $widget.turnoutA_BC) && ($stateB == $widget.turnoutB_BC)) {
-        $result = STATE_BC;
-    } else if (($stateA == $widget.turnoutA_BD) && ($stateB == $widget.turnoutB_BD)) {
-        $result = STATE_BD;
-    } else {
-        if (($stateA == $widget.turnoutA_AC) || ($stateB == $widget.turnoutB_AC)) {
-            $result = STATE_AC;
-        } else if (($stateA == $widget.turnoutA_AD) || ($stateB == $widget.turnoutB_AD)) {
-            $result = STATE_AD;
-        } else if (($stateA == $widget.turnoutA_BC) || ($stateB == $widget.turnoutB_BC)) {
-            $result = STATE_BC;
-        } else if (($stateA == $widget.turnoutA_BD) || ($stateB == $widget.turnoutB_BD)) {
-            $result = STATE_BD;
+function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClosest) {
+    var result = 0; // unknown
+    if ((stateA == slipWidget.turnoutA_AC) && (stateB == slipWidget.turnoutB_AC)) {
+        result = STATE_AC;
+    } else if ((stateA == slipWidget.turnoutA_AD) && (stateB == slipWidget.turnoutB_AD)) {
+        result = STATE_AD;
+    } else if ((stateA == slipWidget.turnoutA_BC) && (stateB == slipWidget.turnoutB_BC)) {
+        result = STATE_BC;
+    } else if ((stateA == slipWidget.turnoutA_BD) && (stateB == slipWidget.turnoutB_BD)) {
+        result = STATE_BD;
+    } else if (useClosest) {
+        if ((stateA == slipWidget.turnoutA_AC) || (stateB == slipWidget.turnoutB_AC)) {
+            result = STATE_AC;
+        } else if ((stateA == slipWidget.turnoutA_AD) || (stateB == slipWidget.turnoutB_AD)) {
+            result = STATE_AD;
+        } else if ((stateA == slipWidget.turnoutA_BC) || (stateB == slipWidget.turnoutB_BC)) {
+            result = STATE_BC;
+        } else if ((stateA == slipWidget.turnoutA_BD) || (stateB == slipWidget.turnoutB_BD)) {
+            result = STATE_BD;
+        } else {
+            result = STATE_AD;
         }
     }
-    return $result;
+    return result;
 }
 
-function getNextSlipState($widget) {
-    var $result = 0; // unknown
+function getSlipStateForTurnoutStates(slipWidget, stateA, stateB) {
+    return getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, true)
+}
 
-    switch ($widget.side) {
+function getNextSlipState(slipWidget) {
+    var result = 0; // unknown
+
+    switch (slipWidget.side) {
         case 'left': {
-            switch ($widget.state) {
+            switch (slipWidget.state) {
                 case STATE_AC:
-                    if ($widget.slipType == SINGLE_SLIP) {
-                        $result = STATE_BD;
+                    if (slipWidget.slipType == SINGLE_SLIP) {
+                        result = STATE_BD;
                     } else {
-                        $result = STATE_BC;
+                        result = STATE_BC;
                     }
                     break;
                 case STATE_AD:
-                    $result = STATE_BD;
+                    result = STATE_BD;
                     break;
                 case STATE_BC:
                 default:
-                    $result = STATE_AC;
+                    result = STATE_AC;
                     break;
                 case STATE_BD:
-                    $result = STATE_AD;
+                    result = STATE_AD;
                     break;
             }
             break;
         }
         case 'right': {
-            switch ($widget.state) {
+            switch (slipWidget.state) {
                 case STATE_AC:
                 default:
-                    $result = STATE_AD;
+                    result = STATE_AD;
                     break;
                 case STATE_AD:
-                    $result = STATE_AC;
+                    result = STATE_AC;
                     break;
                 case STATE_BC:
-                    $result = STATE_BD;
+                    result = STATE_BD;
                     break;
                 case STATE_BD:
-                    if ($widget.slipType == SINGLE_SLIP) {
-                        $result = STATE_AC;
+                    if (slipWidget.slipType == SINGLE_SLIP) {
+                        result = STATE_AC;
                     } else {
-                        $result = STATE_BC;
+                        result = STATE_BC;
                     }
                     break;
             }
             break;
         }
         default: {
-            jmri.log("getNextSlipState($widget): unknown $widget.side: " + $widget.side);
+            jmri.log("getNextSlipState($widget): unknown $widget.side: " + slipWidget.side);
             break;
         }
-    }   // switch ($widget.side)
-    return $result;
-}   // function getNextSlipState($widget)
+    }   // switch (slipWidget.side)
+    return result;
+}   // function getNextSlipState(slipWidget)
