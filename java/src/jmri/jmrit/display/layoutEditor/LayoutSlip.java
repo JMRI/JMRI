@@ -1154,13 +1154,13 @@ public class LayoutSlip extends LayoutTurnout {
             needRedraw = true;
         }
         newName = turnoutBComboBox.getDisplayName();
-        if (!secondTurnoutName.equals(newName)) {
+        if (!turnoutBName.equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName,
                     editLayoutTurnoutFrame)) {
                 setTurnoutB(newName);
             } else {
-                secondNamedTurnout = null;
-                secondTurnoutName = "";
+                namedTurnoutB = null;
+                turnoutBName = "";
             }
             needRedraw = true;
         }
