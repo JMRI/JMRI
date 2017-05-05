@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip,
- * LayoutTurntable, LevelXing, TrackSegment & PositionablePoint)
+ * LayoutTurntable, LevelXing, TrackSegment &amp; PositionablePoint)
  *
  * @author George Warner Copyright (c) 2017
  */
