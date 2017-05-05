@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -155,9 +156,9 @@ public class LayoutTurnout extends LayoutTrack {
     //Second turnout is used to either throw a second turnout in a cross over or if one turnout address is used to throw two physical ones
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
     protected LayoutBlock block = null;
-    private LayoutBlock blockB = null;  // Xover - second block, if there is one
-    private LayoutBlock blockC = null;  // Xover - third block, if there is one
-    private LayoutBlock blockD = null;  // Xover - fourth block, if there is one
+    protected LayoutBlock blockB = null;  // Xover - second block, if there is one
+    protected LayoutBlock blockC = null;  // Xover - third block, if there is one
+    protected LayoutBlock blockD = null;  // Xover - fourth block, if there is one
     protected LayoutEditor layoutEditor = null;
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
@@ -173,9 +174,9 @@ public class LayoutTurnout extends LayoutTrack {
      */
 
     public String blockName = "";  // name for block, if there is one
-    public String blockBName = "";  // Xover - name for second block, if there is one
-    public String blockCName = "";  // Xover - name for third block, if there is one
-    public String blockDName = "";  // Xover - name for fourth block, if there is one
+    public String blockBName = "";  // Xover/slip - name for second block, if there is one
+    public String blockCName = "";  // Xover/slip - name for third block, if there is one
+    public String blockDName = "";  // Xover/slip - name for fourth block, if there is one
 
     //public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
     //public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
@@ -1568,6 +1569,36 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
+     * return the connection type for a point
+     *
+     * @since 7.4.?
+     */
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+        int result = NONE;  // assume point not on connection
+
+        if (useRectangles) {
+            // calculate turnout's control rectangle
+            Rectangle2D r = layoutEditor.turnoutCircleRectAt(getCoordsCenter());
+            if (r.contains(p)) {
+                //point is in this turnout's control rectangle
+                result = TURNOUT_CENTER;
+            }
+        } else {
+            // calculate the distance to the center point of this turnout
+            Double distance = p.distance(getCoordsCenter());
+
+            // calculate radius of turnout control circle
+            // note: 3 is layoutEditor.SIZE (not public)
+            double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
+            if (distance <= circleRadius) {
+                // point is in this turnout's control circle
+                result = TURNOUT_CENTER;
+            }
+        }
+        return result;
+    }
+
+    /**
      * Modify coordinates methods
      */
     public void setCoordsCenter(Point2D p) {
@@ -1864,7 +1895,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         }
         if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-            //If the turnout is set for straigh over, we need to deal with the straight over connecting blocks
+            //If the turnout is set for straight over, we need to deal with the straight over connecting blocks
             if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {
                 if ((block.getOccupancy() == LayoutBlock.OCCUPIED) && (blockB.getOccupancy() == LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + blockName + " & " + blockBName + " are Occupied");
