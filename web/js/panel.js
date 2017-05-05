@@ -92,6 +92,8 @@ var DOUBLE_SLIP = 8;
 
 var jmri = null;
 
+var jmri_logging = false;
+
 //
 //  debug functions
 //
@@ -104,7 +106,7 @@ function $logProperties(obj) {
             $propList += ($propName + "='" + obj[$propName] + "', ");
         }
     }
-    jmri.log("$logProperties(obj): " + $propList + ".");
+    if (jmri_logging) jmri.log("$logProperties(obj): " + $propList + ".");
 }
 
 // convert turnout state to string
@@ -623,12 +625,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
                             case "layoutSlip" :
-                                //jmri.log("case layoutSlip:");
-                                //$logProperties($widget);
+                                if (jmri_logging) jmri.log("case layoutSlip:");
+                                $logProperties(this);
+                                $logProperties($widget);
 
                                 //save the slip state to turnout state information
                                 $widget['turnout'] = $(this).find('turnout:first').text();
                                 $widget['turnoutB'] = $(this).find('turnoutB:first').text();
+
+                                //jmri.log("tA: " + $widget.turnout + ", tB: " + $widget.turnoutB);
 
                                 $widget['turnoutA_AC'] = Number($(this).find('states').find('A-C').find('turnout').text());
                                 $widget['turnoutA_AD'] = Number($(this).find('states').find('A-D').find('turnout').text());
@@ -717,13 +722,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if ($widget["occupancysensor"])
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
 
-                                // add turnout to whereUsed array
+                                // NOTE: turnout & turnoutB may appear to be swapped here however this is intentional
+                                // (since the left turnout controls the right points and vice-versa) and we want
+                                // the slip circles to toggle the points (not the turnout) on the corresponding side.
+                                //
+                                // note: the <div> areas above have their titles & alts turnouts swapped (left <-> right) also
+
+                                // add turnout to whereUsed array (as $widget + 'r')
                                 if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
                                    whereUsed[$widget.turnout] = new Array();
                                 }
                                 whereUsed[$widget.turnout][whereUsed[$widget.turnout].length] = $widget.id + "r";
 
-                                // add turnoutB to whereUsed array
+                                // add turnoutB to whereUsed array (as $widget + 'l')
                                 if (!($widget.turnoutB in whereUsed)) {  //set where-used for this new turnout
                                    whereUsed[$widget.turnoutB] = new Array();
                                 }
@@ -846,46 +857,52 @@ function processPanelXML($returnedData, $success, $xhr) {
 
 //perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
-    //jmri.log("$handleClick()");
+    if (jmri_logging) jmri.log("$handleClick()");
 
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
     var $widget = $gWidgets[this.id];
 
-//     if (null == $widget) {
-//         $logProperties(this);
-//     }
+    // if (null == $widget) {
+    //     $logProperties(this);
+    // }
 
     // special case for layoutSlips
-    if (this.id.endsWith("r") || this.id.endsWith("l")) {
-        var slipID = this.id.slice(0, -1);
-        $widget = $gWidgets[slipID];
+    if (this.className.startsWith('layoutSlip ')) {
+        if (this.id.startsWith("widget-") && (this.id.endsWith("r") || this.id.endsWith("l"))) {
+            var slipID = this.id.slice(0, -1);
+            $widget = $gWidgets[slipID];
 
-        if (this.id.endsWith("l")) {
-            $widget["side"] = "left";
-        } else if (this.id.endsWith("r")) {
-            $widget["side"] = "right";
-        }
-        //jmri.log("  layoutSlip-side:" + $widget.side);
+            if (this.id.endsWith("l")) {
+                $widget["side"] = "left";
+            } else if (this.id.endsWith("r")) {
+                $widget["side"] = "right";
+            }
+            if (jmri_logging) jmri.log("  layoutSlip-side:" + $widget.side);
 
-        // convert current slip state to current turnout states
-        var $oldStateA, $oldStateB;
-        [$oldStateA, $oldStateB] = getTurnoutStatesForSlip($widget);
+            // convert current slip state to current turnout states
+            var $oldStateA, $oldStateB;
+            [$oldStateA, $oldStateB] = getTurnoutStatesForSlip($widget);
 
-        // determine next slip state
-        var $newState = getNextSlipState($widget);
+            // determine next slip state
+            var $newState = getNextSlipState($widget);
 
-        //jmri.log("$handleClick:layoutSlip: change state from: " + $widget.state + ", to: " + $newState + ".");
+            if (jmri_logging) jmri.log("$handleClick:layoutSlip: change state from " +
+                $slipStateToString($widget.state) + " to " + $slipStateToString($newState) + ".");
 
-        // convert new slip state to new turnout states
-        var $newStateA, $newStateB;
-        [$newStateA, $newStateB] = getTurnoutStatesForSlipState($widget, $newState);
+            // convert new slip state to new turnout states
+            var $newStateA, $newStateB;
+            [$newStateA, $newStateB] = getTurnoutStatesForSlipState($widget, $newState);
 
-        if ($oldStateA != $newStateA) {
-            sendElementChange($widget.jsonType, $widget.turnout, $newStateA);
-        }
-        if ($oldStateB != $newStateB) {
-            sendElementChange($widget.jsonType, $widget.turnoutB, $newStateB);
+            if ($oldStateA != $newStateA) {
+                sendElementChange($widget.jsonType, $widget.turnout, $newStateA);
+            }
+            if ($oldStateB != $newStateB) {
+                sendElementChange($widget.jsonType, $widget.turnoutB, $newStateB);
+            }
+        } else {
+            jmri.log("$handleClick(e): unknown slip widget " + this.id);
+            $logProperties(this);
         }
     } else {
         var $newState = $getNextState($widget);  //determine next state from current state
@@ -1284,7 +1301,7 @@ function $drawSlip($widget) {
     if ($widget.hidden == "yes") {
         return;
     }
-    //jmri.log("$drawSlip(" + $widget.id + "): state = " + $widget.state);
+    if (jmri_logging) jmri.log("$drawSlip(" + $widget.id + "): state = " + $widget.state);
 
     var $widthA = $gPanel.sidetrackwidth;
     if (typeof $gWidgets[$widget.connectaname] !== "undefined") {
@@ -1793,6 +1810,9 @@ var $setWidgetState = function($id, $newState) {
     if (typeof $widget == "undefined") {
         // does it have "l" or "r" suffix?
         if ($id.endsWith("l") || $id.endsWith("r")) {   // (yes!)
+
+            if (jmri_logging) jmri.log("#### INFO: clicked slip " + $id + " to state " + $newState);
+
             // remove suffix
             var slipID = $id.slice(0, -1);
             // get the slip widget
@@ -1802,52 +1822,52 @@ var $setWidgetState = function($id, $newState) {
             var $stateA, $stateB;
             [$stateA, $stateB] = getTurnoutStatesForSlip($widget);
 
-            //jmri.log("#### Before slip: " + $slipStateToString($widget.state) +
-            //    ", stateA: " + $turnoutStateToString($stateA) +
-            //    ", stateB: " + $turnoutStateToString($stateB));
+            if (jmri_logging) jmri.log("#### Before slip: " + $slipStateToString($widget.state) +
+                ", stateA: " + $turnoutStateToString($stateA) +
+                ", stateB: " + $turnoutStateToString($stateB));
 
             // change appropriate turnout state
-            if ($id.endsWith("l")) {
+            if ($id.endsWith("r")) {
                 if ($stateA != $newState) {
-                    //jmri.log("#### Changed slip " + $widget.name + " $stateA from " + $turnoutStateToString($stateA) +
-                    //    " to " + $turnoutStateToString($newState));
+                    if (jmri_logging) jmri.log("#### Changed slip " + $widget.name + " $stateA from " + $turnoutStateToString($stateA) +
+                        " to " + $turnoutStateToString($newState));
                     $stateA = $newState;
                 }
-            } else if ($id.endsWith("r")) {
+            } else if ($id.endsWith("l")) {
                 if ($stateB != $newState) {
-                    //jmri.log("#### Changed slip " + $widget.name + " $stateB from " + $turnoutStateToString($stateB) +
-                    //    " to " + $turnoutStateToString($newState));
+                    if (jmri_logging) jmri.log("#### Changed slip " + $widget.name + " $stateB from " + $turnoutStateToString($stateB) +
+                        " to " + $turnoutStateToString($newState));
                     $stateB = $newState;
                 }
             }
 
             // turn turnout states back into slip state
             $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
-            //jmri.log("#### After slip: " + $slipStateToString($newState) +
-            //    ", stateA: " + $turnoutStateToString($stateA) +
-            //    ", stateB: " + $turnoutStateToString($stateB));
+            if (jmri_logging) jmri.log("#### After slip: " + $slipStateToString($newState) +
+                ", stateA: " + $turnoutStateToString($stateA) +
+                ", stateB: " + $turnoutStateToString($stateB));
 
-            //if ($widget.state != $newState) {
-            //    jmri.log("#### Changing slip " + $widget.name + " from " + $slipStateToString($widget.state) +
-            //        " to " + $slipStateToString($newState));
-            //}
+            if ($widget.state != $newState) {
+                if (jmri_logging) jmri.log("#### Changing slip " + $widget.name + " from " + $slipStateToString($widget.state) +
+                    " to " + $slipStateToString($newState));
+            }
 
-            // set widget $id to slip id
+            // set $id to slip id
             $id = slipID;
         } else {
             jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
-        //jmri.log("#### $setWidgetState(slip " + $id + ", " + $slipStateToString($newState) +
-        //    "); (was " + $slipStateToString($widget.state) + ")");
+        if (jmri_logging) jmri.log("#### $setWidgetState(slip " + $id + ", " + $slipStateToString($newState) +
+            "); (was " + $slipStateToString($widget.state) + ")");
         // JMRI doesn't send slip states… it sends slip turnout states…
-        // so suppress this (incorrect) slip state change
-        $newState = $widget.state;
+        // so ignore this (incorrect) slip state change
+        return;
     }
 
     if ($widget.state !== $newState) {  //don't bother if already this value
-        jmri.log("Changing " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
+        if (jmri_logging) jmri.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
         $widget.state = $newState;
 
         switch ($widget.widgetFamily) {
@@ -1903,9 +1923,9 @@ var $safeName = function($name) {
 };
 
 //send request for state change
-var sendElementChange = function(type, name, nextState) {
-    jmri.log("sending " + type + " '" + name + "' state '" + nextState + "'.");
-    jmri.setObject(type, name, nextState);
+var sendElementChange = function(type, name, state) {
+    jmri.log("Sending JMRI " + type + " '" + name + "' state '" + state + "'.");
+    jmri.setObject(type, name, state);
 };
 
 //show unexpected ajax errors
@@ -2169,6 +2189,7 @@ var $drawAllIconWidgets = function() {
 function updateWidgets(name, state, data) {
     //update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
+        if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
         $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state);
         });
@@ -2177,6 +2198,7 @@ function updateWidgets(name, state, data) {
     }
     //update all widgets based on the element that changed, using username
     if (whereUsed[data.userName]) {
+        if (jmri_logging) jmri.log("updateWidgets(" + data.userName + ", " + state + ", data);");
         $.each(whereUsed[data.userName], function(index, widgetId) {
             $setWidgetState(widgetId, state);
         });
@@ -2426,46 +2448,55 @@ function getSlipStateForTurnoutStates($widget, $stateA, $stateB) {
 function getNextSlipState($widget) {
     var $result = 0; // unknown
 
-    if ($widget.side == 'left') {
-        switch ($widget.state) {
-            case STATE_AC:
-                if ($widget.slipType == SINGLE_SLIP) {
-                    $newState = STATE_BD;
-                } else {
-                    $newState = STATE_BC;
-                }
-                break;
-            case STATE_AD:
-                $newState = STATE_BD;
-                break;
-            case STATE_BC:
-            default:
-                $newState = STATE_AC;
-                break;
-            case STATE_BD:
-                $newState = STATE_AD;
-                break;
+    switch ($widget.side) {
+        case 'left': {
+            switch ($widget.state) {
+                case STATE_AC:
+                    if ($widget.slipType == SINGLE_SLIP) {
+                        $result = STATE_BD;
+                    } else {
+                        $result = STATE_BC;
+                    }
+                    break;
+                case STATE_AD:
+                    $result = STATE_BD;
+                    break;
+                case STATE_BC:
+                default:
+                    $result = STATE_AC;
+                    break;
+                case STATE_BD:
+                    $result = STATE_AD;
+                    break;
+            }
+            break;
         }
-    } else if ($widget.side == 'right') {
-        switch ($widget.state) {
-            case STATE_AC:
-            default:
-                $newState = STATE_AD;
-                break;
-            case STATE_AD:
-                $newState = STATE_AC;
-                break;
-            case STATE_BC:
-                $newState = STATE_BD;
-                break;
-            case STATE_BD:
-                if ($widget.slipType == SINGLE_SLIP) {
-                    $newState = STATE_AC;
-                } else {
-                    $newState = STATE_BC;
-                }
-                break;
+        case 'right': {
+            switch ($widget.state) {
+                case STATE_AC:
+                default:
+                    $result = STATE_AD;
+                    break;
+                case STATE_AD:
+                    $result = STATE_AC;
+                    break;
+                case STATE_BC:
+                    $result = STATE_BD;
+                    break;
+                case STATE_BD:
+                    if ($widget.slipType == SINGLE_SLIP) {
+                        $result = STATE_AC;
+                    } else {
+                        $result = STATE_BC;
+                    }
+                    break;
+            }
+            break;
         }
-    }
-    return $newState;
+        default: {
+            jmri.log("getNextSlipState($widget): unknown $widget.side: " + $widget.side);
+            break;
+        }
+    }   // switch ($widget.side)
+    return $result;
 }   // function getNextSlipState($widget)

@@ -308,19 +308,19 @@ public class LayoutSlip extends LayoutTurnout {
                         updateState();
                     }, namedTurnout.getName(), "Layout Editor Slip");
         }
-        if (secondNamedTurnout != null) {
-            secondNamedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
+        if (namedTurnoutB != null) {
+            namedTurnoutB.getBean().addPropertyChangeListener(mTurnoutListener
                     = (java.beans.PropertyChangeEvent e) -> {
                         updateState();
-                    }, secondNamedTurnout.getName(), "Layout Editor Slip");
+                    }, namedTurnoutB.getName(), "Layout Editor Slip");
         }
     }
 
     private void deactivateTurnout() {
         if (mTurnoutListener != null) {
             namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
-            if (secondNamedTurnout != null) {
-                secondNamedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
+            if (namedTurnoutB != null) {
+                namedTurnoutB.getBean().removePropertyChangeListener(mTurnoutListener);
             }
             mTurnoutListener = null;
         }
@@ -642,31 +642,6 @@ public class LayoutSlip extends LayoutTurnout {
                 }
             } else {
                 log.error("bad blockname '" + tBlockDName + "' in layoutslip:setObjects " + ident);
-            }
-        }
-
-        // Do the second one first then the activate is only called the once
-        if (tSecondTurnoutName.length() > 0) {
-            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tSecondTurnoutName);
-            if (turnout != null) {
-                secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tSecondTurnoutName, turnout);
-                secondTurnoutName = tSecondTurnoutName;
-            } else {
-                log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutslip:setObjects " + ident);
-                secondTurnoutName = "";
-                secondNamedTurnout = null;
-            }
-        }
-        if (tTurnoutName.length() > 0) {
-            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tTurnoutName);
-            if (turnout != null) {
-                namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(tTurnoutName, turnout);
-                turnoutName = tTurnoutName;
-                activateTurnout();
-            } else {
-                log.error("bad turnoutname '" + tTurnoutName + "' in layoutslip:setObjects " + ident);
-                turnoutName = "";
-                namedTurnout = null;
             }
         }
     }
