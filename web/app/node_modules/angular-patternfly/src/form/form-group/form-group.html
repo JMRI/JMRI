@@ -1,0 +1,9 @@
+<div class="form-group" ng-class="{ 'has-error' : hasErrors() }">
+  <label for="{{ pfField }}" class="control-label {{ pfLabelClass }}">{{ pfLabel }}</label>
+  <div class="{{ pfInputClass }}">
+    <span ng-transclude></span>
+    <span class="help-block" ng-show="error.messages">
+      <ul><li ng-repeat="message in error.messages">{{ message }}</li></ul>
+    </span>
+  </div>
+</div>

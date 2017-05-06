@@ -1584,7 +1584,7 @@ public class WarrantFrame extends WarrantRoute {
                                 break;
                             }
                             msg = Bundle.getMessage("throttlesetting", value);
-                        } catch (Exception e) {
+                        } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("invalidNumber");
                         }
                         ts.setValue(null);
@@ -1603,39 +1603,39 @@ public class WarrantFrame extends WarrantRoute {
                                     msg = Bundle.getMessage("badStepMode");
                                     ts.setValue(null);
                             }
-                        } catch (Exception e) {
+                        } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("invalidNumber");
                             ts.setValue(null);
                         }
                     } else if ("FORWARD".equalsIgnoreCase(cmd)) {
-                        try {
-                            if (Boolean.parseBoolean((String) value)) {
-                                ts.setValue("true");
+                            if (((String)value).length() < 4) {
+                                msg = Bundle.getMessage("invalidBoolean");
                             } else {
-                                ts.setValue("false");                                
+                                if (Boolean.parseBoolean((String) value)) {
+                                    ts.setValue("true");
+                                } else {
+                                    ts.setValue("false");                                
+                                }
                             }
-                       } catch (Exception e) {
-                            msg = Bundle.getMessage("invalidBoolean");
-                        }
                     } else if (cmd.startsWith("F")) {
-                        try {
-                            if (Boolean.parseBoolean((String) value)) {
-                                ts.setValue("true");
+                            if (((String)value).length() < 4) {
+                                msg = Bundle.getMessage("invalidBoolean");
                             } else {
-                                ts.setValue("false");                                
+                                if (Boolean.parseBoolean((String) value)) {
+                                    ts.setValue("true");
+                                } else {
+                                    ts.setValue("false");                                
+                                }
                             }
-                        } catch (Exception e) {
-                            msg = Bundle.getMessage("invalidBoolean");
-                        }
                     } else if (cmd.startsWith("LOCKF")) {
-                        try {
+                        if (((String)value).length() < 4) {
+                            msg = Bundle.getMessage("invalidBoolean");
+                        } else {
                             if (Boolean.parseBoolean((String) value)) {
                                 ts.setValue("true");
                             } else {
                                 ts.setValue("false");                                
                             }
-                        } catch (Exception e) {
-                            msg = Bundle.getMessage("invalidBoolean");
                         }
                     } else if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                         String v = ((String) value).toUpperCase();

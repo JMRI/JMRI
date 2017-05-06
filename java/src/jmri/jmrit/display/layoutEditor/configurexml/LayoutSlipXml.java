@@ -123,6 +123,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         if (p.getTurnoutBName().length() > 0) {
             element.addContent(new Element("turnoutB").addContent(p.getTurnoutBName()));
         }
+
         Element states = new Element("states");
         Element state = new Element("A-C");
         state.addContent(new Element("turnout").addContent("" + p.getTurnoutState(LayoutSlip.STATE_AC)));

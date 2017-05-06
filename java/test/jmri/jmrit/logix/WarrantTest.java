@@ -33,7 +33,7 @@ public class WarrantTest {
     TurnoutManager _turnoutMgr;
     
     /**
-     * It's considered bad form to write tests that depend on the order of execution.
+     * tests depend on the order of execution.
      * So this will be one large test.
      */
 
@@ -164,7 +164,7 @@ public class WarrantTest {
         
         warrant.setThrottleCommands(new ArrayList<ThrottleSetting>());
         warrant.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", "North"));
-        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.4", "North"));
+        warrant.addThrottleCommand(new ThrottleSetting(10, "Speed", "0.4", "North"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "West"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.5", "West"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "South"));
@@ -191,7 +191,10 @@ public class WarrantTest {
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
 
-        // run the train
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.endsWith("Cmd #2.");
+        }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{

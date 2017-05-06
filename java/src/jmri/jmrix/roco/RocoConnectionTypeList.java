@@ -19,6 +19,7 @@ public class RocoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.lenz.li100f.ConnectionConfig",
             "jmri.jmrix.lenz.li101.ConnectionConfig",
             "jmri.jmrix.lenz.liusb.ConnectionConfig",
+            "jmri.jmrix.lenz.ztc640.ConnectionConfig",
             "jmri.jmrix.lenz.xntcp.ConnectionConfig",
             "jmri.jmrix.xpa.serialdriver.ConnectionConfig",
             "jmri.jmrix.lenz.xnetsimulator.ConnectionConfig",
