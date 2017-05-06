@@ -16,8 +16,17 @@ public class MarklinThrottleTest {
 
     @Test
     public void testCTor() {
-        MarklinTrafficController tc = new MarklinTrafficController();
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
+        MarklinTrafficController tc = new MarklinTrafficController(){
+           @Override
+           public void sendMarklinMessage(MarklinMessage m, MarklinListener reply) {
+           }
+        };
+        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc){
+          @Override
+          public MarklinThrottleManager getThrottleManager() {
+             return new MarklinThrottleManager(this);
+          }
+        };
         MarklinThrottle t = new MarklinThrottle(c,new jmri.DccLocoAddress(42,false));
         Assert.assertNotNull("exists",t);
     }
