@@ -88,7 +88,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
     private JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
-    private SpeedProfileTable spTable = null;
+    private SpeedProfileTable _spTable = null;
 
 
     /**
@@ -204,14 +204,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
 
     private void showProfile() {
-        if (spTable !=null) {
-            spTable.dispose();
+        if (_spTable != null) {
+            _spTable.dispose();
         }
         if (_train != null) {
             RosterSpeedProfile speedProfile = _train.getSpeedProfile();
             if (speedProfile != null) {
-                spTable = new SpeedProfileTable(speedProfile, _train.getId());
-                spTable.setVisible(true);
+                _spTable = new SpeedProfileTable(_train);
+                _spTable.setVisible(true);
                 return;
             }            
         }
@@ -1085,6 +1085,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_pickRouteDialog != null) {
             _pickRouteDialog.dispose();
             _pickRouteDialog = null;
+        }
+        if (_spTable != null) {
+            _spTable.dispose();
         }
     }
 
