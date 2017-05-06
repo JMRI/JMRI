@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import jmri.Conditional;
 import jmri.ConditionalManager;
@@ -46,11 +47,19 @@ public class DefaultLogix extends AbstractNamedBean
     ArrayList<JmriSimplePropertyListener> _listeners = new ArrayList<JmriSimplePropertyListener>();
 
     /**
+     * Maintain a list of conditional objects.  The key is the conditional system name
+     * @since 4.7.4
+     */
+    HashMap<String, Conditional> _conditionalMap = new HashMap<>();
+
+    /**
      * Operational instance variables (not saved between runs)
      */
     private boolean mEnabled = true;
 
     private boolean _isActivated = false;
+
+    private boolean _isGuiSet = false;
 
     /**
      * Get number of Conditionals for this Logix
@@ -110,6 +119,36 @@ public class DefaultLogix extends AbstractNamedBean
     }
 
     /**
+     * Add a child Conditional to the parent Logix.
+     *
+     * @since 4.7.4
+     * @param systemName The system name for the Conditional object.
+     * @param conditional The Conditional object.
+     * @return true if the Conditional was added, false otherwise.
+     */
+    @Override
+    public boolean addConditional(String systemName, Conditional conditional) {
+        Conditional chkDuplicate = _conditionalMap.putIfAbsent(systemName, conditional);
+        if (chkDuplicate == null) {
+            return (true);
+        }
+        log.error("Conditional '{}' has already been added to Logix '{}'", systemName, getSystemName());
+        return (false);
+    }
+
+    /**
+     * Get a Conditional belonging to this Logix.
+     *
+     * @since 4.7.4
+     * @param systemName The name of the Conditional object.
+     * @return the Conditional object or null if not found.
+     */
+    @Override
+    public Conditional getConditional(String systemName) {
+        return _conditionalMap.get(systemName);
+    }
+
+    /**
      * Set enabled status. Enabled is a bound property All conditionals are set
      * to UNKNOWN state and recalculated when the Logix is enabled, provided the
      * Logix has been previously activated.
@@ -158,37 +197,18 @@ public class DefaultLogix extends AbstractNamedBean
         }
         // check other Logix(es) for use of this conditional (systemName) for use as a
         // variable in one of their conditionals
-        Iterator<String> iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
-        while (iter1.hasNext()) {
-            String sNameLogix = iter1.next();
-            if (!sNameLogix.equals(getSystemName())) {
-                Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(sNameLogix);
-                int numCond = x.getNumConditionals();
-                for (int i = 0; i < numCond; i++) {
-                    String sNameCond = x.getConditionalByNumberOrder(i);
-                    Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(sNameCond);
-                    ArrayList<ConditionalVariable> varList = c.getCopyOfStateVariables();
-                    for (int k = 0; k < varList.size(); k++) {
-                        ConditionalVariable v = varList.get(k);
-                        if ((v.getType() == Conditional.TYPE_CONDITIONAL_TRUE)
-                                || (v.getType() == Conditional.TYPE_CONDITIONAL_FALSE)) {
-                            String name = v.getName();
-                            Conditional c1 = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(name);
-                            if (c1 == null) {
-                                log.error("\"" + name + "\" is a non-existent Conditional variable in Conditional \""
-                                        + c.getUserName() + "\" in Logix \"" + x.getUserName() + "\" (" + sNameLogix + ")");
-                            } else {
-                                if (systemName.equals(c1.getSystemName())) {
-                                    String[] result = new String[]{name, systemName, c.getUserName(),
-                                        sNameCond, x.getUserName(), sNameLogix};
-                                    return result;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        ArrayList<String> checkReferences = InstanceManager.getDefault(jmri.ConditionalManager.class).getWhereUsed(systemName);
+        if (checkReferences != null) {
+            Conditional c = getConditional(systemName);
+            String refName = checkReferences.get(0);
+            Logix x = InstanceManager.getDefault(jmri.ConditionalManager.class)
+                .getParentLogix(refName);
+            Conditional cRef = x.getConditional(refName);
+            String[] result = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
+                cRef.getSystemName(), x.getUserName(), x.getSystemName()};
+            return result;
         }
+
         // Remove Conditional from this logix
         if (!_conditionalSystemNames.remove(systemName)) {
             log.error("attempt to delete Conditional not in Logix: " + systemName);
@@ -200,7 +220,7 @@ public class DefaultLogix extends AbstractNamedBean
             log.error("attempt to delete non-existant Conditional - " + systemName);
             return null;
         }
-        InstanceManager.getDefault(jmri.ConditionalManager.class).deleteConditional(c);
+        _conditionalMap.remove(systemName);
         return (null);
     }
 
@@ -216,7 +236,7 @@ public class DefaultLogix extends AbstractNamedBean
         Conditional c = null;
         for (int i = 0; i < _conditionalSystemNames.size(); i++) {
             cName = _conditionalSystemNames.get(i);
-            c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(cName);
+            c = getConditional(cName);
             if (c == null) {
                 log.error("Invalid conditional system name when calculating Logix - " + cName);
             } else {
@@ -255,9 +275,8 @@ public class DefaultLogix extends AbstractNamedBean
     }
 
     private void resetConditionals() {
-        ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
         for (int i = 0; i < _conditionalSystemNames.size(); i++) {
-            Conditional conditional = cm.getBySystemName(_conditionalSystemNames.get(i));
+            Conditional conditional = getConditional(_conditionalSystemNames.get(i));
             if (conditional != null) {
                 try {
                     conditional.setState(NamedBean.UNKNOWN);
@@ -266,6 +285,57 @@ public class DefaultLogix extends AbstractNamedBean
                 }
             }
         }
+    }
+
+    /**
+     * ConditionalVariables only have a single name field.  For user interface purposes
+     * a gui name is used for the referenced conditional user name.  This is not used
+     * for other object types.
+     * <p>
+     * In addition to setting the GUI name, any state variable references are changed to
+     * conditional system names.  This converts the XML system/user name field to the system name
+     * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
+     * Called by {@link jmri.managers.DefaultLogixManager#activateAllLogixs}
+     * @since 4.7.4
+     */
+    @Override
+    public void setGuiNames() {
+        if (_isGuiSet) {
+            return;
+        }
+        if (getSystemName().equals("SYS")) {
+            _isGuiSet = true;
+            return;
+        }
+        for (int i = 0; i < _conditionalSystemNames.size(); i++) {
+            String cName = _conditionalSystemNames.get(i);
+            Conditional conditional = getConditional(cName);
+            ArrayList<ConditionalVariable> varList = conditional.getCopyOfStateVariables();
+            boolean isDirty = false;
+            for (ConditionalVariable var : varList) {
+                // Find any Conditional State Variables
+                if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
+                    // Get the referenced (target) conditonal -- The name can be either a system name or a user name
+                    Conditional cRef = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(var.getName());
+                    if (cRef != null) {
+                        // re-arrange names as needed
+                        var.setName(cRef.getSystemName());      // The state variable reference is now a conditional system name
+                        if (cRef.getUserName() == null || cRef.getUserName().equals("")) {
+                            var.setGuiName(cRef.getSystemName());
+                        } else {
+                            var.setGuiName(cRef.getUserName());
+                        }
+                        // Add the conditional reference to the where used map
+                        InstanceManager.getDefault(jmri.ConditionalManager.class).addWhereUsed(var.getName(), cName);
+                        isDirty = true;
+                    }
+                }
+            }
+            if (isDirty) {
+                conditional.setStateVariables(varList);
+            }
+        }
+        _isGuiSet = true;
     }
 
     /**
@@ -278,10 +348,8 @@ public class DefaultLogix extends AbstractNamedBean
         }
         _listeners = new ArrayList<JmriSimplePropertyListener>();
         // cycle thru Conditionals to find objects to listen to
-        ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
         for (int i = 0; i < _conditionalSystemNames.size(); i++) {
-            Conditional conditional = null;
-            conditional = cm.getBySystemName(_conditionalSystemNames.get(i));
+            Conditional conditional = getConditional(_conditionalSystemNames.get(i));
             if (conditional != null) {
                 ArrayList<ConditionalVariable> variableList = conditional.getCopyOfStateVariables();
                 for (int k = 0; k < variableList.size(); k++) {
@@ -501,7 +569,7 @@ public class DefaultLogix extends AbstractNamedBean
                             } catch (IllegalArgumentException ex) {
                                 log.error("invalid memory name= \"" + name + "\" in state variable");
                                 break;
-                            }                        
+                            }
                         } else {
                             listener = _listeners.get(positionOfListener);
                             listener.addConditional(conditional);
