@@ -88,19 +88,16 @@ public class TrackSegment extends LayoutTrack {
         }
         connect1 = c1;
         connect2 = c2;
-        if ((t1 < POS_POINT)
-                || (((t1 > LEVEL_XING_D) && (t1 < SLIP_A))
-                || ((t1 > SLIP_D) && (t1 < TURNTABLE_RAY_OFFSET)))) {
-            log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
-        } else {
+
+        if (isConnectionType(t1)) {
             type1 = t1;
-        }
-        if ((t2 < POS_POINT)
-                || (((t2 > LEVEL_XING_D) && (t2 < SLIP_A))
-                || ((t2 > SLIP_D) && (t2 < TURNTABLE_RAY_OFFSET)))) {
-            log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
         } else {
+            log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
+        }
+        if (isConnectionType(t2)) {
             type2 = t2;
+        } else {
+            log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
         }
         instance = this;
         ident = id;
@@ -129,7 +126,10 @@ public class TrackSegment extends LayoutTrack {
 
     // this should only be used for debugging…
     public String toString() {
-        return "TrackSegment " + ident;
+        return "TrackSegment " + ident + 
+                " c1:{" + tConnect1Name + " (" + type1 + "}," +
+                " c2:{" + tConnect2Name + " (" + type2 + "}";
+                
     }
 
     /**
@@ -255,25 +255,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private String getConnectName(Object o, int type) {
-        if (type == POS_POINT) {
-            return ((PositionablePoint) o).getID();
-        }
-        if ((type == TURNOUT_A) || (type == TURNOUT_B)
-                || (type == TURNOUT_C) || (type == TURNOUT_D)) {
-            return ((LayoutTurnout) o).getName();
-        }
-        if ((type == LEVEL_XING_A) || (type == LEVEL_XING_B)
-                || (type == LEVEL_XING_C) || (type == LEVEL_XING_D)) {
-            return ((LevelXing) o).getID();
-        }
-        if ((type == SLIP_A) || (type == SLIP_B)
-                || (type == SLIP_C) || (type == SLIP_D)) {
-            return ((LayoutSlip) o).getName();
-        }
-        if (type >= TURNTABLE_RAY_OFFSET) {
-            return ((LayoutTurntable) o).getID();
-        }
-        return "";
+        return ((LayoutTrack) o).getName();
     }
 
     // initialization instance variables (used when loading a LayoutEditor)

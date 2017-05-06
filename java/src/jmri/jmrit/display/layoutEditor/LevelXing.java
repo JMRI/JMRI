@@ -122,9 +122,6 @@ public class LevelXing extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
 
     public String getBlockNameAC() {
         return blockNameAC;

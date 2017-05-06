@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.controlPointSize2;
+import static jmri.util.MathUtil.midpoint;
+import static jmri.util.MathUtil.subtract;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -31,6 +33,7 @@ import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
+import jmri.util.Spline2D;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,9 +101,6 @@ public class LayoutFlex extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
 
     public String getBlockName() {
         return blockName;
@@ -345,7 +345,7 @@ public class LayoutFlex extends LayoutTrack {
         }
         if (NONE == result) {
             // hit testing for the control points
-            // NOTE: index 0 and size - 1 are FLEX_A and FLEX_B above
+            // NOTE: index 0 and size - 1 are FLEX_A and FLEX_B (checked above)
             for (int index = 1; index < controlPoints.size() - 1; index++) {
                 if (r.contains(getCoordsN(index))) {
                     result = LayoutTrack.FLEX_CONTROL_POINT_OFFSET + index;
@@ -364,15 +364,28 @@ public class LayoutFlex extends LayoutTrack {
         center = p;
     }
 
-    public Point2D setCoordsA(Point2D p) {
-        return setCoordsN(p, 0);
+    public void setCoordsA(Point2D p) {
+        setCoordsN(p, 0);
+        reCenter();
     }
 
-    public Point2D setCoordsB(Point2D p) {
-        return setCoordsN(p, -1);
+    public void setCoordsB(Point2D p) {
+        setCoordsN(p, -1);
+        reCenter();
     }
 
-    public Point2D setCoordsN(Point2D p, int index) {
+    // adjust center to midpoint A & B
+    // adjust all control points for new center
+    private void reCenter() {
+        Point2D c = midpoint(getCoordsA(), getCoordsB());
+        Point2D delta = subtract(c, center);
+
+        for (int index = 0; index < controlPoints.size(); index++) {
+            controlPoints.set(index, subtract(controlPoints.get(index), delta));
+        }
+    }
+
+    public void setCoordsN(Point2D p, int index) {
         Point2D result = new Point2D.Double(p.getX() - center.getX(), p.getY() - center.getY());
         if (index < 0) {
             index += controlPoints.size();
@@ -380,7 +393,6 @@ public class LayoutFlex extends LayoutTrack {
         if ((index >= 0) && (index < controlPoints.size())) {
             controlPoints.set(index, result);
         }
-        return result;
     }
 
     protected Point2D addControlPoint(Point2D p) {
@@ -771,9 +783,24 @@ public class LayoutFlex extends LayoutTrack {
         // set track width for block
         layoutEditor.setTrackStrokeWidth(g2, isMainline());
         // draw AC segment
-        //TODO: add code to draw bezier curve using the control points
-        for (int i1 = 0, i2 = 1; i2 < controlPoints.size(); i1++, i2++) {
-            g2.draw(new Line2D.Double(getCoordsN(i1), getCoordsN(i2)));
+        // draw bezier curve using the control points
+        Spline2D s = new Spline2D(controlPoints);
+        Point2D pA = getCoordsA();
+        Point2D pB = getCoordsB();
+        Point2D pLast = pA;
+
+        double steps = Math.hypot(pA.getX() - pB.getX(), pA.getY() - pB.getY()) / 10;
+        if (steps < controlPoints.size() * 4) {
+            steps = controlPoints.size() * 4;
+        }
+        double step = 1 / steps;
+        for (double t = 0; t < 1; t += step) {
+            Point2D p = s.getPoint2D(t);
+            Point2D pP = new Point2D.Double(center.getX() + p.getX(), center.getY() + p.getY());
+            if (t > 0) {
+                g2.draw(new Line2D.Double(pLast, pP));
+            }
+            pLast = pP;
         }
     }   // draw(Graphics2D g2)
 

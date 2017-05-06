@@ -163,7 +163,6 @@ public class LayoutTurnout extends LayoutTrack {
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // persistent instances variables (saved between sessions)
-    public String ident;   // name of this layout turnout (hidden from user)
     public String turnoutName = "";   // should be the name (system or user) of
     //  an existing physical turnout
     public String secondTurnoutName = "";
@@ -380,17 +379,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    @Override
-    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
-        double cX = center.getX();
-        double cY = center.getY();
-        double deltaX = p.getX() - cX;
-        double deltaY = p.getY() - cY;
-        double x = cX + cosineRot * deltaX - sineRot * deltaY;
-        double y = cY + sineRot * deltaX + cosineRot * deltaY;
-        return new Point2D.Double(x, y);
-    }
-
     /**
      * Accessor methods
      */
@@ -400,10 +388,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     public void setVersion(int v) {
         version = v;
-    }
-
-    public String getName() {
-        return ident;
     }
 
     public boolean useBlockSpeed() {

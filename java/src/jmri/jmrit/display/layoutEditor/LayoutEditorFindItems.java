@@ -396,22 +396,25 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName) {
+        PositionablePoint result = null;
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getEastBoundSensorName().equals(sensorName)) {
-                return p;
+                result = p;
+                break;
             }
         }
-        return null;
+        return result;
     }
 
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName) {
+        PositionablePoint result = null;
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getWestBoundSensorName().equals(sensorName)) {
-                return p;
+                result = p;
+                break;
             }
-
         }
-        return null;
+        return result;
     }
 
     public LayoutTurnout findLayoutTurnoutByName(String name) {
@@ -419,7 +422,8 @@ public class LayoutEditorFindItems {
         if (name.length() > 0) {
             for (LayoutTurnout t : layoutEditor.turnoutList) {
                 if (t.getName().equals(name)) {
-                    return t;
+                    result = t;
+                    break;
                 }
             }
         }

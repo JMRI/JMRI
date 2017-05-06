@@ -77,6 +77,10 @@ public abstract class LayoutTrack {
         return ident;
     }
 
+    public String getName() {
+        return ident;
+    }
+
     public static void setDefaultTrackColor(Color color) {
         defaultTrackColor = color;
     }
@@ -129,7 +133,7 @@ public abstract class LayoutTrack {
         return NONE;
     }
 
-    // optional useRectangles parameter defaults to false
+    // optional useRectangles & requireUnconnected parameters default to false
     public int hitTestPoint(Point2D p) {
         return hitTestPoint(p, false, false);
     }
@@ -140,10 +144,10 @@ public abstract class LayoutTrack {
     }
 
     // some connection types aren't actually connections
+    // they're only used for hit testing (to determine what was clicked)
     public boolean isConnectionType(int connectionType) {
-        boolean result = false;
+        boolean result = false; // assume failure (pessimist!)
         switch (connectionType) {
-            case NONE:
             case POS_POINT:
             case TURNOUT_A:
             case TURNOUT_B:
@@ -160,8 +164,9 @@ public abstract class LayoutTrack {
             case SLIP_D:
             case FLEX_A:
             case FLEX_B:
-                result = true;
+                result = true;  // these are all connection types
                 break;
+            case NONE:
             case TURNOUT_CENTER:
             case LEVEL_XING_CENTER:
             case TURNTABLE_CENTER:
@@ -175,11 +180,13 @@ public abstract class LayoutTrack {
             case SLIP_RIGHT:
             case FLEX_CENTER:
             default:
-                result = false;
+                result = false; // these are all hit types
                 break;
         }
-        if (!result && (TURNTABLE_RAY_OFFSET <= connectionType)) {
-            result = true;
+        if (TURNTABLE_RAY_OFFSET <= connectionType) {
+            result = true;  // these are all connection types
+        } else if (FLEX_CONTROL_POINT_OFFSET <= connectionType) {
+            result = false; // these are all hit types
         }
         return result;
     }

@@ -4,14 +4,73 @@ import java.awt.geom.Point2D;
 import javax.annotation.CheckReturnValue;
 
 /**
-*
-* useful math methods
-*
-* @author geowar Copyright 2017
-*/
-
+ *
+ * useful math methods
+ *
+ * @author geowar Copyright 2017
+ */
 @CheckReturnValue
 public final class MathUtil {
+
+    //return the sum of two points
+    public static Point2D add(Point2D a, Point2D b) {
+        return new Point2D.Double(a.getX() + b.getX(), a.getY() + b.getY());
+    }
+
+    //return the difference of two points
+    public static Point2D subtract(Point2D a, Point2D b) {
+        return new Point2D.Double(a.getX() - b.getX(), a.getY() - b.getY());
+    }
+
+    // multiply a point by a scalar
+    public static Point2D multiply(Point2D p, double s) {
+        return new Point2D.Double(p.getX() * s, p.getY() * s);
+    }
+
+    // (just so parameter order doesn't matter…)
+    public static Point2D multiply(double s, Point2D p) {
+        return new Point2D.Double(p.getX() * s, p.getY() * s);
+    }
+
+    // divide a point by a scalar
+    public static Point2D divide(Point2D p, double s) {
+        return new Point2D.Double(p.getX() / s, p.getY() / s);
+    }
+
+    // return the dot product of two points
+    public static double dot(Point2D pA, Point2D pB) {
+        return (pA.getX() * pB.getX() + pA.getY() * pB.getY());
+    }
+
+    // return the length of a vector
+    public static double lengthSquared(Point2D pA) {
+        return dot(pA, pA);
+    }
+
+    // return the distance squared between two points
+    public static double lengthSquared(Point2D pA, Point2D pB) {
+        return dot(pA, pB);
+    }
+
+    // return the length of a vector
+    public static double length(Point2D pA) {
+        return Math.hypot(pA.getX(), pA.getY());
+    }
+
+    // return the distance between two points
+    public static double length(Point2D pA, Point2D pB) {
+        return Math.sqrt(dot(pA, pB));
+    }
+
+    // normalize a point
+    public static Point2D normalize(Point2D pA) {
+        Point2D result = pA;
+        double length = length(pA);
+        if (length >= 0.001) {
+            result = divide(pA, length);
+        }
+        return result;
+    }
 
     //return a double between a & b for t:0 ==> a and t:1 ==> b
     public static double lerp(double a, double b, double t) {

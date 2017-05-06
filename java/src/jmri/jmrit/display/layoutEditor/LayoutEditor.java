@@ -197,7 +197,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //2nd row of radio buttons
     private JLabel trackLabel = new JLabel();
     private JRadioButton levelXingButton = new JRadioButton(rb.getString("LevelCrossing"));
-    private JRadioButton flexButton = new JRadioButton(rb.getString("FlexTrack"));
+    private JRadioButton flexButton = new JRadioButton(rb.getString("LayoutFlex"));
     private JRadioButton trackButton = new JRadioButton(rb.getString("TrackSegment"));
 
     //2nd row of check boxes
@@ -846,7 +846,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //second row of edit tool bar items
         levelXingButton.setToolTipText(rb.getString("LevelCrossingToolTip"));
-        flexButton.setToolTipText(rb.getString("FlexTrackToolTip"));
+        flexButton.setToolTipText(rb.getString("LayoutFlexToolTip"));
         trackButton.setToolTipText(rb.getString("TrackSegmentToolTip"));
 
         //this is enabled/disabled via selectionListAction above
@@ -7982,26 +7982,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
 
                         case LayoutTrack.TURNOUT_A: {
-                            o = (LayoutTurnout) selectedObject;
-                            o.setCoordsA(newPos);
+                            ((LayoutTurnout) selectedObject).setCoordsA(newPos);
                             break;
                         }
 
                         case LayoutTrack.TURNOUT_B: {
-                            o = (LayoutTurnout) selectedObject;
-                            o.setCoordsB(newPos);
+                            ((LayoutTurnout) selectedObject).setCoordsB(newPos);
                             break;
                         }
 
                         case LayoutTrack.TURNOUT_C: {
-                            o = (LayoutTurnout) selectedObject;
-                            o.setCoordsC(newPos);
+                            ((LayoutTurnout) selectedObject).setCoordsC(newPos);
                             break;
                         }
 
                         case LayoutTrack.TURNOUT_D: {
-                            o = (LayoutTurnout) selectedObject;
-                            o.setCoordsD(newPos);
+                            ((LayoutTurnout) selectedObject).setCoordsD(newPos);
                             break;
                         }
 
@@ -8012,26 +8008,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
 
                         case LayoutTrack.LEVEL_XING_A: {
-                            x = (LevelXing) selectedObject;
-                            x.setCoordsA(newPos);
+                            ((LevelXing) selectedObject).setCoordsA(newPos);
                             break;
                         }
 
                         case LayoutTrack.LEVEL_XING_B: {
-                            x = (LevelXing) selectedObject;
-                            x.setCoordsB(newPos);
+                            ((LevelXing) selectedObject).setCoordsB(newPos);
                             break;
                         }
 
                         case LayoutTrack.LEVEL_XING_C: {
-                            x = (LevelXing) selectedObject;
-                            x.setCoordsC(newPos);
+                            ((LevelXing) selectedObject).setCoordsC(newPos);
                             break;
                         }
 
                         case LayoutTrack.LEVEL_XING_D: {
-                            x = (LevelXing) selectedObject;
-                            x.setCoordsD(newPos);
+                            ((LevelXing) selectedObject).setCoordsD(newPos);
                             break;
                         }
 
@@ -8042,14 +8034,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
 
                         case LayoutTrack.FLEX_A: {
-                            x = (LevelXing) selectedObject;
-                            x.setCoordsA(newPos);
+                            ((LayoutFlex) selectedObject).setCoordsA(newPos);
                             break;
                         }
 
                         case LayoutTrack.FLEX_B: {
-                            x = (LevelXing) selectedObject;
-                            x.setCoordsB(newPos);
+                            ((LayoutFlex) selectedObject).setCoordsB(newPos);
                             break;
                         }
 
@@ -8061,26 +8051,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
 
                         case LayoutTrack.SLIP_A: {
-                            sl = (LayoutSlip) selectedObject;
-                            sl.setCoordsA(newPos);
+                            ((LayoutSlip) selectedObject).setCoordsA(newPos);
                             break;
                         }
 
                         case LayoutTrack.SLIP_B: {
-                            sl = (LayoutSlip) selectedObject;
-                            sl.setCoordsB(newPos);
+                            ((LayoutSlip) selectedObject).setCoordsB(newPos);
                             break;
                         }
 
                         case LayoutTrack.SLIP_C: {
-                            sl = (LayoutSlip) selectedObject;
-                            sl.setCoordsC(newPos);
+                            ((LayoutSlip) selectedObject).setCoordsC(newPos);
                             break;
                         }
 
                         case LayoutTrack.SLIP_D: {
-                            sl = (LayoutSlip) selectedObject;
-                            sl.setCoordsD(newPos);
+                            ((LayoutSlip) selectedObject).setCoordsD(newPos);
                             break;
                         }
 
@@ -8933,6 +8919,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             case LayoutTrack.LEVEL_XING_D: {
                 ((LevelXing) toObject).setConnectD(fromObject, fromPointType);
+                break;
+            }
+
+            case LayoutTrack.FLEX_A: {
+                ((LayoutFlex) toObject).setConnectA(fromObject, fromPointType);
+                break;
+            }
+
+            case LayoutTrack.FLEX_B: {
+                ((LayoutFlex) toObject).setConnectB(fromObject, fromPointType);
                 break;
             }
 
@@ -11055,7 +11051,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             x.setObjects(this);
         }
 
-        //initialize LevelXings if any
+        //initialize LayoutFlex's if any
+        for (LayoutFlex f : flexList) {
+            f.setObjects(this);
+        }
+
+        //initialize LayoutSlip if any
         for (LayoutSlip sl : slipList) {
             sl.setObjects(this);
         }
@@ -11592,6 +11593,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     return ((LevelXing) o).getCoordsD();
                 }
 
+                case LayoutTrack.FLEX_A: {
+                    return ((LayoutFlex) o).getCoordsA();
+                }
+
+                case LayoutTrack.FLEX_B: {
+                    return ((LayoutFlex) o).getCoordsB();
+                }
+
                 case LayoutTrack.SLIP_A: {
                     return ((LayoutSlip) o).getCoordsA();
                 }
@@ -11609,9 +11618,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
 
                 default:
-
                     if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                         return ((LayoutTurntable) o).getRayCoordsIndexed(type - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                    } else if (type >= LayoutTrack.FLEX_CONTROL_POINT_OFFSET) {
+                        int index = type - LayoutTrack.FLEX_CONTROL_POINT_OFFSET;
+                        return ((LayoutFlex) o).getCoordsN(index);
                     }
             }   //switch
         } else {

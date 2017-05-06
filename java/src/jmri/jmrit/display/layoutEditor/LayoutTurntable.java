@@ -111,9 +111,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
 
     public Point2D getCoordsCenter() {
         return center;
