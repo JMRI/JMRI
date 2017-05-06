@@ -1,12 +1,15 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.controlPointSize2;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -191,7 +194,7 @@ public class LayoutFlex extends LayoutTrack {
     }
 
     public Point2D getCoordsForConnectionType(int connectionType) {
-        Point2D result;
+        Point2D result = center;
         switch (connectionType) {
             case FLEX_A:
                 result = getCoordsA();
@@ -200,20 +203,15 @@ public class LayoutFlex extends LayoutTrack {
                 result = getCoordsB();
                 break;
             case SLIP_CENTER:
-                result = center;
-                break;
-            case FLEX_CONTROL_POINT_OFFSET:
-                //TODO: add code for control points here!
-                result = center;
                 break;
             default:
-                if ((connectionType >= FLEX_CONTROL_POINT_OFFSET) && 
+                if ((connectionType >= FLEX_CONTROL_POINT_OFFSET) &&
                         (connectionType < TURNTABLE_RAY_OFFSET)) {
                     result = getCoordsN(connectionType - FLEX_CONTROL_POINT_OFFSET);
                 } else {
                     log.error("Invalid connection type " + connectionType); //I18IN
-                    throw new jmri.JmriException("Invalid connection ");
                 }
+                break;
         }
         return result;
     }
@@ -285,62 +283,79 @@ public class LayoutFlex extends LayoutTrack {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
+        Rectangle2D r = layoutEditor.turnoutCircleRectAt(p);
 
         if (useRectangles) {
-            Rectangle2D r = layoutEditor.turnoutCircleRectAt(p);
 
-            if (!requireUnconnected) {
-                //check the center point
-                if (r.contains(center)) {
-                    result = LayoutTrack.FLEX_CENTER;
+            do {
+                if (!requireUnconnected) {
+                    //check the center point
+                    if (r.contains(center)) {
+                        result = LayoutTrack.FLEX_CENTER;
+                        break;
+                    }
                 }
-            }
 
-            if (!requireUnconnected || (getConnectA() == null)) {
-                //check the A connection point
-                if (r.contains(getCoordsA())) {
-                    result = LayoutTrack.FLEX_A;
+                if (!requireUnconnected || (getConnectA() == null)) {
+                    //check the A connection point
+                    if (r.contains(getCoordsA())) {
+                        result = LayoutTrack.FLEX_A;
+                        break;
+                    }
                 }
-            }
 
-            if (!requireUnconnected || (getConnectB() == null)) {
-                //check the B connection point
-                if (r.contains(getCoordsB())) {
-                    //mouse was pressed on this connection point
-                    result = LayoutTrack.FLEX_B;
+                if (!requireUnconnected || (getConnectB() == null)) {
+                    //check the B connection point
+                    if (r.contains(getCoordsB())) {
+                        result = LayoutTrack.FLEX_B;
+                        break;
+                    }
                 }
-            }
+            } while (false);
         } else {
-            double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
+            double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
-            if (!requireUnconnected) {
-                //check the center point
-                if (p.distance(center) <= circleRadius) {
-                    result = LayoutTrack.FLEX_CENTER;
+            do {
+                if (!requireUnconnected) {
+                    //check the center point
+                    if (p.distance(center) <= circleRadius) {
+                        result = LayoutTrack.FLEX_CENTER;
+                        break;
+                    }
                 }
-            }
 
-            if (!requireUnconnected || (getConnectA() == null)) {
-                //check the A connection point
-                if (p.distance(getCoordsA()) <= circleRadius) {
-                    result = LayoutTrack.FLEX_A;
+                if (!requireUnconnected || (getConnectA() == null)) {
+                    //check the A connection point
+                    if (p.distance(getCoordsA()) <= circleRadius) {
+                        result = LayoutTrack.FLEX_A;
+                        break;
+                    }
                 }
-            }
 
-            if (!requireUnconnected || (getConnectB() == null)) {
-                //check the B connection point
-                if (p.distance(getCoordsB()) <= circleRadius) {
-                    //mouse was pressed on this connection point
-                    result = LayoutTrack.FLEX_B;
+                if (!requireUnconnected || (getConnectB() == null)) {
+                    //check the B connection point
+                    if (p.distance(getCoordsB()) <= circleRadius) {
+                        result = LayoutTrack.FLEX_B;
+                        break;
+                    }
+                }
+            } while (false);
+        }
+        if (NONE == result) {
+            // hit testing for the control points
+            // NOTE: index 0 and size - 1 are FLEX_A and FLEX_B above
+            for (int index = 1; index < controlPoints.size() - 1; index++) {
+                if (r.contains(getCoordsN(index))) {
+                    result = LayoutTrack.FLEX_CONTROL_POINT_OFFSET + index;
+                    break;
                 }
             }
         }
-        //TODO: add hit testing for the control points
 
         return result;
-    }
+    }   // hitTestPoint
 
     /**
      * Modify coordinates methods
@@ -350,14 +365,14 @@ public class LayoutFlex extends LayoutTrack {
     }
 
     public Point2D setCoordsA(Point2D p) {
-        return setCoordsN(0, p);
+        return setCoordsN(p, 0);
     }
 
     public Point2D setCoordsB(Point2D p) {
-        return setCoordsN(-1, p);
+        return setCoordsN(p, -1);
     }
 
-    public Point2D setCoordsN(int index, Point2D p) {
+    public Point2D setCoordsN(Point2D p, int index) {
         Point2D result = new Point2D.Double(p.getX() - center.getX(), p.getY() - center.getY());
         if (index < 0) {
             index += controlPoints.size();
@@ -757,8 +772,39 @@ public class LayoutFlex extends LayoutTrack {
         layoutEditor.setTrackStrokeWidth(g2, isMainline());
         // draw AC segment
         //TODO: add code to draw bezier curve using the control points
-        g2.draw(new Line2D.Double(getCoordsA(), getCoordsB()));
+        for (int i1 = 0, i2 = 1; i2 < controlPoints.size(); i1++, i2++) {
+            g2.draw(new Line2D.Double(getCoordsN(i1), getCoordsN(i2)));
+        }
     }   // draw(Graphics2D g2)
+
+    public void drawControlRects(Graphics2D g2) {
+
+        g2.setColor(Color.black);
+        g2.draw(new Ellipse2D.Double(center.getX() - controlPointSize2, center.getY() - controlPointSize2,
+            controlPointSize2 + controlPointSize2, controlPointSize2 + controlPointSize2));
+
+        int lastIndex = controlPoints.size() - 1;
+        for (int index = 0; index <= lastIndex; index++) {
+            Point2D p = getCoordsN(index);
+
+            if (0 == index) {
+                if (getConnectA() == null) {
+                    g2.setColor(Color.magenta);
+                } else {
+                    g2.setColor(Color.blue);
+                }
+            } else if (index == lastIndex) {
+                if (getConnectB() == null) {
+                    g2.setColor(Color.red);
+                } else {
+                    g2.setColor(Color.green);
+                }
+            } else if (1 == index) {
+                g2.setColor(Color.black);
+            }
+            g2.draw(layoutEditor.controlPointRectAt(p));
+        }
+    }   // public void drawSlipRects(Graphics2D g2)
 
     private final static Logger log = LoggerFactory.getLogger(LayoutFlex.class.getName());
 }

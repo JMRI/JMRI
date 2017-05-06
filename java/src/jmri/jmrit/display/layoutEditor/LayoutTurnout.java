@@ -1274,7 +1274,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
-        double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
         switch (connectionType) {
             case TURNOUT_CENTER:
                 break;
@@ -1292,11 +1292,10 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             default:
                 log.error("Invalid connection type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid connection ");
         }
         return result;
     }
-        
+
     // updates connectivity for blocks assigned to this turnout and connected track segments
     private void updateBlockInfo() {
         LayoutBlock bA = null;
@@ -1598,7 +1597,7 @@ public class LayoutTurnout extends LayoutTrack {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (useRectangles) {
@@ -1649,8 +1648,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
         } else {
             // calculate radius of turnout control circle
-            // note: 3 is layoutEditor.SIZE (not public)
-            double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
+            double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
             if (!requireUnconnected) {
                 // calculate the distance to the center point of this turnout

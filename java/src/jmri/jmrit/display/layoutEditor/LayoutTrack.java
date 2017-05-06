@@ -50,8 +50,6 @@ public abstract class LayoutTrack {
     public static final int FLEX_CONTROL_POINT_OFFSET = 30; // offset for flex track control points (0=A, size()-1 == B)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
-
-
     protected String ident = "";
 
     // dashed line parameters
@@ -127,18 +125,63 @@ public abstract class LayoutTrack {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         return NONE;
     }
 
     // optional useRectangles parameter defaults to false
-    public int connectionTypeForPoint(Point2D p) {
-        return connectionTypeForPoint(p, false, false);
+    public int hitTestPoint(Point2D p) {
+        return hitTestPoint(p, false, false);
     }
 
     // optional requireUnconnected parameter defaults to false
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
-        return connectionTypeForPoint(p, useRectangles, false);
+    public int hitTestPoint(Point2D p, boolean useRectangles) {
+        return hitTestPoint(p, useRectangles, false);
+    }
+
+    // some connection types aren't actually connections
+    public boolean isConnectionType(int connectionType) {
+        boolean result = false;
+        switch (connectionType) {
+            case NONE:
+            case POS_POINT:
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D:
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D:
+            case TRACK:
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D:
+            case FLEX_A:
+            case FLEX_B:
+                result = true;
+                break;
+            case TURNOUT_CENTER:
+            case LEVEL_XING_CENTER:
+            case TURNTABLE_CENTER:
+            case LAYOUT_POS_LABEL:
+            case LAYOUT_POS_JCOMP:
+            case MULTI_SENSOR:
+            case MARKER:
+            case TRACK_CIRCLE_CENTRE:
+            case SLIP_CENTER:
+            case SLIP_LEFT:
+            case SLIP_RIGHT:
+            case FLEX_CENTER:
+            default:
+                result = false;
+                break;
+        }
+        if (!result && (TURNTABLE_RAY_OFFSET <= connectionType)) {
+            result = true;
+        }
+        return result;
     }
 
     public void reCheckBlockBoundary() {
