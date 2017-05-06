@@ -102,9 +102,15 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
+
+        final Warrant warrant = w;
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.endsWith("Cmd #2.");
+        }, "Train starts to move at 2nd command");
+        
         sensor = runtimes(route);
         
-        final Warrant warrant = w;
         JUnitUtil.waitFor(() -> {
             return (warrant.getThrottle()==null);
         }, "Wait for run to end");
