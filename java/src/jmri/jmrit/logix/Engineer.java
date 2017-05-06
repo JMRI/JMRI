@@ -266,8 +266,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     protected void advanceToCommandIndex(int idx) {
 //        _idxNoSpeedCommand = idx;
-        if (log.isDebugEnabled()) log.debug("_idxCurrentCommand= {} _normalSpeed= {} _speedType= {} speed= {}",
-                _idxCurrentCommand, _normalSpeed, _speedType, _throttle.getSpeedSetting());
+//        if (log.isDebugEnabled()) log.debug("_idxCurrentCommand= {} _normalSpeed= {} _speedType= {} speed= {}",
+//                _idxCurrentCommand, _normalSpeed, _speedType, _throttle.getSpeedSetting());
     }
 
     private void setSpeedStepMode(int step) {
