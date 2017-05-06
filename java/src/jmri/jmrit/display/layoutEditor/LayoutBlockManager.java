@@ -396,6 +396,9 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                             return lt.getSignalHead(LayoutTurnout.POINTD2);
                         }
                     }
+                default:
+                    log.error("Unhandled crossover connection type: {}", cType);
+                    break;
             }
             // should never reach here, but ...
             log.error("crossover turnout block boundary not found in getFacingSignal");

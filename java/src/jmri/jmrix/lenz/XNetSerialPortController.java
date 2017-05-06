@@ -27,6 +27,10 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
         //options.put(option2Name, new Option("Check Buffer : ", validOption2));
     }
 
+    public XNetSerialPortController(XNetSystemConnectionMemo memo) {
+        super(memo);
+    }
+
     // base class. Implementations will provide InputStream and OutputStream
     // objects to XNetTrafficController classes, who in turn will deal in messages.    
     // returns the InputStream from the port

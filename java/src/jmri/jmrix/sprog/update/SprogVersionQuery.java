@@ -4,8 +4,8 @@ import java.util.Vector;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +107,7 @@ public class SprogVersionQuery implements SprogListener {
 
     /**
      * Notify all registered listeners of the SPROG version
+     * @param v version to send notify too
      *
      */
     protected synchronized void notifyVersion(SprogVersion v) {
@@ -276,6 +277,9 @@ public class SprogVersionQuery implements SprogListener {
             case DONE:
             case IDLE:
                 log.error("Timeout in unexpected state: " + state);
+                break;
+            default:
+                log.warn("Unhandled timeout state code: {}", state);
                 break;
         }
     }

@@ -58,7 +58,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -78,7 +78,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of SignalHeads
+     * of SignalHeads.
      */
     @Override
     protected void createModel() {
@@ -333,7 +333,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             /**
              * Respond to change from bean. Prevent Appearance change when Signal Head is set to Hold or Unlit.
-             * @Param e A property change of any bean
+             * @param e A property change of any bean
              */
             @Override
             // Might be useful to show only a Dark option in the comboBox if head is Held
@@ -738,10 +738,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     /**
      * Provide GUI for adding a new SignalHead.
-     * <P>
+     * <p>
      * Because there are multiple options, each of which requires different
      * inputs, we directly manipulate which parts of the GUI are displayed when
      * the selected type is changed.
+     *
+     * @param e name of the event heard
      */
     @Override
     protected void addPressed(ActionEvent e) {

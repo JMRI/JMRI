@@ -35,7 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract class to make pick lists for NamedBeans; Table model for pick lists in IconAdder
+ * Abstract class to make pick lists for NamedBeans; Table model for pick lists
+ * in IconAdder
  * <P>
  * Concrete pick list class for many beans are include at the end of this file.
  * This class also has instantiation methods serve as a factory for those
@@ -73,11 +74,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static public int getNumInstances(String type) {
         Integer num = _listMap.get(type.toLowerCase());
-        if (log.isDebugEnabled()) {
-            log.debug("getNumInstances of " + type + " num= " + num);
-        }
+        log.debug("getNumInstances of {} num={}", type, num);
         if (num != null) {
-            return num.intValue();
+            return num;
         }
         return 0;
     }
@@ -90,8 +89,11 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     /**
-     * No longer needed. Now done in BeanTableDataModel
+     * No longer needed. Now done in BeanTableDataModel.
+     *
+     * @deprecated since Jan 1, 2014, marked as such May 1, 2017
      */
+    @Deprecated
     public void init() {
         //log.debug("manager "+getManager());
         //getManager().addPropertyChangeListener(this);   // for adds and deletes
@@ -99,9 +101,10 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     /**
-     * If table has been sorted table row no longer is the same as array index
+     * If table has been sorted table row no longer is the same as array index.
      *
-     * @param index = row of table
+     * @param index row of table
+     * @return bean at index or null if index is out of range
      */
     public NamedBean getBeanAt(int index) {
         if (index >= _pickList.size()) {
@@ -139,13 +142,13 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             }
         }
         List<String> systemNameList = getManager().getSystemNameList();
-        TreeSet<NamedBean> ts = new TreeSet<NamedBean>(new NamedBeanComparator());
+        TreeSet<NamedBean> ts = new TreeSet<>(new NamedBeanComparator());
 
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             ts.add(getBySystemName(iter.next()));
         }
-        _pickList = new ArrayList<NamedBean>(systemNameList.size());
+        _pickList = new ArrayList<>(systemNameList.size());
 
         Iterator<NamedBean> it = ts.iterator();
         while (it.hasNext()) {
@@ -175,14 +178,19 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     abstract public Manager getManager();
 
     /**
-     * Return bean with name given in parameter. Create if needed and possible
+     * Return bean with name given in parameter. Create if needed and possible.
+     *
+     * @param name the name for the bean
+     * @return the bean or null if not made
      */
     abstract public NamedBean addBean(String name);
 
     abstract public NamedBean addBean(String sysName, String userName);
 
     /**
-     * Return true if model can create beans
+     * Check if beans can be added by this model.
+     *
+     * @return true if model can create beans; false otherwise
      */
     abstract public boolean canAddBean();
 
@@ -261,7 +269,10 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     /**
-     * override. only interested in additions and deletions
+     * Handle additions and deletions in the table and changes to beans within
+     * the table.
+     *
+     * @param e the change
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -286,19 +297,22 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     }
 
     /**
-     * Make pick table, DND enabled
+     * Make pick table, DND enabled.
+     * @return the table
      */
     public JTable makePickTable() {
-        this.init();
         _sorter = new TableRowSorter<>(this);
         _table = new JTable(this) {
             /**
              * Overridden to prevent empty cells from being selected
              */
+            @Override
             public void changeSelection(int row, int col, boolean toggle, boolean extend) {
-                if (this.getValueAt(row, col) != null)
+                if (this.getValueAt(row, col) != null) {
                     super.changeSelection(row, col, toggle, extend);
-        }};
+                }
+            }
+        };
         _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
 
@@ -347,9 +361,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel turnoutPickModelInstance() {
         Integer num = _listMap.get("turnout");
         if (num != null) {
-            _listMap.put("turnout", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("turnout", num + 1);
         } else {
-            _listMap.put("turnout", Integer.valueOf(1));
+            _listMap.put("turnout", 1);
         }
         return new TurnoutPickModel();
     }
@@ -357,9 +371,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel sensorPickModelInstance() {
         Integer num = _listMap.get("sensor");
         if (num != null) {
-            _listMap.put("sensor", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("sensor", num + 1);
         } else {
-            _listMap.put("sensor", Integer.valueOf(1));
+            _listMap.put("sensor", 1);
         }
         return new SensorPickModel();
     }
@@ -367,9 +381,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel multiSensorPickModelInstance() {
         Integer num = _listMap.get("multisensor");
         if (num != null) {
-            _listMap.put("multisensor", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("multisensor", num + 1);
         } else {
-            _listMap.put("multisensor", Integer.valueOf(1));
+            _listMap.put("multisensor", 1);
         }
         return new MultiSensorPickModel();
     }
@@ -377,9 +391,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel signalHeadPickModelInstance() {
         Integer num = _listMap.get("signalhead");
         if (num != null) {
-            _listMap.put("signalhead", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("signalhead", num + 1);
         } else {
-            _listMap.put("signalhead", Integer.valueOf(1));
+            _listMap.put("signalhead", 1);
         }
         return new SignalHeadPickModel();
     }
@@ -387,9 +401,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel signalMastPickModelInstance() {
         Integer num = _listMap.get("signalmast");
         if (num != null) {
-            _listMap.put("signalmast", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("signalmast", num + 1);
         } else {
-            _listMap.put("signalmast", Integer.valueOf(1));
+            _listMap.put("signalmast", 1);
         }
         return new SignalMastPickModel();
     }
@@ -397,9 +411,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel memoryPickModelInstance() {
         Integer num = _listMap.get("memory");
         if (num != null) {
-            _listMap.put("memory", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("memory", num + 1);
         } else {
-            _listMap.put("memory", Integer.valueOf(1));
+            _listMap.put("memory", 1);
         }
         return new MemoryPickModel();
     }
@@ -407,9 +421,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel blockPickModelInstance() {
         Integer num = _listMap.get("block");
         if (num != null) {
-            _listMap.put("block", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("block", num + 1);
         } else {
-            _listMap.put("block", Integer.valueOf(1));
+            _listMap.put("block", 1);
         }
         return new BlockPickModel();
     }
@@ -417,9 +431,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel reporterPickModelInstance() {
         Integer num = _listMap.get("reporter");
         if (num != null) {
-            _listMap.put("reporter", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("reporter", num + 1);
         } else {
-            _listMap.put("reporter", Integer.valueOf(1));
+            _listMap.put("reporter", 1);
         }
         return new ReporterPickModel();
     }
@@ -427,9 +441,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel lightPickModelInstance() {
         Integer num = _listMap.get("light");
         if (num != null) {
-            _listMap.put("light", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("light", num + 1);
         } else {
-            _listMap.put("light", Integer.valueOf(1));
+            _listMap.put("light", 1);
         }
         return new LightPickModel();
     }
@@ -437,9 +451,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel oBlockPickModelInstance() {
         Integer num = _listMap.get("oBlock");
         if (num != null) {
-            _listMap.put("oBlock", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("oBlock", num + 1);
         } else {
-            _listMap.put("oBlock", Integer.valueOf(1));
+            _listMap.put("oBlock", 1);
         }
         return new OBlockPickModel();
     }
@@ -447,9 +461,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel warrantPickModelInstance() {
         Integer num = _listMap.get("warrant");
         if (num != null) {
-            _listMap.put("warrant", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("warrant", num + 1);
         } else {
-            _listMap.put("warrant", Integer.valueOf(1));
+            _listMap.put("warrant", 1);
         }
         return new WarrantPickModel();
     }
@@ -457,9 +471,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
     public static PickListModel entryExitPickModelInstance() {
         Integer num = _listMap.get("entryExit");
         if (num != null) {
-            _listMap.put("entryExit", Integer.valueOf(num.intValue() + 1));
+            _listMap.put("entryExit", num + 1);
         } else {
-            _listMap.put("entryExit", Integer.valueOf(1));
+            _listMap.put("entryExit", 1);
         }
         return new EntryExitPickModel();
     }
@@ -528,7 +542,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     static class MultiSensorPickModel extends SensorPickModel {
 
-        private HashMap<Integer, String> _position = new HashMap<Integer, String>();
+        private final HashMap<Integer, String> _position = new HashMap<>();
 
         MultiSensorPickModel() {
             super();
@@ -537,7 +551,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         @Override
         public Object getValueAt(int r, int c) {
             if (c == POSITION_COL) {
-                return _position.get(Integer.valueOf(r));
+                return _position.get(r);
             }
             return super.getValueAt(r, c);
         }
@@ -545,7 +559,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == POSITION_COL) {
-                _position.put(Integer.valueOf(r), (String) type);
+                _position.put(r, (String) type);
             }
         }
     }

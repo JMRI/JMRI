@@ -103,7 +103,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
         for (String name : InstanceManager.getDefault(SensorManager.class).getSystemNameList()) {
             root.add(this.doGet(SENSOR, name, locale));

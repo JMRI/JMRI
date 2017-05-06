@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     BundleTest.class,
     jmri.jmrix.dccpp.swing.mon.PackageTest.class,
-    jmri.jmrix.dccpp.swing.packetgen.PackageTest.class
+    jmri.jmrix.dccpp.swing.packetgen.PackageTest.class,
+    ConfigBaseStationActionTest.class,
+    ConfigBaseStationFrameTest.class,
+    DCCppComponentFactoryTest.class
 })
 
 /**

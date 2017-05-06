@@ -1215,7 +1215,7 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 createLogix = false;
                 String userName = targetLogix.getUserName();
-                if (userName.length() > 0) {
+                if (userName != null && userName.length() > 0) {
                     _addUserName.setText(userName);
                     uName = userName;
                 }
@@ -1266,7 +1266,7 @@ public class LogixTableAction extends AbstractTableAction {
         String cNewSysName = targetLogix.getSystemName() + "C" + Integer.toString(num);
         // add to Logix at the end of the calculate order
         String cNewUserName = java.text.MessageFormat.format(rbx.getString("CopyOf"), cOldUserName);
-        if (cOldUserName.length() == 0) {
+        if (cOldUserName != null && cOldUserName.length() == 0) {
             cNewUserName += "C" + Integer.toString(num);
         }
         do {
@@ -4001,6 +4001,9 @@ public class LogixTableAction extends AbstractTableAction {
                         Conditional.ITEM_TO_OTHER_ACTION, actionType) + 1);
                 // ACTION_TRIGGER_ROUTE
                 break;
+            default:
+                log.error("Unhandled type: {}", itemType);
+                break;
         }
         _actionOptionBox.setSelectedIndex(_curAction.getOption() - 1);
         _editActionFrame.pack();
@@ -5550,6 +5553,9 @@ public class LogixTableAction extends AbstractTableAction {
                 return Conditional.ITEM_TO_SCRIPT_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_OTHER:
                 return Conditional.ITEM_TO_OTHER_ACTION[actionTypeSelection];
+            default:
+                // fall through
+                break;
         }
         return Conditional.ACTION_NONE;
     }
@@ -6529,6 +6535,9 @@ public class LogixTableAction extends AbstractTableAction {
                     return JButton.class;
                 case DELETE_COLUMN:
                     return JButton.class;
+                default:
+                    // fall through
+                    break;
             }
             return String.class;
         }
@@ -6562,6 +6571,9 @@ public class LogixTableAction extends AbstractTableAction {
                     return (true);
                 case DELETE_COLUMN:
                     return (true);
+                default:
+                    // fall through
+                    break;
             }
             return (false);
         }
@@ -6585,6 +6597,9 @@ public class LogixTableAction extends AbstractTableAction {
                     return "";
                 case DELETE_COLUMN:
                     return "";
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -6625,6 +6640,9 @@ public class LogixTableAction extends AbstractTableAction {
                             return rbx.getString("False");
                         case NamedBean.UNKNOWN:
                             return Bundle.getMessage("BeanStateUnknown");
+                        default:
+                            log.warn("Unhandled state type: {}", variable.getState());
+                            break;
                     }
                     break;
                 case TRIGGERS_COLUMN:
@@ -6773,6 +6791,9 @@ public class LogixTableAction extends AbstractTableAction {
                         return rbx.getString("ButtonNext");
                     }
                     return Integer.toString(row + 1);
+                default:
+                    // fall through
+                    break;
             }
             return null;
         }

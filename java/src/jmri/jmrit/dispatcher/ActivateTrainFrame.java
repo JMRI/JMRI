@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -55,9 +54,6 @@ public class ActivateTrainFrame {
         _dispatcher = d;
         _tiFile = new TrainInfoFile();
     }
-
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
     // operational instance variables
     private DispatcherFrame _dispatcher = null;
@@ -124,8 +120,12 @@ public class ActivateTrainFrame {
     boolean transitsFromSpecificBlock = false;
 
     /**
-     * Open up a new train window, for a given roster entry located in a
-     * specific block
+     * Open up a new train window for a given roster entry located in a
+     * specific block.
+     * 
+     * @param e the action event triggering the new window
+     * @param re the roster entry to open the new window for
+     * @param b the block where the train is located
      */
     public void initiateTrain(ActionEvent e, RosterEntry re, Block b) {
         initiateTrain(e);
@@ -162,10 +162,11 @@ public class ActivateTrainFrame {
     }
 
     /**
-     * Displays a window that allows a new ActiveTrain to be activated
+     * Displays a window that allows a new ActiveTrain to be activated.
      *
      * Called by Dispatcher in response to the dispatcher clicking the New Train
-     * button
+     * button.
+     * @param e the action event triggering the window display
      */
     protected void initiateTrain(ActionEvent e) {
         // set Dispatcher defaults
@@ -471,8 +472,8 @@ public class ActivateTrainFrame {
         if ((!reverseAtEndBox.isSelected()) && resetWhenDoneBox.isSelected()
                 && (!selectedTransit.canBeResetWhenDone())) {
             resetWhenDoneBox.setSelected(false);
-            javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
-                    .getString("NoResetMessage"), Bundle.getMessage("InformationTitle"),
+            javax.swing.JOptionPane.showMessageDialog(initiateFrame, Bundle
+                    .getMessage("NoResetMessage"), Bundle.getMessage("InformationTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
