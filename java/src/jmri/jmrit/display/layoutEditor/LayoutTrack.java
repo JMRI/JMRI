@@ -44,7 +44,13 @@ public abstract class LayoutTrack {
     public static final int SLIP_D = 24; // offset for slip connection points
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
+    public static final int FLEX_CENTER = 27;
+    public static final int FLEX_A = 28;
+    public static final int FLEX_B = 29;
+    public static final int FLEX_CONTROL_POINT_OFFSET = 30; // offset for flex track control points (0=A, size()-1 == B)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
+
+
 
     protected String ident = "";
 
@@ -121,13 +127,18 @@ public abstract class LayoutTrack {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         return NONE;
     }
 
     // optional useRectangles parameter defaults to false
     public int connectionTypeForPoint(Point2D p) {
-        return connectionTypeForPoint(p, false);
+        return connectionTypeForPoint(p, false, false);
+    }
+
+    // optional requireUnconnected parameter defaults to false
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+        return connectionTypeForPoint(p, useRectangles, false);
     }
 
     public void reCheckBlockBoundary() {

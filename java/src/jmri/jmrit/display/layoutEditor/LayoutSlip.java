@@ -359,6 +359,41 @@ public class LayoutSlip extends LayoutTurnout {
         return new Point2D.Double(x, y);
     }
 
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case SLIP_A:
+                result = getCoordsA();
+                break;
+            case SLIP_B:
+                result = getCoordsB();
+                break;
+            case SLIP_C:
+                result = getCoordsC();
+                break;
+            case SLIP_D:
+                result = getCoordsD();
+                break;
+            case SLIP_CENTER:
+                break;
+            case SLIP_LEFT:
+                Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
+                double leftFract = circleRadius / center.distance(leftCenter);
+                result = lerp(center, leftCenter, leftFract);
+                break;
+            case SLIP_RIGHT:
+                Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
+                double rightFract = circleRadius / center.distance(rightCenter);
+                result = lerp(center, rightCenter, rightFract);
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid connection ");
+        }
+        return result;
+    }
+
     private void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
@@ -493,24 +528,25 @@ public class LayoutSlip extends LayoutTurnout {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
+        // TODO: A faster way to check to see if p is in the rects for
+        // all these locations is to create a rect around p and see if
+        // those locations are in that rect instead of creating rects
+        // for all those locations… Just saying… ;-)
+        //
+        // Rectangle2D pointRect = layoutEditor.turnoutCircleRectAt(p);
+        
         // calculate radius of turnout control circle
         // note: 3 is layoutEditor.SIZE (not public)
         double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
 
-        Point2D pt = getCoordsCenter();
-
-        // calculate left center
-        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        double leftFract = circleRadius / pt.distance(leftCenter);
-        leftCenter = lerp(pt, leftCenter, leftFract);
+        // get left center
+        Point2D leftCenter = getCoordsForConnectionType(SLIP_LEFT);
 
         // calculate right center
-        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        double rightFract = circleRadius / pt.distance(rightCenter);
-        rightCenter = lerp(pt, rightCenter, rightFract);
+        Point2D rightCenter = getCoordsForConnectionType(SLIP_RIGHT);
 
         if (useRectangles) {
             // calculate turnout's left control rectangle
@@ -532,6 +568,49 @@ public class LayoutSlip extends LayoutTurnout {
             if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                 //mouse was pressed on this slip
                 result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+            }
+        }
+        
+        // have we found anything yet?
+        if (result == NONE) {
+            if (!requireUnconnected || (getConnectA() == null)) {
+                //check the A connection point
+                Point2D pt = getCoordsA();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_A;
+                }
+            }
+
+            if (!requireUnconnected || (getConnectB() == null)) {
+                //check the B connection point
+                Point2D pt = getCoordsB();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_B;
+                }
+            }
+
+            if (!requireUnconnected || (getConnectC() == null)) {
+                //check the C connection point
+                Point2D pt = getCoordsC();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_C;
+                }
+            }
+
+            if (!requireUnconnected || (getConnectD() == null)) {
+                //check the D connection point
+                Point2D pt = getCoordsD();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_D;
+                }
             }
         }
         return result;
@@ -1439,30 +1518,19 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void drawSlipCircles(Graphics2D g2) {
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
-        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        double leftFract = circleRadius / center.distance(leftCenter);
-        Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
+        Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_A);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
-        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        double rightFract = circleRadius / center.distance(rightCenter);
-        Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
+        Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_A);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
     }
 
     public void drawSlipRect(Graphics2D g2) {
         // draw east/west turnout control circles
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
-
-        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        double leftFract = circleRadius / center.distance(leftCenter);
-        Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
+        Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_A);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
-        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        double rightFract = circleRadius / center.distance(rightCenter);
-        Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
+        Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_A);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
 
         Point2D pt = getCoordsA();

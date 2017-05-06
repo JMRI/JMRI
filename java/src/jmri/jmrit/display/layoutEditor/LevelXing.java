@@ -1187,30 +1187,20 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(block1NameComboBox, false, true);
-            } else {
-                block1NameComboBox.setEditable(true);
-                block1NameComboBox.getEditor().setItem("");
-                block1NameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(block1NameComboBox, false, true);
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
+
             // setup block 2 name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(block2NameComboBox, false, true);
-            } else {
-                block2NameComboBox.setEditable(true);
-                block2NameComboBox.getEditor().setItem("");
-                block2NameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(block2NameComboBox, false, true);
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
+
             // set up Edit 1 Block and Edit 2 Block buttons
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
