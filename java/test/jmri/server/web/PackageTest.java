@@ -5,14 +5,14 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood (C) 2016, 2017
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    jmri.server.web.spi.WebServerConfigurationTest.class,
+    jmri.server.web.app.PackageTest.class,
+    jmri.server.web.spi.PackageTest.class,
     AbstractWebServerConfigurationTest.class,
     DefaultWebServerConfigurationTest.class
 })
 public class PackageTest {
-    
 }

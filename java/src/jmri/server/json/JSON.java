@@ -114,6 +114,10 @@ public final class JSON {
      * {@value #PROPERTIES}
      */
     public static final String PROPERTIES = "properties"; // NOI18N
+    /**
+     * {@value #DEFAULT}
+     */
+    public static final String DEFAULT = "default"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -232,7 +236,7 @@ public final class JSON {
      * {@value #LENGTH}
      */
     public static final String LENGTH = "length"; // NOI18N
-    
+
     /* JSON panel tokens */
     /**
      * {@value #CONTROL_PANEL}

@@ -1,0 +1,62 @@
+<span ng-switch on="config.layout" ng-class="{'data-unavailable-pf': chartData.dataAvailable === false}">
+  <div ng-switch-default ng-class="{'trend-card-large-pf': showLargeCardLayout,'trend-card-small-pf': showSmallCardLayout}">
+
+    <span class="trend-header-pf" ng-if="config.title">{{config.title}}</span>
+
+    <span ng-if="showActualValue">
+      <span class="trend-title-big-pf">{{getLatestValue()}}</span>
+      <span class="trend-title-small-pf">{{config.units}}</span>
+    </span>
+    <span ng-if="showPercentageValue">
+      <span class="trend-title-big-pf">{{getPercentageValue() + '%'}}</span>
+      <span class="trend-title-small-pf">of {{chartData.total + ' ' + config.units}}</span>
+    </span>
+
+    <div pf-sparkline-chart ng-if="chartData.dataAvailable !== false" config="config" chart-data="chartData" chart-height="getChartHeight()"
+         show-x-axis="showXAxis" show-y-axis="showYAxis"></div>
+    <div pf-empty-chart ng-if="chartData.dataAvailable === false" chart-height="getChartHeight()"></div>
+    <span class="trend-footer-pf" ng-if="config.timeFrame">{{config.timeFrame}}</span>
+  </div>
+  <div ng-switch-when="compact" class="trend-card-compact-pf">
+    <div class="row trend-row">
+      <div class="col-sm-4 col-md-4">
+        <div class="trend-compact-details">
+          <span ng-if="showActualValue">
+            <span class="trend-title-compact-big-pf">{{getLatestValue()}}</span>
+            <span class="trend-title-compact-small-pf">{{config.units}}</span>
+          </span>
+          <span ng-if="showPercentageValue">
+            <span class="trend-title-compact-big-pf">{{getPercentageValue() + '%'}}</span>
+            <span class="trend-title-compact-small-pf">of {{chartData.total + ' ' + config.units}}</span>
+          </span>
+          <span class="trend-header-compact-pf" ng-if="config.title">{{config.title}}</span>
+        </div>
+      </div>
+      <div class="col-sm-8 col-md-8">
+        <div pf-sparkline-chart ng-if="chartData.dataAvailable !== false" config="config" chart-data="chartData" chart-height="getChartHeight()"
+             show-x-axis="showXAxis" show-y-axis="showYAxis"></div>
+        <div pf-empty-chart ng-if="chartData.dataAvailable === false" chart-height="getChartHeight()"></div>
+      </div>
+    </div>
+  </div>
+  <div ng-switch-when="inline" class="trend-card-inline-pf">
+    <div class="row trend-row">
+      <div class="col-sm-8 col-md-8 trend-flat-col">
+        <div pf-sparkline-chart ng-if="chartData.dataAvailable !== false" config="config" chart-data="chartData" chart-height="getChartHeight()"
+             show-x-axis="showXAxis" show-y-axis="showYAxis"></div>
+        <div pf-empty-chart ng-if="chartData.dataAvailable === false" chart-height="getChartHeight()"></div>
+      </div>
+      <div class="col-sm-4 col-md-4 trend-flat-col">
+        <div class="trend-flat-details">
+          <div class="trend-flat-details-cell">
+            <span class="trend-title-flat-big-pf">{{getPercentageValue() + '%'}}</span>
+          </div>
+          <div class="trend-flat-details-cell">
+            <span class="trend-label-flat-strong-pf">{{config.trendLabel}}</span>
+            <span class="trend-label-flat-pf">{{getLatestValue()}} of {{chartData.total + ' ' + config.units}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</span>
