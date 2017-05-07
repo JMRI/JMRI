@@ -3,6 +3,8 @@ package jmri.jmrit.display.layoutEditor;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.controlPointSize2;
 import static jmri.util.MathUtil.add;
+import static jmri.util.MathUtil.length;
+import static jmri.util.MathUtil.midpoint;
 import static jmri.util.MathUtil.subtract;
 
 import java.awt.Color;
@@ -791,28 +793,50 @@ public class LayoutFlex extends LayoutTrack {
         }
         // set track width for block
         layoutEditor.setTrackStrokeWidth(g2, isMainline());
-        // draw AC segment
-        // draw bezier curve using the control points
-        Spline2D s = new Spline2D(controlPoints);
-        Point2D pA = getCoordsA();
-        Point2D pB = getCoordsB();
-        Point2D pLast = pA;
 
-        double steps = Math.hypot(pA.getX() - pB.getX(), pA.getY() - pB.getY()) / 10;
-        if (steps < controlPoints.size() * 4) {
-            steps = controlPoints.size() * 4;
-        }
-        double step = 1 / steps;
-        for (double t = 0; t <= 1; t += step) {
-            Point2D p = s.getPoint2D(t);
-            Point2D pP = new Point2D.Double(center.getX() + p.getX(), center.getY() + p.getY());
-            if (t > 0) {
-                g2.draw(new Line2D.Double(pLast, pP));
-            }
-            pLast = pP;
-        }
+        drawBezier(g2, getCoordsN(0), getCoordsN(1), getCoordsN(2), getCoordsN(3), 0);
     }   // draw(Graphics2D g2)
 
+    // recursive routine to draw a cubic Bezier…
+    // (also returns length!)
+    private double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3, int depth) {
+        double result = 0;
+        
+        // calculate flatness to determine if we need to recurse…
+        double l01 = length(p0, p1);
+        double l12 = length(p1, p2);
+        double l23 = length(p2, p3);
+        double l03 = length(p0, p3);
+        double flatness = (l01 + l12 + l23) / l03;
+        
+        // depth prevents stack overflow… 
+        // (I picked 12 because 2^12 = 2048… is larger than most monitors ;-)
+        // the flatness comparison value is somewhat arbitrary.
+        // (I just kept moving it closer to 1 until I got good results. ;-)
+        if ((depth > 12) || (flatness <= 1.001)) {
+            g2.draw(new Line2D.Double(p0, p3));
+            result = l03;
+        } else {
+            // first order midpoints
+            Point2D q0 = midpoint(p0, p1);
+            Point2D q1 = midpoint(p1, p2);
+            Point2D q2 = midpoint(p2, p3);
+            
+            // second order midpoints
+            Point2D r0 = midpoint(q0, q1);
+            Point2D r1 = midpoint(q1, q2);
+
+            // third order midpoint
+            Point2D s = midpoint(r0, r1);
+            
+            // draw left side Bezier
+            result = drawBezier(g2, p0, q0, r0, s, depth + 1);
+            // draw right side Bezier
+            result += drawBezier(g2, s, r1, q2, p3, depth + 1);
+        }
+        return result;
+    }
+    
     public void drawControlRects(Graphics2D g2) {
         g2.setColor(Color.black);
         g2.draw(new Ellipse2D.Double(center.getX() - controlPointSize2, center.getY() - controlPointSize2,

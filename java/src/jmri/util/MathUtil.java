@@ -27,7 +27,8 @@ public final class MathUtil {
         return new Point2D.Double(p.getX() * s, p.getY() * s);
     }
 
-    // (just so parameter order doesn't matter…)
+    // multiply a point by a scalar
+    // (again just so parameter order doesn't matter…)
     public static Point2D multiply(double s, Point2D p) {
         return new Point2D.Double(p.getX() * s, p.getY() * s);
     }
@@ -59,7 +60,8 @@ public final class MathUtil {
 
     // return the distance between two points
     public static double length(Point2D pA, Point2D pB) {
-        return Math.sqrt(dot(pA, pB));
+        Point2D delta = subtract(pA, pB);
+        return Math.hypot(delta.getX(), delta.getY());
     }
 
     // normalize a point
