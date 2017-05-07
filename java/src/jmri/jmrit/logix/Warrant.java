@@ -2019,9 +2019,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         
         // Halt and waitForCleat may have been freed
-        if (runState!=WAIT_FOR_CLEAR && runState!=HALT) {
-            _engineer.rampSpeedTo(currentType);                    
-        }
+        _engineer.rampSpeedTo(currentType);                    
         
         //look ahead for a speed change slower than the current speed
         // Note: blkOrder still is blkOrder = getBlockOrderAt(_idxCurrentOrder);
@@ -2064,7 +2062,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // From this block, check if there is enough room to make the change 
         // using the entrance speed of the block. Walk back using previous
         // blocks, if necessary.
-        Engineer.RampData rampData = new Engineer.RampData(0.0f, 0);
         float rampLen = 1.0f;
         float availDist = 0.0f;
         BlockSpeedInfo blkSpeedInfo = null;
@@ -2086,7 +2083,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (speed<0.0001f) { // first block has 0.0 entrance speed
                 speed = blkSpeedInfo.getMaxSpeed();
             }
-            rampData = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, speedType);
+            Engineer.RampData rampData = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, speedType);
             rampLen = rampData.getLength() + blkOrder.getEntranceSpace();
             if(log.isDebugEnabled()) log.debug("availDist= {}, at Block \"{}\" for ramp= {} to speed {} from {}. warrant {}", 
                     availDist, getBlockOrderAt(idxBlockOrder).getBlock().getDisplayName(), rampLen, 
@@ -2173,14 +2170,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         float waitDist = 0.0f;      // distance traveled until ramp is started
         int startIdx = blkSpeedInfo.getFirstIndex();
         int endIdx = blkSpeedInfo.getLastIndex();
-        Engineer.RampData rampData = new Engineer.RampData(0.0f, 0);
         for (int i=startIdx; i<=endIdx; i++) {
             ThrottleSetting ts = _commands.get(i);
             String cmd = ts.getCommand().toUpperCase();
             if (hasSpeed) {
                 speedTime = (long)(ts.getTime()*timeRatio);
                 float dist = _engineer.getDistanceTraveled(speed, _curSpeedType, speedTime);
-                rampData = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType);
+                Engineer.RampData rampData = _engineer.rampLengthForSpeedChange(speed, _curSpeedType, endSpeedType);
                 rampLen = rampData.getLength() + distAdj;
                 if (rampLen > availDist) {
                     log.error("availDist>rampLen! availDist= {} rampLen= {} waitTime= {}", availDist, rampLen, waitTime);
