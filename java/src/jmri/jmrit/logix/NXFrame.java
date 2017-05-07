@@ -236,6 +236,7 @@ public class NXFrame extends WarrantRoute {
         p1.add(makeTextBoxPanel(false, _rampInterval, "rampInterval", null));
         p1.add(makeTextBoxPanel(false, _rampIncre, throttleIncrLabel, "ToolTipRampIncrement"));
         p1.add(makeTextBoxPanel(false, _throttleFactorBox, "ThrottleScale", "ToolTipThrottleScale"));
+        p1.add(makeTextBoxPanel(false, _shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
         _maxSpeedBox.setText(Float.toString(maxSpeed));
         _rampInterval.setText(Float.toString(_intervalTime / 1000));
         _rampIncre.setText(Float.toString(throttleIncr));
@@ -243,8 +244,9 @@ public class NXFrame extends WarrantRoute {
 
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
-        JPanel trainPanel = makeTrainIdPanel(makeTextBoxPanel(
-                false, _shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
+//        JPanel trainPanel = makeTrainIdPanel(makeTextBoxPanel(
+//                false, _shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
+        JPanel trainPanel = makeTrainIdPanel(null);
         p2.add(trainPanel);
 
         JPanel autoRunPanel = new JPanel();
