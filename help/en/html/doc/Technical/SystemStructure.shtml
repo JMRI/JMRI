@@ -494,6 +494,19 @@ jmri.jmrix.loconet.LnConnectionTypeList
       
       <h3>Deleting a connection</h3>
       
+      <h2>Misc</h2>
+      
+      This section is a grab-bag of other things you might want to know
+      about the system connection structure.
+      
+      <ul>
+      <li>The <code><a href="http://www.jmri.org/JavaDoc/doc/jmri/swing/ConnectionLabel.html">jmri.swing.ConnectionLabel</a></code> class
+      is a Swing JLabel that listens to a single connection and displays its status.  We use those on the main
+      splash screen, but they can also be used in other places.</li>
+        
+      
+      </ul>
+      
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
