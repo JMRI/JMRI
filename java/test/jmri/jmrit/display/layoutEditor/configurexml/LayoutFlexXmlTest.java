@@ -12,11 +12,11 @@ import org.junit.Test;
  *
  * @author   George Warner  Copyright (C) 2017
  */
-public class LayoutSlipXmlTest {
+public class LayoutFlexXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LayoutSlipXml constructor",new LayoutSlipXml());
+      Assert.assertNotNull("LayoutFlexXml constructor",new LayoutFlexXml());
     }
 
     // The minimal setup for log4J
