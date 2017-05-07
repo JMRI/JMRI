@@ -5,7 +5,7 @@ package jmri.util;
  *
  * @author Bob Jacobsen Copyright 2009
  */
-public class NamedBeanHandle<T> implements java.io.Serializable {
+public class NamedBeanHandle<T> {
 
     public NamedBeanHandle(String name, T bean) {
         this.name = name;
