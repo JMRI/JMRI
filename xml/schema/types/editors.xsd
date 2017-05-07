@@ -1404,6 +1404,45 @@
 
     </xs:complexType>
 
+    <xs:complexType name="EditorLayoutFlexType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LayoutFlex
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LayoutFlexXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="controlpoints">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="controlpoint" minOccurs="4" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="index" type="xs:integer" use="required"></xs:attribute>
+                  <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
+                  <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xa" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="ya" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="yb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="connectaname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectbname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
+
     <xs:complexType name="EditorLayoutTurntableType">
       <xs:annotation>
         <xs:documentation>

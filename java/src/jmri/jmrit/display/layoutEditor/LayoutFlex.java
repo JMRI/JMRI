@@ -2,7 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.controlPointSize2;
-import static jmri.util.MathUtil.midpoint;
+import static jmri.util.MathUtil.add;
 import static jmri.util.MathUtil.subtract;
 
 import java.awt.Color;
@@ -39,21 +39,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A LayoutFlex is a bendable track segment on a layout that can be shaped to one or more curves.
+ * A LayoutFlex is a bendable track segment on a layout that can be shaped to
+ * one or more curves.
  * <P>
- * A LayoutFlex has four or more control points. The first and last are connection
- * points to adjacent track segments.
+ * A LayoutFlex has four or more control points. The first and last are
+ * connection points to adjacent track segments.
  * <P>
- * LayoutFlex's carry Block information, as do TrackSegments, LayoutTurnouts and LevelXings.
+ * LayoutFlex's carry Block information.
  * <P>
- * For drawing purposes, each LayoutFlex carries a center point and displacements
- * for the control points. The center point and the control point displacements
- * may be adjusted by the user when in edit mode.
+ * For drawing purposes, each LayoutFlex carries a center point and
+ * displacements for the control points (including the end points).
+ * The center point and the control point displacements may be adjusted
+ * by the user when in edit mode.
  * <P>
  * When LayoutFlexs are first created, there are no connections. Block
  * information and connections are added when available.
  * <P>
- * LayoutFlex's may be drawn as dashed lines or solid lines. In addition
+ * TODO(?): LayoutFlex's may be drawn as dashed lines or solid lines. In addition
  * LayoutFlex's may be hidden when the panel is not in EditMode.
  *
  * @author George Warner Copyright (c) 2017
@@ -77,6 +79,7 @@ public class LayoutFlex extends LayoutTrack {
 
     private Point2D center = new Point2D.Double(50.0, 50.0);
     private ArrayList<Point2D> controlPoints = new ArrayList<Point2D>(); // list of control point displacements
+
     /**
      * constructor method
      */
@@ -101,7 +104,6 @@ public class LayoutFlex extends LayoutTrack {
     /**
      * Accessor methods
      */
-
     public String getBlockName() {
         return blockName;
     }
@@ -179,6 +181,10 @@ public class LayoutFlex extends LayoutTrack {
         return getCoordsN(-1);
     }
 
+    public int getNumberOfCoords() {
+        return controlPoints.size();
+    }
+
     public Point2D getCoordsN(int index) {
         Point2D result = center;
         if (index < 0) {
@@ -205,8 +211,8 @@ public class LayoutFlex extends LayoutTrack {
             case SLIP_CENTER:
                 break;
             default:
-                if ((connectionType >= FLEX_CONTROL_POINT_OFFSET) &&
-                        (connectionType < TURNTABLE_RAY_OFFSET)) {
+                if ((connectionType >= FLEX_CONTROL_POINT_OFFSET)
+                        && (connectionType < TURNTABLE_RAY_OFFSET)) {
                     result = getCoordsN(connectionType - FLEX_CONTROL_POINT_OFFSET);
                 } else {
                     log.error("Invalid connection type " + connectionType); //I18IN
@@ -274,8 +280,8 @@ public class LayoutFlex extends LayoutTrack {
      * connecting track segments are missing
      */
     public boolean isMainline() {
-        return (((connectA != null) && (((TrackSegment) connectA).getMainline())) ||
-            ((connectB != null) && (((TrackSegment) connectB).getMainline())));
+        return (((connectA != null) && (((TrackSegment) connectA).getMainline()))
+                || ((connectB != null) && (((TrackSegment) connectB).getMainline())));
     }
 
     /**
@@ -343,7 +349,8 @@ public class LayoutFlex extends LayoutTrack {
                 }
             } while (false);
         }
-        if (NONE == result) {
+        // control points will override center
+        if ((NONE == result) || (FLEX_CENTER == result)) {
             // hit testing for the control points
             // NOTE: index 0 and size - 1 are FLEX_A and FLEX_B (checked above)
             for (int index = 1; index < controlPoints.size() - 1; index++) {
@@ -374,17 +381,6 @@ public class LayoutFlex extends LayoutTrack {
         reCenter();
     }
 
-    // adjust center to midpoint A & B
-    // adjust all control points for new center
-    private void reCenter() {
-        Point2D c = midpoint(getCoordsA(), getCoordsB());
-        Point2D delta = subtract(c, center);
-
-        for (int index = 0; index < controlPoints.size(); index++) {
-            controlPoints.set(index, subtract(controlPoints.get(index), delta));
-        }
-    }
-
     public void setCoordsN(Point2D p, int index) {
         Point2D result = new Point2D.Double(p.getX() - center.getX(), p.getY() - center.getY());
         if (index < 0) {
@@ -392,7 +388,20 @@ public class LayoutFlex extends LayoutTrack {
         }
         if ((index >= 0) && (index < controlPoints.size())) {
             controlPoints.set(index, result);
+            reCenter();
         }
+    }
+
+    // adjust center to midpoint of spline
+    // adjust all control points for new center
+    private void reCenter() {
+        Spline2D s = new Spline2D(controlPoints);
+        Point2D delta = s.getPoint2D(0.5);
+
+        for (int index = 0; index < controlPoints.size(); index++) {
+            controlPoints.set(index, subtract(controlPoints.get(index), delta));
+        }
+        center = add(center, delta);
     }
 
     protected Point2D addControlPoint(Point2D p) {
@@ -496,14 +505,14 @@ public class LayoutFlex extends LayoutTrack {
             });
 
             if ((!blockName.equals("")) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
-               popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                   @Override
-                   public void actionPerformed(ActionEvent e) {
-                       AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                       routeTableAction.actionPerformed(e);
-                   }
-               });
-           }
+                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                        routeTableAction.actionPerformed(e);
+                    }
+                });
+            }
 
             layoutEditor.setShowAlignmentMenu(popup);
             popup.show(e.getComponent(), e.getX(), e.getY());
@@ -794,7 +803,7 @@ public class LayoutFlex extends LayoutTrack {
             steps = controlPoints.size() * 4;
         }
         double step = 1 / steps;
-        for (double t = 0; t < 1; t += step) {
+        for (double t = 0; t <= 1; t += step) {
             Point2D p = s.getPoint2D(t);
             Point2D pP = new Point2D.Double(center.getX() + p.getX(), center.getY() + p.getY());
             if (t > 0) {
@@ -805,10 +814,9 @@ public class LayoutFlex extends LayoutTrack {
     }   // draw(Graphics2D g2)
 
     public void drawControlRects(Graphics2D g2) {
-
         g2.setColor(Color.black);
         g2.draw(new Ellipse2D.Double(center.getX() - controlPointSize2, center.getY() - controlPointSize2,
-            controlPointSize2 + controlPointSize2, controlPointSize2 + controlPointSize2));
+                controlPointSize2 + controlPointSize2, controlPointSize2 + controlPointSize2));
 
         int lastIndex = controlPoints.size() - 1;
         for (int index = 0; index <= lastIndex; index++) {
@@ -831,7 +839,7 @@ public class LayoutFlex extends LayoutTrack {
             }
             g2.draw(layoutEditor.controlPointRectAt(p));
         }
-    }   // public void drawSlipRects(Graphics2D g2)
+    }   // public void drawControlRects(Graphics2D g2)
 
     private final static Logger log = LoggerFactory.getLogger(LayoutFlex.class.getName());
 }

@@ -480,10 +480,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private int numEdgeConnectors = 0;
     private int numTrackSegments = 0;
     private int numLevelXings = 0;
+    private int numLayoutFlexes = 0;
     private int numLayoutSlips = 0;
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
-    private int numLayoutFlexes = 0;
 
     //Lists of items that facilitate tools and drawings
     public ArrayList<SignalHeadIcon> signalList = new ArrayList<SignalHeadIcon>();                      //Signal Head Icons
@@ -5269,6 +5269,27 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
+        //check flex tracks, if any
+        for (LayoutFlex f : flexList) {
+            if (f != selectedObject) {
+                try {
+                    foundPointType = f.hitTestPoint(dLoc, false, requireUnconnected);
+                    if (NONE != foundPointType) {
+                        foundObject = f;
+                        foundLocation = f.getCoordsForConnectionType(foundPointType);
+                        foundNeedsConnect = f.isConnectionType(foundPointType);
+                        if (foundNeedsConnect) {
+                            foundNeedsConnect = (null == f.getConnection(foundPointType));
+                        }
+                        return true;
+                    }
+                } catch (Exception e) {
+                    //exceptions make me throw up…
+                    log.error("This error message, which nobody will ever see, shuts my IDE up.");
+                }
+            }
+        }
+
         //check slips, if any
         for (LayoutSlip sl : slipList) {
             if (sl != selectedObject) {
@@ -5340,27 +5361,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     foundPointType = LayoutTrack.TRACK_CIRCLE_CENTRE;
                     foundNeedsConnect = false;
                     return true;
-                }
-            }
-        }
-
-        //check flex tracks, if any
-        for (LayoutFlex f : flexList) {
-            if (f != selectedObject) {
-                try {
-                    foundPointType = f.hitTestPoint(dLoc, false, requireUnconnected);
-                    if (NONE != foundPointType) {
-                        foundObject = f;
-                        foundLocation = f.getCoordsForConnectionType(foundPointType);
-                        foundNeedsConnect = f.isConnectionType(foundPointType);
-                        if (foundNeedsConnect) {
-                            foundNeedsConnect = (null == f.getConnection(foundPointType));
-                        }
-                        return true;
-                    }
-                } catch (Exception e) {
-                    //exceptions make me throw up…
-                    log.error("This error message, which nobody will ever see, shuts my IDE up.");
                 }
             }
         }
@@ -6892,6 +6892,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 if (!_xingSelection.contains(x)) {
                     _xingSelection.add(x);
+                }
+            }
+        }
+
+        //loop over all defined flex tracks
+        for (LayoutFlex f : flexList) {
+            Point2D center = f.getCoordsCenter();
+
+            if (selectRect.contains(center)) {
+                if (_flexSelection == null) {
+                    _flexSelection = new ArrayList<LayoutFlex>();
+                }
+
+                if (!_flexSelection.contains(f)) {
+                    _flexSelection.add(f);
                 }
             }
         }
@@ -8723,29 +8738,29 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
      * Add a Layout Flex track
      */
     public void addLayoutFlex(int type) {
-        numLevelXings++;
+        numLayoutFlexes++;
 
         //get unique name
         String name = "";
         boolean duplicate = true;
 
         while (duplicate) {
-            name = "X" + numLevelXings;
+            name = "F" + numLayoutFlexes;
 
             if (finder.findLevelXingByName(name) == null) {
                 duplicate = false;
             }
 
             if (duplicate) {
-                numLevelXings++;
+                numLayoutFlexes++;
             }
         }
 
         //create object
-        LevelXing o = new LevelXing(name, currentPoint, this);
+        LayoutFlex o = new LayoutFlex(name, currentPoint, this);
 
         //if (o!=null) {
-        xingList.add(o);
+        flexList.add(o);
         setDirty(true);
 
         //check on layout block
@@ -8753,8 +8768,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
-            o.setLayoutBlockAC(b);
-            o.setLayoutBlockBD(b);
+            o.setLayoutBlock(b);
 
             //check on occupancy sensor
             String sensorName = blockSensorComboBox.getUserName();
@@ -9583,6 +9597,77 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return false;
     }   //removeLevelXing
 
+    boolean noWarnFlex = false;
+
+    protected boolean removeLayoutFlex(LayoutFlex o) {
+        if (!(o instanceof LayoutFlex)) {
+            return false;
+        }
+
+        //First verify with the user that this is really wanted
+        if (!noWarnFlex) {
+            int selectedValue = JOptionPane.showOptionDialog(this,
+                    rb.getString("Question8r"), Bundle.getMessage("WarningTitle"),
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                        Bundle.getMessage("ButtonNo"),
+                        rb.getString("ButtonYesPlus")},
+                    Bundle.getMessage("ButtonNo"));
+
+            if (selectedValue == 1) {
+                return false;   //return without creating if "No" response
+            }
+
+            if (selectedValue == 2) {
+                //Suppress future warnings, and continue
+                noWarnFlex = true;
+            }
+        }
+
+        //remove from selection information
+        if (selectedObject == o) {
+            selectedObject = null;
+        }
+
+        if (prevSelectedObject == o) {
+            prevSelectedObject = null;
+        }
+
+        //remove connections if any
+        TrackSegment t = (TrackSegment) o.getConnectA();
+        if (t != null) {
+            substituteAnchor(o.getCoordsA(), o, t);
+        }
+
+        t = (TrackSegment) o.getConnectB();
+        if (t != null) {
+            substituteAnchor(o.getCoordsB(), o, t);
+        }
+
+        //decrement block use count if any blocks in use
+        LayoutBlock lb = o.getLayoutBlock();
+
+        if (lb != null) {
+            lb.decrementUse();
+        }
+
+        //delete from array
+        for (int i = 0; i < flexList.size(); i++) {
+            LayoutFlex f = flexList.get(i);
+
+            if (f == o) {
+                //found object
+                flexList.remove(i);
+                o.remove();
+                setDirty(true);
+                repaint();
+
+                return true;
+            }
+        }
+        return false;
+    }   //removeLayoutFlex
+
     boolean noWarnSlip = false;
 
     protected boolean removeLayoutSlip(LayoutTurnout o) {
@@ -9803,77 +9888,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
         repaint();
     }   //removeTrackSegment
-
-    boolean noWarnFlex = false;
-
-    protected boolean removeLayoutFlex(LayoutFlex o) {
-        if (!(o instanceof LayoutFlex)) {
-            return false;
-        }
-
-        //First verify with the user that this is really wanted
-        if (!noWarnFlex) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question8r"), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonYes"),
-                        Bundle.getMessage("ButtonNo"),
-                        rb.getString("ButtonYesPlus")},
-                    Bundle.getMessage("ButtonNo"));
-
-            if (selectedValue == 1) {
-                return false;   //return without creating if "No" response
-            }
-
-            if (selectedValue == 2) {
-                //Suppress future warnings, and continue
-                noWarnFlex = true;
-            }
-        }
-
-        //remove from selection information
-        if (selectedObject == o) {
-            selectedObject = null;
-        }
-
-        if (prevSelectedObject == o) {
-            prevSelectedObject = null;
-        }
-
-        //remove connections if any
-        TrackSegment t = (TrackSegment) o.getConnectA();
-        if (t != null) {
-            substituteAnchor(o.getCoordsA(), o, t);
-        }
-
-        t = (TrackSegment) o.getConnectB();
-        if (t != null) {
-            substituteAnchor(o.getCoordsB(), o, t);
-        }
-
-        //decrement block use count if any blocks in use
-        LayoutBlock lb = o.getLayoutBlock();
-
-        if (lb != null) {
-            lb.decrementUse();
-        }
-
-        //delete from array
-        for (int i = 0; i < flexList.size(); i++) {
-            LayoutFlex f = flexList.get(i);
-
-            if (f == o) {
-                //found object
-                flexList.remove(i);
-                o.remove();
-                setDirty(true);
-                repaint();
-
-                return true;
-            }
-        }
-        return false;
-    }   //removeLayoutFlex
 
     private void disconnect(Object o, int type) {
         if (o == null) {
@@ -10486,6 +10500,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         trackList.clear();
         pointList.clear();
         xingList.clear();
+        flexList.clear();
         slipList.clear();
         turntableList.clear();
 
@@ -11235,6 +11250,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawTurntables(Graphics2D g2) {
         //loop over all defined layout turntables
         for (LayoutTurntable x : turntableList) {
+            //TODO: move to method of LayoutTurntable class
             //draw turntable circle - default track color, side track width
             setTrackStrokeWidth(g2, false);
             Point2D c = x.getCoordsCenter();
@@ -11281,6 +11297,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawXingRects(Graphics2D g2) {
         //loop over all defined level crossings
         for (LevelXing x : xingList) {
+            //TODO: move to method of LevelXing class
             Point2D pt = x.getCoordsCenter();
             g2.setColor(defaultTrackColor);
             g2.draw(controlPointRectAt(pt));
@@ -11341,6 +11358,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawTurntableRects(Graphics2D g2) {
         //loop over all defined turntables
         for (LayoutTurntable x : turntableList) {
+            //TODO: move to method of LayoutTurntable class
             Point2D pt = x.getCoordsCenter();
             g2.setColor(defaultTrackColor);
             g2.draw(controlPointRectAt(pt));

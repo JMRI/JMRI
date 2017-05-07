@@ -1557,7 +1557,7 @@ public class LayoutSlip extends LayoutTurnout {
             g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.controlPointRectAt(pt));
-    }   // public void drawSlipRects(Graphics2D g2)
+    }   // public void drawControlRects(Graphics2D g2)
 
     static class TurnoutState {
 

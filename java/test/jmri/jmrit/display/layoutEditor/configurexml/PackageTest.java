@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
    LayoutBlockManagerXmlTest.class,
    LayoutEditorXmlTest.class,
    LayoutSlipXmlTest.class,
+   LayoutFlexXmlTest.class,
    LayoutTurnoutXmlTest.class,
    LayoutTurntableXmlTest.class,
    LevelXingXmlTest.class,
