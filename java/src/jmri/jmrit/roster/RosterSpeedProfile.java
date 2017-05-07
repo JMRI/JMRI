@@ -55,6 +55,10 @@ public class RosterSpeedProfile {
     public void clearCurrentProfile() {
         speeds = new TreeMap<Integer, SpeedStep>();
     }
+    
+    public void deleteStep(Integer step) {
+        speeds.remove(step);
+    }
 
     /**
      * forward and reverse values are in meters per second
