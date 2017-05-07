@@ -13,7 +13,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.BlockManager;
-import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.Manager;
@@ -469,16 +468,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new WarrantPickModel();
     }
 
-    public static PickListModel conditionalPickModelInstance() {
-        Integer num = _listMap.get("conditional");
-        if (num != null) {
-            _listMap.put("conditional", num + 1);
-        } else {
-            _listMap.put("conditional", 1);
-        }
-        return new ConditionalPickModel();
-    }
-
     public static PickListModel entryExitPickModelInstance() {
         Integer num = _listMap.get("entryExit");
         if (num != null) {
@@ -820,58 +809,6 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         @Override
         public boolean canAddBean() {
             return false;
-        }
-    }
-
-    static class ConditionalPickModel extends PickListModel {
-
-        ConditionalManager manager;
-
-        ConditionalPickModel() {
-            _name = rb.getString("TitleConditionalTable");
-        }
-
-        @Override
-        public Manager getManager() {
-            manager = InstanceManager.getDefault(jmri.ConditionalManager.class);
-            return manager;
-        }
-
-        @Override
-        public NamedBean addBean(String name) {
-            return manager.createNewConditional(name, null);
-        }
-
-        @Override
-        public NamedBean addBean(String sysName, String userName) {
-            return manager.createNewConditional(sysName, userName);
-        }
-
-        @Override
-        public boolean canAddBean() {
-            return false;
-        }
-
-        @Override
-        public JTable makePickTable() {
-            JTable table = super.makePickTable();
-            TableColumn column = new TableColumn(PickListModel.POSITION_COL);
-            column.setResizable(true);
-            column.setMinWidth(100);
-            column.setHeaderValue("Logix");
-            table.addColumn(column);
-            return table;
-        }
-
-        @Override
-        public Object getValueAt(int r, int c) {
-            if (c == POSITION_COL) {
-                jmri.Logix l = manager.getParentLogix(_pickList.get(r).getSystemName());
-                if (l != null) {
-                    return l.getDisplayName();
-                }
-            }
-            return super.getValueAt(r, c);
         }
     }
 
