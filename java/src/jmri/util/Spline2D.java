@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
+/*
  * Interpolates points given in the 2D plane. The resulting spline
  * is a function s: R -> R^2 with parameter t in [0,1].
  *
@@ -20,7 +20,7 @@ import java.util.Arrays;
  */
 public class Spline2D {
 
-  /**
+  /*
    *  Array representing the relative proportion of the total distance
    *  of each point in the line ( i.e. first point is 0.0, end point is
    *  1.0, a point halfway on line is 0.5 ).
@@ -28,12 +28,12 @@ public class Spline2D {
   private double[] t;
   private Spline splineX;
   private Spline splineY;
-  /**
+  /*
    * Total length tracing the points on the spline
    */
   private double length;
 
-  /**
+  /*
    * Creates a new Spline2D.
    * @param points
    */
@@ -49,7 +49,7 @@ public class Spline2D {
     init(x, y);
   }
 
-  /**
+  /*
    * Creates a new Spline2D.
    * @param points
    */
@@ -65,7 +65,7 @@ public class Spline2D {
     init(x, y);
   }
 
-  /**
+  /*
    * Creates a new Spline2D.
    * @param x
    * @param y
@@ -114,7 +114,7 @@ public class Spline2D {
     splineY = new Spline(t, y);
   }
 
-  /**
+  /*
    * @param t 0 <= t <= 1
    */
   public double[] getPoint(double t) {
@@ -125,14 +125,14 @@ public class Spline2D {
     return result;
   }
 
-  /**
+  /*
    * @param t 0 <= t <= 1
    */
   public Point2D getPoint2D(double t) {
     return new Point2D.Double(splineX.getValue(t), splineY.getValue(t));
   }
 
-  /**
+  /*
    * Used to check the correctness of this spline
    */
   public boolean checkValues() {
@@ -164,7 +164,7 @@ public class Spline2D {
 /* This code is PUBLIC DOMAIN */
 
 
-/**
+/*
  * Interpolates given values by B-Splines.
  *
  * @author krueger
@@ -179,10 +179,10 @@ public class Spline2D {
   private double[] c;
   private double[] d;
 
-  /** tracks the last index found since that is mostly commonly the next one used */
+  /* tracks the last index found since that is mostly commonly the next one used */
   private int storageIndex = 0;
 
-  /**
+  /*
    * Creates a new Spline.
    * @param xx
    * @param yy
@@ -191,7 +191,7 @@ public class Spline2D {
     setValues(xx, yy);
   }
 
-  /**
+  /*
    * Set values for this Spline.
    * @param xx
    * @param yy
@@ -204,7 +204,7 @@ public class Spline2D {
     }
   }
 
-  /**
+  /*
    * Returns an interpolated value.
    * @param x
    * @return the interpolated value
@@ -239,7 +239,7 @@ public class Spline2D {
       + d[index] * Math.pow(x - xx[index], 3);
   }
 
-  /**
+  /*
    * Returns an interpolated value. To be used when a long sequence of values
    * are required in order, but ensure checkValues() is called beforehand to
    * ensure the boundary checks from getValue() are made
@@ -270,7 +270,7 @@ public class Spline2D {
           + d[storageIndex] * (value * value * value);
   }
 
-  /**
+  /*
    * Used to check the correctness of this spline
    */
   public boolean checkValues() {
@@ -281,7 +281,7 @@ public class Spline2D {
     }
   }
 
-  /**
+  /*
    * Returns the first derivation at x.
    * @param x
    * @return the first derivation at x
@@ -301,7 +301,7 @@ public class Spline2D {
       + 3 * d[index] * Math.pow(x - xx[index], 2);
   }
 
-  /**
+  /*
    * Calculates the Spline coefficients.
    */
   private void calculateCoefficients() {
@@ -362,7 +362,7 @@ public class Spline2D {
     d[N - 2] = (c[N - 1] - c[N - 2]) / (3 * h[N - 2]);
   }
 
-  /**
+  /*
    * Solves Ax=b and stores the solution in b.
    */
   public void solve(double[][] A, double[] b) {
