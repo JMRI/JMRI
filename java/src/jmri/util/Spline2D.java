@@ -35,7 +35,6 @@ public class Spline2D {
 
   /*
    * Creates a new Spline2D.
-   * @param points
    */
   public Spline2D(Point2D[] points) {
     double[] x = new double[points.length];
@@ -51,7 +50,6 @@ public class Spline2D {
 
   /*
    * Creates a new Spline2D.
-   * @param points
    */
   public Spline2D(ArrayList<Point2D> points) {
     double[] x = new double[points.size()];
@@ -67,8 +65,6 @@ public class Spline2D {
 
   /*
    * Creates a new Spline2D.
-   * @param x
-   * @param y
    */
   public Spline2D(double[] x, double[] y) {
     init(x, y);
@@ -114,9 +110,6 @@ public class Spline2D {
     splineY = new Spline(t, y);
   }
 
-  /*
-   * @param t 0 <= t <= 1
-   */
   public double[] getPoint(double t) {
     double[] result = new double[2];
     result[0] = splineX.getValue(t);
@@ -125,9 +118,6 @@ public class Spline2D {
     return result;
   }
 
-  /*
-   * @param t 0 <= t <= 1
-   */
   public Point2D getPoint2D(double t) {
     return new Point2D.Double(splineX.getValue(t), splineY.getValue(t));
   }
@@ -184,8 +174,6 @@ public class Spline2D {
 
   /*
    * Creates a new Spline.
-   * @param xx
-   * @param yy
    */
   public Spline(double[] xx, double[] yy) {
     setValues(xx, yy);
@@ -193,8 +181,6 @@ public class Spline2D {
 
   /*
    * Set values for this Spline.
-   * @param xx
-   * @param yy
    */
   public void setValues(double[] xx, double[] yy) {
     this.xx = xx;
@@ -206,8 +192,6 @@ public class Spline2D {
 
   /*
    * Returns an interpolated value.
-   * @param x
-   * @return the interpolated value
    */
   public double getValue(double x) {
     if (xx.length == 0) {
@@ -243,8 +227,6 @@ public class Spline2D {
    * Returns an interpolated value. To be used when a long sequence of values
    * are required in order, but ensure checkValues() is called beforehand to
    * ensure the boundary checks from getValue() are made
-   * @param x
-   * @return the interpolated value
    */
   public double getFastValue(double x) {
     // Fast check to see if previous index is still valid
@@ -283,8 +265,6 @@ public class Spline2D {
 
   /*
    * Returns the first derivation at x.
-   * @param x
-   * @return the first derivation at x
    */
   public double getDx(double x) {
     if (xx.length == 0 || xx.length == 1) {
