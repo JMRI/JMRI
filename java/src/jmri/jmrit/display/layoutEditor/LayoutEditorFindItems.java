@@ -568,6 +568,8 @@ public class LayoutEditorFindItems {
                 result = findPositionablePointByName(name);
             } else if (name.startsWith("X")) {
                 result = findLevelXingByName(name);
+            } else if (name.startsWith("F")) {
+                result = findLayoutFlexByName(name);
             } else if (name.startsWith("SL")) {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {
