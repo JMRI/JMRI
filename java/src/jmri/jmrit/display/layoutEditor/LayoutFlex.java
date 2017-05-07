@@ -35,7 +35,6 @@ import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
-import jmri.util.Spline2D;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -397,9 +396,24 @@ public class LayoutFlex extends LayoutTrack {
     // adjust center to midpoint of spline
     // adjust all control points for new center
     private void reCenter() {
-        Spline2D s = new Spline2D(controlPoints);
-        Point2D delta = s.getPoint2D(0.5);
+        Point2D p0 = getCoordsN(0);
+        Point2D p1 = getCoordsN(1);
+        Point2D p2 = getCoordsN(2);
+        Point2D p3 = getCoordsN(3);
 
+        // first order midpoints
+        Point2D q0 = midpoint(p0, p1);
+        Point2D q1 = midpoint(p1, p2);
+        Point2D q2 = midpoint(p2, p3);
+
+        // second order midpoints
+        Point2D r0 = midpoint(q0, q1);
+        Point2D r1 = midpoint(q1, q2);
+
+        // third order midpoint
+        Point2D s = midpoint(r0, r1);
+
+        Point2D delta = subtract(s, center);
         for (int index = 0; index < controlPoints.size(); index++) {
             controlPoints.set(index, subtract(controlPoints.get(index), delta));
         }
