@@ -337,7 +337,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int MULTI_SENSOR = LayoutTrack.MULTI_SENSOR;
     public static final int MARKER = LayoutTrack.MARKER;
     public static final int TRACK_CIRCLE_CENTRE = LayoutTrack.TRACK_CIRCLE_CENTRE;
-    public static final int SLIP_CENTER = LayoutTrack.SLIP_CENTER;  //
+    public static final int SLIP_CENTER = LayoutTrack.SLIP_CENTER;  //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
     public static final int SLIP_A = LayoutTrack.SLIP_A;            //offset for slip connection points
     public static final int SLIP_B = LayoutTrack.SLIP_B;            //offset for slip connection points
     public static final int SLIP_C = LayoutTrack.SLIP_C;            //offset for slip connection points
@@ -4972,52 +4972,44 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     selectedObject = null;
 
                     for (LayoutTurnout t : turnoutList) {
-                        //check the center point
-                        Point2D pt = t.getCoordsCenter();
-                        Double distance = dLoc.distance(pt);
-
-                        if (distance <= circleRadius) {
-                            //mouse was pressed on this turnout
+                        selectedPointType = t.connectionTypeForPoint(dLoc);
+                        if (NONE != selectedPointType) {
                             selectedObject = t;
-                            selectedPointType = LayoutTrack.TURNOUT_CENTER;
+                            //log.info("Mouse was clicked on turnout control circle of turnout " + t.getID());
                             break;
                         }
                     }
 
-                    for (LayoutSlip sl : slipList) {
-                        //check east/west turnout (control) circles?
-                        Point2D pt = sl.getCoordsCenter();
-
-                        Point2D leftCenter = midpoint(sl.getCoordsA(), sl.getCoordsB());
-                        Double leftFract = circleRadius / pt.distance(leftCenter);
-                        Point2D leftCircleCenter = lerp(pt, leftCenter, leftFract);
-                        Double leftDistance = dLoc.distance(leftCircleCenter);
-
-                        Point2D rightCenter = midpoint(sl.getCoordsC(), sl.getCoordsD());
-                        Double rightFract = circleRadius / pt.distance(rightCenter);
-                        Point2D rightCircleCenter = lerp(pt, rightCenter, rightFract);
-                        Double rightDistance = dLoc.distance(rightCircleCenter);
-
-                        if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
-                            //mouse was pressed on this turnout
-                            selectedObject = sl;
-                            selectedPointType = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
-                            break;
+                    if (null == selectedObject) {
+                        for (LayoutSlip sl : slipList) {
+                            selectedPointType = sl.connectionTypeForPoint(dLoc);
+                            if (NONE != selectedPointType) {
+                                selectedObject = sl;
+                                //if (SLIP_LEFT == selectedPointType) {
+                                //    log.info("Mouse was clicked on left turnout control circle of slip " + sl.getID());
+                                //}
+                                //if (SLIP_RIGHT == selectedPointType) {
+                                //    log.info("Mouse was clicked on right turnout control circle of slip " + sl.getID());
+                                //}
+                                break;
+                            }
                         }
                     }
 
-                    for (LayoutTurntable x : turntableList) {
-                        for (int k = 0; k < x.getNumberRays(); k++) {
-                            if (x.getRayConnectOrdered(k) != null) {
-                                //check the A connection point
-                                Point2D pt = x.getRayCoordsOrdered(k);
-                                Rectangle2D r = controlPointRectAt(pt);
+                    if (null == selectedObject) {
+                        for (LayoutTurntable x : turntableList) {
+                            for (int k = 0; k < x.getNumberRays(); k++) {
+                                if (x.getRayConnectOrdered(k) != null) {
+                                    //check the A connection point
+                                    Point2D pt = x.getRayCoordsOrdered(k);
+                                    Rectangle2D r = controlPointRectAt(pt);
 
-                                if (r.contains(dLoc)) {
-                                    //mouse was pressed on this connection point
-                                    selectedObject = x;
-                                    selectedPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
-                                    break;
+                                    if (r.contains(dLoc)) {
+                                        //mouse was pressed on this connection point
+                                        selectedObject = x;
+                                        selectedPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -5040,58 +5032,44 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             selectedObject = null;
 
             for (LayoutTurnout t : turnoutList) {
-                Point2D pt = t.getCoordsCenter();
-                Rectangle2D r = turnoutCircleRectAt(pt);
-
-                if (r.contains(dLoc)) {
-                    //mouse was pressed on this turnout
+                selectedPointType = t.connectionTypeForPoint(dLoc, true);
+                if (NONE != selectedPointType) {
                     selectedObject = t;
-                    selectedPointType = LayoutTrack.TURNOUT_CENTER;
+                    //log.info("Mouse was clicked on control rectangle of turnout " + t.getID());
                     break;
                 }
             }
 
-            for (LayoutSlip sl : slipList) {
-                //check east/west turnout (control) circles?
-                Point2D pt = sl.getCoordsCenter();
-
-                Point2D leftCenter = midpoint(sl.getCoordsA(), sl.getCoordsB());
-                Double leftFract = circleRadius / pt.distance(leftCenter);
-                Point2D leftCircleCenter = lerp(pt, leftCenter, leftFract);
-                Rectangle2D leftRectangle = turnoutCircleRectAt(leftCircleCenter);
-
-                if (leftRectangle.contains(dLoc)) {
-                    //mouse was pressed on this turnout
-                    selectedObject = sl;
-                    selectedPointType = LayoutTrack.SLIP_LEFT;
-                    break;
-                }
-
-                Point2D rightCenter = midpoint(sl.getCoordsC(), sl.getCoordsD());
-                Double rightFract = circleRadius / pt.distance(rightCenter);
-                Point2D rightCircleCenter = lerp(pt, rightCenter, rightFract);
-                Rectangle2D rightRectangle = turnoutCircleRectAt(rightCircleCenter);
-
-                if (rightRectangle.contains(dLoc)) {
-                    //mouse was pressed on this turnout
-                    selectedObject = sl;
-                    selectedPointType = LayoutTrack.SLIP_RIGHT;
-                    break;
+            if (null == selectedObject) {
+                for (LayoutSlip sl : slipList) {
+                    selectedPointType = sl.connectionTypeForPoint(dLoc, true);
+                    if (NONE != selectedPointType) {
+                        selectedObject = sl;
+                        //if (SLIP_LEFT == selectedPointType) {
+                        //    log.info("Mouse was clicked on left turnout control rectangle of slip " + sl.getID());
+                        //}
+                        //if (SLIP_RIGHT == selectedPointType) {
+                        //    log.info("Mouse was clicked on right turnout control rectangle of slip " + sl.getID());
+                        //}
+                        break;
+                    }
                 }
             }
 
-            for (LayoutTurntable x : turntableList) {
-                for (int k = 0; k < x.getNumberRays(); k++) {
-                    if (x.getRayConnectOrdered(k) != null) {
-                        //check the A connection point
-                        Point2D pt = x.getRayCoordsOrdered(k);
-                        Rectangle2D r = controlPointRectAt(pt);
+            if (null == selectedObject) {
+                for (LayoutTurntable x : turntableList) {
+                    for (int k = 0; k < x.getNumberRays(); k++) {
+                        if (x.getRayConnectOrdered(k) != null) {
+                            //check the A connection point
+                            Point2D pt = x.getRayCoordsOrdered(k);
+                            Rectangle2D r = controlPointRectAt(pt);
 
-                        if (r.contains(dLoc)) {
-                            //mouse was pressed on this connection point
-                            selectedObject = x;
-                            selectedPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
-                            break;
+                            if (r.contains(dLoc)) {
+                                //mouse was pressed on this connection point
+                                selectedObject = x;
+                                selectedPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
+                                break;
+                            }
                         }
                     }
                 }
@@ -5845,8 +5823,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //controlling layout, in edit mode
                 LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.toggleTurnout();
-            } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_CENTER) ||
-                                                    (selectedPointType == LayoutTrack.SLIP_LEFT) ||
+            } else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT) ||
                                                     (selectedPointType == LayoutTrack.SLIP_RIGHT)) &&
                        allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) &&
                        (!event.isShiftDown()) && (!event.isControlDown())) {
@@ -5895,8 +5872,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 t.toggleTurnout();
             }
         }   //check if controlling turnouts out of edit mode
-        else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_CENTER) ||
-                                              (selectedPointType == LayoutTrack.SLIP_LEFT) ||
+        else if ((selectedObject != null) && ((selectedPointType == LayoutTrack.SLIP_LEFT) ||
                                               (selectedPointType == LayoutTrack.SLIP_RIGHT)) &&
                  allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) &&
                  (!event.isShiftDown()) && (!delayedPopupTrigger)) {
@@ -5933,7 +5909,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             break;
                         }
 
-                        case LayoutTrack.SLIP_CENTER:
                         case LayoutTrack.SLIP_RIGHT:
                         case LayoutTrack.SLIP_LEFT: {
                             ((LayoutSlip) foundObject).showPopUp(event, isEditable());
@@ -6012,7 +5987,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
 
-                case LayoutTrack.SLIP_CENTER:
                 case LayoutTrack.SLIP_LEFT:
                 case LayoutTrack.SLIP_RIGHT: {
                     ((LayoutSlip) foundObject).showPopUp(event, isEditable());
@@ -6229,7 +6203,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         break;
                     }
 
-                    case LayoutTrack.SLIP_CENTER:
                     case LayoutTrack.SLIP_LEFT:
                     case LayoutTrack.SLIP_RIGHT: {
                         amendSelectionGroup((LayoutSlip) foundObject);
@@ -8043,7 +8016,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             break;
                         }
 
-                        case LayoutTrack.SLIP_CENTER:
                         case LayoutTrack.SLIP_LEFT:
                         case LayoutTrack.SLIP_RIGHT: {
                             ((LayoutSlip) selectedObject).setCoordsCenter(newPos);

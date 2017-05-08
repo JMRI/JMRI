@@ -152,8 +152,11 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
             warrant.controlRunTrain(Warrant.RESUME);
         });
         
-        flushAWT();
-        flushAWT();   // let calm down before running warrant
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.endsWith("Cmd #7.");
+        }, "Train starts to move at 7th command");
+        
         // OBlock sensor names
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
         block = _OBlockMgr.getOBlock("OB10");
