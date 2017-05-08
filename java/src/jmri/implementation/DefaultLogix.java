@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
-        implements Logix, java.io.Serializable {
+        implements Logix {
 
     public DefaultLogix(String systemName, String userName) {
         super(systemName, userName);

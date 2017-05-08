@@ -39,7 +39,6 @@ public class DefaultSignalGroupManagerXml
         for (int i = 0; i < names.size(); i++) {
             Element e = new Element("signalgroup");
             SignalGroup p = m.getSignalGroup(names.get(i));
-            e.setAttribute("systemName", p.getSystemName()); // deprecated for 2.9.* series
             e.addContent(new Element("systemName").addContent(p.getSystemName()));
             e.setAttribute("userName", p.getUserName());
             //storeCommon(p, e); would store comment, now a separate element
