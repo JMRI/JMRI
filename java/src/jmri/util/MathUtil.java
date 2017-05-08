@@ -1,5 +1,7 @@
 package jmri.util;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import javax.annotation.CheckReturnValue;
 
@@ -144,5 +146,57 @@ public final class MathUtil {
     // pin a value between min & max
     public static double pin(double inValue, double inMin, double inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
+    }
+
+    
+    // recursive routine to draw a cubic Bezier…
+    // (also returns length!)
+    private static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3, int depth) {
+        double result = 0;
+        
+        // calculate flatness to determine if we need to recurse…
+        double l01 = length(p0, p1);
+        double l12 = length(p1, p2);
+        double l23 = length(p2, p3);
+        double l03 = length(p0, p3);
+        double flatness = (l01 + l12 + l23) / l03;
+        
+        // depth prevents stack overflow… 
+        // (I picked 12 because 2^12 = 2048… is larger than most monitors ;-)
+        // the flatness comparison value is somewhat arbitrary.
+        // (I just kept moving it closer to 1 until I got good results. ;-)
+        if ((depth > 12) || (flatness <= 1.001)) {
+            g2.draw(new Line2D.Double(p0, p3));
+            result = l03;
+        } else {
+            // first order midpoints
+            Point2D q0 = midpoint(p0, p1);
+            Point2D q1 = midpoint(p1, p2);
+            Point2D q2 = midpoint(p2, p3);
+            
+            // second order midpoints
+            Point2D r0 = midpoint(q0, q1);
+            Point2D r1 = midpoint(q1, q2);
+
+            // third order midpoint
+            Point2D s = midpoint(r0, r1);
+            
+            // draw left side Bezier
+            result = drawBezier(g2, p0, q0, r0, s, depth + 1);
+            // draw right side Bezier
+            result += drawBezier(g2, s, r1, q2, p3, depth + 1);
+        }
+        return result;
+    }
+
+    /**
+     * Draw a cubic Bezier curve
+     * @param g2 the Graphics2D to draw to
+     * @param p0-p3 the Control points
+     * @return  the length of the Bezier curve
+     */
+    
+    public static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
+        return drawBezier(g2, p0, p1, p2, p3, 0);
     }
 }

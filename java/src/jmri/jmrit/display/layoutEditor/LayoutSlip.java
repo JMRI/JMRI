@@ -531,7 +531,7 @@ public class LayoutSlip extends LayoutTurnout {
         // those locations are in that rect instead of creating rects
         // for all those locations… Just saying… ;-)
         //
-        // Rectangle2D pointRect = layoutEditor.turnoutCircleRectAt(p);
+        // Rectangle2D pointRect = layoutEditor.trackControlCircleRectAt(p);
         // calculate radius of turnout control circle
         double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
@@ -543,12 +543,12 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (useRectangles) {
             // calculate turnout's left control rectangle
-            Rectangle2D leftRectangle = layoutEditor.turnoutCircleRectAt(leftCenter);
+            Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
             if (leftRectangle.contains(p)) {
                 //point is in this turnout's left control rectangle
                 result = SLIP_LEFT;
             }
-            Rectangle2D rightRectangle = layoutEditor.turnoutCircleRectAt(rightCenter);
+            Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
             if (rightRectangle.contains(p)) {
                 //point is in this turnout's right control rectangle
                 result = SLIP_RIGHT;
@@ -569,7 +569,7 @@ public class LayoutSlip extends LayoutTurnout {
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
                 Point2D pt = getCoordsA();
-                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
 
                 if (r.contains(p)) {
                     result = LayoutTrack.SLIP_A;
@@ -579,7 +579,7 @@ public class LayoutSlip extends LayoutTurnout {
             if (!requireUnconnected || (getConnectB() == null)) {
                 //check the B connection point
                 Point2D pt = getCoordsB();
-                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
 
                 if (r.contains(p)) {
                     result = LayoutTrack.SLIP_B;
@@ -589,7 +589,7 @@ public class LayoutSlip extends LayoutTurnout {
             if (!requireUnconnected || (getConnectC() == null)) {
                 //check the C connection point
                 Point2D pt = getCoordsC();
-                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
 
                 if (r.contains(p)) {
                     result = LayoutTrack.SLIP_C;
@@ -599,7 +599,7 @@ public class LayoutSlip extends LayoutTurnout {
             if (!requireUnconnected || (getConnectD() == null)) {
                 //check the D connection point
                 Point2D pt = getCoordsD();
-                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
 
                 if (r.contains(p)) {
                     result = LayoutTrack.SLIP_D;
@@ -1512,19 +1512,19 @@ public class LayoutSlip extends LayoutTurnout {
 
     public void drawSlipCircles(Graphics2D g2) {
         Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_LEFT);
-        g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
+        g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
 
         Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_RIGHT);
-        g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
+        g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
     }
 
     public void drawControlRects(Graphics2D g2) {
         // draw east/west turnout control circles
         Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_LEFT);
-        g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
+        g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
 
         Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_RIGHT);
-        g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
+        g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
 
         Point2D pt = getCoordsA();
         if (getConnectA() == null) {
@@ -1532,7 +1532,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -1540,7 +1540,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -1548,7 +1548,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
 
         pt = getCoordsD();
         if (getConnectD() == null) {
@@ -1556,7 +1556,7 @@ public class LayoutSlip extends LayoutTurnout {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
     }   // public void drawControlRects(Graphics2D g2)
 
     static class TurnoutState {

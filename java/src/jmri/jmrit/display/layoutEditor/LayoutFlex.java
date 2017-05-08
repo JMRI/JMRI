@@ -292,7 +292,7 @@ public class LayoutFlex extends LayoutTrack {
      */
     public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
-        Rectangle2D r = layoutEditor.turnoutCircleRectAt(p);
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
 
         if (useRectangles) {
 
@@ -808,7 +808,7 @@ public class LayoutFlex extends LayoutTrack {
         // set track width for block
         layoutEditor.setTrackStrokeWidth(g2, isMainline());
 
-        drawBezier(g2, getCoordsN(0), getCoordsN(1), getCoordsN(2), getCoordsN(3), 0);
+        drawBezier(g2, getCoordsN(0), getCoordsN(1), getCoordsN(2), getCoordsN(3));
     }   // draw(Graphics2D g2)
 
     // recursive routine to draw a cubic Bezier…
@@ -851,6 +851,10 @@ public class LayoutFlex extends LayoutTrack {
         return result;
     }
     
+    private double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
+        return drawBezier(g2, p0, p1, p2, p3, 0);
+    }
+
     public void drawControlRects(Graphics2D g2) {
         g2.setColor(Color.black);
         g2.draw(new Ellipse2D.Double(center.getX() - controlPointSize2, center.getY() - controlPointSize2,
@@ -875,7 +879,7 @@ public class LayoutFlex extends LayoutTrack {
             } else if (1 == index) {
                 g2.setColor(Color.black);
             }
-            g2.draw(layoutEditor.controlPointRectAt(p));
+            g2.draw(layoutEditor.trackControlPointRectAt(p));
         }
     }   // public void drawControlRects(Graphics2D g2)
 

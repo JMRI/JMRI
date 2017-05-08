@@ -1586,7 +1586,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (useRectangles) {
             // calculate points control rectangle
-            Rectangle2D r = layoutEditor.turnoutCircleRectAt(p);
+            Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
 
             if (!requireUnconnected) {
                 if (r.contains(center)) {
@@ -3908,7 +3908,7 @@ public class LayoutTurnout extends LayoutTrack {
     }   // draw(Graphics2D g2)
 
     public void drawTurnoutCircle(Graphics2D g2) {
-        g2.draw(layoutEditor.turnoutCircleAt(center));
+        g2.draw(layoutEditor.trackControlCircleAt(center));
     }
 
     public void drawTurnoutRect(Graphics2D g2) {
@@ -3928,7 +3928,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -3936,7 +3936,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -3944,7 +3944,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.controlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
         if ((type == DOUBLE_XOVER)
                 || (type == RH_XOVER)
                 || (type == LH_XOVER)) {
@@ -3954,7 +3954,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(layoutEditor.controlPointRectAt(pt));
+            g2.draw(layoutEditor.trackControlPointRectAt(pt));
         }
     }
 

@@ -5044,7 +5044,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 if (x.getRayConnectOrdered(k) != null) {
                                     //check the A connection point
                                     Point2D pt = x.getRayCoordsOrdered(k);
-                                    Rectangle2D r = controlPointRectAt(pt);
+                                    Rectangle2D r = trackControlPointRectAt(pt);
 
                                     if (r.contains(dLoc)) {
                                         //mouse was pressed on this connection point
@@ -5097,7 +5097,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         if (x.getRayConnectOrdered(k) != null) {
                             //check the A connection point
                             Point2D pt = x.getRayCoordsOrdered(k);
-                            Rectangle2D r = controlPointRectAt(pt);
+                            Rectangle2D r = trackControlPointRectAt(pt);
 
                             if (r.contains(dLoc)) {
                                 //mouse was pressed on this connection point
@@ -5153,7 +5153,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || ((p.getType() == PositionablePoint.ANCHOR)
                         && (p.getConnect2() == null))) {
                     Point2D pt = p.getCoords();
-                    Rectangle2D r = controlPointRectAt(pt);
+                    Rectangle2D r = trackControlPointRectAt(pt);
 
                     if (r.contains(loc)) {
                         //mouse was pressed on this connection point
@@ -5195,7 +5195,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected) {
                     //check the center point
                     Point2D pt = x.getCoordsCenter();
-                    Rectangle2D r = turnoutCircleRectAt(pt);
+                    Rectangle2D r = trackControlCircleRectAt(pt);
 
                     if (r.contains(loc)) {
                         //mouse was pressed on this connection point
@@ -5210,7 +5210,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectA() == null)) {
                     //check the A connection point
                     Point2D pt = x.getCoordsA();
-                    Rectangle2D r = controlPointRectAt(pt);
+                    Rectangle2D r = trackControlPointRectAt(pt);
 
                     if (r.contains(loc)) {
                         //mouse was pressed on this connection point
@@ -5225,7 +5225,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectB() == null)) {
                     //check the B connection point
                     Point2D pt = x.getCoordsB();
-                    Rectangle2D r = controlPointRectAt(pt);
+                    Rectangle2D r = trackControlPointRectAt(pt);
 
                     if (r.contains(loc)) {
                         //mouse was pressed on this connection point
@@ -5240,7 +5240,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectC() == null)) {
                     //check the C connection point
                     Point2D pt = x.getCoordsC();
-                    Rectangle2D r = controlPointRectAt(pt);
+                    Rectangle2D r = trackControlPointRectAt(pt);
 
                     if (r.contains(loc)) {
                         //mouse was pressed on this connection point
@@ -5255,7 +5255,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected || (x.getConnectD() == null)) {
                     //check the D connection point
                     Point2D pt = x.getCoordsD();
-                    Rectangle2D r = controlPointRectAt(pt);
+                    Rectangle2D r = trackControlPointRectAt(pt);
 
                     if (r.contains(loc)) {
                         //mouse was pressed on this connection point
@@ -5318,7 +5318,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (!requireUnconnected) {
                     //check the center point
                     Point2D pt = x.getCoordsCenter();
-                    Rectangle2D r = turnoutCircleRectAt(pt);
+                    Rectangle2D r = trackControlCircleRectAt(pt);
 
                     if (r.contains(loc)) {
                         //mouse was pressed on this center point
@@ -5333,7 +5333,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 for (int k = 0; k < x.getNumberRays(); k++) {
                     if (!requireUnconnected || (x.getRayConnectOrdered(k) == null)) {
                         Point2D pt = x.getRayCoordsOrdered(k);
-                        Rectangle2D r = controlPointRectAt(pt);
+                        Rectangle2D r = trackControlPointRectAt(pt);
 
                         if (r.contains(loc)) {
                             //mouse was pressed on this connection point
@@ -5352,7 +5352,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (TrackSegment t : trackList) {
             if (t.getCircle()) {
                 Point2D pt = t.getCoordsCenterCircle();
-                Rectangle2D r = controlPointRectAt(pt);
+                Rectangle2D r = trackControlPointRectAt(pt);
 
                 if (r.contains(loc)) {
                     //mouse was pressed on this connection point
@@ -5378,7 +5378,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             int type = tr.getType1();
 
             if (tr.getCircle()) {
-                Rectangle2D r = turnoutCircleRectAt(
+                Rectangle2D r = trackControlCircleRectAt(
                         new Point2D.Double(tr.getCentreSegX(), tr.getCentreSegY()));
 
                 //Test this detection rectangle
@@ -5387,17 +5387,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             } else {
                 //get coordinates of first end point
-                Point2D pt1 = getEndCoords(o, type);
+                Point2D pt1 = getCoords(o, type);
                 o = tr.getConnect2();
                 type = tr.getType2();
 
                 //get coordinates of second end point
-                Point2D pt2 = getEndCoords(o, type);
+                Point2D pt2 = getCoords(o, type);
 
                 //construct a detection rectangle
                 double cX = (pt1.getX() + pt2.getX()) / 2.0D;
                 double cY = (pt1.getY() + pt2.getY()) / 2.0D;
-                Rectangle2D r = turnoutCircleRectAt(new Point2D.Double(cX, cY));
+                Rectangle2D r = trackControlCircleRectAt(new Point2D.Double(cX, cY));
 
                 //Test this detection rectangle
                 if (r.contains(loc)) {
@@ -5583,7 +5583,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return null;
     }   //checkMarkers
 
-    public Point2D getEndCoords(Object o, int type) {
+    public Point2D getCoords(Object o, int type) {
         if (o != null) {
             switch (type) {
                 case LayoutTrack.POS_POINT: {
@@ -5622,6 +5622,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     return ((LevelXing) o).getCoordsD();
                 }
 
+                case LayoutTrack.FLEX_A: {
+                    return ((LayoutFlex) o).getCoordsA();
+                }
+
+                case LayoutTrack.FLEX_B: {
+                    return ((LayoutFlex) o).getCoordsB();
+                }
+
                 case LayoutTrack.SLIP_A: {
                     return ((LayoutSlip) o).getCoordsA();
                 }
@@ -5638,14 +5646,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     return ((LayoutSlip) o).getCoordsD();
                 }
 
-                case LayoutTrack.FLEX_A: {
-                    return ((LayoutFlex) o).getCoordsA();
-                }
-
-                case LayoutTrack.FLEX_B: {
-                    return ((LayoutFlex) o).getCoordsB();
-                }
-
                 default:
                     if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                         return ((LayoutTurntable) o).getRayCoordsIndexed(type - LayoutTrack.TURNTABLE_RAY_OFFSET);
@@ -5653,9 +5653,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         return ((LayoutFlex) o).getCoordsN(type - LayoutTrack.FLEX_CONTROL_POINT_OFFSET);
                     }
             }   //switch
+        } else {
+            log.error("Null connection point of type " + type + " " + getLayoutName());
         }
         return new Point2D.Double(0.0, 0.0);
-    }   //getEndCoords
+    }   //getCoords
 
     @Override
     public void mouseReleased(MouseEvent event) {
@@ -7101,7 +7103,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || (ttype == LayoutTurnout.LH_XOVER)
                         || (ttype == LayoutTurnout.RH_XOVER))) {
                     TurnoutSelection ts = entry.getValue();
-                    Rectangle2D r = controlPointRectAt(dLoc);
+                    Rectangle2D r = trackControlPointRectAt(dLoc);
 
                     if (ts.getPointA()) {
                         if (r.contains(t.getCoordsA())) {
@@ -7148,7 +7150,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if ((p.getVersion() == 2) && ((p.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                     || (p.getTurnoutType() == LayoutTurnout.LH_XOVER)
                     || (p.getTurnoutType() == LayoutTurnout.RH_XOVER))) {
-                Rectangle2D r = controlPointRectAt(dLoc);
+                Rectangle2D r = trackControlPointRectAt(dLoc);
 
                 if (r.contains(p.getCoordsA())) {
                     TurnoutSelection ts;
@@ -11095,7 +11097,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //these are convenience methods to return rectangles
     //to do point-in-rect (hit) testing
     //compute the control point rect at inPoint
-    public Rectangle2D controlPointRectAt(Point2D inPoint) {
+    public Rectangle2D trackControlPointRectAt(Point2D inPoint) {
         return new Rectangle2D.Double(
                 inPoint.getX() - LayoutTrack.controlPointSize,
                 inPoint.getY() - LayoutTrack.controlPointSize,
@@ -11103,13 +11105,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //controlPointRectAt
 
     //compute the turnout circle rect at inPoint
-    public Rectangle2D turnoutCircleRectAt(Point2D inPoint) {
+    public Rectangle2D trackControlCircleRectAt(Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - circleRadius,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
-    public Ellipse2D turnoutCircleAt(Point2D inPoint) {
+    public Ellipse2D trackControlCircleAt(Point2D inPoint) {
         return new Ellipse2D.Double(inPoint.getX() - circleRadius,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
@@ -11184,6 +11186,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return trackWidth;
     }   //setTrackStrokeWidth
 
+    //TODO: Move all track specific drawing code into LayoutTrack subclasses
     protected void drawTurnouts(Graphics2D g2) {
         //loop over all defined turnouts
         for (LayoutTurnout t : turnoutList) {
@@ -11300,7 +11303,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //TODO: move to method of LevelXing class
             Point2D pt = x.getCoordsCenter();
             g2.setColor(defaultTrackColor);
-            g2.draw(controlPointRectAt(pt));
+            g2.draw(trackControlPointRectAt(pt));
             pt = x.getCoordsA();
 
             if (x.getConnectA() == null) {
@@ -11308,7 +11311,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.setColor(Color.blue);
             }
-            g2.draw(controlPointRectAt(pt));
+            g2.draw(trackControlPointRectAt(pt));
             pt = x.getCoordsB();
 
             if (x.getConnectB() == null) {
@@ -11316,7 +11319,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(controlPointRectAt(pt));
+            g2.draw(trackControlPointRectAt(pt));
             pt = x.getCoordsC();
 
             if (x.getConnectC() == null) {
@@ -11324,7 +11327,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.setColor(Color.blue);
             }
-            g2.draw(controlPointRectAt(pt));
+            g2.draw(trackControlPointRectAt(pt));
             pt = x.getCoordsD();
 
             if (x.getConnectD() == null) {
@@ -11332,7 +11335,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(controlPointRectAt(pt));
+            g2.draw(trackControlPointRectAt(pt));
         }
     }   //drawXingRects
 
@@ -11361,7 +11364,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             //TODO: move to method of LayoutTurntable class
             Point2D pt = x.getCoordsCenter();
             g2.setColor(defaultTrackColor);
-            g2.draw(controlPointRectAt(pt));
+            g2.draw(trackControlPointRectAt(pt));
 
             for (int j = 0; j < x.getNumberRays(); j++) {
                 pt = x.getRayCoordsOrdered(j);
@@ -11371,16 +11374,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 } else {
                     g2.setColor(Color.green);
                 }
-                g2.draw(controlPointRectAt(pt));
+                g2.draw(trackControlPointRectAt(pt));
             }
         }
     }   //drawTurntableRects
 
     private void drawHiddenTrack(Graphics2D g2) {
-        for (TrackSegment t : trackList) {
-            if (isEditable() && t.isHidden()) {
-                t.draw(g2);
-                setTrackStrokeWidth(g2, !main);
+        if (isEditable()) {
+            for (TrackSegment t : trackList) {
+                if (t.isHidden()) {
+                    t.draw(g2);
+                    setTrackStrokeWidth(g2, !main);
+                }
             }
         }
     }   //drawHiddenTrack
@@ -11395,10 +11400,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawSolidTrack(Graphics2D g2, boolean isMainline) {
         for (TrackSegment t : trackList) {
             setTrackStrokeWidth(g2, isMainline);
-
-            if ((!t.isHidden()) && (!t.getDashed()) && (isMainline == t.getMainline())) {
-                t.drawSolid(g2, isMainline);
-            }
+            t.drawSolid(g2, isMainline);
         }
     }   //drawSolidTrack
 
@@ -11413,7 +11415,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             if (t.getCircle() && t.showConstructionLinesLE()) {
                 Point2D pt = t.getCoordsCenterCircle();
-                g2.draw(turnoutCircleRectAt(pt));
+                g2.draw(trackControlCircleRectAt(pt));
             }
         }
     }   //drawTrackCircleCentre
@@ -11437,46 +11439,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawTrackOvals
 
     private void drawPoints(Graphics2D g2) {
-        for (PositionablePoint p : pointList) {
-            switch (p.getType()) {
-                case PositionablePoint.ANCHOR: {
-                    //nothing to draw unless in edit mode
-                    if (isEditable()) {
-                        //in edit mode, draw locater rectangle
-                        Point2D pt = p.getCoords();
-
-                        if ((p.getConnect1() == null) || (p.getConnect2() == null)) {
-                            g2.setColor(Color.red);
-                        } else {
-                            g2.setColor(Color.green);
-                        }
-                        g2.draw(controlPointRectAt(pt));
-                    }
-                    break;
-                }
-
-                case PositionablePoint.END_BUMPER: {
-                    //nothing to draw unless in edit mode
-                    if (isEditable()) {
-                        //in edit mode, draw locater rectangle
-                        Point2D pt = p.getCoords();
-
-                        if (p.getConnect1() == null) {
-                            g2.setColor(Color.red);
-                        } else {
-                            g2.setColor(Color.green);
-                        }
-                        g2.draw(controlPointRectAt(pt));
-                    }
-                    break;
-                }
-
-                case PositionablePoint.EDGE_CONNECTOR: {
-                    //nothing to draw unless in edit mode
-                    if (isEditable()) {
-                        //in edit mode, draw locater rectangle
-                        Point2D pt = p.getCoords();
-
+        //nothing to draw unless in edit mode
+        if (isEditable()) {
+            for (PositionablePoint p : pointList) {
+                switch (p.getType()) {
+                    case PositionablePoint.ANCHOR:
+                    case PositionablePoint.EDGE_CONNECTOR: {
                         if (p.getConnect1() == null) {
                             g2.setColor(Color.red);
                         } else if (p.getConnect2() == null) {
@@ -11484,15 +11452,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         } else {
                             g2.setColor(Color.green);
                         }
-                        g2.draw(controlPointRectAt(pt));
+                        break;
                     }
-                    break;
-                }
-
-                default:
-                    log.error("Illegal type of Positionable Point");
-            }   //switch
-        }
+                    case PositionablePoint.END_BUMPER: {
+                        if (p.getConnect1() == null) {
+                            g2.setColor(Color.red);
+                        } else {
+                            g2.setColor(Color.green);
+                        }
+                        break;
+                    }
+                    default: {
+                        log.error("Illegal type of Positionable Point");
+                        break;
+                    }
+                }   //switch
+                // draw locater rectangle
+                Point2D pt = p.getCoords();
+                g2.draw(trackControlPointRectAt(pt));
+            }   // for (PositionablePoint p : pointList)
+         }
     }   //drawPoints
 
     private void drawSelectionRect(Graphics2D g2) {
@@ -11571,83 +11550,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             pix += gridSize;
         }
     }   //drawPanelGrid
-
-    protected Point2D getCoords(Object o, int type) {
-        if (o != null) {
-            switch (type) {
-                case LayoutTrack.POS_POINT: {
-                    return ((PositionablePoint) o).getCoords();
-                }
-
-                case LayoutTrack.TURNOUT_A: {
-                    return ((LayoutTurnout) o).getCoordsA();
-                }
-
-                case LayoutTrack.TURNOUT_B: {
-                    return ((LayoutTurnout) o).getCoordsB();
-                }
-
-                case LayoutTrack.TURNOUT_C: {
-                    return ((LayoutTurnout) o).getCoordsC();
-                }
-
-                case LayoutTrack.TURNOUT_D: {
-                    return ((LayoutTurnout) o).getCoordsD();
-                }
-
-                case LayoutTrack.LEVEL_XING_A: {
-                    return ((LevelXing) o).getCoordsA();
-                }
-
-                case LayoutTrack.LEVEL_XING_B: {
-                    return ((LevelXing) o).getCoordsB();
-                }
-
-                case LayoutTrack.LEVEL_XING_C: {
-                    return ((LevelXing) o).getCoordsC();
-                }
-
-                case LayoutTrack.LEVEL_XING_D: {
-                    return ((LevelXing) o).getCoordsD();
-                }
-
-                case LayoutTrack.FLEX_A: {
-                    return ((LayoutFlex) o).getCoordsA();
-                }
-
-                case LayoutTrack.FLEX_B: {
-                    return ((LayoutFlex) o).getCoordsB();
-                }
-
-                case LayoutTrack.SLIP_A: {
-                    return ((LayoutSlip) o).getCoordsA();
-                }
-
-                case LayoutTrack.SLIP_B: {
-                    return ((LayoutSlip) o).getCoordsB();
-                }
-
-                case LayoutTrack.SLIP_C: {
-                    return ((LayoutSlip) o).getCoordsC();
-                }
-
-                case LayoutTrack.SLIP_D: {
-                    return ((LayoutSlip) o).getCoordsD();
-                }
-
-                default:
-                    if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
-                        return ((LayoutTurntable) o).getRayCoordsIndexed(type - LayoutTrack.TURNTABLE_RAY_OFFSET);
-                    } else if (type >= LayoutTrack.FLEX_CONTROL_POINT_OFFSET) {
-                        int index = type - LayoutTrack.FLEX_CONTROL_POINT_OFFSET;
-                        return ((LayoutFlex) o).getCoordsN(index);
-                    }
-            }   //switch
-        } else {
-            log.error("Null connection point of type " + type + " " + getLayoutName());
-        }
-        return new Point2D.Double(0.0, 0.0);
-    }   //getCoords
 
     @Override
     protected boolean showAlignPopup(Positionable l) {
