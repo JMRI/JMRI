@@ -13,9 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="ronald@wirkuhns.de" version="1.9" lastUpdated="2016/5/12"/>
-  <!-- add/update translations to german -->
-  <version author="ncliffe@btinternet.com" version="1.8" lastUpdated="2011/11/30"/>
+  <version author="Nigel Cliffe" version="1.10" lastUpdated="2017/5/01"/>
+    
   <!-- previous version credit:                        -->
   <!--         <version author="peter.brandenburg@t-online.de"   -->
   <!--            version="1" lastUpdated="2006/11/20"/>      -->
@@ -34,6 +33,8 @@
   <!--    and upper limit used by CT is not known  -->
   <!-- Version 1.9, Nigel Cliffe, 2013/05/14 -->
   <!--    added DCX76 series decoders -->
+  <!-- Version 1.10, Nigel Cliffe, 2017/05/01 -->
+  <!--    added DCX77 series decoders -->
   <decoder>
     <family name="DCX Series (v.66 and higher)" mfg="CT Elektronik" lowVersionID="66" comment="DCX74, DCX75, with variants">
       <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
@@ -105,6 +106,43 @@
         </output>
         <output name="2" label="Yellow">
           <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="3" label="Pad F1"/>
+        <output name="4" label="Pad F2"/>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
+      </model>
+	  <model model="DCX77z" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiß</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="3" label="Pad F1"/>
+        <output name="4" label="Pad F2"/>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
+      </model>
+	  <model model="DCX77L" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+        <output name="1" label="White">
+          <label xml:lang="de">Weiß</label>
+        </output>
+        <output name="2" label="Yellow">
+          <label xml:lang="de">Gelb</label>
+        </output>
+        <output name="3" label="Pad F1"/>
+        <output name="4" label="Pad F2"/>
+        <output name="Ra" label="Yard Mode">
+          <label xml:lang="de">Rangiermodus</label>
+        </output>
+      </model>
+	  <model model="DCX65" numOuts="4" numFns="10" maxMotorCurrent="0.25 A" maxTotalCurrent="0.3 A">
+        <output name="1" label="Pad Lh">
+        </output>
+        <output name="2" label="Pad Lv">
         </output>
         <output name="3" label="Pad F1"/>
         <output name="4" label="Pad F2"/>

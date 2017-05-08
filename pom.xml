@@ -347,7 +347,7 @@
                         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
                     </systemPropertyVariables>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine}</argLine>
+                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- uncomment to force each test into new context
@@ -738,7 +738,7 @@
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
             <version>4.4.0</version>
-        </dependency>       
+        </dependency>
         <dependency>
             <groupId>net.java.jinput</groupId>
             <artifactId>jinput</artifactId>
@@ -797,18 +797,18 @@
             <artifactId>xbee-java-library</artifactId>
             <version>1.2.0</version>
             <exclusions>
-               <exclusion>
-                  <groupId>org.slf4j</groupId>
-                  <artifactId>slf4j-jdk14</artifactId>
-               </exclusion>
-               <exclusion>
-                  <groupId>com.digi</groupId>
-                  <artifactId>android-sdk</artifactId>
-               </exclusion>
-               <exclusion>
-                  <groupId>com.digi</groupId>
-                  <artifactId>android-sdk-addon</artifactId>
-               </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.digi</groupId>
+                    <artifactId>android-sdk</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.digi</groupId>
+                    <artifactId>android-sdk-addon</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>

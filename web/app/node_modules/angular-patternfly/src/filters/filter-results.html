@@ -1,0 +1,17 @@
+<div class="filter-pf">
+  <div class="row toolbar-pf-results">
+    <div class="col-sm-12">
+      <h5>{{config.resultsCount}} Results</h5>
+      <p ng-if="config.appliedFilters.length > 0">Active filters:</p>
+      <ul class="list-inline">
+        <li ng-repeat="filter in config.appliedFilters">
+          <span class="active-filter label label-info">
+            {{filter.title}}: {{filter.value}}
+            <a><span class="pficon pficon-close" ng-click="clearFilter(filter)"></span></a>
+          </span>
+        </li>
+      </ul>
+      <p><a class="clear-filters" ng-click="clearAllFilters()" ng-if="config.appliedFilters.length > 0">Clear All Filters</a></p>
+    </div><!-- /col -->
+  </div><!-- /row -->
+</div>

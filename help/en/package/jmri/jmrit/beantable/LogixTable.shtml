@@ -123,7 +123,7 @@
           down combo box.  Clicking on an item selects the name.</li>
       </ul>
 
-      <p>The <strong>Tools</strong> menu has 4 items:</p>
+      <p>The <strong>Tools</strong> menu has 5 items:</p>
       <ul>
         <li>Open PickList Tables - Opens the tabbed Pick List tables
           as described above for the first method.</li>
@@ -133,6 +133,9 @@
         <li>Find Empty Conditionals</li>
         <li>Find Cross References - Create a list of places where an
           item, such as a sensor, are used.
+        </li>
+        <li>Conditional Variable References - Create a list of conditionals
+          that are referenced by other conditonals.
         </li>
       </ul>
 
