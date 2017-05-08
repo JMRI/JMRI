@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
 import static jmri.util.MathUtil.add;
 import static jmri.util.MathUtil.drawBezier;
 import static jmri.util.MathUtil.length;
@@ -19,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -388,6 +390,55 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    
+    /**
+     * return the connection type for a point
+     * @param p the point to hit test
+     * @param useRectangles hit test against rectangles instead of circles
+     * @param requireUnconnected only hit test unconnected connections
+     * @return the type of point that was hit (NONE means none… (Duh!))
+     * @since 7.4.?
+     */
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        //note: optimization here: instead of creating rectangles for all the 
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
+        Rectangle2D r = layoutEditor.trackControlPointRectAt(p);
+
+        if (getCircle()) {
+            if (r.contains(getCoordsCenterCircle())) {
+                result = LayoutTrack.TRACK_CIRCLE_CENTRE;
+            }
+        }
+        
+        if (getBezier()) {
+            // hit testing for the control points
+            // note: control points will override center circle
+            Point2D center = new Point2D.Double(centreX, centreY);
+            for (int index = 0; index < controlPoints.size(); index++) {
+                Point2D pt = add(controlPoints.get(index), center);
+                if (r.contains(pt)) {
+                    result = LayoutTrack.FLEX_CONTROL_POINT_OFFSET + index;
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }   // hitTestPoint
+
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = midpoint(pt1, pt2);
+        if (connectionType == TRACK_CIRCLE_CENTRE) {
+            result = getCoordsCenterCircle();
+        } else if ((connectionType >= FLEX_CONTROL_POINT_OFFSET) && (connectionType < TURNTABLE_RAY_OFFSET)) {
+            result = add(result, controlPoints.get(connectionType - FLEX_CONTROL_POINT_OFFSET));
+        }
+        return result;
+    }
+
     JPopupMenu popup = null;
 
     /**
@@ -526,16 +577,21 @@ public class TrackSegment extends LayoutTrack {
                 setBezier(true);
                 if (controlPoints.size() == 0) {
                     // set default control point displacements
-                    Point2D ptC = getCoordsCenterCircle();
-                    Point2D pt0 = subtract(layoutEditor.getCoords(getConnect1(), getType1()), ptC);
-                    Point2D pt3 = subtract(layoutEditor.getCoords(getConnect2(), getType2()), ptC);
+                    Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+                    Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                    Point2D delta = subtract(pt3, pt0);
+                    Point2D ptC = midpoint(ep1, ep2);
+                    Point2D pt0 = subtract(ep1, ptC);
+                    Point2D pt3 = subtract(ep2, ptC);
+
+                    // compute delta one third the length from ep1 to ep2
+                    Point2D delta = subtract(ep2, ep1);
                     delta = multiply(normalize(delta), length(delta) / 3);
 
-                    // note: x & y are swapped here to add delta orthogonally
+                    // note: x & y are swapped here to add delta orthogonally (90° to right)
                     Point2D delta1 = new Point2D.Double(delta.getY(), delta.getX());
-                    // note: x & y swapped here also; plus x offset now in opposite (-) direction
+                    // note: x & y swapped here also; 
+                    // also x offset now in opposite (-) direction (90° to left)
                     Point2D delta2 = new Point2D.Double(-delta.getY(), delta.getX());
                     
                     Point2D pt1 = add(third(pt0, pt3), delta1);
@@ -1200,11 +1256,11 @@ public class TrackSegment extends LayoutTrack {
                 calculateTrackSegmentAngle();
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
             } else if (getBezier()) {
-                Point2D ptC = getCoordsCenterCircle();
                 Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
+                Point2D ptC = midpoint(pt0, pt3);
                 Point2D pt1 = add(controlPoints.get(0), ptC);
                 Point2D pt2 = add(controlPoints.get(1), ptC);
-                Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
                 drawBezier(g2, pt0, pt1, pt2, pt3);
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
@@ -1224,11 +1280,10 @@ public class TrackSegment extends LayoutTrack {
         }
         if (getCircle()) {
             if (showConstructionLinesLE()) {
-                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
-                    new Point2D.Double(getCentreX(), getCentreY())));
-                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect2(), getType2()),
-                    new Point2D.Double(getCentreX(), getCentreY())));
-                g2.draw(layoutEditor.trackControlCircleAt(getCoordsCenterCircle()));
+                Point2D centerPoint = getCoordsCenterCircle();
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()), centerPoint));
+                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect2(), getType2()), centerPoint));
+                g2.draw(layoutEditor.trackControlCircleAt(centerPoint));
             }
         } else {
             Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());

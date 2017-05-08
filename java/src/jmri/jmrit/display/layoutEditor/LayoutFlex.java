@@ -287,7 +287,10 @@ public class LayoutFlex extends LayoutTrack {
 
     /**
      * return the connection type for a point
-     *
+     * @param p the point to hit test
+     * @param useRectangles hit test against rectangles instead of circles
+     * @param requireUnconnected only hit test unconnected connections
+     * @return the type of point that was hit (NONE means none… (Duh!))
      * @since 7.4.?
      */
     public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {

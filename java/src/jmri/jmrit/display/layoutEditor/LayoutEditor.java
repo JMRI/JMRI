@@ -5146,6 +5146,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private boolean checkSelect(Point2D loc, boolean requireUnconnected, Object avoid) {
         //check positionable points, if any
+        //TODO: convert to use hitTestPoint, getCoordsForConnectionType & isConnectionType
         for (PositionablePoint p : pointList) {
             if (p != avoid) {
                 if ((p != selectedObject) && !requireUnconnected
@@ -5168,6 +5169,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //check turnouts, if any
+        //TODO: convert to use hitTestPoint, getCoordsForConnectionType & isConnectionType
         for (LayoutTurnout t : turnoutList) {
             if (t != selectedObject) {
                 try {
@@ -5350,18 +5352,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         for (TrackSegment t : trackList) {
-            if (t.getCircle()) {
-                Point2D pt = t.getCoordsCenterCircle();
-                Rectangle2D r = trackControlPointRectAt(pt);
-
-                if (r.contains(loc)) {
-                    //mouse was pressed on this connection point
-                    foundLocation = pt;
+            try {
+                foundPointType = t.hitTestPoint(loc, false, requireUnconnected);
+                if (NONE != foundPointType) {
                     foundObject = t;
-                    foundPointType = LayoutTrack.TRACK_CIRCLE_CENTRE;
+                    foundLocation = t.getCoordsForConnectionType(foundPointType);
                     foundNeedsConnect = false;
                     return true;
                 }
+            } catch (Exception e) {
+                //exceptions make me throw up…
+                log.error("This error message, which nobody will ever see, shuts my IDE up.");
             }
         }
 
