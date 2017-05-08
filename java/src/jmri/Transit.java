@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
-public class Transit extends AbstractNamedBean implements java.io.Serializable {
+public class Transit extends AbstractNamedBean {
 
     /**
      * The idle, or available for assignment to an ActiveTrain state.

@@ -1,0 +1,84 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/notification/inline-notification.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/notification/inline-notification.directive.js#L69" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfInlineNotification</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.notification</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-notification-directive-page patternfly-notification-directive-pfinlinenotification-page"><p>The main visual element of the notification message.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;pf-inline-notification
+       [pf-notification-type="{expression}"]
+       [pf-notification-message="{expression}"]
+       [pf-notification-header="{expression}"]
+       [pf-notification-persistent="{expression}"]&gt;
+&lt;/pf-inline-notification&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pfNotificationType <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-notification-directive-page patternfly-notification-directive-pfinlinenotification-page"><p>The type of the notification message. Allowed value is one of these: &#39;success&#39;,&#39;info&#39;,&#39;danger&#39;, &#39;warning&#39;.</p>
+</div></td></tr><tr><td>pfNotificationMessage <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-notification-directive-page patternfly-notification-directive-pfinlinenotification-page"><p>The main text message of the notification.</p>
+</div></td></tr><tr><td>pfNotificationHeader <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-notification-directive-page patternfly-notification-directive-pfinlinenotification-page"><p>The header text of the notification.</p>
+</div></td></tr><tr><td>pfNotificationPersistent <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-expression">expression</a></td><td><div class="patternfly-notification-directive-page patternfly-notification-directive-pfinlinenotification-page"><p>The notification won&#39;t disappear after delay timeout, but has to be closed manually with the close button.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-notification-directive-page patternfly-notification-directive-pfinlinenotification-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.notification" source-edit-deps="angular.js script.js" source-edit-html="index.html-41" source-edit-css="" source-edit-js="script.js-42" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-41" ng-html-wrap-loaded="patternfly.notification angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-41">
+    <div ng-controller="NotificationDemoCtrl">
+
+      <pf-inline-notification pf-notification-type="type"
+                       pf-notification-header="header"
+                       pf-notification-message="message"
+                       pf-notification-persistent="isPersistent">
+      </pf-inline-notification>
+
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="header">Header:</label>
+          <div class="col-sm-10">
+           <input type="text" class="form-control" ng-model="header" id="header"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="message">Message:</label>
+          <div class="col-sm-10">
+           <input type="text" class="form-control" ng-model="message" id="message"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="type">Type:</label>
+          <div class="col-sm-10">
+           <select pf-select ng-model="type" id="type" ng-options="o as o for o in types"></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="type">Persistent:</label>
+          <div class="col-sm-10">
+           <input type="checkbox" ng-model="isPersistent"></input>
+          </div>
+        </div>
+      </form>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-42"></pre>
+<script type="text/ng-template" id="script.js-42">
+    angular.module( 'patternfly.notification' ).controller( 'NotificationDemoCtrl', function( $scope, Notifications ) {
+      $scope.types = ['success','info','danger', 'warning'];
+      $scope.type = $scope.types[0];
+      $scope.isPersistent = false;
+
+      $scope.header = 'Default Header.';
+      $scope.message = 'Default Message.';
+    });
+  </script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.notification" ng-set-html="index.html-41" ng-eval-javascript="script.js-42"></div>
+</div></div>
+</div>

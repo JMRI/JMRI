@@ -19,14 +19,15 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        
+
         <xs:element name="icons" type="EditorIconsType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="turnouticon" type="EditorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="sensoricon" type="EditorSensorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="layoutturnout" type="EditorLayoutTurnoutType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="layoutSlip" type="EditorLayoutSlipType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
-            
+
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="name" type="xs:string"></xs:attribute>

@@ -1,0 +1,3 @@
+# Providers of WebManifest instances
+# Order is insignificant
+jmri.server.web.app.JsonManifest

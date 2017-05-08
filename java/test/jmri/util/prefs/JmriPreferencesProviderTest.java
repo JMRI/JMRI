@@ -28,7 +28,7 @@ public class JmriPreferencesProviderTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        this.workspace = Files.createTempDirectory(this.getName());
+        this.workspace = Files.createTempDirectory(this.getClass().getSimpleName());
     }
     
     @Override
