@@ -225,7 +225,16 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (type.equals(jmri.LightManager.class)) {
             return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
-            return (((LenzCommandStation)getCommandStation()).getCommandStationType()!=0x10);
+            try {
+                return (((LenzCommandStation)getCommandStation()).getCommandStationType()!=0x10);
+            } catch (java.lang.NullPointerException npe){
+                // if the command station has not been configured yet,
+                // assume true
+                if(log.isTraceEnabled()){
+                   npe.printStackTrace();
+                }
+                return true;
+            }
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         } else {

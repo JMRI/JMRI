@@ -174,6 +174,7 @@ public class DefaultConditional extends AbstractNamedBean
             clone.setNum2(variable.getNum2());
             clone.setTriggerActions(variable.doTriggerActions());
             clone.setState(variable.getState());
+            clone.setGuiName(variable.getGuiName());
             variableList.add(clone);
         }
         return variableList;

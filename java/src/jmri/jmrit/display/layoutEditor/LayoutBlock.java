@@ -1606,7 +1606,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if (newPacketFlow != TXONLY) {
                 Routes neighRoute = getValidRoute(this.getBlock(), adj.getBlock());
                 //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " valid routes returned as " + neighRoute);
-                //log.info("From " + this.getDisplayName() + " neighbour " + adj.getBlock().getDisplayName() + " " + neighRoute);
                 if (neighRoute == null) {
                     log.info("Null route so will bomb out");
                     return false;
@@ -2803,6 +2802,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             case NONE: {
                 return "None routing updates will be passed";
             }
+            default:
+                log.warn("Unhandled packet flow value: {}", value);
+                break;
         }
         return "Unknown";
     }
@@ -3132,7 +3134,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        
+
         if (e.getSource() instanceof LayoutBlock) {
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
@@ -3204,22 +3206,19 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             ArrayList<Routes> rtr = getRouteByNeighbour(nxtBlock);
 
             if (rtr.size() == 0) {
-                log.info("From {}, no routes returned for getRouteByNeighbour({})",
+                log.debug("From {}, no routes returned for getRouteByNeighbour({})",
                         this.getDisplayName(),
                         nxtBlock.getDisplayName());
-
                 return null;
             }
 
             for (Routes rt : rtr) {
-                log.trace("From " + this.getDisplayName() + ", found dest " + rt.getDestBlock().getDisplayName()
-                        + " " + ((rt.getDestBlock() == dstBlock) ? "matches" : "does not match")
-                        + " required dest " + dstBlock.getDisplayName());
                 if (rt.getDestBlock() == dstBlock) {
-                    log.trace("   From " + this.getDisplayName() + " matched");
+                    log.debug("From " + this.getDisplayName() + ", found dest " + dstBlock.getDisplayName() + ".");
                     return rt;
                 }
             }
+            log.debug("From {}, no routes to {}.", this.getDisplayName(), nxtBlock.getDisplayName());
         } else {
             log.warn("getValidRoute({}, {}",
                 (null != nxtBlock) ? nxtBlock.getDisplayName() : "<null>",

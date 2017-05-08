@@ -1,0 +1,179 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/trends/trends-chart.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/charts/trends/trends-chart.directive.js#L164" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfTrendsChart</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pftrendschart-page"><p>Directive for rendering a trend chart. The trend chart combines overall data with a
+pfSparklineChart.
+<br><br>
+See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> for a full list of C3 chart options.<br>
+See also: <a href="#/api/patternfly.charts.directive:pfSparklineChart">patternfly.charts.directive:pfSparklineChart</a></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-trends-chart
+     config="{object}"
+     chart-data="{object}"
+     [chart-height="{int}"]
+     [show-x-axis="{boolean}"]
+     [show-y-axis="{boolean}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pftrendschart-page"><p>configuration settings for the trends chart:<br/></p>
+<ul style='list-style-type: none'>
+<li>.chartId    - the unique id of this trends chart
+<li>.title      - (optional) title of the Trends chart
+<li>.layout     - (optional) the layout and sizes of titles and chart. Values are &#39;large&#39; (default), &#39;small&#39;, &#39;compact&#39;, and &#39;inline&#39;
+<li>.trendLabel - (optional) the trend label used in the &#39;inline&#39; layout
+<li>.timeFrame  - (optional) the time frame for the data in the pfSparklineChart, ex: &#39;Last 30 Days&#39;
+<li>.units      - unit label for values, ex: &#39;MHz&#39;,&#39;GB&#39;, etc..
+<li>.valueType  - (optional) the format of the latest data point which is shown in the title. Values are &#39;actual&#39;(default) or &#39;percentage&#39;
+</ul></div></td></tr><tr><td>chartData</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pftrendschart-page"><p>the data to be shown in the sparkline charts<br/></p>
+<ul style='list-style-type: none'>
+<li>.total  - number representing the total amount
+<li>.xData  - Array, X values for the data points, first element must be the name of the data
+<li>.yData  - Array, Y Values for the data points, first element must be the name of the data
+<li>.dataAvailable - Flag if there is data available - default: true
+</ul></div></td></tr><tr><td>chartHeight <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pftrendschart-page"><p>height of the sparkline chart</p>
+</div></td></tr><tr><td>showXAxis <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pftrendschart-page"><p>override sparkline config settings for showing the X Axis</p>
+</div></td></tr><tr><td>showYAxis <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pftrendschart-page"><p>override sparkline config settings for showing the Y Axis</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pftrendschart-page"><h4 id="example_source">Source</h4>
+<div source-edit="demo" source-edit-deps="angular.js script.js" source-edit-html="index.html-17" source-edit-css="" source-edit-js="script.js-18" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-17" ng-html-wrap-loaded="demo angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-17">
+  <div ng-controller="ChartCtrl" class="row" style="display:inline-block; width: 100%;">
+    <div class="col-md-12">
+      <div pf-trends-chart config="config" chart-data="data"
+           show-x-axis="custShowXAxis" show-y-axis="custShowYAxis"></div>
+    </div>
+    <hr class="col-md-12">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <form role="form"">
+            <div class="form-group">
+              <label>Show</label></br>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custShowXAxis">X Axis</input>
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custShowYAxis">Y Axis</input>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+          <form role="form" >
+            <div class="form-group">
+              <label>Layout</label></br>
+              <select pf-select class="pf-select-sm" ng-model="layout" id="layout">
+                <option value="large" ng-selected="true" selected>Large</option>
+                <option value="small">Small</option>
+                <option value="compact">Compact</option>
+                <option value="inline">Inline</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+          <form role="form" ng-hide="layout == 'inline'">
+            <div class="form-group">
+              <label>Title Value Type</label></br>
+              <select pf-select class="pf-select-sm" ng-model="valueType" id="valueType">
+                <option value="actual" ng-selected="true" selected>Actual</option>
+                <option value="percentage">Percentage</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-2">
+          <button ng-click="addDataPoint()">Add Data Point</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <form role="form"">
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="data.dataAvailable">Data Available</input>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-18"></pre>
+<script type="text/ng-template" id="script.js-18">
+angular.module( 'demo', ['patternfly.charts', 'patternfly.card'] ).controller( 'ChartCtrl', function( $scope ) {
+
+      $scope.config = {
+        chartId      : 'exampleTrendsChart',
+        title        : 'Network Utilization Trends',
+        layout       : 'large',
+        trendLabel   : 'Virtual Disk I/O',
+        valueType    : 'actual',
+        timeFrame    : 'Last 15 Minutes',
+        units        : 'MHz',
+        tooltipType  : 'percentage'
+      };
+
+      $scope.footerConfig = {
+        iconClass : 'fa fa-plus-circle',
+        text      : 'Add New Cluster',
+        callBackFn: function () {
+           alert("Footer Callback Fn Called");
+         }
+      }
+
+      $scope.filterConfig = {
+        filters : [{label:'Last 30 Days', value:'30'},
+                     {label:'Last 15 Days', value:'15'},
+                     {label:'Today', value:'today'}],
+        callBackFn: function (f) {
+           alert("Filter Callback Fn Called for '" + f.label + "' value = " + f.value);
+         }
+      }
+
+     var today = new Date();
+     var dates = ['dates'];
+     for (var d = 20 - 1; d >= 0; d--) {
+         dates.push(new Date(today.getTime() - (d * 24 * 60 * 60 * 1000)));
+     }
+
+      $scope.data = {
+          dataAvailable: true,
+          total: 250,
+          xData: dates,
+          yData: ['used', 10, 20, 30, 20, 30, 10, 14, 20, 25, 68, 54, 56, 78, 56, 67, 88, 76, 65, 87, 76]
+      };
+
+      $scope.custShowXAxis = false;
+      $scope.custShowYAxis = false;
+
+      $scope.addDataPoint = function () {
+        $scope.data.xData.push(new Date($scope.data.xData[$scope.data.xData.length - 1].getTime() + (24 * 60 * 60 * 1000)));
+        $scope.data.yData.push(Math.round(Math.random() * 100));
+      };
+
+      $scope.$watch('valueType', function (newValue) {
+        $scope.config.valueType = newValue;
+      });
+
+      $scope.$watch('layout', function (newValue) {
+        $scope.config.layout = newValue;
+      });
+
+    });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="demo" ng-set-html="index.html-17" ng-eval-javascript="script.js-18"></div>
+</div></div>
+</div>

@@ -1,0 +1,172 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/heatmap/heatmap.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/charts/heatmap/heatmap.directive.js#L145" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfHeatMap</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>Directive for rendering a heatmap chart.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-heat-map
+     data="{object}"
+     [chart-data-available="{boolean}"]
+     [height="{number}"]
+     [chart-title="{string}"]
+     [show-legend="{boolean}"]
+     [legend-labels="{array}"]
+     [max-block-size="{number}"]
+     [min-block-size="{number}"]
+     [block-padding="{number}"]
+     [thresholds="{array}"]
+     [heatmap-color-pattern="{array}"]
+     [click-action="{function}"]
+     [range-hover-size="{number}"]
+     [range-on-hover="{boolean}"]
+     [range-tooltips="{array}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>data</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>data for the chart:<br/></p>
+<ul style='list-style-type: none'>
+<li>.id            - the id of the measurement
+<li>.value         - the value of the measurement
+<li>.tooltip       - message to be displayed on hover
+</ul></div></td></tr><tr><td>chartDataAvailable <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>flag if the chart data is available - default: true</p>
+</div></td></tr><tr><td>height <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>height of the chart (no units) - default: 200</p>
+</div></td></tr><tr><td>chartTitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>title of the chart</p>
+</div></td></tr><tr><td>showLegend <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>flag to show the legend, defaults to true</p>
+</div></td></tr><tr><td>legendLabels <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the labels for the legend - defaults: [&#39;&lt; 70%&#39;, &#39;70-80%&#39; ,&#39;80-90%&#39;, &#39;&gt; 90%&#39;]</p>
+</div></td></tr><tr><td>maxBlockSize <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the maximum size for blocks in the heatmap. Default: 50, Range: 5 - 50</p>
+</div></td></tr><tr><td>minBlockSize <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the minimum size for blocks in the heatmap. Default: 2</p>
+</div></td></tr><tr><td>blockPadding <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the padding in pixels between blocks (default: 2)</p>
+</div></td></tr><tr><td>thresholds <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the threshold values for the heapmap - defaults: [0.7, 0.8, 0.9]</p>
+</div></td></tr><tr><td>heatmapColorPattern <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the colors that correspond to the various threshold values (lowest to hightest value ex: <70& to >90%) - defaults: [&#39;#d4f0fa&#39;, &#39;#F9D67A&#39;, &#39;#EC7A08&#39;, &#39;#CE0000&#39;]</p>
+</div></td></tr><tr><td>clickAction <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>function(block) function to call when a block is clicked on</p>
+</div></td></tr><tr><td>rangeHoverSize <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the maximum size for highlighting blocks in the same range. Default: 15</p>
+</div></td></tr><tr><td>rangeOnHover <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>flag to highlight blocks in the same range on hover, defaults to true</p>
+</div></td></tr><tr><td>rangeTooltips <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><p>the tooltips for blocks in the same range - defaults: [&#39;&lt; 70%&#39;, &#39;70-80%&#39; ,&#39;80-90%&#39;, &#39;&gt; 90%&#39;]</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfheatmap-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-11" source-edit-css="" source-edit-js="script.js-12" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-11" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-11">
+  <div ng-controller="ChartCtrl">
+    <div class="row">
+      <div class="col-md-5 example-heatmap-container">
+        <div pf-heatmap id="id" chart-title="title" data="data" chart-data-available="dataAvailable"
+             show-legend="showLegends"></div>
+      </div>
+      <div class="col-md-3 example-heatmap-container">
+        <div pf-heatmap id="id" chart-title="titleAlt" data="data" chart-data-available="dataAvailable"
+             show-legend="showLegends" legend-labels="legendLabels"  max-block-size="20" block-padding="5"
+             heatmap-color-pattern="heatmapColorPattern" thresholds="thresholds"
+             click-action="clickAction"></div>
+      </div>
+      <div class="col-md-3 example-heatmap-container">
+        <div pf-heatmap id="id" chart-title="titleSmall" data="data" chart-data-available="dataAvailable"
+             show-legend="showLegends" max-block-size="15" range-tooltips="rangeTooltips"></div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <form role="form">
+          <div class="form-group">
+            <label class="checkbox-inline">
+              <input type="checkbox" ng-model="dataAvailable">Data Available</input>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3">
+        <form role="form">
+          <div class="form-group">
+            <label class="checkbox-inline">
+              <input type="checkbox" ng-model="showLegends">Show Legends</input>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-12"></pre>
+<script type="text/ng-template" id="script.js-12">
+  angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope) {
+    $scope.data = [
+    {'id': 9,'value': 0.96,'tooltip': 'Node 8 : My OpenShift Provider<br\>96% : 96 Used of 100 Total<br\>4 Available'},
+    {'id': 44, 'value': 0.94, 'tooltip': 'Node 19 : My Kubernetes Provider<br\>94% : 94 Used of 100 Total<br\>6 Available'},
+    {'id': 0, 'value': 0.91, 'tooltip': 'Node 9 : My OpenShift Provider<br\>91% : 91 Used of 100 Total<br\>9 Available'},
+    {'id': 43, 'value': 0.9, 'tooltip': 'Node 18 : My Kubernetes Provider<br\>90% : 90 Used of 100 Total<br\>10 Available'},
+    {'id': 7, 'value': 0.89, 'tooltip': 'Node 12 : My OpenShift Provider<br\>89% : 89 Used of 100 Total<br\>11 Available'},
+    {'id': 41, 'value': 0.82, 'tooltip': 'Node 16 : My Kubernetes Provider<br\>82% : 82 Used of 100 Total<br\>18 Available'},
+    {'id': 21, 'value': 0.81, 'tooltip': 'Node 21 : My OpenShift Provider<br\>81% : 81 Used of 100 Total<br\>19 Available'},
+    {'id': 26, 'value': 0.8, 'tooltip': 'Node 1 : My Kubernetes Provider<br\>80% : 80 Used of 100 Total<br\>20 Available'},
+    {'id': 48, 'value': 0.74, 'tooltip': 'Node 23 : My Kubernetes Provider<br\>74% : 74 Used of 100 Total<br\>26 Available'},
+    {'id': 27, 'value': 0.72, 'tooltip': 'Node 2 : My Kubernetes Provider<br\>72% : 72 Used of 100 Total<br\>28 Available'},
+    {'id': 42, 'value': 0.71, 'tooltip': 'Node 17 : My Kubernetes Provider<br\>71% : 71 Used of 100 Total<br\>29 Available'},
+    {'id': 23, 'value': 0.71, 'tooltip': 'Node 23 : My OpenShift Provider<br\>71% : 71 Used of 100 Total<br\>29 Available'},
+    {'id': 22, 'value': 0.69, 'tooltip': 'Node 22 : My OpenShift Provider<br\>69% : 69 Used of 100 Total<br\>31 Available'},
+    {'id': 2, 'value': 0.66, 'tooltip': 'Node 2 : M8y OpenShift Provider<br\>66% : 66 Used of 100 Total<br\>34 Available'},
+    {'id': 39, 'value': 0.66, 'tooltip': 'Node 14 : My Kubernetes Provider<br\>66% : 66 Used of 100 Total<br\>34 Available'},
+    {'id': 3, 'value': 0.65, 'tooltip': 'Node 39 : My OpenShift Provider<br\>65% : 65 Used of 100 Total<br\>35 Available'},
+    {'id': 29, 'value': 0.65, 'tooltip': 'Node 4 : My Kubernetes Provider<br\>65% : 65 Used of 100 Total<br\>35 Available'},
+    {'id': 32, 'value': 0.56, 'tooltip': 'Node 7 : My Kubernetes Provider<br\>56% : 56 Used of 100 Total<br\>44 Available'},
+    {'id': 13, 'value': 0.56, 'tooltip': 'Node 13 : My OpenShift Provider<br\>56% : 56 Used of 100 Total<br\>44 Available'},
+    {'id': 49, 'value': 0.52, 'tooltip': 'Node 24 : My Kubernetes Provider<br\>52% : 52 Used of 100 Total<br\>48 Available'},
+    {'id': 36, 'value': 0.5, 'tooltip': 'Node 11 : My Kubernetes Provider<br\>50% : 50 Used of 100 Total<br\>50 Available'},
+    {'id': 6, 'value': 0.5, 'tooltip': 'Node 5 : My OpenShift Provider<br\>50% : 50 Used of 100 Total<br\>50 Available'},
+    {'id': 38, 'value': 0.49, 'tooltip': 'Node 13 : My Kubernetes Provider<br\>49% : 49 Used of 100 Total<br\>51 Available'},
+    {'id': 15, 'value': 0.48, 'tooltip': 'Node 15 : My OpenShift Provider<br\>48% : 48 Used of 100 Total<br\>52 Available'},
+    {'id': 30, 'value': 0.48, 'tooltip': 'Node 5 : My Kubernetes Provider<br\>48% : 48 Used of 100 Total<br\>52 Available'},
+    {'id': 11, 'value': 0.47, 'tooltip': 'Node 11 : My OpenShift Provider<br\>47% : 47 Used of 100 Total<br\>53 Available'},
+    {'id': 17, 'value': 0.46, 'tooltip': 'Node 17 : My OpenShift Provider<br\>46% : 46 Used of 100 Total<br\>54 Available'},
+    {'id': 25, 'value': 0.45, 'tooltip': 'Node 0 : My Kubernetes Provider<br\>45% : 45 Used of 100 Total<br\>55 Available'},
+    {'id': 50, 'value': 0.45, 'tooltip': 'Node 25 : My Kubernetes Provider<br\>45% : 45 Used of 100 Total<br\>55 Available'},
+    {'id': 46, 'value': 0.45, 'tooltip': 'Node 21 : My Kubernetes Provider<br\>45% : 45 Used of 100 Total<br\>55 Available'},
+    {'id': 47, 'value': 0.45, 'tooltip': 'Node 22 : My Kubernetes Provider<br\>45% : 45 Used of 100 Total<br\>55 Available'},
+    {'id': 1, 'value': 0.44, 'tooltip': 'Node 1 : My OpenShift Provider<br\>44% : 44 Used of 100 Total<br\>56 Available'},
+    {'id': 31, 'value': 0.44, 'tooltip': 'Node 6 : My Kubernetes Provider<br\>44% : 44 Used of 100 Total<br\>56 Available'},
+    {'id': 37, 'value': 0.44, 'tooltip': 'Node 12 : My Kubernetes Provider<br\>44% : 44 Used of 100 Total<br\>56 Available'},
+    {'id': 24, 'value': 0.44, 'tooltip': 'Node 24 : My OpenShift Provider<br\>44% : 44 Used of 100 Total<br\>56 Available'},
+    {'id': 40, 'value': 0.43, 'tooltip': 'Node 40 : My Kubernetes Provider<br\>43% : 43 Used of 100 Total<br\>57 Available'},
+    {'id': 20, 'value': 0.39, 'tooltip': 'Node 20 : My OpenShift Provider<br\>39% : 39 Used of 100 Total<br\>61 Available'},
+    {'id': 8, 'value': 0.39, 'tooltip': 'Node 8 : My OpenShift Provider<br\>39% : 39 Used of 100 Total<br\>61 Available'},
+    {'id': 5, 'value': 0.38, 'tooltip': 'Node 5 : My OpenShift Provider<br\>38% : 38 Used of 100 Total<br\>62 Available'},
+    {'id': 45, 'value': 0.37, 'tooltip': 'Node 20 : My Kubernetes Provider<br\>37% : 37 Used of 100 Total<br\>63 Available'},
+    {'id': 12, 'value': 0.37, 'tooltip': 'Node 12 : My OpenShift Provider<br\>37% : 37 Used of 100 Total<br\>63 Available'},
+    {'id': 34, 'value': 0.37, 'tooltip': 'Node 9 : My Kubernetes Provider<br\>37% : 37 Used of 100 Total<br\>63 Available'},
+    {'id': 33, 'value': 0.33, 'tooltip': 'Node 8 : My Kubernetes Provider<br\>33% : 33 Used of 100 Total<br\>67 Available'},
+    {'id': 16, 'value': 0.32, 'tooltip': 'Node 16 : My OpenShift Provider<br\>32% : 32 Used of 100 Total<br\>68 Available'},
+    {'id': 10, 'value': 0.29, 'tooltip': 'Node 10 : My OpenShift Provider<br\>28% : 29 Used of 100 Total<br\>71 Available'},
+    {'id': 35, 'value': 0.28, 'tooltip': 'Node 35 : My Kubernetes Provider<br\>28% : 28 Used of 100 Total<br\>72 Available'},
+    {'id': 18, 'value': 0.27, 'tooltip': 'Node 18 : My OpenShift Provider<br\>27% : 27 Used of 100 Total<br\>73 Available'},
+    {'id': 4, 'value': 0.26, 'tooltip': 'Node 4 : My OpenShift Provider<br\>26% : 26 Used of 100 Total<br\>74 Available'},
+    {'id': 19, 'value': 0.25, 'tooltip': 'Node 19 : My OpenShift Provider<br\>25% : 25 Used of 100 Total<br\>75 Available'},
+    {'id': 28, 'value': 0.25, 'tooltip': 'Node 3 : My Kubernetes Provider<br\>25% : 25 Used of 100 Total<br\>75 Available'},
+    {'id': 51, 'value': 0.22, 'tooltip': 'Node 26 : My Kubernetes Provider<br\>22% : 22 Used of 100 Total<br\>78 Available'},
+    {'id': 14, 'value': 0.2, 'tooltip': 'Node 14 : My OpenShift Provider<br\>20% : 20 Used of 100 Total<br\>80 Available'}];
+
+    $scope.dataAvailable = true;
+    $scope.title = 'Utilization - Using Defaults';
+    $scope.titleAlt = 'Utilization - Overriding Defaults';
+    $scope.titleSmall = 'Utilization - Small Blocks';
+    $scope.legendLabels = ['< 60%','70%', '70-80%' ,'80-90%', '> 90%'];
+    $scope.rangeTooltips = ['Memory Utilization < 70%<br\>40 Nodes', 'Memory Utilization 70-80%<br\>4 Nodes', 'Memory Utilization 80-90%<br\>4 Nodes', 'Memory Utilization > 90%<br\>4 Nodes'];
+    $scope.thresholds = [0.6, 0.7, 0.8, 0.9];
+    $scope.heatmapColorPattern = ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000', '#f00'];
+
+    $scope.showLegends = true;
+    var clickAction = function (block) {
+       console.log(block);
+    };
+    $scope.clickAction = clickAction;
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-11" ng-eval-javascript="script.js-12"></div>
+</div></div>
+</div>

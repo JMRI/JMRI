@@ -366,6 +366,9 @@ public class WarrantFrame extends WarrantRoute {
             case Warrant.MODE_RUN:
             case Warrant.MODE_MANUAL:
                 return _warrant.getRunningMessage();
+            default:
+                // fall through
+                break;
         }        
         return Bundle.getMessage("Idle");
     }
@@ -1336,6 +1339,7 @@ public class WarrantFrame extends WarrantRoute {
 
         if (_isSCWarrant.isSelected()) {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
+            ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
         }
         _warrant.setDccAddress(getTrainId());
         _warrant.setTrainName(getTrainName());
@@ -1419,6 +1423,9 @@ public class WarrantFrame extends WarrantRoute {
                     return Bundle.getMessage("ValueCol");
                 case BLOCK_COLUMN:
                     return Bundle.getMessage("BlockCol");
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1448,6 +1455,9 @@ public class WarrantFrame extends WarrantRoute {
                     return new JTextField(8).getPreferredSize().width;
                 case BLOCK_COLUMN:
                     return new JTextField(40).getPreferredSize().width;
+                default:
+                    // fall through
+                    break;
             }
             return new JTextField(12).getPreferredSize().width;
         }
@@ -1479,6 +1489,9 @@ public class WarrantFrame extends WarrantRoute {
                     return ts.getValue();
                 case BLOCK_COLUMN:
                     return ts.getBeanDisplayName();
+                default:
+                    // fall through
+                    break;
             }
             return "";
         }
@@ -1571,7 +1584,7 @@ public class WarrantFrame extends WarrantRoute {
                                 break;
                             }
                             msg = Bundle.getMessage("throttlesetting", value);
-                        } catch (Exception e) {
+                        } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("invalidNumber");
                         }
                         ts.setValue(null);
@@ -1590,39 +1603,39 @@ public class WarrantFrame extends WarrantRoute {
                                     msg = Bundle.getMessage("badStepMode");
                                     ts.setValue(null);
                             }
-                        } catch (Exception e) {
+                        } catch (NumberFormatException nfe) {
                             msg = Bundle.getMessage("invalidNumber");
                             ts.setValue(null);
                         }
                     } else if ("FORWARD".equalsIgnoreCase(cmd)) {
-                        try {
-                            if (Boolean.parseBoolean((String) value)) {
-                                ts.setValue("true");
+                            if (((String)value).length() < 4) {
+                                msg = Bundle.getMessage("invalidBoolean");
                             } else {
-                                ts.setValue("false");                                
+                                if (Boolean.parseBoolean((String) value)) {
+                                    ts.setValue("true");
+                                } else {
+                                    ts.setValue("false");                                
+                                }
                             }
-                       } catch (Exception e) {
-                            msg = Bundle.getMessage("invalidBoolean");
-                        }
                     } else if (cmd.startsWith("F")) {
-                        try {
-                            if (Boolean.parseBoolean((String) value)) {
-                                ts.setValue("true");
+                            if (((String)value).length() < 4) {
+                                msg = Bundle.getMessage("invalidBoolean");
                             } else {
-                                ts.setValue("false");                                
+                                if (Boolean.parseBoolean((String) value)) {
+                                    ts.setValue("true");
+                                } else {
+                                    ts.setValue("false");                                
+                                }
                             }
-                        } catch (Exception e) {
-                            msg = Bundle.getMessage("invalidBoolean");
-                        }
                     } else if (cmd.startsWith("LOCKF")) {
-                        try {
+                        if (((String)value).length() < 4) {
+                            msg = Bundle.getMessage("invalidBoolean");
+                        } else {
                             if (Boolean.parseBoolean((String) value)) {
                                 ts.setValue("true");
                             } else {
                                 ts.setValue("false");                                
                             }
-                        } catch (Exception e) {
-                            msg = Bundle.getMessage("invalidBoolean");
                         }
                     } else if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                         String v = ((String) value).toUpperCase();

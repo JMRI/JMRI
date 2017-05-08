@@ -253,6 +253,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return Bundle.getMessage("MRun");
         case CONTROL_COLUMN:
             return Bundle.getMessage("Control");
+        default:
+            // fall out
+            break;
         }
         return "";
     }
@@ -274,6 +277,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case EDIT_COLUMN:
         case DELETE_COLUMN:
             return true;
+        default:
+            // fall out
+            break;
         }
         return false;
     }
@@ -305,6 +311,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return JButton.class;
         case DELETE_COLUMN:
             return JButton.class;
+        default:
+            // fall out
+            break;
         }
         return String.class;
     }
@@ -330,6 +339,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case EDIT_COLUMN:
         case DELETE_COLUMN:
             return new JButton("DELETE").getPreferredSize().width;
+        default:
+            // fall out
+            break;
         }
         return new JTextField(10).getPreferredSize().width;
     }
@@ -427,6 +439,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return Bundle.getMessage("ButtonEdit");
         case DELETE_COLUMN:
             return Bundle.getMessage("ButtonDelete");
+        default:
+            // fall out
+            break;
         }
         return "";
     }
@@ -516,12 +531,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ABORT;
                     }
                     w.controlRunTrain(s);
-                } else if (setting.equals(WarrantTableFrame.abort)) {
-                    w.deAllocate();
-                } else if (mode == Warrant.MODE_NONE) {
-                    msg = Bundle.getMessage("NotRunning", w.getDisplayName());
-                } else {
-                    getValueAt(row, col);
                 }
             }
             break;

@@ -1,0 +1,346 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/wizard/wizard-directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/wizard/wizard-directive.js#L299" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfWizard</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.wizard</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Directive for rendering a Wizard modal.  Each wizard dynamically creates the step navigation both in the header and the left-hand side based on nested steps.
+Use the pf-wizardstep to define individual steps within a wizard and pf-wizardsubstep to define portions of pf-wizardsteps if so desired.  For instance, Step one can have two substeps - 1A and 1B when it is logical to group those together.
+<br /><br />
+The basic structure should be:
+<pre class="prettyprint linenums">
+&lt;div pf-wizard&gt;
+  &lt;div pf-wizardstep&gt;
+    &lt;div pf-wizardsubstep&gt;&lt;!-- content here --&gt;&lt;/div&gt;
+    &lt;div pf-wizardsubstep&gt;&lt;!-- content here --&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div pf-wizardstep&gt;&lt;!-- additional configuration can be added here with substeps if desired --&gt;&lt;/div&gt;
+  &lt;div pf-wizardstep&gt;&lt;!-- review steps and final command here --&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-wizard
+     title="{string}"
+     [hide-indicators="{boolean}"]
+     [current-step="{string}"]
+     [cancel-title="{string}"]
+     [back-title="{string}"]
+     [next-title="{string}"]
+     [back-callback="{function(step)}"]
+     [next-callback="{function(step)}"]
+     [on-finish="{function()}"]
+     [on-cancel="{function()}"]
+     wizard-ready="{boolean}"
+     [wizard-done="{boolean}"]
+     loading-wizard-title="{string}"
+     [loading-secondary-information="{string}"]
+     [content-height="{string}"]
+     [embed-in-page="{boolean}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>title</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>The wizard title displayed in the header</p>
+</div></td></tr><tr><td>hideIndicators <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Hides the step indicators in the header of the wizard</p>
+</div></td></tr><tr><td>currentStep <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>The current step can be changed externally - this is the title of the step to switch the wizard to</p>
+</div></td></tr><tr><td>cancelTitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>The text to display on the cancel button</p>
+</div></td></tr><tr><td>backTitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>The text to display on the back button</p>
+</div></td></tr><tr><td>nextTitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>The text to display on the next button</p>
+</div></td></tr><tr><td>backCallback <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function(step</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Called to notify when the back button is clicked</p>
+</div></td></tr><tr><td>nextCallback <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function(step</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Called to notify when the next button is clicked</p>
+</div></td></tr><tr><td>onFinish <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function()</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Called to notify when when the wizard is complete.  Returns a boolean value to indicate if the finish operation is complete</p>
+</div></td></tr><tr><td>onCancel <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function()</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Called when the wizard is canceled, returns a boolean value to indicate if cancel is successful</p>
+</div></td></tr><tr><td>wizardReady</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Value that is set when the wizard is ready</p>
+</div></td></tr><tr><td>wizardDone <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Value that is set when the wizard is done</p>
+</div></td></tr><tr><td>loadingWizardTitle</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>The text displayed when the wizard is loading</p>
+</div></td></tr><tr><td>loadingSecondaryInformation <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Secondary descriptive information to display when the wizard is loading</p>
+</div></td></tr><tr><td>contentHeight <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>The height the wizard content should be set to.  This defaults to 300px if the property is not supplied.</p>
+</div></td></tr><tr><td>embedInPage <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><p>Value that indicates wizard is embedded in a page (not a modal).  This moves the navigation buttons to the left hand side of the footer and removes the close button.</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-wizard-directive-page patternfly-wizard-directive-pfwizard-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.wizard" source-edit-deps="angular.js patternfly.form script.js" source-edit-html="index.html-69 wizard-container.html detail-page.html review-template.html review-second-template.html summary.html deployment.html" source-edit-css="" source-edit-js="script.js-70" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-69" ng-html-wrap-loaded="patternfly.wizard angular.js patternfly.form script.js"></pre>
+<script type="text/ng-template" id="index.html-69">
+  <div ng-controller="WizardModalController">
+    <button ng-click="openWizardModel()" class="btn btn-default">Launch Wizard</button>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="wizard-container.html">
+<pre class="prettyprint linenums" ng-set-text="wizard-container.html"></pre>
+<script type="text/ng-template" id="wizard-container.html">
+<div pf-wizard title="Wizard Title"
+  wizard-ready="deployProviderReady"
+  on-finish="finishedWizard()"
+  on-cancel="cancelDeploymentWizard()"
+  next-title="nextButtonTitle"
+  next-callback="nextCallback"
+  back-callback="backCallback"
+  wizard-done="deployComplete || deployInProgress"
+  content-height="'600px'"
+  loading-secondary-information="secondaryLoadInformation">
+    <div pf-wizard-step step-title="First Step" substeps="true" step-id="details" step-priority="0" show-review="true" show-review-details="true">
+      <div ng-include="'detail-page.html'">
+      </div>
+      <div pf-wizard-substep step-title="Details - Extra" next-enabled="true" step-id="details-extra" step-priority="1" show-review="true" show-review-details="true" review-template="review-second-template.html">
+        <form class="form-horizontal">
+          <div pf-form-group pf-label="Lorem" required>
+            <input id="new-lorem" name="lorem" ng-model="data.lorem" type="text" required/>
+          </div>
+          <div pf-form-group pf-label="Ipsum">
+            <input id="new-ipsum" name="ipsum" ng-model="data.ipsum" type="text" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div pf-wizard-step step-title="Second Step" substeps="false" step-id="configuration" step-priority="1" show-review="true" review-template="review-second-template.html" >
+      <form class="form-horizontal">
+        <h5 id="example_source_wizards-should-make-use-of-substeps-consistently-throughout-this-is-an-example-only">Wizards should make use of substeps consistently throughout (either using them or not using them).  This is an example only.</h5>
+        <div pf-form-group pf-label="Lorem">
+          <input id="new-lorem" name="lorem" ng-model="data.lorem" type="text"/>
+        </div>
+        <div pf-form-group pf-label="Ipsum">
+          <input id="new-ipsum" name="ipsum" ng-model="data.ipsum" type="text" />
+        </div>
+      </form>
+    </div>
+    <div pf-wizard-step step-title="Review" substeps="true" step-id="review" step-priority="2">
+      <div ng-include="'summary.html'"></div>
+      <div ng-include="'deployment.html'"></div>
+    </div>
+ </div>
+</script>
+</div>
+<div class="tab-pane" title="detail-page.html">
+<pre class="prettyprint linenums" ng-set-text="detail-page.html"></pre>
+<script type="text/ng-template" id="detail-page.html">
+  <div ng-controller="DetailsGeneralController">
+     <div pf-wizard-substep step-title="General" next-enabled="detailsGeneralComplete" step-id="details-general" step-priority="0" on-show="onShow" review-template="{{reviewTemplate}}" show-review-details="true">
+       <form class="form-horizontal">
+         <div pf-form-group pf-label="Name" required>
+          <input id="new-name" name="name" ng-model="data.name" type="text" ng-change="updateName()" required/>
+         </div>
+         <div pf-form-group pf-label="Description">
+          <input id="new-description" name="description" ng-model="data.description" type="text" />
+         </div>
+       </form>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="review-template.html">
+<pre class="prettyprint linenums" ng-set-text="review-template.html"></pre>
+<script type="text/ng-template" id="review-template.html">
+<div ng-controller="DetailsReviewController">
+  <form class="form">
+    <div class="wizard-pf-review-item">
+      <span class="wizard-pf-review-item-label">Name:</span>
+      <span class="wizard-pf-review-item-value">{{data.name}}</span>
+    </div>
+    <div class="wizard-pf-review-item">
+      <span class="wizard-pf-review-item-label">Description:</span>
+      <span class="wizard-pf-review-item-value">{{data.description}}</span>
+    </div>
+  </form>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="review-second-template.html">
+<pre class="prettyprint linenums" ng-set-text="review-second-template.html"></pre>
+<script type="text/ng-template" id="review-second-template.html">
+<div ng-controller="DetailsReviewController">
+  <form class="form">
+    <div class="wizard-pf-review-item">
+      <span class="wizard-pf-review-item-label">Lorem:</span>
+      <span class="wizard-pf-review-item-value">{{data.lorem}}</span>
+    </div>
+    <div class="wizard-pf-review-item">
+      <span class="wizard-pf-review-item-label">Ipsum:</span>
+      <span class="wizard-pf-review-item-value">{{data.ipsum}}</span>
+    </div>
+  </form>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="summary.html">
+<pre class="prettyprint linenums" ng-set-text="summary.html"></pre>
+<script type="text/ng-template" id="summary.html">
+<div ng-controller="SummaryController">
+  <div pf-wizard-substep step-title="Summary" step-id="review-summary" step-priority="0" next-enabled="true" prev-enabled="true" ok-to-nav-away="true" wz-disabled="false" on-show="onShow">
+    <div pf-wizard-review-page shown="pageShown" wizard-data="data"></div>
+  </div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="deployment.html">
+<pre class="prettyprint linenums" ng-set-text="deployment.html"></pre>
+<script type="text/ng-template" id="deployment.html">
+<div ng-controller="DeploymentController">
+  <div pf-wizard-substep step-title="Deploy" step-id="review-progress" step-priority="1" next-enabled="true" prev-enabled="false" ok-to-nav-away="true" wz-disabled="false" on-show="onShow">
+    <div class="wizard-pf-contents" ng-controller="DeploymentController">
+      <div class="wizard-pf-process blank-slate-pf" ng-if="!deploymentComplete">
+        <div class="spinner spinner-lg blank-slate-pf-icon"></div>
+        <h5 class="blank-slate-pf-main-action" id="example_source_deployment-in-progress">Deployment in progress</h5>
+        <p class="blank-slate-pf-secondary-action">Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus, lorem sociosqu eget nunc amet. </p>
+      </div>
+      <div class="wizard-pf-complete blank-slate-pf" ng-if="deploymentComplete">
+        <div class="wizard-pf-success-icon"><span class="glyphicon glyphicon-ok-circle"></span></div>
+        <h5 class="blank-slate-pf-main-action" id="example_source_deployment-was-successful">Deployment was successful</h5>
+        <p class="blank-slate-pf-secondary-action">Lorem ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus, lorem sociosqu eget nunc amet. </p>
+        <button type="button" class="btn btn-lg btn-primary">View Deployment</button>
+      </div>
+   </div>
+ </div>
+</div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-70"></pre>
+<script type="text/ng-template" id="script.js-70">
+angular.module('patternfly.wizard').controller('WizardModalController', ['$scope', '$timeout', '$uibModal', '$rootScope',
+  function ($scope, $timeout, $uibModal, $rootScope) {
+    $scope.openWizardModel = function () {
+      var wizardDoneListener,
+          modalInstance = $uibModal.open({
+            animation: true,
+            backdrop: 'static',
+            templateUrl: 'wizard-container.html',
+            controller: 'WizardController',
+            size: 'lg'
+          });
+
+      var closeWizard = function (e, reason) {
+        modalInstance.dismiss(reason);
+        wizardDoneListener();
+      };
+
+      modalInstance.result.then(function () { }, function () { });
+
+      wizardDoneListener = $rootScope.$on('wizard.done', closeWizard);
+    };
+  }
+]);
+angular.module('patternfly.wizard').controller('WizardController', ['$scope', '$timeout', '$rootScope',
+  function ($scope, $timeout, $rootScope) {
+
+
+    var initializeWizard = function () {
+      $scope.data = {
+        name: '',
+        description: '',
+        lorem: 'default setting',
+        ipsum: ''
+      };
+      $scope.secondaryLoadInformation = 'ipsum dolor sit amet, porta at suspendisse ac, ut wisi vivamus, lorem sociosqu eget nunc amet.';
+      $timeout(function () {
+        $scope.deployReady = true;
+      }, 1000);
+      $scope.nextButtonTitle = "Next >";
+    };
+
+    var startDeploy = function () {
+      $timeout(function() { }, 2000);
+      $scope.deployInProgress = true;
+    };
+
+    $scope.data = {};
+
+    $scope.nextCallback = function (step) {
+      // call startdeploy after deploy button is clicked on review-summary tab
+      if (step.stepId === 'review-summary') {
+        startDeploy();
+      }
+      return true;
+    };
+    $scope.backCallback = function (step) {
+      return true;
+    };
+
+    $scope.$on("wizard:stepChanged", function (e, parameters) {
+      if (parameters.step.stepId === 'review-summary') {
+        $scope.nextButtonTitle = "Deploy";
+      } else if (parameters.step.stepId === 'review-progress') {
+        $scope.nextButtonTitle = "Close";
+      } else {
+        $scope.nextButtonTitle = "Next >";
+      }
+    });
+
+    $scope.cancelDeploymentWizard = function () {
+      $rootScope.$emit('wizard.done', 'cancel');
+    };
+
+    $scope.finishedWizard = function () {
+      $rootScope.$emit('wizard.done', 'done');
+      return true;
+    };
+
+    initializeWizard();
+   }
+]);
+
+angular.module('patternfly.wizard').controller('DetailsGeneralController', ['$rootScope', '$scope',
+  function ($rootScope, $scope) {
+    'use strict';
+
+    $scope.reviewTemplate = "review-template.html";
+    $scope.detailsGeneralComplete = false;
+
+    $scope.onShow = function() { };
+
+    $scope.updateName = function() {
+      $scope.detailsGeneralComplete = angular.isDefined($scope.data.name) && $scope.data.name.length > 0;
+    };
+  }
+]);
+
+angular.module('patternfly.wizard').controller('DetailsReviewController', ['$rootScope', '$scope',
+  function ($rootScope, $scope) {
+    'use strict';
+
+    // Find the data!
+    var next = $scope;
+    while (angular.isUndefined($scope.data)) {
+      next = next.$parent;
+      if (angular.isUndefined(next)) {
+        $scope.data = {};
+      } else {
+        $scope.data = next.wizardData;
+      }
+    }
+  }
+]);
+
+angular.module('patternfly.wizard').controller('SummaryController', ['$rootScope', '$scope', '$timeout',
+  function ($rootScope, $scope, $timeout) {
+    'use strict';
+    $scope.pageShown = false;
+
+    $scope.onShow = function () {
+      $scope.pageShown = true;
+      $timeout(function () {
+        $scope.pageShown = false;  // done so the next time the page is shown it updates
+      });
+    }
+  }
+]);
+
+angular.module('patternfly.wizard').controller('DeploymentController', ['$rootScope', '$scope', '$timeout',
+  function ($rootScope, $scope, $timeout) {
+    'use strict';
+
+    $scope.onShow = function() {
+      $scope.deploymentComplete = false;
+      $timeout(function() {
+        $scope.deploymentComplete = true;
+      }, 2500);
+    };
+  }
+]);
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.wizard" ng-set-html="index.html-69" ng-eval-javascript="script.js-70"></div>
+</div></div>
+</div>

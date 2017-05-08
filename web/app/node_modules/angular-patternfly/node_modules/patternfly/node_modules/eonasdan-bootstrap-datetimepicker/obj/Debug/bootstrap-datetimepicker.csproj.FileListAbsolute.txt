@@ -1,0 +1,5 @@
+C:\Users\Jonathan\Source\Repos\bootstrap-datetimepicker\bin\Debug\ClassLibrary.dll
+C:\Users\Jonathan\Source\Repos\bootstrap-datetimepicker\bin\Debug\ClassLibrary.pdb
+C:\Users\Jonathan\Source\Repos\bootstrap-datetimepicker\obj\Debug\bootstrap-datetimepicker.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Source\Repos\bootstrap-datetimepicker\obj\Debug\ClassLibrary.dll
+C:\Users\Jonathan\Source\Repos\bootstrap-datetimepicker\obj\Debug\ClassLibrary.pdb

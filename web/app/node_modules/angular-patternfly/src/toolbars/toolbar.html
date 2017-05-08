@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="row toolbar-pf">
+    <div class="col-sm-12">
+      <form class="toolbar-pf-actions" ng-class="{'no-filter-results': !config.filterConfig}">
+        <div class="form-group toolbar-apf-filter">
+          <div pf-filter-fields id="{{filterDomId}}_fields" config="config.filterConfig" ng-if="config.filterConfig" add-filter-fn="addFilter"></div>
+        </div>
+        <div class="form-group">
+          <div pf-sort id="{{sortDomId}}" config="config.sortConfig" ng-if="config.sortConfig"></div>
+        </div>
+        <div class="form-group toolbar-actions"
+             ng-if="config.actionsConfig &&
+                   ((config.actionsConfig.primaryActions && config.actionsConfig.primaryActions.length > 0) ||
+                    (config.actionsConfig.moreActions && config.actionsConfig.moreActions.length > 0) ||
+                    config.actionsConfig.actionsInclude)">
+          <button class="btn btn-default primary-action" type="button" ng-repeat="action in config.actionsConfig.primaryActions"
+                  title="{{action.title}}"
+                  ng-click="handleAction(action)"
+                  ng-disabled="action.isDisabled === true">
+            {{action.name}}
+          </button>
+          <div ng-if="config.actionsConfig.actionsInclude" pf-transclude class="toolbar-pf-include-actions" ng-tranclude="actions"></div>
+          <div uib-dropdown class="dropdown-kebab-pf" ng-if="config.actionsConfig.moreActions && config.actionsConfig.moreActions.length > 0">
+            <button uib-dropdown-toggle class="btn btn-link" type="button" id="{{filterDomId}}_kebab">
+              <span class="fa fa-ellipsis-v"></span>
+            </button>
+            <ul uib-dropdown-menu aria-labelledby="dropdownKebab">
+              <li ng-repeat="action in config.actionsConfig.moreActions"
+                  role="{{action.isSeparator === true ? 'separator' : 'menuitem'}}"
+                  ng-class="{'divider': action.isSeparator === true, 'disabled': action.isDisabled === true}">
+                <a ng-if="action.isSeparator !== true"
+                   class="secondary-action"
+                   title="{{action.title}}"
+                   ng-click="handleAction(action)">
+                  {{action.name}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="toolbar-pf-action-right">
+          <div class="form-group toolbar-pf-view-selector" ng-if="config.viewsConfig && config.viewsConfig.views">
+            <button ng-repeat="view in config.viewsConfig.viewsList" class="btn btn-link"
+                ng-class="{'active': isViewSelected(view.id), 'disabled': checkViewDisabled(view)}"
+                title={{view.title}}  ng-click="viewSelected(view.id)">
+              <i class="{{view.iconClass}}"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div pf-filter-results id="{{filterDomId}_results}" config="config.filterConfig" ng-if="config.filterConfig"></div>
+    </div><!-- /col -->
+  </div><!-- /row -->
+</div><!-- /container -->

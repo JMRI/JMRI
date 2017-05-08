@@ -168,6 +168,9 @@ public class LnPacketizer extends LnTrafficController {
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     * @param istream stream to read from
+     * @return buffer of received data
+     * @throws java.io.IOException failure during stream read
      *
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
@@ -240,6 +243,9 @@ public class LnPacketizer extends LnTrafficController {
                                             + " opcode: " + Integer.toHexString(opCode)); // NOI18N
                                 }
                                 len = byte2;
+                                break;
+                            default:
+                                log.warn("Unhandled code: {}", (opCode & 0x60) >> 5);
                                 break;
                         }
                         msg = new LocoNetMessage(len);
@@ -374,6 +380,9 @@ public class LnPacketizer extends LnTrafficController {
                                     }
                                     len = byte2;
                                     break;
+                                default:
+                                    log.warn("Unhandled code: {}", (opCode & 0x60) >> 5);
+                                    break;
                             }
                             msg = new LocoNetMessage(len);
                             // message exists, now fill it
@@ -504,6 +513,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
      * is needed
+     * @param msg message sent
      *
      */
     protected void messageTransmited(byte[] msg) {

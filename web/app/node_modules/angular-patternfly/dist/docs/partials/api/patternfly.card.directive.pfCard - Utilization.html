@@ -1,0 +1,103 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/card/basic/card.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/card/basic/card.directive.js#L86" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfCard - Utilization</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.card</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><p>Directive for easily displaying a card with html content</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-card - -utilization
+     head-title="{string}"
+     [sub-title="{string}"]
+     [show-top-border="{boolean}"]
+     [show-titles-separator="{boolean}"]
+     [footer="{object}"]
+     [filter="{object}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>headTitle</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><p>Title for the card</p>
+</div></td></tr><tr><td>subTitle <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><p>Sub-Title for the card</p>
+</div></td></tr><tr><td>showTopBorder <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><p>Show/Hide the blue top border. True shows top border, false (default) hides top border</p>
+</div></td></tr><tr><td>showTitlesSeparator <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><p>Show/Hide the grey line between the title and sub-title.
+True (default) shows the line, false hides the line</p>
+</div></td></tr><tr><td>footer <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><p>footer configuration properties:<br/></p>
+<p><ul style='list-style-type: none'></p>
+<p><li>.iconClass  - (optional) the icon to show on the bottom left of the footer panel</p>
+<p><li>.text       - (optional) the text to show on the bottom left of the footer panel, to the right of the icon</p>
+<p><li>.href       - (optional) the href link to navigate to when the footer href is clicked</p>
+<p><li>.callBackFn - (optional) user defined function to call when the footer href is clicked
+</ul>
+*Note: If a href link and a callBackFn are specified, the href link will be called</p>
+</div></td></tr><tr><td>filter <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><p>filter configuration properties:<br/></p>
+<ul style='list-style-type: none'>
+<li>.filters    - drop down items for the filter.
+<pre class='' class="prettyprint linenums">
+ Ex:  'filters' : [{label:'Last 30 Days', value:'30'},
+                   {label:'Last 15 Days', value:'15'},
+                   {label:'Today', value:'today'}]</pre>
+<li>.defaultFilter - integer, 0 based index into the filters array
+<li>.callBackFn - user defined function to call when a filter is selected
+</ul></div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-card-directive-page patternfly-card-directive-pfcard-utilization-page"><h4 id="example_source">Source</h4>
+<div source-edit="demo" source-edit-deps="angular.js script.js" source-edit-html="index.html-1" source-edit-css="" source-edit-js="script.js-2" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-1" ng-html-wrap-loaded="demo angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-1">
+  <div ng-controller="ChartCtrl">
+    <label class="label-title">Card With Multiple Utilization Bars</label>
+    <div pf-card head-title="System Resources" show-top-border="true" style="width: 65%">
+      <div pf-utilization-bar-chart chart-data=data2 chart-title=title2 layout=layoutInline units=units2 threshold-error="85" threshold-warning="60"></div>
+      <div pf-utilization-bar-chart chart-data=data3 chart-title=title3 layout=layoutInline units=units3 threshold-error="85" threshold-warning="60"></div>
+      <div pf-utilization-bar-chart chart-data=data4 chart-title=title4 layout=layoutInline units=units4 threshold-error="85" threshold-warning="60"></div>
+      <div pf-utilization-bar-chart chart-data=data5 chart-title=title5 layout=layoutInline units=units5 threshold-error="85" threshold-warning="60"></div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-2"></pre>
+<script type="text/ng-template" id="script.js-2">
+angular.module( 'demo', ['patternfly.charts', 'patternfly.card'] ).controller( 'ChartCtrl', function( $scope ) {
+
+      $scope.title2 = 'Memory';
+      $scope.units2 = 'GB';
+
+      $scope.data2 = {
+        'used': '25',
+        'total': '100'
+      };
+
+      $scope.title3 = 'CPU Usage';
+      $scope.units3 = 'MHz';
+
+      $scope.data3 = {
+        'used': '420',
+        'total': '500',
+      };
+
+      $scope.title4 = 'Disk Usage';
+      $scope.units4 = 'TB';
+      $scope.data4 = {
+        'used': '350',
+        'total': '500',
+      };
+
+      $scope.title5 = 'Disk I/O';
+      $scope.units5 = 'I/Ops';
+      $scope.data5 = {
+        'used': '450',
+        'total': '500',
+      };
+
+      $scope.layoutInline = {
+        'type': 'inline'
+      };
+    });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="demo" ng-set-html="index.html-1" ng-eval-javascript="script.js-2"></div>
+</div></div>
+</div>

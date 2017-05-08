@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip,
- * LayoutTurntable, LevelXing, TrackSegment)
+ * LayoutTurntable, LevelXing, TrackSegment &amp; PositionablePoint)
  *
  * @author George Warner Copyright (c) 2017
  */
@@ -37,7 +37,7 @@ public abstract class LayoutTrack {
     public static final int MULTI_SENSOR = 16;
     public static final int MARKER = 17;
     public static final int TRACK_CIRCLE_CENTRE = 18;
-    public static final int SLIP_CENTER = 20; //
+    public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
     public static final int SLIP_A = 21; // offset for slip connection points
     public static final int SLIP_B = 22; // offset for slip connection points
     public static final int SLIP_C = 23; // offset for slip connection points
@@ -45,6 +45,8 @@ public abstract class LayoutTrack {
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
+
+    protected String ident = "";
 
     // dashed line parameters
     //private static int minNumDashes = 3;
@@ -65,21 +67,14 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * accessor method
+     * accessor methods
      */
-    public static void setDefaultTrackColor(Color color) {
-        defaultTrackColor = color;
+    public String getID() {
+        return ident;
     }
 
-    //NOTE: not public because "center" is a member variable
-    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
-        double cX = center.getX();
-        double cY = center.getY();
-        double deltaX = p.getX() - cX;
-        double deltaY = p.getY() - cY;
-        double x = cX + cosineRot * deltaX - sineRot * deltaY;
-        double y = cY + sineRot * deltaX + cosineRot * deltaY;
-        return new Point2D.Double(x, y);
+    public static void setDefaultTrackColor(Color color) {
+        defaultTrackColor = color;
     }
 
     /**
@@ -104,6 +99,39 @@ public abstract class LayoutTrack {
 
     public void setHidden(boolean hide) {
         hidden = hide;
+    }
+
+    /*
+     * non-accessor methods
+     */
+
+    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
+        double cX = center.getX();
+        double cY = center.getY();
+        double deltaX = p.getX() - cX;
+        double deltaY = p.getY() - cY;
+        double x = cX + cosineRot * deltaX - sineRot * deltaY;
+        double y = cY + sineRot * deltaX + cosineRot * deltaY;
+        return new Point2D.Double(x, y);
+    }
+
+    /**
+     * return the connection type for a point
+     * (abstract; should be overridden by sub-classes)
+     *
+     * @since 7.4.?
+     */
+    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+        return NONE;
+    }
+
+    // optional useRectangles parameter defaults to false
+    public int connectionTypeForPoint(Point2D p) {
+        return connectionTypeForPoint(p, false);
+    }
+
+    public void reCheckBlockBoundary() {
+        log.error("virtual method: override in sub-classes; don't call [super ...].");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());
