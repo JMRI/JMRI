@@ -28,7 +28,7 @@ public class WebAppConfigurationTest {
         Assert.assertNotNull(config.getFilePaths());
         Assert.assertEquals(2, config.getFilePaths().size());
         Assert.assertTrue(config.getFilePaths().containsKey("/app/node_modules"));
-        Assert.assertTrue(config.getFilePaths().containsKey("/app/scripts"));
+        Assert.assertTrue(config.getFilePaths().containsKey("/app/app"));
     }
 
     @Test

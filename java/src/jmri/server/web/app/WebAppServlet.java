@@ -6,11 +6,16 @@ import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JAVASCRIPT;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map.Entry;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,7 +63,11 @@ public class WebAppServlet extends HttpServlet {
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         switch (request.getContextPath()) {
             case "/app": // NOI18N
-                this.processApp(request, response);
+                if (request.getPathInfo().startsWith("/locale-")) { // NOI18N
+                    this.processLocale(request, response);
+                } else {
+                    this.processApp(request, response);
+                }
                 break;
             case "/app/about": // NOI18N
                 this.processAbout(request, response);
@@ -160,6 +169,36 @@ public class WebAppServlet extends HttpServlet {
             ));
         }
         response.getWriter().print(FileUtil.readFile(script));
+    }
+
+    private void processLocale(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType(UTF8_APPLICATION_JSON);
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        // the locale is the file name portion between "locale-" and ".json"
+        Locale locale = new Locale(request.getPathInfo().substring(8, request.getPathInfo().length() - 5));
+        File cache = new File(ProfileUtils.getCacheDirectory(profile, this.getClass()), locale.toString());
+        FileUtil.createDirectory(cache);
+        File file = new File(cache, "locale.json"); // NOI18N
+        if (!file.exists()) {
+            WebAppManager manager = getWebAppManager();
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode translation = mapper.createObjectNode();
+            for (URL url : manager.getPreloadedTranslations(profile, locale)) {
+                log.debug("Reading {}", url.toString());
+                JsonNode translations = mapper.readTree(url);
+                log.debug("Read {}", translations.toString());
+                if (translations.isObject()) {
+                    log.debug("Adding {}", translations.toString());
+                    Iterator<Entry<String, JsonNode>> fields = translations.fields();
+                    fields.forEachRemaining((field) -> {
+                        translation.set(field.getKey(), field.getValue());
+                    });
+                }
+            }
+            log.debug("Writing {}", translation.toString());
+            mapper.writeValue(file, translation);
+        }
+        response.getWriter().print(FileUtil.readFile(file));
     }
 
     private WebAppManager getWebAppManager() throws ServletException {

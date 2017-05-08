@@ -43,6 +43,28 @@ manifest.json is a JSON object with the following properties:
 - styles
 - dependencies
 - sources
+- __translations__ - a list of locale that need to be pre-loaded before the
+  controllers for a module are loaded. Use an asterisk as the placeholder for
+  the requested language (English (en) will be substituted for missing languages
+  in the translation).
+
+# Localization
+
+## Translations
+
+The JMRI Web App uses the [angular-translate][6] service to provide translation
+services. The angular-translate service is configured to use URLs in the pattern
+http://server:port/PART/locale-LOCALE.json to load translation strings where
+PART is the path to the locale file for the module and LOCALE is the requested
+locale. The locale _en (English)_ **must** be provided as that is the fall-back
+locale in the absence of others. See
+https://angular-translate.github.io/docs/#/guide/02_getting-started for details
+of the file structure.
+
+A separate file (or files) can be provided to provide pre-loaded translations
+that might need to be used in other places even if the controller (if any) is
+loaded. These files need to be listed in the _translations_ section of the
+manifest file, with an asterisk used as a placeholder for the locale.
 
 # Included with JMRI
 

@@ -6,11 +6,17 @@
     },
     {
       "path": "panel",
-      "iconClass": "fa fa-map-o"  
+      "iconClass": "fa fa-map-o"
     },
     {
       "path": "layout",
       "iconClass": "fa fa-map-signs"
+    },
+    {
+      "path": "translate-test",
+      "iconClass": "fa fa-flag",
+      "title": "translate:TRANSLATE_THIS",
+      "href": "ng-click:openAboutModal()"
     }
   ],
   "scripts":[
@@ -53,5 +59,8 @@
   ],
   "sources":[
     "web/app/app/websocket.js"
+  ],
+  "translations":[
+    "web/app/app/navigation-*.json"
   ]
 }

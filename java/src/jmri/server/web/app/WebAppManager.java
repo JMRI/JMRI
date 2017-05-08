@@ -212,10 +212,14 @@ public class WebAppManager extends AbstractPreferencesManager {
             // TODO: handle separator before
             // TODO: handle separator after
             String href = item.getHref();
+            String title = item.getTitle(locale);
+            if (title.startsWith("translate:")) {
+                title = String.format("<span data-translate>%s</span>", title);
+            }
             if (href != null && href.startsWith("ng-click:")) { // NOI18N
-                navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>", href.substring(href.indexOf(":") + 1, href.length()), item.getTitle(locale))); // NOI18N
+                navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>", href.substring(href.indexOf(":") + 1, href.length()), title)); // NOI18N
             } else {
-                navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", href, item.getTitle(locale))); // NOI18N
+                navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", href, title)); // NOI18N
             }
         });
         return navigation.toString();
@@ -278,6 +282,14 @@ public class WebAppManager extends AbstractPreferencesManager {
             }
         });
         return sources.toString();
+    }
+
+    public Set<URL> getPreloadedTranslations(Profile profile, Locale locale) {
+        Set<URL> urls = new HashSet<>();
+        this.getManifests(profile).forEach((WebManifest manifest) -> {
+            urls.addAll(manifest.getPreloadedTranslations(locale));
+        });
+        return urls;
     }
 
     private void lifeCycleStarting(LifeCycle lc, Profile profile) {

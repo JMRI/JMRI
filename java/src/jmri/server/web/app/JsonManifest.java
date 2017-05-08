@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import jmri.server.web.spi.AngularRoute;
 import jmri.server.web.spi.WebManifest;
@@ -30,6 +31,7 @@ public class JsonManifest implements WebManifest {
     private final List<String> dependencies = new ArrayList<>();
     private final Set<AngularRoute> routes = new HashSet<>();
     private final List<URL> sources = new ArrayList<>();
+    private final Set<String> translations = new HashSet<>();
     private final static Logger log = LoggerFactory.getLogger(JsonManifest.class);
 
     @Override
@@ -66,6 +68,27 @@ public class JsonManifest implements WebManifest {
     public List<URL> getAngularSources() {
         this.initialize();
         return this.sources;
+    }
+
+    @Override
+    public Set<URL> getPreloadedTranslations(Locale locale) {
+        this.initialize();
+        Set<URL> found = new HashSet<>();
+        this.translations.forEach((translation) -> {
+            URL url = FileUtil.findURL(translation.replaceFirst("\\*", locale.toString()));
+            if (url == null) {
+                url = FileUtil.findURL(translation.replaceFirst("\\*", locale.getLanguage()));
+            }
+            if (url == null) {
+                url = FileUtil.findURL(translation.replaceFirst("\\*", "en"));
+            }
+            if (url != null) {
+                found.add(url);
+            } else {
+                log.error("Unable to find localization file {} for any language", translation);
+            }
+        });
+        return found;
     }
 
     synchronized private void initialize() {
@@ -110,7 +133,7 @@ public class JsonManifest implements WebManifest {
                         }
                         if (when != null && !when.isEmpty()) {
                             try {
-                            this.routes.add(new AngularRoute(when, template, controller, redirection));
+                                this.routes.add(new AngularRoute(when, template, controller, redirection));
                             } catch (NullPointerException | IllegalArgumentException ex) {
                                 log.error("Unable to add route for {}", when);
                             }
@@ -120,6 +143,12 @@ public class JsonManifest implements WebManifest {
                         URL url = FileUtil.findURL(source.asText());
                         if (url != null) {
                             this.sources.add(url);
+                        }
+                    });
+                    root.path("translations").forEach((translation) -> {
+                        String url = translation.asText();
+                        if (url != null) {
+                            this.translations.add(url);
                         }
                     });
                 } catch (IOException ex) {
