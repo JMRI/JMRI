@@ -40,7 +40,7 @@ public class DefaultSignalGroupManagerXml
             Element e = new Element("signalgroup");
             SignalGroup p = m.getSignalGroup(names.get(i));
             e.addContent(new Element("systemName").addContent(p.getSystemName()));
-            e.setAttribute("userName", p.getUserName());
+            e.addContent(new Element("userName").addContent(p.getUserName()));
             //storeCommon(p, e); would store comment, now a separate element
             storeComment(p, e);
             element.addContent(e);
