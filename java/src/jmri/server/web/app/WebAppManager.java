@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -284,8 +285,8 @@ public class WebAppManager extends AbstractPreferencesManager {
         return sources.toString();
     }
 
-    public Set<URL> getPreloadedTranslations(Profile profile, Locale locale) {
-        Set<URL> urls = new HashSet<>();
+    public Set<URI> getPreloadedTranslations(Profile profile, Locale locale) {
+        Set<URI> urls = new HashSet<>();
         this.getManifests(profile).forEach((WebManifest manifest) -> {
             urls.addAll(manifest.getPreloadedTranslations(locale));
         });

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -71,16 +72,16 @@ public class JsonManifest implements WebManifest {
     }
 
     @Override
-    public Set<URL> getPreloadedTranslations(Locale locale) {
+    public Set<URI> getPreloadedTranslations(Locale locale) {
         this.initialize();
-        Set<URL> found = new HashSet<>();
+        Set<URI> found = new HashSet<>();
         this.translations.forEach((translation) -> {
-            URL url = FileUtil.findURL(translation.replaceFirst("\\*", locale.toString()));
+            URI url = FileUtil.findURI(translation.replaceFirst("\\*", locale.toString()));
             if (url == null) {
-                url = FileUtil.findURL(translation.replaceFirst("\\*", locale.getLanguage()));
+                url = FileUtil.findURI(translation.replaceFirst("\\*", locale.getLanguage()));
             }
             if (url == null) {
-                url = FileUtil.findURL(translation.replaceFirst("\\*", "en"));
+                url = FileUtil.findURI(translation.replaceFirst("\\*", "en"));
             }
             if (url != null) {
                 found.add(url);

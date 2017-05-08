@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -183,9 +183,9 @@ public class WebAppServlet extends HttpServlet {
             WebAppManager manager = getWebAppManager();
             ObjectMapper mapper = new ObjectMapper();
             ObjectNode translation = mapper.createObjectNode();
-            for (URL url : manager.getPreloadedTranslations(profile, locale)) {
+            for (URI url : manager.getPreloadedTranslations(profile, locale)) {
                 log.debug("Reading {}", url.toString());
-                JsonNode translations = mapper.readTree(url);
+                JsonNode translations = mapper.readTree(url.toURL());
                 log.debug("Read {}", translations.toString());
                 if (translations.isObject()) {
                     log.debug("Adding {}", translations.toString());

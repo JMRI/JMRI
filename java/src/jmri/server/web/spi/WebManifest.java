@@ -1,5 +1,6 @@
 package jmri.server.web.spi;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
@@ -80,5 +81,5 @@ public interface WebManifest {
      * @param locale the requested locale for the translations
      * @return a list of translation sources
      */
-    public Set<URL> getPreloadedTranslations(Locale locale);
+    public Set<URI> getPreloadedTranslations(Locale locale);
 }
