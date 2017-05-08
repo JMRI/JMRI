@@ -258,12 +258,12 @@ public class SE8cSignalHead extends DefaultSignalHead {
                 new java.beans.PropertyChangeListener() {
                     @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        // we're not tracking state, we're tracking changes in state
+                        // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
                         if (e.getPropertyName().equals("KnownState")) {
-                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED) && getAppearance() != GREEN) {
-                                setAppearance(GREEN);
-                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN) && getAppearance() != RED) {
-                                setAppearance(RED);
+                            if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != GREEN) {
+                                setLocalAppearance(GREEN);
+                            } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != RED) {
+                                setLocalAppearance(RED);
                             }
                         }
                     }
@@ -273,12 +273,12 @@ public class SE8cSignalHead extends DefaultSignalHead {
                 new java.beans.PropertyChangeListener() {
                     @Override
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        // we're not tracking state, we're tracking changes in state
-                        if (e.getPropertyName().equals("CommandedState")) {
-                            if (e.getNewValue().equals(Turnout.CLOSED) && !e.getOldValue().equals(Turnout.CLOSED) && getAppearance() != DARK) {
-                                setAppearance(DARK);
-                            } else if (e.getNewValue().equals(Turnout.THROWN) && !e.getOldValue().equals(Turnout.THROWN) && getAppearance() != YELLOW) {
-                                setAppearance(YELLOW);
+                        // we're not tracking state, we're tracking LocoNet messages - run even if a repeated state transition
+                        if (e.getPropertyName().equals("KnownState")) {
+                            if (e.getNewValue().equals(Turnout.CLOSED) && getAppearance() != DARK) {
+                                setLocalAppearance(DARK);
+                            } else if (e.getNewValue().equals(Turnout.THROWN) && getAppearance() != YELLOW) {
+                                setLocalAppearance(YELLOW);
                             }
                         }
                     }
@@ -286,5 +286,19 @@ public class SE8cSignalHead extends DefaultSignalHead {
         );
     }
 
+    /**
+     * Local method for when external (turnout) input
+     * sets the appearance.  Does everything setAppearance does
+     * _except_ drive the outputs to avoid a LocoNet loop.
+     */
+    void setLocalAppearance(int newAppearance) {
+        int oldAppearance = mAppearance; // store the current appearance
+        mAppearance = newAppearance;
+        appearanceSetsFlashTimer(newAppearance);
+
+        // notify listeners, if any
+        firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
 }
