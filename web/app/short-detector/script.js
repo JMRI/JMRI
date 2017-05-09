@@ -15,9 +15,11 @@ angular.module('jmri.app').run(function shortDetector($rootScope, $http, $log, N
   };
 
   $rootScope.$on('$translateRefreshEnd', function () {
-    $translate('SHORT-DETECTOR.DETECTED').then(function(translated) {
-      $rootScope.shortDetector.detected = translated;
-    });
+    if (typeof($rootScope.shortDetector.detectors.regex) !== 'undefined') {
+      $translate('SHORT-DETECTOR.DETECTED').then(function(translated) {
+        $rootScope.shortDetector.detected = translated;
+      });
+    }
   });
 
   // register a listener for sensors with the jmriWebSocket service
