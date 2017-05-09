@@ -17,7 +17,7 @@ import java.util.Comparator;
  * @author Howard Penny
  * @author Pete Cressman
  */
-public class SystemNameComparator implements Comparator<Object>, java.io.Serializable {
+public class SystemNameComparator implements Comparator<Object> {
 
     public SystemNameComparator() {
     }
