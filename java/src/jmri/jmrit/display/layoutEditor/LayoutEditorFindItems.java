@@ -396,82 +396,102 @@ public class LayoutEditorFindItems {
     }
 
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName) {
+        PositionablePoint result = null;
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getEastBoundSensorName().equals(sensorName)) {
-                return p;
+                result = p;
+                break;
             }
         }
-        return null;
+        return result;
     }
 
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName) {
+        PositionablePoint result = null;
         for (PositionablePoint p : layoutEditor.pointList) {
             if (p.getWestBoundSensorName().equals(sensorName)) {
-                return p;
+                result = p;
+                break;
             }
-
         }
-        return null;
+        return result;
     }
 
     public LayoutTurnout findLayoutTurnoutByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
-            if (t.getName().equals(name)) {
-                return t;
+        LayoutTurnout result = null;
+        if (name.length() > 0) {
+            for (LayoutTurnout t : layoutEditor.turnoutList) {
+                if (t.getName().equals(name)) {
+                    result = t;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutTurnout t : layoutEditor.turnoutList) {
-            if (t.getTurnoutName().equals(name)) {
-                return t;
+        LayoutTurnout result = null;
+        if (name.length() > 0) {
+            for (LayoutTurnout t : layoutEditor.turnoutList) {
+                if (t.getTurnoutName().equals(name)) {
+                    result = t;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     public LevelXing findLevelXingByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LevelXing x : layoutEditor.xingList) {
-            if (x.getID().equals(name)) {
-                return x;
+        LevelXing result = null;
+        if (name.length() > 0) {
+            for (LevelXing x : layoutEditor.xingList) {
+                if (x.getID().equals(name)) {
+                    result = x;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
+    }
+
+    public LayoutFlex findLayoutFlexByName(String name) {
+        LayoutFlex result = null;
+        if (name.length() > 0) {
+            for (LayoutFlex f : layoutEditor.flexList) {
+                if (f.getID().equals(name)) {
+                    result = f;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public LayoutSlip findLayoutSlipByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutSlip x : layoutEditor.slipList) {
-            if (x.getName().equals(name)) {
-                return x;
+        LayoutSlip result = null;
+        if (name.length() > 0) {
+            for (LayoutSlip x : layoutEditor.slipList) {
+                if (x.getName().equals(name)) {
+                    result = x;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     public LayoutTurntable findLayoutTurntableByName(String name) {
-        if (name.length() <= 0) {
-            return null;
-        }
-        for (LayoutTurntable x : layoutEditor.turntableList) {
-            if (x.getID().equals(name)) {
-                return x;
+        LayoutTurntable result = null;
+        if (name.length() > 0) {
+            for (LayoutTurntable x : layoutEditor.turntableList) {
+                if (x.getID().equals(name)) {
+                    result = x;
+                    break;
+                }
             }
         }
-        return null;
+        return result;
     }
 
     // data encapsulation means that no one external to an object should
@@ -548,6 +568,8 @@ public class LayoutEditorFindItems {
                 result = findPositionablePointByName(name);
             } else if (name.startsWith("X")) {
                 result = findLevelXingByName(name);
+            } else if (name.startsWith("F")) {
+                result = findLayoutFlexByName(name);
             } else if (name.startsWith("SL")) {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {

@@ -45,17 +45,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A LayoutSlip is is a crossing of two straight tracks designed in such a way as to allow
- * trains to change from one straight track to the other, as well as going straight across.
+ * A LayoutSlip is is a crossing of two straight tracks designed in such a way
+ * as to allow trains to change from one straight track to the other, as well as
+ * going straight across.
  * <P>
- * A LayoutSlip has four connection points, designated A, B, C, and D.
- * A train may proceed between A &amp; D, A &amp; C, B &amp; D and in the case of double-slips, B &amp; C.
+ * A LayoutSlip has four connection points, designated A, B, C, and D. A train
+ * may proceed between A &amp; D, A &amp; C, B &amp; D and in the case of
+ * double-slips, B &amp; C.
  * <P>
- *    ==A==-==D==
- *       \\ //
- *         X
- *       // \\
- *    ==B==-==C==
+ * ==A==-==D== \\ // X // \\ ==B==-==C==
  * <P>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
@@ -66,8 +64,8 @@ import org.slf4j.LoggerFactory;
  * information and connections are added when available.
  * <P>
  * SignalHead names are saved here to keep track of where signals are.
- * LayoutSlip only serves as a storage place for SignalHead names. The names
- * are placed here by Set Signals at Level Crossing in Tools menu.
+ * LayoutSlip only serves as a storage place for SignalHead names. The names are
+ * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  */
@@ -146,29 +144,29 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public Turnout getTurnoutB() {
-    if (namedTurnoutB == null) {
-        // set physical turnout if possible and needed
-        setTurnoutB(turnoutBName);
+        if (namedTurnoutB == null) {
+            // set physical turnout if possible and needed
+            setTurnoutB(turnoutBName);
             if (namedTurnoutB == null) {
-                 return null;
+                return null;
             }
-         }
-         return namedTurnoutB.getBean();
+        }
+        return namedTurnoutB.getBean();
     }
 
     public void setTurnoutB(String tName) {
         if (namedTurnoutB != null) {
-             deactivateTurnout();
-         }
-         turnoutBName = tName;
-         Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutBName);
-         if (turnout != null) {
-             namedTurnoutB = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutBName, turnout);
-             activateTurnout();
-         } else {
-             turnoutBName = "";
-             namedTurnoutB = null;
-         }
+            deactivateTurnout();
+        }
+        turnoutBName = tName;
+        Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutBName);
+        if (turnout != null) {
+            namedTurnoutB = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutBName, turnout);
+            activateTurnout();
+        } else {
+            turnoutBName = "";
+            namedTurnoutB = null;
+        }
     }
 
     @Override
@@ -182,9 +180,6 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectC;
             case SLIP_D:
                 return connectD;
-            default:
-                // fall out
-                break;
         }
         log.error("Invalid Point Type " + location); //I18IN
         throw new jmri.JmriException("Invalid Point");
@@ -229,7 +224,8 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Toggle slip states if clicked on, physical turnout exists, and not disabled
+     * Toggle slip states if clicked on, physical turnout exists, and not
+     * disabled
      */
     public void toggleState(int selectedPointType) {
         switch (selectedPointType) {
@@ -357,6 +353,40 @@ public class LayoutSlip extends LayoutTurnout {
         double x = center.getX() - dispB.getX();
         double y = center.getY() - dispB.getY();
         return new Point2D.Double(x, y);
+    }
+
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case SLIP_A:
+                result = getCoordsA();
+                break;
+            case SLIP_B:
+                result = getCoordsB();
+                break;
+            case SLIP_C:
+                result = getCoordsC();
+                break;
+            case SLIP_D:
+                result = getCoordsD();
+                break;
+            case SLIP_CENTER:
+                break;
+            case SLIP_LEFT:
+                Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
+                double leftFract = circleRadius / center.distance(leftCenter);
+                result = lerp(center, leftCenter, leftFract);
+                break;
+            case SLIP_RIGHT:
+                Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
+                double rightFract = circleRadius / center.distance(rightCenter);
+                result = lerp(center, rightCenter, rightFract);
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
     }
 
     private void updateBlockInfo() {
@@ -493,24 +523,23 @@ public class LayoutSlip extends LayoutTurnout {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
+        // TODO: A faster way to check to see if p is in the rects for
+        // all these locations is to create a rect around p and see if
+        // those locations are in that rect instead of creating rects
+        // for all those locations… Just saying… ;-)
+        //
+        // Rectangle2D pointRect = layoutEditor.turnoutCircleRectAt(p);
         // calculate radius of turnout control circle
-        // note: 3 is layoutEditor.SIZE (not public)
-        double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
-
-        Point2D pt = getCoordsCenter();
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
         // calculate left center
-        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        double leftFract = circleRadius / pt.distance(leftCenter);
-        leftCenter = lerp(pt, leftCenter, leftFract);
+        Point2D leftCenter = getCoordsForConnectionType(SLIP_LEFT);
 
         // calculate right center
-        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        double rightFract = circleRadius / pt.distance(rightCenter);
-        rightCenter = lerp(pt, rightCenter, rightFract);
+        Point2D rightCenter = getCoordsForConnectionType(SLIP_RIGHT);
 
         if (useRectangles) {
             // calculate turnout's left control rectangle
@@ -532,6 +561,49 @@ public class LayoutSlip extends LayoutTurnout {
             if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
                 //mouse was pressed on this slip
                 result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+            }
+        }
+
+        // have we found anything yet?
+        if (result == NONE) {
+            if (!requireUnconnected || (getConnectA() == null)) {
+                //check the A connection point
+                Point2D pt = getCoordsA();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_A;
+                }
+            }
+
+            if (!requireUnconnected || (getConnectB() == null)) {
+                //check the B connection point
+                Point2D pt = getCoordsB();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_B;
+                }
+            }
+
+            if (!requireUnconnected || (getConnectC() == null)) {
+                //check the C connection point
+                Point2D pt = getCoordsC();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_C;
+                }
+            }
+
+            if (!requireUnconnected || (getConnectD() == null)) {
+                //check the D connection point
+                Point2D pt = getCoordsD();
+                Rectangle2D r = layoutEditor.controlPointRectAt(pt);
+
+                if (r.contains(p)) {
+                    result = LayoutTrack.SLIP_D;
+                }
             }
         }
         return result;
@@ -588,8 +660,8 @@ public class LayoutSlip extends LayoutTurnout {
 
     /**
      * Initialization method The above variables are initialized by
-     * LayoutSlipXml, then the following method is called after the
-     * entire LayoutEditor is loaded to set the specific TrackSegment objects.
+     * LayoutSlipXml, then the following method is called after the entire
+     * LayoutEditor is loaded to set the specific TrackSegment objects.
      */
     @Override
     public void setObjects(LayoutEditor p) {
@@ -697,36 +769,36 @@ public class LayoutSlip extends LayoutTurnout {
                 JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener(
-                    (ActionEvent event) -> {
-                        boolean entering = true;
-                        boolean error = false;
-                        String newAngle = "";
-                        while (entering) {
-                            // prompt for rotation angle
-                            error = false;
-                            newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                    rb.getString("EnterRotation") + " :");
-                            if (newAngle.length() < 1) {
-                                return;  // cancelled
-                            }
-                            double rot = 0.0;
-                            try {
-                                rot = Double.parseDouble(newAngle);
-                            } catch (Exception e1) {
-                                JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
-                                        + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                                error = true;
-                                newAngle = "";
-                            }
-                            if (!error) {
-                                entering = false;
-                                if (rot != 0.0) {
-                                    rotateCoords(rot);
-                                    layoutEditor.redrawPanel();
+                        (ActionEvent event) -> {
+                            boolean entering = true;
+                            boolean error = false;
+                            String newAngle = "";
+                            while (entering) {
+                                // prompt for rotation angle
+                                error = false;
+                                newAngle = JOptionPane.showInputDialog(layoutEditor,
+                                        rb.getString("EnterRotation") + " :");
+                                if (newAngle.length() < 1) {
+                                    return;  // cancelled
+                                }
+                                double rot = 0.0;
+                                try {
+                                    rot = Double.parseDouble(newAngle);
+                                } catch (Exception e1) {
+                                    JOptionPane.showMessageDialog(layoutEditor, rb.getString("Error3")
+                                            + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                                    error = true;
+                                    newAngle = "";
+                                }
+                                if (!error) {
+                                    entering = false;
+                                    if (rot != 0.0) {
+                                        rotateCoords(rot);
+                                        layoutEditor.redrawPanel();
+                                    }
                                 }
                             }
                         }
-                    }
                 );
             }
             if (blockAssigned) {
@@ -860,7 +932,7 @@ public class LayoutSlip extends LayoutTurnout {
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));
             turnoutAComboBox = new JmriBeanComboBox(
-                InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    InstanceManager.turnoutManagerInstance(), getTurnout(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutAComboBox);
             contentPane.add(panel1);
@@ -868,7 +940,7 @@ public class LayoutSlip extends LayoutTurnout {
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));
             turnoutBComboBox = new JmriBeanComboBox(
-                InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    InstanceManager.turnoutManagerInstance(), getTurnoutB(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
             panel1a.add(turnoutBNameLabel);
             panel1a.add(turnoutBComboBox);
             contentPane.add(panel1a);
@@ -921,9 +993,9 @@ public class LayoutSlip extends LayoutTurnout {
             // Edit Block
             panel4.add(turnoutEditBlock = new JButton(Bundle.getMessage("EditBlock", "")));
             turnoutEditBlock.addActionListener(
-                (ActionEvent event) -> {
-                    turnoutEditBlockPressed(event);
-                }
+                    (ActionEvent event) -> {
+                        turnoutEditBlockPressed(event);
+                    }
             );
             turnoutEditBlock.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1
 
@@ -936,24 +1008,24 @@ public class LayoutSlip extends LayoutTurnout {
             // make this button the default button (return or enter activates)
             // Note: We have to invoke this later because we don't currently have a root pane
             SwingUtilities.invokeLater(
-                () -> {
-                    JRootPane rootPane = SwingUtilities.getRootPane(slipEditDone);
-                    rootPane.setDefaultButton(slipEditDone);
-                }
+                    () -> {
+                        JRootPane rootPane = SwingUtilities.getRootPane(slipEditDone);
+                        rootPane.setDefaultButton(slipEditDone);
+                    }
             );
 
             slipEditDone.addActionListener(
-                (ActionEvent event) -> {
-                    slipEditDonePressed(event);
-                }
+                    (ActionEvent event) -> {
+                        slipEditDonePressed(event);
+                    }
             );
             slipEditDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
             // Cancel
             panel5.add(slipEditCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             slipEditCancel.addActionListener(
-                (ActionEvent event) -> {
-                    slipEditCancelPressed(event);
-                }
+                    (ActionEvent event) -> {
+                        slipEditCancelPressed(event);
+                    }
             );
             slipEditCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             contentPane.add(panel5);
@@ -976,7 +1048,7 @@ public class LayoutSlip extends LayoutTurnout {
         needsBlockUpdate = false;
     }
 
-    void drawSlipState(Graphics2D g2, int state) {
+    private void drawSlipState(Graphics2D g2, int state) {
         int ctrX = 20;
         int ctrY = 20;
         Point2D ldispA = new Point2D.Double(-20.0, 0.0);
@@ -1439,30 +1511,19 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void drawSlipCircles(Graphics2D g2) {
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
-        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        double leftFract = circleRadius / center.distance(leftCenter);
-        Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
+        Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_LEFT);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
-        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        double rightFract = circleRadius / center.distance(rightCenter);
-        Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
+        Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_RIGHT);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
     }
 
-    public void drawSlipRect(Graphics2D g2) {
+    public void drawControlRects(Graphics2D g2) {
         // draw east/west turnout control circles
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
-
-        Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
-        double leftFract = circleRadius / center.distance(leftCenter);
-        Point2D leftCircleCenter = lerp(center, leftCenter, leftFract);
+        Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_LEFT);
         g2.draw(layoutEditor.turnoutCircleAt(leftCircleCenter));
 
-        Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
-        double rightFract = circleRadius / center.distance(rightCenter);
-        Point2D rightCircleCenter = lerp(center, rightCenter, rightFract);
+        Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_RIGHT);
         g2.draw(layoutEditor.turnoutCircleAt(rightCircleCenter));
 
         Point2D pt = getCoordsA();
@@ -1496,7 +1557,7 @@ public class LayoutSlip extends LayoutTurnout {
             g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.controlPointRectAt(pt));
-    }   // public void drawSlipRects(Graphics2D g2)
+    }   // public void drawControlRects(Graphics2D g2)
 
     static class TurnoutState {
 

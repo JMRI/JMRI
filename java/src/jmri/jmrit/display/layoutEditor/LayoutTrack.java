@@ -44,6 +44,10 @@ public abstract class LayoutTrack {
     public static final int SLIP_D = 24; // offset for slip connection points
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
+    public static final int FLEX_CENTER = 27;
+    public static final int FLEX_A = 28;
+    public static final int FLEX_B = 29;
+    public static final int FLEX_CONTROL_POINT_OFFSET = 30; // offset for flex track control points (0=A, size()-1 == B)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
     protected String ident = "";
@@ -70,6 +74,10 @@ public abstract class LayoutTrack {
      * accessor methods
      */
     public String getID() {
+        return ident;
+    }
+
+    public String getName() {
         return ident;
     }
 
@@ -121,13 +129,66 @@ public abstract class LayoutTrack {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         return NONE;
     }
 
-    // optional useRectangles parameter defaults to false
-    public int connectionTypeForPoint(Point2D p) {
-        return connectionTypeForPoint(p, false);
+    // optional useRectangles & requireUnconnected parameters default to false
+    public int hitTestPoint(Point2D p) {
+        return hitTestPoint(p, false, false);
+    }
+
+    // optional requireUnconnected parameter defaults to false
+    public int hitTestPoint(Point2D p, boolean useRectangles) {
+        return hitTestPoint(p, useRectangles, false);
+    }
+
+    // some connection types aren't actually connections
+    // they're only used for hit testing (to determine what was clicked)
+    public boolean isConnectionType(int connectionType) {
+        boolean result = false; // assume failure (pessimist!)
+        switch (connectionType) {
+            case POS_POINT:
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D:
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D:
+            case TRACK:
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D:
+            case FLEX_A:
+            case FLEX_B:
+                result = true;  // these are all connection types
+                break;
+            case NONE:
+            case TURNOUT_CENTER:
+            case LEVEL_XING_CENTER:
+            case TURNTABLE_CENTER:
+            case LAYOUT_POS_LABEL:
+            case LAYOUT_POS_JCOMP:
+            case MULTI_SENSOR:
+            case MARKER:
+            case TRACK_CIRCLE_CENTRE:
+            case SLIP_CENTER:
+            case SLIP_LEFT:
+            case SLIP_RIGHT:
+            case FLEX_CENTER:
+            default:
+                result = false; // these are all hit types
+                break;
+        }
+        if (TURNTABLE_RAY_OFFSET <= connectionType) {
+            result = true;  // these are all connection types
+        } else if (FLEX_CONTROL_POINT_OFFSET <= connectionType) {
+            result = false; // these are all hit types
+        }
+        return result;
     }
 
     public void reCheckBlockBoundary() {

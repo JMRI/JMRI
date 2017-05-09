@@ -163,7 +163,6 @@ public class LayoutTurnout extends LayoutTrack {
     private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // persistent instances variables (saved between sessions)
-    public String ident;   // name of this layout turnout (hidden from user)
     public String turnoutName = "";   // should be the name (system or user) of
     //  an existing physical turnout
     public String secondTurnoutName = "";
@@ -380,17 +379,6 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    @Override
-    protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
-        double cX = center.getX();
-        double cY = center.getY();
-        double deltaX = p.getX() - cX;
-        double deltaY = p.getY() - cY;
-        double x = cX + cosineRot * deltaX - sineRot * deltaY;
-        double y = cY + sineRot * deltaX + cosineRot * deltaY;
-        return new Point2D.Double(x, y);
-    }
-
     /**
      * Accessor methods
      */
@@ -400,10 +388,6 @@ public class LayoutTurnout extends LayoutTrack {
 
     public void setVersion(int v) {
         version = v;
-    }
-
-    public String getName() {
-        return ident;
     }
 
     public boolean useBlockSpeed() {
@@ -1272,6 +1256,30 @@ public class LayoutTurnout extends LayoutTrack {
         return new Point2D.Double(x, y);
     }
 
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case TURNOUT_CENTER:
+                break;
+            case TURNOUT_A:
+                result = getCoordsA();
+                break;
+            case TURNOUT_B:
+                result = getCoordsB();
+                break;
+            case TURNOUT_C:
+                result = getCoordsC();
+                break;
+            case TURNOUT_D:
+                result = getCoordsD();
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
     // updates connectivity for blocks assigned to this turnout and connected track segments
     private void updateBlockInfo() {
         LayoutBlock bA = null;
@@ -1573,26 +1581,107 @@ public class LayoutTurnout extends LayoutTrack {
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (useRectangles) {
-            // calculate turnout's control rectangle
-            Rectangle2D r = layoutEditor.turnoutCircleRectAt(getCoordsCenter());
-            if (r.contains(p)) {
-                //point is in this turnout's control rectangle
-                result = TURNOUT_CENTER;
+            // calculate points control rectangle
+            Rectangle2D r = layoutEditor.turnoutCircleRectAt(p);
+
+            if (!requireUnconnected) {
+                if (r.contains(center)) {
+                    result = LayoutTrack.TURNOUT_CENTER;
+                }
+            }
+            //check the A connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectA() == null)) {
+                    if (r.contains(getCoordsA())) {
+                        result = LayoutTrack.TURNOUT_A;
+                    }
+                }
+            }
+
+            //check the B connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectB() == null)) {
+                    if (r.contains(getCoordsB())) {
+                        result = LayoutTrack.TURNOUT_B;
+                    }
+                }
+            }
+
+            //check the C connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectC() == null)) {
+                    if (r.contains(getCoordsC())) {
+                        result = LayoutTrack.TURNOUT_C;
+                    }
+                }
+            }
+
+            //check the D connection point
+            if (NONE == result) {
+                if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+                    if (!requireUnconnected || (getConnectD() == null)) {
+                        if (r.contains(getCoordsD())) {
+                            result = LayoutTrack.TURNOUT_D;
+                        }
+                    }
+                }
             }
         } else {
-            // calculate the distance to the center point of this turnout
-            Double distance = p.distance(getCoordsCenter());
-
             // calculate radius of turnout control circle
-            // note: 3 is layoutEditor.SIZE (not public)
-            double circleRadius = 3 * layoutEditor.getTurnoutCircleSize();
-            if (distance <= circleRadius) {
-                // point is in this turnout's control circle
-                result = TURNOUT_CENTER;
+            double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+
+            if (!requireUnconnected) {
+                // calculate the distance to the center point of this turnout
+                Double distance = p.distance(getCoordsCenter());
+                if (distance <= circleRadius) {
+                    result = TURNOUT_CENTER;
+                }
+            }
+
+            //check the A connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectA() == null)) {
+                    Double distance = p.distance(getCoordsA());
+                    if (distance <= circleRadius) {
+                        result = LayoutTrack.TURNOUT_A;
+                    }
+                }
+            }
+
+            //check the B connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectB() == null)) {
+                    Double distance = p.distance(getCoordsB());
+                    if (distance <= circleRadius) {
+                        result = LayoutTrack.TURNOUT_B;
+                    }
+                }
+            }
+
+            //check the C connection point
+            if (NONE == result) {
+                if (!requireUnconnected || (getConnectC() == null)) {
+                    Double distance = p.distance(getCoordsC());
+                    if (distance <= circleRadius) {
+                        result = LayoutTrack.TURNOUT_C;
+                    }
+                }
+            }
+
+            //check the D connection point
+            if (NONE == result) {
+                if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+                    if (!requireUnconnected || (getConnectD() == null)) {
+                        Double distance = p.distance(getCoordsD());
+                        if (distance <= circleRadius) {
+                            result = LayoutTrack.TURNOUT_D;
+                        }
+                    }
+                }
             }
         }
         return result;
