@@ -204,7 +204,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    static class TurnoutAspect implements java.io.Serializable {
+    static class TurnoutAspect {
 
         NamedBeanHandle<Turnout> namedTurnout;
         int state;

@@ -44,8 +44,6 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         element.setAttribute("aspects", p.getAspects() + "");
