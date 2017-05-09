@@ -1,0 +1,198 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/charts/utilization-trend/utilization-trend-chart-directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/charts/utilization-trend/utilization-trend-chart-directive.js#L184" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfUtilizationTrendChart</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.charts</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>Directive for rendering a utilization trend chart. The utilization trend chart combines overall
+data with a pfDonutPctChart and a pfSparklineChart. Add the options for the pfDonutChart via
+the donutConfig parameter. Add the options for the pfSparklineChart via the sparklineConfig
+parameter.
+<br><br>
+See <a href="http://c3js.org/reference.html">http://c3js.org/reference.html</a> for a full list of C3 chart options.</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-utilization-trend-chart
+     config="{object}"
+     donut-config="{object}"
+     sparkline-config="{object}"
+     chart-data="{object}"
+     [donut-center-label="{string}"]
+     [sparkline-chart-height="{int}"]
+     [show-sparkline-x-axis="{boolean}"]
+     [show-sparkline-y-axis="{boolean}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>configuration settings for the utilization trend chart:<br/></p>
+<ul style='list-style-type: none'>
+<li>.title        - title of the Utilization chart
+<li>.units        - unit label for values, ex: &#39;MHz&#39;,&#39;GB&#39;, etc..
+</ul></div></td></tr><tr><td>donutConfig</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>configuration settings for the donut pct chart, see pfDonutPctChart for specifics<br/></p>
+</div></td></tr><tr><td>sparklineConfig</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>configuration settings for the sparkline chart, see pfSparklineChart for specifics<br/></p>
+</div></td></tr><tr><td>chartData</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>the data to be shown in the donut and sparkline charts<br/></p>
+<ul style='list-style-type: none'>
+<li>.used   - number representing the amount used
+<li>.total  - number representing the total amount
+<li>.xData  - Array, X values for the data points, first element must be the name of the data
+<li>.yData  - Array, Y Values for the data points, first element must be the name of the data
+<li>.dataAvailable - Flag if there is data available - default: true
+</ul></div></td></tr><tr><td>donutCenterLabel <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>specifies the contents of the donut&#39;s center label.<br/>
+<strong>Values:</strong></p>
+<ul style='list-style-type: none'>
+<li> &#39;used&#39;      - displays the Used amount in the center label (default)
+<li> &#39;available&#39; - displays the Available amount in the center label
+<li> &#39;percent&#39;   - displays the Usage Percent of the Total amount in the center label
+<li> &#39;none&#39;      - does not display the center label
+</ul></div></td></tr><tr><td>sparklineChartHeight <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>height of the sparkline chart</p>
+</div></td></tr><tr><td>showSparklineXAxis <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>override sparkline config settings for showing the X Axis</p>
+</div></td></tr><tr><td>showSparklineYAxis <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><p>override sparkline config settings for showing the Y Axis</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-charts-directive-page patternfly-charts-directive-pfutilizationtrendchart-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.charts" source-edit-deps="angular.js script.js" source-edit-html="index.html-21" source-edit-css="" source-edit-js="script.js-22" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-21" ng-html-wrap-loaded="patternfly.charts angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-21">
+  <div ng-controller="ChartCtrl" class="row" style="display:inline-block; width: 100%;">
+    <div class="col-md-12">
+      <div pf-utilization-trend-chart config="config"
+           chart-data="data" center-label="centerLabel"
+           donut-config="donutConfig" sparkline-config="sparklineConfig"
+           sparkline-chart-height="custChartHeight"
+           show-sparkline-x-axis="custShowXAxis"
+           show-sparkline-y-axis="custShowYAxis">
+      </div>
+    </div>
+    <hr class="col-md-12">
+    <div class="col-md-12">
+      <form role="form">
+        <div class="form-group">
+        <label>Donut Center Label Type</label>
+        </br>
+        <label class="radio-inline">
+          <input type="radio" ng-model="centerLabel" value="used">Used</input>
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="centerLabel" value="available">Available</input>
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="centerLabel" value="percent">Percent</input>
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="centerLabel" value="none">None</input>
+        </label>
+        </div>
+      </form>
+      <form role="form">
+        <div class="form-group">
+          <label>Sparkline Tooltip Type</label>
+            </br>
+          <label class="radio-inline">
+            <input type="radio" ng-model="sparklineConfig.tooltipType" value="default">Default</input>
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-model="sparklineConfig.tooltipType" value="usagePerDay">Usage Per Day</input>
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-model="sparklineConfig.tooltipType" value="valuePerDay">Value Per Day</input>
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-model="sparklineConfig.tooltipType" value="percentage">Percentage</input>
+          </label>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-md-6">
+          <form role="form"">
+            <div class="form-group">
+              <label>Show</label>
+              </br>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custShowXAxis">Sparkline X Axis</input>
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="custShowYAxis">Sparkline Y Axis</input>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+        <form role="form" >
+          <div class="form-group">
+            <label>Chart Height</label>
+            </br>
+            <input style="height:25px; width:60px;" type="number" ng-model="custChartHeight"></input>
+          </div>
+        </form>
+        </div>
+        <div class="col-md-3">
+          <button ng-click="addDataPoint()">Add Data Point</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <form role="form"">
+            <div class="form-group">
+              <label class="checkbox-inline">
+                <input type="checkbox" ng-model="data.dataAvailable" ng-change="updateDataAvailable()">Data Available</input>
+              </label>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-22"></pre>
+<script type="text/ng-template" id="script.js-22">
+angular.module( 'patternfly.charts' ).controller( 'ChartCtrl', function( $scope ) {
+  $scope.config = {
+    title: 'Memory',
+    units: 'GB'
+  };
+  $scope.donutConfig = {
+    chartId: 'chartA',
+    thresholds: {'warning':'60','error':'90'}
+  };
+  $scope.sparklineConfig = {
+    'chartId': 'exampleSparkline',
+    'tooltipType': 'default',
+    'units': 'GB'
+  };
+
+ var today = new Date();
+ var dates = ['dates'];
+ for (var d = 20 - 1; d >= 0; d--) {
+     dates.push(new Date(today.getTime() - (d * 24 * 60 * 60 * 1000)));
+ }
+
+  $scope.data = {
+      dataAvailable: true,
+      used: 76,
+      total: 100,
+      xData: dates,
+      yData: ['used', '10', '20', '30', '20', '30', '10', '14', '20', '25', '68', '54', '56', '78', '56', '67', '88', '76', '65', '87', '76']
+  };
+
+  $scope.centerLabel = 'used';
+
+  $scope.custShowXAxis = false;
+  $scope.custShowYAxis = false;
+  $scope.custChartHeight = 60;
+
+  $scope.addDataPoint = function () {
+    var newData = Math.round(Math.random() * 100);
+    var newDate = new Date($scope.data.xData[$scope.data.xData.length - 1].getTime() + (24 * 60 * 60 * 1000));
+
+    $scope.data.used = newData;
+    $scope.data.xData.push(newDate);
+    $scope.data.yData.push(newData);
+  };
+});
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.charts" ng-set-html="index.html-21" ng-eval-javascript="script.js-22"></div>
+</div></div>
+</div>

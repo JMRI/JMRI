@@ -1,0 +1,160 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/sort/sort-directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/sort/sort-directive.js#L148" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfSort</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.sort</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-sort-directive-page patternfly-sort-directive-pfsort-page"><p>Directive for a  sort component
+<br><br></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-sort
+     config="{object}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>config</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-sort-directive-page patternfly-sort-directive-pfsort-page"><p>configuration settings for the sort:<br/></p>
+<ul style='list-style-type: none'>
+<li>.fields          - (Array) List of sortable fields containing:
+<ul style='list-style-type: none'>
+<li>.id          - (String) Unique Id for the sort field
+<li>.title       - (String) The title to display for the sort field
+<li>.sortType    - (String) The sort type, &#39;alpha&#39; or &#39;numeric&#39;
+</ul>
+<li>.currentField   - (Object) Currently selected field
+<li>.isAscending - (boolean) Current sort direction is ascending. True for ascending, False for descending
+<li>.onSortChange - ( function(sortId, sortDirection ) Function to call when the current sort params change
+</ul></div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-sort-directive-page patternfly-sort-directive-pfsort-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.sort" source-edit-deps="angular.js script.js" source-edit-html="index.html-55" source-edit-css="" source-edit-js="script.js-56" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-55" ng-html-wrap-loaded="patternfly.sort angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-55">
+  <div ng-controller="ViewCtrl" class="row example-container">
+    <div class="col-md-12">
+      <div pf-sort id="exampleSort" config="sortConfig"></div>
+    </div>
+    <hr class="col-md-12">
+    <div class="col-md-12">
+      <label class="events-label">Items: </label>
+    </div>
+    <div class="col-md-12">
+      <div ng-repeat="item in items" class="col-md-12 cfme-row-column">
+        <div class="row">
+          <div class="col-md-3">
+            <span>{{item.name}}</span>
+          </div>
+          <div class="col-md-3">
+            <span>{{item.count}}</span>
+          </div>
+          <div class="col-md-3">
+            <span>{{item.description}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-56"></pre>
+<script type="text/ng-template" id="script.js-56">
+  angular.module('patternfly.sort').controller('ViewCtrl', ['$scope',
+    function ($scope) {
+      $scope.items = [
+        {
+          name: "Item 7",
+          count: 432,
+          description: 'Very nice item'
+        },
+        {
+          name: "Item 6",
+          count: 22,
+          description: 'It lasts forever'
+        },
+        {
+          name: "Item 3",
+          count: 632,
+          description: 'Good stuff cheap'
+        },
+        {
+          name: "Item 2",
+          count: 12,
+          description: 'Fantastic'
+        },
+        {
+          name: "Item 9",
+          count: 99,
+          description: 'It does alright'
+        },
+        {
+          name: "Item 4",
+          count: 442,
+          description: 'Horrible'
+        },
+        {
+          name: "Item 1",
+          count: 42,
+          description: 'Most excellent'
+        },
+        {
+          name: "Item 8",
+          count: 2,
+          description: 'Get it while it lasts'
+        },
+        {
+          name: "Item 5",
+          count: 321,
+          description: 'Beautiful style'
+        }
+      ];
+
+      var compareFn = function(item1, item2) {
+        var compValue = 0;
+        if ($scope.sortConfig.currentField.id === 'name') {
+          compValue = item1.name.localeCompare(item2.name);
+        } else if ($scope.sortConfig.currentField.id === 'count') {
+            compValue = item1.count - item2.count;
+        } else if ($scope.sortConfig.currentField.id === 'description') {
+          compValue = item1.description.localeCompare(item2.description);
+        }
+
+        if (!$scope.sortConfig.isAscending) {
+          compValue = compValue * -1;
+        }
+
+        return compValue;
+      };
+
+      var sortChange = function (sortId, isAscending) {
+        $scope.items.sort(compareFn);
+      };
+
+      $scope.sortConfig = {
+        fields: [
+          {
+            id: 'name',
+            title:  'Name',
+            sortType: 'alpha'
+          },
+          {
+            id: 'count',
+            title:  'Count',
+            sortType: 'numeric'
+          },
+          {
+            id: 'description',
+            title:  'Description',
+            sortType: 'alpha'
+          }
+        ],
+        onSortChange: sortChange
+      };
+    }
+  ]);
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.sort" ng-set-html="index.html-55" ng-eval-javascript="script.js-56"></div>
+</div></div>
+</div>

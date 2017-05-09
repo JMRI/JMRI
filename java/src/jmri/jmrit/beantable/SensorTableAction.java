@@ -170,7 +170,7 @@ public class SensorTableAction extends AbstractTableAction {
         }
         if (numberOfSensors >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", numberOfSensors),
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Sensors"), numberOfSensors),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;

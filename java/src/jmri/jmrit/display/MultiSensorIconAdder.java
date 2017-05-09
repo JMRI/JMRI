@@ -237,7 +237,7 @@ public class MultiSensorIconAdder extends IconAdder {
             String key = _order.get(i);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            p.add(new JLabel(rbean.getString(key)));
+            p.add(new JLabel(Bundle.getMessage(key)));
             p.add(_iconMap.get(key));
             rowPanel.add(p);
             rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));

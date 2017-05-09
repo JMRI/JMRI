@@ -36,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(EliteXNetProgrammerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.lenz.hornbyelite.configurexml.PackageTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(EliteXNetSystemConnectionMemoTest.class));
         return suite;
     }
 
