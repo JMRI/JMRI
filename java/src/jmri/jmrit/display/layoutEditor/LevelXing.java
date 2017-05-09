@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -709,6 +710,35 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
+     * return the coordinates for a specified connection type
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case LEVEL_XING_CENTER:
+                break;
+            case LEVEL_XING_A:
+                result = getCoordsA();
+                break;
+            case LEVEL_XING_B:
+                result = getCoordsB();
+                break;
+            case LEVEL_XING_C:
+                result = getCoordsC();
+                break;
+            case LEVEL_XING_D:
+                result = getCoordsD();
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
      * Add Layout Blocks
      */
     public void setLayoutBlockAC(LayoutBlock b) {
@@ -911,6 +941,57 @@ public class LevelXing extends LayoutTrack {
         pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
                 Math.round(dispB.getY() * yFactor));
         dispB = pt;
+    }
+
+    /**
+     * return the connection type for a point
+     * @param p the point
+     * @param useRectangles use hit rectangle (false: use hit circles)
+     * @param requireUnconnected (only hit disconnected connections)
+     * @return 
+     * @since 7.4.?
+     */
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+        
+        if (!requireUnconnected) {
+            //check the center point
+            if (r.contains(getCoordsCenter())) {
+                result = LayoutTrack.LEVEL_XING_CENTER;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectA() == null)) {
+            //check the A connection point
+            if (r.contains(getCoordsA())) {
+                result = LayoutTrack.LEVEL_XING_A;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectB() == null)) {
+            //check the B connection point
+            if (r.contains(getCoordsB())) {
+                //mouse was pressed on this connection point
+                result = LayoutTrack.LEVEL_XING_B;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectC() == null)) {
+            //check the C connection point
+            if (r.contains(getCoordsC())) {
+                result = LayoutTrack.LEVEL_XING_C;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectD() == null)) {
+            //check the D connection point
+            if (r.contains(getCoordsD())) {
+                result = LayoutTrack.LEVEL_XING_D;
+            }
+        }
+        return result;
     }
 
     // initialization instance variables (used when loading a LayoutEditor)

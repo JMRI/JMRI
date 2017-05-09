@@ -69,7 +69,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
                 elementControlpoint.setAttribute("index", "" + i);
 
-                Point2D pt = p.getBezierControlPoint(i, false);
+                Point2D pt = p.getBezierControlPoint(i);
                 elementControlpoint.setAttribute("x", "" + pt.getX());
                 elementControlpoint.setAttribute("y", "" + pt.getY());
 
@@ -183,7 +183,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                                 } catch (org.jdom2.DataConversionException e) {
                                     log.error("failed to convert controlpoint coordinates or index attributes");
                                 }
-                                l.setBezierControlPoint(new Point2D.Double(x, y), index, false);
+                                l.setBezierControlPoint(new Point2D.Double(x, y), index);
                             }
                         } else {
                             log.error("Track segment Bezier two controlpoint elements not found. (found " + elementList.size() + ")");

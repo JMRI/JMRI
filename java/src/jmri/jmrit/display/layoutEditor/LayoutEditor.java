@@ -2932,8 +2932,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 show = TrackSegment.HIDECONALL;
             }
 
-            for (TrackSegment t : trackList) {
-                t.hideConstructionLines(show);
+            for (TrackSegment ts : trackList) {
+                ts.hideConstructionLines(show);
             }
             repaint();
         });
@@ -4880,8 +4880,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (checkSelect(dLoc, false)) {
                     selectedObject = foundObject;
                     selectedPointType = foundPointType;
-
-                    //selectedNeedsConnect = foundNeedsConnect;
                     startDel.setLocation(subtract(foundLocation, dLoc));
                     foundObject = null;
                 } else {
@@ -4890,7 +4888,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     if (selectedObject != null) {
                         selectedPointType = LayoutTrack.MARKER;
                         startDel.setLocation((((LocoIcon) selectedObject).getX() - dLoc.getX()),
-                                (((LocoIcon) selectedObject).getY() - dLoc.getY()));
+                                             (((LocoIcon) selectedObject).getY() - dLoc.getY()));
 
                         //selectedNeedsConnect = false;
                     } else {
@@ -4899,7 +4897,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         if (selectedObject != null) {
                             selectedPointType = LayoutTrack.LAYOUT_POS_JCOMP;
                             startDel.setLocation((((PositionableJComponent) selectedObject).getX() - dLoc.getX()),
-                                    (((PositionableJComponent) selectedObject).getY() - dLoc.getY()));
+                                                 (((PositionableJComponent) selectedObject).getY() - dLoc.getY()));
 
                             //selectedNeedsConnect = false;
                         } else {
@@ -4908,7 +4906,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (selectedObject != null) {
                                 selectedPointType = LayoutTrack.MULTI_SENSOR;
                                 startDel.setLocation((((MultiSensorIcon) selectedObject).getX() - dLoc.getX()),
-                                        (((MultiSensorIcon) selectedObject).getY() - dLoc.getY()));
+                                                     (((MultiSensorIcon) selectedObject).getY() - dLoc.getY()));
 
                                 //selectedNeedsConnect = false;
                             }
@@ -4917,13 +4915,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                     if (selectedObject == null) {
                         selectedObject = checkSensorIconPopUps(dLoc);
-
                         if (selectedObject == null) {
                             selectedObject = checkSignalHeadIconPopUps(dLoc);
-
                             if (selectedObject == null) {
                                 selectedObject = checkLabelImagePopUps(dLoc);
-
                                 if (selectedObject == null) {
                                     selectedObject = checkSignalMastIconPopUps(dLoc);
                                 }
@@ -4933,27 +4928,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         if (selectedObject != null) {
                             selectedPointType = LayoutTrack.LAYOUT_POS_LABEL;
                             startDel.setLocation((((PositionableLabel) selectedObject).getX() - dLoc.getX()),
-                                    (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
+                                                 (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
 
                             if (selectedObject instanceof MemoryIcon) {
                                 MemoryIcon pm = (MemoryIcon) selectedObject;
 
                                 if (pm.getPopupUtility().getFixedWidth() == 0) {
                                     startDel.setLocation((pm.getOriginalX() - dLoc.getX()),
-                                            (pm.getOriginalY() - dLoc.getY()));
+                                                         (pm.getOriginalY() - dLoc.getY()));
                                 }
                             }
-
-                            //selectedNeedsConnect = false;
                         } else {
                             selectedObject = checkBackgroundPopUps(dLoc);
 
                             if (selectedObject != null) {
                                 selectedPointType = LayoutTrack.LAYOUT_POS_LABEL;
                                 startDel.setLocation((((PositionableLabel) selectedObject).getX() - dLoc.getX()),
-                                        (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
-
-                                //selectedNeedsConnect = false;
+                                                     (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
                             }
                         }
                     }
@@ -5016,6 +5007,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
                     }
                 }   //if (allControlling())
+
                 //initialize starting selection - cancel any previous selection rectangle
                 selectionActive = true;
                 selectionX = dLoc.getX();
@@ -5104,8 +5096,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private boolean checkSelect(Point2D loc, boolean requireUnconnected, Object avoid) {
+        Rectangle2D r = trackControlPointRectAt(loc);
+
         //check positionable points, if any
-        //TODO: convert to use hitTestPoint, getCoordsForConnectionType & isConnectionType
+        //TODO: (?) convert to use hitTestPoint, getCoordsForConnectionType & isConnectionType
         for (PositionablePoint p : pointList) {
             if (p != avoid) {
                 if ((p != selectedObject) && !requireUnconnected
@@ -5113,9 +5107,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         || ((p.getType() == PositionablePoint.ANCHOR)
                         && (p.getConnect2() == null))) {
                     Point2D pt = p.getCoords();
-                    Rectangle2D r = trackControlPointRectAt(pt);
-
-                    if (r.contains(loc)) {
+                    if (r.contains(pt)) {
                         //mouse was pressed on this connection point
                         foundLocation = pt;
                         foundObject = p;
@@ -5149,82 +5141,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //check level Xings, if any
-        //TODO: convert to use hitTestPoint, getCoordsForConnectionType & isConnectionType
         for (LevelXing x : xingList) {
             if (x != selectedObject) {
-                if (!requireUnconnected) {
-                    //check the center point
-                    Point2D pt = x.getCoordsCenter();
-                    Rectangle2D r = trackControlCircleRectAt(pt);
-
-                    if (r.contains(loc)) {
-                        //mouse was pressed on this connection point
-                        foundLocation = pt;
+                try {
+                    foundPointType = x.hitTestPoint(dLoc, false, requireUnconnected);
+                    if (NONE != foundPointType) {
                         foundObject = x;
-                        foundPointType = LayoutTrack.LEVEL_XING_CENTER;
-                        foundNeedsConnect = false;
+                        foundLocation = x.getCoordsForConnectionType(foundPointType);
+                        foundNeedsConnect = x.isConnectionType(foundPointType);
+                        if (foundNeedsConnect) {
+                            foundNeedsConnect = (null == x.getConnection(foundPointType));
+                        }
                         return true;
                     }
-                }
-
-                if (!requireUnconnected || (x.getConnectA() == null)) {
-                    //check the A connection point
-                    Point2D pt = x.getCoordsA();
-                    Rectangle2D r = trackControlPointRectAt(pt);
-
-                    if (r.contains(loc)) {
-                        //mouse was pressed on this connection point
-                        foundLocation = pt;
-                        foundObject = x;
-                        foundPointType = LayoutTrack.LEVEL_XING_A;
-                        foundNeedsConnect = (x.getConnectA() == null);
-                        return true;
-                    }
-                }
-
-                if (!requireUnconnected || (x.getConnectB() == null)) {
-                    //check the B connection point
-                    Point2D pt = x.getCoordsB();
-                    Rectangle2D r = trackControlPointRectAt(pt);
-
-                    if (r.contains(loc)) {
-                        //mouse was pressed on this connection point
-                        foundLocation = pt;
-                        foundObject = x;
-                        foundPointType = LayoutTrack.LEVEL_XING_B;
-                        foundNeedsConnect = (x.getConnectB() == null);
-                        return true;
-                    }
-                }
-
-                if (!requireUnconnected || (x.getConnectC() == null)) {
-                    //check the C connection point
-                    Point2D pt = x.getCoordsC();
-                    Rectangle2D r = trackControlPointRectAt(pt);
-
-                    if (r.contains(loc)) {
-                        //mouse was pressed on this connection point
-                        foundLocation = pt;
-                        foundObject = x;
-                        foundPointType = LayoutTrack.LEVEL_XING_C;
-                        foundNeedsConnect = (x.getConnectC() == null);
-                        return true;
-                    }
-                }
-
-                if (!requireUnconnected || (x.getConnectD() == null)) {
-                    //check the D connection point
-                    Point2D pt = x.getCoordsD();
-                    Rectangle2D r = trackControlPointRectAt(pt);
-
-                    if (r.contains(loc)) {
-                        //mouse was pressed on this connection point
-                        foundLocation = pt;
-                        foundObject = x;
-                        foundPointType = LayoutTrack.LEVEL_XING_D;
-                        foundNeedsConnect = (x.getConnectD() == null);
-                        return true;
-                    }
+                } catch (Exception e) {
+                    //exceptions make me throw up…
+                    log.error("This error message, which nobody will ever see, shuts my IDE up.");
                 }
             }
         }
@@ -5251,49 +5183,32 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         //check turntables, if any
-        //TODO: convert to use hitTestPoint, getCoordsForConnectionType & isConnectionType
         for (LayoutTurntable x : turntableList) {
             if (x != selectedObject) {
-                if (!requireUnconnected) {
-                    //check the center point
-                    Point2D pt = x.getCoordsCenter();
-                    Rectangle2D r = trackControlCircleRectAt(pt);
-
-                    if (r.contains(loc)) {
-                        //mouse was pressed on this center point
-                        foundLocation = pt;
+                try {
+                    foundPointType = x.hitTestPoint(dLoc, false, requireUnconnected);
+                    if (NONE != foundPointType) {
                         foundObject = x;
-                        foundPointType = LayoutTrack.TURNTABLE_CENTER;
-                        foundNeedsConnect = false;
+                        foundLocation = x.getCoordsForConnectionType(foundPointType);
+                        foundNeedsConnect = x.isConnectionType(foundPointType);
+                        if (foundNeedsConnect) {
+                            foundNeedsConnect = (null == x.getConnection(foundPointType));
+                        }
                         return true;
                     }
-                }
-
-                for (int k = 0; k < x.getNumberRays(); k++) {
-                    if (!requireUnconnected || (x.getRayConnectOrdered(k) == null)) {
-                        Point2D pt = x.getRayCoordsOrdered(k);
-                        Rectangle2D r = trackControlPointRectAt(pt);
-
-                        if (r.contains(loc)) {
-                            //mouse was pressed on this connection point
-                            foundLocation = pt;
-                            foundObject = x;
-                            foundPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
-                            foundNeedsConnect = (x.getRayConnectOrdered(k) == null);
-
-                            return true;
-                        }
-                    }
+                } catch (Exception e) {
+                    //exceptions make me throw up…
+                    log.error("This error message, which nobody will ever see, shuts my IDE up.");
                 }
             }
         }
 
-        for (TrackSegment t : trackList) {
+        for (TrackSegment ts : trackList) {
             try {
-                foundPointType = t.hitTestPoint(loc, false, requireUnconnected);
+                foundPointType = ((TrackSegment)ts).hitTestPoint(loc, false, requireUnconnected);
                 if (NONE != foundPointType) {
-                    foundObject = t;
-                    foundLocation = t.getCoordsForConnectionType(foundPointType);
+                    foundObject = ts;
+                    foundLocation = ts.getCoordsForConnectionType(foundPointType);
                     foundNeedsConnect = false;
                     return true;
                 }
@@ -10649,8 +10564,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //final initialization routine for loading a LayoutEditor
     public void setConnections() {
         //initialize TrackSegments if any
-        for (TrackSegment t : trackList) {
-            t.setObjects(this);
+        for (TrackSegment ts : trackList) {
+            ts.setObjects(this);
         }
 
         //initialize PositionablePoints if any
@@ -10959,9 +10874,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawHiddenTrackSegments(Graphics2D g2) {
         if (isEditable()) {
-            for (TrackSegment t : trackList) {
-                if (t.isHidden()) {
-                    t.drawHidden(g2);
+            for (TrackSegment ts : trackList) {
+                if (ts.isHidden()) {
+                    ts.drawHidden(g2);
                     setTrackStrokeWidth(g2, !main);
                 }
             }
@@ -10969,16 +10884,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //drawHiddenTrackSegments
 
     private void drawDashedTrackSegments(Graphics2D g2, boolean mainline) {
-        for (TrackSegment t : trackList) {
-            t.drawDashed(g2, mainline);
+        for (TrackSegment ts : trackList) {
+            ts.drawDashed(g2, mainline);
         }
     }   //drawDashedTrackSegments
 
     // drawHidden all track segments which are not hidden, not dashed, and that match the mainline parm
     private void drawSolidTrackSegments(Graphics2D g2, boolean mainline) {
         setTrackStrokeWidth(g2, mainline);
-        for (TrackSegment t : trackList) {
-            t.drawSolid(g2, mainline);
+        for (TrackSegment ts : trackList) {
+            ts.drawSolid(g2, mainline);
         }
     }   //drawSolidTrackSegments
 
@@ -10994,8 +10909,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void drawTrackSegmentEditControls(Graphics2D g2) {
         g2.setColor(defaultTrackColor);
         // loop over all track segments
-        for (TrackSegment t : trackList) {
-            t.drawEditControls(g2);
+        for (TrackSegment ts : trackList) {
+            ts.drawEditControls(g2);
         }
 
         //TODO: move to method of TrackSegment class
@@ -11003,10 +10918,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // user to dynamically change the angle by dragging the mouse.
         g2.setColor(Color.black);
         // loop over all track segments
-        for (TrackSegment t : trackList) {
+        for (TrackSegment ts : trackList) {
 
-            if (t.getCircle() && t.showConstructionLinesLE()) {
-                Point2D pt = t.getCoordsCenterCircle();
+            if (ts.getCircle() && ts.showConstructionLinesLE()) {
+                Point2D pt = ts.getCoordsCenterCircle();
                 g2.draw(trackControlCircleRectAt(pt));
             }
         }

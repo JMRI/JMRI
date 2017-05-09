@@ -1256,6 +1256,11 @@ public class LayoutTurnout extends LayoutTrack {
         return new Point2D.Double(x, y);
     }
 
+    /**
+     * return the coordinates for a specified connection type
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = center;
         double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
@@ -1578,7 +1583,10 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * return the connection type for a point
-     *
+     * @param p the point
+     * @param useRectangles use hit rectangle (false: use hit circles)
+     * @param requireUnconnected (only hit disconnected connections)
+     * @return 
      * @since 7.4.?
      */
     public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {

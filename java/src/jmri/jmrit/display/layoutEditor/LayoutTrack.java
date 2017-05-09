@@ -130,7 +130,7 @@ public abstract class LayoutTrack {
      *
      * @since 7.4.?
      */
-    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         return NONE;
     }
 
