@@ -4,11 +4,8 @@
 2 = scripts (in comments)
 3 = style sheets (in comments)
 4 = body content (divs)
-5 = help menu title
-6 = help menu contents (in comments)
-7 = personal menu title
-8 = personal menu contents (in comments)
-9 = power menu title
+5 = help menu contents (in comments)
+6 = personal menu contents (in comments)
 -->
 <html>
     <head>
@@ -34,7 +31,7 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-power" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span title="%9$s" class="fa fa-power-off" ></span>
+                                <span data-translate-attr="{ title: 'POWER.POWER' }" class="fa fa-power-off" ></span>
                                 <span class="carat fa {{defaultPowerState| powerTriState}} small"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-power">
@@ -43,20 +40,20 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-help" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span title="%5$s" class="fa pficon-help"></span>
+                                <span data-translate-attr="{ title: 'HELP.HELP' }" class="fa pficon-help"></span>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-help">
-                                <!-- help menu items %6$s -->
+                                <!-- help menu items %5$s -->
                             </ul>
                         </li>
                         <li class="dropdown hidden">
                             <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-personal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span title="%7$s" class="fa pficon-user"></span>
+                                <span data-translate-attr="{ title: 'USER.USER' }" class="fa pficon-user"></span>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbar-menu-personal">
-                                <!-- user menu items %8$s -->
+                                <!-- user menu items %6$s -->
                             </ul>
                         </li>
                     </ul>

@@ -1,5 +1,6 @@
 {
   "POWER": {
-    "DEFAULT": "(default)"
+    "DEFAULT": "(default)",
+    "POWER": "Power"
   }
 }

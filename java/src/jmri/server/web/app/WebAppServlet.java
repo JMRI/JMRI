@@ -93,22 +93,16 @@ public class WebAppServlet extends HttpServlet {
             // 2 = scripts (in comments)
             // 3 = stylesheets (in comments)
             // 4 = body content (divs)
-            // 5 = help menu title
-            // 6 = help menu contents (in comments)
-            // 7 = personal menu title
-            // 8 = personal menu contents (in comments)
-            // 9 = power menu title
+            // 5 = help menu contents (in comments)
+            // 6 = personal menu contents (in comments)
             FileUtil.appendTextToFile(index, String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL("web/app/app/index.html")),
                     ServletUtil.getInstance().getRailroadName(false), // railroad name
                     String.format(inComments, manager.getScriptTags(profile)), // scripts (in comments)
                     String.format(inComments, manager.getStyleTags(profile)), // stylesheets (in comments)
                     "<!-- -->", // body content (divs)
-                    Bundle.getMessage(request.getLocale(), "help"), // help menu title
                     String.format(inComments, manager.getHelpMenuItems(profile, request.getLocale())), // help menu contents (in comments)
-                    Bundle.getMessage(request.getLocale(), "user"), // personal menu title
-                    String.format(inComments, manager.getUserMenuItems(profile, request.getLocale())), // personal menu contents (in comments)
-                    Bundle.getMessage(request.getLocale(), "power") // power menu title
+                    String.format(inComments, manager.getUserMenuItems(profile, request.getLocale())) // personal menu contents (in comments)
             ));
         }
         response.getWriter().print(FileUtil.readFile(index));

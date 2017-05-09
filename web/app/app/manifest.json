@@ -2,21 +2,23 @@
   "navigation":[
     {
       "path": "help/about",
-      "href": "ng-click:openAboutModal()"
+      "href": "ng-click:openAboutModal()",
+      "title": "translate:HELP.ABOUT"
     },
     {
       "path": "panel",
-      "iconClass": "fa fa-map-o"
+      "iconClass": "fa fa-map-o",
+      "title": "translate:NAVIGATION.PANELS"
+    },
+    {
+      "path": "roster",
+      "iconClass": "fa fa-train-o",
+      "title": "translate:NAVIGATION.ROSTER"
     },
     {
       "path": "layout",
-      "iconClass": "fa fa-map-signs"
-    },
-    {
-      "path": "translate-test",
-      "iconClass": "fa fa-flag",
-      "title": "translate:TRANSLATE_THIS",
-      "href": "ng-click:openAboutModal()"
+      "iconClass": "fa fa-map-signs",
+      "title": "translate:NAVIGATION.LAYOUT"
     }
   ],
   "scripts":[

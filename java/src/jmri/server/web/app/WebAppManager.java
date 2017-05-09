@@ -215,7 +215,7 @@ public class WebAppManager extends AbstractPreferencesManager {
             String href = item.getHref();
             String title = item.getTitle(locale);
             if (title.startsWith("translate:")) {
-                title = String.format("<span data-translate>%s</span>", title);
+                title = String.format("<span data-translate>%s</span>", title.substring(10));
             }
             if (href != null && href.startsWith("ng-click:")) { // NOI18N
                 navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>", href.substring(href.indexOf(":") + 1, href.length()), title)); // NOI18N
