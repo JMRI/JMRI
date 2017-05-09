@@ -1,20 +1,19 @@
 package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -424,9 +423,9 @@ public class LightTableAction extends AbstractTableAction {
                         label.setForeground(Color.red);
                         log.debug("Light state inconsistent");
                         iconHeight = 0;
-                    } else if (value.equals(Bundle.getMessage("BeanStateUnknown"))) {
-                        label = new JLabel("?", JLabel.CENTER); // centered text alignment
-                        log.debug("Light state unknown");
+                    } else if (value.equals(Bundle.getMessage("LightStateIntermediate"))) {
+                        label = new JLabel("...", JLabel.CENTER); // centered text alignment
+                        log.debug("Light state in transition");
                         iconHeight = 0;
                     } else { // failed to load icon
                         label = new JLabel(value, JLabel.CENTER); // centered text alignment

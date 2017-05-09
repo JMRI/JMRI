@@ -35,7 +35,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -67,7 +67,7 @@ public class SensorTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Sensors
+     * of Sensors.
      */
     @Override
     protected void createModel() {

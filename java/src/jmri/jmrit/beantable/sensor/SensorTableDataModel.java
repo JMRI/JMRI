@@ -1,12 +1,30 @@
 package jmri.jmrit.beantable.sensor;
 
-import java.util.ResourceBundle;
+import apps.gui.GuiLafPreferencesManager;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ResourceBundle;
+import javax.imageio.ImageIO;
+import javax.swing.AbstractCellEditor; // for iconLabel
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -20,9 +38,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Data model for a SensorTable
+ * Data model for a SensorTable.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class SensorTableDataModel extends BeanTableDataModel {
 
@@ -34,6 +53,8 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int PULLUPCOL = INACTIVEDELAY + 1;
 
     SensorManager senManager = InstanceManager.sensorManagerInstance();
+    // for icon state col
+    protected boolean _graphicState = false; // updated from prefs
 
     public SensorTableDataModel() {
         super();
@@ -54,6 +75,8 @@ public class SensorTableDataModel extends BeanTableDataModel {
         senManager = manager;
         getManager().addPropertyChangeListener(this);
         updateNameList();
+        // load graphic state column display preference
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
     }
 
     @Override
@@ -170,6 +193,10 @@ public class SensorTableDataModel extends BeanTableDataModel {
               return String.class;
            case PULLUPCOL:
               return JComboBox.class;
+           case VALUECOL:
+               if (_graphicState) {
+                    return JLabel.class; // use an image to show sensor state
+               }
            default:
               return super.getColumnClass(col);
         }
@@ -302,6 +329,9 @@ public class SensorTableDataModel extends BeanTableDataModel {
         } else if (col == PULLUPCOL) {
             JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
             s.setPullResistance((Sensor.PullResistance)cb.getSelectedItem());
+        } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
+            clickOn(s);
+            fireTableRowsUpdated(row, row);
         } else {
             super.setValueAt(value, row, col);
         }
@@ -321,6 +351,131 @@ public class SensorTableDataModel extends BeanTableDataModel {
             return super.matchPropertyName(e);
         }
     }
+
+    /**
+     * Customize the sensor table Value (State) column to show an appropriate graphic for the sensor state
+     * if _graphicState = true, or just the localized state text
+     * when the TableDataModel is being called from ListedTableAction.
+     *
+     * @param table a JTable of Sensors
+     */
+    @Override
+    protected void configValueColumn(JTable table) {
+        // have the value column hold a JPanel (icon)
+        //setColumnToHoldButton(table, VALUECOL, new JLabel("test")); // needed?
+        // add extras, override BeanTableDataModel
+        log.debug("Sensor configValueColumn (I am {})", super.toString());
+        if (_graphicState) { // load icons, only once
+            table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // no editor
+            table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
+        } else {
+            super.configValueColumn(table); // classic text style state indication
+        }
+    }
+
+    class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+
+        protected JLabel label;
+        protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
+        protected char beanTypeChar = 'S'; // for Sensor
+        protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
+        protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
+        protected BufferedImage onImage;
+        protected BufferedImage offImage;
+        protected ImageIcon onIcon;
+        protected ImageIcon offIcon;
+        protected int iconHeight = -1;
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            log.debug("Renderer Item = {}, State = {}", row, value);
+            if (iconHeight < 0) {
+                loadIcons();
+                log.debug("icons loaded");
+            }
+            return updateLabel((String) value, row);
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(
+                JTable table, Object value, boolean isSelected,
+                int row, int column) {
+
+            log.debug("Renderer Item = {}, State = {}", row, value);
+            if (iconHeight < 0) {
+                loadIcons();
+                log.debug("icons loaded");
+            }
+            return updateLabel((String) value, row);
+        }
+
+        public JLabel updateLabel(String value, int row) {
+            if (iconHeight > 0) { // if necessary, increase row height;
+                table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // adjust table row height for Sensor icon
+            }
+            if (value.equals(Bundle.getMessage("SensorStateInactive")) && offIcon != null) {
+                label = new JLabel(offIcon);
+                label.setVerticalAlignment(JLabel.BOTTOM);
+                log.debug("offIcon set");
+            } else if (value.equals(Bundle.getMessage("SensorStateActive")) && onIcon != null) {
+                label = new JLabel(onIcon);
+                label.setVerticalAlignment(JLabel.BOTTOM);
+                log.debug("onIcon set");
+            } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
+                label = new JLabel("X", JLabel.CENTER); // centered text alignment
+                label.setForeground(Color.red);
+                log.debug("Sensor state inconsistent");
+                iconHeight = 0;
+            } else if (value.equals(Bundle.getMessage("BeanStateUnknown"))) {
+                label = new JLabel("?", JLabel.CENTER); // centered text alignment
+                log.debug("Sensor state unknown");
+                iconHeight = 0;
+            } else { // failed to load icon
+                label = new JLabel(value, JLabel.CENTER); // centered text alignment
+                log.warn("Error reading icons for SensorTable");
+                iconHeight = 0;
+            }
+            label.setToolTipText(value);
+            label.addMouseListener (new MouseAdapter ()
+            {
+                @Override
+                public final void mousePressed (MouseEvent evt)
+                {
+                    log.debug("Clicked on icon in row {}", row);
+                    stopCellEditing();
+                }
+            });
+            return label;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            log.debug("getCellEditorValue, me = {})", this.toString());
+            return this.toString();
+        }
+
+        protected void loadIcons() {
+            try {
+                onImage = ImageIO.read(new File(onIconPath));
+                offImage = ImageIO.read(new File(offIconPath));
+            } catch (IOException ex) {
+                log.error("error reading image from {} or {}", onIconPath, offIconPath, ex);
+            }
+            log.debug("Success reading images");
+            int imageWidth = onImage.getWidth();
+            int imageHeight = onImage.getHeight();
+            // scale icons to fit in table rows
+            Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+            Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+            onIcon = new ImageIcon(smallOnImage);
+            offIcon = new ImageIcon(smallOffImage);
+            iconHeight = onIcon.getIconHeight();
+        }
+
+    }// end of ImageIconRenderer class
 
     @Override
     public void configureTable(JTable table) {
