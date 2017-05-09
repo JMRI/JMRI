@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
-        implements SignalMast, java.io.Serializable, java.beans.VetoableChangeListener {
+        implements SignalMast, java.beans.VetoableChangeListener {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSignalMast.class);
 
