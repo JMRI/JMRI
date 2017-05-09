@@ -195,24 +195,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 }
             }
         }
-         // include LayoutFlexes
-        num = p.flexList.size();
-        if (log.isDebugEnabled()) {
-            log.debug("N LayoutFlex elements: " + num);
-        }
-        if (num > 0) {
-            for (int i = 0; i < num; i++) {
-                Object sub = p.flexList.get(i);
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        panel.addContent(e);
-                    }
-                } catch (Exception e) {
-                    log.error("Error storing panel LayoutFlex element: " + e);
-                }
-            }
-        }
+
         // include LayoutSlips
         num = p.slipList.size();
         if (log.isDebugEnabled()) {

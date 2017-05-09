@@ -528,7 +528,7 @@ public class TrackSegment extends LayoutTrack {
             // note: control points will override center circle
             for (int index = 0; index < bezierControlPoints.size(); index++) {
                 if (r.contains(getBezierControlPoint(index))) {
-                    result = LayoutTrack.FLEX_CONTROL_POINT_OFFSET + index;
+                    result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET + index;
                     break;
                 }
             }
@@ -546,8 +546,8 @@ public class TrackSegment extends LayoutTrack {
         Point2D result = center;
         if (connectionType == TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
-        } else if ((connectionType >= FLEX_CONTROL_POINT_OFFSET) && (connectionType < TURNTABLE_RAY_OFFSET)) {
-            result = getBezierControlPoint(connectionType - FLEX_CONTROL_POINT_OFFSET);
+        } else if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET) && (connectionType < TURNTABLE_RAY_OFFSET)) {
+            result = getBezierControlPoint(connectionType - BEZIER_CONTROL_POINT_OFFSET);
         }
         return result;
     }

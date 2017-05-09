@@ -455,19 +455,6 @@ public class LayoutEditorFindItems {
         return result;
     }
 
-    public LayoutFlex findLayoutFlexByName(String name) {
-        LayoutFlex result = null;
-        if (name.length() > 0) {
-            for (LayoutFlex f : layoutEditor.flexList) {
-                if (f.getID().equals(name)) {
-                    result = f;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
     public LayoutSlip findLayoutSlipByName(String name) {
         LayoutSlip result = null;
         if (name.length() > 0) {
@@ -568,8 +555,6 @@ public class LayoutEditorFindItems {
                 result = findPositionablePointByName(name);
             } else if (name.startsWith("X")) {
                 result = findLevelXingByName(name);
-            } else if (name.startsWith("F")) {
-                result = findLayoutFlexByName(name);
             } else if (name.startsWith("SL")) {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {

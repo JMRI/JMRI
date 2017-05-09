@@ -110,7 +110,7 @@ import org.slf4j.LoggerFactory;
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
  * <P>
  * This module serves as a manager for the LayoutTurnout, Layout Block,
- * PositionablePoint, Track Segment, LayoutSlip, LayoutFlex and LevelXing
+ * PositionablePoint, Track Segment, LayoutSlip and LevelXing
  * objects which are integral subparts of the LayoutEditor class.
  * <P>
  * All created objects are put on specific levels depending on their type
@@ -199,7 +199,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //2nd row of radio buttons
     private JLabel trackLabel = new JLabel();
     private JRadioButton levelXingButton = new JRadioButton(rb.getString("LevelCrossing"));
-    private JRadioButton flexButton = new JRadioButton(rb.getString("LayoutFlex"));
     private JRadioButton trackButton = new JRadioButton(rb.getString("TrackSegment"));
 
     //2nd row of check boxes
@@ -343,10 +342,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SLIP_B = LayoutTrack.SLIP_B;            //offset for slip connection points
     public static final int SLIP_C = LayoutTrack.SLIP_C;            //offset for slip connection points
     public static final int SLIP_D = LayoutTrack.SLIP_D;            //offset for slip connection points
-    public static final int FLEX_CENTER = LayoutTrack.FLEX_CENTER;
-    public static final int FLEX_A = LayoutTrack.FLEX_A;
-    public static final int FLEX_B = LayoutTrack.FLEX_B;
-    public static final int FLEX_CONTROL_POINT_OFFSET = LayoutTrack.FLEX_CONTROL_POINT_OFFSET;
+    public static final int BEZIER_CONTROL_POINT_OFFSET = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
 
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;    //offset for turntable connection points
 
@@ -474,7 +470,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public ArrayList<LevelXing> xingList = new ArrayList<LevelXing>();                  //LevelXing list
     public ArrayList<LayoutSlip> slipList = new ArrayList<LayoutSlip>();                //LayoutSlip list
     public ArrayList<LayoutTurntable> turntableList = new ArrayList<LayoutTurntable>(); //LayoutTurntable list
-    public ArrayList<LayoutFlex> flexList = new ArrayList<LayoutFlex>();                //LayoutFlex list
 
     //counts used to determine unique internal names
     private int numAnchors = 0;
@@ -482,7 +477,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private int numEdgeConnectors = 0;
     private int numTrackSegments = 0;
     private int numLevelXings = 0;
-    private int numLayoutFlexes = 0;
     private int numLayoutSlips = 0;
     private int numLayoutTurnouts = 0;
     private int numLayoutTurntables = 0;
@@ -662,7 +656,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         itemGroup.add(rhXoverButton);
         itemGroup.add(lhXoverButton);
         itemGroup.add(levelXingButton);
-        itemGroup.add(flexButton);
         itemGroup.add(layoutSingleSlipButton);
         itemGroup.add(layoutDoubleSlipButton);
         itemGroup.add(endBumperButton);
@@ -727,7 +720,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     || layoutSingleSlipButton.isSelected()
                     || layoutDoubleSlipButton.isSelected()
                     || levelXingButton.isSelected()
-                    || flexButton.isSelected()
                     || trackButton.isSelected());
             log.debug("blockPanel is " + (e ? "enabled" : "disabled"));
 
@@ -774,7 +766,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         rhXoverButton.addActionListener(selectionListAction);
         lhXoverButton.addActionListener(selectionListAction);
         levelXingButton.addActionListener(selectionListAction);
-        flexButton.addActionListener(selectionListAction);
         layoutSingleSlipButton.addActionListener(selectionListAction);
         layoutDoubleSlipButton.addActionListener(selectionListAction);
         endBumperButton.addActionListener(selectionListAction);
@@ -848,7 +839,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         //second row of edit tool bar items
         levelXingButton.setToolTipText(rb.getString("LevelCrossingToolTip"));
-        flexButton.setToolTipText(rb.getString("LayoutFlexToolTip"));
         trackButton.setToolTipText(rb.getString("TrackSegmentToolTip"));
 
         //this is enabled/disabled via selectionListAction above
@@ -1263,7 +1253,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         JPanel trackGroup2 = new JPanel(floatContentLayout);
         trackGroup2.add(trackButton);
-        trackGroup2.add(flexButton);
         trackGroup2.add(levelXingButton);
         floatEditTrack.add(trackGroup2);
 
@@ -1495,7 +1484,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             JPanel vTop8Panel = new JPanel(verticalContentLayout);
             vTop8Panel.add(levelXingButton);
-            vTop8Panel.add(flexButton);
             vTop8Panel.add(trackButton);
             vTop8Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8Panel.getPreferredSize().height));
             outerBorderPanel.add(vTop8Panel);
@@ -1717,7 +1705,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 hTop3Left.add(trackLabel);
             }
             hTop3Left.add(levelXingButton);
-            hTop3Left.add(flexButton);
             hTop3Left.add(trackButton);
             hTop3Left.add(trackSegmentPropertiesPanel);
 
@@ -4040,12 +4027,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             x.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
         }
 
-        // loop over all flex tracks
-        for (LayoutFlex f : flexList) {
-            Point2D center = f.getCoordsCenter();
-            f.setCoordsCenter(new Point2D.Double(center.getX() + xDel, center.getY() + yDel));
-        }
-
         // loop over all slips
         for (LayoutSlip sl : slipList) {
             Point2D center = sl.getCoordsCenter();
@@ -4075,11 +4056,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         // loop over all level crossings
         for (LevelXing x : xingList) {
             x.scaleCoords(xFactor, yFactor);
-        }
-
-        // loop over all flex tracks
-        for (LayoutFlex f : flexList) {
-            f.scaleCoords(xFactor, yFactor);
         }
 
         // loop over all slips
@@ -4308,16 +4284,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
 
-            // loop over all flex tracks
-            for (LayoutFlex f : flexList) {
-                Point2D center = f.getCoordsCenter();
-
-                if (selectRect.contains(center)) {
-                    f.setCoordsCenter(new Point2D.Double(center.getX() + xTranslation,
-                            center.getY() + yTranslation));
-                }
-            }
-
             // loop over all slips
             for (LayoutSlip sl : slipList) {
                 Point2D center = sl.getCoordsCenter();
@@ -4422,15 +4388,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 if (undoRect.contains(center)) {
                     x.setCoordsCenter(new Point2D.Double(center.getX() + undoDeltaX,
-                            center.getY() + undoDeltaY));
-                }
-            }
-
-            for (LayoutFlex f : flexList) {
-                Point2D center = f.getCoordsCenter();
-
-                if (undoRect.contains(center)) {
-                    f.setCoordsCenter(new Point2D.Double(center.getX() + undoDeltaX,
                             center.getY() + undoDeltaY));
                 }
             }
@@ -5272,27 +5229,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        //check flex tracks, if any
-        for (LayoutFlex f : flexList) {
-            if (f != selectedObject) {
-                try {
-                    foundPointType = f.hitTestPoint(dLoc, false, requireUnconnected);
-                    if (NONE != foundPointType) {
-                        foundObject = f;
-                        foundLocation = f.getCoordsForConnectionType(foundPointType);
-                        foundNeedsConnect = f.isConnectionType(foundPointType);
-                        if (foundNeedsConnect) {
-                            foundNeedsConnect = (null == f.getConnection(foundPointType));
-                        }
-                        return true;
-                    }
-                } catch (Exception e) {
-                    //exceptions make me throw up…
-                    log.error("This error message, which nobody will ever see, shuts my IDE up.");
-                }
-            }
-        }
-
         //check slips, if any
         for (LayoutSlip sl : slipList) {
             if (sl != selectedObject) {
@@ -5375,13 +5311,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     //TODO: Should this be moved into TrackSegment.java: hit testing?
     private TrackSegment checkTrackSegmentPopUps(Point2D loc) {
-        //NOTE: rather than compute all the hit rectangles for all 
+        //NOTE: rather than compute all the hit rectangles for all
         // the points  below and test if this point is in any of those
         // rectangles just create a hit rectangle for this location and
         // see if those points are in it instead…
-        
+
         Rectangle2D r = trackControlCircleRectAt(loc);
-        
+
         //check Track Segments, if any
         for (TrackSegment ts : trackList) {
             if (r.contains(ts.getCentreSeg())) {
@@ -5603,14 +5539,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     return ((LevelXing) o).getCoordsD();
                 }
 
-                case LayoutTrack.FLEX_A: {
-                    return ((LayoutFlex) o).getCoordsA();
-                }
-
-                case LayoutTrack.FLEX_B: {
-                    return ((LayoutFlex) o).getCoordsB();
-                }
-
                 case LayoutTrack.SLIP_A: {
                     return ((LayoutSlip) o).getCoordsA();
                 }
@@ -5630,9 +5558,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 default:
                     if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                         return ((LayoutTurntable) o).getRayCoordsIndexed(type - LayoutTrack.TURNTABLE_RAY_OFFSET);
-                    } else if (type >= LayoutTrack.FLEX_CONTROL_POINT_OFFSET) {
-                        //return ((LayoutFlex) o).getCoordsN(type - LayoutTrack.FLEX_CONTROL_POINT_OFFSET);
-                        return ((TrackSegment) o).getBezierControlPoint(type - LayoutTrack.FLEX_CONTROL_POINT_OFFSET);
+                    } else if (type >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
+                        return ((TrackSegment) o).getBezierControlPoint(type - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET);
                     }
             }   //switch
         } else {
@@ -5676,8 +5603,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     addLayoutTurnout(LayoutTurnout.LH_XOVER);
                 } else if (levelXingButton.isSelected()) {
                     addLevelXing();
-                } else if (flexButton.isSelected()) {
-                    addLayoutFlex();
                 } else if (layoutSingleSlipButton.isSelected()) {
                     addLayoutSlip(LayoutSlip.SINGLE_SLIP);
                 } else if (layoutDoubleSlipButton.isSelected()) {
@@ -5815,11 +5740,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             break;
                         }
 
-                        case LayoutTrack.FLEX_CENTER: {
-                            ((LayoutFlex) foundObject).showPopUp(event, isEditable());
-                            break;
-                        }
-
                         case LayoutTrack.SLIP_RIGHT:
                         case LayoutTrack.SLIP_LEFT: {
                             ((LayoutSlip) foundObject).showPopUp(event, isEditable());
@@ -5895,11 +5815,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 case LayoutTrack.LEVEL_XING_CENTER: {
                     ((LevelXing) foundObject).showPopUp(event, isEditable());
-                    break;
-                }
-
-                case LayoutTrack.FLEX_CENTER: {
-                    ((LayoutFlex) foundObject).showPopUp(event, isEditable());
                     break;
                 }
 
@@ -5981,7 +5896,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
             } while (false);
-        }   // if (checkSelect(dLoc, false)) {...} else 
+        }   // if (checkSelect(dLoc, false)) {...} else
     }   //checkPopUp
 
     /**
@@ -6117,11 +6032,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                     case LayoutTrack.LEVEL_XING_CENTER: {
                         amendSelectionGroup((LevelXing) foundObject);
-                        break;
-                    }
-
-                    case LayoutTrack.FLEX_CENTER: {
-                        amendSelectionGroup((LayoutFlex) foundObject);
                         break;
                     }
 
@@ -6285,30 +6195,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
 
-                case LayoutTrack.FLEX_A:
-                case LayoutTrack.FLEX_B: {
-                    LayoutFlex f = (LayoutFlex) foundObject;
-                    try {
-                        if (f.getConnection(foundPointType) == null) {
-                            f.setConnection(foundPointType, t, LayoutTrack.TRACK);
-
-                            if (t.getConnect1() == p) {
-                                t.setNewConnect1(f, foundPointType);
-                            } else {
-                                t.setNewConnect2(f, foundPointType);
-                            }
-                            p.removeTrackConnection(t);
-
-                            if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
-                                removePositionablePoint(p);
-                            }
-                        }
-                    } catch (jmri.JmriException e) {
-                        log.debug("Unable to set location");
-                    }
-                    break;
-                }
-
                 case LayoutTrack.SLIP_A:
                 case LayoutTrack.SLIP_B:
                 case LayoutTrack.SLIP_C:
@@ -6355,30 +6241,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 removePositionablePoint(p);
                             }
                         }
-                    } else if (foundPointType >= LayoutTrack.FLEX_CONTROL_POINT_OFFSET) {
-                        if (true) {
-                            log.warn("George! finish this code NOW!");
-                        } else {
-                            LayoutFlex f = (LayoutFlex) foundObject;
-                            try {
-                                if (f.getConnection(foundPointType) == null) {
-                                    f.setConnection(foundPointType, t, LayoutTrack.TRACK);
-
-                                    if (t.getConnect1() == p) {
-                                        t.setNewConnect1(f, foundPointType);
-                                    } else {
-                                        t.setNewConnect2(f, foundPointType);
-                                    }
-                                    p.removeTrackConnection(t);
-
-                                    if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
-                                        removePositionablePoint(p);
-                                    }
-                                }
-                            } catch (jmri.JmriException e) {
-                                log.debug("Unable to set location");
-                            }
-                        }
+                    } else if (foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
+                        log.warn("George! finish this code NOW!");
                     } else {
                         log.debug("No valid point, so will quit");
 
@@ -6638,7 +6502,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private ArrayList<LayoutSlip> _slipSelection = null;            //new ArrayList<LevelXing>();  //LayoutSlip list
     private ArrayList<LayoutTurntable> _turntableSelection = null;  //new ArrayList<LayoutTurntable>(); //Turntable list
     private ArrayList<Positionable> _positionableSelection = null;
-    private ArrayList<LayoutFlex> _flexSelection = null;            //new ArrayList<LayoutFlex>();  //LayoutFlex list
 
     private void highLightSelection(Graphics2D g) {
         java.awt.Stroke stroke = g.getStroke();
@@ -6886,21 +6749,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
 
-        // loop over all flex tracks
-        for (LayoutFlex f : flexList) {
-            Point2D center = f.getCoordsCenter();
-
-            if (selectRect.contains(center)) {
-                if (_flexSelection == null) {
-                    _flexSelection = new ArrayList<LayoutFlex>();
-                }
-
-                if (!_flexSelection.contains(f)) {
-                    _flexSelection.add(f);
-                }
-            }
-        }
-
         // loop over all slips
         for (LayoutSlip sl : slipList) {
             Point2D center = sl.getCoordsCenter();
@@ -7033,16 +6881,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 removeLayoutTurnout(entry.getKey());
             }
             noWarnLayoutTurnout = oldTurnout;
-        }
-
-        if (_flexSelection != null) {
-            boolean oldFlex = noWarnFlex;
-            noWarnFlex = true;
-
-            for (LayoutFlex f : _flexSelection) {
-                removeLayoutFlex(f);
-            }
-            noWarnFlex = oldFlex;
         }
 
         selectionActive = false;
@@ -7242,30 +7080,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         if (_xingSelection.size() == 0) {
             _xingSelection = null;
-        }
-        repaint();
-    }   //amendSelectionGroup
-
-    private void amendSelectionGroup(LayoutFlex p) {
-        if (_flexSelection == null) {
-            _flexSelection = new ArrayList<LayoutFlex>();
-        }
-        boolean removed = false;
-
-        for (int i = 0; i < _flexSelection.size(); i++) {
-            if (_flexSelection.get(i) == p) {
-                _flexSelection.remove(i);
-                removed = true;
-                break;
-            }
-        }
-
-        if (!removed) {
-            _flexSelection.add(p);
-        }
-
-        if (_flexSelection.size() == 0) {
-            _flexSelection = null;
         }
         repaint();
     }   //amendSelectionGroup
@@ -8032,22 +7846,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             break;
                         }
 
-                        case LayoutTrack.FLEX_CENTER: {
-                            ((LayoutFlex) selectedObject).setCoordsCenter(newPos);
-                            isDragging = true;
-                            break;
-                        }
-
-                        case LayoutTrack.FLEX_A: {
-                            ((LayoutFlex) selectedObject).setCoordsA(newPos);
-                            break;
-                        }
-
-                        case LayoutTrack.FLEX_B: {
-                            ((LayoutFlex) selectedObject).setCoordsB(newPos);
-                            break;
-                        }
-
                         case LayoutTrack.SLIP_LEFT:
                         case LayoutTrack.SLIP_RIGHT: {
                             ((LayoutSlip) selectedObject).setCoordsCenter(newPos);
@@ -8155,10 +7953,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(newPos.getX(), newPos.getY(),
                                         selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
-                            } else if (selectedPointType >= LayoutTrack.FLEX_CONTROL_POINT_OFFSET) {
-                                int index = selectedPointType - LayoutTrack.FLEX_CONTROL_POINT_OFFSET;
-                                //LayoutFlex f = (LayoutFlex) selectedObject;
-                                //f.setCoordsN(newPos, index);
+                            } else if (selectedPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
+                                int index = selectedPointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
                                 ((TrackSegment)selectedObject).setBezierControlPoint(newPos, index);
                             }
                     }   //switch
@@ -8231,16 +8027,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 break;
             }
 
-            case LayoutTrack.FLEX_A: {
-                ((LayoutFlex) o).setCoordsA(newPos);
-                break;
-            }
-
-            case LayoutTrack.FLEX_B: {
-                ((LayoutFlex) o).setCoordsB(newPos);
-                break;
-            }
-
             case LayoutTrack.SLIP_A: {
                 ((LayoutSlip) o).setCoordsA(newPos);
                 break;
@@ -8266,9 +8052,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     LayoutTurntable turn = (LayoutTurntable) o;
                     turn.setRayCoordsIndexed(newPos.getX(), newPos.getY(),
                             pointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
-                } else if (pointType >= LayoutTrack.FLEX_CONTROL_POINT_OFFSET) {
-                    int index = pointType - LayoutTrack.FLEX_CONTROL_POINT_OFFSET;
-                    //((LayoutFlex) o).setCoordsN(newPos, index);
+                } else if (pointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
+                    int index = pointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
                     ((TrackSegment)o).setBezierControlPoint(newPos, index);
                 }
         }   //switch
@@ -8500,55 +8285,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //addLevelXing
 
     /**
-     * Add a flex track
-     */
-    public void addLayoutFlex() {
-        numLayoutFlexes++;
-
-        //get unique name
-        String name = "";
-        boolean duplicate = true;
-
-        while (duplicate) {
-            name = "F" + numLayoutFlexes;
-
-            if (finder.findLayoutFlexByName(name) == null) {
-                duplicate = false;
-            }
-
-            if (duplicate) {
-                numLayoutFlexes++;
-            }
-        }
-
-        //create object
-        LayoutFlex o = new LayoutFlex(name, currentPoint, this);
-
-        //if (o!=null) {
-        flexList.add(o);
-        setDirty(true);
-
-        //check on layout block
-        String newName = blockIDComboBox.getUserName();
-        LayoutBlock b = provideLayoutBlock(newName);
-
-        if (b != null) {
-            o.setLayoutBlock(b);
-
-            //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getUserName();
-
-            if (sensorName.length() > 0) {
-                if (!validateSensor(sensorName, b, this)) {
-                    b.setOccupancySensorName("");
-                } else {
-                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
-                }
-            }
-        }
-    }   //addLayoutFlex
-
-    /**
      * Add a LayoutSlip
      */
     public void addLayoutSlip(int type) {
@@ -8727,55 +8463,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //addLayoutTurnout
 
     /**
-     * Add a Layout Flex track
-     */
-    public void addLayoutFlex(int type) {
-        numLayoutFlexes++;
-
-        //get unique name
-        String name = "";
-        boolean duplicate = true;
-
-        while (duplicate) {
-            name = "F" + numLayoutFlexes;
-
-            if (finder.findLevelXingByName(name) == null) {
-                duplicate = false;
-            }
-
-            if (duplicate) {
-                numLayoutFlexes++;
-            }
-        }
-
-        //create object
-        LayoutFlex o = new LayoutFlex(name, currentPoint, this);
-
-        //if (o!=null) {
-        flexList.add(o);
-        setDirty(true);
-
-        //check on layout block
-        String newName = blockIDComboBox.getUserName();
-        LayoutBlock b = provideLayoutBlock(newName);
-
-        if (b != null) {
-            o.setLayoutBlock(b);
-
-            //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getUserName();
-
-            if (sensorName.length() > 0) {
-                if (!validateSensor(sensorName, b, this)) {
-                    b.setOccupancySensorName("");
-                } else {
-                    blockSensorComboBox.getEditor().setItem(b.getOccupancySensorName());
-                }
-            }
-        }
-    }   //addLayoutFlex
-
-    /**
      * Validates that a physical turnout exists and is unique among Layout
      * Turnouts Returns true if valid turnout was entered, false otherwise
      */
@@ -8925,16 +8612,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             case LayoutTrack.LEVEL_XING_D: {
                 ((LevelXing) toObject).setConnectD(fromObject, fromPointType);
-                break;
-            }
-
-            case LayoutTrack.FLEX_A: {
-                ((LayoutFlex) toObject).setConnectA(fromObject, fromPointType);
-                break;
-            }
-
-            case LayoutTrack.FLEX_B: {
-                ((LayoutFlex) toObject).setConnectB(fromObject, fromPointType);
                 break;
             }
 
@@ -9588,77 +9265,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
         return false;
     }   //removeLevelXing
-
-    boolean noWarnFlex = false;
-
-    protected boolean removeLayoutFlex(LayoutFlex o) {
-        if (!(o instanceof LayoutFlex)) {
-            return false;
-        }
-
-        //First verify with the user that this is really wanted
-        if (!noWarnFlex) {
-            int selectedValue = JOptionPane.showOptionDialog(this,
-                    rb.getString("Question8r"), Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonYes"),
-                        Bundle.getMessage("ButtonNo"),
-                        rb.getString("ButtonYesPlus")},
-                    Bundle.getMessage("ButtonNo"));
-
-            if (selectedValue == 1) {
-                return false;   //return without creating if "No" response
-            }
-
-            if (selectedValue == 2) {
-                //Suppress future warnings, and continue
-                noWarnFlex = true;
-            }
-        }
-
-        //remove from selection information
-        if (selectedObject == o) {
-            selectedObject = null;
-        }
-
-        if (prevSelectedObject == o) {
-            prevSelectedObject = null;
-        }
-
-        //remove connections if any
-        TrackSegment t = (TrackSegment) o.getConnectA();
-        if (t != null) {
-            substituteAnchor(o.getCoordsA(), o, t);
-        }
-
-        t = (TrackSegment) o.getConnectB();
-        if (t != null) {
-            substituteAnchor(o.getCoordsB(), o, t);
-        }
-
-        //decrement block use count if any blocks in use
-        LayoutBlock lb = o.getLayoutBlock();
-
-        if (lb != null) {
-            lb.decrementUse();
-        }
-
-        //delete from array
-        for (int i = 0; i < flexList.size(); i++) {
-            LayoutFlex f = flexList.get(i);
-
-            if (f == o) {
-                //found object
-                flexList.remove(i);
-                o.remove();
-                setDirty(true);
-                repaint();
-
-                return true;
-            }
-        }
-        return false;
-    }   //removeLayoutFlex
 
     boolean noWarnSlip = false;
 
@@ -10492,7 +10098,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         trackList.clear();
         pointList.clear();
         xingList.clear();
-        flexList.clear();
         slipList.clear();
         turntableList.clear();
 
@@ -11058,11 +10663,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             x.setObjects(this);
         }
 
-        //initialize LayoutFlex's if any
-        for (LayoutFlex f : flexList) {
-            f.setObjects(this);
-        }
-
         //initialize LayoutSlip if any
         for (LayoutSlip sl : slipList) {
             sl.setObjects(this);
@@ -11137,7 +10737,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         drawTurnouts(g2);
         drawXings(g2);
-        drawFlexes(g2);
         drawSlips(g2);
         drawTurntables(g2);
 
@@ -11148,7 +10747,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (isEditable()) {
             drawTurnoutEditControls(g2);
             drawXingEditControls(g2);
-            drawFlexEditControls(g2);
             drawSlipEditControls(g2);
             drawTurntableEditControls(g2);
 
@@ -11202,15 +10800,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
     }   //drawXings
-
-    private void drawFlexes(Graphics2D g2) {
-        // loop over all flex tracks
-        for (LayoutFlex f : flexList) {
-            if (!(f.isHidden() && !isEditable())) {
-                f.draw(g2);
-            }
-        }
-    }   //drawFlexes
 
     private void drawSlips(Graphics2D g2) {
         for (LayoutSlip sl : slipList) {
@@ -11336,15 +10925,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             g2.draw(trackControlPointRectAt(pt));
         }
     }   //drawXingEditControls
-
-    private void drawFlexEditControls(Graphics2D g2) {
-        // loop over all flex tracks
-        for (LayoutFlex f : flexList) {
-            if (!f.isHidden() || isEditable()) {
-                f.drawEditControls(g2);
-            }
-        }
-    }   //drawFlexEditControls
 
     private void drawSlipEditControls(Graphics2D g2) {
         // loop over all slips

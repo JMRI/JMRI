@@ -450,7 +450,6 @@ public class LayoutEditorAuxTools {
             int type = 0;
             LevelXing lx = null;
             LayoutSlip ls = null;
-            LayoutFlex f = null;
             for (TrackSegment ts : layoutEditor.trackList) {
                 // ensure that block is assigned
                 blk1 = ts.getLayoutBlock();
@@ -518,20 +517,6 @@ public class LayoutEditorAuxTools {
                             // add to list
                             checkConnectivity(c, found);
                         }
-                    } else if ((ts.getType1() == LayoutTrack.FLEX_A) || (ts.getType1() == LayoutTrack.FLEX_B)) {
-                        // have connection to a flex track
-                        f = (LayoutFlex) ts.getConnect1();
-                        type = ts.getType1();
-                        blk2 = ls.getLayoutBlock();
-                        if ((blk2 != null) && (blk1 != blk2)) {
-                            // have a block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(blk1, blk2);
-                            c.setConnections(ts, f, type, null);
-                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
-                                    ts.getType2()), layoutEditor.getCoords(ts.getConnect1(), type)));
-                            // add to list
-                            checkConnectivity(c, found);
-                        }
                     }
                     // check second connection for turnout or level crossing
                     if ((ts.getType2() >= LayoutTrack.TURNOUT_A)
@@ -591,20 +576,6 @@ public class LayoutEditorAuxTools {
                             // have a block boundary, create a LayoutConnectivity
                             c = new LayoutConnectivity(blk1, blk2);
                             c.setConnections(ts, ls, type, null);
-                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
-                                    ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
-                            // add to list
-                            checkConnectivity(c, found);
-                        }
-                    } else if ((ts.getType2() == LayoutTrack.FLEX_A) || (ts.getType2() == LayoutTrack.FLEX_B)) {
-                        // have connection to a flex track
-                        f = (LayoutFlex) ts.getConnect2();
-                        type = ts.getType2();
-                        blk2 = f.getLayoutBlock();
-                        if ((blk2 != null) && (blk1 != blk2)) {
-                            // have a block boundary, create a LayoutConnectivity
-                            c = new LayoutConnectivity(blk1, blk2);
-                            c.setConnections(ts, f, type, null);
                             c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
                                     ts.getType1()), layoutEditor.getCoords(ts.getConnect2(), type)));
                             // add to list

@@ -47,7 +47,8 @@ public abstract class LayoutTrack {
     public static final int FLEX_CENTER = 27;
     public static final int FLEX_A = 28;
     public static final int FLEX_B = 29;
-    public static final int FLEX_CONTROL_POINT_OFFSET = 30; // offset for flex track control points (0=A, size()-1 == B)
+    public static final int BEZIER_CONTROL_POINT_OFFSET = 30; // offset for TrackSegment Bezier control points
+    //NOTE: if(/when) you need another control/hit point type leave at least four (if not eight) unused here (for more Bezier control points)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
     protected String ident = "";
@@ -185,7 +186,7 @@ public abstract class LayoutTrack {
         }
         if (TURNTABLE_RAY_OFFSET <= connectionType) {
             result = true;  // these are all connection types
-        } else if (FLEX_CONTROL_POINT_OFFSET <= connectionType) {
+        } else if (BEZIER_CONTROL_POINT_OFFSET <= connectionType) {
             result = false; // these are all hit types
         }
         return result;
