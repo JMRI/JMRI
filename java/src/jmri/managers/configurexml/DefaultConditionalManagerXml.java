@@ -57,6 +57,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 log.debug("conditional system name is " + sname);
                 Conditional c = tm.getBySystemName(sname);
+                if (c == null) {
+                    log.error("Unable to save '{}' to the XML file", sname);
+                    continue;
+                }
                 Element elem = new Element("conditional").setAttribute("systemName", sname);
                 elem.addContent(new Element("systemName").addContent(sname));
 
@@ -210,6 +214,11 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             Conditional c = tm.getBySystemName(sysName);
             if (c == null) c = tm.createNewConditional(sysName, userName);
 
+            if (c == null) {
+                log.error("conditional '{}' is an orphan (no parent Logix)", sysName);
+                continue;
+            }
+            
             // conditional already exists
             // load common parts
             loadCommon(c, condElem);

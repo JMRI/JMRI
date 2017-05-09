@@ -127,6 +127,18 @@ public class DefaultConditionalManager extends AbstractManager
     }
 
     /**
+     * Regex patterns to derive the logix system name from the conditional system name
+     * The 3 route patterns deal with Route Logix names that end with a number,
+     * such as Logix RTX123 with Conditional RTX1231T.
+     */
+    private static final String[] PATTERNS = {
+        "(.*?)(C\\d+$)",               // Standard IX
+        "(.*?)([1-9]{1}[ALT]$)",       // LRoute/Route, 1-9
+        "(.*?)([0-9]{2}[ALT]$)",       // LRoute/Route, 10-99
+        "(.*?)([0-9]{3}[ALT]$)"        // LRoute/Route, 100-999
+    };
+
+    /**
      * Parses the Conditional system name to get the parent Logix system name,
      * then gets the parent Logix, and returns it.  For sensor groups, the parent
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
@@ -137,33 +149,35 @@ public class DefaultConditionalManager extends AbstractManager
      */
     @Override
     public Logix getParentLogix(String name) {
-        if (name.length() < 4) {
+        if (name == null || name.length() < 4) {
             return null;
         }
 
+        // Check for standard names
         if (name.startsWith(SensorGroupFrame.ConditionalSystemPrefix)) {
             return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("SYS");
         } else {
-            String pattern = "(.*?)(C\\d+$)";                            // Default pattern: ???Cn
-            if (name.startsWith(LRouteTableAction.LOGIX_SYS_NAME)) {    // LRoutes and exported Routes
-                pattern = "(.*?)([1-9]{1}[ALT]$)";                      // Pattern: ???nA, nL or nT (one digit, 1-9)
-            }
-            Pattern r = Pattern.compile(pattern);
-            Matcher m = r.matcher(name);
-            if (m.find()) {
-                Logix lgx = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
-                if (lgx != null) {
-                    return lgx;
+            for (String pattern : PATTERNS) {
+                Pattern r = Pattern.compile(pattern);
+                Matcher m = r.matcher(name);
+                if (m.find()) {
+                    Logix lgx = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
+                    if (lgx != null) {
+                        return lgx;
+                    }
+                    
                 }
             }
-            // Old style LRoutes can have more than 9 conditionals
-            if (name.startsWith(LRouteTableAction.LOGIX_SYS_NAME)) {
-                // Try again with 2 digits (10-99)
-                pattern = "(.*?)([0-9]{2}[ALT]$)";
-                r = Pattern.compile(pattern);
-                m = r.matcher(name);
-                if (m.find()) {
-                    return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
+        }
+
+        // Now try non-standard names using a brute force scan
+        jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
+        for (String xName : logixManager.getSystemNameList()) {
+            Logix lgx = logixManager.getLogix(xName);
+            for (int i = 0; i < lgx.getNumConditionals(); i++) {
+                String cdlName = lgx.getConditionalByNumberOrder(i);
+                if (cdlName.equals(name)) {
+                    return lgx;
                 }
             }
         }
