@@ -1544,7 +1544,7 @@ public class LevelXing extends LayoutTrack {
             drawXingBD(g2);
             drawXingAC(g2);
         }
-    }   // draw(Graphics2D g2)
+    }   // drawHidden(Graphics2D g2)
 
 
     private void drawXingAC(Graphics2D g2) {
@@ -1557,7 +1557,7 @@ public class LevelXing extends LayoutTrack {
         }
         // set track width for AC block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
-        // draw AC segment
+        // drawHidden AC segment
         g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
     }
 
@@ -1571,7 +1571,7 @@ public class LevelXing extends LayoutTrack {
         }
         // set track width for BD block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
-        // draw BD segment
+        // drawHidden BD segment
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 

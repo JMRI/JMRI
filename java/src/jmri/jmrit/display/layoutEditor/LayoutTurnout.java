@@ -3415,7 +3415,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (type == DOUBLE_XOVER) {
             //  double crossover turnout
             if (to == null) {
-                // no physical turnout linked - draw A corner
+                // no physical turnout linked - drawHidden A corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
                 g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
@@ -3428,7 +3428,7 @@ public class LayoutTurnout extends LayoutTrack {
                 } else {
                     g2.setColor(defaultTrackColor);
                 }
-                // draw B corner
+                // drawHidden B corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
                 g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
@@ -3440,7 +3440,7 @@ public class LayoutTurnout extends LayoutTrack {
                 } else {
                     g2.setColor(defaultTrackColor);
                 }
-                // draw C corner
+                // drawHidden C corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
                 g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
@@ -3452,7 +3452,7 @@ public class LayoutTurnout extends LayoutTrack {
                 } else {
                     g2.setColor(defaultTrackColor);
                 }
-                // draw D corner
+                // drawHidden D corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
                 g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
                 layoutEditor.setTrackStrokeWidth(g2, false);
@@ -3611,7 +3611,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (type == LH_XOVER)) {
             //  LH and RH crossover turnouts
             if (to == null) {
-                // no physical turnout linked - draw A corner
+                // no physical turnout linked - drawHidden A corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
                 g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointB)));
                 if (type == RH_XOVER) {
@@ -3625,7 +3625,7 @@ public class LayoutTurnout extends LayoutTrack {
                 } else {
                     g2.setColor(defaultTrackColor);
                 }
-                // draw B corner
+                // drawHidden B corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
                 g2.draw(new Line2D.Double(pointB, midpoint(pointA, pointB)));
                 if (type == LH_XOVER) {
@@ -3639,7 +3639,7 @@ public class LayoutTurnout extends LayoutTrack {
                 } else {
                     g2.setColor(defaultTrackColor);
                 }
-                // draw C corner
+                // drawHidden C corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineC());
                 g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointD)));
                 if (type == RH_XOVER) {
@@ -3653,7 +3653,7 @@ public class LayoutTurnout extends LayoutTrack {
                 } else {
                     g2.setColor(defaultTrackColor);
                 }
-                // draw D corner
+                // drawHidden D corner
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineD());
                 g2.draw(new Line2D.Double(pointD, midpoint(pointC, pointD)));
                 if (type == LH_XOVER) {
@@ -3830,7 +3830,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             // LH, RH, or WYE Turnouts
             if (to == null) {
-                // no physical turnout linked - draw connected
+                // no physical turnout linked - drawHidden connected
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineA());
                 g2.draw(new Line2D.Double(pointA, center));
                 layoutEditor.setTrackStrokeWidth(g2, isMainlineB());
@@ -3905,14 +3905,14 @@ public class LayoutTurnout extends LayoutTrack {
                 }
             }
         }
-    }   // draw(Graphics2D g2)
+    }   // drawHidden(Graphics2D g2)
 
-    public void drawTurnoutCircle(Graphics2D g2) {
+    public void drawControls(Graphics2D g2) {
         g2.draw(layoutEditor.trackControlCircleAt(center));
     }
 
-    public void drawTurnoutRect(Graphics2D g2) {
-        drawTurnoutCircle(g2);
+    public void drawEditControls(Graphics2D g2) {
+        drawControls(g2);
 
         Point2D pt = getCoordsA();
         if (type >= DOUBLE_XOVER && type <= LH_XOVER) {
@@ -3945,6 +3945,7 @@ public class LayoutTurnout extends LayoutTrack {
             g2.setColor(Color.green);
         }
         g2.draw(layoutEditor.trackControlPointRectAt(pt));
+
         if ((type == DOUBLE_XOVER)
                 || (type == RH_XOVER)
                 || (type == LH_XOVER)) {

@@ -977,13 +977,13 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     private void draw(Graphics2D g2) {
-        // draw turntable circle - default track color, side track width
+        // drawHidden turntable circle - default track color, side track width
         layoutEditor.setTrackStrokeWidth(g2, false);
         double r = getRadius();
         g2.setColor(defaultTrackColor);
         g2.draw(new Ellipse2D.Double(
                 center.getX() - r, center.getY() - r, r + r, r + r));
-        // draw ray tracks
+        // drawHidden ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
             Point2D pt = getRayCoordsOrdered(j);
             TrackSegment t = getRayConnectOrdered(j);

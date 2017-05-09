@@ -1432,9 +1432,9 @@ public class LayoutSlip extends LayoutTurnout {
             float w = layoutEditor.setTrackStrokeWidth(g2, isMainline());
 
             boolean isMainA = (connectA != null) && (((TrackSegment) connectA).getMainline());
-            boolean isMainB = (connectA != null) && (((TrackSegment) connectB).getMainline());
-            boolean isMainC = (connectA != null) && (((TrackSegment) connectC).getMainline());
-            boolean isMainD = (connectA != null) && (((TrackSegment) connectD).getMainline());
+            boolean isMainB = (connectB != null) && (((TrackSegment) connectB).getMainline());
+            boolean isMainC = (connectC != null) && (((TrackSegment) connectC).getMainline());
+            boolean isMainD = (connectD != null) && (((TrackSegment) connectD).getMainline());
 
             if (getSlipState() == STATE_AC) {
                 g2.setColor(mainColourA);
@@ -1508,56 +1508,46 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
             }
         }   // if (!(getHidden() && !layoutEditor.isEditable()))
-    }
+    }   // draw(Graphics2D g2)
 
-    public void drawSlipCircles(Graphics2D g2) {
+    public void drawControls(Graphics2D g2) {
+        // drawHidden left/right turnout control circles
         Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_LEFT);
         g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
 
         Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_RIGHT);
         g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
-    }
+    }   // drawControls(Graphics2D g2)
 
-    public void drawControlRects(Graphics2D g2) {
-        // draw east/west turnout control circles
-        Point2D leftCircleCenter = getCoordsForConnectionType(SLIP_LEFT);
-        g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
-
-        Point2D rightCircleCenter = getCoordsForConnectionType(SLIP_RIGHT);
-        g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
-
-        Point2D pt = getCoordsA();
+    public void drawEditControls(Graphics2D g2) {
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsA()));
 
-        pt = getCoordsB();
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsB()));
 
-        pt = getCoordsC();
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsC()));
 
-        pt = getCoordsD();
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackControlPointRectAt(pt));
-    }   // public void drawControlRects(Graphics2D g2)
+        g2.draw(layoutEditor.trackControlPointRectAt(getCoordsD()));
+    }   // drawEditControls(Graphics2D g2)
 
     static class TurnoutState {
 
