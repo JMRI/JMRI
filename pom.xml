@@ -50,6 +50,7 @@
             </properties>
             <build>
                 <plugins>
+                    <!-- use surefire for all test
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -72,7 +73,8 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- use surefire (maven default test harness) only for line endings -->
+                    -->
+                    <!-- use surefire (maven default test harness) only for line endings
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
@@ -81,6 +83,7 @@
                             <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
                     </plugin>
+                    -->
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
