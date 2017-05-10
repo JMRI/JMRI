@@ -8,7 +8,6 @@ import jmri.implementation.QuietShutDownTask;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +19,10 @@ import org.slf4j.LoggerFactory;
 public class DefaultShutDownManagerTest {
 
     @Test
-    @Ignore("Causes Exception and hang on appveyor")
     public void testCTor() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
+        // remove the default shutdown hook to prevent crashes stopping tests
+        Runtime.getRuntime().removeShutdownHook(dsdm.shutdownHook);
         Assert.assertNotNull("exists", dsdm);
     }
 
