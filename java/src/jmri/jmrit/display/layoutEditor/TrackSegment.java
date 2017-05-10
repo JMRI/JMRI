@@ -1301,8 +1301,20 @@ public class TrackSegment extends LayoutTrack {
                 g2.setStroke(drawingStroke);
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
                 g2.setStroke(originalStroke);
-            //} else if (getBezier()) {
-            //TODO: Add code to draw dashed Bezier
+            } else if (getBezier()) {
+                Stroke originalStroke = g2.getStroke();
+                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+                g2.setStroke(drawingStroke);
+
+                Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                Point2D pt1 = getBezierControlPoint(0);
+                Point2D pt2 = getBezierControlPoint(1);
+
+                drawBezier(g2, pt0, pt1, pt2, pt3);
+
+                g2.setStroke(originalStroke);
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
                 Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());

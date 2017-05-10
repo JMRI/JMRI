@@ -6156,11 +6156,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 removePositionablePoint(p);
                             }
                         }
-                    } else if (foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
-                        log.warn("George! finish this code NOW!");
                     } else {
                         log.debug("No valid point, so will quit");
-
                         return;
                     }
             }   //switch
