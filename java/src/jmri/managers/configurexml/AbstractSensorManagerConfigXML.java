@@ -63,7 +63,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             String inverted = s.getInverted() ? "true" : "false";
 
             Element elem = new Element("sensor")
-                    .setAttribute("systemName", sname) // deprecated for 2.9.* series
                     .setAttribute("inverted", inverted);
             elem.addContent(new Element("systemName").addContent(sname));
             log.debug("store sensor " + sname);
