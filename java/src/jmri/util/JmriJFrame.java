@@ -96,17 +96,17 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
          * This ensures that different jframes do not get placed directly on top of each other, but offset by the top
          * inset. However a saved preferences can over ride this
          */
-        for (int i = 0; i < LIST.size(); i++) {
-            JmriJFrame j = LIST.get(i);
-            if ((j.getExtendedState() != ICONIFIED) && (j.isVisible())) {
-                if ((j.getX() == this.getX()) && (j.getY() == this.getY())) {
-                    offSetFrameOnScreen(j);
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            for (JmriJFrame j : m) {
+                if ((j.getExtendedState() != ICONIFIED) && (j.isVisible())) {
+                    if ((j.getX() == this.getX()) && (j.getY() == this.getY())) {
+                        offSetFrameOnScreen(j);
+                    }
                 }
             }
-        }
 
-        synchronized (LIST) {
-            LIST.add(this);
+            m.add(this);
         }
         // Set the image for use when minimized
         setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
@@ -164,8 +164,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * active JmriJFrames.
      */
     public void makePrivateWindow() {
-        synchronized (LIST) {
-            LIST.remove(this);
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            m.remove(this);
         }
     }
 
@@ -195,8 +196,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 // We just check to make sure that having set the location that we do not have anther frame with the same
                 // class name and title in the same location, if it is we offset
                 //
-                for (int i = 0; i < LIST.size(); i++) {
-                    JmriJFrame j = LIST.get(i);
+                for (JmriJFrame j : getJmriJFrameManager()) {
                     if (j.getClass().getName().equals(this.getClass().getName()) && (j.getExtendedState() != ICONIFIED)
                             && (j.isVisible()) && j.getTitle().equals(getTitle())) {
                         if ((j.getX() == this.getX()) && (j.getY() == this.getY())) {
@@ -224,10 +224,13 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
         int refNo = 1;
         String ref = initref;
-        for (JmriJFrame j : LIST) {
-            if (j != this && j.getWindowFrameRef() != null && j.getWindowFrameRef().equals(ref)) {
-                ref = initref + ":" + refNo;
-                refNo++;
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            for (JmriJFrame j : m) {
+                if (j != this && j.getWindowFrameRef() != null && j.getWindowFrameRef().equals(ref)) {
+                    ref = initref + ":" + refNo;
+                    refNo++;
+                }
             }
         }
         log.debug("Created windowFrameRef: {}", ref);
@@ -594,11 +597,10 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     @Nonnull
     public static List<JmriJFrame> getFrameList() {
-        List<JmriJFrame> returnList;
-        synchronized (LIST) {
-            returnList = new ArrayList<>(LIST);
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            return new ArrayList<>(m);
         }
-        return returnList;
     }
 
     /**
@@ -619,8 +621,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             return JmriJFrame.getFrameList();
         }
         List<JmriJFrame> result = new ArrayList<>();
-        synchronized (LIST) {
-            LIST.stream().filter((f) -> (subClass.isInstance(f))).forEachOrdered((f) -> {
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            m.stream().filter((f) -> (subClass.isInstance(f))).forEachOrdered((f) -> {
                 result.add(f);
             });
         }
@@ -643,8 +646,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
         return null;
     }
-
-    private static final List<JmriJFrame> LIST = new ArrayList<>();
 
     // handle resizing when first shown
     private boolean mShown = false;
@@ -862,8 +863,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(task);
             task = null;
         }
-        synchronized (LIST) {
-            LIST.remove(this);
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            m.remove(this);
         }
         super.dispose();
     }
@@ -1008,6 +1010,16 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     @Override
     public Frame getFrame() {
         return this;
+    }
+
+    private static JmriJFrameManager getJmriJFrameManager() {
+        return InstanceManager.getOptionalDefault(JmriJFrameManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(JmriJFrameManager.class, new JmriJFrameManager());
+        });
+    }
+
+    private static class JmriJFrameManager extends ArrayList<JmriJFrame> {
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
