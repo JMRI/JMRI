@@ -563,9 +563,10 @@ public class TrackSegment extends LayoutTrack {
                     flipAngle();
                 }
             });
+        }
+        if (getArc() || getBezier()) {
             if (hideConstructionLines()) {
                 popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
-
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
@@ -932,7 +933,6 @@ public class TrackSegment extends LayoutTrack {
 
     public int showConstructionLine = SHOWCON;
 
-    //Method used by Layout Editor
     protected boolean showConstructionLinesLE() {
         if ((showConstructionLine & HIDECON) == HIDECON || (showConstructionLine & HIDECONALL) == HIDECONALL) {
             return false;
@@ -940,12 +940,13 @@ public class TrackSegment extends LayoutTrack {
         return true;
     }
 
+    //Methods used by Layout Editor
     public void hideConstructionLines(int hide) {
         if (hide == HIDECONALL) {
-            showConstructionLine = showConstructionLine + HIDECONALL;
+            showConstructionLine |= HIDECONALL;
         } else if (hide == SHOWCON) {
             if ((showConstructionLine & HIDECONALL) == HIDECONALL) {
-                showConstructionLine = (showConstructionLine & (~HIDECONALL));
+                showConstructionLine &= ~HIDECONALL;
             } else {
                 showConstructionLine = hide;
             }
@@ -1389,11 +1390,19 @@ public class TrackSegment extends LayoutTrack {
             g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else if (getBezier()) {
             g2.draw(layoutEditor.trackControlPointRectAt(ep1));
-            g2.draw(layoutEditor.trackControlPointRectAt(ep2));
-            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
+            Point2D lastPt = ep1;
             for (Point2D bcp : bezierControlPoints) {
+                if (showConstructionLinesLE()) { //draw track circles
+                    g2.draw(new Line2D.Double(lastPt, bcp));
+                    lastPt = bcp;
+                }
                 g2.draw(layoutEditor.trackControlPointRectAt(bcp));
             }
+            if (showConstructionLinesLE()) { //draw track circles
+                g2.draw(new Line2D.Double(lastPt, ep2));
+            }
+            g2.draw(layoutEditor.trackControlPointRectAt(ep2));
+            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
         } else {
             if (getArc()) {
                 g2.draw(new Line2D.Double(ep1, ep2));
