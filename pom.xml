@@ -332,6 +332,8 @@
                     <excludes>
                         <!-- TEMPORARY since NCE tests sometimes fail to load classes -->
                         <exclude>jmri.jmrix.nce.**</exclude>
+                        <!-- TEMPORARY since locormi tests cause later security policy issues -->
+                        <exclude>jmri.jmrix.loconet.locormi.**</exclude>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
