@@ -84,7 +84,6 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     void storeUserName(NamedBean t, Element elem) {
         String uname = t.getUserName();
         if (uname != null && uname.length() > 0) {
-            elem.setAttribute("userName", uname); // doing this for compatibility during 2.9.* series
             elem.addContent(new Element("userName").addContent(uname));
         }
     }

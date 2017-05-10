@@ -104,9 +104,6 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
 
     public int getType() {
         return type;
