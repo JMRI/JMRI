@@ -158,7 +158,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Load, starting with the levelxing element, then all the other data
+     * Load, starting with the LayoutSlip element, then all the other data
      *
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
@@ -225,14 +225,14 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
         } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert levelxing a coords attribute");
+            log.error("failed to convert LayoutSlip a coords attribute");
         }
         l.setCoordsA(new Point2D.Double(x, y));
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
         } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert levelxing b coords attribute");
+            log.error("failed to convert LayoutSlip b coords attribute");
         }
         l.setCoordsB(new Point2D.Double(x, y));
 

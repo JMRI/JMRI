@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -122,9 +123,6 @@ public class LevelXing extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
 
     public String getBlockNameAC() {
         return blockNameAC;
@@ -712,6 +710,35 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
+     * return the coordinates for a specified connection type
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case LEVEL_XING_CENTER:
+                break;
+            case LEVEL_XING_A:
+                result = getCoordsA();
+                break;
+            case LEVEL_XING_B:
+                result = getCoordsB();
+                break;
+            case LEVEL_XING_C:
+                result = getCoordsC();
+                break;
+            case LEVEL_XING_D:
+                result = getCoordsD();
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
      * Add Layout Blocks
      */
     public void setLayoutBlockAC(LayoutBlock b) {
@@ -914,6 +941,57 @@ public class LevelXing extends LayoutTrack {
         pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
                 Math.round(dispB.getY() * yFactor));
         dispB = pt;
+    }
+
+    /**
+     * return the connection type for a point
+     * @param p the point
+     * @param useRectangles use hit rectangle (false: use hit circles)
+     * @param requireUnconnected (only hit disconnected connections)
+     * @return 
+     * @since 7.4.?
+     */
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+        
+        if (!requireUnconnected) {
+            //check the center point
+            if (r.contains(getCoordsCenter())) {
+                result = LayoutTrack.LEVEL_XING_CENTER;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectA() == null)) {
+            //check the A connection point
+            if (r.contains(getCoordsA())) {
+                result = LayoutTrack.LEVEL_XING_A;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectB() == null)) {
+            //check the B connection point
+            if (r.contains(getCoordsB())) {
+                //mouse was pressed on this connection point
+                result = LayoutTrack.LEVEL_XING_B;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectC() == null)) {
+            //check the C connection point
+            if (r.contains(getCoordsC())) {
+                result = LayoutTrack.LEVEL_XING_C;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectD() == null)) {
+            //check the D connection point
+            if (r.contains(getCoordsD())) {
+                result = LayoutTrack.LEVEL_XING_D;
+            }
+        }
+        return result;
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
@@ -1187,30 +1265,20 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(block1NameComboBox, false, true);
-            } else {
-                block1NameComboBox.setEditable(true);
-                block1NameComboBox.getEditor().setItem("");
-                block1NameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(block1NameComboBox, false, true);
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
+
             // setup block 2 name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(block2NameComboBox, false, true);
-            } else {
-                block2NameComboBox.setEditable(true);
-                block2NameComboBox.getEditor().setItem("");
-                block2NameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(block2NameComboBox, false, true);
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
+
             // set up Edit 1 Block and Edit 2 Block buttons
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
@@ -1557,7 +1625,7 @@ public class LevelXing extends LayoutTrack {
             drawXingBD(g2);
             drawXingAC(g2);
         }
-    }   // draw(Graphics2D g2)
+    }   // drawHidden(Graphics2D g2)
 
 
     private void drawXingAC(Graphics2D g2) {
@@ -1570,7 +1638,7 @@ public class LevelXing extends LayoutTrack {
         }
         // set track width for AC block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
-        // draw AC segment
+        // drawHidden AC segment
         g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
     }
 
@@ -1584,7 +1652,7 @@ public class LevelXing extends LayoutTrack {
         }
         // set track width for BD block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
-        // draw BD segment
+        // drawHidden BD segment
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
