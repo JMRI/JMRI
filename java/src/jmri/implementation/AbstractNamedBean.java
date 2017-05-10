@@ -17,7 +17,7 @@ import jmri.NamedBean;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
+public abstract class AbstractNamedBean implements NamedBean {
 
     protected AbstractNamedBean(String sys) {
         mSystemName = sys;
