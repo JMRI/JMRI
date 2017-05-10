@@ -132,6 +132,7 @@ public class DefaultConditionalManager extends AbstractManager
      * such as Logix RTX123 with Conditional RTX1231T.
      */
     private static final String[] PATTERNS = {
+        "(.*?)(_SGC_.*)",              // Sensor Groups
         "(.*?)(C\\d+$)",               // Standard IX
         "(.*?)([1-9]{1}[ALT]$)",       // LRoute/Route, 1-9
         "(.*?)([0-9]{2}[ALT]$)",       // LRoute/Route, 10-99
@@ -154,19 +155,15 @@ public class DefaultConditionalManager extends AbstractManager
         }
 
         // Check for standard names
-        if (name.startsWith(SensorGroupFrame.ConditionalSystemPrefix)) {
-            return InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("SYS");
-        } else {
-            for (String pattern : PATTERNS) {
-                Pattern r = Pattern.compile(pattern);
-                Matcher m = r.matcher(name);
-                if (m.find()) {
-                    Logix lgx = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
-                    if (lgx != null) {
-                        return lgx;
-                    }
-                    
+        for (String pattern : PATTERNS) {
+            Pattern r = Pattern.compile(pattern);
+            Matcher m = r.matcher(name);
+            if (m.find()) {
+                Logix lgx = InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName(m.group(1));
+                if (lgx != null) {
+                    return lgx;
                 }
+                
             }
         }
 
