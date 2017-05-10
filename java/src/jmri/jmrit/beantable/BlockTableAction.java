@@ -546,23 +546,30 @@ public class BlockTableAction extends AbstractTableAction {
 
             /**
              * Customize the block table State column to show an appropriate graphic for the block occupancy state
-             * if _graphicState = true, or just the localized state text
+             * if _graphicState = true, or (default) just show the localized state text
              * when the TableDataModel is being called from ListedTableAction.
              *
              * @param table a JTable of Blocks
              */
             protected void configStateColumn(JTable table) {
                 // have the state column hold a JPanel (icon)
-                //setColumnToHoldButton(table, VALUECOL, new JLabel("test")); // needed?
+                //setColumnToHoldButton(table, VALUECOL, new JLabel("1234")); // for small round icon, but cannot be converted to JButton
                 // add extras, override BeanTableDataModel
                 log.debug("Block configStateColumn (I am {})", super.toString());
                 if (_graphicState) { // load icons, only once
-                    //table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // no editor
+                    //table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // there's no editor for state column in BlockTable
                     table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
                     // else, classic text style state indication, do nothing extra
                 }
             }
 
+            /**
+             * Visualize state in table as a graphic, customized for Blocks (2 states).
+             * Renderer and Editor are identical, as the cell contents are not actually edited.
+             * @see jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
+             * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
+             * @see jmri.jmrit.beantable.LightTableAction#createModel()
+             */
             class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
 
                 protected JLabel label;
@@ -580,9 +587,8 @@ public class BlockTableAction extends AbstractTableAction {
                 public Component getTableCellRendererComponent(
                         JTable table, Object value, boolean isSelected,
                         boolean hasFocus, int row, int column) {
-
                     log.debug("Renderer Item = {}, State = {}", row, value);
-                    if (iconHeight < 0) {
+                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
                         loadIcons();
                         log.debug("icons loaded");
                     }
@@ -593,9 +599,8 @@ public class BlockTableAction extends AbstractTableAction {
                 public Component getTableCellEditorComponent(
                         JTable table, Object value, boolean isSelected,
                         int row, int column) {
-
                     log.debug("Renderer Item = {}, State = {}", row, value);
-                    if (iconHeight < 0) {
+                    if (iconHeight < 0) { // load resources only first time, either for renderer or editor
                         loadIcons();
                         log.debug("icons loaded");
                     }
@@ -647,6 +652,10 @@ public class BlockTableAction extends AbstractTableAction {
                     return this.toString();
                 }
 
+                /**
+                 * Read and buffer graphics. Only called once for this table.
+                 * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
+                 */
                 protected void loadIcons() {
                     try {
                         onImage = ImageIO.read(new File(onIconPath));
@@ -657,7 +666,7 @@ public class BlockTableAction extends AbstractTableAction {
                     log.debug("Success reading images");
                     int imageWidth = onImage.getWidth();
                     int imageHeight = onImage.getHeight();
-                    // scale icons to fit in table rows
+                    // scale icons 50% to fit in table rows
                     Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
                     Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
                     onIcon = new ImageIcon(smallOnImage);
@@ -665,9 +674,9 @@ public class BlockTableAction extends AbstractTableAction {
                     iconHeight = onIcon.getIconHeight();
                 }
 
-            }// end of ImageIconRenderer class
+            } // end of ImageIconRenderer class
 
-        };  // end of custom data model
+        }; // end of custom data model
     }
 
     void editButton(Block b) {
