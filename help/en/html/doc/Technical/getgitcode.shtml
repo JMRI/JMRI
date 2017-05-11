@@ -159,7 +159,12 @@
 
       <p>After the download is complete, there are menu items under
       the application "Repository" menu to access the code
-      directory. You can also navigate there directly using your file
+      directory:<br>
+      <a href="images/GitDtRepoSettingsMenu.png"><img src=
+      "images/GitDtRepoSettingsMenu.png" alt=
+      "Repository menu in GitHub Desktop" height="175" width=
+      "275"></a>
+      <br>You can also navigate there directly using your file
       system.</p>
       <p>Inside, you'll find directories called <tt>xml</tt>,
       <tt>resources</tt>, <tt>jython</tt>, <tt>help</tt>,

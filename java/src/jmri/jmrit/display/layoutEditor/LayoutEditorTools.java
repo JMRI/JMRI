@@ -9747,10 +9747,10 @@ public class LayoutEditorTools {
             TrackSegment t = (TrackSegment) obj;
             Point2D end;
             if (t.getConnect1() == layoutTurnout) {
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
+                end = layoutEditor.getCoords(t.getConnect2(), t.getType2());
 
             } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
+                end = layoutEditor.getCoords(t.getConnect1(), t.getType1());
             }
             boolean east = false;
 
