@@ -128,6 +128,19 @@ public class DefaultLogix extends AbstractNamedBean
      */
     @Override
     public boolean addConditional(String systemName, Conditional conditional) {
+        // Verify that the name is in the conditional index.  This can occur when
+        // the XML file contains orphaned conditionals.
+        boolean inIndex = false;
+        for (int i = 0; i < _conditionalSystemNames.size(); i++) {
+            if (systemName.equals(_conditionalSystemNames.get(i))) {
+                inIndex = true;
+                break;
+            }
+        }
+        if (!inIndex) {
+            return false;
+        }
+
         Conditional chkDuplicate = _conditionalMap.putIfAbsent(systemName, conditional);
         if (chkDuplicate == null) {
             return (true);
@@ -310,6 +323,13 @@ public class DefaultLogix extends AbstractNamedBean
         for (int i = 0; i < _conditionalSystemNames.size(); i++) {
             String cName = _conditionalSystemNames.get(i);
             Conditional conditional = getConditional(cName);
+            if (conditional == null) {
+                // A Logix index entry exists without a corresponding conditional.  This
+                // should never happen.
+                log.error("setGuiNames: Missing conditional for Logix index entry,  Logix name = '{}', Conditional index name = '{}'",
+                    getSystemName(), cName);
+                continue;
+            }
             ArrayList<ConditionalVariable> varList = conditional.getCopyOfStateVariables();
             boolean isDirty = false;
             for (ConditionalVariable var : varList) {
@@ -320,7 +340,7 @@ public class DefaultLogix extends AbstractNamedBean
                     if (cRef != null) {
                         // re-arrange names as needed
                         var.setName(cRef.getSystemName());      // The state variable reference is now a conditional system name
-                        if (cRef.getUserName() == null || cRef.getUserName().equals("")) {
+                        if (cRef.getUserName() == null || cRef.getUserName().length() < 1) {
                             var.setGuiName(cRef.getSystemName());
                         } else {
                             var.setGuiName(cRef.getUserName());
@@ -328,6 +348,9 @@ public class DefaultLogix extends AbstractNamedBean
                         // Add the conditional reference to the where used map
                         InstanceManager.getDefault(jmri.ConditionalManager.class).addWhereUsed(var.getName(), cName);
                         isDirty = true;
+                    } else {
+                        log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced conditional, '{}',  does not exist",
+                             cName, getSystemName(), var.getName());
                     }
                 }
             }
