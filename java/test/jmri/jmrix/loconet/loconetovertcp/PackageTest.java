@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
    ServerTest.class,
    ServerActionTest.class,
    ServerFrameTest.class,
-   LnTcpDriverAdapterTest.class
+   LnTcpDriverAdapterTest.class,
+   ClientRxHandlerTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.loconetovertcp package.

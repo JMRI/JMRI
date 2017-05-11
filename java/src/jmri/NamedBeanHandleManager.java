@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable {
+public class NamedBeanHandleManager extends jmri.managers.AbstractManager {
 
     public NamedBeanHandleManager() {
         super();

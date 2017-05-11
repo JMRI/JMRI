@@ -1,16 +1,30 @@
 package jmri.jmrit.beantable;
 
+import apps.gui.GuiLafPreferencesManager;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.imageio.ImageIO;
+import javax.swing.AbstractCellEditor; // for iconLabel
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -53,12 +67,13 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a TurnoutTable GUI.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
+ * @author Egbert Broerse Copyright (C) 2017
  */
 public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -112,6 +127,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
     protected JTable table;
+    // for icon state col
+    protected boolean _graphicState = false; // updated from prefs
 
     @Override
     public void setManager(Manager man) {
@@ -134,13 +151,16 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Turnouts
+     * of Turnouts.
      */
     @Override
     protected void createModel() {
         // store the terminology
         closedText = turnManager.getClosedText();
         thrownText = turnManager.getThrownText();
+
+        // load graphic state column display preference
+        _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
@@ -177,8 +197,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return Bundle.getMessage("ThrownSpeed");
                 } else if (col == STRAIGHTCOL) {
                     return Bundle.getMessage("ClosedSpeed");
-                } else if (col == VALUECOL) {
-                    return Bundle.getMessage("ColumnState");  // override default title
                 } else if (col == EDITCOL) {
                     return "";
                 } else {
@@ -214,6 +232,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return JComboBox.class;
                 } else if (col == STRAIGHTCOL) {
                     return JComboBox.class;
+                } else if (col == VALUECOL && _graphicState) {
+                    return JLabel.class; // use an image to show turnout state
                 } else {
                     return super.getColumnClass(col);
                 }
@@ -391,6 +411,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     c.setEditable(true);
                     c.setSelectedItem(speed);
                     return c;
+                // } else if (col == VALUECOL && _graphicState) { // not neeeded as the
+                //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as classic bean state text button
                 }
                 return super.getValueAt(row, col);
             }
@@ -494,6 +516,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if ((!speedListThrown.contains(speed)) && !speed.contains("Global")) {
                         speedListThrown.add(speed);
                     }
+                    fireTableRowsUpdated(row, row);
+                } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
+                    clickOn(t);
                     fireTableRowsUpdated(row, row);
                 } else {
                     super.setValueAt(value, row, col);
@@ -626,6 +651,27 @@ public class TurnoutTableAction extends AbstractTableAction {
                 return Bundle.getMessage("BeanNameTurnout");
             }
 
+            /**
+             * Customize the turnout table Value (State) column to show an appropriate graphic for the turnout state
+             * if _graphicState = true, or just the localized state text
+             * when the TableDataModel is being called from ListedTableAction.
+             *
+             * @param table a JTable of Turnouts
+             */
+            @Override
+            protected void configValueColumn(JTable table) {
+                // have the value column hold a JPanel (icon)
+                //setColumnToHoldButton(table, VALUECOL, new JLabel("test")); // needed?
+                // add extras, override BeanTableDataModel
+                log.debug("Turnout configValueColumn (I am {})", super.toString());
+                if (_graphicState) { // load icons, only once
+                    table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // no editor
+                    table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
+                } else {
+                    super.configValueColumn(table); // classic text style state indication
+                }
+            }
+
             @Override
             public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
                 JTable table = this.makeJTable(model);
@@ -739,6 +785,110 @@ public class TurnoutTableAction extends AbstractTableAction {
                     Hashtable<Object, TableCellEditor> editorMapSensor2 = new Hashtable<>();
                 };
             }
+
+            class ImageIconRenderer extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+
+                protected JLabel label;
+                protected String rootPath = "resources/icons/misc/switchboard/"; // also used in display.switchboardEditor
+                protected char beanTypeChar = 'T'; // for Turnout
+                protected String onIconPath = rootPath + beanTypeChar + "-on-s.png";
+                protected String offIconPath = rootPath + beanTypeChar + "-off-s.png";
+                protected BufferedImage onImage;
+                protected BufferedImage offImage;
+                protected ImageIcon onIcon;
+                protected ImageIcon offIcon;
+                protected int iconHeight = -1;
+
+                @Override
+                public Component getTableCellRendererComponent(
+                        JTable table, Object value, boolean isSelected,
+                        boolean hasFocus, int row, int column) {
+
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) {
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                @Override
+                public Component getTableCellEditorComponent(
+                        JTable table, Object value, boolean isSelected,
+                        int row, int column) {
+
+                    log.debug("Renderer Item = {}, State = {}", row, value);
+                    if (iconHeight < 0) {
+                        loadIcons();
+                        log.debug("icons loaded");
+                    }
+                    return updateLabel((String) value, row);
+                }
+
+                public JLabel updateLabel(String value, int row) {
+                    if (iconHeight > 0) { // if necessary, increase row height;
+                        table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
+                    }
+                    if (value.equals(closedText) && offIcon != null) {
+                        label = new JLabel(offIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("offIcon set");
+                    } else if (value.equals(thrownText) && onIcon != null) {
+                        label = new JLabel(onIcon);
+                        label.setVerticalAlignment(JLabel.BOTTOM);
+                        log.debug("onIcon set");
+                    } else if (value.equals(Bundle.getMessage("BeanStateInconsistent"))) {
+                        label = new JLabel("X", JLabel.CENTER); // centered text alignment
+                        label.setForeground(Color.red);
+                        log.debug("Turnout state inconsistent");
+                        iconHeight = 0;
+                    } else if (value.equals(Bundle.getMessage("BeanStateUnknown"))) {
+                        label = new JLabel("?", JLabel.CENTER); // centered text alignment
+                        log.debug("Turnout state unknown");
+                        iconHeight = 0;
+                    } else { // failed to load icon
+                        label = new JLabel(value, JLabel.CENTER); // centered text alignment
+                        log.warn("Error reading icons for TurnoutTable");
+                        iconHeight = 0;
+                    }
+                    label.setToolTipText(value);
+                    label.addMouseListener (new MouseAdapter ()
+                    {
+                        @Override
+                        public final void mousePressed (MouseEvent evt)
+                        {
+                            log.debug("Clicked on icon in row {}", row);
+                            stopCellEditing();
+                        }
+                    });
+                    return label;
+                }
+
+                @Override
+                public Object getCellEditorValue() {
+                    log.debug("getCellEditorValue, me = {})", this.toString());
+                    return this.toString();
+                }
+
+                protected void loadIcons() {
+                    try {
+                        onImage = ImageIO.read(new File(onIconPath));
+                        offImage = ImageIO.read(new File(offIconPath));
+                    } catch (IOException ex) {
+                        log.error("error reading image from {} or {}", onIconPath, offIconPath, ex);
+                    }
+                    log.debug("Success reading images");
+                    int imageWidth = onImage.getWidth();
+                    int imageHeight = onImage.getHeight();
+                    // scale icons to fit in table rows
+                    Image smallOnImage = onImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    Image smallOffImage = offImage.getScaledInstance(imageWidth / 2, imageHeight / 2, Image.SCALE_DEFAULT);
+                    onIcon = new ImageIcon(smallOnImage);
+                    offIcon = new ImageIcon(smallOffImage);
+                    iconHeight = onIcon.getIconHeight();
+                }
+
+            }// end of ImageIconRenderer class
 
         };  // end of custom data model
     }
@@ -1315,7 +1465,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
         if (numberOfTurnouts >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
-                    Bundle.getMessage("WarnExcessBeans", numberOfTurnouts),
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Turnouts"), numberOfTurnouts),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;

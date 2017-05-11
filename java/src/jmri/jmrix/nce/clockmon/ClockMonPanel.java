@@ -1022,6 +1022,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     internalSyncRunStateCounter++;
                     break;
                 case 2:
+                case 6:
                     if (!waitingForCmdRead) {
                         internalSyncRunStateCounter++;
                     }
@@ -1068,11 +1069,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                 case 5:
                     issueReadOnlyRequest();
                     internalSyncRunStateCounter++;
-                    break;
-                case 6:
-                    if (!waitingForCmdRead) {
-                        internalSyncRunStateCounter++;
-                    }
                     break;
                 case 7:
                     // compute offset delay

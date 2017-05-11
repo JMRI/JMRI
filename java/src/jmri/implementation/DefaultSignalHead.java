@@ -25,6 +25,21 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance; // store the current appearance
         mAppearance = newAppearance;
+        appearanceSetsFlashTimer(newAppearance);
+
+        /* there are circumstances (admittedly rare) where signals and turnouts can get out of sync
+         * allow 'newAppearance' to be set to resync these cases - P Cressman
+         * if (oldAppearance != newAppearance) */
+        updateOutput();
+
+        // notify listeners, if any
+        firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
+    }
+
+    /**
+     * Call to set timer when updating the appearance
+     */
+    protected void appearanceSetsFlashTimer(int newAppearance) {
         if (mLit && ((newAppearance == FLASHGREEN)
                 || (newAppearance == FLASHYELLOW)
                 || (newAppearance == FLASHRED)
@@ -37,17 +52,8 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
                 && (newAppearance != FLASHLUNAR))) {
             stopFlash();
         }
-
-        /* there are circumstances (admittedly rare) where signals and turnouts can get out of sync
-         * allow 'newAppearance' to be set to resync these cases - P Cressman
-         if (oldAppearance != newAppearance) */ {
-            updateOutput();
-
-            // notify listeners, if any
-            firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
-        }
     }
-
+    
     @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;

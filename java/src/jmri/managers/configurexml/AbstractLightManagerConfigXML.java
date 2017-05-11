@@ -57,8 +57,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 }
                 log.debug("system name is " + sname);
                 Light lgt = tm.getBySystemName(sname);
-                Element elem = new Element("light")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("light");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts

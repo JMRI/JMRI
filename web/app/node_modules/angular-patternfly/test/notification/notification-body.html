@@ -1,0 +1,20 @@
+<div uib-dropdown class="pull-right dropdown-kebab-pf" ng-if="notification.actions && notification.actions.length > 0">
+  <button uib-dropdown-toggle class="btn btn-link" type="button" id="dropdownKebabRight">
+    <span class="fa fa-ellipsis-v"></span>
+  </button>
+  <ul uib-dropdown-menu class="dropdown-menu-right" aria-labelledby="dropdownKebabRight">
+    <li ng-repeat="action in notification.actions"
+        role="{{action.isSeparator === true ? 'separator' : 'menuitem'}}"
+        ng-class="{'divider': action.isSeparator === true, 'disabled': action.isDisabled === true}">
+      <a ng-if="action.isSeparator !== true" class="secondary-action" title="{{action.title}}" ng-click="customScope.handleAction(notification, action)">
+        {{action.name}}
+      </a>
+    </li>
+  </ul>
+</div>
+<span ng-if="notification.status" class="{{'pull-left ' + customScope.getNotficationStatusIconClass(notification)}}"></span>
+<span class="drawer-pf-notification-message">{{notification.message}}</span>
+<div class="drawer-pf-notification-info">
+  <span class="date">{{notification.timeStamp | date:'MM/dd/yyyy'}}</span>
+  <span class="time">{{notification.timeStamp | date:'h:mm:ss a'}}</span>
+</div>

@@ -1,0 +1,143 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/card/aggregate-status/aggregate-status-card.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/card/aggregate-status/aggregate-status-card.directive.js#L132" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfAggregateStatusCard</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.card</code>
+</span>
+</div>
+</h1>
+<div><fieldset class="deprecated"><legend>Deprecated API</legend>
+{boolean=} alt-layout Display the aggregate status card in a 'alternate tall' layout.  false (default) displays normal layout, true displays tall layout</fieldset>
+<h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-card-directive-page patternfly-card-directive-pfaggregatestatuscard-page"><p>Directive for easily displaying status information</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-aggregate-status-card
+     status="{object}"
+     [show-top-border="{boolean}"]
+     [layout="{string}"]&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>status</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfaggregatestatuscard-page"><p>Status configuration information<br/></p>
+<ul style='list-style-type: none'>
+<li>.title         - the main title of the aggregate status card
+<li>.count         - the number count of the main statuses
+<li>.href          - the href to navigate to if one clicks on the title or count
+<li>.iconClass     - an icon to display to the left of the count
+<li>.iconImage     - an image to display to the left of the count
+<li>.notifications - an array of status icons &amp; counts
+  <ul style='list-style-type: none'>
+  <li>.iconClass   - an icon to display to the right of the notification count
+  <li>.iconImage   - an image to display to the left of the notification count
+  <li>.count         - the number count of the notification status
+  <li>.href          - href to navigate to if one clicks on the notification status icon or count
+  </ul>
+</ul>
+When layout=&#39;mini&#39;, only one notification can be specified:<br>
+<ul style='list-style-type: none'>
+<li>...
+<li><strong>.notification</strong>  - an <em>object</em> of containing a single notification icon &amp; count
+  <ul style='list-style-type: none'>
+  <li>.iconClass   - an icon to display to the right of the notification count
+  <li>.iconImage   - an image to display to the left of the notification count
+  <li>.count         - the number count of the notification status
+  <li>.href          - href to navigate to if one clicks on the notification status icon or count
+  </ul>
+</ul></div></td></tr><tr><td>show-top-border <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfaggregatestatuscard-page"><p>Show/hide the top border, true shows top border, false (default) hides top border</p>
+</div></td></tr><tr><td>layout <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-card-directive-page patternfly-card-directive-pfaggregatestatuscard-page"><p>Various alternative layouts the aggregate status card may have:<br/></p>
+<ul style='list-style-type: none'>
+<li>&#39;mini&#39; displays a mini aggregate status card.  Note: when using &#39;mini&#39; layout, only one notification can be specified in the status object
+<li>&#39;tall&#39; displays a tall aggregate status card.  This equals the depreciated &#39;alt-layout&#39; param.</li>
+</ul></div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-card-directive-page patternfly-card-directive-pfaggregatestatuscard-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.card" source-edit-deps="angular.js script.js" source-edit-html="index.html-0" source-edit-css="" source-edit-js="script.js" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-0" ng-html-wrap-loaded="patternfly.card angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-0">
+  <div ng-controller="CardDemoCtrl" style="display:inline-block;">
+    <div class="col-md-10">
+      <label>With Top Border</label>
+      <div pf-aggregate-status-card status="status" show-top-border="true"></div>
+      <br/>
+      <label>No Top Border</label>
+      <div pf-aggregate-status-card status="status"></div>
+      <br/>
+      <label>layout = "mini"</label>
+      <div pf-aggregate-status-card status="miniAggStatus" show-top-border="true" layout="mini"></div>
+      <div pf-aggregate-status-card status="miniAggStatus2" show-top-border="true" layout="mini"></div>
+      <br/>
+      <label>layout = "tall"</label>
+      <div pf-aggregate-status-card status="aggStatusAlt" show-top-border="true" layout="tall"></div>
+      <br/>
+      <label>Alternate Layout</label>
+      <i>(depreciated, use layout = 'tall' instead)</i>
+      </br></br>
+      <div pf-aggregate-status-card status="aggStatusAlt" show-top-border="true" alt-layout="true"></div>
+    </div>
+  </div>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js"></pre>
+<script type="text/ng-template" id="script.js">
+  angular.module( 'patternfly.card' ).controller( 'CardDemoCtrl', function( $scope ) {
+   $scope.status = {
+     "title":"Nodes",
+     "count":793,
+     "href":"#",
+     "iconClass": "fa fa-shield",
+     "notifications":[
+       {
+         "iconClass":"pficon pficon-error-circle-o",
+         "count":4,
+         "href":"#"
+       },
+       {
+         "iconClass":"pficon pficon-warning-triangle-o",
+         "count":1
+       }
+     ]
+   };
+
+   $scope.aggStatusAlt = {
+     "title":"Providers",
+     "count":3,
+     "notifications":[
+       {
+         "iconImage":"img/kubernetes.svg",
+         "count":1,
+         "href":"#"
+       },
+       {
+         "iconImage":"img/OpenShift-logo.svg",
+         "count":2,
+         "href":"#"
+       }
+     ]
+    };
+
+    $scope.miniAggStatus = {
+     "iconClass":"pficon pficon-container-node",
+     "title":"Nodes",
+     "count":52,
+     "href":"#",
+     "notification": {
+         "iconClass":"pficon pficon-error-circle-o",
+         "count":3
+       }
+    };
+
+    $scope.miniAggStatus2 = {
+     "iconClass":"pficon pficon-cluster",
+     "title":"Adipiscing",
+     "count":9,
+     "href":"#",
+     "notification":{
+         "iconClass":"pficon pficon-ok"
+       }
+    };
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.card" ng-set-html="index.html-0" ng-eval-javascript="script.js"></div>
+</div></div>
+</div>

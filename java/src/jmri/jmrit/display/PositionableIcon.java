@@ -37,6 +37,7 @@ public class PositionableIcon extends PositionableLabel {
         PositionableIcon pos = new PositionableIcon(_editor);
         return finishClone(pos);
     }
+
     protected Positionable finishClone(PositionableIcon pos) {
         pos._iconFamily = _iconFamily;
         pos._scale = _scale;
@@ -46,8 +47,10 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     /**
-     * Get icon by its bean state name key found in
-     * jmri.NamedBeanBundle.properties Get icon by its localized bean state name
+     * Get icon by its localized bean state name.
+     *
+     * @param state the state name
+     * @return the icon or null if no match
      */
     public NamedIcon getIcon(String state) {
         return _iconMap.get(state);
@@ -141,8 +144,8 @@ public class PositionableIcon extends PositionableLabel {
             Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
-                entry.getValue().rotate(deg, this);                    
-            }            
+                entry.getValue().rotate(deg, this);
+            }
         }
         super.rotate(deg);
         updateSize();

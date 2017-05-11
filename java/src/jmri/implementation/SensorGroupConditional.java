@@ -25,8 +25,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Pete Cressman Copyright (C) 2009
  */
-public class SensorGroupConditional extends DefaultConditional
-        implements java.io.Serializable {
+public class SensorGroupConditional extends DefaultConditional {
 
     public SensorGroupConditional(String systemName, String userName) {
         super(systemName, userName);
