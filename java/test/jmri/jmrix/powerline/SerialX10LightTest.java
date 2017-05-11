@@ -24,7 +24,8 @@ public class SerialX10LightTest {
         SerialSystemConnectionMemo memo = new SerialSystemConnectionMemo();
         memo.setTrafficController(tc);
         tc.setAdapterMemo(memo);
-        SerialX10Light t = new SerialX10Light("PL1",tc);
+        memo.setSerialAddress(new SerialAddress(memo));
+        SerialX10Light t = new SerialX10Light("PLA1",tc);
         Assert.assertNotNull("exists",t);
     }
 
