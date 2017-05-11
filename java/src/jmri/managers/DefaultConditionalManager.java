@@ -101,7 +101,7 @@ public class DefaultConditionalManager extends AbstractManager
         }
 
         // Conditional does not exist, create a new Conditional
-        if (systemName.startsWith(SensorGroupFrame.ConditionalSystemPrefix)) {
+        if (systemName.startsWith(SensorGroupFrame.logixSysName)) {
             c = new SensorGroupConditional(systemName, userName);
         } else {
             c = new DefaultConditional(systemName, userName);
@@ -132,7 +132,6 @@ public class DefaultConditionalManager extends AbstractManager
      * such as Logix RTX123 with Conditional RTX1231T.
      */
     private static final String[] PATTERNS = {
-        "(.*?)(_SGC_.*)",              // Sensor Groups
         "(.*?)(C\\d+$)",               // Standard IX
         "(.*?)([1-9]{1}[ALT]$)",       // LRoute/Route, 1-9
         "(.*?)([0-9]{2}[ALT]$)",       // LRoute/Route, 10-99
