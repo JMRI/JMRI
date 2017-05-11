@@ -134,6 +134,11 @@
       See <a href="LogixTable.shtml#selectMethod">
       Conditional Name Selection Method</a>.</p>
       
+      <p>For Condtional Variables, the text input field is replaced
+	  by two drop down combo boxes.  The first box is used to
+	  select the Logix, the second box is used to select a
+	  conditonal that belongs to the selected Logix.</p>
+      
       <p>After the name is entered, select the required state from the
       <strong>Variable State</strong> drop down box.  Depending on the selected
       variable type and state, additional fields may be displayed.

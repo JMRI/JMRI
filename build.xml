@@ -1502,7 +1502,7 @@
              index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
           <manifest>
             <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
@@ -1571,7 +1571,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2500"/><!-- change from default 100 warnings -->
+            <arg value="2430"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1638,7 +1638,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="2500"/><!-- change from default 100 warnings -->
+            <arg value="2430"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -1672,11 +1672,11 @@
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
+            <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.5"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
-            <link href="http://www.javadoc.io/doc/org.openlcb/openlcb/0.7.11"/>
+            <link href="http://static.javadoc.io/org.openlcb/openlcb/0.7.11"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
     </target>
@@ -1949,13 +1949,16 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.windows}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib"/>
         <copy todir="${dist.windows}/JMRI/lib" flatten="true">
@@ -1988,7 +1991,7 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
@@ -1996,6 +1999,9 @@
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
@@ -2061,11 +2067,14 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"
-                     excludes="help/en/manual/**" />
+                     excludes="help/en/manual/**,web/app/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
+        </copy>
+        <copy todir="${dist.macosx}/JMRI/">
+            <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
         <copy todir="${dist.linux}/JMRI/lib" flatten="true">

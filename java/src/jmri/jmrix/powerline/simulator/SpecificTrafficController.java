@@ -186,7 +186,6 @@ public class SpecificTrafficController extends SerialTrafficController {
                     }
                     break;
                 default:
-                    log.warn("Unhandled reply length: {}", msg.getNumDataElements());
                     break;
             }
         }

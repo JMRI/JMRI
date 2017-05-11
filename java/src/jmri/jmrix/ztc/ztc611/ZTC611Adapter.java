@@ -54,7 +54,7 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
             // set timeout
             activeSerialPort.enableReceiveTimeout(10);
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                      + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -251,7 +251,10 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
+     *
+     * @throws gnu.io.UnsupportedCommOperationException if there is an error
+     *                                                  configuring the port
      */
     protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

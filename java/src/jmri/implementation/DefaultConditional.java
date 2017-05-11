@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse i18n 2016
  */
 public class DefaultConditional extends AbstractNamedBean
-        implements Conditional, java.io.Serializable {
+        implements Conditional {
 
     public static final boolean PARKS_DEBUG = false;
 
@@ -174,6 +174,7 @@ public class DefaultConditional extends AbstractNamedBean
             clone.setNum2(variable.getNum2());
             clone.setTriggerActions(variable.doTriggerActions());
             clone.setState(variable.getState());
+            clone.setGuiName(variable.getGuiName());
             variableList.add(clone);
         }
         return variableList;

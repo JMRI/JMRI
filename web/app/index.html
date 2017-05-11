@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- the following format strings identifiers are used in this template:
+1 = railroad name
+2 = scripts (in comments)
+3 = style sheets (in comments)
+4 = body content (divs)
+5 = help menu title
+6 = help menu contents (in comments)
+7 = personal menu title
+8 = personal menu contents (in comments)
+9 = power menu title
+-->
+<html>
+    <head>
+        <title>%1$s</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- scripts %2$s -->
+        <!-- style sheets %3$s -->
+    </head>
+    <body ng-app="jmri.app">
+        %4$s
+        <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout" ng-controller="NavigationCtrl">
+            <div data-pf-toast-notification-list
+                 data-notifications="toastNotifications"
+                 data-close-callback="tnCloseCallback"
+                 data-update-viewing="updateToastNotificationViewing"></div>
+            <div data-pf-vertical-navigation data-items="navigationItems" data-brand-alt="%1$s"
+                 data-show-badges="true" data-persistent-secondary="true" data-pinnable-menus="true"
+                 data-navigate-callback="handleNavigateClick">
+                <div>
+                    <ul class="nav navbar-nav navbar-right navbar-iconic">
+                        <li class="dropdown">
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-power" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span title="%9$s" class="fa fa-power-off" ></span>
+                                <span class="carat fa {{defaultPowerState| powerTriState}} small"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-menu-power">
+                                <li ng-repeat="pm in power| orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="fa fa-fw {{pm.state| powerTriState}}"></span> {{pm.name}} <span ng-show="pm.default === true">(default)</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-help" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span title="%5$s" class="fa pficon-help"></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-menu-help">
+                                <!-- help menu items %6$s -->
+                            </ul>
+                        </li>
+                        <li class="dropdown hidden">
+                            <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-personal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span title="%7$s" class="fa pficon-user"></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-menu-personal">
+                                <!-- user menu items %8$s -->
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical example-page-container">
+                <div ng-view id="includedContent"></div>
+            </div>
+            <div data-pf-about-modal data-is-open="isAboutModalOpen" data-on-close="onAboutModalClose()"
+                 data-additional-info="additionalInfo" data-product-info="productInfo"
+                 data-title="title" data-copyright="copyright" data-img-alt="imgAlt" data-img-src="imgSrc">
+            </div>
+        </div>
+    </body>
+</html>
