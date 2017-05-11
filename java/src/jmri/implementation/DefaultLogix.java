@@ -128,19 +128,6 @@ public class DefaultLogix extends AbstractNamedBean
      */
     @Override
     public boolean addConditional(String systemName, Conditional conditional) {
-        // Verify that the name is in the conditional index.  This can occur when
-        // the XML file contains orphaned conditionals.
-        boolean inIndex = false;
-        for (int i = 0; i < _conditionalSystemNames.size(); i++) {
-            if (systemName.equals(_conditionalSystemNames.get(i))) {
-                inIndex = true;
-                break;
-            }
-        }
-        if (!inIndex) {
-            return false;
-        }
-
         Conditional chkDuplicate = _conditionalMap.putIfAbsent(systemName, conditional);
         if (chkDuplicate == null) {
             return (true);
