@@ -37,6 +37,9 @@ public class XBeeTurnout extends AbstractTurnout {
     /**
      * Create a Turnout object, with system and user names and a reference to
      * the traffic controller.
+     * @param systemName Xbee id : pin
+     * @param userName friendly text name
+     * @param controller tc for node connection
      */
     public XBeeTurnout(String systemName, String userName, XBeeTrafficController controller) {
         super(systemName, userName);
