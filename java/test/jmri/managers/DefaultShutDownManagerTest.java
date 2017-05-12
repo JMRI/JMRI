@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,9 +73,16 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testIsShuttingDown() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
+        Frame frame = null;
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new Frame("Shutdown test frame");
+        }
         Assert.assertFalse(dsdm.isShuttingDown());
         dsdm.shutdown(0, false);
         Assert.assertTrue(dsdm.isShuttingDown());
+        if (frame != null) {
+            frame.dispose();
+        }
     }
 
     // The minimal setup for log4J
