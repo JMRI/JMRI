@@ -353,6 +353,7 @@
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
                         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
                     </systemPropertyVariables>
+                    <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
                     <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/test-security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
