@@ -353,7 +353,7 @@
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy==${basedir}/lib/test-security.policy</argLine>
+                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
