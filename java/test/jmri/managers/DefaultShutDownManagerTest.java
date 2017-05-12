@@ -1,7 +1,9 @@
 package jmri.managers;
 
+import java.awt.Frame;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -80,6 +82,11 @@ public class DefaultShutDownManagerTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        // close any open remaining windows from earlier tests
+        Arrays.asList(Frame.getFrames()).stream().forEach((frame) -> {
+            log.warn("Cleaning up frame \"{}\" from earlier test.", frame.getTitle());
+            frame.dispose();
+        });
     }
 
     @After
