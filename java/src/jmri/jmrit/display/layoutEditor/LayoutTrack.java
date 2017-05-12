@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for all layout track objects (LayoutTurnout, LayoutSlip,
- * LayoutTurntable, LevelXing, TrackSegment)
+ * LayoutTurntable, LevelXing, TrackSegment &amp; PositionablePoint)
  *
  * @author George Warner Copyright (c) 2017
  */
@@ -37,13 +37,18 @@ public abstract class LayoutTrack {
     public static final int MULTI_SENSOR = 16;
     public static final int MARKER = 17;
     public static final int TRACK_CIRCLE_CENTRE = 18;
-    public static final int SLIP_CENTER = 20; //
+    public static final int SLIP_CENTER = 20;   //should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
     public static final int SLIP_A = 21; // offset for slip connection points
     public static final int SLIP_B = 22; // offset for slip connection points
     public static final int SLIP_C = 23; // offset for slip connection points
     public static final int SLIP_D = 24; // offset for slip connection points
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
+    public static final int FLEX_CENTER = 27;
+    public static final int FLEX_A = 28;
+    public static final int FLEX_B = 29;
+    public static final int BEZIER_CONTROL_POINT_OFFSET = 30; // offset for TrackSegment Bezier control points
+    //NOTE: if(/when) you need another control/hit point type leave at least four (if not eight) unused here (for more Bezier control points)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
     protected String ident = "";
@@ -70,6 +75,10 @@ public abstract class LayoutTrack {
      * accessor methods
      */
     public String getID() {
+        return ident;
+    }
+
+    public String getName() {
         return ident;
     }
 
@@ -113,6 +122,74 @@ public abstract class LayoutTrack {
         double x = cX + cosineRot * deltaX - sineRot * deltaY;
         double y = cY + sineRot * deltaX + cosineRot * deltaY;
         return new Point2D.Double(x, y);
+    }
+
+    /**
+     * return the connection type for a point
+     * (abstract; should be overridden by sub-classes)
+     *
+     * @since 7.4.?
+     */
+    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        return NONE;
+    }
+
+    // optional useRectangles & requireUnconnected parameters default to false
+    public int hitTestPoint(Point2D p) {
+        return hitTestPoint(p, false, false);
+    }
+
+    // optional requireUnconnected parameter defaults to false
+    public int hitTestPoint(Point2D p, boolean useRectangles) {
+        return hitTestPoint(p, useRectangles, false);
+    }
+
+    // some connection types aren't actually connections
+    // they're only used for hit testing (to determine what was clicked)
+    public boolean isConnectionType(int connectionType) {
+        boolean result = false; // assume failure (pessimist!)
+        switch (connectionType) {
+            case POS_POINT:
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D:
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D:
+            case TRACK:
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D:
+            case FLEX_A:
+            case FLEX_B:
+                result = true;  // these are all connection types
+                break;
+            case NONE:
+            case TURNOUT_CENTER:
+            case LEVEL_XING_CENTER:
+            case TURNTABLE_CENTER:
+            case LAYOUT_POS_LABEL:
+            case LAYOUT_POS_JCOMP:
+            case MULTI_SENSOR:
+            case MARKER:
+            case TRACK_CIRCLE_CENTRE:
+            case SLIP_CENTER:
+            case SLIP_LEFT:
+            case SLIP_RIGHT:
+            case FLEX_CENTER:
+            default:
+                result = false; // these are all hit types
+                break;
+        }
+        if (TURNTABLE_RAY_OFFSET <= connectionType) {
+            result = true;  // these are all connection types
+        } else if (BEZIER_CONTROL_POINT_OFFSET <= connectionType) {
+            result = false; // these are all hit types
+        }
+        return result;
     }
 
     public void reCheckBlockBoundary() {

@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright 2009
  */
-public class NamedBeanHandle<T extends NamedBean> implements java.io.Serializable {
+public class NamedBeanHandle<T extends NamedBean> {
 
     /**
      * Create a handle to a particular bean accessed by a specific name.

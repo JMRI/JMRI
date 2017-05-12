@@ -134,6 +134,10 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         };
         assertNotNull("LogixTableAction is null!", _logixTable);
 
+//        Logix x1 = new jmri.implementation.DefaultLogix("RTXABC");
+//        assertNotNull("Logix x1 is null!", x1);
+//        InstanceManager.getDefault(jmri.LogixManager.class).register(x1);
+
         for (int i = 1; i < 20; i++) {
             Sensor s = InstanceManager.sensorManagerInstance().newSensor("IS" + i, "Sensor" + i);
             assertNotNull("Sensor is null!", s);
@@ -141,9 +145,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
             assertNotNull("Turnout is null!", t);
             Light l = InstanceManager.lightManagerInstance().newLight("IL" + (i), "Light" + i);
             assertNotNull(i + "th Light is null!", l);
-            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(
-                    "Conditional" + i, "Conditional" + i);
-            assertNotNull(i + "th Conditional is null!", c);
+//            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(
+//                    "Conditional" + i, "Conditional" + i);
+//            assertNotNull(i + "th Conditional is null!", c);
             SignalHead sh = new jmri.implementation.VirtualSignalHead("SignalHead" + i);
             assertNotNull(i + "th SignalHead is null!", sh);
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh);

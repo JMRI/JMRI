@@ -1,0 +1,4 @@
+<span>
+  <div pf-c3-chart ng-if="chartData.dataAvailable !== false" id={{sparklineChartId}} config="chartConfig"></div>
+  <div pf-empty-chart ng-if="chartData.dataAvailable === false" chart-height="chartHeight"></div>
+</span>
