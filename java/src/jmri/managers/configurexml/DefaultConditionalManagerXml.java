@@ -7,6 +7,7 @@ import jmri.ConditionalAction;
 import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
+import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.managers.DefaultConditionalManager;
@@ -211,11 +212,38 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 log.debug("create conditional: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");
             }
+
+            // Try getting the conditional.  This should fail
             Conditional c = tm.getBySystemName(sysName);
-            if (c == null) c = tm.createNewConditional(sysName, userName);
+            if (c == null) {
+                // Check for parent Logix
+                Logix x = tm.getParentLogix(sysName);
+                if (x == null) {
+                    log.error("Conditional '{}' is an orphan -- no parent Logix", sysName);
+                    continue;
+                }
+
+                // Found a potential parent Logix, check the Logix index
+                boolean inIndex = false;
+                for (int j = 0; j < x.getNumConditionals(); j++) {
+                    String cName = x.getConditionalByNumberOrder(j);
+                    if (sysName.equals(cName)) {
+                        inIndex = true;
+                        break;
+                    }
+                }
+                if (!inIndex) {
+                    log.error("Conditional '{}' is an orphan -- not in Logix index", sysName);
+                    continue;
+                }
+
+                // Create the condtional
+                c = tm.createNewConditional(sysName, userName);
+            }
 
             if (c == null) {
-                log.error("conditional '{}' is an orphan (no parent Logix)", sysName);
+                // Should never get here
+                log.error("Conditional '{}' cannot be created", sysName);
                 continue;
             }
             
