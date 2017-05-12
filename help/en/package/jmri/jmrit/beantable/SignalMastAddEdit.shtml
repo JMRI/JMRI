@@ -30,7 +30,7 @@
       Signaling Systems, and the Signal Mast Types supported within
       that system.</p>
 
-      <p>In the <b>Add Signal Mast</b> panel, after entering a User
+      <p>In the <b>Add/Edit Signal Mast</b> panel, after entering a User
       Name for the new Signal Mast, from the pop-up menu select the
       JMRI Signal System the Signal Mast is to be based upon.<br>
       Next select one of the Signal Mast models available in the
@@ -144,7 +144,7 @@
         <dt><a name="matrixCtl" id="matrixCtl">Output
         Matrix</a></dt>
 
-        <dd>
+        <dd><span class="since">since 4.6</span>
           <a href="images/MatrixMastPanel-3t.png"><img src=
           "images/MatrixMastPanel-3t.png" width="256" height="251"
           hspace="0" vspace="0" alt=
