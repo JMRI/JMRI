@@ -330,8 +330,8 @@
                 <version>2.20</version>
                 <configuration>
                     <excludes>
-                        <!-- TEMPORARY since NCE tests sometimes fail to load classes -->
-                        <exclude>jmri.jmrix.nce.**</exclude>
+                        <!-- ignore until #3340 is merged -->
+                        <exclude>jmri.jmrix.nce.**.Nce*</exclude>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
