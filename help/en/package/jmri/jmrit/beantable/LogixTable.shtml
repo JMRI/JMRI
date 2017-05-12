@@ -38,31 +38,34 @@
       System Name and User Name.</p>
 
       <h2>Columns in the Logix Table</h2>
-
+      <p>You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to a
+      column title.</p>
       <p>The last column of the table provides four things you can
-      do with a Logix; Edit it, Browse it, Duplicate it, or Delete
+      do with a Logix: Edit it, Browse it, Duplicate it, or Delete
       it. Simply clicking <strong>Select</strong> will drop down a menu with the
       choices: <strong>Edit</strong>, <strong>Browse</strong>,
       <strong>Copy</strong>, <strong>Delete</strong>.</p>
-      <ul><li>
-      Selecting <strong>Edit</strong> will bring up the Edit Logix window
-      which provides a way to edit a Logix and its Conditionals. See
-      <a href="LogixAddEdit.shtml">the help page on adding
-      Logix</a> for more information on creating and editing Logix
-      Conditionals.
-      </li><li>
-      Selecting <strong>Browse</strong> will bring up the Conditional Browser
-      window. The window provides a summary view of the Conditionals
-      and their definitions in the Logix.  When you are done, just
-      close the window.
-      </li><li>
-      Selecting <strong>Copy</strong> will bring up windows that allow you to
-      make a new copy of Logix and its Conditionals or to copy its
-      Conditionals into an existing Logix.
-      </li><li>
-      Selecting <strong>Delete</strong> will delete the Logix and its
-      Conditionals.
-      </li></ul>
+      <ul>
+        <li>
+        Selecting <strong>Edit</strong> will bring up the Edit Logix window
+        which provides a way to edit a Logix and its Conditionals. See
+        <a href="LogixAddEdit.shtml">the help page on adding
+        Logix</a> for more information on creating and editing Logix
+        Conditionals.</li>
+        <li>
+        Selecting <strong>Browse</strong> will bring up the Conditional Browser
+        window. The window provides a summary view of the Conditionals
+        and their definitions in the Logix.  When you are done, just
+        close the window.</li>
+        <li>
+        Selecting <strong>Copy</strong> will bring up windows that allow you to
+        make a new copy of Logix and its Conditionals or to copy its
+        Conditionals into an existing Logix.</li>
+        <li>
+        Selecting <strong>Delete</strong> will delete the Logix and its
+        Conditionals.</li>
+      </ul>
 
       <p>The <strong>Enabled</strong> column allows you to enable (checked)
       or disable (unchecked) a Logix. A Logix does not have a state
@@ -141,7 +144,8 @@
 
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix
-      documentation</a>.</p><!--#include virtual="/Footer" -->
+      documentation</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
