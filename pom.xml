@@ -356,8 +356,8 @@
                     <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
-                    <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
                     <forkCount>1</forkCount>
+                    <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
                     <reuseForks>false</reuseForks>
                     -->
                     <!-- uncomment to really ensure tests are independent -->
