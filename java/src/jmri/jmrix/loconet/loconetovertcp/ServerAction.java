@@ -1,10 +1,11 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ * Implementation of the LocoNet over TCP Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  */
@@ -13,21 +14,17 @@ public class ServerAction
 
     public ServerAction(String s) {
         super(s);
-        // Get a server instance to cause the config to be read and the server
-        // started if necessary
-        Server.getDefault();
     }
 
     public ServerAction() {
-        this("LocoNetOverTcp Server");
-        // Get a server instance to cause the config to be read and the server
-        // started if necessary
-        Server.getDefault();
+        this(Bundle.getMessage("ServerAction"));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ServerFrame f = ServerFrame.getInstance();
-        f.setVisible(true);
+        Server.getDefault().enable();
+        if (!GraphicsEnvironment.isHeadless()) {
+            ServerFrame.getInstance().setVisible(true);
+        }
     }
 }
