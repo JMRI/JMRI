@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.InstanceManager;
-import jmri.beans.Bean;
+import jmri.beans.PreferencesBean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Randall Wood Copyright (C) 2012
  */
-public class WebServerPreferences extends Bean {
+public class WebServerPreferences extends PreferencesBean {
 
     // preferences elements
     public static final String DISALLOWED_FRAMES = "disallowedFrames"; // NOI18N
@@ -94,14 +94,7 @@ public class WebServerPreferences extends Bean {
     public static final String ReadonlyPower = READONLY_POWER;
     public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
     public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
-    // properties
-    public static final String DIRTY = "dirty"; // NOI18N
-    public static final String RESTART_REQUIRED = "restartRequired"; // NOI18N
 
-    // Flag that prefs have not been saved
-    private boolean isDirty = false;
-    // flag that changed prefs cannot be applied before restarting
-    private boolean restartRequired = false;
     // initial defaults if prefs not found
     private int clickDelay = 1;
     private int refreshDelay = 5;
@@ -330,18 +323,6 @@ public class WebServerPreferences extends Bean {
         }
     }
 
-    public boolean isDirty() {
-        return isDirty;
-    }
-
-    public void setIsDirty(boolean value) {
-        boolean old = this.isDirty;
-        if (old != value) {
-            this.isDirty = value;
-            this.firePropertyChange(DIRTY, old, value);
-        }
-    }
-
     public int getClickDelay() {
         return clickDelay;
     }
@@ -527,51 +508,6 @@ public class WebServerPreferences extends Bean {
         if (old != redirectFramesToPanels) {
             this.redirectFramesToPanels = redirectFramesToPanels;
             this.firePropertyChange(REDIRECT_FRAMES, old, this.redirectFramesToPanels);
-        }
-    }
-
-    /**
-     * Check if some preferences cannot be applied without restarting JMRI.
-     *
-     * @return true if JMRI needs to be restarted, false otherwise.
-     */
-    public boolean isRestartRequired() {
-        return this.restartRequired;
-    }
-
-    /**
-     * Set if restart needs to be required for some preferences to take effect.
-     *
-     * @param restartRequired true if JMRI needs to be restarted.
-     */
-    private void setRestartRequired() {
-        if (!this.restartRequired) {
-            this.restartRequired = true;
-            this.firePropertyChange(RESTART_REQUIRED, false, true);
-        }
-    }
-
-    @Override
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
-            this.setIsDirty(true);
-        }
-    }
-
-    @Override
-    protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
-        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
-            this.setIsDirty(true);
-        }
-    }
-
-    @Override
-    protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
-        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
-            this.setIsDirty(true);
         }
     }
 
