@@ -191,7 +191,7 @@
         <dt>GUI</dt>
 
         <dd>
-          These radio boxes allow you to select how the program
+          A row of radio boxes allow you to select how the program
           looks. The available choices depend on what kind of
           computer you have, and not all of the following may be
           available:
@@ -209,7 +209,18 @@
             possible like a regular Windows application.</li>
 
             <li>Mac OS X - only available on MacOS, this makes the
-            program look like a Macintosh application</li>
+            program look like a Macintosh application.</li>
+          </ul>
+          
+          <br>
+          
+          In addition, this tab lets you set:
+          <ul>
+          <li>The font size of the GUI.</li>
+          <li>Whether you want to use graphics to show the state of turnouts,
+          lights, sensors and blocks in the state column of their tables.
+          <span class="since">since 4.7.4</span></li>
+          <li>How long tooltips (where available) should be shown.</li>
           </ul>
         </dd>
 

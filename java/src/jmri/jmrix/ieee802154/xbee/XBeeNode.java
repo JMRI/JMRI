@@ -187,6 +187,7 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * XBee Nodes store an identifier. we want to be able to store and retrieve
      * this information.
+     * @param id text id for node
      */
     public void setIdentifier(String id) {
         try {
@@ -399,6 +400,8 @@ public class XBeeNode extends IEEE802154Node {
      *
      * @param pin the pin number to change.
      * @param pr a jmri.Sensor.PullResistance value used to configure the pin.
+     * @throws TimeoutException lock timed out
+     * @throws XBeeException invalid Xbee values, pins
      */
     void setPRParameter(int pin, jmri.Sensor.PullResistance pr) throws TimeoutException,XBeeException {
        // flip the bits in the PR data byte, and then send to the node.
@@ -486,8 +489,10 @@ public class XBeeNode extends IEEE802154Node {
     *
     * @param pin the pin number
     * @return a jmri.Sensor.PullResistance value indicating the current state of    * the pullup resistor. 
+ * @throws TimeoutException lock timeout
+ * @throws XBeeException invalid pins or values
     */
-    jmri.Sensor.PullResistance getPRValueForPin(int pin) throws TimeoutException,XBeeException {
+    jmri.Sensor.PullResistance getPRValueForPin(int pin) throws TimeoutException, XBeeException {
        if(pin>7 || pin < 0){
           throw new IllegalArgumentException("Invalid pin specified");
        }
