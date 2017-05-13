@@ -26,6 +26,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>The Switchboard Editor</h1>
+      <span class="since">since 4.7.3</span>
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
       To create a new Switchboard, from the Panels menu, choose New Panel &gt; Switchboard Editor.<br>
       A default pane with switches for Turnouts in the range 1 - 32 opens.<br>
@@ -62,8 +63,8 @@
       <ul>
         <li>set the user name of a connected item (stored in the item, not in the board)</li>
         <li>attach a new item to an inactive switch (using the name of the switch and the object type as set in the Editor)</li>
-        <li>To come: invert a turnout so it displays the intended state (depending on protocol support)</li>
-        <li>To come: flip the switch icon to better represent the position of the connected turnout (presently not saved)</li>
+        <li>Invert a turnout so it displays the intended state (depending on protocol support)</li>
+        <li>To come: flip the switch icon to better represent the position of the connected turnout</li>
       </ul>
 
       <p>Remember to save your setup and configured items by choosing Save Panels... from the File menu.<br>

@@ -216,10 +216,11 @@
           
           In addition, this tab lets you set:
           <ul>
-          <li>the font size of the GUI</li>
-          <li>whether you want to use graphics to show the state of turnouts,
-          lights, sensors and blocks in the state column of their tables</li>
-          <li>how long tooltips (where available) should be shown</li>
+          <li>The font size of the GUI.</li>
+          <li>Whether you want to use graphics to show the state of turnouts,
+          lights, sensors and blocks in the state column of their tables.
+          <span class="since">since 4.7.4</span></li>
+          <li>How long tooltips (where available) should be shown.</li>
           </ul>
         </dd>
 
