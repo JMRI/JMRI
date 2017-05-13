@@ -62,23 +62,23 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                Server.getInstance().enable();
+                Server.getDefault().enable();
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                Server.getInstance().disable();
+                Server.getDefault().disable();
             }
         });
 
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                Server.getInstance().setAutoStart(autoStartCheckBox.isSelected());
-                Server.getInstance().setPortNumber(((Integer) portNumber.getValue()).intValue());
-                Server.getInstance().saveSettings();
+                Server.getDefault().setAutoStart(autoStartCheckBox.isSelected());
+                Server.getDefault().setPortNumber(((Integer) portNumber.getValue()).intValue());
+                Server.getDefault().saveSettings();
             }
         });
 
@@ -105,7 +105,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         self = null;
-        Server.getInstance().setStateListner(null);
+        Server.getDefault().setStateListner(null);
         dispose();
         super.windowClosing(e);
     }
@@ -118,7 +118,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     static public synchronized ServerFrame getInstance() {
         if (self == null) {
             self = new ServerFrame();
-            Server server = Server.getInstance();
+            Server server = Server.getDefault();
             server.setStateListner(self);
             server.updateServerStateListener();
             server.updateClinetStateListener();
@@ -128,7 +128,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     }
 
     private void updateServerStatus() {
-        Server server = Server.getInstance();
+        Server server = Server.getDefault();
         autoStartCheckBox.setSelected(server.getAutoStart());
         autoStartCheckBox.setEnabled(!server.isEnabled());
         if (portNumber != null) {
@@ -143,7 +143,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     }
 
     private void updateClientStatus() {
-        clientStatus.setText("   Client Count: " + Integer.toString(Server.getInstance().getClientCount()));
+        clientStatus.setText("   Client Count: " + Integer.toString(Server.getDefault().getClientCount()));
     }
 
     @Override

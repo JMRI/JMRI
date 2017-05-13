@@ -17,8 +17,8 @@ public class ServerTest {
    @Test
    @Ignore("needs more setup")
    public void getInstanceTest(){
-      Assert.assertNotNull("Server getInstance",Server.getInstance());
-      Server.getInstance().disable();  // turn the server off after enabled durring creation.
+      Assert.assertNotNull("Server getInstance",Server.getDefault());
+      Server.getDefault().disable();  // turn the server off after enabled durring creation.
    }
 
    @Before

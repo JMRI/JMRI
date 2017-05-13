@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
-  */
+ */
 public class ServerAction
         extends AbstractAction {
 
@@ -15,14 +15,14 @@ public class ServerAction
         super(s);
         // Get a server instance to cause the config to be read and the server
         // started if necessary
-        Server.getInstance();
+        Server.getDefault();
     }
 
     public ServerAction() {
         this("LocoNetOverTcp Server");
         // Get a server instance to cause the config to be read and the server
         // started if necessary
-        Server.getInstance();
+        Server.getDefault();
     }
 
     @Override

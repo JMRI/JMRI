@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Properties;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
@@ -38,21 +39,36 @@ public class Server {
     static final String SETTINGS_FILE_NAME = "LocoNetOverTcpSettings.ini";
 
     private Server() {
-        clients = new LinkedList<ClientRxHandler>();
+        clients = new LinkedList<>();
     }
 
     public void setStateListner(ServerListner l) {
         stateListner = l;
     }
 
-    public static synchronized Server getInstance() {
-        if (self == null) {
-            self = new Server();
-            if (self.getAutoStart()) {
-                self.enable();
+    /**
+     * Get the default server instance, creating it if necessary.
+     *
+     * @return the default server instance
+     */
+    public static synchronized Server getDefault() {
+        return InstanceManager.getOptionalDefault(Server.class).orElseGet(() -> {
+            Server server = new Server();
+            if (server.getAutoStart()) {
+                server.enable();
             }
-        }
-        return self;
+            return InstanceManager.setDefault(Server.class, server);
+        });
+    }
+
+    /**
+     *
+     * @return the default server
+     * @deprecated since 4.7.5; use {@link #getDefault()} instead
+     */
+    @Deprecated
+    public static synchronized Server getInstance() {
+        return Server.getDefault();
     }
 
     private void loadSettings() {
@@ -160,7 +176,7 @@ public class Server {
                 this.shutDownTask = new QuietShutDownTask("LocoNetOverTcpServer") {
                     @Override
                     public boolean execute() {
-                        Server.getInstance().disable();
+                        Server.getDefault().disable();
                         return true;
                     }
                 };
@@ -195,9 +211,9 @@ public class Server {
             }
         }
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
-        }
+        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((manager) -> {
+            manager.deregister(this.shutDownTask);
+        });
     }
 
     public void updateServerStateListener() {

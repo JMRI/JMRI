@@ -139,7 +139,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         } catch (IOException ex1) {
         }
 
-        Server.getInstance().removeClient(this);
+        Server.getDefault().removeClient(this);
         log.info("ClientRxHandler: Exiting");
     }
 
