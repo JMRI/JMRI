@@ -17,7 +17,6 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <jetty.version>9.2.21.v20170120</jetty.version>
-        <powermock.version>1.6.6</powermock.version>
         <slf4j.version>1.7.21</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -28,6 +27,8 @@
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m</argLine>
+        <powermock.version>1.6.6</powermock.version>
+        <surefire.version>2.20</surefire.version>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -78,7 +79,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
+                        <version>${surefire.version}</version>
                         <configuration>
                             <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
@@ -157,7 +158,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
+                        <version>${surefire.version}</version>
                         <configuration>
                             <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
@@ -173,7 +174,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.20</version>
+                        <version>${surefire.version}</version>
                         <configuration>
                             <skipTests>true</skipTests>
                         </configuration>
@@ -327,7 +328,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20</version>
+                <version>${surefire.version}</version>
                 <configuration>
                     <excludes>
                         <!-- ignore until #3340 is merged -->
@@ -364,6 +365,13 @@
                     -->
                     <!-- uncomment to really ensure tests are independent -->
                     <runOrder>random</runOrder>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.surefire</groupId>
+                            <artifactId>surefire-junit47</artifactId>
+                            <version>${surefire.version}</version>
+                        </dependency>
+                    </dependencies>
                 </configuration>
             </plugin>
             <plugin>
@@ -556,7 +564,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.20</version>
+                <version>${surefire.version}</version>
                 <configuration>
                     <showSuccess>false</showSuccess>
                 </configuration>
