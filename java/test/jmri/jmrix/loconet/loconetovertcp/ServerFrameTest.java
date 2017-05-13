@@ -19,7 +19,7 @@ public class ServerFrameTest {
     @Test
     public void testGetInstance() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ServerFrame action = ServerFrame.getInstance();
+        ServerFrame action = ServerFrame.getDefault();
         Assert.assertNotNull("exists", action);
     }
 

@@ -1,17 +1,12 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import jmri.InstanceManager;
+import jmri.util.JmriJFrame;
 
 /**
  * Frame displaying and programming a LocoNet clock monitor.
@@ -24,24 +19,30 @@ import javax.swing.event.ChangeListener;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004
  * @author Alex Shepherd Copyright (C) 2006
+ * @author Randall Wood Copyright (C) 2017
  */
-public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
+public class ServerFrame extends JmriJFrame implements ServerListner {
+
+    JLabel portNumber;
+    JLabel portNumberLabel = new JLabel("  Port Number: ");
+    JLabel serverStatus = new JLabel("Server Status:         ");
+    JLabel clientStatus = new JLabel("   Client Count:  ");
+
+    JButton startButton = new JButton("Start Server");
+    JButton stopButton = new JButton("Stop Server");
 
     private ServerFrame() {
-        super("LocoNetOverTcp Server");
+        super(Bundle.getMessage("ServerAction"));
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        portNumber = new JSpinner();
-        portNumberModel = new SpinnerNumberModel(65535, 1, 65535, 1);
-        portNumber.setModel(portNumberModel);
+        portNumber = new JLabel();
 
         portNumber.setFocusable(false);
 
         // add GUI items
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(autoStartCheckBox);
         panel.add(portNumberLabel);
         panel.add(portNumber);
         getContentPane().add(panel);
@@ -50,7 +51,6 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(startButton);
         panel.add(stopButton);
-        panel.add(saveButton);
         getContentPane().add(panel);
 
         panel = new JPanel();
@@ -59,55 +59,24 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         panel.add(clientStatus);
         getContentPane().add(panel);
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                Server.getDefault().enable();
-            }
+        startButton.addActionListener((ActionEvent a) -> {
+            Server.getDefault().enable();
         });
 
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                Server.getDefault().disable();
-            }
-        });
-
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                Server.getDefault().setAutoStart(autoStartCheckBox.isSelected());
-                Server.getDefault().setPortNumber(((Integer) portNumber.getValue()).intValue());
-                Server.getDefault().saveSettings();
-            }
-        });
-
-        autoStartCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                saveButton.setEnabled(true);
-            }
-        });
-
-        portNumber.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                saveButton.setEnabled(true);
-            }
+        stopButton.addActionListener((ActionEvent a) -> {
+            Server.getDefault().disable();
         });
 
         pack();
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
-        self = null;
         Server.getDefault().setStateListner(null);
         dispose();
         super.windowClosing(e);
+        InstanceManager.deregister(this, ServerFrame.class);
     }
 
     @Override
@@ -115,30 +84,40 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
         super.dispose();
     }
 
-    static public synchronized ServerFrame getInstance() {
-        if (self == null) {
-            self = new ServerFrame();
+    /**
+     *
+     * @return the default server frame instance
+     * @deprecated since 4.7.5; use {@link #getDefault() } instead
+     */
+    @Deprecated
+    static public ServerFrame getInstance() {
+        return getDefault();
+    }
+
+    /**
+     * Get the default server frame instance.
+     *
+     * @return the default server frame instance, creating it if needed
+     */
+    static public synchronized ServerFrame getDefault() {
+        return InstanceManager.getOptionalDefault(ServerFrame.class).orElseGet(() -> {
+            ServerFrame self = new ServerFrame();
             Server server = Server.getDefault();
             server.setStateListner(self);
             server.updateServerStateListener();
-            server.updateClinetStateListener();
-        }
-
-        return self;
+            server.updateClientStateListener();
+            return InstanceManager.setDefault(ServerFrame.class, self);
+        });
     }
 
     private void updateServerStatus() {
         Server server = Server.getDefault();
-        autoStartCheckBox.setSelected(server.getAutoStart());
-        autoStartCheckBox.setEnabled(!server.isEnabled());
         if (portNumber != null) {
-            portNumber.setValue(Integer.valueOf(server.getPortNumber()));
-            portNumber.setEnabled(!server.isEnabled());
+            portNumber.setText(Integer.toString(server.getPortNumber()));
             portNumberLabel.setEnabled(!server.isEnabled());
         }
         startButton.setEnabled(!server.isEnabled());
         stopButton.setEnabled(server.isEnabled());
-        saveButton.setEnabled(server.isSettingChanged());
         serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled"));
     }
 
@@ -148,35 +127,16 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
     @Override
     public void notifyServerStateChanged(Server s) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                updateServerStatus();
-            }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            updateServerStatus();
         });
     }
 
     @Override
     public void notifyClientStateChanged(Server s) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                updateClientStatus();
-            }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            updateClientStatus();
         });
     }
 
-    JSpinner portNumber;
-    SpinnerNumberModel portNumberModel;
-    JLabel portNumberLabel = new JLabel("  Port Number: ");
-    JLabel serverStatus = new JLabel("Server Status:         ");
-    JLabel clientStatus = new JLabel("   Client Count:  ");
-
-    JCheckBox autoStartCheckBox = new JCheckBox(
-            "Start Server at Application Startup");
-    JButton startButton = new JButton("Start Server");
-    JButton stopButton = new JButton("Stop Server");
-    JButton saveButton = new JButton("Save Settings");
-
-    static ServerFrame self;
 }

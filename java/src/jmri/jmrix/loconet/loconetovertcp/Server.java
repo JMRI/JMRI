@@ -1,19 +1,12 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
-import java.util.Properties;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.implementation.QuietShutDownTask;
-import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Server {
 
-    static Server self;
-    LinkedList<ClientRxHandler> clients;
+    final LinkedList<ClientRxHandler> clients;
     Thread socketListener;
     ServerSocket serverSocket;
     boolean settingsLoaded = false;
@@ -36,10 +28,14 @@ public class Server {
     ZeroConfService service = null;
     static final String AUTO_START_KEY = "AutoStart";
     static final String PORT_NUMBER_KEY = "PortNumber";
-    static final String SETTINGS_FILE_NAME = "LocoNetOverTcpSettings.ini";
+
+    private int portNumber = 1234;
 
     private Server() {
         clients = new LinkedList<>();
+        portNumber = InstanceManager.getOptionalDefault(LnTcpPreferences.class).orElseGet(() -> {
+            return InstanceManager.setDefault(LnTcpPreferences.class, new LnTcpPreferences());
+        }).getPort();
     }
 
     public void setStateListner(ServerListner l) {
@@ -54,9 +50,6 @@ public class Server {
     public static synchronized Server getDefault() {
         return InstanceManager.getOptionalDefault(Server.class).orElseGet(() -> {
             Server server = new Server();
-            if (server.getAutoStart()) {
-                server.enable();
-            }
             return InstanceManager.setDefault(Server.class, server);
         });
     }
@@ -71,79 +64,53 @@ public class Server {
         return Server.getDefault();
     }
 
-    private void loadSettings() {
-        if (!settingsLoaded) {
-            settingsLoaded = true;
-            Properties settings = new Properties();
-
-            String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
-
-            try {
-                log.debug("Server: opening settings file " + settingsFileName);
-                java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
-                try {
-                    settings.load(settingsStream);
-                } finally {
-                    settingsStream.close();
-                }
-
-                String val = settings.getProperty(AUTO_START_KEY, "0");
-                autoStart = (val.equals("1"));
-                val = settings.getProperty(PORT_NUMBER_KEY, "1234");
-                portNumber = Integer.parseInt(val, 10);
-            } catch (FileNotFoundException ex) {
-                log.debug("Server: loadSettings file not found");
-            } catch (IOException ex) {
-                log.debug("Server: loadSettings exception: ", ex);
-            }
-            updateServerStateListener();
-        }
-    }
-
-    public void saveSettings() {
-        // we can't use the store capabilities of java.util.Properties, as
-        // they are not present in Java 1.1.8
-        String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
-        log.debug("Server: saving settings file " + settingsFileName);
-
-        try {
-            OutputStream outStream = new FileOutputStream(settingsFileName);
-            PrintStream settingsStream = new PrintStream(outStream);
-            settingsStream.println("# LocoNetOverTcp Configuration Settings");
-            settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));
-            settingsStream.println(PORT_NUMBER_KEY + " = " + portNumber);
-
-            settingsStream.flush();
-            settingsStream.close();
-            settingsChanged = false;
-        } catch (FileNotFoundException ex) {
-            log.warn("Server: saveSettings exception: ", ex);
-        }
-        updateServerStateListener();
-    }
-    private boolean autoStart;
-
+    /**
+     * Determine if server will start when created by an action.
+     *
+     * @return true
+     * @deprecated since 4.7.5 without replacement; use the JMRI startup actions
+     * mechanisms to control this
+     */
+    @Deprecated
     public boolean getAutoStart() {
-        loadSettings();
-        return autoStart;
+        return true;
     }
 
+    /**
+     * Set if server will start when created by an action.
+     *
+     * @param start ignored
+     * @deprecated since 4.7.5 without replacement
+     */
+    @Deprecated
     public void setAutoStart(boolean start) {
-        loadSettings();
-        autoStart = start;
-        settingsChanged = true;
-        updateServerStateListener();
+        // do nothing
     }
-    private int portNumber = 1234;
 
+    /**
+     * Get the port the server listens to.
+     *
+     * @return the port
+     * @deprecated since 4.7.5; use
+     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#getPort()}
+     * instead
+     */
+    @Deprecated
     public int getPortNumber() {
-        loadSettings();
         return portNumber;
     }
 
+    /**
+     * Set the port the server listens to.
+     *
+     * @param port ignored
+     * @deprecated since 4.7.5; use
+     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#setPort()}
+     * instead
+     */
+    @Deprecated
     public void setPortNumber(int port) {
-        loadSettings();
-        if ((port >= 1024) && (port <= 65535)) {
+        if ((port >= 1) && (port <= 65535)) {
             portNumber = port;
             settingsChanged = true;
             updateServerStateListener();
@@ -222,7 +189,7 @@ public class Server {
         }
     }
 
-    public void updateClinetStateListener() {
+    public void updateClientStateListener() {
         if (stateListner != null) {
             stateListner.notifyClientStateChanged(this);
         }
@@ -257,14 +224,14 @@ public class Server {
         synchronized (clients) {
             clients.add(handler);
         }
-        updateClinetStateListener();
+        updateClientStateListener();
     }
 
     protected void removeClient(ClientRxHandler handler) {
         synchronized (clients) {
             clients.remove(handler);
         }
-        updateClinetStateListener();
+        updateClientStateListener();
     }
 
     public int getClientCount() {

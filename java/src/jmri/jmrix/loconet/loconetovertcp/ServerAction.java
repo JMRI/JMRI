@@ -24,7 +24,7 @@ public class ServerAction
     public void actionPerformed(ActionEvent e) {
         Server.getDefault().enable();
         if (!GraphicsEnvironment.isHeadless()) {
-            ServerFrame.getInstance().setVisible(true);
+            ServerFrame.getDefault().setVisible(true);
         }
     }
 }
