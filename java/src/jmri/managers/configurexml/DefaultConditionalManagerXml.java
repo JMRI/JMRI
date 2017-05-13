@@ -219,7 +219,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // Check for parent Logix
                 Logix x = tm.getParentLogix(sysName);
                 if (x == null) {
-                    log.debug("Conditional '{}' is an orphan -- no parent Logix", sysName);
+                    log.warn("Conditional '{}' has no parent Logix", sysName);
                     continue;
                 }
 
@@ -233,7 +233,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     }
                 }
                 if (!inIndex) {
-                    log.debug("Conditional '{}' is an orphan -- not in Logix index", sysName);
+                    log.debug("Conditional '{}' is not in the Logix index", sysName);
                     continue;
                 }
 
