@@ -333,7 +333,7 @@
                         <!-- ignore until #3340 is merged -->
                         <exclude>jmri.jmrix.nce.**.Nce*</exclude>
                         <!-- ignore until #3492 is resolved -->
-                        <exclude>jmri.jmrix.loconet.locormi.LnMessage{Client,Server}</exclude>
+                        <exclude>jmri.jmrix.loconet.locormi.LnMessage{Client,Server}Test</exclude>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
