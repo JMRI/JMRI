@@ -195,6 +195,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 }
             }
         }
+
         // include LayoutSlips
         num = p.slipList.size();
         if (log.isDebugEnabled()) {
