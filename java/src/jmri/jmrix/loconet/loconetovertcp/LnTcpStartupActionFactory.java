@@ -9,7 +9,7 @@ import java.util.Locale;
  *
  * @author Randall Wood Copyright (C) 2017
  */
-public class LocoNetOverTCPStartupActionFactory extends AbstractStartupActionFactory {
+public class LnTcpStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
