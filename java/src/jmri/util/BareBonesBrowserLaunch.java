@@ -20,7 +20,7 @@ public class BareBonesBrowserLaunch {
      * display a generic error message. Use Desktop#browse() directly to provide
      * task-specific handling of the inability to open the URL.
      *
-     * @param url
+     * @param url web page to open
      */
     public static void openURL(String url) {
         try {
