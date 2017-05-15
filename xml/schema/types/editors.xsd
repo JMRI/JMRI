@@ -1252,21 +1252,14 @@
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="icon" type="xs:string"></xs:attribute>
       <xs:attribute name="dockX" type="xs:string"></xs:attribute>
       <xs:attribute name="dockY" type="xs:string"></xs:attribute>
       <xs:attribute name="text" type="xs:string"></xs:attribute>
-      <xs:attribute name="size" type="xs:string"></xs:attribute>
-      <xs:attribute name="style" type="xs:string"></xs:attribute>
-      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="hasBackground" type="xs:string"></xs:attribute>
-      <xs:attribute name="justification" default="left" type="JustificationType"></xs:attribute>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
-      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorLocoLabelType">

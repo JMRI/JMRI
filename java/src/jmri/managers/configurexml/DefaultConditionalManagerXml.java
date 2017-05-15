@@ -233,7 +233,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     }
                 }
                 if (!inIndex) {
-                    log.debug("Conditional '{}' is not in the Logix index", sysName);
+                    log.warn("Conditional '{}' is not in the Logix index", sysName);
                     continue;
                 }
 
