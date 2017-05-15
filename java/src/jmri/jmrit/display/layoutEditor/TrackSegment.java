@@ -143,8 +143,8 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * return debugging string for the TrackSegment
-     * @return 
+     * Get debugging string for the TrackSegment.
+     * @return text showing id and connections of this segment
      */
     public String toString() {
         return "TrackSegment " + ident +
@@ -153,7 +153,7 @@ public class TrackSegment extends LayoutTrack {
 
     }
 
-    /**
+    /*
      * Accessor methods
      */
 
@@ -264,8 +264,10 @@ public class TrackSegment extends LayoutTrack {
         changed = true;
     }
 
-    //This method is used to determine if we need to redraw a curved piece of track
-    //It saves having to recalculate the circle details each time.
+    /**
+     * Determine if we need to redraw a curved piece of track.
+     * Saves having to recalculate the circle details each time.
+     */
     public boolean trackNeedsRedraw() {
         return changed;
     }
@@ -331,7 +333,7 @@ public class TrackSegment extends LayoutTrack {
     public String tConnect2Name = "";
 
     /**
-     * Initialization method The above variables are initialized by
+     * Initialization method. The above variables are initialized by
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
@@ -361,7 +363,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Set Up a Layout Block for a Track Segment
+     * Set Up a Layout Block for a Track Segment.
      */
     public void setLayoutBlock(LayoutBlock b) {
         block = b;
@@ -432,7 +434,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * return the connection type for a point
+     * Get the connection type for a point.
      * @param p the point to hit test
      * @return the type of point that was hit (NONE means none… (Duh!))
      * @since 7.4.?
@@ -466,7 +468,7 @@ public class TrackSegment extends LayoutTrack {
     }   // hitTestPoint
 
     /**
-     * return the coordinates for a specified connection type
+     * Get the coordinates for a specified connection type.
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
@@ -483,7 +485,7 @@ public class TrackSegment extends LayoutTrack {
     JPopupMenu popup = null;
 
     /**
-     * Display popup menu for information and editing
+     * Display popup menu for information and editing.
      */
     protected void showPopUp(MouseEvent e) {
         if (popup != null) {
@@ -671,7 +673,7 @@ public class TrackSegment extends LayoutTrack {
     private boolean needsRedraw = false;
 
     /**
-     * Edit a Track Segment
+     * Edit a Track Segment.
      */
     protected void editTrackSegment() {
         if (editOpen) {
@@ -900,8 +902,11 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
+     * Clean up when this object is no longer needed.
+     * <p>
+     * Should not be called while
+     * the object is still displayed.
+     * @see #remove()
      */
     void dispose() {
         if (popup != null) {
@@ -911,7 +916,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Remove this object from display and persistance.
      */
     void remove() {
         // remove from persistance by flagging inactive
@@ -921,6 +926,7 @@ public class TrackSegment extends LayoutTrack {
     boolean active = true;
 
     /**
+     * Get state.
      * "active" means that the object is still displayed, and should be stored.
      */
     public boolean isActive() {
@@ -941,6 +947,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     //Methods used by Layout Editor
+
     public void hideConstructionLines(int hide) {
         if (hide == HIDECONALL) {
             showConstructionLine |= HIDECONALL;
@@ -1155,8 +1162,8 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /*
-     * The recalculation method is used when the user changes the angle dynamically in edit mode
-     * by dragging the centre of the cirle
+     * Called when the user changes the angle dynamically in edit mode
+     * by dragging the centre of the cirle.
      */
     //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
@@ -1197,7 +1204,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /*
-     * Calculates the initally parameters for drawing a circular track segment.
+     * Calculate the initally parameters for drawing a circular track segment.
      */
     protected void calculateTrackSegmentAngle() {
         Point2D pt1, pt2;
