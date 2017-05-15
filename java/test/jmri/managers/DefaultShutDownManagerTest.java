@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -88,19 +89,13 @@ public class DefaultShutDownManagerTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        // close any open remaining windows from earlier tests
-        for (Frame frame : Frame.getFrames()) {
-            if (frame.isDisplayable()) {
-                log.warn("Cleaning up frame \"{}\" from earlier test.", frame.getTitle());
-                frame.dispose();
-            }
-        }
+        JUnitUtil.resetWindows(true);
+        JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 
