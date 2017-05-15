@@ -56,6 +56,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param tc connector for node
      */
     public NodeConfigFrame(IEEE802154TrafficController tc) {
         super();
@@ -453,6 +454,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Check for consistency errors by node type Returns 'true' if successful,
      * 'false' if an error was detected. If an error is detected, a suitable
      * error message is placed in the Notes area
+     * @return always true
      */
     protected boolean checkConsistency() {
         return true;

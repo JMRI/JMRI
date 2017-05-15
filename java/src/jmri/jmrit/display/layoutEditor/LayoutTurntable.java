@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
 import static jmri.util.MathUtil.*;
 
 import java.awt.BorderLayout;
@@ -15,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -111,9 +113,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
 
     public Point2D getCoordsCenter() {
         return center;
@@ -323,6 +322,35 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
+     * return the coordinates for a specified connection type
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = getCoordsCenter();
+        if (TURNTABLE_CENTER == connectionType) {
+            // nothing to do here… move along…
+            // (results are already correct)
+        } else if (connectionType >= TURNTABLE_RAY_OFFSET) {
+            result = getRayCoordsIndexed(connectionType - TURNTABLE_RAY_OFFSET);
+        } else {
+            log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    public Object getConnection(int connection) throws jmri.JmriException {
+        Point2D result = null;
+        if (connection >= TURNTABLE_RAY_OFFSET) {
+            result = getRayCoordsIndexed(connection - TURNTABLE_RAY_OFFSET);
+        } else {
+            log.error("Invalid Turntable connection type " + connection); //I18IN
+            throw new jmri.JmriException("Invalid Point");
+        }
+        return result;
+    }
+
+    /**
      * Methods to test if ray is a mainline track or not Returns true if
      * connecting track segment is mainline Defaults to not mainline if
      * connecting track segment is missing
@@ -371,6 +399,36 @@ public class LayoutTurntable extends LayoutTrack {
         Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
                 Math.round(center.getY() * yFactor));
         center = pt;
+    }
+
+    /**
+     * return the connection type for a point
+     * @param p the point
+     * @param useRectangles use hit rectangle (false: use hit circles)
+     * @param requireUnconnected (only hit disconnected connections)
+     * @return value representing the point connection type
+     * @since 7.4.?
+     */
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+
+        if (!requireUnconnected) {
+            //check the center point
+            if (r.contains(getCoordsCenter())) {
+                result = LayoutTrack.TURNTABLE_CENTER;
+            }
+        }
+
+        for (int k = 0; k < getNumberRays(); k++) {
+            if (!requireUnconnected || (getRayConnectOrdered(k) == null)) {
+                if (r.contains(getRayCoordsOrdered(k))) {
+                    result = LayoutTrack.TURNTABLE_RAY_OFFSET + getRayIndex(k);
+                }
+            }
+        }
+        return result;
     }
 
     /**
@@ -980,13 +1038,13 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     private void draw(Graphics2D g2) {
-        // draw turntable circle - default track color, side track width
+        // drawHidden turntable circle - default track color, side track width
         layoutEditor.setTrackStrokeWidth(g2, false);
         double r = getRadius();
         g2.setColor(defaultTrackColor);
         g2.draw(new Ellipse2D.Double(
                 center.getX() - r, center.getY() - r, r + r, r + r));
-        // draw ray tracks
+        // drawHidden ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
             Point2D pt = getRayCoordsOrdered(j);
             TrackSegment t = getRayConnectOrdered(j);

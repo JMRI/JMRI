@@ -1,5 +1,17 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.util.MathUtil.add;
+import static jmri.util.MathUtil.drawBezier;
+import static jmri.util.MathUtil.length;
+import static jmri.util.MathUtil.midpoint;
+import static jmri.util.MathUtil.multiply;
+import static jmri.util.MathUtil.normalize;
+import static jmri.util.MathUtil.pin;
+import static jmri.util.MathUtil.subtract;
+import static jmri.util.MathUtil.third;
+import static jmri.util.MathUtil.zeroPoint2D;
+
 import java.awt.BasicStroke;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -8,9 +20,10 @@ import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -78,6 +91,10 @@ public class TrackSegment extends LayoutTrack {
     private double angle = 0.0D;
     private boolean circle = false;
     private boolean changed = false;
+    private boolean bezier = false;
+
+    // for Bezier
+    private ArrayList<Point2D> bezierControlPoints = new ArrayList<Point2D>(); // list of control point displacements
 
     public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
             boolean main, LayoutEditor myPanel) {
@@ -86,21 +103,18 @@ public class TrackSegment extends LayoutTrack {
         if ((c1 == null) || (c2 == null)) {
             log.error("Invalid object in TrackSegment constructor call - " + id);
         }
-        connect1 = c1;
-        connect2 = c2;
-        if ((t1 < POS_POINT)
-                || (((t1 > LEVEL_XING_D) && (t1 < SLIP_A))
-                || ((t1 > SLIP_D) && (t1 < TURNTABLE_RAY_OFFSET)))) {
-            log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
-        } else {
+
+        if (isConnectionType(t1)) {
+            connect1 = c1;
             type1 = t1;
-        }
-        if ((t2 < POS_POINT)
-                || (((t2 > LEVEL_XING_D) && (t2 < SLIP_A))
-                || ((t2 > SLIP_D) && (t2 < TURNTABLE_RAY_OFFSET)))) {
-            log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
         } else {
+            log.error("Invalid connect type 1 in TrackSegment constructor - " + id);
+        }
+        if (isConnectionType(t2)) {
+            connect2 = c2;
             type2 = t2;
+        } else {
+            log.error("Invalid connect type 2 in TrackSegment constructor - " + id);
         }
         instance = this;
         ident = id;
@@ -110,6 +124,7 @@ public class TrackSegment extends LayoutTrack {
         flip = false;
         angle = 0.0D;
         circle = false;
+        bezier = false;
     }
 
     // alternate constructor for loading layout editor panels
@@ -127,12 +142,18 @@ public class TrackSegment extends LayoutTrack {
         hidden = hide;
     }
 
-    // this should only be used for debugging…
+    /**
+     * Get debugging string for the TrackSegment.
+     * @return text showing id and connections of this segment
+     */
     public String toString() {
-        return "TrackSegment " + ident;
+        return "TrackSegment " + ident +
+                " c1:{" + getConnect1Name() + " (" + type1 + "}," +
+                " c2:{" + getConnect2Name() + " (" + type2 + "}";
+
     }
 
-    /**
+    /*
      * Accessor methods
      */
 
@@ -159,7 +180,6 @@ public class TrackSegment extends LayoutTrack {
     protected void setNewConnect1(Object o, int type) {
         connect1 = o;
         type1 = type;
-
     }
 
     protected void setNewConnect2(Object o, int type) {
@@ -188,8 +208,13 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setArc(boolean boo) {
-        arc = boo;
-        changed = true;
+        if (arc != boo) {
+            arc = boo;
+            if (arc) {
+                bezier = false;
+            }
+            changed = true;
+        }
     }
 
     public boolean getCircle() {
@@ -197,8 +222,13 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setCircle(boolean boo) {
-        circle = boo;
-        changed = true;
+        if (circle != boo) {
+            circle = boo;
+            if (circle) {
+                bezier = false;
+            }
+            changed = true;
+        }
     }
 
     public boolean getFlip() {
@@ -209,28 +239,35 @@ public class TrackSegment extends LayoutTrack {
         flip = boo;
         changed = true;
     }
-    //public int getStartAngle() {return startangle;}
-    //public void setStartAngle(int x) {startangle = x;}
+
+    public boolean getBezier() {
+        return bezier;
+    }
+
+    public void setBezier(boolean boo) {
+        if (bezier != boo) {
+            bezier = boo;
+            if (bezier) {
+                arc = false;
+                circle = false;
+            }
+            changed = true;
+        }
+    }
 
     public double getAngle() {
         return angle;
     }
 
     public void setAngle(double x) {
-// GT 8-OCT-2009 ==== Changed arcs maths : Start
-//        if (angle>180) // ???
-        if (x > 180.0D) {
-            x = 180.0D;
-        } else if (x < 0.0D) {
-            x = 0.0D;
-        }
-// GT 8-OCT-2009 ==== Changed arcs maths : End
-        angle = x;
+        angle = pin(x, 0.0D, 180.0D);
         changed = true;
     }
 
-    //This method is used to determine if we need to redraw a curved piece of track
-    //It saves having to recalculate the circle details each time.
+    /**
+     * Determine if we need to redraw a curved piece of track.
+     * Saves having to recalculate the circle details each time.
+     */
     public boolean trackNeedsRedraw() {
         return changed;
     }
@@ -255,25 +292,39 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private String getConnectName(Object o, int type) {
-        if (type == POS_POINT) {
-            return ((PositionablePoint) o).getID();
+        String result = null;
+        if (null != o) {
+            result = ((LayoutTrack) o).getName();
         }
-        if ((type == TURNOUT_A) || (type == TURNOUT_B)
-                || (type == TURNOUT_C) || (type == TURNOUT_D)) {
-            return ((LayoutTurnout) o).getName();
+        return result;
+    }
+
+    public int getNumberOfBezierControlPoints() {
+        return bezierControlPoints.size();
+    }
+
+    public Point2D getBezierControlPoint(int index) {
+        Point2D result = center;
+        if (index < 0) {
+            index += bezierControlPoints.size();
         }
-        if ((type == LEVEL_XING_A) || (type == LEVEL_XING_B)
-                || (type == LEVEL_XING_C) || (type == LEVEL_XING_D)) {
-            return ((LevelXing) o).getID();
+        if ((index >= 0) && (index < bezierControlPoints.size())) {
+            result = bezierControlPoints.get(index);
         }
-        if ((type == SLIP_A) || (type == SLIP_B)
-                || (type == SLIP_C) || (type == SLIP_D)) {
-            return ((LayoutSlip) o).getName();
+        return result;
+    }
+
+    public void setBezierControlPoint(Point2D p, int index) {
+        if (index < 0) {
+            index += bezierControlPoints.size();
         }
-        if (type >= TURNTABLE_RAY_OFFSET) {
-            return ((LayoutTurntable) o).getID();
+        if ((index >= 0) && (index <= bezierControlPoints.size())) {
+            if (index < bezierControlPoints.size()) {
+                bezierControlPoints.set(index, p);
+            } else {
+                bezierControlPoints.add(p);
+            }
         }
-        return "";
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
@@ -282,7 +333,7 @@ public class TrackSegment extends LayoutTrack {
     public String tConnect2Name = "";
 
     /**
-     * Initialization method The above variables are initialized by
+     * Initialization method. The above variables are initialized by
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
@@ -301,16 +352,18 @@ public class TrackSegment extends LayoutTrack {
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+            log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
-        if (null == connect1) { // findObjectByName failed… try findObjectByTypeAndName
+        if (null == connect2) { // findObjectByName failed… try findObjectByTypeAndName
+            log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type1 + ".");
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
 
     /**
-     * Set Up a Layout Block for a Track Segment
+     * Set Up a Layout Block for a Track Segment.
      */
     public void setLayoutBlock(LayoutBlock b) {
         block = b;
@@ -380,10 +433,59 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
+    /**
+     * Get the connection type for a point.
+     * @param p the point to hit test
+     * @return the type of point that was hit (NONE means none… (Duh!))
+     * @since 7.4.?
+     */
+    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        //note: optimization here: instead of creating rectangles for all the
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
+        Rectangle2D r = layoutEditor.trackControlPointRectAt(p);
+
+        if (getCircle()) {
+            if (r.contains(getCoordsCenterCircle())) {
+                result = LayoutTrack.TRACK_CIRCLE_CENTRE;
+            }
+        }
+
+        if (getBezier()) {
+            // hit testing for the control points
+            // note: control points will override center circle
+            for (int index = 0; index < bezierControlPoints.size(); index++) {
+                if (r.contains(getBezierControlPoint(index))) {
+                    result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET + index;
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }   // hitTestPoint
+
+    /**
+     * Get the coordinates for a specified connection type.
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = getCentreSeg();
+        if (connectionType == TRACK_CIRCLE_CENTRE) {
+            result = getCoordsCenterCircle();
+        } else if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET) && (connectionType < TURNTABLE_RAY_OFFSET)) {
+            result = getBezierControlPoint(connectionType - BEZIER_CONTROL_POINT_OFFSET);
+        }
+        return result;
+    }
+
     JPopupMenu popup = null;
 
     /**
-     * Display popup menu for information and editing
+     * Display popup menu for information and editing.
      */
     protected void showPopUp(MouseEvent e) {
         if (popup != null) {
@@ -448,6 +550,12 @@ public class TrackSegment extends LayoutTrack {
                 changeType(2);
             }
         });
+        lineType.add(new AbstractAction(Bundle.getMessage("Bezier")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeType(3);
+            }
+        });
         popup.add(lineType);
         if (getArc()) {
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
@@ -457,9 +565,10 @@ public class TrackSegment extends LayoutTrack {
                     flipAngle();
                 }
             });
+        }
+        if (getArc() || getBezier()) {
             if (hideConstructionLines()) {
                 popup.add(new AbstractAction(rb.getString("ShowConstruct")) {
-
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
@@ -492,16 +601,41 @@ public class TrackSegment extends LayoutTrack {
                 setArc(false);
                 setAngle(0.0D);
                 setCircle(false);
+                setBezier(false);
                 break;
             case 1:
                 setArc(true);
                 setAngle(90.0D);
                 setCircle(true);
+                setBezier(false);
                 break;
             case 2:
                 setArc(true);
                 setAngle(90.0D);
                 setCircle(false);
+                setBezier(false);
+                break;
+            case 3:
+                setArc(false);
+                setCircle(false);
+                if (bezierControlPoints.size() == 0) {
+                    // set default control point displacements
+                    Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+                    Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                    // compute offset one third the distance from ep1 to ep2
+                    Point2D offset = subtract(ep2, ep1);
+                    offset = multiply(normalize(offset), length(offset) / 3);
+
+                    // swap x & y so the offset is orthogonal to orginal line
+                    offset = new Point2D.Double(offset.getY(), offset.getX());
+                    Point2D pt1 = add(third(ep1, ep2), offset);
+                    Point2D pt2 = subtract(third(ep2, ep1), offset);
+
+                    bezierControlPoints.add(pt1);
+                    bezierControlPoints.add(pt2);
+                }
+                setBezier(true);    // do this last (it calls reCenter())
                 break;
             default:
                 break;
@@ -539,7 +673,7 @@ public class TrackSegment extends LayoutTrack {
     private boolean needsRedraw = false;
 
     /**
-     * Edit a Track Segment
+     * Edit a Track Segment.
      */
     protected void editTrackSegment() {
         if (editOpen) {
@@ -768,8 +902,11 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
+     * Clean up when this object is no longer needed.
+     * <p>
+     * Should not be called while
+     * the object is still displayed.
+     * @see #remove()
      */
     void dispose() {
         if (popup != null) {
@@ -779,7 +916,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Remove this object from display and persistance.
      */
     void remove() {
         // remove from persistance by flagging inactive
@@ -789,6 +926,7 @@ public class TrackSegment extends LayoutTrack {
     boolean active = true;
 
     /**
+     * Get state.
      * "active" means that the object is still displayed, and should be stored.
      */
     public boolean isActive() {
@@ -801,7 +939,6 @@ public class TrackSegment extends LayoutTrack {
 
     public int showConstructionLine = SHOWCON;
 
-    //Method used by Layout Editor
     protected boolean showConstructionLinesLE() {
         if ((showConstructionLine & HIDECON) == HIDECON || (showConstructionLine & HIDECONALL) == HIDECONALL) {
             return false;
@@ -809,12 +946,14 @@ public class TrackSegment extends LayoutTrack {
         return true;
     }
 
+    //Methods used by Layout Editor
+
     public void hideConstructionLines(int hide) {
         if (hide == HIDECONALL) {
-            showConstructionLine = showConstructionLine + HIDECONALL;
+            showConstructionLine |= HIDECONALL;
         } else if (hide == SHOWCON) {
             if ((showConstructionLine & HIDECONALL) == HIDECONALL) {
-                showConstructionLine = (showConstructionLine & (~HIDECONALL));
+                showConstructionLine &= ~HIDECONALL;
             } else {
                 showConstructionLine = hide;
             }
@@ -836,7 +975,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * The following are used only as a temporary store after a circle or arc
      * has been calculated. This prevents the need to recalculate the values
-     * each time a re-draw is required.
+     *  each time a re-drawHidden is required.
      */
     private Point2D pt1;
     private Point2D pt2;
@@ -910,34 +1049,73 @@ public class TrackSegment extends LayoutTrack {
         startadj = Startadj;
     }
 
-    private double centreSegX;
-
+    // this is the center of the track segment (it is "on" the track segment)
     public double getCentreSegX() {
-        return centreSegX;
+        return getCentreSeg().getX();
     }
 
-    public void setCentreSegX(double CentreX) {
-        centreSegX = CentreX;
+    public void setCentreSegX(double x) {
+        center.setLocation(x, getCentreSeg().getY());
     }
-
-    private double centreSegY;
 
     public double getCentreSegY() {
-        return centreSegY;
+        return getCentreSeg().getY();
     }
 
-    public void setCentreSegY(double CentreY) {
-        centreSegY = CentreY;
+    public void setCentreSegY(double y) {
+        center.setLocation(getCentreSeg().getX(), y);
     }
 
+    public Point2D getCentreSeg() {
+        Point2D result = zeroPoint2D();
+        
+        if ((null != connect1) && (null != connect2)) {
+            // get the end points
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+
+            if (getCircle()) {
+                //TODO: do something here?
+            //} else if (getArc()) {
+                //TODO: do something here?
+                result = center;
+            } else if (getBezier()) {
+                // get (absolute) control points
+                Point2D p1 = getBezierControlPoint(0);
+                Point2D p2 = getBezierControlPoint(1);
+
+                // first order midpoints
+                Point2D q0 = midpoint(ep1, p1);
+                Point2D q1 = midpoint(p1, p2);
+                Point2D q2 = midpoint(p2, ep2);
+
+                // second order midpoints
+                Point2D r0 = midpoint(q0, q1);
+                Point2D r1 = midpoint(q1, q2);
+
+                // third order midpoint
+                result = midpoint(r0, r1);
+            } else {
+                result = midpoint(ep1, ep2);
+            }
+            center = result;
+        }
+        return result;
+    }
+
+    public void setCentreSeg(Point2D p) {
+        center = p;
+    }
+
+    // this is the center of the track segment when configured as a circle
     private double centreX;
 
     public double getCentreX() {
         return centreX;
     }
 
-    public void setCentreX(double CentreX) {
-        centreX = CentreX;
+    public void setCentreX(double x) {
+        centreX = x;
     }
 
     private double centreY;
@@ -946,22 +1124,31 @@ public class TrackSegment extends LayoutTrack {
         return centreY;
     }
 
-    public void setCentreY(double CentreY) {
-        centreY = CentreY;
+    public void setCentreY(double y) {
+        centreY = y;
     }
 
+    public Point2D getCentre() {
+        return new Point2D.Double(centreX, centreY);
+    }
+    
     private double tmpangle;
 
     public double getTmpAngle() {
         return tmpangle;
     }
 
-    public void setTmpAngle(double TmpAngle) {
-        tmpangle = TmpAngle;
+    public void setTmpAngle(double a) {
+        tmpangle = a;
     }
 
     public Point2D getCoordsCenterCircle() {
-        return new Point2D.Double(getCentreX(), getCentreY());
+        return new Point2D.Double(centreX, centreY);
+    }
+
+    public void setCoordsCenterCircle(Point2D p) {
+        centreX = p.getX();
+        centreY = p.getY();
     }
 
     private double chordLength;
@@ -975,9 +1162,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /*
-     * The recalculation method is used when the user changes the angle dynamically in edit mode
-     * by dragging the centre of the cirle
+     * Called when the user changes the angle dynamically in edit mode
+     * by dragging the centre of the cirle.
      */
+    //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
 
         double pt2x;
@@ -996,19 +1184,19 @@ public class TrackSegment extends LayoutTrack {
             pt2x = getTmpPt2().getX();
             pt2y = getTmpPt2().getY();
         }
-        //Point 1 to new point length
+        //Point 1 to new point distance
         double a;
         double o;
         double la;
         // Compute arc's chord
         a = pt2x - x;
         o = pt2y - y;
-        la = java.lang.Math.sqrt(((a * a) + (o * o)));
+        la = Math.hypot(a, o);
 
         double lb;
         a = pt1x - x;
         o = pt1y - y;
-        lb = java.lang.Math.sqrt(((a * a) + (o * o)));
+        lb = Math.hypot(a, o);
 
         double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
         setAngle(newangle);
@@ -1016,9 +1204,9 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /*
-     * Calculates the initally parameters for drawing a circular track segment.
+     * Calculate the initally parameters for drawing a circular track segment.
      */
-    protected void calculateTrackSegmentAngle(/*Point2D pt1, Point2D pt2*/) {
+    protected void calculateTrackSegmentAngle() {
         Point2D pt1, pt2;
         if (getFlip()) {
             pt1 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1042,25 +1230,25 @@ public class TrackSegment extends LayoutTrack {
                 setTmpAngle(getAngle());
             }
             // Convert angle to radiants in order to speed up maths
-            double halfAngleRAD = java.lang.Math.toRadians(getTmpAngle()) / 2.0D;
+            double halfAngleRAD = Math.toRadians(getTmpAngle()) / 2.0D;
 
             // Compute arc's chord
             double a = pt2x - pt1x;
             double o = pt2y - pt1y;
-            double chord = java.lang.Math.sqrt(((a * a) + (o * o)));
+            double chord = Math.hypot(a, o);
             setChordLength(chord);
 
             // Make sure chord is not null
-            // In such a case (pt1 == pt2), there is no arc to draw
+            // In such a case (ep1 == ep2), there is no arc to drawHidden
             if (chord > 0.0D) {
-                double radius = (chord / 2) / java.lang.Math.sin(halfAngleRAD);
+                double radius = (chord / 2) / Math.sin(halfAngleRAD);
                 // Circle
-                double startRad = java.lang.Math.atan2(a, o) - halfAngleRAD;
-                setStartadj(java.lang.Math.toDegrees(startRad));
+                double startRad = Math.atan2(a, o) - halfAngleRAD;
+                setStartadj(Math.toDegrees(startRad));
                 if (getCircle()) {
                     // Circle - Compute center
-                    setCentreX(pt2x - java.lang.Math.cos(startRad) * radius);
-                    setCentreY(pt2y + java.lang.Math.sin(startRad) * radius);
+                    setCentreX(pt2x - Math.cos(startRad) * radius);
+                    setCentreY(pt2y + Math.sin(startRad) * radius);
 
                     // Circle - Compute rectangle required by Arc2D.Double
                     setCW(radius * 2.0D);
@@ -1068,30 +1256,31 @@ public class TrackSegment extends LayoutTrack {
                     setCX(getCentreX() - radius);
                     setCY(getCentreY() - radius);
 
-                    // Compute the vlues for locating the circle
-                    setCentreSegX(getCentreX() + radius * java.lang.Math.cos(startRad + halfAngleRAD));
-                    setCentreSegY(getCentreY() - java.lang.Math.sin(startRad + halfAngleRAD) * radius);
-
+                    // Compute where to locate the control circle on the circle segment
+                    Point2D offset = new Point2D.Double(
+                        +radius * Math.cos(startRad + halfAngleRAD),
+                        -radius * Math.sin(startRad + halfAngleRAD));
+                    setCentreSeg(add(getCentre(), offset));
                 } else {
                     // Ellipse - Round start angle to the closest multiple of 90
-                    setStartadj(java.lang.Math.round(getStartadj() / 90.0D) * 90.0D);
+                    setStartadj(Math.round(getStartadj() / 90.0D) * 90.0D);
                     // Ellipse - Compute rectangle required by Arc2D.Double
-                    setCW(java.lang.Math.abs(a) * 2.0D);
-                    setCH(java.lang.Math.abs(o) * 2.0D);
+                    setCW(Math.abs(a) * 2.0D);
+                    setCH(Math.abs(o) * 2.0D);
                     // Ellipse - Adjust rectangle corner, depending on quadrant
                     if (o * a < 0.0D) {
                         a = -a;
                     } else {
                         o = -o;
                     }
-                    setCX(java.lang.Math.min(pt1x, pt2x) - java.lang.Math.max(a, 0.0D));
-                    setCY(java.lang.Math.min(pt1y, pt2y) - java.lang.Math.max(o, 0.0D));
+                    setCX(Math.min(pt1x, pt2x) - Math.max(a, 0.0D));
+                    setCY(Math.min(pt1y, pt2y) - Math.max(o, 0.0D));
                 }
             }
         }
     }
 
-    public void draw(Graphics2D g2) {
+    public void drawHidden(Graphics2D g2) {
         LayoutBlock b = getLayoutBlock();
         if (b != null) {
             g2.setColor(b.getBlockColor());
@@ -1101,7 +1290,7 @@ public class TrackSegment extends LayoutTrack {
         g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
             layoutEditor.getCoords(getConnect2(), getType2())));
-    }   // draw(Graphics2D g2)
+    }   // drawHidden(Graphics2D g2)
 
 
     public void drawDashed(Graphics2D g2, boolean mainline) {
@@ -1120,12 +1309,28 @@ public class TrackSegment extends LayoutTrack {
                 g2.setStroke(drawingStroke);
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
                 g2.setStroke(originalStroke);
+            } else if (getBezier()) {
+                Stroke originalStroke = g2.getStroke();
+                Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+                g2.setStroke(drawingStroke);
+
+                Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                Point2D pt1 = getBezierControlPoint(0);
+                Point2D pt2 = getBezierControlPoint(1);
+
+                drawBezier(g2, pt0, pt1, pt2, pt3);
+
+                g2.setStroke(originalStroke);
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
                 Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
+
                 double delX = end1.getX() - end2.getX();
                 double delY = end1.getY() - end2.getY();
-                double cLength = Math.sqrt((delX * delX) + (delY * delY));
+                double cLength = Math.hypot(delX, delY);
+
                 // note: The preferred dimension of a dash (solid + blank space) is
                 //         5 * the track width - about 60% solid and 40% blank.
                 int nDashes = (int) (cLength / ((trackWidth) * 5.0));
@@ -1144,7 +1349,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             }
         }
-    }
+    }   // drawDashed(Graphics2D g2, boolean mainline)
 
     public void drawSolid(Graphics2D g2, boolean isMainline) {
         if ((!isHidden()) && (!getDashed()) && (isMainline == getMainline())) {
@@ -1157,6 +1362,13 @@ public class TrackSegment extends LayoutTrack {
             if (getArc()) {
                 calculateTrackSegmentAngle();
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
+            } else if (getBezier()) {
+                Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
+
+                Point2D pt1 = getBezierControlPoint(0);
+                Point2D pt2 = getBezierControlPoint(1);
+                drawBezier(g2, pt0, pt1, pt2, pt3);
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
                 Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -1164,42 +1376,49 @@ public class TrackSegment extends LayoutTrack {
             }
             trackRedrawn();
         }
-    }
+    }   // drawSolid(Graphics2D g2, boolean isMainline)
 
-    public void drawOvals(Graphics2D g2) {
+    public void drawEditControls(Graphics2D g2) {
         LayoutBlock b = getLayoutBlock();
         if (b != null) {
             g2.setColor(b.getBlockColor());
         } else {
             g2.setColor(defaultTrackColor);
         }
+        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         if (getCircle()) {
             if (showConstructionLinesLE()) {
-                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
-                    new Point2D.Double(getCentreX(), getCentreY())));
-                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect2(), getType2()),
-                    new Point2D.Double(getCentreX(), getCentreY())));
-                g2.draw(new Ellipse2D.Double(getCentreSegX() - controlPointSize2, getCentreSegY() - controlPointSize2,
-                    controlPointSize2 + controlPointSize2, controlPointSize2 + controlPointSize2));
+                Point2D circleCenterPoint = getCoordsCenterCircle();
+                g2.draw(new Line2D.Double(ep1, circleCenterPoint));
+                g2.draw(new Line2D.Double(ep2, circleCenterPoint));
+                g2.draw(layoutEditor.trackControlCircleAt(circleCenterPoint));
             }
-        } else {
-            Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
-            Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
-            double cX = (pt1.getX() + pt2.getX()) / 2.0D;
-            double cY = (pt1.getY() + pt2.getY()) / 2.0D;
+            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
+        } else if (getBezier()) {
+            g2.draw(layoutEditor.trackControlPointRectAt(ep1));
+            Point2D lastPt = ep1;
+            for (Point2D bcp : bezierControlPoints) {
+                if (showConstructionLinesLE()) { //draw track circles
+                    g2.draw(new Line2D.Double(lastPt, bcp));
+                    lastPt = bcp;
+                }
+                g2.draw(layoutEditor.trackControlPointRectAt(bcp));
+            }
             if (showConstructionLinesLE()) { //draw track circles
-                g2.draw(new Ellipse2D.Double(
-                        cX - controlPointSize2, cY - controlPointSize2,
-                        controlPointSize2 + controlPointSize2,
-                        controlPointSize2 + controlPointSize2));
+                g2.draw(new Line2D.Double(lastPt, ep2));
             }
+            g2.draw(layoutEditor.trackControlPointRectAt(ep2));
+            g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
+        } else {
             if (getArc()) {
-                g2.draw(new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
-                    layoutEditor.getCoords(getConnect2(), getType2())));
+                g2.draw(new Line2D.Double(ep1, ep2));
+            }
+            if (showConstructionLinesLE()) { //draw track circles
+                g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
             }
         }
-        g2.setColor(defaultTrackColor);
-    }
+    }   // drawEditControls(Graphics2D g2)
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 }
