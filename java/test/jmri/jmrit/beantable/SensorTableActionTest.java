@@ -52,6 +52,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     @Override
     @After
     public void tearDown() {
+        a = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }

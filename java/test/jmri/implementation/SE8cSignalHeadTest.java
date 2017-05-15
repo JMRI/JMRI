@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the SE8cSignalHead implmentation
+ * Tests for the SE8cSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
