@@ -110,8 +110,8 @@ import org.slf4j.LoggerFactory;
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
  * <P>
  * This module serves as a manager for the LayoutTurnout, Layout Block,
- * PositionablePoint, Track Segment, LayoutSlip and LevelXing
- * objects which are integral subparts of the LayoutEditor class.
+ * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
+ * integral subparts of the LayoutEditor class.
  * <P>
  * All created objects are put on specific levels depending on their type
  * (higher levels are in front): Note that higher numbers appear behind lower
@@ -4888,7 +4888,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     if (selectedObject != null) {
                         selectedPointType = LayoutTrack.MARKER;
                         startDel.setLocation((((LocoIcon) selectedObject).getX() - dLoc.getX()),
-                                             (((LocoIcon) selectedObject).getY() - dLoc.getY()));
+                                (((LocoIcon) selectedObject).getY() - dLoc.getY()));
 
                         //selectedNeedsConnect = false;
                     } else {
@@ -4897,7 +4897,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         if (selectedObject != null) {
                             selectedPointType = LayoutTrack.LAYOUT_POS_JCOMP;
                             startDel.setLocation((((PositionableJComponent) selectedObject).getX() - dLoc.getX()),
-                                                 (((PositionableJComponent) selectedObject).getY() - dLoc.getY()));
+                                    (((PositionableJComponent) selectedObject).getY() - dLoc.getY()));
 
                             //selectedNeedsConnect = false;
                         } else {
@@ -4906,7 +4906,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (selectedObject != null) {
                                 selectedPointType = LayoutTrack.MULTI_SENSOR;
                                 startDel.setLocation((((MultiSensorIcon) selectedObject).getX() - dLoc.getX()),
-                                                     (((MultiSensorIcon) selectedObject).getY() - dLoc.getY()));
+                                        (((MultiSensorIcon) selectedObject).getY() - dLoc.getY()));
 
                                 //selectedNeedsConnect = false;
                             }
@@ -4928,14 +4928,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         if (selectedObject != null) {
                             selectedPointType = LayoutTrack.LAYOUT_POS_LABEL;
                             startDel.setLocation((((PositionableLabel) selectedObject).getX() - dLoc.getX()),
-                                                 (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
+                                    (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
 
                             if (selectedObject instanceof MemoryIcon) {
                                 MemoryIcon pm = (MemoryIcon) selectedObject;
 
                                 if (pm.getPopupUtility().getFixedWidth() == 0) {
                                     startDel.setLocation((pm.getOriginalX() - dLoc.getX()),
-                                                         (pm.getOriginalY() - dLoc.getY()));
+                                            (pm.getOriginalY() - dLoc.getY()));
                                 }
                             }
                         } else {
@@ -4944,7 +4944,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (selectedObject != null) {
                                 selectedPointType = LayoutTrack.LAYOUT_POS_LABEL;
                                 startDel.setLocation((((PositionableLabel) selectedObject).getX() - dLoc.getX()),
-                                                     (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
+                                        (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
                             }
                         }
                     }
@@ -5205,7 +5205,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         for (TrackSegment ts : trackList) {
             try {
-                foundPointType = ((TrackSegment)ts).hitTestPoint(loc, false, requireUnconnected);
+                foundPointType = ((TrackSegment) ts).hitTestPoint(loc, false, requireUnconnected);
                 if (NONE != foundPointType) {
                     foundObject = ts;
                     foundLocation = ts.getCoordsForConnectionType(foundPointType);
@@ -7867,7 +7867,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                         selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                             } else if (selectedPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
                                 int index = selectedPointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
-                                ((TrackSegment)selectedObject).setBezierControlPoint(newPos, index);
+                                ((TrackSegment) selectedObject).setBezierControlPoint(newPos, index);
                             }
                     }   //switch
                 }
@@ -7966,7 +7966,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             pointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 } else if (pointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
                     int index = pointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
-                    ((TrackSegment)o).setBezierControlPoint(newPos, index);
+                    ((TrackSegment) o).setBezierControlPoint(newPos, index);
                 }
         }   //switch
         setDirty(true);
@@ -9970,6 +9970,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setLocation(multiLocX, multiLocY);
         setDirty(true);
         putItem(l);
+        multiSensorFrame.dispose();
         multiSensorFrame = null;
     }   //addMultiSensor
 
@@ -11460,6 +11461,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
     }   //vetoableChange
+
+    @Override
+    public void dispose() {
+        this.sensorFrame.dispose();
+        this.signalFrame.dispose();
+        this.iconFrame.dispose();
+        super.dispose();
+    }
 
     //initialize logging
     private final static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());

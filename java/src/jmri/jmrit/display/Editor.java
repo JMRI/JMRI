@@ -2618,7 +2618,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _contents.clear();
         }
         removeAll();
-        super.dispose();
+        this.dispose();
     }
 
     /*
