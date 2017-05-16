@@ -160,9 +160,10 @@ public class TurnoutTableAction extends AbstractTableAction {
         thrownText = turnManager.getThrownText();
 
         // load graphic state column display preference
+        // from apps/GuiLafConfigPane.java
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
-        // create the data model object that drives the table;
+        // create the data model object that drives the table
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
 
@@ -784,6 +785,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                     Hashtable<Object, TableCellEditor> editorMapSensor1 = new Hashtable<>();
                     Hashtable<Object, TableCellEditor> editorMapSensor2 = new Hashtable<>();
                 };
+            }
+
+            /**
+             * Change display method for existing table.
+             *
+             * @param graphicStateCol true to show turnout state using icons, false to use text value
+             */
+            public void setGraphicState(boolean graphicStateCol) {
+                _graphicState = graphicStateCol;
             }
 
             /**
