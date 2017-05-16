@@ -54,6 +54,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
     @Test
     public void testAddAndInvoke() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        a.actionPerformed(null); // show table
         // create 2 turnouts and see if they exist
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
@@ -105,6 +106,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new TurnoutTableAction();
     }

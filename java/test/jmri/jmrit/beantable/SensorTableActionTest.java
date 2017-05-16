@@ -54,6 +54,8 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     @Test
     public void testAddAndInvoke() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        a.actionPerformed(null); // show table
         // create 2 sensors and see if they exist
         Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
         Sensor is2 = InstanceManager.sensorManagerInstance().provideSensor("IS2");
@@ -109,6 +111,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new SensorTableAction();
     }

@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.Block;
@@ -12,6 +13,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
@@ -54,14 +57,53 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleBlockTable"), true, true);
         Assert.assertNotNull(f);
-        // create a couple blocks, and see if they show
+        // create a couple of blocks, and see if they show
         InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB1", "block 1");
 
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB2", "block 2");
         Assert.assertNotNull(b2);
         b2.setDirection(jmri.Path.EAST);
-        // TODO: assert blocks show in frame
+
+        // set graphic state column display preference to false, read by createModel()
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(false);
+
+        BlockTableAction _bTable;
+        _bTable = new BlockTableAction();
+        Assert.assertNotNull("found BlockTable frame", _bTable);
+
+        // set to true, use icons
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(true);
+        BlockTableAction _b1Table;
+        _b1Table = new BlockTableAction();
+        Assert.assertNotNull("found BlockTable1 frame", _b1Table);
+
+        _b1Table.addPressed(null);
+        JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddBlock"), true, true);
+        Assert.assertNotNull("found Add frame", af);
+
+//        // wait 1 sec (nothing to see)
+//        Runnable waiter = new Runnable() {
+//            @Override
+//            public synchronized void run() {
+//                try {
+//                    this.wait(1000);
+//                } catch (InterruptedException ex) {
+//                    log.error("Waiter interrupted.");
+//                }
+//            }
+//        };
+//        waiter.run();
+
+        // close AddPane
+        _b1Table.cancelPressed(null);
+
+        // clean up
+        af.dispose();
+        b2 = null;
+        _bTable.dispose();
+        _b1Table.dispose();
         f.dispose();
+        // TODO: assert blocks show in frame
     }
 
     @Before
@@ -80,8 +122,12 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
         a = null;
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        apps.tests.Log4JFixture.tearDown();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
+
 }
