@@ -1,10 +1,17 @@
 package jmri.jmrit.beantable;
 
+import apps.gui.GuiLafPreferencesManager;
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import jmri.InstanceManager;
+import jmri.Sensor;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,13 +53,16 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new SensorTableAction();
     }
 
     @Override
     @After
     public void tearDown() {
+        a = null;
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         apps.tests.Log4JFixture.tearDown();
     }
 

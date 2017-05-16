@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Tests for the jmri.jmrit.beantable.TurnoutTableAction class.
  * @author Paul Bender Copyright (C) 2017	
  */
 public class TurnoutTableActionTest extends AbstractTableActionBase {
