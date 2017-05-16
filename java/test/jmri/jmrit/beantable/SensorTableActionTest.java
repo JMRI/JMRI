@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Tests for the jmri.jmrit.beantable.SensorTableAction class.
  * @author Paul Bender Copyright (C) 2017	
  */
 public class SensorTableActionTest extends AbstractTableActionBase {
@@ -45,6 +45,62 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     @Test
     public void testIncludeAddButton(){
          Assert.assertTrue("Default include add button",a.includeAddButton());
+    }
+
+    /**
+     * Check graphic state presentation.
+     * @since 4.7.4
+     */
+    @Test
+    public void testAddAndInvoke() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // create 2 sensors and see if they exist
+        Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        Sensor is2 = InstanceManager.sensorManagerInstance().provideSensor("IS2");
+        try {
+            is1.setKnownState(Sensor.ACTIVE);
+            is2.setKnownState(Sensor.INACTIVE);
+        } catch (jmri.JmriException reason) {
+            log.warn("Exception flipping sensor is1: " + reason);
+        }
+
+        // set graphic state column display preference to false, read by createModel()
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(false);
+
+        SensorTableAction _sTable;
+        _sTable = new SensorTableAction();
+        Assert.assertNotNull("found SensorTable frame", _sTable);
+
+        // set to true, use icons
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(true);
+        SensorTableAction _s1Table;
+        _s1Table = new SensorTableAction();
+        Assert.assertNotNull("found SensorTable1 frame", _s1Table);
+
+        _s1Table.addPressed(null);
+        JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddSensor"), true, true);
+        Assert.assertNotNull("found Add frame", af);
+
+//        // wait 1 sec (nothing to see)
+//        Runnable waiter = new Runnable() {
+//            @Override
+//            public synchronized void run() {
+//                try {
+//                    this.wait(1000);
+//                } catch (InterruptedException ex) {
+//                    log.error("Waiter interrupted.");
+//                }
+//            }
+//        };
+//        waiter.run();
+
+        // close AddPane
+        _s1Table.cancelPressed(null);
+
+        // clean up
+        af.dispose();
+        _sTable.dispose();
+        _s1Table.dispose();
     }
 
     // The minimal setup for log4J
