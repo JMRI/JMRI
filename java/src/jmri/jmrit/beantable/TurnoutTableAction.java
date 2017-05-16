@@ -788,15 +788,6 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
 
             /**
-             * Change display method for existing table.
-             *
-             * @param graphicStateCol true to show turnout state using icons, false to use text value
-             */
-            public void setGraphicState(boolean graphicStateCol) {
-                _graphicState = graphicStateCol;
-            }
-
-            /**
              * Visualize state in table as a graphic, customized for Turnouts (4 states).
              * Renderer and Editor are identical, as the cell contents are not actually edited,
              * only used to toggle state using {@link #clickOn(NamedBean)}.
