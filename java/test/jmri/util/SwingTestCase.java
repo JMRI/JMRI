@@ -12,9 +12,10 @@ import org.junit.Assert;
 /**
  * Provide Swing context for JUnit test classes.
  * <p>
- * By default, JFCUnit closes all windows at the end of each test.
+ * By default, JFCUnit closes all windows at the end of each test. JMRI tests
+ * leave windows open, so that's been bypassed for now.
  *
- * @author	Bob Jacobsen - Copyright 2009
+ * @author Bob Jacobsen - Copyright 2009
  * @since 2.5.3
  */
 public class SwingTestCase extends JFCTestCase {
@@ -29,11 +30,14 @@ public class SwingTestCase extends JFCTestCase {
      *
      * static so that it can in invoked outside SwingTestCases subclasses
      *
-     * Note: this does no adjustment, e.g. pack, etc.  That should have been already been done as required.
+     * Note: this does no adjustment, e.g. pack, etc. That should have been
+     * already been done as required.
      *
-     * @param component Typically a JComponent, could be a JFrame, the item to be returned
-     * @param upLeft the upper-left corner of the returned area in component's coordinates
-     * @param size dimension of returned array
+     * @param component Typically a JComponent, could be a JFrame, the item to
+     *                  be returned
+     * @param upLeft    the upper-left corner of the returned area in
+     *                  component's coordinates
+     * @param size      dimension of returned array
      * @return int[] array of ARGB values
      */
     public static int[] getDisplayedContent(java.awt.Container component, Dimension size, Point upLeft) {
@@ -50,19 +54,27 @@ public class SwingTestCase extends JFCTestCase {
 
     protected enum Pixel { // protected to limit leakage outside Swing tests
 
-        TRANSPARENT (0x00000000),
-        RED         (0xFFFF0000),
-        GREEN       (0xFF00FF00),
-        BLUE        (0xFF0000FF),
-        WHITE       (0xFFFFFFFF),
-        BLACK       (0xFF000000),
-        YELLOW      (0xFFFFFF00);
+        TRANSPARENT(0x00000000),
+        RED(0xFFFF0000),
+        GREEN(0xFF00FF00),
+        BLUE(0xFF0000FF),
+        WHITE(0xFFFFFFFF),
+        BLACK(0xFF000000),
+        YELLOW(0xFFFFFF00);
 
         @Override
-        public String toString() { return formatPixel(value); }
-        public boolean equals(int v) { return value == v; }
+        public String toString() {
+            return formatPixel(value);
+        }
+
+        public boolean equals(int v) {
+            return value == v;
+        }
         private final int value;
-        private Pixel(int value) { this.value = value; }
+
+        private Pixel(int value) {
+            this.value = value;
+        }
     }
 
     /**
@@ -74,7 +86,8 @@ public class SwingTestCase extends JFCTestCase {
 
     /**
      * Clean way to assert against a pixel value.
-     * @param name Condition being asserted
+     *
+     * @param name  Condition being asserted
      * @param value Correct ARGB value for test
      * @param pixel ARGB piel value being tested
      */
@@ -84,42 +97,43 @@ public class SwingTestCase extends JFCTestCase {
 
     /**
      * Check four corners and center of an image
-     * @param name Condition being asserted
+     *
+     * @param name   Condition being asserted
      * @param pixels Image ARCG array
      */
     protected static void assertImageNinePoints(String name, int[] pixels, Dimension size,
-                        Pixel upperLeft, Pixel upperCenter, Pixel upperRight,
-                        Pixel midLeft, Pixel center, Pixel midRight,
-                        Pixel lowerLeft, Pixel lowerCenter, Pixel lowerRight
-                        ) {
+            Pixel upperLeft, Pixel upperCenter, Pixel upperRight,
+            Pixel midLeft, Pixel center, Pixel midRight,
+            Pixel lowerLeft, Pixel lowerCenter, Pixel lowerRight
+    ) {
         int rows = size.height;
         int cols = size.width;
 
-        Assert.assertEquals("size consistency", pixels.length, rows*cols);
+        Assert.assertEquals("size consistency", pixels.length, rows * cols);
 
-        assertPixel(name+" upper left", upperLeft,     pixels[0]);
-        assertPixel(name+" upper middle", upperCenter, pixels[0+cols/2]);
-        assertPixel(name+" upper right", upperRight,   pixels[0+(cols-1)]);
+        assertPixel(name + " upper left", upperLeft, pixels[0]);
+        assertPixel(name + " upper middle", upperCenter, pixels[0 + cols / 2]);
+        assertPixel(name + " upper right", upperRight, pixels[0 + (cols - 1)]);
 
-        assertPixel(name+" middle left", midLeft,      pixels[(rows/2)*cols]);
-        assertPixel(name+" middle right", midRight,    pixels[(rows/2)*cols+(cols-1)]);
+        assertPixel(name + " middle left", midLeft, pixels[(rows / 2) * cols]);
+        assertPixel(name + " middle right", midRight, pixels[(rows / 2) * cols + (cols - 1)]);
 
-        assertPixel(name+" lower left", lowerLeft,     pixels[(rows*cols-1)-(cols-1)]);
-        assertPixel(name+" lower middle", lowerCenter, pixels[(rows*cols-1)-(cols-1)+cols/2]);
-        assertPixel(name+" lower right", lowerRight,   pixels[rows*cols-1]);
+        assertPixel(name + " lower left", lowerLeft, pixels[(rows * cols - 1) - (cols - 1)]);
+        assertPixel(name + " lower middle", lowerCenter, pixels[(rows * cols - 1) - (cols - 1) + cols / 2]);
+        assertPixel(name + " lower right", lowerRight, pixels[rows * cols - 1]);
 
         // we've checked the corners first on purpose, to see they're all right
-        assertPixel(name+" center", center,            pixels[(rows/2)*cols+cols/2]);
+        assertPixel(name + " center", center, pixels[(rows / 2) * cols + cols / 2]);
 
     }
 
     /**
-     * Provides a (slightly) better calibrated waiting interval
-     * than a native awtSleep()
+     * Provides a (slightly) better calibrated waiting interval than a native
+     * awtSleep()
      */
     public void waitAtLeast(int delay) {
         long start = System.currentTimeMillis();
-        while (System.currentTimeMillis() < start+delay) {
+        while (System.currentTimeMillis() < start + delay) {
             awtSleep(20); // this is completely uncalibrated
         }
     }
@@ -138,6 +152,7 @@ public class SwingTestCase extends JFCTestCase {
 
     @Override
     protected void tearDown() throws Exception {
+        leaveAllWindowsOpen();
         TestHelper.cleanUp(this);
         super.tearDown();
     }
