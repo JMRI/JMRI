@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Marker Color Test Panel" x="38" y="23" height="341" width="419" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both">
+    <locoicon x="0" y="0" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" text="123" size="13" style="0" red="255" green="255" blue="255" hasBackground="yes" redBack="255" greenBack="0" blueBack="0" justification="centre" icon="yes" dockX="0" dockY="0" class="jmri.jmrit.display.configurexml.LocoIconXml">
+      <icon url="program:resources/icons/markers/loco-blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </locoicon>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Marker Color Test Control Panel" x="464" y="23" height="341" width="319" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <locoicon x="0" y="0" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" text="456" size="13" style="0" red="192" green="192" blue="192" hasBackground="no" justification="centre" icon="yes" dockX="0" dockY="0" class="jmri.jmrit.display.configurexml.LocoIconXml">
+      <icon url="program:resources/icons/markers/loco-blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </locoicon>
+  </paneleditor>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Marker Color Test Layout Editor Panel" x="4" y="23" height="1320" width="2541" windowheight="1417" windowwidth="2556" panelheight="1320" panelwidth="2541" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" gridSize="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <locoicon x="34" y="29" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" text="789" size="13" style="0" red="192" green="192" blue="192" hasBackground="no" justification="centre" icon="yes" dockX="0" dockY="0" class="jmri.jmrit.display.configurexml.LocoIconXml">
+      <icon url="program:resources/icons/markers/loco-blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </locoicon>
+  </LayoutEditor>
+  <!--Written by JMRI version 4.7.4ish+jake+20170514T1755Z+R93b3622d0d on Sun May 14 11:01:03 PDT 2017 $Id$-->
+</layout-config>

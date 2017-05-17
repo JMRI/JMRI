@@ -274,6 +274,7 @@ public class LightTableAction extends AbstractTableAction {
                             fireTableRowsUpdated(row, row);
                             break;
                         }
+                        //$FALL-THROUGH$
                     default:
                         super.setValueAt(value, row, col);
                         break;
