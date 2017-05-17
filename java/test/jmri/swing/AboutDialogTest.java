@@ -22,6 +22,7 @@ public class AboutDialogTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AboutDialog dialog = new AboutDialog(null, true);
         Assert.assertNotNull(dialog);
+        dialog.dispose();
     }
 
     @Test
@@ -38,6 +39,7 @@ public class AboutDialogTest {
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "About dialog did not close");
+        dialog.dispose();
     }
 
     @Before
