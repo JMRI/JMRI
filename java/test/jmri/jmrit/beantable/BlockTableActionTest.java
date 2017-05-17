@@ -71,6 +71,14 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         _bTable = new BlockTableAction();
         Assert.assertNotNull("found BlockTable frame", _bTable);
 
+        // assert blocks show in table
+        Assert.assertEquals("Block1 getValue","(no name)",_bTable.getValue(null));
+        Assert.assertEquals("Block1 getValue","(no Block)",_bTable.getValue("nonsenseBlock"));
+        Assert.assertEquals("Block1 getValue","IB1",_bTable.getValue("block 1"));
+        // test value in table
+        //Assert.assertEquals("Block2 getColumnCount",5,_bTable.getColumnCount());
+        //Assert.assertEquals("Block2 getValueAt",1,_bTable.getValueAt(1,2));
+
         // set to true, use icons
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(true);
         BlockTableAction _b1Table;
@@ -103,7 +111,6 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         _bTable.dispose();
         _b1Table.dispose();
         f.dispose();
-        // TODO: assert blocks show in frame
     }
 
     @Before
@@ -124,7 +131,6 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     public void tearDown() {
         a = null;
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initDefaultUserMessagePreferences();
         apps.tests.Log4JFixture.tearDown();
     }
 
