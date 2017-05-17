@@ -116,7 +116,6 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
     public void tearDown() {
         a = null;
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         apps.tests.Log4JFixture.tearDown();
     }
 
