@@ -33,6 +33,6 @@ public class TurnoutSignalMastTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMastTest.class.getName());
 
 }
