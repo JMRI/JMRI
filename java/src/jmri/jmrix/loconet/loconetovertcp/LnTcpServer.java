@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (C) 2006
  */
-public class Server {
+public class LnTcpServer {
 
     final LinkedList<ClientRxHandler> clients;
     Thread socketListener;
@@ -31,7 +31,7 @@ public class Server {
 
     private int portNumber = 1234;
 
-    private Server() {
+    private LnTcpServer() {
         clients = new LinkedList<>();
         portNumber = InstanceManager.getOptionalDefault(LnTcpPreferences.class).orElseGet(() -> {
             return InstanceManager.setDefault(LnTcpPreferences.class, new LnTcpPreferences());
@@ -47,10 +47,10 @@ public class Server {
      *
      * @return the default server instance
      */
-    public static synchronized Server getDefault() {
-        return InstanceManager.getOptionalDefault(Server.class).orElseGet(() -> {
-            Server server = new Server();
-            return InstanceManager.setDefault(Server.class, server);
+    public static synchronized LnTcpServer getDefault() {
+        return InstanceManager.getOptionalDefault(LnTcpServer.class).orElseGet(() -> {
+            LnTcpServer server = new LnTcpServer();
+            return InstanceManager.setDefault(LnTcpServer.class, server);
         });
     }
 
@@ -60,8 +60,8 @@ public class Server {
      * @deprecated since 4.7.5; use {@link #getDefault()} instead
      */
     @Deprecated
-    public static synchronized Server getInstance() {
-        return Server.getDefault();
+    public static synchronized LnTcpServer getInstance() {
+        return LnTcpServer.getDefault();
     }
 
     /**
@@ -143,7 +143,7 @@ public class Server {
                 this.shutDownTask = new QuietShutDownTask("LocoNetOverTcpServer") {
                     @Override
                     public boolean execute() {
-                        Server.getDefault().disable();
+                        LnTcpServer.getDefault().disable();
                         return true;
                     }
                 };
@@ -239,5 +239,5 @@ public class Server {
             return clients.size();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(Server.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTcpServer.class.getName());
 }

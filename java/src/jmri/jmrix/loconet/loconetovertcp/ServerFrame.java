@@ -60,11 +60,11 @@ public class ServerFrame extends JmriJFrame implements ServerListner {
         getContentPane().add(panel);
 
         startButton.addActionListener((ActionEvent a) -> {
-            Server.getDefault().enable();
+            LnTcpServer.getDefault().enable();
         });
 
         stopButton.addActionListener((ActionEvent a) -> {
-            Server.getDefault().disable();
+            LnTcpServer.getDefault().disable();
         });
 
         pack();
@@ -73,7 +73,7 @@ public class ServerFrame extends JmriJFrame implements ServerListner {
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
-        Server.getDefault().setStateListner(null);
+        LnTcpServer.getDefault().setStateListner(null);
         dispose();
         super.windowClosing(e);
         InstanceManager.deregister(this, ServerFrame.class);
@@ -102,7 +102,7 @@ public class ServerFrame extends JmriJFrame implements ServerListner {
     static public synchronized ServerFrame getDefault() {
         return InstanceManager.getOptionalDefault(ServerFrame.class).orElseGet(() -> {
             ServerFrame self = new ServerFrame();
-            Server server = Server.getDefault();
+            LnTcpServer server = LnTcpServer.getDefault();
             server.setStateListner(self);
             server.updateServerStateListener();
             server.updateClientStateListener();
@@ -111,7 +111,7 @@ public class ServerFrame extends JmriJFrame implements ServerListner {
     }
 
     private void updateServerStatus() {
-        Server server = Server.getDefault();
+        LnTcpServer server = LnTcpServer.getDefault();
         if (portNumber != null) {
             portNumber.setText(Integer.toString(server.getPortNumber()));
             portNumberLabel.setEnabled(!server.isEnabled());
@@ -122,18 +122,18 @@ public class ServerFrame extends JmriJFrame implements ServerListner {
     }
 
     private void updateClientStatus() {
-        clientStatus.setText("   Client Count: " + Integer.toString(Server.getDefault().getClientCount()));
+        clientStatus.setText("   Client Count: " + Integer.toString(LnTcpServer.getDefault().getClientCount()));
     }
 
     @Override
-    public void notifyServerStateChanged(Server s) {
+    public void notifyServerStateChanged(LnTcpServer s) {
         javax.swing.SwingUtilities.invokeLater(() -> {
             updateServerStatus();
         });
     }
 
     @Override
-    public void notifyClientStateChanged(Server s) {
+    public void notifyClientStateChanged(LnTcpServer s) {
         javax.swing.SwingUtilities.invokeLater(() -> {
             updateClientStatus();
         });

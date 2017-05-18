@@ -22,7 +22,7 @@ public class ServerAction
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Server.getDefault().enable();
+        LnTcpServer.getDefault().enable();
         if (!GraphicsEnvironment.isHeadless()) {
             ServerFrame.getDefault().setVisible(true);
         }

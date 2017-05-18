@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for Server class.
+ * Tests for LnTcpServer class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
@@ -17,8 +17,8 @@ public class ServerTest {
    @Test
    @Ignore("needs more setup")
    public void getInstanceTest(){
-      Assert.assertNotNull("Server getInstance",Server.getDefault());
-      Server.getDefault().disable();  // turn the server off after enabled durring creation.
+      Assert.assertNotNull("Server getInstance",LnTcpServer.getDefault());
+      LnTcpServer.getDefault().disable();  // turn the server off after enabled durring creation.
    }
 
    @Before
