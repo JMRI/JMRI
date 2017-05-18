@@ -92,7 +92,7 @@ public class LnTcpServer {
      *
      * @return the port
      * @deprecated since 4.7.5; use
-     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#getPort()}
+     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#getPort() }
      * instead
      */
     @Deprecated

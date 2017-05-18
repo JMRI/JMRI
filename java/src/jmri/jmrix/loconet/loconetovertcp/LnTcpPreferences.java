@@ -1,8 +1,8 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-import jmri.beans.PreferencesBean;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.beans.PreferencesBean;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import org.slf4j.Logger;
@@ -35,6 +35,11 @@ public class LnTcpPreferences extends PreferencesBean {
         return this.port > 0 && this.port < 65536;
     }
 
+    /**
+     * Get the port used by the LocoNetOverTCP server.
+     *
+     * @return the port
+     */
     public int getPort() {
         return port;
     }
