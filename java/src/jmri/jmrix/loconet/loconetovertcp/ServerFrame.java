@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * @author Alex Shepherd Copyright (C) 2006
  * @author Randall Wood Copyright (C) 2017
  */
-public class ServerFrame extends JmriJFrame implements ServerListner {
+public class ServerFrame extends JmriJFrame implements LnTcpServerListener {
 
     JLabel portNumber;
     JLabel portNumberLabel = new JLabel("  Port Number: ");

@@ -22,7 +22,7 @@ public class LnTcpServer {
     Thread socketListener;
     ServerSocket serverSocket;
     boolean settingsLoaded = false;
-    ServerListner stateListner;
+    LnTcpServerListener stateListner;
     boolean settingsChanged = false;
     QuietShutDownTask shutDownTask;
     ZeroConfService service = null;
@@ -38,7 +38,7 @@ public class LnTcpServer {
         }).getPort();
     }
 
-    public void setStateListner(ServerListner l) {
+    public void setStateListner(LnTcpServerListener l) {
         stateListner = l;
     }
 
