@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * @author Alex Shepherd Copyright (C) 2006
  * @author Randall Wood Copyright (C) 2017
  */
-public class ServerFrame extends JmriJFrame implements LnTcpServerListener {
+public class LnTcpServerFrame extends JmriJFrame implements LnTcpServerListener {
 
     JLabel portNumber;
     JLabel portNumberLabel = new JLabel("  Port Number: ");
@@ -31,7 +31,7 @@ public class ServerFrame extends JmriJFrame implements LnTcpServerListener {
     JButton startButton = new JButton("Start Server");
     JButton stopButton = new JButton("Stop Server");
 
-    private ServerFrame() {
+    private LnTcpServerFrame() {
         super(Bundle.getMessage("ServerAction"));
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -76,7 +76,7 @@ public class ServerFrame extends JmriJFrame implements LnTcpServerListener {
         LnTcpServer.getDefault().setStateListner(null);
         dispose();
         super.windowClosing(e);
-        InstanceManager.deregister(this, ServerFrame.class);
+        InstanceManager.deregister(this, LnTcpServerFrame.class);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class ServerFrame extends JmriJFrame implements LnTcpServerListener {
      * @deprecated since 4.7.5; use {@link #getDefault() } instead
      */
     @Deprecated
-    static public ServerFrame getInstance() {
+    static public LnTcpServerFrame getInstance() {
         return getDefault();
     }
 
@@ -99,14 +99,14 @@ public class ServerFrame extends JmriJFrame implements LnTcpServerListener {
      *
      * @return the default server frame instance, creating it if needed
      */
-    static public synchronized ServerFrame getDefault() {
-        return InstanceManager.getOptionalDefault(ServerFrame.class).orElseGet(() -> {
-            ServerFrame self = new ServerFrame();
+    static public synchronized LnTcpServerFrame getDefault() {
+        return InstanceManager.getOptionalDefault(LnTcpServerFrame.class).orElseGet(() -> {
+            LnTcpServerFrame self = new LnTcpServerFrame();
             LnTcpServer server = LnTcpServer.getDefault();
             server.setStateListner(self);
             server.updateServerStateListener();
             server.updateClientStateListener();
-            return InstanceManager.setDefault(ServerFrame.class, self);
+            return InstanceManager.setDefault(LnTcpServerFrame.class, self);
         });
     }
 

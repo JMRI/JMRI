@@ -10,7 +10,7 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of ServerFrame
+ * Test simple functioning of LnTcpServerFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -19,7 +19,7 @@ public class ServerFrameTest {
     @Test
     public void testGetInstance() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ServerFrame action = ServerFrame.getDefault();
+        LnTcpServerFrame action = LnTcpServerFrame.getDefault();
         Assert.assertNotNull("exists", action);
     }
 

@@ -67,14 +67,14 @@ public class LnTcpPreferencesPanel extends JPanel implements PreferencesPanel {
             StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
             if (this.startup.isSelected()) {
                 PerformActionModel model = new PerformActionModel();
-                model.setClassName(ServerAction.class.getName());
+                model.setClassName(LnTcpServerAction.class.getName());
                 if (this.startupActionPosition == -1 || this.startupActionPosition >= manager.getActions().length) {
                     manager.addAction(model);
                 } else {
                     manager.setActions(this.startupActionPosition, model);
                 }
             } else {
-                manager.getActions(PerformActionModel.class).stream().filter((model) -> (ServerAction.class.getName().equals(model.getClassName()))).forEach((model) -> {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (LnTcpServerAction.class.getName().equals(model.getClassName()))).forEach((model) -> {
                     this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
                     manager.removeAction(model);
                 });
@@ -112,7 +112,7 @@ public class LnTcpPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private boolean isStartupAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
-                .anyMatch((model) -> (ServerAction.class.getName().equals(model.getClassName())));
+                .anyMatch((model) -> (LnTcpServerAction.class.getName().equals(model.getClassName())));
     }
 
     @Override

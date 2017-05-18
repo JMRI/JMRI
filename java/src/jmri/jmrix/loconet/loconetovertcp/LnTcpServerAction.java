@@ -9,14 +9,14 @@ import javax.swing.AbstractAction;
  *
  * @author Alex Shepherd Copyright (C) 2006
  */
-public class ServerAction
+public class LnTcpServerAction
         extends AbstractAction {
 
-    public ServerAction(String s) {
+    public LnTcpServerAction(String s) {
         super(s);
     }
 
-    public ServerAction() {
+    public LnTcpServerAction() {
         this(Bundle.getMessage("ServerAction"));
     }
 
@@ -24,7 +24,7 @@ public class ServerAction
     public void actionPerformed(ActionEvent e) {
         LnTcpServer.getDefault().enable();
         if (!GraphicsEnvironment.isHeadless()) {
-            ServerFrame.getDefault().setVisible(true);
+            LnTcpServerFrame.getDefault().setVisible(true);
         }
     }
 }
