@@ -110,8 +110,9 @@ public class WebServerPreferences extends PreferencesBean {
     private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
     public WebServerPreferences(String fileName) {
+        super(ProfileManager.getDefault().getActiveProfile());
         boolean migrate = false;
-        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
         try {
             if (sharedPreferences.keys().length == 0) {
                 log.info("No Webserver preferences exist.");
@@ -144,7 +145,8 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     public WebServerPreferences() {
-        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        super(ProfileManager.getDefault().getActiveProfile());
+        Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
         this.readPreferences(sharedPreferences);
     }
 
@@ -295,7 +297,7 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     public void save() {
-        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putInt(PORT, this.getPort());
         sharedPreferences.putInt(CLICK_DELAY, this.getClickDelay());
         sharedPreferences.putInt(REFRESH_DELAY, this.getRefreshDelay());

@@ -1,5 +1,9 @@
 package jmri.beans;
 
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import jmri.profile.Profile;
+
 /**
  * Bean that implements some common code for preferences objects.
  *
@@ -21,6 +25,27 @@ public abstract class PreferencesBean extends Bean {
     public static final String RESTART_REQUIRED = "restartRequired"; // NOI18N
     private boolean restartRequired = false;
     private boolean isDirty = false;
+    private final Profile profile;
+
+    /**
+     * Create the PreferencesBean.
+     *
+     * @param profile the Profile this PreferencesBean is associated with
+     */
+    public PreferencesBean(@Nonnull Profile profile) {
+        Objects.requireNonNull(profile, "Profile must be specified.");
+        this.profile = profile;
+    }
+
+    /**
+     * Get the profile associated with this PreferencesBean.
+     *
+     * @return the profile
+     */
+    @Nonnull
+    public Profile getProfile() {
+        return this.profile;
+    }
 
     /**
      * Check if this preferences bean has a state that needs to be saved.

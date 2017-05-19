@@ -20,8 +20,19 @@ public class LnTcpPreferences extends PreferencesBean {
     private int port = 1234;
     private final static Logger log = LoggerFactory.getLogger(LnTcpPreferences.class);
 
-    void savePreferences() {
-        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+    public LnTcpPreferences() {
+        super(ProfileManager.getDefault().getActiveProfile());
+        Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
+        this.readPreferences(sharedPreferences);
+    }
+
+    private void readPreferences(Preferences sharedPreferences) {
+        this.port = sharedPreferences.getInt(PORT, this.getPort());
+        this.setIsDirty(false);
+    }
+
+    public void savePreferences() {
+        Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putInt(PORT, this.getPort());
         try {
             sharedPreferences.sync();

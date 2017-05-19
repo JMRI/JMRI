@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -33,9 +34,19 @@ public class LnTcpServer {
 
     private LnTcpServer() {
         clients = new LinkedList<>();
-        portNumber = InstanceManager.getOptionalDefault(LnTcpPreferences.class).orElseGet(() -> {
+        LnTcpPreferences pm = InstanceManager.getOptionalDefault(LnTcpPreferences.class).orElseGet(() -> {
             return InstanceManager.setDefault(LnTcpPreferences.class, new LnTcpPreferences());
-        }).getPort();
+        });
+        portNumber = pm.getPort();
+        pm.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            switch (evt.getPropertyName()) {
+                case LnTcpPreferences.PORT:
+                    portNumber = pm.getPort();
+                    break;
+                default:
+                    // ignore uninteresting property changes
+            }
+        });
     }
 
     public void setStateListner(LnTcpServerListener l) {
@@ -105,7 +116,7 @@ public class LnTcpServer {
      *
      * @param port ignored
      * @deprecated since 4.7.5; use
-     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#setPort()}
+     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#setPort() }
      * instead
      */
     @Deprecated
