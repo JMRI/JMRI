@@ -75,9 +75,6 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         //Assert.assertEquals("Block1 getValue","(no name)",_bTable.getValue(null)); // taken out for now, returns null on CI?
         //Assert.assertEquals("Block1 getValue","(no Block)",_bTable.getValue("nonsenseBlock"));
         //Assert.assertEquals("Block1 getValue","IB1",_bTable.getValue("block 1"));
-        // test value in table
-        //Assert.assertEquals("Block2 getColumnCount",5,_bTable.getColumnCount()); // cannot directly acces _bTable methods?
-        //Assert.assertEquals("Block2 getValueAt",1,_bTable.getValueAt(1,2));
 
         // set to true, use icons
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(true);
@@ -88,21 +85,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         _b1Table.addPressed(null);
         JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddBlock"), true, true);
         Assert.assertNotNull("found Add frame", af);
-
-//        // wait 1 sec (nothing to see)
-//        Runnable waiter = new Runnable() {
-//            @Override
-//            public synchronized void run() {
-//                try {
-//                    this.wait(1000);
-//                } catch (InterruptedException ex) {
-//                    log.error("Waiter interrupted.");
-//                }
-//            }
-//        };
-//        waiter.run();
-
-        // close AddPane
+        // Cancel & close AddPane
         _b1Table.cancelPressed(null);
 
         // clean up

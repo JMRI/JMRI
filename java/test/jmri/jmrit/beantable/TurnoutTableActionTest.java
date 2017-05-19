@@ -77,22 +77,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         _t1Table.addPressed(null);
         JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddTurnout"), true, true);
         Assert.assertNotNull("found Add frame", af);
-
-//        // wait 1 sec (nothing to see)
-//        Runnable waiter = new Runnable() {
-//            @Override
-//            public synchronized void run() {
-//                try {
-//                    this.wait(1000);
-//                } catch (InterruptedException ex) {
-//                    log.error("Waiter interrupted.");
-//                }
-//            }
-//        };
-//        waiter.run();
-
         // close AddPane
         _t1Table.cancelPressed(null);
+        // more Turnout Add pane tests in TurnoutTableWindowTest
 
         // clean up
         af.dispose();

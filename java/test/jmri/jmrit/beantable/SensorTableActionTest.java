@@ -82,22 +82,9 @@ public class SensorTableActionTest extends AbstractTableActionBase {
         _s1Table.addPressed(null);
         JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddSensor"), true, true);
         Assert.assertNotNull("found Add frame", af);
-
-//        // wait 1 sec (nothing to see)
-//        Runnable waiter = new Runnable() {
-//            @Override
-//            public synchronized void run() {
-//                try {
-//                    this.wait(1000);
-//                } catch (InterruptedException ex) {
-//                    log.error("Waiter interrupted.");
-//                }
-//            }
-//        };
-//        waiter.run();
-
         // close AddPane
         _s1Table.cancelPressed(null);
+        // more Sensor Add pane tests in SensorTableWindowTest
 
         // clean up
         af.dispose();
