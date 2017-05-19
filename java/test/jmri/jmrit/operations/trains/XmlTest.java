@@ -39,7 +39,7 @@ public class XmlTest extends OperationsTestCase {
                 "buildstatus" +
                 File.separator +
                 "train (TestReportName).txt",
-                TrainManagerXml.instance().defaultBuildReportFilename("TestReportName"));
+                TrainManagerXml.instance().defaultBuildReportFileName("TestReportName"));
         
         // test the manifest path name
         Assert.assertEquals("manifests", TrainManagerXml.MANIFESTS);
@@ -51,7 +51,7 @@ public class XmlTest extends OperationsTestCase {
                 "manifests" +
                 File.separator +
                 "train (TestManifestName).txt",
-                TrainManagerXml.instance().getDefaultManifestFilename("TestManifestName"));
+                TrainManagerXml.instance().getDefaultManifestFileName("TestManifestName"));
         
         // test the manifest CSV path name
         Assert.assertEquals("csvManifests", TrainManagerXml.CSV_MANIFESTS);
@@ -63,7 +63,7 @@ public class XmlTest extends OperationsTestCase {
                 "csvManifests" +
                 File.separator +
                 "train (TestManifestName).csv",
-                TrainManagerXml.instance().getDefaultCsvManifestFilename("TestManifestName"));
+                TrainManagerXml.instance().getDefaultCsvManifestFileName("TestManifestName"));
         
         // test the switch list path name
         Assert.assertEquals("switchLists", TrainManagerXml.SWITCH_LISTS);
@@ -87,7 +87,7 @@ public class XmlTest extends OperationsTestCase {
                 "csvSwitchLists" +
                 File.separator +
                 "location (TestSwitchListName).csv",
-                TrainManagerXml.instance().getDefaultCsvSwitchListName("TestSwitchListName"));
+                TrainManagerXml.instance().getDefaultCsvSwitchListFileName("TestSwitchListName"));
     }
 
 
