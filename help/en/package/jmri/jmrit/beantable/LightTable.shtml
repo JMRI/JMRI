@@ -65,15 +65,24 @@
       control Turnout, it must be "Enabled", that is, its check box
       in the 'Enabled' column must be checked. You can uncheck this
       box to temporarily disable a Light from being triggered, i.e.
-      prevent it switching when its control mechanism fires.</p>
+      prevent it switching when its control mechanism fires.<br>
+      You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to
+      a column title.</p>
 
       <p>A Light may also be a variable light. This will depend on
       the interface and the hardware driving the physical
       light.</p>
 
+      <img src="images/LightTableGraphic.png" height="135" width="276"
+      align="right" alt="Graphic Light state column">
+      <p>Choose between textual and graphic display of the Light state
+      in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+      </p>
+
       <h2>Switching a Light On or Off</h2>
 
-      <p>Lights may be turned on or off by clicking the button in
+      <p>Lights may be turned on or off by clicking the button/icon in
       the State column of the Light Table. A Light may be set up to
       follow the state of a track switch (Turnout), On when the
       Turnout is Closed, and Off when it is Thrown, or vice versa.
@@ -126,7 +135,8 @@
       <b>Panel</b> menu. Note that the enabled/disabled state of
       each Light is not saved in the configuration file. When
       Lights are loaded from a configuration file, they are all
-      enabled. <!--#include virtual="/Footer" --></p>
+      enabled.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

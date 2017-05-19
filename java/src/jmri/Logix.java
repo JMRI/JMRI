@@ -87,7 +87,7 @@ public interface Logix extends NamedBean {
     public String getConditionalByNumberOrder(int order);
 
     /**
-     * Add a Conditional to this Logix.
+     * Add a Conditional name and sequence number to this Logix.
      *
      * @param systemName The Conditional system name
      * @param order      - the order this conditional should calculate in if
@@ -97,6 +97,25 @@ public interface Logix extends NamedBean {
      *         false indicates that maximum number of Conditionals was exceeded)
      */
     public boolean addConditional(String systemName, int order);
+
+    /**
+     * Add a child Conditional to the parent Logix.
+     *
+     * @since 4.7.4
+     * @param systemName The system name for the Conditional object.
+     * @param conditional The Conditional object.
+     * @return true if the Conditional was added, false otherwise.
+     */
+    public boolean addConditional(String systemName, Conditional conditional);
+
+    /**
+     * Get a Conditional belonging to this Logix.
+     *
+     * @since 4.7.4
+     * @param systemName The name of the Conditional object.
+     * @return the Conditional object or null if not found.
+     */
+    public Conditional getConditional(String systemName);
 
     /**
      * Delete a Conditional from this Logix
@@ -137,6 +156,18 @@ public interface Logix extends NamedBean {
     public void deActivateLogix();
 
     /**
+     * ConditionalVariables only have a single name field.  For user interface purposes
+     * a gui name is used for the referenced conditional user name.  This is not used
+     * for other object types.
+     * <p>
+     * In addition to setting the GUI name, any state variable references are changed to
+     * conditional system names.  This converts the XML system/user name field to the system name
+     * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
+     * @since 4.7.4
+     */
+    public void setGuiNames();
+
+    /**
      * Assembles a list of state variables that both trigger the Logix, and are
      * changed by it. Returns true if any such variables were found. Returns
      * false otherwise.
@@ -163,5 +194,5 @@ public interface Logix extends NamedBean {
      * the correspondeing variable suppresses Calculation. Note this method must
      * not modify the supplied variable list in any way.
      */
-    //public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);  
+    //public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);
 }

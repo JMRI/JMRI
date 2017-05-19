@@ -1252,21 +1252,14 @@
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="icon" type="xs:string"></xs:attribute>
       <xs:attribute name="dockX" type="xs:string"></xs:attribute>
       <xs:attribute name="dockY" type="xs:string"></xs:attribute>
       <xs:attribute name="text" type="xs:string"></xs:attribute>
-      <xs:attribute name="size" type="xs:string"></xs:attribute>
-      <xs:attribute name="style" type="xs:string"></xs:attribute>
-      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
-      <xs:attribute name="hasBackground" type="xs:string"></xs:attribute>
-      <xs:attribute name="justification" default="left" type="JustificationType"></xs:attribute>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
-      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorLocoLabelType">
@@ -1333,6 +1326,22 @@
         </xs:appinfo>
       </xs:annotation>
 
+      <xs:sequence>
+        <xs:element name="controlpoints" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="controlpoint" minOccurs="2" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="index" type="xs:integer" use="required"></xs:attribute>
+                  <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
+                  <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
@@ -1348,9 +1357,9 @@
       <xs:attribute name="arc" type="yesNoType"></xs:attribute>
       <xs:attribute name="flip" type="yesNoType"></xs:attribute>
       <xs:attribute name="circle" type="yesNoType"></xs:attribute>
+      <xs:attribute name="bezier" type="yesNoType"></xs:attribute>
       <xs:attribute name="angle" type="xs:float"></xs:attribute>
       <xs:attribute name="hideConLines" type="yesNoType"></xs:attribute>
-
     </xs:complexType>
 
     <xs:complexType name="EditorLevelXingType">

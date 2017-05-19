@@ -3005,19 +3005,18 @@ public class Train implements java.beans.PropertyChangeListener {
     public boolean printManifestIfBuilt() {
         if (isBuilt()) {
             boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
-            printManifest(isPreview);
+            return (printManifest(isPreview));
         } else {
             log.debug("Need to build train (" + getName() + ") before printing manifest");
             return false;
         }
-        return true;
     }
 
     /**
      * Print manifest for train.
      * @param isPreview True if preview.
      *
-     * @return true if print successful.
+     * @return true if print successful, false if train print file not found.
      */
     public boolean printManifest(boolean isPreview) {
         if (isModified()) {
@@ -3033,7 +3032,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         File file = TrainManagerXml.instance().getTrainManifestFile(getName());
         if (!file.exists()) {
-            log.warn("Manifest file missing for train {}", getName());
+            log.warn("Manifest file missing for train ({})", getName());
             return false;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {

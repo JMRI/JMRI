@@ -41,8 +41,6 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
