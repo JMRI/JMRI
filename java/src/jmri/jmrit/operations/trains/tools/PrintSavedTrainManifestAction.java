@@ -80,9 +80,9 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
 
     // Get file to read from
     protected File getFile() {
-        String pathName = TrainManagerXml.instance().getBackupManifestDirectory();
+        String pathName = TrainManagerXml.instance().getBackupManifestDirectoryName();
         if (_train != null) {
-            pathName = TrainManagerXml.instance().getBackupManifestDirectory(_train.getName());
+            pathName = TrainManagerXml.instance().getBackupManifestDirectoryName(_train.getName());
         }
         JFileChooser fc = new JFileChooser(pathName);
         fc.addChoosableFileFilter(new FileFilter());
