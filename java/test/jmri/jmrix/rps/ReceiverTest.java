@@ -1,4 +1,4 @@
-package jmri.implementation;
+package jmri.jmrix.rps;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,12 +12,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultSignalMastLogicTest {
+public class ReceiverTest {
 
     @Test
     public void testCTor() {
-        VirtualSignalMast s1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
-        DefaultSignalMastLogic t = new DefaultSignalMastLogic(s1);
+        Receiver t = new Receiver(new javax.vecmath.Point3d(0.0,0.0,0.0));
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +33,6 @@ public class DefaultSignalMastLogicTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReceiverTest.class.getName());
 
 }

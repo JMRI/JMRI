@@ -26,8 +26,7 @@ public class PrintTrainManifestAction extends Action {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt()) {
                 setRunning(true);
-                train.printManifest(TrainManager.instance().isPrintPreviewEnabled());
-                finishAction(true);
+                finishAction(train.printManifest(TrainManager.instance().isPrintPreviewEnabled()));
             } else {
                 finishAction(false);
             }

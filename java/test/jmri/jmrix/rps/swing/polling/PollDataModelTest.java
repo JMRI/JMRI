@@ -1,23 +1,26 @@
-package jmri.implementation;
+package jmri.jmrix.rps.swing.polling;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultSignalMastLogicTest {
+public class PollDataModelTest {
 
     @Test
     public void testCTor() {
-        VirtualSignalMast s1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
-        DefaultSignalMastLogic t = new DefaultSignalMastLogic(s1);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PollTableFrame f = new PollTableFrame();
+        PollDataModel t = new PollDataModel(f);
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +37,6 @@ public class DefaultSignalMastLogicTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollDataModelTest.class.getName());
 
 }

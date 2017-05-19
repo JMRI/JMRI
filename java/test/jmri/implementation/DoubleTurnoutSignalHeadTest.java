@@ -53,18 +53,18 @@ public class DoubleTurnoutSignalHeadTest {
     @Test
     public void testCTor() {
         Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
-        NamedBeanHandle green = new NamedBeanHandle("green handle", it);
-        Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
-        NamedBeanHandle red = new NamedBeanHandle("red handle", it2);
+        NamedBeanHandle<Turnout> green = new NamedBeanHandle("green handle", it);
+        Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1"); // deliberately use same system name?
+        NamedBeanHandle<Turnout> red = new NamedBeanHandle("red handle", it2);
         DoubleTurnoutSignalHead t = new DoubleTurnoutSignalHead("Test Head", green, red);
         //Assert.assertNotNull("exists",t);
     }
 
     void createHead() {
         mGreenTurnout = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
-        NamedBeanHandle green = new NamedBeanHandle("green handle", mGreenTurnout);
+        NamedBeanHandle<Turnout> green = new NamedBeanHandle("green handle", mGreenTurnout);
         mRedTurnout = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT2");
-        NamedBeanHandle red = new NamedBeanHandle("red handle", mRedTurnout);
+        NamedBeanHandle<Turnout> red = new NamedBeanHandle("red handle", mRedTurnout);
         mHead = new DoubleTurnoutSignalHead("Test Head", green, red);
     }
 
@@ -208,6 +208,6 @@ public class DoubleTurnoutSignalHeadTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadTest.class.getName());
 
 }

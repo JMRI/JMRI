@@ -316,7 +316,10 @@ public final class MathUtil {
     /**
      * Draw a cubic Bezier curve
      * @param g2 the Graphics2D to draw to
-     * @param p0-p3 the Control points
+     * @param p0 origin control point
+     * @param p1 first control point
+     * @param p2 second control point
+     * @param p3 terminating control point
      * @return  the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
