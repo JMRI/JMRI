@@ -44,6 +44,11 @@ public class LnTcpPreferences extends PreferencesBean {
         return port;
     }
 
+    /**
+     * Set the port used by the LocoNetOverTCP server.
+     *
+     * @param value the port
+     */
     public void setPort(int value) {
         int old = this.port;
         if (old != value) {
