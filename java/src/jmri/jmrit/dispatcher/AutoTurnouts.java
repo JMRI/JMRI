@@ -140,7 +140,7 @@ public class AutoTurnouts {
             curBlock = entryPt.getBlock();
             prevBlock = entryPt.getFromBlock();
             curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
-        } else if (s.containsBlock(at.getStartBlock())) {
+        } else if ( !at.isAllocationReversed() && s.containsBlock(at.getStartBlock())) {
             curBlock = at.getStartBlock();
             curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
             //Get the previous block so that we can set the turnouts in the current block correctly.
@@ -148,6 +148,15 @@ public class AutoTurnouts {
                 prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
             } else if (direction == Section.REVERSE) {
                 prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+            }
+        } else if (at.isAllocationReversed() && s.containsBlock(at.getEndBlock())) {
+            curBlock = at.getEndBlock();
+            curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
+            //Get the previous block so that we can set the turnouts in the current block correctly.
+            if (direction == Section.REVERSE) {
+                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+            } else if (direction == Section.FORWARD) {
+                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
             }
         } else {
 
