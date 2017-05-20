@@ -116,7 +116,7 @@ public class LnTcpServer {
      *
      * @param port ignored
      * @deprecated since 4.7.5; use
-     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#setPort() }
+     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#setPort(int) }
      * instead
      */
     @Deprecated
