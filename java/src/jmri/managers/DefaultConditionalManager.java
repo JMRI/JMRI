@@ -3,7 +3,6 @@ package jmri.managers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -15,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
-import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -162,7 +160,7 @@ public class DefaultConditionalManager extends AbstractManager
                 if (lgx != null) {
                     return lgx;
                 }
-                
+
             }
         }
 
@@ -350,10 +348,11 @@ public class DefaultConditionalManager extends AbstractManager
      * Return a copy of the entire map.  Used by
      * {@link jmri.jmrit.beantable.LogixTableAction#buildWhereUsedListing}
      * @since 4.7.4
+     * @return a copy of the map
      */
     @Override
     public HashMap<String, ArrayList<String>> getWhereUsedMap() {
-        return conditionalWhereUsed;
+        return new HashMap<>(conditionalWhereUsed);
     }
 
     /**

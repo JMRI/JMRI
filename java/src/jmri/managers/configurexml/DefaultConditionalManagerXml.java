@@ -203,9 +203,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 break;
             }
 
-            String userName = "";  // omitted username is treated as empty, not null
-            if (condElem.getAttribute("userName") != null) {
-                userName = condElem.getAttribute("userName").getValue();
+            // omitted username is treated as empty, not null
+            String userName = getUserName(condElem);
+            if (userName == null) {
+                userName = "";
             }
 
             if (log.isDebugEnabled()) {

@@ -1,4 +1,4 @@
-package jmri.implementation;
+package jmri.jmrix.rps;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -12,12 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultSignalMastLogicTest {
+public class RpsBlockTest {
 
     @Test
     public void testCTor() {
-        VirtualSignalMast s1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
-        DefaultSignalMastLogic t = new DefaultSignalMastLogic(s1);
+        RpsSensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
+        jmri.SignalHead sh = new jmri.implementation.VirtualSignalHead("TS1","test signal head");
+        RpsBlock t = new RpsBlock(s,sh,0.0f,1.0f);
         Assert.assertNotNull("exists",t);
     }
 
@@ -34,6 +35,6 @@ public class DefaultSignalMastLogicTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsBlockTest.class.getName());
 
 }
