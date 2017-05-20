@@ -93,6 +93,7 @@ public interface ConditionalManager extends Manager {
     /**
      * Return a copy of the entire map.  Used by
      * {@link jmri.jmrit.beantable.LogixTableAction#buildWhereUsedListing}
+     * @return a copy of the map
      * @since 4.7.4
      */
     public HashMap<String, ArrayList<String>> getWhereUsedMap();

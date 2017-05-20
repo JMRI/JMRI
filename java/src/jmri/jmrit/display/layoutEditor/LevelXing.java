@@ -948,7 +948,7 @@ public class LevelXing extends LayoutTrack {
      * @param p the point
      * @param useRectangles use hit rectangle (false: use hit circles)
      * @param requireUnconnected (only hit disconnected connections)
-     * @return 
+     * @return value representing the point connection type
      * @since 7.4.?
      */
     public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
