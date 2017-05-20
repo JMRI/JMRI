@@ -18,10 +18,11 @@ import org.slf4j.LoggerFactory;
  * then CV56 is high byte, write {@literal 5=>CV50}, then CV56 is low byte of
  * ID</li>
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID</li>
- * <li>Hornby: (mfgID == 48) CV159 is ID</li>
+ * <li>Hornby: (mfgID == 48) CV159 is usually ID. If (CV159 == 143), CV159 is
+ * low byte of ID and CV158 is high byte of ID</li>
  * <li>TCS: (mfgID == 153) CV249 is ID</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
- * <li>SoundTraxx: (mfgID == 98, modelID == 70 or 71) CV253 is high byte, CV256
+ * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
  * is low byte of ID</li>
  * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
  * write {@literal 0=>CV31}, write {@literal 255=>CV32}, then CVs 261 (lowest)
@@ -113,8 +114,15 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productID = value;
             return true;
         } else if (mfgID == 48) {  // Hornby
-            productID = value;
-            return true;
+            if (value == 143) {
+                productIDlow = value;
+                statusUpdate("Read Product ID High Byte");
+                readCV(158);
+                return false;
+            } else {
+                productID = value;
+                return true;
+            }
         } else if (mfgID == 145) {  // Zimo
             productID = value;
             return true;
@@ -143,6 +151,11 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read Product ID High Byte");
             readCV(56);
             return false;
+        } else if (mfgID == 48) {  // Hornby
+            productIDhigh = value;
+            productID = (productIDhigh << 8) | productIDlow;
+            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
+            return true;
         } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;
