@@ -619,7 +619,7 @@ public class DefaultConditional extends AbstractNamedBean
                 Warrant w = null;
                 NamedBean nb = null;
                 if (action.getNamedBean() != null) {
-                    nb = (NamedBean) action.getNamedBean().getBean();
+                    nb = action.getNamedBean().getBean();
                 }
                 int value = 0;
                 Timer timer = null;
