@@ -104,7 +104,7 @@ public class SensorTableAction extends AbstractTableAction {
 
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSensor"));
-            //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
+            addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
             ActionListener okListener = new ActionListener() {

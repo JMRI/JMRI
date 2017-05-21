@@ -160,9 +160,10 @@ public class TurnoutTableAction extends AbstractTableAction {
         thrownText = turnManager.getThrownText();
 
         // load graphic state column display preference
+        // from apps/GuiLafConfigPane.java
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
-        // create the data model object that drives the table;
+        // create the data model object that drives the table
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
 
