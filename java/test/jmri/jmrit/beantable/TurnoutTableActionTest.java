@@ -84,7 +84,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 
         // Open Automation menu
         jmri.jmrit.turnoutoperations.TurnoutOperationFrame tof = new jmri.jmrit.turnoutoperations.TurnoutOperationFrame(null);
-        JFrame am = JFrameOperator.waitJFrame(Bundle.getMessage("TurnoutOperationEditorTitle"), true, true);
+        JFrame am = JFrameOperator.waitJFrame(jmri.jmrit.turnoutoperations.Bundle.getMessage("TurnoutOperationEditorTitle"), true, true);
         Assert.assertNotNull("found Automation menu dialog", am);
         log.debug("OpsMenu found");
 
