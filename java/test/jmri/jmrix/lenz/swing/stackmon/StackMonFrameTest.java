@@ -24,6 +24,7 @@ public class StackMonFrameTest {
 
         StackMonFrame f = new StackMonFrame(memo);
         Assert.assertNotNull(f);
+        f.dispose();
     }
 
     // The minimal setup for log4J
