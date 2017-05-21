@@ -1,18 +1,17 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LayoutEditorFindItemsTest {
 
@@ -21,7 +20,8 @@ public class LayoutEditorFindItemsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor e = new LayoutEditor();
         LayoutEditorFindItems t = new LayoutEditorFindItems(e);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
+        e.dispose();
     }
 
     // The minimal setup for log4J

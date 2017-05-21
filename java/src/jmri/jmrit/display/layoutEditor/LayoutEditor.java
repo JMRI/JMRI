@@ -10068,6 +10068,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         l.setLocation(multiLocX, multiLocY);
         setDirty(true);
         putItem(l);
+        multiSensorFrame.dispose();
         multiSensorFrame = null;
     }   //addMultiSensor
 
@@ -11558,6 +11559,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         }
     }   //vetoableChange
+
+    @Override
+    public void dispose() {
+        this.sensorFrame.dispose();
+        this.signalFrame.dispose();
+        this.iconFrame.dispose();
+        super.dispose();
+    }
 
     //initialize logging
     private final static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
