@@ -46,11 +46,11 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th loc", "Test Loc E", f.locationsModel.getValueAt(4, LocationsTableModel.NAMECOLUMN));
 
         // check location lengths
-        Assert.assertEquals("1st loc length", 1005, f.locationsModel.getValueAt(0, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("2nd loc length", 1004, f.locationsModel.getValueAt(1, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("3rd loc length", 1003, f.locationsModel.getValueAt(2, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("4th loc length", 1002, f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
-        Assert.assertEquals("5th loc length", 1001, f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("1st loc length", "1005", f.locationsModel.getValueAt(0, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("2nd loc length", "1004", f.locationsModel.getValueAt(1, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("3rd loc length", "1003", f.locationsModel.getValueAt(2, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("4th loc length", "1002", f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
+        Assert.assertEquals("5th loc length", "1001", f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
 
         // close windows
         JFrameOperator jfof = new JFrameOperator(f);
