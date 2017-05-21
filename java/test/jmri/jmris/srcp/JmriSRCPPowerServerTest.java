@@ -35,7 +35,6 @@ public class JmriSRCPPowerServerTest{
     public void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initDebugPowerManager();
     }
 
     @After
