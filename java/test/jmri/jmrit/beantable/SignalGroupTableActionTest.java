@@ -57,16 +57,20 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         // create a Turnout
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         // create a signal head
-        jmri.implementation.SingleTurnoutSignalHead sh
-                = new jmri.implementation.SingleTurnoutSignalHead("IH1",
+        SignalHead sh = new jmri.implementation.SingleTurnoutSignalHead("IH1",
                 new jmri.NamedBeanHandle<Turnout>("IT1", it1),
                 SignalHead.LUNAR, SignalHead.DARK); // on state + off state
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(sh);
+
         // open Signal Group Table
         SignalGroupTableAction _sGroupTable;
         _sGroupTable = new SignalGroupTableAction();
+        Assert.assertNotNull("found SignalGroupTable frame", _sGroupTable);
+
         _sGroupTable.addPressed(null);
         JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("AddSignalGroup"), true, true);
         Assert.assertNotNull("found Add frame", af);
+
         // create a new signal group
         _sGroupTable._userName.setText("TestGroup");
         Assert.assertEquals("user name", "TestGroup", _sGroupTable._userName.getText());
@@ -76,19 +80,21 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         SignalGroup g = _sGroupTable.checkNamesOK();
         _sGroupTable.setValidSignalMastAspects();
         // add the head to the group:
-        //g.addSignalHead(sh);
+        g.addSignalHead(sh);
 
-        // causes NPE when bypassing the GUI to open an Edit Head pane:
+        // NPE when bypassing the GUI to open an Edit Head pane: was fixed by registering sh in SignalHeadManager (line 63)
         // open Edit head pane
-        //SignalGroupSubTableAction editSignalHead = new SignalGroupSubTableAction();
-        //editSignalHead.editHead(g, "IH1");
-        //editSignalHead.cancelSubPressed(null); // close edit head pane
+        SignalGroupSubTableAction editSignalHead = new SignalGroupSubTableAction();
+        editSignalHead.editHead(g, "IH1");
+        editSignalHead.cancelSubPressed(null); // close edit head pane
 
         _sGroupTable.cancelPressed(null); // calling updatePressed() complains about duplicate group name
+
         // clean up
         af.dispose();
         g.dispose();
         _sGroupTable.dispose();
+        sh.dispose();
     }
 
     // The minimal setup for log4J
@@ -102,6 +108,8 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
 
     @After
     public void tearDown() {
+        a = null;
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 }

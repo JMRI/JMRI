@@ -1,0 +1,7 @@
+grant {
+  // standard JMRI permissions from security.policy
+  permission java.security.AllPermission;
+  // allow tests to access normally inaccessible declared members of classes
+  permission java.lang.RuntimePermission "accessDeclaredMembers";
+};
+

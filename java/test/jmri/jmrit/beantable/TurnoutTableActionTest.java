@@ -1,15 +1,22 @@
 package jmri.jmrit.beantable;
 
+import apps.gui.GuiLafPreferencesManager;
+import java.awt.GraphicsEnvironment;
+import javax.swing.JFrame;
+import jmri.InstanceManager;
+import jmri.Turnout;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Tests for the jmri.jmrit.beantable.TurnoutTableAction class.
  * @author Paul Bender Copyright (C) 2017	
  */
 public class TurnoutTableActionTest extends AbstractTableActionBase {
@@ -40,6 +47,45 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
          Assert.assertTrue("Default include add button",a.includeAddButton());
     }
 
+    /**
+     * Check graphic state presentation.
+     * @since 4.7.4
+     */
+    @Test
+    public void testAddAndInvoke() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        a.actionPerformed(null); // show table
+        // create 2 turnouts and see if they exist
+        Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
+        it1.setCommandedState(Turnout.THROWN);
+        it1.setCommandedState(Turnout.CLOSED);
+
+        // set graphic state column display preference to false, read by createModel()
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(false);
+
+        TurnoutTableAction _tTable;
+        _tTable = new TurnoutTableAction();
+        Assert.assertNotNull("found TurnoutTable frame", _tTable);
+
+        // set to true, use icons
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(true);
+        TurnoutTableAction _t1Table;
+        _t1Table = new TurnoutTableAction();
+        Assert.assertNotNull("found TurnoutTable1 frame", _t1Table);
+
+        _t1Table.addPressed(null);
+        JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddTurnout"), true, true);
+        Assert.assertNotNull("found Add frame", af);
+        // close AddPane
+        _t1Table.cancelPressed(null);
+        // more Turnout Add pane tests in TurnoutTableWindowTest
+
+        // clean up
+        af.dispose();
+        _tTable.dispose();
+        _t1Table.dispose();
+    }
 
     // The minimal setup for log4J
     @Before
@@ -47,6 +93,8 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new TurnoutTableAction();
     }
 

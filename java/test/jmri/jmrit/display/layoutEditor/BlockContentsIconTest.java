@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of BlockContentsIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class BlockContentsIconTest {
 
@@ -20,6 +20,7 @@ public class BlockContentsIconTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         BlockContentsIcon t = new BlockContentsIcon("test", new LayoutEditor());
         Assert.assertNotNull("exists", t);
+        t.getEditor().dispose();
     }
 
     // from here down is testing infrastructure

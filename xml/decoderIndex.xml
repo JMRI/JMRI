@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.7.3ish+jake+20170415T2202Z+R6344d4702d on Sat Apr 15 15:02:29 PDT 2017 $Id$-->
-  <decoderIndex version="810">
+  <!--Written by JMRI version 4.7.4ish+heap+20170520T1036Z+R02a6d02 on Sat May 20 20:38:08 AEST 2017 $Id$-->
+  <decoderIndex version="812">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -581,6 +581,41 @@
           <output name="2" label="Yellow">
             <label xml:lang="de">Gelb</label>
           </output>
+          <output name="3" label="Pad F1" />
+          <output name="4" label="Pad F2" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
+        </model>
+        <model model="DCX77z" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Pad F1" />
+          <output name="4" label="Pad F2" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
+        </model>
+        <model model="DCX77L" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+          <output name="1" label="White">
+            <label xml:lang="de">Weiß</label>
+          </output>
+          <output name="2" label="Yellow">
+            <label xml:lang="de">Gelb</label>
+          </output>
+          <output name="3" label="Pad F1" />
+          <output name="4" label="Pad F2" />
+          <output name="Ra" label="Yard Mode">
+            <label xml:lang="de">Rangiermodus</label>
+          </output>
+        </model>
+        <model model="DCX65" numOuts="4" numFns="10" maxMotorCurrent="0.25 A" maxTotalCurrent="0.3 A">
+          <output name="1" label="Pad Lh" />
+          <output name="2" label="Pad Lv" />
           <output name="3" label="Pad F1" />
           <output name="4" label="Pad F2" />
           <output name="Ra" label="Yard Mode">
@@ -6950,7 +6985,13 @@
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
-        <model model="Hornby TTS Fowler 2P 4-4-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="143">
+        <model model="Hornby TTS Fowler 2P 4-4-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2703">
+          <versionCV lowVersionID="2" highVersionID="120" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS 9F 2-10-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="655">
           <versionCV lowVersionID="2" highVersionID="120" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
@@ -24050,7 +24091,7 @@
         </model>
       </family>
       <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_76400.xml">
-        <model model="76200" highVersionID="20" numOuts="4" numFns="8" maxMotorCurrent="1.2A" formFactor="HO" productID="76200" comment="HO-Scale, wired, for universal (Märklin) motors">
+        <model model="76200" highVersionID="40" numOuts="4" numFns="8" maxMotorCurrent="1.2A" formFactor="HO" productID="76200" comment="HO-Scale, wired, for universal (Märklin) motors">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <output name="3" label=". A1 ." connection="solder" />
@@ -24059,7 +24100,7 @@
           <output name="Start/brake" label="inertia" />
           <size length="33.5" width="19" height="5.5" units="mm" />
         </model>
-        <model model="76400" highVersionID="20" numOuts="4" numFns="8" maxMotorCurrent="1.0A" formFactor="HO" productID="76400" comment="HO-Scale, wired">
+        <model model="76400" highVersionID="40" numOuts="4" numFns="8" maxMotorCurrent="1.0A" formFactor="HO" productID="76400" comment="HO-Scale, wired">
           <output name="1" label="White" connection="wire" />
           <output name="2" label="Yellow" connection="wire" />
           <output name="3" label=". A1 ." connection="solder" />
@@ -24068,7 +24109,7 @@
           <output name="Start/brake" label="inertia" />
           <size length="22" width="12.5" height="5.5" units="mm" />
         </model>
-        <model model="76420" highVersionID="20" numOuts="4" numFns="10" maxMotorCurrent="1.0A" formFactor="HO" connector="NEM652" productID="76420" comment="HO-Scale, IntelliDrive Deluxe with NEM 652 plug">
+        <model model="76420" highVersionID="40" numOuts="4" numFns="10" maxMotorCurrent="1.0A" formFactor="HO" connector="NEM652" productID="76420" comment="HO-Scale, IntelliDrive Deluxe with NEM 652 plug">
           <output name="1" label="White" connection="plug" />
           <output name="2" label="Yellow" connection="plug" />
           <output name="3" label=". A1 ." connection="plug" />

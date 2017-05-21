@@ -2010,7 +2010,7 @@ public class LogixTableAction extends AbstractTableAction {
      * @param varList The ConditionalVariable list that might contain conditional references
      * @param treeSet A tree set to be built from the varList data
      */
-    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet treeSet) {
+    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
             if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
@@ -2088,7 +2088,7 @@ public class LogixTableAction extends AbstractTableAction {
                 String csName = x.getConditionalByNumberOrder(i);
 
                 // If the conditional is a where used source, retain it for later
-                ArrayList targetList = InstanceManager.getDefault(jmri.ConditionalManager.class).getTargetList(csName);
+                ArrayList<String> targetList = InstanceManager.getDefault(jmri.ConditionalManager.class).getTargetList(csName);
                 if (targetList.size() > 0) {
                     _saveTargetList.put(csName, targetList);
                 }
@@ -2707,14 +2707,14 @@ public class LogixTableAction extends AbstractTableAction {
      * @param newTargetNames The conditional target names after updating
      * @param refName The system name for the referencing conditional
      */
-    void updateWhereUsed(TreeSet newTargetNames, String refName) {
-        TreeSet<String> deleteNames = new TreeSet(_saveTargetNames);
+    void updateWhereUsed(TreeSet<String> newTargetNames, String refName) {
+        TreeSet<String> deleteNames = new TreeSet<>(_saveTargetNames);
         deleteNames.removeAll(newTargetNames);
         for (String deleteName : deleteNames) {
             InstanceManager.getDefault(jmri.ConditionalManager.class).removeWhereUsed(deleteName, refName);
         }
 
-        TreeSet<String> addNames = new TreeSet(newTargetNames);
+        TreeSet<String> addNames = new TreeSet<>(newTargetNames);
         addNames.removeAll(_saveTargetNames);
         for (String addName : addNames) {
             InstanceManager.getDefault(jmri.ConditionalManager.class).addWhereUsed(addName, refName);
@@ -6918,7 +6918,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     void buildConditionalListing() {
         String  showSystemName,
-        showUserName,
         showCondName,
         condName,
         operand,
@@ -6929,7 +6928,6 @@ public class LogixTableAction extends AbstractTableAction {
 
         numConditionals = _curLogix.getNumConditionals();
         showSystemName  = _curLogix.getSystemName();
-        showUserName    = _curLogix.getUserName();
 
         condText.setText(null);
 

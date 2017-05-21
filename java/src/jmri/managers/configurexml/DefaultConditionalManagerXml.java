@@ -210,8 +210,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             }
 
             if (log.isDebugEnabled()) {
-                log.debug("create conditional: (" + sysName + ")("
-                        + (userName == null ? "<null>" : userName) + ")");
+                log.debug("create conditional: ({})({})", sysName, userName);
             }
 
             // Try getting the conditional.  This should fail
