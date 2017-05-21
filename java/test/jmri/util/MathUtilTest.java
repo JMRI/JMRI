@@ -64,7 +64,7 @@ public class MathUtilTest extends TestCase {
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
 
-        Point2D pC = third(pA, pB);
+        Point2D pC = oneThirdPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
         Assert.assertEquals(1.0 / 3.0, t, tolerance);
@@ -80,7 +80,7 @@ public class MathUtilTest extends TestCase {
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
 
-        Point2D pC = MathUtil.fourth(pA, pB);
+        Point2D pC = MathUtil.oneFourthPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
         Assert.assertEquals(1.0 / 4.0, t, tolerance);
