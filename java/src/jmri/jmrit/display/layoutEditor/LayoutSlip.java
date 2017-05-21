@@ -729,20 +729,51 @@ public class LayoutSlip extends LayoutTurnout {
             popup = new JPopupMenu();
         }
         if (editable) {
-            popup.add(getName());
+            JMenuItem jmi = null;
+            switch (type) {
+                case SINGLE_SLIP: {
+                    jmi = popup.add(rb.getString("LayoutSingleSlip"));
+                    break;
+                }
+                case DOUBLE_SLIP: {
+                    jmi = popup.add(rb.getString("LayoutDoubleSlip"));
+                    break;
+                }
+            }
+            jmi.setEnabled(false);
+
+            jmi = popup.add(ident);
+            jmi.setEnabled(false);
+
+            if (getTurnout() == null) {
+                jmi = popup.add(rb.getString("NoTurnout"));
+            } else {
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
+            }
+            jmi.setEnabled(false);
+
+            if (getTurnoutB() == null) {
+                jmi = popup.add(rb.getString("NoTurnout"));
+            } else {
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutBName);
+            }
+            jmi.setEnabled(false);
+
             boolean blockAssigned = false;
             if ((blockName == null) || (blockName.equals(""))) {
-                popup.add(rb.getString("NoBlock"));
+                jmi = popup.add(rb.getString("NoBlock"));
             } else {
-                popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
+                jmi = popup.add(rb.getString("BlockID") + ": " + getLayoutBlock().getID());
                 blockAssigned = true;
             }
+            jmi.setEnabled(false);
 
             if (hidden) {
-                popup.add(rb.getString("Hidden"));
+                jmi = popup.add(rb.getString("Hidden"));
             } else {
-                popup.add(rb.getString("NotHidden"));
+                jmi = popup.add(rb.getString("NotHidden"));
             }
+            jmi.setEnabled(false);
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {

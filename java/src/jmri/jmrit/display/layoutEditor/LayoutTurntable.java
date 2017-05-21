@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -461,7 +462,8 @@ public class LayoutTurntable extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        popup.add(rb.getString("Turntable"));
+        JMenuItem jmi = popup.add(rb.getString("Turntable"));
+        jmi.setEnabled(false);
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
@@ -502,9 +504,11 @@ public class LayoutTurntable extends LayoutTrack {
             //log.error("Attempt to set the position on a non-existant ray track");
             return;
         }
-        rayPopup.add("Turntable Ray " + index);
+        JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
+        jmi.setEnabled(false);
         if (ray.getTurnout() != null) {
-            rayPopup.add(ray.getTurnout().getDisplayName() + " (" + ray.getTurnoutState() + ")");
+            jmi = rayPopup.add(ray.getTurnout().getDisplayName() + " (" + ray.getTurnoutState() + ")");
+            jmi.setEnabled(false);
         }
         rayPopup.show(e.getComponent(), e.getX(), e.getY());
     }

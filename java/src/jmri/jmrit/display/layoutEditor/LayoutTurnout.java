@@ -2128,34 +2128,72 @@ public class LayoutTurnout extends LayoutTrack {
             popup = new JPopupMenu();
         }
         if (editable) {
+            JMenuItem jmi = null;
             switch (getTurnoutType()) {
                 case RH_TURNOUT:
-                    popup.add(Bundle.getMessage("RightTurnout"));
+                    jmi = popup.add(Bundle.getMessage("RightTurnout"));
                     break;
                 case LH_TURNOUT:
-                    popup.add(Bundle.getMessage("LeftTurnout"));
+                    jmi = popup.add(Bundle.getMessage("LeftTurnout"));
                     break;
                 case WYE_TURNOUT:
-                    popup.add(rb.getString("WYETurnout"));
+                    jmi = popup.add(rb.getString("WYETurnout"));
                     break;
                 case DOUBLE_XOVER:
-                    popup.add(rb.getString("DoubleCrossOver"));
+                    jmi = popup.add(rb.getString("DoubleCrossOver"));
                     break;
                 case RH_XOVER:
-                    popup.add(Bundle.getMessage("RightCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("RightCrossOver"));
                     break;
                 case LH_XOVER:
-                    popup.add(Bundle.getMessage("LeftCrossOver"));
+                    jmi = popup.add(Bundle.getMessage("LeftCrossOver"));
                     break;
                 default:
                     break;
             }
-            popup.add(ident);
+            jmi.setEnabled(false);
+
+            jmi = popup.add(ident);
+            jmi.setEnabled(false);
+
             if (getTurnout() == null) {
-                popup.add(rb.getString("NoTurnout"));
+                jmi = popup.add(rb.getString("NoTurnout"));
             } else {
-                popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + turnoutName);
             }
+            jmi.setEnabled(false);
+
+            if (blockName.equals("")) {
+                jmi = popup.add(rb.getString("NoBlock"));
+            } else {
+                jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+            }
+            jmi.setEnabled(false);
+
+            if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
+                // check if extra blocks have been entered
+                if (blockB != null) {
+                    jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
+                    jmi.setEnabled(false);
+                }
+                if (blockC != null) {
+                    jmi = popup.add(Bundle.getMessage("Block_ID", 3) + ": " + blockCName);
+                    jmi.setEnabled(false);
+                }
+                if (blockD != null) {
+                    jmi = popup.add(Bundle.getMessage("Block_ID", 4) + ": " + blockDName);
+                    jmi.setEnabled(false);
+                }
+            }
+            if (hidden) {
+                jmi = popup.add(rb.getString("Hidden"));
+            } else {
+                jmi = popup.add(rb.getString("NotHidden"));
+            }
+            jmi.setEnabled(false);
+
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
             // Rotate if there are no track connections
             if ((connectA == null) && (connectB == null)
                     && (connectC == null) && (connectD == null)) {
@@ -2208,29 +2246,7 @@ public class LayoutTurnout extends LayoutTrack {
             disableWhenOccupiedItem.addActionListener((java.awt.event.ActionEvent e3) -> {
                 disableWhenOccupied = disableWhenOccupiedItem.isSelected();
             });
-            if (blockName.equals("")) {
-                popup.add(rb.getString("NoBlock"));
-            } else {
-                popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
-            }
-            if ((type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER)) {
-                // check if extra blocks have been entered
-                if (blockB != null) {
-                    popup.add(Bundle.getMessage("Block_ID", 2) + ": " + blockBName);
-                }
-                if (blockC != null) {
-                    popup.add(Bundle.getMessage("Block_ID", 3) + ": " + blockCName);
-                }
-                if (blockD != null) {
-                    popup.add(Bundle.getMessage("Block_ID", 4) + ": " + blockDName);
-                }
-            }
-            if (hidden) {
-                popup.add(rb.getString("Hidden"));
-            } else {
-                popup.add(rb.getString("NotHidden"));
-            }
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
             popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {

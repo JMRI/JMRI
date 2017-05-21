@@ -483,26 +483,35 @@ public class TrackSegment extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
+        JMenuItem jmi = null;
         if (!dashed) {
-            popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
+            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
         } else {
-            popup.add(rb.getString("Style") + " - " + rb.getString("Dashed"));
+            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Dashed"));
         }
+        jmi.setEnabled(false);
+
         if (!mainline) {
-            popup.add(rb.getString("NotMainline"));
+            jmi = popup.add(rb.getString("NotMainline"));
         } else {
-            popup.add(rb.getString("Mainline"));
+            jmi = popup.add(rb.getString("Mainline"));
         }
+        jmi.setEnabled(false);
+
         if (blockName.equals("")) {
-            popup.add(rb.getString("NoBlock"));
+            jmi = popup.add(rb.getString("NoBlock"));
         } else {
-            popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
         }
+        jmi.setEnabled(false);
+
         if (hidden) {
-            popup.add(rb.getString("Hidden"));
+            jmi = popup.add(rb.getString("Hidden"));
         } else {
-            popup.add(rb.getString("NotHidden"));
+            jmi = popup.add(rb.getString("NotHidden"));
         }
+        jmi.setEnabled(false);
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
 

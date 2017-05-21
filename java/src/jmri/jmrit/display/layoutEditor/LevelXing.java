@@ -1049,27 +1049,33 @@ public class LevelXing extends LayoutTrack {
             popup = new JPopupMenu();
         }
         if (isEditable) {
-            popup.add(rb.getString("LevelCrossing"));
+            JMenuItem jmi = popup.add(rb.getString("LevelCrossing"));
+            jmi.setEnabled(false);
+
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.equals(""))) {
-                popup.add(Bundle.getMessage("NoBlockX", 1));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
                 blockACAssigned = true;
             }
+            jmi.setEnabled(false);
+
             if ((blockNameBD == null) || (blockNameBD.equals(""))) {
-                popup.add(Bundle.getMessage("NoBlockX", 2));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
                 blockBDAssigned = true;
             }
+            jmi.setEnabled(false);
 
             if (hidden) {
-                popup.add(rb.getString("Hidden"));
+                jmi = popup.add(rb.getString("Hidden"));
             } else {
-                popup.add(rb.getString("NotHidden"));
+                jmi = popup.add(rb.getString("NotHidden"));
             }
+            jmi.setEnabled(false);
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
