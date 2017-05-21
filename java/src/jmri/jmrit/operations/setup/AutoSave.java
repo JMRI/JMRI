@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
@@ -15,18 +14,26 @@ public class AutoSave {
 
     static Thread autoSave = null;
 
-    @SuppressFBWarnings(value = "SC_START_IN_CTOR")
     public AutoSave() {
+    }
+
+    public void start() {
         synchronized (this) {
             if (Setup.isAutoSaveEnabled() && autoSave == null) {
-                autoSave = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        saveFiles();
-                    }
+                autoSave = new Thread(() -> {
+                    saveFiles();
                 });
                 autoSave.setName("Operations Auto Save"); // NOI18N
                 autoSave.start();
+            }
+        }
+    }
+
+    public void stop() {
+        synchronized (this) {
+            if (autoSave != null) {
+                autoSave.interrupt();
+                autoSave = null;
             }
         }
     }
@@ -36,6 +43,7 @@ public class AutoSave {
             try {
                 wait(60000); // check every minute
             } catch (InterruptedException e) {
+                break; // stop was called
             }
             if (!Setup.isAutoSaveEnabled()) {
                 break;
