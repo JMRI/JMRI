@@ -39,7 +39,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         JButton button = (JButton) abfinder.find(ft, 0);
         Assert.assertNotNull(button);
 
-        // Click button to open add window
+        // Click button to open Add Turnout window
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
 
         // Find add window by name
@@ -76,10 +76,10 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         // Click button to add turnout
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
         
-        // Ask to close add window
+        // Ask to close Add window
         TestHelper.disposeWindow(fa, this);
 
-        // Ask to close table window
+        // Ask to close turnout table window
         TestHelper.disposeWindow(ft, this);
 
         flushAWT();
