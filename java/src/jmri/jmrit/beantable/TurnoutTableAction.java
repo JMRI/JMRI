@@ -1077,7 +1077,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             try {
                 strings.insertElementAt(defStrings.elementAt(i), i + 2);
             } catch (java.lang.ArrayIndexOutOfBoundsException obe) {
-                //            strings.insertElementAt(defStrings.elementAt(i),i+2);
+                // just catch it
             }
         }
         for (int i = 0; i < strings.size(); ++i) {
@@ -1097,8 +1097,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * Set the turnout's operation info based on the contents of the combo box.
      *
-     * @param t  turnout
-     * @param cb JComboBox
+     * @param t  turnout being configured
+     * @param cb JComboBox for ops for t in the TurnoutTable
      */
     protected void setTurnoutOperation(Turnout t, JComboBox<String> cb) {
         switch (cb.getSelectedIndex()) {
@@ -1148,7 +1148,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     op = op.makeNonce(t);
                 }
                 // make and show edit dialog
-                log.debug("OpsEditDialog starting");
+                log.debug("TurnoutOpsEditDialog starting");
                 TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
                 dialog.setVisible(true);
             } else {
@@ -1179,6 +1179,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             myTurnout = t;
             config = TurnoutOperationConfig.getConfigPanel(op);
             setTitle();
+            log.debug("TurnoutOpsEditDialog title set");
             if (config != null) {
                 log.debug("OpsEditDialog opening");
                 Box outerBox = Box.createVerticalBox();

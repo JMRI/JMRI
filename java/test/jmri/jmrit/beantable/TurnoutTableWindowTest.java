@@ -38,7 +38,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // Find the Automatic retry checkbox
-        AbstractButtonFinder arfinder = new AbstractButtonFinder("Automatic retry");
+        AbstractButtonFinder arfinder = new AbstractButtonFinder(Bundle.getMessage("AutomaticRetry"));
         JCheckBox ar = (JCheckBox) arfinder.find(ft, 0);
         Assert.assertNotNull(ar);
         // Click checkbox to select Automatic retry
@@ -46,7 +46,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("AR selected", ar.getSelectedObjects());
 
         // Find the Show Feedback information checkbox
-        AbstractButtonFinder fbfinder = new AbstractButtonFinder("Show Feedback information");
+        AbstractButtonFinder fbfinder = new AbstractButtonFinder(Bundle.getMessage("ShowFeedbackInfo"));
         JCheckBox fb = (JCheckBox) fbfinder.find(ft, 0);
         Assert.assertNotNull(fb);
         // Click checkbox to select Show feedback information
@@ -54,7 +54,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("FBbox selected", fb.getSelectedObjects());
 
         // Find the Show Lock information checkbox
-        AbstractButtonFinder lkfinder = new AbstractButtonFinder("Show Lock information");
+        AbstractButtonFinder lkfinder = new AbstractButtonFinder(Bundle.getMessage("ShowLockInfo"));
         JCheckBox lk = (JCheckBox) lkfinder.find(ft, 0);
         Assert.assertNotNull(lk);
         // Click checkbox to select Show feedback information
@@ -62,7 +62,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("LKbox selected", lk.getSelectedObjects());
 
         // Find the Show Turnout Speed details checkbox
-        AbstractButtonFinder tsfinder = new AbstractButtonFinder("Show Turnout Speed details");
+        AbstractButtonFinder tsfinder = new AbstractButtonFinder(Bundle.getMessage("ShowTurnoutSpeedDetails"));
         JCheckBox ts = (JCheckBox) tsfinder.find(ft, 0);
         Assert.assertNotNull(ts);
         // Click checkbox to select Show feedback information
@@ -70,7 +70,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("TSbox selected", ts.getSelectedObjects());
 
         // Find the Add... button
-        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add...");
+        AbstractButtonFinder abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonAdd"));
         JButton ad = (JButton) abfinder.find(ft, 0);
         Assert.assertNotNull(ad);
 
@@ -78,8 +78,8 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, ad));
 
         // Find Add Turnout pane by name
-        JmriJFrame fa = JmriJFrame.getFrame("Add New Turnout");
-        Assert.assertNotNull("Add window", fa);
+        JmriJFrame fa = JmriJFrame.getFrame(Bundle.getMessage("TitleAddTurnout"));
+        Assert.assertNotNull("Add window found", fa);
 
         // Find hardware number field
         NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "sysName");
@@ -101,10 +101,10 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
-        Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
+        Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem()); // this connection type is always available
 
         // Find the Add OK button
-        AbstractButtonFinder okfinder = new AbstractButtonFinder("OK");
+        AbstractButtonFinder okfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonOK"));
         JButton okbutton = (JButton) okfinder.find(fa, 0);
         Assert.assertNotNull(okbutton);
         // Click button to add turnout
@@ -128,7 +128,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         JmriJFrame fe = JmriJFrame.getFrame("Edit Turnout IT1");
         Assert.assertNotNull("Edit window", fe);
         // Find the Edit Cancel button
-        AbstractButtonFinder canceleditfinder = new AbstractButtonFinder("Cancel");
+        AbstractButtonFinder canceleditfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCancel"));
         JButton cancelbutton = (JButton) canceleditfinder.find(fe, 0);
         Assert.assertNotNull(cancelbutton);
         // Click button to cancel edit turnout
