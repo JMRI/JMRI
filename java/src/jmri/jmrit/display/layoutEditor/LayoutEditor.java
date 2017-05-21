@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.util.MathUtil.subtract;
-
 import apps.gui.GuiLafPreferencesManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
@@ -4972,7 +4970,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 if (checkSelect(dLoc, false)) {
                     selectedObject = foundObject;
                     selectedPointType = foundPointType;
-                    startDel.setLocation(subtract(foundLocation, dLoc));
+                    startDel.setLocation(MathUtil.subtract(foundLocation, dLoc));
                     foundObject = null;
                 } else {
                     selectedObject = checkMarkerPopUps(dLoc);
