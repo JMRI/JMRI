@@ -18,7 +18,8 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Swing jfcUnit tests for the turnout table
+ * Swing jfcUnit tests for the turnout table.
+ * Do not convert to JUnit4 (no support for enterClickAndLeave() etc.)
  *
  * @author	Bob Jacobsen Copyright 2009, 2010, 2017
  */
