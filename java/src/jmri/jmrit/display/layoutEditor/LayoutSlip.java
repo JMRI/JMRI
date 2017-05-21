@@ -1,8 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static jmri.util.MathUtil.lerp;
-import static jmri.util.MathUtil.midpoint;
-import static jmri.util.MathUtil.third;
+import static jmri.util.MathUtil.midPoint;
+import static jmri.util.MathUtil.oneThirdPoint;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -374,12 +374,12 @@ public class LayoutSlip extends LayoutTurnout {
             case SLIP_CENTER:
                 break;
             case SLIP_LEFT:
-                Point2D leftCenter = midpoint(getCoordsA(), getCoordsB());
+                Point2D leftCenter = midPoint(getCoordsA(), getCoordsB());
                 double leftFract = circleRadius / center.distance(leftCenter);
                 result = lerp(center, leftCenter, leftFract);
                 break;
             case SLIP_RIGHT:
-                Point2D rightCenter = midpoint(getCoordsC(), getCoordsD());
+                Point2D rightCenter = midPoint(getCoordsC(), getCoordsD());
                 double rightFract = circleRadius / center.distance(rightCenter);
                 result = lerp(center, rightCenter, rightFract);
                 break;
@@ -1062,26 +1062,26 @@ public class LayoutSlip extends LayoutTurnout {
 
         g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
-        g2.draw(new Line2D.Double(A, third(A, C)));
-        g2.draw(new Line2D.Double(C, third(C, A)));
+        g2.draw(new Line2D.Double(A, oneThirdPoint(A, C)));
+        g2.draw(new Line2D.Double(C, oneThirdPoint(C, A)));
 
         if (state == STATE_AC || state == STATE_BD || state == UNKNOWN) {
-            g2.draw(new Line2D.Double(A, third(A, D)));
-            g2.draw(new Line2D.Double(D, third(D, A)));
+            g2.draw(new Line2D.Double(A, oneThirdPoint(A, D)));
+            g2.draw(new Line2D.Double(D, oneThirdPoint(D, A)));
 
             if (getSlipType() == DOUBLE_SLIP) {
-                g2.draw(new Line2D.Double(B, third(B, C)));
-                g2.draw(new Line2D.Double(C, third(C, B)));
+                g2.draw(new Line2D.Double(B, oneThirdPoint(B, C)));
+                g2.draw(new Line2D.Double(C, oneThirdPoint(C, B)));
             }
         } else {
-            g2.draw(new Line2D.Double(B, third(B, D)));
-            g2.draw(new Line2D.Double(D, third(D, B)));
+            g2.draw(new Line2D.Double(B, oneThirdPoint(B, D)));
+            g2.draw(new Line2D.Double(D, oneThirdPoint(D, B)));
         }
 
         if (getSlipType() == DOUBLE_SLIP) {
             if (state == STATE_AC) {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, oneThirdPoint(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
@@ -1089,32 +1089,32 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
             } else if (state == STATE_AD) {
-                g2.draw(new Line2D.Double(B, third(B, C)));
+                g2.draw(new Line2D.Double(B, oneThirdPoint(B, C)));
 
-                g2.draw(new Line2D.Double(C, third(C, B)));
+                g2.draw(new Line2D.Double(C, oneThirdPoint(C, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
             } else if (state == STATE_BC) {
-                g2.draw(new Line2D.Double(A, third(A, D)));
+                g2.draw(new Line2D.Double(A, oneThirdPoint(A, D)));
 
-                g2.draw(new Line2D.Double(D, third(D, A)));
+                g2.draw(new Line2D.Double(D, oneThirdPoint(D, A)));
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, C));
             } else {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, oneThirdPoint(D, B)));
             }
         } else {
-            g2.draw(new Line2D.Double(A, third(A, D)));
-            g2.draw(new Line2D.Double(D, third(D, A)));
+            g2.draw(new Line2D.Double(A, oneThirdPoint(A, D)));
+            g2.draw(new Line2D.Double(D, oneThirdPoint(D, A)));
 
             if (state == STATE_AD) {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, D));
             } else if (state == STATE_AC) {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, oneThirdPoint(D, B)));
 
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A, C));
@@ -1122,8 +1122,8 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B, D));
             } else {
-                g2.draw(new Line2D.Double(B, third(B, D)));
-                g2.draw(new Line2D.Double(D, third(D, B)));
+                g2.draw(new Line2D.Double(B, oneThirdPoint(B, D)));
+                g2.draw(new Line2D.Double(D, oneThirdPoint(D, B)));
             }
         }
     }
@@ -1439,73 +1439,73 @@ public class LayoutSlip extends LayoutTurnout {
             if (getSlipState() == STATE_AC) {
                 g2.setColor(mainColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointC)));
+                g2.draw(new Line2D.Double(pointA, midPoint(pointA, pointC)));
 
                 g2.setColor(mainColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointA)));
+                g2.draw(new Line2D.Double(pointC, midPoint(pointC, pointA)));
             } else {
                 g2.setColor(subColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, third(pointA, pointC)));
+                g2.draw(new Line2D.Double(pointA, oneThirdPoint(pointA, pointC)));
 
                 g2.setColor(subColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, third(pointC, pointA)));
+                g2.draw(new Line2D.Double(pointC, oneThirdPoint(pointC, pointA)));
             }
 
             if (getSlipState() == STATE_BD) {
                 g2.setColor(mainColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointD)));
+                g2.draw(new Line2D.Double(pointB, midPoint(pointB, pointD)));
 
                 g2.setColor(mainColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointB)));
+                g2.draw(new Line2D.Double(pointD, midPoint(pointD, pointB)));
             } else {
                 g2.setColor(subColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, third(pointB, pointD)));
+                g2.draw(new Line2D.Double(pointB, oneThirdPoint(pointB, pointD)));
 
                 g2.setColor(subColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, third(pointD, pointB)));
+                g2.draw(new Line2D.Double(pointD, oneThirdPoint(pointD, pointB)));
             }
 
             if (getSlipState() == STATE_AD) {
                 g2.setColor(mainColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, midpoint(pointA, pointD)));
+                g2.draw(new Line2D.Double(pointA, midPoint(pointA, pointD)));
 
                 g2.setColor(mainColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, midpoint(pointD, pointA)));
+                g2.draw(new Line2D.Double(pointD, midPoint(pointD, pointA)));
             } else {
                 g2.setColor(subColourA);
                 layoutEditor.setTrackStrokeWidth(g2, isMainA);
-                g2.draw(new Line2D.Double(pointA, third(pointA, pointD)));
+                g2.draw(new Line2D.Double(pointA, oneThirdPoint(pointA, pointD)));
 
                 g2.setColor(subColourD);
                 layoutEditor.setTrackStrokeWidth(g2, isMainD);
-                g2.draw(new Line2D.Double(pointD, third(pointD, pointA)));
+                g2.draw(new Line2D.Double(pointD, oneThirdPoint(pointD, pointA)));
             }
 
             if (getSlipState() == STATE_BC) {
                 g2.setColor(mainColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, midpoint(pointB, pointC)));
+                g2.draw(new Line2D.Double(pointB, midPoint(pointB, pointC)));
 
                 g2.setColor(mainColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, midpoint(pointC, pointB)));
+                g2.draw(new Line2D.Double(pointC, midPoint(pointC, pointB)));
             } else if (getSlipType() == DOUBLE_SLIP) {
                 g2.setColor(subColourB);
                 layoutEditor.setTrackStrokeWidth(g2, isMainB);
-                g2.draw(new Line2D.Double(pointB, third(pointB, pointC)));
+                g2.draw(new Line2D.Double(pointB, oneThirdPoint(pointB, pointC)));
 
                 g2.setColor(subColourC);
                 layoutEditor.setTrackStrokeWidth(g2, isMainC);
-                g2.draw(new Line2D.Double(pointC, third(pointC, pointB)));
+                g2.draw(new Line2D.Double(pointC, oneThirdPoint(pointC, pointB)));
             }
         }   // if (!(getHidden() && !layoutEditor.isEditable()))
     }   // draw(Graphics2D g2)

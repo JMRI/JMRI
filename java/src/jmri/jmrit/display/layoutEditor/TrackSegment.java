@@ -1,15 +1,14 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
 import static jmri.util.MathUtil.add;
 import static jmri.util.MathUtil.drawBezier;
 import static jmri.util.MathUtil.length;
-import static jmri.util.MathUtil.midpoint;
+import static jmri.util.MathUtil.midPoint;
 import static jmri.util.MathUtil.multiply;
 import static jmri.util.MathUtil.normalize;
+import static jmri.util.MathUtil.oneThirdPoint;
 import static jmri.util.MathUtil.pin;
 import static jmri.util.MathUtil.subtract;
-import static jmri.util.MathUtil.third;
 import static jmri.util.MathUtil.zeroPoint2D;
 
 import java.awt.BasicStroke;
@@ -32,6 +31,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -43,6 +43,7 @@ import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -458,7 +459,7 @@ public class TrackSegment extends LayoutTrack {
             // note: control points will override center circle
             for (int index = 0; index < bezierControlPoints.size(); index++) {
                 if (r.contains(getBezierControlPoint(index))) {
-                    result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET + index;
+                    result = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN + index;
                     break;
                 }
             }
@@ -476,8 +477,8 @@ public class TrackSegment extends LayoutTrack {
         Point2D result = getCentreSeg();
         if (connectionType == TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
-        } else if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET) && (connectionType < TURNTABLE_RAY_OFFSET)) {
-            result = getBezierControlPoint(connectionType - BEZIER_CONTROL_POINT_OFFSET);
+        } else if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType < TURNTABLE_RAY_OFFSET)) {
+            result = getBezierControlPoint(connectionType - BEZIER_CONTROL_POINT_OFFSET_MIN);
         }
         return result;
     }
@@ -557,6 +558,7 @@ public class TrackSegment extends LayoutTrack {
             }
         });
         popup.add(lineType);
+
         if (getArc()) {
             popup.add(new AbstractAction(rb.getString("FlipAngle")) {
 
@@ -595,6 +597,88 @@ public class TrackSegment extends LayoutTrack {
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+
+    /**
+     * Display popup menu for information and editing.
+     */
+    protected void showBezierPopUp(MouseEvent e, int hitPointType) {
+        int bezierControlPointIndex = hitPointType - BEZIER_CONTROL_POINT_OFFSET_MIN;
+        if (popup != null) {
+            popup.removeAll();
+        } else {
+            popup = new JPopupMenu();
+        }
+
+        JMenuItem jmi = popup.add(rb.getString("BezierControlPoint") + " #" + bezierControlPointIndex);
+        jmi.setEnabled(false);
+        popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+        if (bezierControlPoints.size() < BEZIER_CONTROL_POINT_OFFSET_MAX - BEZIER_CONTROL_POINT_OFFSET_MIN) {
+            popup.add(new AbstractAction(rb.getString("AddBezierControlPointAfter")) {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addBezierControlPointAfter(bezierControlPointIndex);
+                }
+            });
+            popup.add(new AbstractAction(rb.getString("AddBezierControlPointBefore")) {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addBezierControlPointBefore(bezierControlPointIndex);
+                }
+            });
+        }
+
+        if (bezierControlPoints.size() > 2) {
+            popup.add(new AbstractAction(rb.getString("DeleteBezierControlPoint") + " #" + bezierControlPointIndex) {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    deleteBezierControlPoint(bezierControlPointIndex);
+                }
+            });
+        }
+        popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    private void addBezierControlPointBefore(int index) {
+        Point2D addPoint = getBezierControlPoint(index);
+        if (index > 0) {
+            addPoint = MathUtil.midPoint(getBezierControlPoint(index - 1), addPoint);
+        } else {
+            Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+            addPoint = MathUtil.midPoint(ep1, addPoint);
+        }
+        bezierControlPoints.add(index, addPoint);
+        layoutEditor.redrawPanel();
+        layoutEditor.setDirty();
+    }
+
+    private void addBezierControlPointAfter(int index) {
+        int cnt = bezierControlPoints.size();
+        Point2D addPoint = getBezierControlPoint(index);
+        if (index < cnt - 1) {
+            addPoint = MathUtil.midPoint(addPoint, getBezierControlPoint(index + 1));
+            bezierControlPoints.add(index + 1, addPoint);
+        } else {
+            Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+            addPoint = MathUtil.midPoint(addPoint, ep2);
+            bezierControlPoints.add(addPoint);
+        }
+        layoutEditor.redrawPanel();
+        layoutEditor.setDirty();
+    }
+
+    private void deleteBezierControlPoint(int index) {
+        if ((index >= 0) && (index < bezierControlPoints.size())) {
+            bezierControlPoints.remove(index);
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+
+
     void changeType(int choice) {
         switch (choice) {
             case 0:
@@ -623,14 +707,14 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
                     Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                    // compute offset one third the distance from ep1 to ep2
+                    // compute offset one oneThirdPoint the distance from ep1 to ep2
                     Point2D offset = subtract(ep2, ep1);
                     offset = multiply(normalize(offset), length(offset) / 3);
 
                     // swap x & y so the offset is orthogonal to orginal line
                     offset = new Point2D.Double(offset.getY(), offset.getX());
-                    Point2D pt1 = add(third(ep1, ep2), offset);
-                    Point2D pt2 = subtract(third(ep2, ep1), offset);
+                    Point2D pt1 = add(oneThirdPoint(ep1, ep2), offset);
+                    Point2D pt2 = subtract(oneThirdPoint(ep2, ep1), offset);
 
                     bezierControlPoints.add(pt1);
                     bezierControlPoints.add(pt2);
@@ -1068,7 +1152,7 @@ public class TrackSegment extends LayoutTrack {
 
     public Point2D getCentreSeg() {
         Point2D result = zeroPoint2D();
-        
+
         if ((null != connect1) && (null != connect2)) {
             // get the end points
             Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
@@ -1080,23 +1164,24 @@ public class TrackSegment extends LayoutTrack {
                 //TODO: do something here?
                 result = center;
             } else if (getBezier()) {
+                //TODO: compute result Bezier(t == 0.5);
                 // get (absolute) control points
                 Point2D p1 = getBezierControlPoint(0);
                 Point2D p2 = getBezierControlPoint(1);
 
                 // first order midpoints
-                Point2D q0 = midpoint(ep1, p1);
-                Point2D q1 = midpoint(p1, p2);
-                Point2D q2 = midpoint(p2, ep2);
+                Point2D q0 = midPoint(ep1, p1);
+                Point2D q1 = midPoint(p1, p2);
+                Point2D q2 = midPoint(p2, ep2);
 
                 // second order midpoints
-                Point2D r0 = midpoint(q0, q1);
-                Point2D r1 = midpoint(q1, q2);
+                Point2D r0 = midPoint(q0, q1);
+                Point2D r1 = midPoint(q1, q2);
 
-                // third order midpoint
-                result = midpoint(r0, r1);
+                // oneThirdPoint order midPoint
+                result = midPoint(r0, r1);
             } else {
-                result = midpoint(ep1, ep2);
+                result = midPoint(ep1, ep2);
             }
             center = result;
         }
@@ -1131,7 +1216,7 @@ public class TrackSegment extends LayoutTrack {
     public Point2D getCentre() {
         return new Point2D.Double(centreX, centreY);
     }
-    
+
     private double tmpangle;
 
     public double getTmpAngle() {
@@ -1314,13 +1399,18 @@ public class TrackSegment extends LayoutTrack {
                 Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
                 g2.setStroke(drawingStroke);
 
-                Point2D pt0 = layoutEditor.getCoords(getConnect1(), getType1());
-                Point2D pt3 = layoutEditor.getCoords(getConnect2(), getType2());
+                Point2D pt1 = layoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                Point2D pt1 = getBezierControlPoint(0);
-                Point2D pt2 = getBezierControlPoint(1);
+                int cnt = bezierControlPoints.size();
+                Point2D[] points = new Point2D[cnt + 2];
+                points[0] = pt1;
+                for (int idx = 0; idx < cnt; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt + 1] = pt2;
 
-                drawBezier(g2, pt0, pt1, pt2, pt3);
+                drawBezier(g2, points);
 
                 g2.setStroke(originalStroke);
             } else {

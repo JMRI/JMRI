@@ -167,7 +167,7 @@ public final class MathUtil {
      * @param pB the second point
      * @return the midpoint between the two points
      */
-    public static Point2D midpoint(Point2D pA, Point2D pB) {
+    public static Point2D midPoint(Point2D pA, Point2D pB) {
         return lerp(pA, pB, 0.5);
     }
 
@@ -177,7 +177,17 @@ public final class MathUtil {
      * @param pB the second point
      * @return the point one third of the way from pA to pB
      */
-    public static Point2D third(Point2D pA, Point2D pB) {
+    public static Point2D oneThirdPoint(Point2D pA, Point2D pB) {
+        return lerp(pA, pB, 1.0 / 3.0);
+    }
+
+    /**
+     *
+     * @param pA the first point
+     * @param pB the second point
+     * @return the point two thirds of the way from pA to pB
+     */
+    public static Point2D twoThirdPoint(Point2D pA, Point2D pB) {
         return lerp(pA, pB, 1.0 / 3.0);
     }
 
@@ -187,8 +197,18 @@ public final class MathUtil {
      * @param pB the second point
      * @return the point one fourth of the way from pA to pB
      */
-    public static Point2D fourth(Point2D pA, Point2D pB) {
+    public static Point2D oneFourthPoint(Point2D pA, Point2D pB) {
         return lerp(pA, pB, 1.0 / 4.0);
+    }
+
+    /**
+     *
+     * @param pA the first point
+     * @param pB the second point
+     * @return the point three fourths of the way from pA to pB
+     */
+    public static Point2D threeFourthsPoint(Point2D pA, Point2D pB) {
+        return lerp(pA, pB, 3.0 / 4.0);
     }
 
     /**
@@ -294,16 +314,16 @@ public final class MathUtil {
             result = l03;
         } else {
             // first order midpoints
-            Point2D q0 = midpoint(p0, p1);
-            Point2D q1 = midpoint(p1, p2);
-            Point2D q2 = midpoint(p2, p3);
+            Point2D q0 = midPoint(p0, p1);
+            Point2D q1 = midPoint(p1, p2);
+            Point2D q2 = midPoint(p2, p3);
 
             // second order midpoints
-            Point2D r0 = midpoint(q0, q1);
-            Point2D r1 = midpoint(q1, q2);
+            Point2D r0 = midPoint(q0, q1);
+            Point2D r1 = midPoint(q1, q2);
 
-            // third order midpoint
-            Point2D s = midpoint(r0, r1);
+            // oneThirdPoint order midPoint
+            Point2D s = midPoint(r0, r1);
 
             // draw left side Bezier
             result = drawBezier(g2, p0, q0, r0, s, depth + 1);
@@ -324,5 +344,77 @@ public final class MathUtil {
      */
     public static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3) {
         return drawBezier(g2, p0, p1, p2, p3, 0);
+    }
+
+    // recursive routine to draw a Bezier curve…
+    // (also returns distance!)
+    private static double drawBezier(Graphics2D g2, Point2D points[], int depth) {
+        int len = points.length, idx, jdx;
+        double result = 0;
+
+        // calculate flatness to determine if we need to recurse…
+        double outer_distance = 0;
+        for (idx = 1; idx < len; idx++) {
+            outer_distance += MathUtil.distance(points[idx - 1], points[idx]);
+        }
+        double inner_distance = MathUtil.distance(points[0], points[len - 1]);
+        double flatness = outer_distance / inner_distance;
+
+        // depth prevents stack overflow…
+        // (I picked 12 because 2^12 = 2048… is larger than most monitors ;-)
+        // the flatness comparison value is somewhat arbitrary.
+        // (I just kept moving it closer to 1 until I got good results. ;-)
+        if ((depth > 12) || (flatness <= 1.001)) {
+            g2.draw(new Line2D.Double(points[0], points[len - 1]));
+            result = inner_distance;
+        } else {
+            // calculate (len - 1) order of points
+            // (zero'th order are the input points)
+            Point2D[][] nthOrderPoints = new Point2D[len - 1][];
+            for (idx = 0; idx < len - 1; idx++) {
+                nthOrderPoints[idx] = new Point2D[len - 1 - idx];
+                for (jdx = 0; jdx < len - 1 - idx; jdx++) {
+                    if (idx == 0) {
+                        nthOrderPoints[idx][jdx] = midPoint(points[jdx], points[jdx + 1]);
+                    } else {
+                        nthOrderPoints[idx][jdx] = midPoint(nthOrderPoints[idx - 1][jdx], nthOrderPoints[idx - 1][jdx + 1]);
+                    }
+                }
+            }
+
+            // collect left points
+            Point2D[] leftPoints = new Point2D[len];
+            leftPoints[0] = points[0];
+            for (idx = 0; idx < len - 1; idx++) {
+                leftPoints[idx + 1] = nthOrderPoints[idx][0];
+            }
+            // draw left side Bezier
+            result = drawBezier(g2, leftPoints, depth + 1);
+
+            // collect right points
+            Point2D[] rightPoints = new Point2D[len];
+            for (idx = 0; idx < len - 1; idx++) {
+                rightPoints[idx] = nthOrderPoints[len - 2 - idx][idx];
+            }
+            rightPoints[idx] = points[len - 1];
+
+            // draw right side Bezier
+            result += drawBezier(g2, rightPoints, depth + 1);
+        }
+        return result;
+    }
+
+    /**
+     * Draw a Bezier curve
+     * @param g2 the Graphics2D to draw to
+     * @param p[] control points
+     * @return  the length of the Bezier curve
+     */
+    public static double drawBezier(Graphics2D g2, Point2D p[]) {
+        if (p.length == 4) {    // draw cubic bezier?
+            return drawBezier(g2, p[0], p[1], p[2], p[3], 0);
+        } else {    // (nope)
+            return drawBezier(g2, p, 0);
+        }
     }
 }

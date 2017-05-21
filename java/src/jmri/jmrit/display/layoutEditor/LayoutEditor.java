@@ -23,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -63,6 +65,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
@@ -110,8 +113,8 @@ import org.slf4j.LoggerFactory;
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
  * <P>
  * This module serves as a manager for the LayoutTurnout, Layout Block,
- * PositionablePoint, Track Segment, LayoutSlip and LevelXing
- * objects which are integral subparts of the LayoutEditor class.
+ * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
+ * integral subparts of the LayoutEditor class.
  * <P>
  * All created objects are put on specific levels depending on their type
  * (higher levels are in front): Note that higher numbers appear behind lower
@@ -128,7 +131,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  */
 @SuppressWarnings("serial")
-public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor implements java.beans.VetoableChangeListener {
+public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor implements java.beans.VetoableChangeListener, MouseWheelListener {
 
     //Defined text resource
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
@@ -342,8 +345,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SLIP_B = LayoutTrack.SLIP_B;            //offset for slip connection points
     public static final int SLIP_C = LayoutTrack.SLIP_C;            //offset for slip connection points
     public static final int SLIP_D = LayoutTrack.SLIP_D;            //offset for slip connection points
-    public static final int BEZIER_CONTROL_POINT_OFFSET = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
-
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;          // offsets for Bezier track segment control points (min)
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;  // "        "       "       "       "       "      (max)
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;    //offset for turntable connection points
 
     // these aren't connection types… they specify the left/right control circles for a slip
@@ -1149,7 +1152,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void createFloatingEditToolBox() {
         if (floatingEditToolBox == null) {
             if (floatingEditContent == null) {
-                // Create the window content if necessary, normally on first load or switching from toolbox to toolbar to toolbox
+                // Create the window content if necessary, normally on first load or switching between toolbox and toolbar
                 createFloatingEditContent();
             }
 
@@ -3257,8 +3260,97 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             });
         });
+
+        // add mouse-wheel support
+        SwingUtilities.invokeLater(() -> {
+            JScrollPane scrollPane = getPanelScrollPane();
+            scrollPane.addMouseWheelListener(this);
+        });
     }   //setupZoomMenu
 
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        if (e.isAltDown()) {
+            Component s = e.getComponent();
+            //log.warn("mouseWheelMoved:e.source: " + s);
+
+            //Display display = (Display) e.getComponent();
+            //calcLocation(e, 0, 0);
+            //log.warn("               dloc = " + dLoc);
+
+            //Point2D mousePoint = MathUtil.divide(MathUtil.add(e.getPoint(), oldViewPos), oldZoom);
+            
+            //final Point thisMousePos = this.getMousePosition();
+            //log.warn("mouseWheelMoved:thisMousePos              = " + thisMousePos);
+            
+            JScrollPane scrollPane = getPanelScrollPane();
+            //final Point scrollPaneMousePos = scrollPane.getMousePosition();
+            //log.warn("mouseWheelMoved:scrollPaneMousePos              = " + scrollPaneMousePos);
+
+            JViewport viewPort = scrollPane.getViewport();
+            //final Point viewPortMousePos = viewPort.getMousePosition();
+            //log.warn("  mouseWheelMoved:viewPortMousePos              = " + viewPortMousePos);
+
+            //this.imagePanel.setZoom(this.imagePanel.getZoom() * 0.9f);
+            Point2D oldViewPos = viewPort.getViewPosition();
+            //Point2D delta = MathUtil.subtract(dLoc, oldViewPos);
+
+            double oldZoom = getZoom();
+
+            //log.warn("mouseWheelMoved:e.getPoint()  = " + e.getPoint());
+            //log.warn("                   oldViewPos = " + oldViewPos);
+            //log.warn("  oldViewPos + dLoc = " + MathUtil.add(oldViewPos, dLoc));
+            //log.warn("    e.getPoint() + oldViewPos = " + MathUtil.add(e.getPoint(), oldViewPos));
+            //log.warn("    (e.getPoint() + oldViewPos) / oldZoom = " + MathUtil.divide(MathUtil.add(e.getPoint(), oldViewPos), oldZoom));
+            double amount = Math.pow(1.1, e.getScrollAmount());
+            if (e.getWheelRotation() < 0) {
+                //reciprocal for zoom out
+                amount = 1 / amount;
+            }
+            double newZoom = setZoom(oldZoom * amount);
+            // in case setZoom pin'ed the new zoom (between min & max)
+            amount = newZoom / oldZoom;
+
+            // in case setZoom changed the view position
+            Point2D newViewPos = viewPort.getViewPosition();
+
+            if (true) {
+                Point2D oldDelta = e.getPoint();
+                Point2D oldUnscalledDelta = MathUtil.divide(oldDelta, oldZoom);
+                Point2D oldUnscalledViewPos = MathUtil.divide(oldViewPos, oldZoom);
+                Point2D unScaledPoint = MathUtil.add(oldUnscalledViewPos, oldUnscalledDelta);
+                Point2D scaledPoint = MathUtil.multiply(unScaledPoint, newZoom);
+                Point2D scaledDelta = MathUtil.multiply(oldUnscalledDelta, newZoom);
+                newViewPos = MathUtil.subtract(scaledPoint, scaledDelta);
+            } else if (false) {
+                Point2D oldImageLoc = MathUtil.divide(MathUtil.subtract(dLoc, oldViewPos), oldZoom);
+                Point2D newImageLoc = MathUtil.multiply(oldImageLoc, newZoom);
+                newViewPos = MathUtil.multiply(MathUtil.divide(oldViewPos, oldZoom), newZoom);
+                newViewPos = MathUtil.add(newViewPos, newImageLoc);
+            } else if (false) {
+                Point2D oldImageLoc = MathUtil.divide(MathUtil.add(oldViewPos, dLoc), oldZoom);
+                Point2D newImageLoc = MathUtil.multiply(oldImageLoc, newZoom);
+                newViewPos = MathUtil.subtract(newImageLoc, dLoc);
+            } else if (false) {
+                //newViewPos = MathUtil.add(oldViewPos, MathUtil.multiply(delta, amount));
+            } else if (false) {
+                newViewPos = MathUtil.multiply(MathUtil.divide(dLoc, oldZoom), newZoom);
+            } else if (false) {
+                //int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
+                //int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
+                newViewPos = MathUtil.lerp(dLoc, oldViewPos, amount);
+            }
+            if (false) {
+                log.warn("mouseWheelMoved:newPos = " + newViewPos);
+                Point newPoint = new Point();
+                newPoint.setLocation(newViewPos.getX(), newViewPos.getY());
+                viewPort.setViewPosition(newPoint);
+            }
+        } else {
+            JScrollPane scrollPane = getPanelScrollPane();
+            scrollPane.getParent().dispatchEvent(e);
+        }
+    }
     //
     //
     //
@@ -3283,7 +3375,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //
     public double setZoom(double zoomFactor) {
-        double newZoom = Math.min(Math.max(zoomFactor, minZoom), maxZoom);
+        double newZoom = MathUtil.pin(zoomFactor, minZoom, maxZoom);
 
         if (newZoom != getPaintScale()) {
             log.debug("zoom: " + zoomFactor);
@@ -4888,7 +4980,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     if (selectedObject != null) {
                         selectedPointType = LayoutTrack.MARKER;
                         startDel.setLocation((((LocoIcon) selectedObject).getX() - dLoc.getX()),
-                                             (((LocoIcon) selectedObject).getY() - dLoc.getY()));
+                                (((LocoIcon) selectedObject).getY() - dLoc.getY()));
 
                         //selectedNeedsConnect = false;
                     } else {
@@ -4897,7 +4989,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         if (selectedObject != null) {
                             selectedPointType = LayoutTrack.LAYOUT_POS_JCOMP;
                             startDel.setLocation((((PositionableJComponent) selectedObject).getX() - dLoc.getX()),
-                                                 (((PositionableJComponent) selectedObject).getY() - dLoc.getY()));
+                                    (((PositionableJComponent) selectedObject).getY() - dLoc.getY()));
 
                             //selectedNeedsConnect = false;
                         } else {
@@ -4906,7 +4998,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (selectedObject != null) {
                                 selectedPointType = LayoutTrack.MULTI_SENSOR;
                                 startDel.setLocation((((MultiSensorIcon) selectedObject).getX() - dLoc.getX()),
-                                                     (((MultiSensorIcon) selectedObject).getY() - dLoc.getY()));
+                                        (((MultiSensorIcon) selectedObject).getY() - dLoc.getY()));
 
                                 //selectedNeedsConnect = false;
                             }
@@ -4928,14 +5020,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         if (selectedObject != null) {
                             selectedPointType = LayoutTrack.LAYOUT_POS_LABEL;
                             startDel.setLocation((((PositionableLabel) selectedObject).getX() - dLoc.getX()),
-                                                 (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
+                                    (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
 
                             if (selectedObject instanceof MemoryIcon) {
                                 MemoryIcon pm = (MemoryIcon) selectedObject;
 
                                 if (pm.getPopupUtility().getFixedWidth() == 0) {
                                     startDel.setLocation((pm.getOriginalX() - dLoc.getX()),
-                                                         (pm.getOriginalY() - dLoc.getY()));
+                                            (pm.getOriginalY() - dLoc.getY()));
                                 }
                             }
                         } else {
@@ -4944,7 +5036,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                             if (selectedObject != null) {
                                 selectedPointType = LayoutTrack.LAYOUT_POS_LABEL;
                                 startDel.setLocation((((PositionableLabel) selectedObject).getX() - dLoc.getX()),
-                                                     (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
+                                        (((PositionableLabel) selectedObject).getY() - dLoc.getY()));
                             }
                         }
                     }
@@ -5205,7 +5297,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         for (TrackSegment ts : trackList) {
             try {
-                foundPointType = ((TrackSegment)ts).hitTestPoint(loc, false, requireUnconnected);
+                foundPointType = ((TrackSegment) ts).hitTestPoint(loc, false, requireUnconnected);
                 if (NONE != foundPointType) {
                     foundObject = ts;
                     foundLocation = ts.getCoordsForConnectionType(foundPointType);
@@ -5471,10 +5563,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
 
                 default:
-                    if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                    if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
+                            && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+                        return ((TrackSegment) o).getBezierControlPoint(type - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN);
+                    } else if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                         return ((LayoutTurntable) o).getRayCoordsIndexed(type - LayoutTrack.TURNTABLE_RAY_OFFSET);
-                    } else if (type >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
-                        return ((TrackSegment) o).getBezierControlPoint(type - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET);
                     }
             }   //switch
         } else {
@@ -5749,7 +5842,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }   //switch
 
-            if (foundPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+            if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
+                    && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+                ((TrackSegment) foundObject).showBezierPopUp(event, foundPointType);
+            } else if (foundPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                 LayoutTurntable t = (LayoutTurntable) foundObject;
                 if (t.isTurnoutControlled()) {
                     ((LayoutTurntable) foundObject).showRayPopUp(event, foundPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
@@ -7861,13 +7957,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         }
 
                         default:
-                            if (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                            if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
+                                    && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+                                int index = selectedPointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
+                                ((TrackSegment) selectedObject).setBezierControlPoint(newPos, index);
+                            } else if (selectedPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(newPos.getX(), newPos.getY(),
                                         selectedPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
-                            } else if (selectedPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
-                                int index = selectedPointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
-                                ((TrackSegment)selectedObject).setBezierControlPoint(newPos, index);
                             }
                     }   //switch
                 }
@@ -7960,13 +8057,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
 
             default:
-                if (pointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
+                        && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+                    int index = pointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
+                    ((TrackSegment) o).setBezierControlPoint(newPos, index);
+                } else if (pointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                     LayoutTurntable turn = (LayoutTurntable) o;
                     turn.setRayCoordsIndexed(newPos.getX(), newPos.getY(),
                             pointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
-                } else if (pointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET) {
-                    int index = pointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET;
-                    ((TrackSegment)o).setBezierControlPoint(newPos, index);
                 }
         }   //switch
         setDirty(true);
