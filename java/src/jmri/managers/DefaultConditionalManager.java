@@ -76,11 +76,13 @@ public class DefaultConditionalManager extends AbstractManager
         Conditional c = null;
 
         // Check system name
-        if (systemName != null && systemName.length() > 0) {
-            c = getBySystemName(systemName);
-            if (c != null) {
-                return null;        // Conditional already exists
-            }
+        if (systemName == null || systemName.length() < 1) {
+            log.error("createNewConditional: systemName is null or empty");
+            return null;
+        }
+        c = getBySystemName(systemName);
+        if (c != null) {
+            return null;        // Conditional already exists
         }
 
         // Get the potential parent Logix
@@ -373,13 +375,13 @@ public class DefaultConditionalManager extends AbstractManager
         }
 
         if (conditionalWhereUsed.containsKey(target)) {
-            ArrayList refList = conditionalWhereUsed.get(target);
+            ArrayList<String> refList = conditionalWhereUsed.get(target);
             if (!refList.contains(reference)) {
                 refList.add(reference);
                 conditionalWhereUsed.replace(target, refList);
             }
         } else {
-            ArrayList refList = new ArrayList<String>();
+            ArrayList<String> refList = new ArrayList<>();
             refList.add(reference);
             conditionalWhereUsed.put(target, refList);
         }
@@ -451,7 +453,7 @@ public class DefaultConditionalManager extends AbstractManager
      */
     @Override
     public ArrayList<String> getTargetList(String reference) {
-        ArrayList<String> targetList = new ArrayList();
+        ArrayList<String> targetList = new ArrayList<>();
         SortedSet<String> keys = new TreeSet<>(conditionalWhereUsed.keySet());
         for (String key : keys) {
             ArrayList<String> refList = conditionalWhereUsed.get(key);
