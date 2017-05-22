@@ -23,6 +23,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.jmrix.cmri.CMRISystemConnectionMemo.reset();
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
         stcs.registerNode(new SerialNode(stcs));
