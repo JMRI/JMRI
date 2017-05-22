@@ -57,7 +57,12 @@
         Selecting <strong>Browse</strong> will bring up the Conditional Browser
         window. The window provides a summary view of the Conditionals
         and their definitions in the Logix.  When you are done, just
-        close the window. <span class="since">since 4.7.3</span></li>
+        close the window. <span class="since">since 4.7.3</span><br>
+        <a href="images/ConditionalBrowser.png">
+        <img src="images/ConditionalBrowser.png"
+        alt="Conditional Browser Window" height="375" width="500">
+        </a>
+        </li>
         <li>
         Selecting <strong>Copy</strong> will bring up windows that allow you to
         make a new copy of Logix and its Conditionals or to copy its
@@ -139,7 +144,11 @@
           item, such as a sensor, are used.
         </li>
         <li>Conditional Variable References - Create a list of conditionals
-          that are referenced by other conditonals.
+          that are referenced by other conditonals. <span class="since">since 4.7.4</span><br>
+          <a href="images/VariableReferences.png">
+          <img src="images/VariableReferences.png"
+          alt="Variable Reference Window" height="320" width="339">
+          </a>
         </li>
       </ul>
 
