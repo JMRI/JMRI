@@ -217,7 +217,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         }
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
+            int num = Integer.valueOf(systemName.substring(offset+1)).intValue();
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             nName = systemName.substring(0, offset + 1) + Integer.toString((nAddress * 1000) + bitNum);
@@ -240,7 +240,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         if (offset < 1) {
             return "";
         }
-        if (!validSystemNameFormat(systemName, systemName.charAt(1))) {
+        if (!validSystemNameFormat(systemName, systemName.charAt(offset))) {
             // No point in trying if a valid system name format is not present
             return "";
         }
@@ -302,7 +302,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             // This is a CLnnnxxx address
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(2)).intValue();
+                num = Integer.valueOf(systemName.substring(offset+1)).intValue();
             } catch (Exception e) {
                 log.error("illegal character in number field of CMRI system name: " + systemName);
                 return false;
@@ -488,7 +488,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         }
         int ua;
         if (noB) {
-            int num = Integer.valueOf(systemName.substring(2)).intValue();
+            int num = Integer.valueOf(systemName.substring(offset+1)).intValue();
             if (num > 0) {
                 ua = num / 1000;
             } else {

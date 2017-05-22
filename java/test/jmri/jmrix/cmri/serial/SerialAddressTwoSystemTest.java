@@ -63,7 +63,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
 
         // replace the 2nd SerialTrafficController
         stcs2 = new SerialTrafficControlScaffold();
-        memo2 = new jmri.jmrix.cmri.CMRISystemConnectionMemo("K", "CMRI2");
+        memo2 = new jmri.jmrix.cmri.CMRISystemConnectionMemo("K2", "CMRI2");
         memo2.setTrafficController(stcs2);
         // create 2nd nodes
         k10 = new SerialNode(10, SerialNode.SMINI, stcs2);
@@ -173,22 +173,22 @@ public class SerialAddressTwoSystemTest extends TestCase {
     }
 
     public void testGetBitFromSystemName2() {
-        Assert.assertEquals("KL2", 2, memo2.getBitFromSystemName("KL2"));
-        Assert.assertEquals("KL2002", 2, memo2.getBitFromSystemName("KL2002"));
-        Assert.assertEquals("KL1", 1, memo2.getBitFromSystemName("KL1"));
-        Assert.assertEquals("KL2001", 1, memo2.getBitFromSystemName("KL2001"));
-        Assert.assertEquals("KL999", 999, memo2.getBitFromSystemName("KL999"));
-        Assert.assertEquals("KL2999", 999, memo2.getBitFromSystemName("KL2999"));
+        Assert.assertEquals("K2L2", 2, memo2.getBitFromSystemName("K2L2"));
+        Assert.assertEquals("K2L2002", 2, memo2.getBitFromSystemName("K2L2002"));
+        Assert.assertEquals("K2L1", 1, memo2.getBitFromSystemName("K2L1"));
+        Assert.assertEquals("K2L2001", 1, memo2.getBitFromSystemName("K2L2001"));
+        Assert.assertEquals("K2L999", 999, memo2.getBitFromSystemName("K2L999"));
+        Assert.assertEquals("K2L2999", 999, memo2.getBitFromSystemName("K2L2999"));
 
-        Assert.assertEquals("KL29O9", 0, memo2.getBitFromSystemName("KL29O9"));
-        JUnitAppender.assertErrorMessage("illegal character in number field of system name: KL29O9");
+        Assert.assertEquals("K2L29O9", 0, memo2.getBitFromSystemName("K2L29O9"));
+        JUnitAppender.assertErrorMessage("illegal character in number field of system name: K2L29O9");
 
-        Assert.assertEquals("KL0B7", 7, memo2.getBitFromSystemName("KL0B7"));
-        Assert.assertEquals("KL2B7", 7, memo2.getBitFromSystemName("KL2B7"));
-        Assert.assertEquals("KL0B1", 1, memo2.getBitFromSystemName("KL0B1"));
-        Assert.assertEquals("KL2B1", 1, memo2.getBitFromSystemName("KL2B1"));
-        Assert.assertEquals("KL0B2048", 2048, memo2.getBitFromSystemName("KL0B2048"));
-        Assert.assertEquals("KL11B2048", 2048, memo2.getBitFromSystemName("KL11B2048"));
+        Assert.assertEquals("K2L0B7", 7, memo2.getBitFromSystemName("K2L0B7"));
+        Assert.assertEquals("K2L2B7", 7, memo2.getBitFromSystemName("K2L2B7"));
+        Assert.assertEquals("K2L0B1", 1, memo2.getBitFromSystemName("K2L0B1"));
+        Assert.assertEquals("K2L2B1", 1, memo2.getBitFromSystemName("K2L2B1"));
+        Assert.assertEquals("K2L0B2048", 2048, memo2.getBitFromSystemName("K2L0B2048"));
+        Assert.assertEquals("K2L11B2048", 2048, memo2.getBitFromSystemName("K2L11B2048"));
     }
 
 
@@ -210,14 +210,14 @@ public class SerialAddressTwoSystemTest extends TestCase {
         SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC,stcs2);
         SerialNode c = new SerialNode(17, SerialNode.SMINI,stcs2);
         SerialNode b = new SerialNode(127, SerialNode.SMINI,stcs2);
-        Assert.assertEquals("node of KL14007", d, memo2.getNodeFromSystemName("KL14007",stcs2));
-        Assert.assertEquals("node of KL14B7", d, memo2.getNodeFromSystemName("KL14B7",stcs2));
-        Assert.assertEquals("node of KL127007", b, memo2.getNodeFromSystemName("KL127007",stcs2));
-        Assert.assertEquals("node of KL127B7", b, memo2.getNodeFromSystemName("KL127B7",stcs2));
-        Assert.assertEquals("node of KL17007", c, memo2.getNodeFromSystemName("KL17007",stcs2));
-        Assert.assertEquals("node of KL17B7", c, memo2.getNodeFromSystemName("KL17B7",stcs2));
-        Assert.assertEquals("node of KL11007", null, memo2.getNodeFromSystemName("KL11007",stcs2));
-        Assert.assertEquals("node of KL11B7", null, memo2.getNodeFromSystemName("KL11B7",stcs2));
+        Assert.assertEquals("node of K2L14007", d, memo2.getNodeFromSystemName("K2L14007",stcs2));
+        Assert.assertEquals("node of K2L14B7", d, memo2.getNodeFromSystemName("K2L14B7",stcs2));
+        Assert.assertEquals("node of K2L127007", b, memo2.getNodeFromSystemName("K2L127007",stcs2));
+        Assert.assertEquals("node of K2L127B7", b, memo2.getNodeFromSystemName("K2L127B7",stcs2));
+        Assert.assertEquals("node of K2L17007", c, memo2.getNodeFromSystemName("K2L17007",stcs2));
+        Assert.assertEquals("node of K2L17B7", c, memo2.getNodeFromSystemName("K2L17B7",stcs2));
+        Assert.assertEquals("node of K2L11007", null, memo2.getNodeFromSystemName("K2L11007",stcs2));
+        Assert.assertEquals("node of K2L11B7", null, memo2.getNodeFromSystemName("K2L11B7",stcs2));
     }
 
     public void testGetNodeAddressFromSystemName() {
@@ -236,18 +236,18 @@ public class SerialAddressTwoSystemTest extends TestCase {
     }
 
     public void testGetNodeAddressFromSystemName2() {
-        Assert.assertEquals("KL14007", 14, memo2.getNodeAddressFromSystemName("KL14007"));
-        Assert.assertEquals("KL14B7", 14, memo2.getNodeAddressFromSystemName("KL14B7"));
-        Assert.assertEquals("KL127007", 127, memo2.getNodeAddressFromSystemName("KL127007"));
-        Assert.assertEquals("KL127B7", 127, memo2.getNodeAddressFromSystemName("KL127B7"));
-        Assert.assertEquals("KL0B7", 0, memo2.getNodeAddressFromSystemName("KL0B7"));
-        Assert.assertEquals("KL7", 0, memo2.getNodeAddressFromSystemName("KL7"));
+        Assert.assertEquals("K2L14007", 14, memo2.getNodeAddressFromSystemName("K2L14007"));
+        Assert.assertEquals("K2L14B7", 14, memo2.getNodeAddressFromSystemName("K2L14B7"));
+        Assert.assertEquals("K2L127007", 127, memo2.getNodeAddressFromSystemName("K2L127007"));
+        Assert.assertEquals("K2L127B7", 127, memo2.getNodeAddressFromSystemName("K2L127B7"));
+        Assert.assertEquals("K2L0B7", 0, memo2.getNodeAddressFromSystemName("K2L0B7"));
+        Assert.assertEquals("K2L7", 0, memo2.getNodeAddressFromSystemName("K2L7"));
 
-        Assert.assertEquals("KLB7", -1, memo2.getNodeAddressFromSystemName("KLB7"));
-        JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: KLB7");
+        Assert.assertEquals("K2LB7", -1, memo2.getNodeAddressFromSystemName("K2LB7"));
+        JUnitAppender.assertErrorMessage("no node address before 'B' in CMRI system name: K2LB7");
 
-        Assert.assertEquals("KR7", -1, memo2.getNodeAddressFromSystemName("KR7"));
-        JUnitAppender.assertErrorMessage("illegal character in header field of system name: KR7");
+        Assert.assertEquals("K2R7", -1, memo2.getNodeAddressFromSystemName("K2R7"));
+        JUnitAppender.assertErrorMessage("illegal character in header field of system name: K2R7");
     }
 
     public void testValidSystemNameConfig() {
@@ -300,16 +300,16 @@ public class SerialAddressTwoSystemTest extends TestCase {
     }
 
     public void testConvertSystemNameFormat2() {
-        Assert.assertEquals("convert KL14007", "KL14B7", memo2.convertSystemNameToAlternate("KL14007"));
-        Assert.assertEquals("convert KS7", "KS0B7", memo2.convertSystemNameToAlternate("KS7"));
-        Assert.assertEquals("convert KT4007", "KT4B7", memo2.convertSystemNameToAlternate("KT4007"));
-        Assert.assertEquals("convert KL14B7", "KL14007", memo2.convertSystemNameToAlternate("KL14B7"));
-        Assert.assertEquals("convert KL0B7", "KL7", memo2.convertSystemNameToAlternate("KL0B7"));
-        Assert.assertEquals("convert KS4B7", "KS4007", memo2.convertSystemNameToAlternate("KS4B7"));
-        Assert.assertEquals("convert KL14B8", "KL14008", memo2.convertSystemNameToAlternate("KL14B8"));
+        Assert.assertEquals("convert K2L14007", "K2L14B7", memo2.convertSystemNameToAlternate("K2L14007"));
+        Assert.assertEquals("convert K2S7", "K2S0B7", memo2.convertSystemNameToAlternate("K2S7"));
+        Assert.assertEquals("convert K2T4007", "K2T4B7", memo2.convertSystemNameToAlternate("K2T4007"));
+        Assert.assertEquals("convert K2L14B7", "K2L14007", memo2.convertSystemNameToAlternate("K2L14B7"));
+        Assert.assertEquals("convert K2L0B7", "K2L7", memo2.convertSystemNameToAlternate("K2L0B7"));
+        Assert.assertEquals("convert K2S4B7", "K2S4007", memo2.convertSystemNameToAlternate("K2S4B7"));
+        Assert.assertEquals("convert K2L14B8", "K2L14008", memo2.convertSystemNameToAlternate("K2L14B8"));
 
-        Assert.assertEquals("convert KL128B7", "", memo2.convertSystemNameToAlternate("KL128B7"));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: KL128B7");
+        Assert.assertEquals("convert K2L128B7", "", memo2.convertSystemNameToAlternate("K2L128B7"));
+        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: K2L128B7");
     }
 
     public void testNormalizeSystemName() {
@@ -326,16 +326,16 @@ public class SerialAddressTwoSystemTest extends TestCase {
     }
 
     public void testNormalizeSystemName2() {
-        Assert.assertEquals("normalize KL14007", "KL14007", memo2.normalizeSystemName("KL14007"));
-        Assert.assertEquals("normalize KL007", "KL7", memo2.normalizeSystemName("KL007"));
-        Assert.assertEquals("normalize KL004007", "KL4007", memo2.normalizeSystemName("KL004007"));
-        Assert.assertEquals("normalize KL14B7", "KL14B7", memo2.normalizeSystemName("KL14B7"));
-        Assert.assertEquals("normalize KL0B7", "KL0B7", memo2.normalizeSystemName("KL0B7"));
-        Assert.assertEquals("normalize KL004B7", "KL4B7", memo2.normalizeSystemName("KL004B7"));
-        Assert.assertEquals("normalize KL014B0008", "KL14B8", memo2.normalizeSystemName("KL014B0008"));
+        Assert.assertEquals("normalize K2L14007", "K2L14007", memo2.normalizeSystemName("K2L14007"));
+        Assert.assertEquals("normalize K2L007", "K2L7", memo2.normalizeSystemName("K2L007"));
+        Assert.assertEquals("normalize K2L004007", "K2L4007", memo2.normalizeSystemName("K2L004007"));
+        Assert.assertEquals("normalize K2L14B7", "K2L14B7", memo2.normalizeSystemName("K2L14B7"));
+        Assert.assertEquals("normalize K2L0B7", "K2L0B7", memo2.normalizeSystemName("K2L0B7"));
+        Assert.assertEquals("normalize K2L004B7", "K2L4B7", memo2.normalizeSystemName("K2L004B7"));
+        Assert.assertEquals("normalize K2L014B0008", "K2L14B8", memo2.normalizeSystemName("K2L014B0008"));
 
-        Assert.assertEquals("normalize KL128B7", "", memo2.normalizeSystemName("KL128B7"));
-        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: KL128B7");
+        Assert.assertEquals("normalize K2L128B7", "", memo2.normalizeSystemName("K2L128B7"));
+        JUnitAppender.assertErrorMessage("node address field out of range in CMRI system name: K2L128B7");
     }
 
     public void testConstructSystemName() {
@@ -357,8 +357,8 @@ public class SerialAddressTwoSystemTest extends TestCase {
     }
 
     public void testConstructSystemName2() {
-        Assert.assertEquals("make KL14007", "KL14007", memo2.makeSystemName("L", 14, 7));
-        Assert.assertEquals("make KT7", "KT7", memo2.makeSystemName("T", 0, 7));
+        Assert.assertEquals("make K2L14007", "K2L14007", memo2.makeSystemName("L", 14, 7));
+        Assert.assertEquals("make K2T7", "K2T7", memo2.makeSystemName("T", 0, 7));
 
         Assert.assertEquals("make illegal 1", "", memo2.makeSystemName("L", 0, 0));
         JUnitAppender.assertErrorMessage("illegal bit number proposed for system name");
@@ -369,9 +369,9 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("make illegal 3", "", memo2.makeSystemName("R", 120, 7));
         JUnitAppender.assertErrorMessage("illegal type character proposed for system name");
 
-        Assert.assertEquals("make KL0B1770", "KL0B1770", memo2.makeSystemName("L", 0, 1770));
-        Assert.assertEquals("make KS127999", "KS127999", memo2.makeSystemName("S", 127, 999));
-        Assert.assertEquals("make KS14B1000", "KS14B1000", memo2.makeSystemName("S", 14, 1000));
+        Assert.assertEquals("make K2L0B1770", "K2L0B1770", memo2.makeSystemName("L", 0, 1770));
+        Assert.assertEquals("make K2S127999", "K2S127999", memo2.makeSystemName("S", 127, 999));
+        Assert.assertEquals("make K2S14B1000", "K2S14B1000", memo2.makeSystemName("S", 14, 1000));
     }
 
     public void testIsOutputBitFree() {
@@ -473,29 +473,29 @@ public class SerialAddressTwoSystemTest extends TestCase {
     public void testGetUserNameFromSystemName2() {
         jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
         // create 4 new sensors
-        sMgr.newSensor("KS20016", "userS16");
-        sMgr.newSensor("KS20014", "userS14");
-        sMgr.newSensor("KS20017", "userS17");
-        sMgr.newSensor("KS20012", "userS12");
+        sMgr.newSensor("K2S20016", "userS16");
+        sMgr.newSensor("K2S20014", "userS14");
+        sMgr.newSensor("K2S20017", "userS17");
+        sMgr.newSensor("K2S20012", "userS12");
 
         jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
-        lMgr.newLight("KL20036", "userL36");
-        lMgr.newLight("KL20037", "userL37");
+        lMgr.newLight("K2L20036", "userL36");
+        lMgr.newLight("K2L20037", "userL37");
 
         jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
-        tMgr.newTurnout("KT20032", "userT32");
-        tMgr.newTurnout("KT20034", "userT34");
+        tMgr.newTurnout("K2T20032", "userT32");
+        tMgr.newTurnout("K2T20034", "userT34");
 
-        Assert.assertEquals("test KS20016", "userS16", memo2.getUserNameFromSystemName("KS20016"));
-        Assert.assertEquals("test KS20012", "userS12", memo2.getUserNameFromSystemName("KS20012"));
-        Assert.assertEquals("test KS20017", "userS17", memo2.getUserNameFromSystemName("KS20017"));
-        Assert.assertEquals("test undefined KS18010", "", memo2.getUserNameFromSystemName("KS20010"));
-        Assert.assertEquals("test KL20037", "userL37", memo2.getUserNameFromSystemName("KL20037"));
-        Assert.assertEquals("test KL20036", "userL36", memo2.getUserNameFromSystemName("KL20036"));
-        Assert.assertEquals("test undefined KL20030", "", memo2.getUserNameFromSystemName("KL20030"));
-        Assert.assertEquals("test KT20032", "userT32", memo2.getUserNameFromSystemName("KT20032"));
-        Assert.assertEquals("test KT20034", "userT34", memo2.getUserNameFromSystemName("KT20034"));
-        Assert.assertEquals("test undefined KT20039", "", memo2.getUserNameFromSystemName("KT20039"));
+        Assert.assertEquals("test K2S20016", "userS16", memo2.getUserNameFromSystemName("K2S20016"));
+        Assert.assertEquals("test K2S20012", "userS12", memo2.getUserNameFromSystemName("K2S20012"));
+        Assert.assertEquals("test K2S20017", "userS17", memo2.getUserNameFromSystemName("K2S20017"));
+        Assert.assertEquals("test undefined K2S18010", "", memo2.getUserNameFromSystemName("K2S20010"));
+        Assert.assertEquals("test K2L20037", "userL37", memo2.getUserNameFromSystemName("K2L20037"));
+        Assert.assertEquals("test K2L20036", "userL36", memo2.getUserNameFromSystemName("K2L20036"));
+        Assert.assertEquals("test undefined K2L20030", "", memo2.getUserNameFromSystemName("K2L20030"));
+        Assert.assertEquals("test K2T20032", "userT32", memo2.getUserNameFromSystemName("K2T20032"));
+        Assert.assertEquals("test K2T20034", "userT34", memo2.getUserNameFromSystemName("K2T20034"));
+        Assert.assertEquals("test undefined K2T20039", "", memo2.getUserNameFromSystemName("K2T20039"));
     }
 
     // from here down is testing infrastructure
