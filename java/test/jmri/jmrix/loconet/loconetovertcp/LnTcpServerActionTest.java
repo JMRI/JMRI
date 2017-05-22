@@ -14,7 +14,7 @@ import java.awt.GraphicsEnvironment;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class ServerActionTest {
+public class LnTcpServerActionTest {
 
     @Test
     public void testStringCtor() {
