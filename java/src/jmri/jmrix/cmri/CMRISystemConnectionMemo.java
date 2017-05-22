@@ -19,7 +19,12 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     private SerialTrafficController tc = null;
 
     public CMRISystemConnectionMemo() {
-        super("C", CMRIConnectionTypeList.CMRI);
+        this("C", CMRIConnectionTypeList.CMRI);
+    }
+    
+    public CMRISystemConnectionMemo(String prefix, String userName) {
+        super(prefix, userName);
+        
         register(); // registers general type
         jmri.InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
 
