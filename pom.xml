@@ -29,6 +29,7 @@
         <argLine>-Xmx1536m</argLine>
         <powermock.version>1.6.6</powermock.version>
         <surefire.version>2.20</surefire.version>
+        <surefile.printSummary>false</surefile.printSummary>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
