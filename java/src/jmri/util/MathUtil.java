@@ -1,6 +1,7 @@
 package jmri.util;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import javax.annotation.CheckReturnValue;
@@ -15,7 +16,6 @@ import javax.annotation.CheckReturnValue;
 public final class MathUtil {
 
     /**
-     *
      * @return the point {0, 0}
      */
     public static Point2D zeroPoint2D() {
@@ -23,7 +23,43 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * Convert Point to Point2D
+     * @param p the Point
+     * @return the Point2D
+     */
+    public static Point2D Point2DForPoint(Point p) {
+        return new Point2D.Double(p.x, p.y);
+    }
+
+    /**
+     * Convert Point to Point2D
+     * @param p the Point
+     * @return the Point2D
+     */
+    public static Point2D PointToPoint2D(Point p) {
+        return new Point2D.Double(p.x, p.y);
+    }
+
+    /**
+     * Convert Point2D to Point
+     * @param p the Point
+     * @return the Point2D
+     */
+    public static Point PointForPoint2D(Point2D p) {
+        return new Point((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * Convert Point2D to Point
+     * @param p the Point
+     * @return the Point2D
+     */
+    public static Point Point2DToPoint(Point2D p) {
+        return new Point((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * add two points
      * @param pA the first point
      * @param pB the second point
      * @return the sum of the two points
@@ -33,7 +69,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * subtract two points
      * @param pA the first point
      * @param pB the second point
      * @return the difference of the two points
@@ -43,7 +79,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     *  multiply a point times a scalar
      * @param p the  point
      * @param s the scalar
      * @return the point multiplied by the scalar
@@ -53,7 +89,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     *  multiply a scalar times a point
      * @param s the scalar
      * @param p the  point
      * @return the point multiplied by the scalar
@@ -64,7 +100,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     *  divide a point times a scalar
      * @param p the point
      * @param s the scalar
      * @return the point divided by the scalar
@@ -74,17 +110,19 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * dot product of two points (vectors)
      * @param pA the first point
      * @param pB the second point
      * @return the dot product of the two points
+     * note: Arccos(x) (inverse cosine) of dot product
+     * is the angle between the vectors
      */
     public static double dot(Point2D pA, Point2D pB) {
         return (pA.getX() * pB.getX() + pA.getY() * pB.getY());
     }
 
     /**
-     *
+     * calculate the length squared of a point (vector)
      * @param p the point (vector)
      * @return the length squared of the point (vector)
      */
@@ -93,7 +131,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the length of a point (vector)
      * @param p the point (vector)
      * @return the length of the point (vector)
      */
@@ -102,7 +140,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the distance between two points
      * @param pA the first point
      * @param pB the second point
      * @return the distance between the two points
@@ -112,11 +150,10 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * normalize a point
      * @param p the point
      * @return the normalized point
      */
-    // normalize a point
     public static Point2D normalize(Point2D p) {
         Point2D result = p;
         double length = length(p);
@@ -127,7 +164,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the linear interpolation between two doubles
      * @param a the first number
      * @param b the second number
      * @param t the fraction (between 0 and 1)
@@ -138,7 +175,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the linear interpolation between two doubles
      * @param a the first number
      * @param b the second number
      * @param t the fraction (between 0 and 1)
@@ -149,7 +186,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the linear interpolation between two points
      * @param pA the first point
      * @param pB the second point
      * @param t the fraction (between 0 and 1)
@@ -162,7 +199,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the midpoint between two points
      * @param pA the first point
      * @param pB the second point
      * @return the midpoint between the two points
@@ -172,7 +209,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the point 1/3 of the way between two points
      * @param pA the first point
      * @param pB the second point
      * @return the point one third of the way from pA to pB
@@ -182,7 +219,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the point 2/3 of the way between two points
      * @param pA the first point
      * @param pB the second point
      * @return the point two thirds of the way from pA to pB
@@ -192,7 +229,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the point 1/4 of the way between two points
      * @param pA the first point
      * @param pB the second point
      * @return the point one fourth of the way from pA to pB
@@ -202,7 +239,7 @@ public final class MathUtil {
     }
 
     /**
-     *
+     * calculate the point 3/4 of the way between two points
      * @param pA the first point
      * @param pB the second point
      * @return the point three fourths of the way from pA to pB
@@ -212,9 +249,7 @@ public final class MathUtil {
     }
 
     /**
-     *
      * Wrap a double between two values (for example +/- 180 or 0-360 degrees)
-     *
      * @param inValue the value
      * @param inMin the lowest value
      * @param inMax the highest value
@@ -228,9 +263,7 @@ public final class MathUtil {
     }
 
     /**
-     *
      * wrap a value between +/-180
-     *
      * @param inValue the value
      * @return the value wrapped between -180 and +180
      */
@@ -239,9 +272,7 @@ public final class MathUtil {
     }
 
     /**
-     *
      * wrap a value between +/-360
-     *
      * @param inValue the value
      * @return the value wrapped between -360 and +360
      */
@@ -250,9 +281,7 @@ public final class MathUtil {
     }
 
     /**
-     *
      * wrap a value between 0 and 360
-     *
      * @param inValue the value
      * @return the value wrapped between -360 and +360
      */
@@ -261,9 +290,7 @@ public final class MathUtil {
     }
 
     /**
-     *
      * wrap an angle between 0 and 360
-     *
      * @param a the angle
      * @return the angle wrapped between 0 and 360
      */
@@ -271,7 +298,6 @@ public final class MathUtil {
         return wrap360(a);
     }
 
-    //
     /**
      * calculate the absolute difference (0-180) between two angles
      * @param a the first angle

@@ -3270,8 +3270,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JScrollBar vsb = scrollPane.getVerticalScrollBar();
 
             // Increase scroll bar unit increments!!!
-            vsb.setUnitIncrement(16);
-            hsb.setUnitIncrement(16);
+            if (false) {
+                vsb.setUnitIncrement(16);
+                hsb.setUnitIncrement(16);
+            } else {
+                //TODO:this is here for debugging; strip for production
+                vsb.setUnitIncrement(1);
+                hsb.setUnitIncrement(1);
+            }
 
             // add scroll bar adjustment listeners
             vsb.addAdjustmentListener((AdjustmentEvent e) -> {
@@ -3322,7 +3328,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             yLabel.setText(Integer.toString(yLoc));
 
             if (true) {
-                //TODO:here for debugging; strip for production
+                //TODO:this is here for debugging; strip for production
                 JScrollPane scrollPane = getPanelScrollPane();
                 JViewport viewPort = scrollPane.getViewport();
                 Point2D viewPos = viewPort.getViewPosition();
@@ -3336,10 +3342,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (e.isAltDown()) {
             // get the location of the mouse
             PointerInfo mpi = MouseInfo.getPointerInfo();
-            Point mouseLoc = mpi.getLocation();
-            log.warn("                     mouseLoc = " + mouseLoc);
+            Point mousePoint = mpi.getLocation();
+            log.warn("                     mouseLoc = " + mousePoint);
+            Point2D oldMousePoint2D = MathUtil.PointToPoint2D(mousePoint);
+
             // convert to target panel coordinates
-            SwingUtilities.convertPointFromScreen(mouseLoc, getTargetPanel());
+            Point oldMouseLoc = new Point(mousePoint);
+            SwingUtilities.convertPointFromScreen(oldMouseLoc, getTargetPanel());
+            log.warn("                  oldMouseLoc = " + oldMouseLoc);
 
             // get the old view port position
             JScrollPane scrollPane = getPanelScrollPane();
@@ -3349,7 +3359,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             Point2D oldScrollPos = e.getPoint();
             log.warn("mouseWheelMoved:");
-            log.warn("                     mouseLoc = " + mouseLoc);
+            log.warn("                     mouseLoc = " + mousePoint);
             log.warn("                 oldScrollPos = " + oldScrollPos);
             log.warn("                   oldViewPos = " + oldViewPos);
 
@@ -3363,49 +3373,67 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             amount = newZoom / oldZoom;
             log.warn("                  amount (" + amount + ") = newZoom (" + newZoom + ") / oldZoom (" + oldZoom + ")");
 
+            Point newMouseLoc = new Point(mousePoint);
+            SwingUtilities.convertPointToScreen(mousePoint, getTargetPanel());
+            log.warn("                  newMouseLoc = " + oldViewPos);
+            Point2D diff = new Point(newMouseLoc.x - oldMouseLoc.x, newMouseLoc.y - oldMouseLoc.y);
+            log.warn("                         diff = " + diff);
+
             // in case setZoom changed the view position
             Point2D newViewPos = viewPort.getViewPosition();
 
             if (false) {
+                // (MABIE?)
                 //int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
                 //int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
-                newViewPos = MathUtil.add(MathUtil.multiply(mouseLoc, amount - 1f), MathUtil.multiply(oldViewPos, amount));
+                newViewPos = MathUtil.add(MathUtil.multiply(mousePoint, amount - 1f), MathUtil.multiply(oldViewPos, amount));
             } else if (false) {
-                newViewPos = MathUtil.divide(oldViewPos, amount);
-            } else if (true) {
+                // (MABIE?)
                 Point2D imagePos = MathUtil.divide(MathUtil.add(oldScrollPos, oldViewPos), oldZoom);
                 log.warn("                  imagePos = " + imagePos);
                 Point2D newScrollPos = MathUtil.divide(oldScrollPos, amount);
                 newViewPos = MathUtil.subtract(MathUtil.multiply(imagePos, newZoom), newScrollPos);
                 //newViewPos = MathUtil.divide(newViewPos, newZoom);
             } else if (false) {
-                Point2D oldImageLoc = MathUtil.divide(MathUtil.subtract(dLoc, oldViewPos), oldZoom);
+                // (KINDA?)
+                Point2D oldImageLoc = MathUtil.divide(MathUtil.add(oldViewPos, dLoc), oldZoom);
                 Point2D newImageLoc = MathUtil.multiply(oldImageLoc, newZoom);
-                newViewPos = MathUtil.multiply(MathUtil.divide(oldViewPos, oldZoom), newZoom);
-                newViewPos = MathUtil.add(newViewPos, newImageLoc);
+                newViewPos = MathUtil.subtract(newImageLoc, MathUtil.divide(dLoc, amount));
             } else if (false) {
+                // (MABIE?)
+                Point2D oldImageLoc = MathUtil.divide(MathUtil.add(oldViewPos, dLoc), oldZoom);
+                Point2D newImageLoc = MathUtil.multiply(oldImageLoc, newZoom);
+                newViewPos = MathUtil.subtract(newImageLoc, MathUtil.divide(dLoc, amount));
+            } else if (false) {
+                // (MABIE? "focus" point about 1/2 mouse)
                 Point2D oldImageLoc = MathUtil.divide(MathUtil.add(oldViewPos, dLoc), oldZoom);
                 Point2D newImageLoc = MathUtil.multiply(oldImageLoc, newZoom);
                 newViewPos = MathUtil.subtract(newImageLoc, dLoc);
             } else if (false) {
+                newViewPos = MathUtil.divide(oldViewPos, amount);
+            } else if (false) {
                 newViewPos = MathUtil.multiply(oldViewPos, amount);
             } else if (false) {
+                // (KINDA? weak…)
                 newViewPos = MathUtil.multiply(MathUtil.divide(dLoc, oldZoom), newZoom);
             }
-            if (false) {
-                log.warn("                   newViewPos = " + newViewPos);
-                Point newPoint = new Point();
-                newPoint.setLocation(newViewPos.getX(), newViewPos.getY());
+            log.warn("                   newViewPos = " + newViewPos);
+            if (true) {
+                Point newPoint = MathUtil.Point2DToPoint(newViewPos);
                 viewPort.setViewPosition(newPoint);
             }
-        } else if (true) {
+        } else {
+            log.warn("mouseWheelMoved:e.isAltDown() is FALSE!");
             JScrollPane scrollPane = getPanelScrollPane();
             if (scrollPane.getVerticalScrollBar().isVisible()) {
-                //  Redispatch the event to original MouseWheelListener
+                log.warn("mouseWheelMoved: proprogate to previous mouseWheelListeners");
+                //  Redispatch the event to the original MouseWheelListeners
                 for (MouseWheelListener mwl : mouseWheelListeners) {
                     mwl.mouseWheelMoved(e);
                 }
             } else {
+                log.warn("mouseWheelMoved: proprogate to previous ancestor");
+                // proprogate event to ancestor
                 Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class, scrollPane);
 
                 MouseWheelEvent mwe = new MouseWheelEvent(
@@ -3425,8 +3453,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
                 ancestor.dispatchEvent(mwe);
             }
-            //JScrollPane scrollPane = getPanelScrollPane();
-            //scrollPane.getParent().dispatchEvent(e);
         }
     }
 
