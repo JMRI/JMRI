@@ -62,6 +62,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRootPane;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -71,6 +72,8 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import jmri.BlockManager;
@@ -2024,9 +2027,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //setupComboBox
 
     /**
-     * Grabs a subset of the possible KeyEvent constants and puts them into a
-     * hash for fast lookups later. These lookups are used to enable bundles to
-     * specify keyboard shortcuts on a per-locale basis.
+     * Grabs a subset of the possible KeyEvent constants and puts them into
+     * a hash for fast lookups later. These lookups are used to enable bundles
+     * to specify keyboard shortcuts on a per-locale basis.
      */
     private void initStringsToVTCodes() {
         Field[] fields = KeyEvent.class.getFields();
@@ -3249,7 +3252,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //menu item then.
         noZoomItem.setSelected(true);
 
-        //Note: We have to invoke this later because everything's not setup yet
+        //Note: We have to invoke this stuff later because everything's not setup yet
         SwingUtilities.invokeLater(() -> {
             //get the window specific saved zoom user preference
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
@@ -3260,67 +3263,93 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     setZoom((Double) zoomProp);
                 }
             });
-        });
 
-        // add mouse-wheel support
-        SwingUtilities.invokeLater(() -> {
+            // get the scroll bars from the scroll pane
             JScrollPane scrollPane = getPanelScrollPane();
+            JScrollBar hsb = scrollPane.getHorizontalScrollBar();
+            JScrollBar vsb = scrollPane.getVerticalScrollBar();
+
+            // Increase scroll bar unit increments!!!
+            vsb.setUnitIncrement(16);
+            hsb.setUnitIncrement(16);
+
+            // add scroll bar adjustment listeners
+            vsb.addAdjustmentListener((AdjustmentEvent e) -> {
+                scrollBarAdjusted(e);
+            });
+            hsb.addAdjustmentListener((AdjustmentEvent e) -> {
+                scrollBarAdjusted(e);
+            });
+
+            // remove all mouse wheel listeners
+            mouseWheelListeners = scrollPane.getMouseWheelListeners();
+            for (MouseWheelListener mwl : mouseWheelListeners) {
+                scrollPane.removeMouseWheelListener(mwl);
+            }
+
+            // add my mouse wheel listener
             scrollPane.addMouseWheelListener(this);
 
-            //scrollPane.getViewport().addChangeListener(this);
-
-            scrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
-                scrollBarAdjusted(e);
-            });
-            scrollPane.getHorizontalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
-                scrollBarAdjusted(e);
-            });
+            if (false) {
+                scrollPane.getViewport().addChangeListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        log.warn("stateChanged(" + e.toString() + ")");
+                    }
+                });
+            }
         });
     }   //setupZoomMenu
 
+    private MouseWheelListener[] mouseWheelListeners;
+
+    // scroll bar listener to update x & y coordinates in toolbar on scroll
     public void scrollBarAdjusted(AdjustmentEvent e) {
-        log.warn("scrollBarAdjusted(" + e.paramString() + ")");
-
-        // Finds the location of the mouse
-        PointerInfo a = MouseInfo.getPointerInfo();
-        Point p0 = a.getLocation();
-        log.warn("      p0  =" + p0);
-        //convertPointFromScreen(p0, this);
-        SwingUtilities.convertPointFromScreen(p0, getComponent());
-        log.warn("      p0' = " + p0);
-        
-        //Point p1 = getLocationOnScreen();
-        //log.warn("      p1  =" + p1);
-        //convertPointFromScreen(p1, this);
-        //log.warn("      p1' = " + p1);
-
-        //xLoc = (int) (e.getX() / getPaintScale());
-        //yLoc = (int) (e.getY() / getPaintScale());
-        //dLoc.setLocation(xLoc, yLoc);
-        
-        //Point2D p2 = ((MouseEvent)e).getLocationOnScreen();
-        //Point2D p3 = ((MouseEvent)e).getPoint();
-
-        //MouseEvent convertMouseEvent(Component source, MouseEvent sourceEvent, Component destination);
-        
         if (isEditable()) {
+            // get the location of the mouse
+            PointerInfo mpi = MouseInfo.getPointerInfo();
+            Point mouseLoc = mpi.getLocation();
+            // convert to target panel coordinates
+            SwingUtilities.convertPointFromScreen(mouseLoc, getTargetPanel());
+
+            // correct for scaling…
+            double theZoom = getZoom();
+            xLoc = (int) (mouseLoc.getX() / theZoom);
+            yLoc = (int) (mouseLoc.getY() / theZoom);
+            dLoc.setLocation(xLoc, yLoc);
+
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
-        }       
+
+            if (true) {
+                //TODO:here for debugging; strip for production
+                JScrollPane scrollPane = getPanelScrollPane();
+                JViewport viewPort = scrollPane.getViewport();
+                Point2D viewPos = viewPort.getViewPosition();
+                log.warn("scrollBarAdjusted:oldViewPos= " + viewPos);
+            }
+        }
     }
-    
+
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         if (e.isAltDown()) {
+            // get the location of the mouse
+            PointerInfo mpi = MouseInfo.getPointerInfo();
+            Point mouseLoc = mpi.getLocation();
+            log.warn("                     mouseLoc = " + mouseLoc);
+            // convert to target panel coordinates
+            SwingUtilities.convertPointFromScreen(mouseLoc, getTargetPanel());
+
+            // get the old view port position
             JScrollPane scrollPane = getPanelScrollPane();
             JViewport viewPort = scrollPane.getViewport();
             Point2D oldViewPos = viewPort.getViewPosition();
             double oldZoom = getZoom();
 
-            //convertMouseEvent(scrollPane, e, scrollPane);
-            
             Point2D oldScrollPos = e.getPoint();
             log.warn("mouseWheelMoved:");
+            log.warn("                     mouseLoc = " + mouseLoc);
             log.warn("                 oldScrollPos = " + oldScrollPos);
             log.warn("                   oldViewPos = " + oldViewPos);
 
@@ -3332,20 +3361,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             double newZoom = setZoom(oldZoom * amount);
             // in case setZoom pin'ed the new zoom (between min & max)
             amount = newZoom / oldZoom;
-
             log.warn("                  amount (" + amount + ") = newZoom (" + newZoom + ") / oldZoom (" + oldZoom + ")");
 
             // in case setZoom changed the view position
             Point2D newViewPos = viewPort.getViewPosition();
 
-            if (true) {
-                newViewPos = MathUtil.divide(oldViewPos, amount);
+            if (false) {
+                //int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
+                //int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
+                newViewPos = MathUtil.add(MathUtil.multiply(mouseLoc, amount - 1f), MathUtil.multiply(oldViewPos, amount));
             } else if (false) {
+                newViewPos = MathUtil.divide(oldViewPos, amount);
+            } else if (true) {
                 Point2D imagePos = MathUtil.divide(MathUtil.add(oldScrollPos, oldViewPos), oldZoom);
                 log.warn("                  imagePos = " + imagePos);
                 Point2D newScrollPos = MathUtil.divide(oldScrollPos, amount);
                 newViewPos = MathUtil.subtract(MathUtil.multiply(imagePos, newZoom), newScrollPos);
-                newViewPos = MathUtil.divide(newViewPos, newZoom);
+                //newViewPos = MathUtil.divide(newViewPos, newZoom);
             } else if (false) {
                 Point2D oldImageLoc = MathUtil.divide(MathUtil.subtract(dLoc, oldViewPos), oldZoom);
                 Point2D newImageLoc = MathUtil.multiply(oldImageLoc, newZoom);
@@ -3356,25 +3388,48 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 Point2D newImageLoc = MathUtil.multiply(oldImageLoc, newZoom);
                 newViewPos = MathUtil.subtract(newImageLoc, dLoc);
             } else if (false) {
-                //newViewPos = MathUtil.add(oldViewPos, MathUtil.multiply(delta, amount));
+                newViewPos = MathUtil.multiply(oldViewPos, amount);
             } else if (false) {
                 newViewPos = MathUtil.multiply(MathUtil.divide(dLoc, oldZoom), newZoom);
-            } else if (false) {
-                //int newX = (int)(point.x*(0.9f - 1f) + 0.9f*pos.x);
-                //int newY = (int)(point.y*(0.9f - 1f) + 0.9f*pos.y);
-                newViewPos = MathUtil.lerp(dLoc, oldViewPos, amount);
             }
-            if (true) {
+            if (false) {
                 log.warn("                   newViewPos = " + newViewPos);
                 Point newPoint = new Point();
                 newPoint.setLocation(newViewPos.getX(), newViewPos.getY());
                 viewPort.setViewPosition(newPoint);
             }
-        } else {
+        } else if (true) {
             JScrollPane scrollPane = getPanelScrollPane();
-            scrollPane.getParent().dispatchEvent(e);
+            if (scrollPane.getVerticalScrollBar().isVisible()) {
+                //  Redispatch the event to original MouseWheelListener
+                for (MouseWheelListener mwl : mouseWheelListeners) {
+                    mwl.mouseWheelMoved(e);
+                }
+            } else {
+                Component ancestor = SwingUtilities.getAncestorOfClass(JScrollPane.class, scrollPane);
+
+                MouseWheelEvent mwe = new MouseWheelEvent(
+                        ancestor,
+                        e.getID(),
+                        e.getWhen(),
+                        e.getModifiers(),
+                        e.getX(),
+                        e.getY(),
+                        e.getXOnScreen(),
+                        e.getYOnScreen(),
+                        e.getClickCount(),
+                        e.isPopupTrigger(),
+                        e.getScrollType(),
+                        e.getScrollAmount(),
+                        e.getWheelRotation());
+
+                ancestor.dispatchEvent(mwe);
+            }
+            //JScrollPane scrollPane = getPanelScrollPane();
+            //scrollPane.getParent().dispatchEvent(e);
         }
     }
+
     //
     //
     //
@@ -10066,7 +10121,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //removeBackground
 
     /**
-     * Invoke a window to allow you to add a MultiSensor indicator to the target
+     * Invoke a window to allow you to add a MultiSensor indicator to the
+     * target
      */
     private int multiLocX;
     private int multiLocY;
@@ -10739,8 +10795,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     /**
-     * Special internal class to allow drawing of layout to a JLayeredPane This
-     * is the 'target' pane where the layout is displayed
+     * Special internal class to allow drawing of layout to a JLayeredPane
+     * This is the 'target' pane where the layout is displayed
      */
     @Override
     protected void paintTargetPanel(Graphics g) {
