@@ -45,6 +45,7 @@ public class LnTcpServer {
                     break;
                 default:
                     // ignore uninteresting property changes
+                    break;
             }
         });
     }
@@ -188,7 +189,9 @@ public class LnTcpServer {
                 ((ClientRxHandler) clientsArray[i]).close();
             }
         }
-        this.service.stop();
+        if (this.service != null) {
+            this.service.stop();
+        }
         InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((manager) -> {
             manager.deregister(this.shutDownTask);
         });
@@ -223,7 +226,7 @@ public class LnTcpServer {
                 }
                 serverSocket.close();
             } catch (IOException ex) {
-                if (ex.toString().indexOf("socket closed") == -1) {
+                if (!ex.toString().contains("socket closed")) {
                     log.error("Server: IO Exception: ", ex);
                 }
             }
