@@ -654,7 +654,11 @@ abstract public class AbstractMRTrafficController {
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
                 +(packages.length>=1 ? packages[packages.length-1] :"")
                 +" Transmit thread");
+
+            xmtThread.setDaemon(true);
+            xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
             xmtThread.start();
+
             rcvThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -665,10 +669,11 @@ abstract public class AbstractMRTrafficController {
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
                 +(packages.length>=1 ? packages[packages.length-1] :"")
                 +" Receive thread");
-            int xr = rcvThread.getPriority();
-            xr++;
-            rcvThread.setPriority(xr);      //bump up the priority
+
+            rcvThread.setPriority(Thread.MAX_PRIORITY);      //bump up the priority
+            rcvThread.setDaemon(true);
             rcvThread.start();
+            
         } catch (Exception e) {
             log.error("Failed to start up communications. Error was {}", e.toString());
             log.debug("Full trace:", e);
