@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.python.modules.math;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of MathUtil
@@ -95,8 +95,8 @@ public class MathUtilTest extends TestCase {
         double theRange = theMax - theMin;
         for (double a = -3.0 * theLimits; a < +3.0 * theLimits; a += theLimits / 10.0) {
             double t = a;
-            while (t >= theMax) {t -= theRange;};
-            while (t < theMin) {t += theRange;};
+            while (t >= theMax) {t -= theRange;}
+            while (t < theMin) {t += theRange;}
             double c = MathUtil.wrap(a, theMin, theMax);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
@@ -115,8 +115,8 @@ public class MathUtilTest extends TestCase {
         double theRange = theMax - theMin;
         for (double a = -3.0 * theLimits; a < +3.0 * theLimits; a += theLimits / 10.0) {
             double t = a;
-            while (t >= theMax) {t -= theRange;};
-            while (t < theMin) {t += theRange;};
+            while (t >= theMax) {t -= theRange;}
+            while (t < theMin) {t += theRange;}
             double c = MathUtil.wrapPM180(a);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
@@ -135,8 +135,8 @@ public class MathUtilTest extends TestCase {
         double theRange = theMax - theMin;
         for (double a = -3.0 * theLimits; a < +3.0 * theLimits; a += theLimits / 10.0) {
             double t = a;
-            while (t >= theMax) {t -= theRange;};
-            while (t < theMin) {t += theRange;};
+            while (t >= theMax) {t -= theRange;}
+            while (t < theMin) {t += theRange;}
             double c = MathUtil.wrapPM360(a);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
@@ -153,8 +153,8 @@ public class MathUtilTest extends TestCase {
         double limits = 360.0;
         for (double a = -3.3 * limits; a < +3.3 * limits; a += limits / 15.0) {
             double t = a;
-            while (t < 0.0) {t += limits;};
-            while (t >= +limits) {t -= limits;};
+            while (t < 0.0) {t += limits;}
+            while (t >= +limits) {t -= limits;}
             double c = MathUtil.wrap360(a);
             Assert.assertEquals(t, c, tolerance);
             passed = (math.fabs(t - c) <= tolerance);
@@ -171,7 +171,7 @@ public class MathUtilTest extends TestCase {
         double limits = 360.0;
         for (double a = -3.0 * limits; a < +3.0 * limits; a += limits / 10.0) {
             double t = a;
-            while (t >= +limits) {t -= limits;};
+            while (t >= +limits) {t -= limits;}
             while (t < 0.0) {t += limits;};
             double c = MathUtil.normalizeAngle(a);
             Assert.assertEquals(t, c, tolerance);
@@ -193,8 +193,8 @@ public class MathUtilTest extends TestCase {
         for (double a = -3.3 * theLimits; a < +3.3 * theLimits; a += theLimits / 15.0) {
             for (double b = -3.3 * theLimits; b < +3.3 * theLimits; b += theLimits / 15.0) {
                 double t = a - b;
-                while (t >= theMax) {t -= theRange;};
-                while (t < theMin) {t += theRange;};
+                while (t >= theMax) {t -= theRange;}
+                while (t < theMin) {t += theRange;}
                 if (t < 0.0) { t = -t;};
                 double c = MathUtil.diffAngle(a, b);
                 Assert.assertEquals(t, c, tolerance);
@@ -263,5 +263,5 @@ public class MathUtilTest extends TestCase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(MathUtilTest.class.getName());
 }
