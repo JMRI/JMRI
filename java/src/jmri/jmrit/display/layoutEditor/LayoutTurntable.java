@@ -1,8 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
-import static jmri.util.MathUtil.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -27,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -41,6 +39,7 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
 import jmri.util.swing.BeanSelectCreatePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -463,7 +462,8 @@ public class LayoutTurntable extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        popup.add(rb.getString("Turntable"));
+        JMenuItem jmi = popup.add(rb.getString("Turntable"));
+        jmi.setEnabled(false);
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
@@ -504,9 +504,11 @@ public class LayoutTurntable extends LayoutTrack {
             //log.error("Attempt to set the position on a non-existant ray track");
             return;
         }
-        rayPopup.add("Turntable Ray " + index);
+        JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
+        jmi.setEnabled(false);
         if (ray.getTurnout() != null) {
-            rayPopup.add(ray.getTurnout().getDisplayName() + " (" + ray.getTurnoutState() + ")");
+            jmi = rayPopup.add(ray.getTurnout().getDisplayName() + " (" + ray.getTurnoutState() + ")");
+            jmi.setEnabled(false);
         }
         rayPopup.show(e.getComponent(), e.getX(), e.getY());
     }
@@ -708,7 +710,7 @@ public class LayoutTurntable extends LayoutTrack {
         RayTrack closest = null;
         double bestDel = 360.0;
         for (int i = 0; i < rayList.size(); i++) {
-            double del = diffAngle(rayList.get(i).getAngle(), ang);
+            double del = MathUtil.diffAngle(rayList.get(i).getAngle(), ang);
             if (del < bestDel) {
                 bestDel = del;
                 closest = rayList.get(i);
@@ -814,7 +816,7 @@ public class LayoutTurntable extends LayoutTrack {
     class RayTrack {
 
         public RayTrack(double angle, int index) {
-            rayAngle = normalizeAngle(angle);
+            rayAngle = MathUtil.normalizeAngle(angle);
             connect = null;
             connectionIndex = index;
         }
@@ -838,7 +840,7 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         public void setAngle(double an) {
-            rayAngle = normalizeAngle(an);
+            rayAngle = MathUtil.normalizeAngle(an);
         }
 
         public int getConnectionIndex() {
