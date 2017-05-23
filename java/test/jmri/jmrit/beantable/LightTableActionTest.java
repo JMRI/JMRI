@@ -94,7 +94,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
 
         // close AddPane
         _l1Table.cancelPressed(null);
-        // TODO Add more Light Add pane tests in new LightTableWindowTest? see TurountEtc
+        // TODO Add more Light Add pane tests in new LightTableWindowTest? see TurnoutEtc
 
         // clean up
         af.dispose();
