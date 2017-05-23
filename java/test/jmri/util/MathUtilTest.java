@@ -1,8 +1,5 @@
 package jmri.util;
 
-import static jmri.util.MathUtil.*;
-import static org.python.modules.math.fabs;
-
 import java.awt.geom.Point2D;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.python.modules.math;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +25,10 @@ public class MathUtilTest extends TestCase {
         boolean passed = true;    // assume success (optimist!)
         double theMin = -666.66, theMax = +999.99;
         for (double f = 0.0; f < 2.f; f += 0.15) {
-            double c = lerp(theMin, theMax, f);
+            double c = MathUtil.lerp(theMin, theMax, f);
             double t = (c - theMin) / (theMax - theMin);
             Assert.assertEquals(t, f, tolerance);
-            passed = (fabs(t - f) <= tolerance);
+            passed = (math.fabs(t - f) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -45,11 +43,11 @@ public class MathUtilTest extends TestCase {
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
         for (double f = 0.0; f < 2.f; f += 0.15) {
-            Point2D pC = lerp(pA, pB, f);
+            Point2D pC = MathUtil.lerp(pA, pB, f);
             double distanceAC = pA.distance(pC);
             double t = distanceAC / distanceAB;
             Assert.assertEquals(f, t, tolerance);
-            passed = (fabs(t - f) <= tolerance);
+            passed = (math.fabs(t - f) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -64,11 +62,11 @@ public class MathUtilTest extends TestCase {
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
 
-        Point2D pC = third(pA, pB);
+        Point2D pC = MathUtil.oneThirdPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
         Assert.assertEquals(1.0 / 3.0, t, tolerance);
-        passed = (fabs(t - (1.0/3.0)) <= tolerance);
+        passed = (math.fabs(t - (1.0/3.0)) <= tolerance);
 
         Assert.assertEquals("Point2D third is good", true, passed);
     }
@@ -80,12 +78,12 @@ public class MathUtilTest extends TestCase {
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
 
-        Point2D pC = MathUtil.fourth(pA, pB);
+        Point2D pC = MathUtil.oneFourthPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
         Assert.assertEquals(1.0 / 4.0, t, tolerance);
 
-        passed = (fabs(t - (1.0/4.0)) <= tolerance);
+        passed = (math.fabs(t - (1.0/4.0)) <= tolerance);
         Assert.assertEquals("Point2D fourth is good", true, passed);
     }
 
@@ -99,9 +97,9 @@ public class MathUtilTest extends TestCase {
             double t = a;
             while (t >= theMax) {t -= theRange;};
             while (t < theMin) {t += theRange;};
-            double c = wrap(a, theMin, theMax);
+            double c = MathUtil.wrap(a, theMin, theMax);
             Assert.assertEquals(t, c, tolerance);
-            passed = (fabs(t - c) <= tolerance);
+            passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -119,9 +117,9 @@ public class MathUtilTest extends TestCase {
             double t = a;
             while (t >= theMax) {t -= theRange;};
             while (t < theMin) {t += theRange;};
-            double c = wrapPM180(a);
+            double c = MathUtil.wrapPM180(a);
             Assert.assertEquals(t, c, tolerance);
-            passed = (fabs(t - c) <= tolerance);
+            passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -139,9 +137,9 @@ public class MathUtilTest extends TestCase {
             double t = a;
             while (t >= theMax) {t -= theRange;};
             while (t < theMin) {t += theRange;};
-            double c = wrapPM360(a);
+            double c = MathUtil.wrapPM360(a);
             Assert.assertEquals(t, c, tolerance);
-            passed = (fabs(t - c) <= tolerance);
+            passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -157,9 +155,9 @@ public class MathUtilTest extends TestCase {
             double t = a;
             while (t < 0.0) {t += limits;};
             while (t >= +limits) {t -= limits;};
-            double c = wrap360(a);
+            double c = MathUtil.wrap360(a);
             Assert.assertEquals(t, c, tolerance);
-            passed = (fabs(t - c) <= tolerance);
+            passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -175,9 +173,9 @@ public class MathUtilTest extends TestCase {
             double t = a;
             while (t >= +limits) {t -= limits;};
             while (t < 0.0) {t += limits;};
-            double c = normalizeAngle(a);
+            double c = MathUtil.normalizeAngle(a);
             Assert.assertEquals(t, c, tolerance);
-            passed = (fabs(t - c) <= tolerance);
+            passed = (math.fabs(t - c) <= tolerance);
             if (!passed) {
                 break;
             }
@@ -198,9 +196,9 @@ public class MathUtilTest extends TestCase {
                 while (t >= theMax) {t -= theRange;};
                 while (t < theMin) {t += theRange;};
                 if (t < 0.0) { t = -t;};
-                double c = diffAngle(a, b);
+                double c = MathUtil.diffAngle(a, b);
                 Assert.assertEquals(t, c, tolerance);
-                passed = (fabs(t - c) <= tolerance);
+                passed = (math.fabs(t - c) <= tolerance);
                 if (!passed) {
                     break;
                 }
@@ -222,9 +220,9 @@ public class MathUtilTest extends TestCase {
                     double t = a;
                     if (t < b) {t = b;};
                     if (t > c) {t = c;};
-                    double d = pin(a, b, c);
+                    double d = MathUtil.pin(a, b, c);
                     Assert.assertEquals(t, d, tolerance);
-                    passed = (fabs(t - d) <= tolerance);
+                    passed = (math.fabs(t - d) <= tolerance);
                     if (!passed) {
                         break;
                     }
@@ -239,7 +237,7 @@ public class MathUtilTest extends TestCase {
         }
         Assert.assertEquals("Double pin is good", true, passed);
     }
- 
+
     // from here down is testing infrastructure
     @Before
     protected void setUp() throws Exception {

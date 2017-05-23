@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
@@ -705,9 +706,11 @@ public class PositionablePoint extends LayoutTrack {
         }
         boolean blockBoundary = false;
         boolean endBumper = false;
+        JMenuItem jmi = null;
         switch (getType()) {
             case ANCHOR:
-                popup.add(rb.getString("Anchor"));
+                jmi = popup.add(rb.getString("Anchor"));
+                jmi.setEnabled(false);
                 LayoutBlock block1 = null;
                 LayoutBlock block2 = null;
                 if (connect1 != null) {
@@ -717,32 +720,42 @@ public class PositionablePoint extends LayoutTrack {
                     block2 = connect2.getLayoutBlock();
                 }
                 if ((block1 != null) && (block1 == block2)) {
-                    popup.add(Bundle.getMessage("BeanNameBlock") + ": " + block1.getID());
+                    jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + block1.getID());
                 } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
-                    popup.add(rb.getString("BlockDivider"));
-                    popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
-                    popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
+                    jmi = popup.add(rb.getString("BlockDivider"));
+                    jmi.setEnabled(false);
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    jmi.setEnabled(false);
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
                     blockBoundary = true;
                 }
+                jmi.setEnabled(false);
                 break;
             case END_BUMPER:
-                popup.add(rb.getString("EndBumper"));
+                jmi = popup.add(rb.getString("EndBumper"));
+                jmi.setEnabled(false);
+
                 LayoutBlock blockEnd = null;
                 if (connect1 != null) {
                     blockEnd = connect1.getLayoutBlock();
                 }
                 if (blockEnd != null) {
-                    popup.add(rb.getString("BlockID") + ": " + blockEnd.getID());
+                    jmi = popup.add(rb.getString("BlockID") + ": " + blockEnd.getID());
+                    jmi.setEnabled(false);
                 }
                 endBumper = true;
                 break;
             case EDGE_CONNECTOR:
-                popup.add(rb.getString("EdgeConnector"));
+                jmi = popup.add(rb.getString("EdgeConnector"));
+                jmi.setEnabled(false);
+
                 if (getLinkedEditor() != null) {
-                    popup.add(getLinkEditorName());
+                    jmi = popup.add(getLinkEditorName());
                 } else {
-                    popup.add(rb.getString("EdgeNotLinked"));
+                    jmi = popup.add(rb.getString("EdgeNotLinked"));
                 }
+                jmi.setEnabled(false);
+
                 block1 = null;
                 block2 = null;
                 if (connect1 != null) {
@@ -752,10 +765,12 @@ public class PositionablePoint extends LayoutTrack {
                     block2 = getConnect2().getLayoutBlock();
                 }
                 if ((block1 != null) && (block2 != null) && (block1 != block2)) {
-                    popup.add(rb.getString("BlockDivider"));
-                    popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
-                    popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
-
+                    jmi = popup.add(rb.getString("BlockDivider"));
+                    jmi.setEnabled(false);
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 1) + ": " + block1.getID());
+                    jmi.setEnabled(false);
+                    jmi = popup.add(" " + Bundle.getMessage("Block_ID", 2) + ": " + block2.getID());
+                    jmi.setEnabled(false);
                 }
                 blockBoundary = true;
                 break;
