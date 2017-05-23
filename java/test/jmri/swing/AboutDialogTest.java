@@ -3,6 +3,7 @@ package jmri.swing;
 import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -35,7 +36,7 @@ public class AboutDialogTest {
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleAbout", jmri.Application.getApplicationName()));
             jdo.close();
         }).start();
-        dialog.setVisible(true);
+        ThreadingUtil.runOnGUI(()-> { dialog.setVisible(true); } );
         JUnitUtil.waitFor(() -> {
             return !dialog.isVisible();
         }, "About dialog did not close");
@@ -46,12 +47,14 @@ public class AboutDialogTest {
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(true);
         JUnitUtil.initConnectionConfigManager();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetWindows(true);
         Log4JFixture.tearDown();
     }
 }
