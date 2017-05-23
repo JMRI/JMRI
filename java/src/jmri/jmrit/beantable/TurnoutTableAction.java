@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -1277,13 +1278,50 @@ public class TurnoutTableAction extends AbstractTableAction {
         thrownCombo.setSelectedItem(turnManager.getDefaultThrownSpeed());
         closedCombo.setSelectedItem(turnManager.getDefaultClosedSpeed());
 
-        int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("TurnoutGlobalSpeedMessage"), Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"),
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), thrown, closed}, null);
-        if (retval != 1) {
-            return;
-        }
+        // gleaned from Maintenance.makeDialog(), looks better than horizontal JOptionPane and can be accessed by Jemmy in GUI test
+        JDialog dialog = new JDialog(_who, Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), true);
+        java.awt.Container contentPane = dialog.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(new JLabel(Bundle.getMessage("TurnoutGlobalSpeedMessage"))); // TODO align center
+        JPanel speedspanel = new JPanel();
+        speedspanel.add(thrown);
+        speedspanel.add(closed);
+        contentPane.add(speedspanel, BorderLayout.CENTER);
+        contentPane.add(Box.createVerticalStrut(5));
+        contentPane.add(Box.createVerticalGlue());
+        JPanel buttonpanel = new JPanel();
+        buttonpanel.setLayout(new BoxLayout(buttonpanel, BoxLayout.X_AXIS));
+        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
+        ok.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.setVisible(false);
+            }
+        });
+        buttonpanel.add(ok);
+        buttonpanel.add(Box.createHorizontalStrut(5));
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.setVisible(false);
+                return;
+            }
+        });
+        buttonpanel.add(cancel);
+        contentPane.add(buttonpanel, BorderLayout.SOUTH);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        //dialog.setLocationRelativeTo(_who);
+        dialog.pack();
+        dialog.setVisible(true);
+
+//        int retval = JOptionPane.showOptionDialog(_who,
+//                Bundle.getMessage("TurnoutGlobalSpeedMessage"), Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"),
+//                0, JOptionPane.INFORMATION_MESSAGE, null,
+//                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), thrown, closed}, null);
+//        if (retval != 1) {
+//            return;
+//        }
 
         String closedValue = (String) closedCombo.getSelectedItem();
         String thrownValue = (String) thrownCombo.getSelectedItem();
@@ -1302,7 +1340,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Add the check boxes
+     * Add the check boxes to the table frame.
+     *
+     * @param f a Turnout table frame
      */
     @Override
     public void addToFrame(BeanTableFrame f) {
