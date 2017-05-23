@@ -34,9 +34,7 @@
       the text in the User Name field. The user name may not be the
       same as the user name of another Conditional in this Logix,
       but may be the same as the user name of a Conditional in a
-      different Logix.  The one exception is that for a Conditional
-      that is going to be referenced from another Logix, the user
-      name, if any, must be unique among all Conditionals</p>
+      different Logix.</p>
 
       <p>Next are two sections--one for the setup of a logical
       expression and one for set up of actions. Conditionals are
@@ -132,15 +130,18 @@
       turnouts, etc. The actual format for entering names
       will depend on the conditional name selection method setting.
       See <a href="LogixTable.shtml#selectMethod">
-      Conditional Name Selection Method</a>.<br>
-      Using the <a href="LogixTable.shtml#selectMethod">Options menu</a>
-      in the Logix Table, you can choose how you wish to enter the
-      items in your Conditionals:</p>
+      Conditional Name Selection Method</a>.</p>
       
       <p>For Conditional Variables, the text input field is replaced
-	  by two drop down combo boxes.  The first box is used to
-	  select the Logix, the second box is used to select a
-	  Conditional that belongs to the selected Logix.</p>
+      by two drop down combo boxes.  The first box is used to
+      select the Logix, the second box is used to select a
+      Conditional that belongs to the selected Logix.
+      <span class="since">since 4.7.4</span>
+      <a href="images/SelectConditionalReference.png">
+      <img src="images/SelectConditionalReference.png"
+      alt="Logix/Conditional Combo Boxes" height="148" width="558">
+      </a>
+      </p>
       
       <p>After the name is entered, select the required state from the
       <strong>Variable State</strong> drop down box.  Depending on the selected
@@ -164,8 +165,8 @@
       <h2>Action</h2>
       <p>The action section contains a table of actions, with two
       buttons below.  The action list shows a description of each
-      action.  The <strong>Edit</strong> is used to change an action. The
-      <strong>Delete</strong> button is used to delete an action.
+      action.  The <strong>Edit</strong> button is used to change an action.
+      The <strong>Delete</strong> button is used to delete an action.
 
       <p>Actions are evaluated in the order listed. To change that
       order, click the "Reorder" button on the "Edit Conditional"
@@ -175,8 +176,8 @@
       <h3>Adding a New Action</h3>
 
       <p>To add a new action, press the "Add Action" button. A new
-      "Edit Action" window will appear. Select an action type in
-      the type box, and data items needed to completely specify the
+      "Edit Action" pane will appear. Select an action type in
+      the type box. The data items needed to completely specify the
       action will appear to the right of the type box. If you don't
       know what needs to be entered in a data field, hover your
       cursor over it, and a hint message will appear. When a name
@@ -340,16 +341,10 @@
 
             <li>Conditional<ul>
               <li><strong>Conditional True</strong>: Evaluates to true if the state
-              of the specified Conditional is true. Note that because
-              Conditional user names may be duplicated across different
-              Logix, a System Name must be used to specify a Conditional
-              belonging to a different Logix.</li>
+              of the specified Conditional is true.</li>
 
               <li><strong>Conditional False</strong>: Evaluates to true if the
-              state of the specified Conditional is false. Note that
-              because Conditional user names may be duplicated across
-              different Logix, a System Name must be used to specify a
-              Conditional belonging to a different Logix.</li>
+              state of the specified Conditional is false.</li>
             </ul></li>
 
             <li>Warrant<ul>

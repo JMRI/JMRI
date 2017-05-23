@@ -1,16 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.util.MathUtil.add;
-import static jmri.util.MathUtil.drawBezier;
-import static jmri.util.MathUtil.length;
-import static jmri.util.MathUtil.midPoint;
-import static jmri.util.MathUtil.multiply;
-import static jmri.util.MathUtil.normalize;
-import static jmri.util.MathUtil.oneThirdPoint;
-import static jmri.util.MathUtil.pin;
-import static jmri.util.MathUtil.subtract;
-import static jmri.util.MathUtil.zeroPoint2D;
-
 import java.awt.BasicStroke;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -261,7 +250,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setAngle(double x) {
-        angle = pin(x, 0.0D, 180.0D);
+        angle = MathUtil.pin(x, 0.0D, 180.0D);
         changed = true;
     }
 
@@ -494,26 +483,35 @@ public class TrackSegment extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
+        JMenuItem jmi = null;
         if (!dashed) {
-            popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
+            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
         } else {
-            popup.add(rb.getString("Style") + " - " + rb.getString("Dashed"));
+            jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Dashed"));
         }
+        jmi.setEnabled(false);
+
         if (!mainline) {
-            popup.add(rb.getString("NotMainline"));
+            jmi = popup.add(rb.getString("NotMainline"));
         } else {
-            popup.add(rb.getString("Mainline"));
+            jmi = popup.add(rb.getString("Mainline"));
         }
+        jmi.setEnabled(false);
+
         if (blockName.equals("")) {
-            popup.add(rb.getString("NoBlock"));
+            jmi = popup.add(rb.getString("NoBlock"));
         } else {
-            popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
+            jmi = popup.add(Bundle.getMessage("BeanNameBlock") + ": " + getLayoutBlock().getID());
         }
+        jmi.setEnabled(false);
+
         if (hidden) {
-            popup.add(rb.getString("Hidden"));
+            jmi = popup.add(rb.getString("Hidden"));
         } else {
-            popup.add(rb.getString("NotHidden"));
+            jmi = popup.add(rb.getString("NotHidden"));
         }
+        jmi.setEnabled(false);
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
 
@@ -708,13 +706,13 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
                     // compute offset one oneThirdPoint the distance from ep1 to ep2
-                    Point2D offset = subtract(ep2, ep1);
-                    offset = multiply(normalize(offset), length(offset) / 3);
+                    Point2D offset = MathUtil.subtract(ep2, ep1);
+                    offset = MathUtil.multiply(MathUtil.normalize(offset), MathUtil.length(offset) / 3);
 
                     // swap x & y so the offset is orthogonal to orginal line
                     offset = new Point2D.Double(offset.getY(), offset.getX());
-                    Point2D pt1 = add(oneThirdPoint(ep1, ep2), offset);
-                    Point2D pt2 = subtract(oneThirdPoint(ep2, ep1), offset);
+                    Point2D pt1 = MathUtil.add(MathUtil.oneThirdPoint(ep1, ep2), offset);
+                    Point2D pt2 = MathUtil.subtract(MathUtil.oneThirdPoint(ep2, ep1), offset);
 
                     bezierControlPoints.add(pt1);
                     bezierControlPoints.add(pt2);
@@ -1151,7 +1149,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public Point2D getCentreSeg() {
-        Point2D result = zeroPoint2D();
+        Point2D result = MathUtil.zeroPoint2D();
 
         if ((null != connect1) && (null != connect2)) {
             // get the end points
@@ -1170,18 +1168,18 @@ public class TrackSegment extends LayoutTrack {
                 Point2D p2 = getBezierControlPoint(1);
 
                 // first order midpoints
-                Point2D q0 = midPoint(ep1, p1);
-                Point2D q1 = midPoint(p1, p2);
-                Point2D q2 = midPoint(p2, ep2);
+                Point2D q0 = MathUtil.midPoint(ep1, p1);
+                Point2D q1 = MathUtil.midPoint(p1, p2);
+                Point2D q2 = MathUtil.midPoint(p2, ep2);
 
                 // second order midpoints
-                Point2D r0 = midPoint(q0, q1);
-                Point2D r1 = midPoint(q1, q2);
+                Point2D r0 = MathUtil.midPoint(q0, q1);
+                Point2D r1 = MathUtil.midPoint(q1, q2);
 
                 // oneThirdPoint order midPoint
-                result = midPoint(r0, r1);
+                result = MathUtil.midPoint(r0, r1);
             } else {
-                result = midPoint(ep1, ep2);
+                result = MathUtil.midPoint(ep1, ep2);
             }
             center = result;
         }
@@ -1345,7 +1343,7 @@ public class TrackSegment extends LayoutTrack {
                     Point2D offset = new Point2D.Double(
                         +radius * Math.cos(startRad + halfAngleRAD),
                         -radius * Math.sin(startRad + halfAngleRAD));
-                    setCentreSeg(add(getCentre(), offset));
+                    setCentreSeg(MathUtil.add(getCentre(), offset));
                 } else {
                     // Ellipse - Round start angle to the closest multiple of 90
                     setStartadj(Math.round(getStartadj() / 90.0D) * 90.0D);
@@ -1410,7 +1408,7 @@ public class TrackSegment extends LayoutTrack {
                 }
                 points[cnt + 1] = pt2;
 
-                drawBezier(g2, points);
+                MathUtil.drawBezier(g2, points);
 
                 g2.setStroke(originalStroke);
             } else {
@@ -1458,7 +1456,7 @@ public class TrackSegment extends LayoutTrack {
 
                 Point2D pt1 = getBezierControlPoint(0);
                 Point2D pt2 = getBezierControlPoint(1);
-                drawBezier(g2, pt0, pt1, pt2, pt3);
+                MathUtil.drawBezier(g2, pt0, pt1, pt2, pt3);
             } else {
                 Point2D end1 = layoutEditor.getCoords(getConnect1(), getType1());
                 Point2D end2 = layoutEditor.getCoords(getConnect2(), getType2());
