@@ -53,7 +53,6 @@ public class AboutDialogTest {
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetWindows(true);
         Log4JFixture.tearDown();
     }
 }
