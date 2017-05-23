@@ -953,7 +953,7 @@ public class LevelXing extends LayoutTrack {
      * @return value representing the point connection type
      * @since 7.4.?
      */
-    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);

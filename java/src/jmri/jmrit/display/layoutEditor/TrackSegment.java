@@ -328,6 +328,9 @@ public class TrackSegment extends LayoutTrack {
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
+    @SuppressWarnings("deprecation")
+    //NOTE: findObjectByTypeAndName is @Deprecated;
+    // we're using it here for backwards compatibility until it can be removed
     public void setObjects(LayoutEditor p) {
         if (tBlockName.length() > 0) {
             block = p.getLayoutBlock(tBlockName);
@@ -431,7 +434,7 @@ public class TrackSegment extends LayoutTrack {
      * @return the type of point that was hit (NONE means none… (Duh!))
      * @since 7.4.?
      */
-    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         if (!requireUnconnected) {
@@ -458,7 +461,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
         return result;
-    }   // hitTestPoint
+    }   // findHitPointType
 
     /**
      * Get the coordinates for a specified connection type.
@@ -470,7 +473,7 @@ public class TrackSegment extends LayoutTrack {
         Point2D result = getCentreSeg();
         if (connectionType == TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
-        } else if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType < TURNTABLE_RAY_OFFSET)) {
+        } else if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
             result = getBezierControlPoint(connectionType - BEZIER_CONTROL_POINT_OFFSET_MIN);
         }
         return result;
@@ -707,7 +710,7 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
                     Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
-                    // compute offset one oneThirdPoint the distance from ep1 to ep2
+                    // compute offset one third the distance from ep1 to ep2
                     Point2D offset = MathUtil.subtract(ep2, ep1);
                     offset = MathUtil.multiply(MathUtil.normalize(offset), MathUtil.length(offset) / 3);
 
@@ -1163,22 +1166,23 @@ public class TrackSegment extends LayoutTrack {
                 //TODO: do something here?
                 result = center;
             } else if (getBezier()) {
-                //TODO: compute result Bezier(t == 0.5);
-                // get (absolute) control points
-                Point2D p1 = getBezierControlPoint(0);
-                Point2D p2 = getBezierControlPoint(1);
+                //compute result Bezier point for (t == 0.5);
+                // copy all the control points (including end points) into an array
+                int len = bezierControlPoints.size() + 2;
+                Point2D[] points = new Point2D[len];
+                points[0] = ep1;
+                for (int idx = 1; idx < len - 1; idx++) {
+                    points[idx] = getBezierControlPoint(idx - 1);
+                }
+                points[len - 1] = ep2;
 
-                // first order midpoints
-                Point2D q0 = MathUtil.midPoint(ep1, p1);
-                Point2D q1 = MathUtil.midPoint(p1, p2);
-                Point2D q2 = MathUtil.midPoint(p2, ep2);
-
-                // second order midpoints
-                Point2D r0 = MathUtil.midPoint(q0, q1);
-                Point2D r1 = MathUtil.midPoint(q1, q2);
-
-                // oneThirdPoint order midPoint
-                result = MathUtil.midPoint(r0, r1);
+                // calculate midpoints of all points (len - 1 order times)
+                for (int idx = len - 1; idx > 0; idx--) {
+                    for (int jdx = 0; jdx < idx; jdx++) {
+                        points[jdx] = MathUtil.midPoint(points[jdx], points[jdx + 1]);
+                    }
+                }
+                result = points[0];
             } else {
                 result = MathUtil.midPoint(ep1, ep2);
             }

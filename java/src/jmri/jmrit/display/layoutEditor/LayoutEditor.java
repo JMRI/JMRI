@@ -306,7 +306,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private static final double SIZE = 3.0;
     private static final double SIZE2 = SIZE * 2.;  //must be twice SIZE
 
-    //note: although these have been moved to the LayoutTurnout class I'm leaving a copy of them here so
+    //NOTE: although these have been moved to the LayoutTurnout class I'm leaving a copy of them here so
     //that any external use of these won't break. At some point in the future these should be @Deprecated.
     //All JMRI sources have been updated to use the ones in the LayoutTurnout class.
     //defined constants - turnout types
@@ -319,7 +319,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SINGLE_SLIP = LayoutTurnout.SINGLE_SLIP;
     public static final int DOUBLE_SLIP = LayoutTurnout.DOUBLE_SLIP;
 
-    //connection types (see note above)
+    // connection, hit and control point types (see NOTE above)
     public static final int NONE = LayoutTrack.NONE;
     public static final int POS_POINT = LayoutTrack.POS_POINT;
     public static final int TURNOUT_A = LayoutTrack.TURNOUT_A;  //throat for RH, LH, and WYE turnouts
@@ -344,13 +344,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public static final int SLIP_B = LayoutTrack.SLIP_B;            //offset for slip connection points
     public static final int SLIP_C = LayoutTrack.SLIP_C;            //offset for slip connection points
     public static final int SLIP_D = LayoutTrack.SLIP_D;            //offset for slip connection points
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;          // offsets for Bezier track segment control points (min)
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;  // "        "       "       "       "       "      (max)
-    public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;    //offset for turntable connection points
-
-    // these aren't connection types… they specify the left/right control circles for a slip
     public static final int SLIP_LEFT = LayoutTrack.SLIP_LEFT;
     public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;  // offsets for Bezier track segment control points (min)
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;  // "        "       "       "       "       "      (max)
+    public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;    //offset for turntable connection points
 
     protected Color turnoutCircleColor = Color.black;   //matches earlier versions
     protected int turnoutCircleSize = 4;                //matches earlier versions
@@ -5082,45 +5080,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 selectedObject = null;
 
                 if (allControlling()) {
-                    //check if mouse is on a turnout
-                    selectedObject = null;
-
-                    for (LayoutTurnout t : turnoutList) {
-                        selectedPointType = t.hitTestPoint(dLoc);
-                        if (NONE != selectedPointType) {
-                            selectedObject = t;
-                            break;
-                        }
-                    }
-
-                    if (null == selectedObject) {
-                        for (LayoutSlip sl : slipList) {
-                            selectedPointType = sl.hitTestPoint(dLoc);
-                            if (NONE != selectedPointType) {
-                                selectedObject = sl;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (null == selectedObject) {
-                        for (LayoutTurntable x : turntableList) {
-                            for (int k = 0; k < x.getNumberRays(); k++) {
-                                if (x.getRayConnectOrdered(k) != null) {
-                                    //check the A connection point
-                                    Point2D pt = x.getRayCoordsOrdered(k);
-                                    Rectangle2D r = trackControlPointRectAt(pt);
-
-                                    if (r.contains(dLoc)) {
-                                        //mouse was pressed on this connection point
-                                        selectedObject = x;
-                                        selectedPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    checkControls(false);
                 }   //if (allControlling())
 
                 //initialize starting selection - cancel any previous selection rectangle
@@ -5138,43 +5098,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 && (!event.isAltDown()) && (!event.isShiftDown()) && (!event.isControlDown())) {
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
+            checkControls(true);
 
-            for (LayoutTurnout t : turnoutList) {
-                selectedPointType = t.hitTestPoint(dLoc, true);
-                if (NONE != selectedPointType) {
-                    selectedObject = t;
-                    break;
-                }
-            }
-
-            if (null == selectedObject) {
-                for (LayoutSlip sl : slipList) {
-                    selectedPointType = sl.hitTestPoint(dLoc, true);
-                    if (NONE != selectedPointType) {
-                        selectedObject = sl;
-                        break;
-                    }
-                }
-            }
-
-            if (null == selectedObject) {
-                for (LayoutTurntable x : turntableList) {
-                    for (int k = 0; k < x.getNumberRays(); k++) {
-                        if (x.getRayConnectOrdered(k) != null) {
-                            //check the A connection point
-                            Point2D pt = x.getRayCoordsOrdered(k);
-                            Rectangle2D r = trackControlPointRectAt(pt);
-
-                            if (r.contains(dLoc)) {
-                                //mouse was pressed on this connection point
-                                selectedObject = x;
-                                selectedPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
         } else if ((event.isMetaDown() || event.isAltDown())
                 && (!event.isShiftDown()) && (!event.isControlDown())) {
             //not in edit mode - check if moving a marker if there are any
@@ -5206,6 +5131,64 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         thisPanel.requestFocusInWindow();
     }   //mousePressed
 
+    private void checkControls(boolean useRectangles) {
+        //check if mouse is on a turnout
+        for (LayoutTurnout t : turnoutList) {
+            selectedPointType = t.findHitPointType(dLoc, useRectangles);
+            if (LayoutTrack.NONE != selectedPointType) {
+                selectedObject = t;
+                break;
+            }
+        }
+
+        if (null == selectedObject) {
+            for (LayoutSlip sl : slipList) {
+                selectedPointType = sl.findHitPointType(dLoc, useRectangles);
+                if (LayoutTrack.NONE != selectedPointType) {
+                    selectedObject = sl;
+                    break;
+                }
+            }
+        }
+
+        if (null == selectedObject) {
+            for (LayoutTurntable x : turntableList) {
+                selectedPointType = x.findHitPointType(dLoc, useRectangles);
+                if (LayoutTrack.NONE != selectedPointType) {
+                    if (x.isConnectionType(selectedPointType)) {
+                        try {
+                            selectedObject = x.getConnection(selectedPointType);
+                        } catch (Exception e) {
+                            //exceptions make me throw up…
+                            log.error("This error message, which nobody will ever see, shuts my IDE up.");
+                        }
+                    } else {
+                        selectedPointType = LayoutTrack.NONE;
+                    }
+                }
+
+                //if (null == selectedObject) 
+                {
+                    for (int k = 0; k < x.getNumberRays(); k++) {
+                        if (x.getRayConnectOrdered(k) != null) {
+                            //check the A connection point
+                            Point2D pt = x.getRayCoordsOrdered(k);
+                            Rectangle2D r = trackControlPointRectAt(pt);
+
+                            if (r.contains(dLoc)) {
+                                //mouse was pressed on this connection point
+                                selectedObject = x;
+                                selectedPointType = LayoutTrack.TURNTABLE_RAY_OFFSET + x.getRayIndex(k);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }   // checkControls
+
+    // optional parameter requireUnconnected
     private boolean checkSelect(Point2D loc, boolean requireUnconnected) {
         return checkSelect(loc, requireUnconnected, null);
     }
@@ -5214,8 +5197,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         //check positionable points, if any
         for (PositionablePoint p : pointList) {
             if ((p != avoid) && (p != selectedObject)) {
-                foundPointType = p.hitTestPoint(loc, false, requireUnconnected);
-                if (NONE != foundPointType) {
+                foundPointType = p.findHitPointType(loc, false, requireUnconnected);
+                if (LayoutTrack.NONE != foundPointType) {
                     foundObject = p;
                     foundLocation = p.getCoordsForConnectionType(foundPointType);
                     foundNeedsConnect = p.isConnectionType(foundPointType);
@@ -5231,8 +5214,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutTurnout t : turnoutList) {
             if (t != selectedObject) {
                 try {
-                    foundPointType = t.hitTestPoint(loc, false, requireUnconnected);
-                    if (NONE != foundPointType) {
+                    foundPointType = t.findHitPointType(loc, false, requireUnconnected);
+                    if (LayoutTrack.NONE != foundPointType) {
                         foundObject = t;
                         foundLocation = t.getCoordsForConnectionType(foundPointType);
                         foundNeedsConnect = t.isConnectionType(foundPointType);
@@ -5252,8 +5235,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LevelXing x : xingList) {
             if (x != selectedObject) {
                 try {
-                    foundPointType = x.hitTestPoint(loc, false, requireUnconnected);
-                    if (NONE != foundPointType) {
+                    foundPointType = x.findHitPointType(loc, false, requireUnconnected);
+                    if (LayoutTrack.NONE != foundPointType) {
                         foundObject = x;
                         foundLocation = x.getCoordsForConnectionType(foundPointType);
                         foundNeedsConnect = x.isConnectionType(foundPointType);
@@ -5273,8 +5256,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutSlip sl : slipList) {
             if (sl != selectedObject) {
                 try {
-                    foundPointType = sl.hitTestPoint(loc, false, requireUnconnected);
-                    if (NONE != foundPointType) {
+                    foundPointType = sl.findHitPointType(loc, false, requireUnconnected);
+                    if (LayoutTrack.NONE != foundPointType) {
                         foundObject = sl;
                         foundLocation = sl.getCoordsForConnectionType(foundPointType);
                         foundNeedsConnect = sl.isConnectionType(foundPointType);
@@ -5294,8 +5277,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (LayoutTurntable x : turntableList) {
             if (x != selectedObject) {
                 try {
-                    foundPointType = x.hitTestPoint(loc, false, requireUnconnected);
-                    if (NONE != foundPointType) {
+                    foundPointType = x.findHitPointType(loc, false, requireUnconnected);
+                    if (LayoutTrack.NONE != foundPointType) {
                         foundObject = x;
                         foundLocation = x.getCoordsForConnectionType(foundPointType);
                         foundNeedsConnect = x.isConnectionType(foundPointType);
@@ -5313,8 +5296,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
         for (TrackSegment ts : trackList) {
             try {
-                foundPointType = ((TrackSegment) ts).hitTestPoint(loc, false, requireUnconnected);
-                if (NONE != foundPointType) {
+                foundPointType = ((TrackSegment) ts).findHitPointType(loc, false, requireUnconnected);
+                if (LayoutTrack.NONE != foundPointType) {
                     foundObject = ts;
                     foundLocation = ts.getCoordsForConnectionType(foundPointType);
                     foundNeedsConnect = false;

@@ -2789,7 +2789,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             rect = p.getBounds(rect);
             if (p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape
                     && p.getDegrees() != 0) {
-                double rad = p.getDegrees() * Math.PI / 180.0;
+                double rad = Math.toRadians(p.getDegrees());
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
                 double[] pt = new double[2];
                 // bit shift to avoid Findbugs paranoia

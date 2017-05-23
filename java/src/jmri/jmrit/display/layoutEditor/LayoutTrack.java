@@ -131,18 +131,18 @@ public abstract class LayoutTrack {
      *
      * @since 7.4.?
      */
-    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         return NONE;
     }
 
     // optional useRectangles & requireUnconnected parameters default to false
-    protected int hitTestPoint(Point2D p) {
-        return hitTestPoint(p, false, false);
+    protected int findHitPointType(Point2D p) {
+        return findHitPointType(p, false, false);
     }
 
     // optional requireUnconnected parameter defaults to false
-    protected int hitTestPoint(Point2D p, boolean useRectangles) {
-        return hitTestPoint(p, useRectangles, false);
+    protected int findHitPointType(Point2D p, boolean useRectangles) {
+        return findHitPointType(p, useRectangles, false);
     }
 
     // some connection types aren't actually connections
@@ -185,10 +185,10 @@ public abstract class LayoutTrack {
                 result = false; // these are all hit types
                 break;
         }
-        if (TURNTABLE_RAY_OFFSET <= connectionType) {
-            result = true;  // these are all connection types
-        } else if (BEZIER_CONTROL_POINT_OFFSET_MIN <= connectionType) {
+        if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
             result = false; // these are all hit types
+        } else if (TURNTABLE_RAY_OFFSET <= connectionType) {
+            result = true;  // these are all connection types
         }
         return result;
     }

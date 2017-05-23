@@ -520,7 +520,7 @@ public class LayoutSlip extends LayoutTurnout {
      *
      * @since 7.4.?
      */
-    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         // TODO: A faster way to check to see if p is in the rects for
