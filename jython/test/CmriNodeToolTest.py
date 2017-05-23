@@ -6,8 +6,7 @@ import java
 # create and self-register
 c = jmri.jmrix.cmri.CMRISystemConnectionMemo()
 
-if (! java.awt.GraphicsEnvironment.isHeadless()) : 
+if (not java.awt.GraphicsEnvironment.isHeadless()) : 
     execfile("jython/CmriNodeTool.py")
-    
     # need to kill the display
     a.scriptFrame.dispose()

@@ -6,8 +6,7 @@ import java
 # create and self-register
 c = jmri.jmrix.cmri.CMRISystemConnectionMemo()
 
-if (! java.awt.GraphicsEnvironment.isHeadless()) : 
+if (not java.awt.GraphicsEnvironment.isHeadless()) : 
     execfile("jython/CmriNodeMonitor.py")
-    
     # need to kill the thread
     jmri.jmrit.automat.AutomatSummary.instance().get("CmriNodeMonitor").stop()
