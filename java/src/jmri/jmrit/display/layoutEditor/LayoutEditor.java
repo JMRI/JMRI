@@ -3312,14 +3312,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
-
-            if (false) {
-                //TODO:this is here for debugging; strip for production
-                JScrollPane scrollPane = getPanelScrollPane();
-                JViewport viewPort = scrollPane.getViewport();
-                Point2D viewPos = viewPort.getViewPosition();
-                log.warn("scrollBarAdjusted:oldViewPos= " + viewPos);
-            }
         }
     }
 
@@ -3327,13 +3319,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public void mouseWheelMoved(MouseWheelEvent e) {
         //log.warn("mouseWheelMoved");
         if (e.isAltDown()) {
-            // get the (screen) location of the mouse
-            PointerInfo mpi = MouseInfo.getPointerInfo();
-            Point screenMousePoint = mpi.getLocation();
-            // convert it to target panel coordinates
-            Point targetMousePoint = new Point(screenMousePoint);
-            SwingUtilities.convertPointFromScreen(targetMousePoint, getTargetPanel());
-            Point2D mousePos2D = MathUtil.PointToPoint2D(targetMousePoint);
+            // get the mouse position from the event and convert to target panel coordinates
+            Component c = (Component) e.getSource();
+            Point ep = e.getPoint();
+            JComponent t = getTargetPanel();
+            Point2D mousePos2D = SwingUtilities.convertPoint(c, ep, t);
 
             // get the old view port position
             JScrollPane scrollPane = getPanelScrollPane();
@@ -5354,9 +5344,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     //TODO: Should this be moved into TrackSegment.java: hit testing?
     private TrackSegment checkTrackSegmentPopUps(Point2D loc) {
-        //NOTE: rather than compute all the hit rectangles for all
-        // the points  below and test if this point is in any of those
-        // rectangles just create a hit rectangle for this location and
+        //NOTE: rather than calculate all the hit rectangles for all
+        // the points below and test if this location is in any of those
+        // rectangles just create a hit rectangle for the location and
         // see if those points are in it instead…
 
         Rectangle2D r = trackControlCircleRectAt(loc);
