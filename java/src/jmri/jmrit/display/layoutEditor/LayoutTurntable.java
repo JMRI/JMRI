@@ -108,11 +108,9 @@ public class LayoutTurntable extends LayoutTrack {
         return "LayoutTurntable " + ident;
     }
 
-
     /**
      * Accessor methods
      */
-
     public Point2D getCoordsCenter() {
         return center;
     }
@@ -322,6 +320,7 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * return the coordinates for a specified connection type
+     *
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
@@ -402,13 +401,14 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * return the connection type for a point
-     * @param p the point
-     * @param useRectangles use hit rectangle (false: use hit circles)
+     *
+     * @param p                  the point
+     * @param useRectangles      use hit rectangle (false: use hit circles)
      * @param requireUnconnected (only hit disconnected connections)
      * @return value representing the point connection type
      * @since 7.4.?
      */
-    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
@@ -1039,16 +1039,20 @@ public class LayoutTurntable extends LayoutTrack {
         }
     }
 
-    private void draw(Graphics2D g2) {
-        // drawHidden turntable circle - default track color, side track width
+    /**
+     * draw this turntable
+     *
+     * @param g2 the graphics port to draw to
+     */
+    public void draw(Graphics2D g2) {
+        // draw turntable circle - default track color, side track width
         layoutEditor.setTrackStrokeWidth(g2, false);
-        double r = getRadius();
+        double r = getRadius(), d = r + r;
         g2.setColor(defaultTrackColor);
-        g2.draw(new Ellipse2D.Double(
-                center.getX() - r, center.getY() - r, r + r, r + r));
-        // drawHidden ray tracks
+        g2.draw(new Ellipse2D.Double(center.getX() - r, center.getY() - r, d, d));
+
+        // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
-            Point2D pt = getRayCoordsOrdered(j);
             TrackSegment t = getRayConnectOrdered(j);
             if (t != null) {
                 layoutEditor.setTrackStrokeWidth(g2, t.getMainline());
@@ -1062,6 +1066,7 @@ public class LayoutTurntable extends LayoutTrack {
                 layoutEditor.setTrackStrokeWidth(g2, false);
                 g2.setColor(defaultTrackColor);
             }
+            Point2D pt = getRayCoordsOrdered(j);
             g2.draw(new Line2D.Double(new Point2D.Double(
                     pt.getX() - ((pt.getX() - center.getX()) * 0.2),
                     pt.getY() - ((pt.getY() - center.getY()) * 0.2)), pt));
@@ -1070,11 +1075,26 @@ public class LayoutTurntable extends LayoutTrack {
             Point2D pt = getRayCoordsIndexed(getPosition());
             g2.draw(new Line2D.Double(new Point2D.Double(
                     pt.getX() - ((pt.getX() - center.getX()) * 1.8/* 2 */),
-                    pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */
-                    )), pt));
+                    pt.getY() - ((pt.getY() - center.getY()) * 1.8/* * * 2 */)), pt));
+        }
+    }
+
+    public void drawEditControls(Graphics2D g2) {
+        Point2D pt = getCoordsCenter();
+        g2.setColor(defaultTrackColor);
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+
+        for (int j = 0; j < getNumberRays(); j++) {
+            pt = getRayCoordsOrdered(j);
+
+            if (getRayConnectOrdered(j) == null) {
+                g2.setColor(Color.red);
+            } else {
+                g2.setColor(Color.green);
+            }
+            g2.draw(layoutEditor.trackControlPointRectAt(pt));
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
-
 }

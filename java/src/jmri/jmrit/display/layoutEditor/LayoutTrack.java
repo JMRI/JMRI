@@ -54,9 +54,10 @@ public abstract class LayoutTrack {
 
     protected String ident = "";
 
-    // dashed line parameters
-    //private static int minNumDashes = 3;
-    //private static double maxDashLength = 10;
+    // dashed line parameters (unused)
+    //protected static int minNumDashes = 3;
+    //protected static double maxDashLength = 10;
+
     public Point2D center = new Point2D.Double(50.0, 50.0);
 
     protected boolean hidden = false;
@@ -114,7 +115,6 @@ public abstract class LayoutTrack {
     /*
      * non-accessor methods
      */
-
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
@@ -126,8 +126,8 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * return the connection type for a point
-     * (abstract; should be overridden by sub-classes)
+     * return the connection type for a point (abstract; should be overridden by
+     * sub-classes)
      *
      * @since 7.4.?
      */
@@ -136,18 +136,18 @@ public abstract class LayoutTrack {
     }
 
     // optional useRectangles & requireUnconnected parameters default to false
-    public int hitTestPoint(Point2D p) {
+    protected int hitTestPoint(Point2D p) {
         return hitTestPoint(p, false, false);
     }
 
     // optional requireUnconnected parameter defaults to false
-    public int hitTestPoint(Point2D p, boolean useRectangles) {
+    protected int hitTestPoint(Point2D p, boolean useRectangles) {
         return hitTestPoint(p, useRectangles, false);
     }
 
     // some connection types aren't actually connections
     // they're only used for hit testing (to determine what was clicked)
-    public boolean isConnectionType(int connectionType) {
+    protected boolean isConnectionType(int connectionType) {
         boolean result = false; // assume failure (pessimist!)
         switch (connectionType) {
             case POS_POINT:
@@ -193,8 +193,19 @@ public abstract class LayoutTrack {
         return result;
     }
 
+    /**
+     * return the coordinates for a specified connection type
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        log.error("virtual method: override in sub-classes and don't call super...].");
+        log.error("Invalid connection type " + connectionType); //I18IN
+        return center;
+    }
+
     public void reCheckBlockBoundary() {
-        log.error("virtual method: override in sub-classes; don't call [super ...].");
+        log.error("virtual method: override in sub-classes and don't call super...].");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());

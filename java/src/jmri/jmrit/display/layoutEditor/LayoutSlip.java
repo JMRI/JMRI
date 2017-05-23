@@ -520,44 +520,44 @@ public class LayoutSlip extends LayoutTurnout {
      *
      * @since 7.4.?
      */
-    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         // TODO: A faster way to check to see if p is in the rects for
         // all these locations is to create a rect around p and see if
         // those locations are in that rect instead of creating rects
         // for all those locations… Just saying… ;-)
-        //
-        // Rectangle2D pointRect = layoutEditor.trackControlCircleRectAt(p);
-        // calculate radius of turnout control circle
-        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        if (!requireUnconnected) {
+            // calculate radius of turnout control circle
+            double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
 
-        // calculate left center
-        Point2D leftCenter = getCoordsForConnectionType(SLIP_LEFT);
+            // calculate left center
+            Point2D leftCenter = getCoordsForConnectionType(SLIP_LEFT);
 
-        // calculate right center
-        Point2D rightCenter = getCoordsForConnectionType(SLIP_RIGHT);
+            // calculate right center
+            Point2D rightCenter = getCoordsForConnectionType(SLIP_RIGHT);
 
-        if (useRectangles) {
-            // calculate turnout's left control rectangle
-            Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
-            if (leftRectangle.contains(p)) {
-                //point is in this turnout's left control rectangle
-                result = SLIP_LEFT;
-            }
-            Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
-            if (rightRectangle.contains(p)) {
-                //point is in this turnout's right control rectangle
-                result = SLIP_RIGHT;
-            }
-        } else {
-            //check east/west turnout control circles
-            double leftDistance = p.distance(leftCenter);
-            double rightDistance = p.distance(rightCenter);
+            if (useRectangles) {
+                // calculate turnout's left control rectangle
+                Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
+                if (leftRectangle.contains(p)) {
+                    //point is in this turnout's left control rectangle
+                    result = SLIP_LEFT;
+                }
+                Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
+                if (rightRectangle.contains(p)) {
+                    //point is in this turnout's right control rectangle
+                    result = SLIP_RIGHT;
+                }
+            } else {
+                //check east/west turnout control circles
+                double leftDistance = p.distance(leftCenter);
+                double rightDistance = p.distance(rightCenter);
 
-            if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
-                //mouse was pressed on this slip
-                result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+                if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
+                    //mouse was pressed on this slip
+                    result = (leftDistance < rightDistance) ? LayoutTrack.SLIP_LEFT : LayoutTrack.SLIP_RIGHT;
+                }
             }
         }
 
@@ -1418,6 +1418,11 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * draw this slip
+     *
+     * @param g2 the graphics port to draw to
+     */
     public void draw(Graphics2D g2) {
         if (!isHidden() || layoutEditor.isEditable()) {
             Point2D pointA = getCoordsA();
