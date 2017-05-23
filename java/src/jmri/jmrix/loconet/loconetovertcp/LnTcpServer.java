@@ -221,12 +221,12 @@ public class LnTcpServer {
                 while (!socketListener.isInterrupted()) {
                     newClientConnection = serverSocket.accept();
                     remoteAddress = newClientConnection.getRemoteSocketAddress().toString();
-                    log.info("Server: Connection from: " + remoteAddress);
+                    log.info("Server: Connection from: {}", remoteAddress);
                     addClient(new ClientRxHandler(remoteAddress, newClientConnection));
                 }
                 serverSocket.close();
             } catch (IOException ex) {
-                if (!ex.toString().contains("socket closed")) {
+                if (!ex.toString().toLowerCase().contains("socket closed")) {
                     log.error("Server: IO Exception: ", ex);
                 }
             }
