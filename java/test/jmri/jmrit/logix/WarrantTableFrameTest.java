@@ -18,7 +18,7 @@ public class WarrantTableFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WarrantTableFrame t = WarrantTableFrame.getInstance();
+        WarrantTableFrame t = WarrantTableFrame.getDefault();
         Assert.assertNotNull("exists", t);
         t.dispose();
     }

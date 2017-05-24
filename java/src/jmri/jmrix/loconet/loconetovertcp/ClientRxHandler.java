@@ -17,13 +17,13 @@ import org.slf4j.LoggerFactory;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
-  */
+ */
 public final class ClientRxHandler extends Thread implements LocoNetListener {
 
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    LinkedList<LocoNetMessage> msgQueue;
+    final LinkedList<LocoNetMessage> msgQueue = new LinkedList<>();
     Thread txThread;
     String inString;
     String remoteAddress;
@@ -47,7 +47,6 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
 
-            msgQueue = new LinkedList<LocoNetMessage>();
             LnTrafficController.instance().addLocoNetListener(~0, this);
 
             txThread = new Thread(new ClientTxHandler(this));
@@ -72,22 +71,22 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
 
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
-                            case 0: /* 2 byte message */
+                            case 0: // 2 byte message
 
                                 msg = new LocoNetMessage(2);
                                 break;
 
-                            case 1: /* 4 byte message */
+                            case 1: // 4 byte message
 
                                 msg = new LocoNetMessage(4);
                                 break;
 
-                            case 2: /* 6 byte message */
+                            case 2: // 6 byte message
 
                                 msg = new LocoNetMessage(6);
                                 break;
 
-                            case 3: /* N byte message */
+                            case 3: // N byte message
 
                                 if (byte2 < 2) {
                                     log.error("ClientRxHandler: LocoNet message length invalid: "
@@ -132,14 +131,13 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         inStream = null;
         outStream = null;
         msgQueue.clear();
-        msgQueue = null;
 
         try {
             clientSocket.close();
         } catch (IOException ex1) {
         }
 
-        Server.getInstance().removeClient(this);
+        LnTcpServer.getDefault().removeClient(this);
         log.info("ClientRxHandler: Exiting");
     }
 

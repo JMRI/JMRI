@@ -113,6 +113,7 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
     public void setUp() throws Exception {
         super.setUp();
         JUnitUtil.initIdTagManager();
+        JUnitUtil.initShutDownManager();
     }
 
     @Override

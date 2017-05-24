@@ -40,7 +40,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
         }
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         Assert.assertNotNull("NXFrame", nxFrame);
     }
 
@@ -64,7 +64,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
 
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame.setThrottleIncrement(0.075f);
@@ -78,7 +78,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // after cancel, try again
-        nxFrame = NXFrame.getInstance();
+        nxFrame = NXFrame.getDefault();
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame._maxSpeedBox.setText("0.30");
@@ -110,10 +110,10 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         nxFrame.setThrottleIncrement(0.05f);
         pressButton(pickDia, Bundle.getMessage("ButtonSelect"));
         flushAWT();     //pause for NXFrame to make commands
-        
-        WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
+
+        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
-        WarrantTableModel model = tableFrame.getModel(); 
+        WarrantTableModel model = tableFrame.getModel();
         Assert.assertNotNull("tableFrame model", model);
         JUnitUtil.waitFor(() -> {
             return model.getRowCount()>0;
@@ -127,7 +127,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         String name = block.getDisplayName();
         jmri.util.JUnitUtil.waitFor(
             ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
-            "Waiting message"); 
+            "Waiting message");
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
 
@@ -151,12 +151,12 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
         });
-        
+
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #7.");
         }, "Train starts to move at 7th command");
-        
+
         // OBlock sensor names
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
         block = _OBlockMgr.getOBlock("OB10");
@@ -222,7 +222,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
 
     /**
      * Simulates the movement of a warranted train over its route.
-     * <p>Works through a list of OBlocks, gets its sensor,  
+     * <p>Works through a list of OBlocks, gets its sensor,
      * activates it, then inactivates the previous OBlock sensor.
      * Leaves last sensor ACTIVE to show the train stopped there.
      * @param list of detection sensors of the route
@@ -263,7 +263,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                         Assert.fail("Unexpected Exception: " + e);
                     }
                 });
-                flushAWT();                                
+                flushAWT();
                 jmri.util.JUnitUtil.releaseThread(this);
             } else {
                 nextSensor = null;
@@ -277,7 +277,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
                 }
             });
             if (!dark) {
-                sensor = nextSensor;                
+                sensor = nextSensor;
             }
         }
         return sensor;
@@ -312,6 +312,7 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
