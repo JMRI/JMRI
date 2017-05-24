@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
@@ -976,7 +977,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         //check if Memory changed
 
-        String newName = NamedBean.normalizeUserName(memoryNameField.getText());
+        newName = NamedBean.normalizeUserName(memoryNameField.getText());
         if (!memoryName.equals(newName)) {
             //memory has changed
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);

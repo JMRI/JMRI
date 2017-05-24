@@ -26,6 +26,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
