@@ -4,7 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.implementation.QuietShutDownTask;
@@ -19,29 +21,26 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTcpServer {
 
-    final LinkedList<ClientRxHandler> clients;
-    Thread socketListener;
-    ServerSocket serverSocket;
-    boolean settingsLoaded = false;
-    LnTcpServerListener stateListner;
-    boolean settingsChanged = false;
-    QuietShutDownTask shutDownTask;
-    ZeroConfService service = null;
-    static final String AUTO_START_KEY = "AutoStart";
-    static final String PORT_NUMBER_KEY = "PortNumber";
+    private final List<ClientRxHandler> clients = new LinkedList<>();
+    private Thread socketListener;
+    private ServerSocket serverSocket;
+    private final List<LnTcpServerListener> stateListeners = new ArrayList<>();
+    private boolean settingsChanged = false;
+    private QuietShutDownTask shutDownTask;
+    private ZeroConfService service = null;
 
-    private int portNumber = 1234;
+    private int portNumber;
 
     private LnTcpServer() {
-        clients = new LinkedList<>();
-        LnTcpPreferences pm = InstanceManager.getOptionalDefault(LnTcpPreferences.class).orElseGet(() -> {
-            return InstanceManager.setDefault(LnTcpPreferences.class, new LnTcpPreferences());
-        });
+        LnTcpPreferences pm = LnTcpPreferences.getDefault();
         portNumber = pm.getPort();
         pm.addPropertyChangeListener((PropertyChangeEvent evt) -> {
             switch (evt.getPropertyName()) {
                 case LnTcpPreferences.PORT:
-                    portNumber = pm.getPort();
+                    // only change the port if stopped
+                    if (!isEnabled()) {
+                        portNumber = pm.getPort();
+                    }
                     break;
                 default:
                     // ignore uninteresting property changes
@@ -50,8 +49,17 @@ public class LnTcpServer {
         });
     }
 
+    /**
+     * Add a state listener to this server.
+     *
+     * @param l the listener to add
+     * @deprecated since 4.7.4; use
+     * {@link #addStateListener(jmri.jmrix.loconet.loconetovertcp.LnTcpServerListener)}
+     * instead.
+     */
+    @Deprecated
     public void setStateListner(LnTcpServerListener l) {
-        stateListner = l;
+        this.addStateListener(l);
     }
 
     /**
@@ -67,6 +75,7 @@ public class LnTcpServer {
     }
 
     /**
+     * Get the default server instance, creating it if necessary.
      *
      * @return the default server
      * @deprecated since 4.7.5; use {@link #getDefault()} instead
@@ -92,7 +101,8 @@ public class LnTcpServer {
      * Set if server will start when created by an action.
      *
      * @param start ignored
-     * @deprecated since 4.7.5 without replacement
+     * @deprecated since 4.7.5 without replacement; use the JMRI startup actions
+     * mechanism to control this
      */
     @Deprecated
     public void setAutoStart(boolean start) {
@@ -103,8 +113,7 @@ public class LnTcpServer {
      * Get the port the server listens to.
      *
      * @return the port
-     * @deprecated since 4.7.5; use
-     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#getPort() }
+     * @deprecated since 4.7.5; use {@link #getPort() }
      * instead
      */
     @Deprecated
@@ -125,7 +134,7 @@ public class LnTcpServer {
         if ((port >= 1) && (port <= 65535)) {
             portNumber = port;
             settingsChanged = true;
-            updateServerStateListener();
+            updateServerStateListeners();
         }
     }
 
@@ -144,7 +153,7 @@ public class LnTcpServer {
             socketListener.setName("LocoNetOverTcpServer");
             log.info("Starting new LocoNetOverTcpServer listener on port " + portNumber);
             socketListener.start();
-            updateServerStateListener();
+            updateServerStateListeners();
             // advertise over Zeroconf/Bonjour
             if (this.service == null) {
                 this.service = ZeroConfService.create("_loconetovertcpserver._tcp.local.", portNumber);
@@ -155,14 +164,14 @@ public class LnTcpServer {
                 this.shutDownTask = new QuietShutDownTask("LocoNetOverTcpServer") {
                     @Override
                     public boolean execute() {
-                        LnTcpServer.getDefault().disable();
+                        LnTcpServer.this.disable();
                         return true;
                     }
                 };
             }
-            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
-            }
+            InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((manager) -> {
+                manager.register(this.shutDownTask);
+            });
         }
     }
 
@@ -177,7 +186,7 @@ public class LnTcpServer {
             } catch (IOException ex) {
             }
 
-            updateServerStateListener();
+            updateServerStateListeners();
 
             // Now close all the client connections
             Object[] clientsArray;
@@ -197,16 +206,37 @@ public class LnTcpServer {
         });
     }
 
-    public void updateServerStateListener() {
-        if (stateListner != null) {
-            stateListner.notifyServerStateChanged(this);
+    private void updateServerStateListeners() {
+        synchronized (this) {
+            this.stateListeners.stream().filter((l) -> (l != null)).forEachOrdered((l) -> {
+                l.notifyServerStateChanged(this);
+            });
         }
     }
 
-    public void updateClientStateListener() {
-        if (stateListner != null) {
-            stateListner.notifyClientStateChanged(this);
+    private void updateClientStateListeners() {
+        synchronized (this) {
+            this.stateListeners.stream().filter((l) -> (l != null)).forEachOrdered((l) -> {
+                l.notifyClientStateChanged(this);
+            });
         }
+    }
+
+    public void addStateListener(LnTcpServerListener l) {
+        this.stateListeners.add(l);
+    }
+
+    public boolean removeStateListener(LnTcpServerListener l) {
+        return this.stateListeners.remove(l);
+    }
+
+    /**
+     * Get the port this server is using.
+     *
+     * @return the port
+     */
+    public int getPort() {
+        return this.portNumber;
     }
 
     class ClientListener implements Runnable {
@@ -216,7 +246,7 @@ public class LnTcpServer {
             Socket newClientConnection;
             String remoteAddress;
             try {
-                serverSocket = new ServerSocket(getPortNumber());
+                serverSocket = new ServerSocket(portNumber);
                 serverSocket.setReuseAddress(true);
                 while (!socketListener.isInterrupted()) {
                     newClientConnection = serverSocket.accept();
@@ -238,14 +268,14 @@ public class LnTcpServer {
         synchronized (clients) {
             clients.add(handler);
         }
-        updateClientStateListener();
+        updateClientStateListeners();
     }
 
     protected void removeClient(ClientRxHandler handler) {
         synchronized (clients) {
             clients.remove(handler);
         }
-        updateClientStateListener();
+        updateClientStateListeners();
     }
 
     public int getClientCount() {

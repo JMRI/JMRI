@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -9,7 +10,7 @@ import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 
 /**
- * Frame displaying and programming a LocoNet clock monitor.
+ * Frame displaying the status of the a LocoNet over TCP server.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -21,59 +22,76 @@ import jmri.util.JmriJFrame;
  * @author Alex Shepherd Copyright (C) 2006
  * @author Randall Wood Copyright (C) 2017
  */
-public class LnTcpServerFrame extends JmriJFrame implements LnTcpServerListener {
+public class LnTcpServerFrame extends JmriJFrame {
 
-    JLabel portNumber;
-    JLabel portNumberLabel = new JLabel("  Port Number: ");
-    JLabel serverStatus = new JLabel("Server Status:         ");
-    JLabel clientStatus = new JLabel("   Client Count:  ");
+    private final JLabel portNumberLabel = new JLabel(Bundle.getMessage("PortLabel", 1234));
+    private final JLabel statusLabel = new JLabel(Bundle.getMessage("StatusLabel", Bundle.getMessage("Stopped"), 0));
 
-    JButton startButton = new JButton("Start Server");
-    JButton stopButton = new JButton("Stop Server");
+    private final JButton startButton = new JButton(Bundle.getMessage("StartButton"));
+    private final JButton stopButton = new JButton(Bundle.getMessage("StopButton"));
+    private final LnTcpServer server;
+    private final LnTcpServerListener listener;
 
-    private LnTcpServerFrame() {
+    /**
+     * Create a LocoNet over TCP server status window.
+     *
+     * @param server the server to monitor
+     */
+    public LnTcpServerFrame(LnTcpServer server) {
         super(Bundle.getMessage("ServerAction"));
+        this.server = server;
 
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
-        portNumber = new JLabel();
-
-        portNumber.setFocusable(false);
+        super.getContentPane().setLayout(new BoxLayout(super.getContentPane(), BoxLayout.Y_AXIS));
 
         // add GUI items
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(portNumberLabel);
-        panel.add(portNumber);
-        getContentPane().add(panel);
+        portNumberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        super.getContentPane().add(portNumberLabel);
 
-        panel = new JPanel();
+        JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(startButton);
         panel.add(stopButton);
-        getContentPane().add(panel);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        super.getContentPane().add(panel);
 
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(serverStatus);
-        panel.add(clientStatus);
-        getContentPane().add(panel);
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        super.getContentPane().add(statusLabel);
 
         startButton.addActionListener((ActionEvent a) -> {
-            LnTcpServer.getDefault().enable();
+            server.enable();
         });
 
         stopButton.addActionListener((ActionEvent a) -> {
-            LnTcpServer.getDefault().disable();
+            server.disable();
         });
 
-        pack();
+        this.listener = new LnTcpServerListener() {
+            @Override
+            public void notifyServerStateChanged(LnTcpServer s) {
+                if (s.equals(LnTcpServerFrame.this.server)) {
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        LnTcpServerFrame.this.updateServerStatus(s);
+                    });
+                }
+            }
+
+            @Override
+            public void notifyClientStateChanged(LnTcpServer s) {
+                if (s.equals(LnTcpServerFrame.this.server)) {
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        LnTcpServerFrame.this.updateClientStatus(s);
+                    });
+                }
+            }
+        };
+        server.addStateListener(listener);
+        super.pack();
     }
 
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
-        LnTcpServer.getDefault().setStateListner(null);
+        this.server.removeStateListener(this.listener);
         dispose();
         super.windowClosing(e);
         InstanceManager.deregister(this, LnTcpServerFrame.class);
@@ -95,48 +113,25 @@ public class LnTcpServerFrame extends JmriJFrame implements LnTcpServerListener 
     }
 
     /**
-     * Get the default server frame instance.
+     * Get the server status window for the default LocoNet over TCP server.
      *
      * @return the default server frame instance, creating it if needed
      */
     static public synchronized LnTcpServerFrame getDefault() {
         return InstanceManager.getOptionalDefault(LnTcpServerFrame.class).orElseGet(() -> {
-            LnTcpServerFrame self = new LnTcpServerFrame();
-            LnTcpServer server = LnTcpServer.getDefault();
-            server.setStateListner(self);
-            server.updateServerStateListener();
-            server.updateClientStateListener();
-            return InstanceManager.setDefault(LnTcpServerFrame.class, self);
+            return InstanceManager.setDefault(LnTcpServerFrame.class, new LnTcpServerFrame(LnTcpServer.getDefault()));
         });
     }
 
-    private void updateServerStatus() {
-        LnTcpServer server = LnTcpServer.getDefault();
-        if (portNumber != null) {
-            portNumber.setText(Integer.toString(server.getPortNumber()));
-            portNumberLabel.setEnabled(!server.isEnabled());
-        }
-        startButton.setEnabled(!server.isEnabled());
-        stopButton.setEnabled(server.isEnabled());
-        serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled"));
+    private void updateServerStatus(LnTcpServer s) {
+        portNumberLabel.setText(Bundle.getMessage("PortLabel", s.getPort()));
+        startButton.setEnabled(!s.isEnabled());
+        stopButton.setEnabled(s.isEnabled());
+        this.updateClientStatus(s);
     }
 
-    private void updateClientStatus() {
-        clientStatus.setText("   Client Count: " + Integer.toString(LnTcpServer.getDefault().getClientCount()));
-    }
-
-    @Override
-    public void notifyServerStateChanged(LnTcpServer s) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            updateServerStatus();
-        });
-    }
-
-    @Override
-    public void notifyClientStateChanged(LnTcpServer s) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            updateClientStatus();
-        });
+    private void updateClientStatus(LnTcpServer s) {
+        statusLabel.setText(Bundle.getMessage("StatusLabel", (s.isEnabled() ? Bundle.getMessage("Running") : Bundle.getMessage("Stopped")), s.getClientCount()));
     }
 
 }
