@@ -443,8 +443,11 @@ knows to look for routes of this name.
                                                     currentSensor, 
                                                     <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.DisplayOptions.html">JmriBeanComboBox.DisplayOptions</a>.DISPLAYNAME)
         
-        // to get the selected item
-        selectComboBox.getSelectedItem()                                         
+        // to get the selected item, depending on what you want:
+        selectComboBox.getNamedBean()                                       
+        selectComboBox.getSystemName()                                       
+        selectComboBox.getUserName()                                        
+        selectComboBox.getDisplayName()                                       
             </pre></code>
 
         <li>Table format:
