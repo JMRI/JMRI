@@ -169,8 +169,8 @@ public class Llnmon {
             return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_TWO_DIGITS",
                     new Integer(val/10), val%10);   // the integer is boxed in order to prevent display as a floating point value
         } else if ((val >= 100) && (val < 1000)) {
-            int hundreds = new Integer(val/100); // the integer is boxed in order to prevent display as a floating point value
-            int tens = new Integer((val - (hundreds * 100)) / 10);  // the integer is boxed in order to prevent display as a floating point value
+            int hundreds = val/100;
+            int tens = (val - (hundreds * 100)) / 10;
             int ones = val %10;
             return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_THREE_DIGITS",
                     hundreds, tens, ones);
