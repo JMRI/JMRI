@@ -2,10 +2,15 @@ package jmri.jmrix.cmri.serial;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import jmri.InstanceManager;
+import jmri.Light;
+import jmri.Sensor;
+import jmri.Turnout;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
+
 
     public SerialTrafficController() {
         super();

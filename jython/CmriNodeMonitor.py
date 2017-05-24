@@ -4,7 +4,7 @@
 #
 # Since JMRI 3.9.4
 #
-# only handles 1st CMRI connection:  tc should be iterated over the full list
+# only handles 1st CMRI connection:  get(0) should be iterated over the full list
 
 import jmri
 
@@ -22,7 +22,7 @@ class CmriNodeMonitor(jmri.jmrit.automat.AbstractAutomaton) :
         while i < self.maxNodeAddr :
             x = (i * 1000) + 1
             txt = "CT" + str(x)
-            node = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName(txt, self.tc)
+            node = jmri.InstanceManager.getList(jmri.jmrix.cmri.CMRISystemConnectionMemo).get(0).getNodeFromSystemName(txt, self.tc)
             if (node != None) :
                 print "Start monitoring C/MRI node " + str(i)
                 self.nodeList.append(node)
@@ -43,4 +43,6 @@ class CmriNodeMonitor(jmri.jmrit.automat.AbstractAutomaton) :
         self.waitMsec(self.delay)        
         return 1
 
-CmriNodeMonitor().start()
+c = CmriNodeMonitor()
+c.setName("CmriNodeMonitor")
+c.start()

@@ -199,7 +199,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesInitial() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS1", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS2", "ab");
         SerialSensor s3 = new SerialSensor("CS3", "abc");
         b.registerSensor(s1, 0);
@@ -218,7 +218,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChanges2ndByte() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS9", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS10", "ab");
         SerialSensor s3 = new SerialSensor("CS11", "abc");
         b.registerSensor(s1, 8);
@@ -238,7 +238,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesShortReply() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS9", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS10", "ab");
         SerialSensor s3 = new SerialSensor("CS11", "abc");
         b.registerSensor(s1, 8);
@@ -264,7 +264,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesEmptyReply() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS9", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("CS1"));
+        Assert.assertEquals("check bit number", 1, memo.getBitFromSystemName("CS1"));
         SerialSensor s2 = new SerialSensor("CS10", "ab");
         SerialSensor s3 = new SerialSensor("CS11", "abc");
         b.registerSensor(s1, 8);
@@ -368,6 +368,7 @@ public class SerialNodeTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.jmrix.cmri.CMRISystemConnectionMemo.reset();
         // replace the SerialTrafficController
         stcs = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();

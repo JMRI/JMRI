@@ -27,6 +27,7 @@ public class LZV100FrameTest {
 
         LZV100Frame f = new LZV100Frame(new XNetSystemConnectionMemo(tc));
         Assert.assertNotNull(f);
+        f.dispose();
     }
 
     @Before
