@@ -812,6 +812,14 @@
                     <groupId>com.digi</groupId>
                     <artifactId>android-sdk-addon</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.rxtx</groupId>
+                    <artifactId>rxtx</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.rxtx</groupId>
+                    <artifactId>rxtx-native</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
