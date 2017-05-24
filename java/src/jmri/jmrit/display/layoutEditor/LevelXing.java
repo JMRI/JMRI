@@ -1392,7 +1392,7 @@ public class LevelXing extends LayoutTrack {
         if (-1 != block2NameComboBox.getSelectedIndex()) {
             newName = block2NameComboBox.getSelectedDisplayName();
         } else {
-            newName = (null != newName) ? newName.trim() : "";
+            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
         }
         if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use

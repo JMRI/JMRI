@@ -555,7 +555,7 @@ public class LayoutEditorTools {
             turnout = null;
             layoutTurnout = null;
             if (!crossover) {
-                str = turnoutNameField.getText().trim();
+                str = NamedBean.normalizeUserName(turnoutNameField.getText());
             } else {
                 str = xoverTurnoutName.trim();
             }
@@ -2363,7 +2363,7 @@ public class LayoutEditorTools {
     }
 
     private LayoutBlock getBlockFromEntry(JTextField blockNameField) {
-        String str = blockNameField.getText().trim();
+        String str = NamedBean.normalizeUserName(blockNameField.getText());
         if (str.equals("")) {
             JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame, rb.getString("SignalsError9"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
