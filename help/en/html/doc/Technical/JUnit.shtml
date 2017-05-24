@@ -729,7 +729,7 @@ environment.
       
       Recently, e.g. 2016, some tests have been developed
       using the
-      <a href="https://jemmy.java.net/tutorial.html">jemmy</a> tool.  See e.g. the Speedometer tests
+      <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the Speedometer tests
       <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a> 
       for an example.
 
@@ -832,7 +832,7 @@ environment.
       <p>We may want to consider:</p>
 
       <ul>
-        <li>using <a href="https://jemmy.java.net/">Jemmy</a> for
+        <li>using <a href="http://wiki.netbeans.org/Jemmy">Jemmy</a> for
         UI tests instead of JFCUnit, since Jemmy can be used by
         Junit 4 tests, while JFCUnit requires extending Junit 3
         TestCase class.</li>
