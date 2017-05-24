@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import jmri.ConfigureManager;
@@ -121,6 +120,18 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
+        List<BlockOrder> orders = warrant.getBlockOrders();
+        if (orders.size()!=7) {
+            System.out.println();
+            System.out.println(warrant.getSystemName()+" " +warrant.getUserName());
+            for (BlockOrder bo : orders) {
+                System.out.println(bo.toString());
+            }
+            List<ThrottleSetting> commands = warrant.getThrottleCommands();
+            for (ThrottleSetting ts : commands) {
+                System.out.println(ts.toString());
+            }
+        }
         Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
         Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
 
@@ -174,11 +185,12 @@ public class NXFrameTest extends jmri.util.SwingTestCase {
         // passed test - cleanup.  Do it here so failure leaves traces.
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
-        TestHelper.disposeWindow(panel, this);
+        panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+//        TestHelper.disposeWindow(panel, this);
 
         // Dialog has popped up, so handle that. First, locate it.
-        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
-        TestHelper.disposeWindow(dialogList.get(0), this);
+//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
+//       TestHelper.disposeWindow(dialogList.get(0), this);
 
         // confirm one message logged
         jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
