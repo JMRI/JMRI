@@ -99,10 +99,10 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
      // to make location for accessibility & testing easier
      sysName.setName("sysName");
      userName.setName("userName");
-            
+
      setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
      JPanel p;
-     p = new JPanel(); 
+     p = new JPanel();
      p.setLayout(new FlowLayout());
      p.setLayout(new java.awt.GridBagLayout());
      java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
@@ -169,7 +169,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
 
         String sName = null;
-        String curAddress = sysName.getText();
+        String curAddress = manager.normalizeSystemName(sysName.getText());
 
         for (int x = 0; x < numberOfSensors; x++) {
             try {
@@ -191,12 +191,12 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating       
+                return; // without creating
             }
 
-            String user = userName.getText();
+            String user = NamedBean.normalizeUserName(userName.getText());
             if ((x != 0) && user != null && !user.equals("")) {
-                user = userName.getText() + ":" + x;
+                user += ":" + x;
             }
             if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
                 s.setUserName(user);
