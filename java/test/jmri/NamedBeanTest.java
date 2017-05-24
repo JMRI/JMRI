@@ -18,7 +18,7 @@ public class NamedBeanTest extends TestCase {
     public void testNormalizePassThrough() {
         String testString = "  foo ";
         String normalForm = NamedBean.normalizeUserName(testString);
-        Assert.assertEquals(testString, normalForm);
+        Assert.assertEquals("foo", normalForm);
     }
 
     

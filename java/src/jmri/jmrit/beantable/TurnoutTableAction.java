@@ -455,6 +455,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t.setInhibitOperation(false);
                     @SuppressWarnings("unchecked") // cast to JComboBox<String> required in OPSEDITCOL
                     JComboBox<String> cb = (JComboBox<String>) getValueAt(row, OPSONOFFCOL);
+                    log.debug("opsSelected = {}", getValueAt(row, OPSONOFFCOL).toString());
                     editTurnoutOperation(t, cb);
                 } else if (col == EDITCOL) {
                     class WindowMaker implements Runnable {
@@ -1027,7 +1028,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create a JButton to edit a turnout operation.
+     * Create a JButton to edit a turnout's operation.
      *
      * @return the JButton
      */
@@ -1038,7 +1039,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Add the content and make the appropriate selection to a combox box for a
-     * turnout's automation choices
+     * turnout's automation choices.
      *
      * @param t  turnout
      * @param cb the JComboBox
@@ -1048,9 +1049,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         cb.removeAllItems();
         Vector<String> strings = new Vector<String>(20);
         Vector<String> defStrings = new Vector<String>(20);
-        if (log.isDebugEnabled()) {
-            log.debug("start " + ops.length);
-        }
+        log.debug("opsCombo start {}", ops.length);
         for (int i = 0; i < ops.length; ++i) {
             if (log.isDebugEnabled()) {
                 log.debug("isDef " + ops[i].isDefinitive()
@@ -1063,9 +1062,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 strings.addElement(ops[i].getName());
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("end");
-        }
+        log.debug("opsCombo end");
         for (int i = 0; i < ops.length; ++i) {
             if (ops[i].isDefinitive()
                     && ops[i].matchFeedbackMode(t.getFeedbackMode())) {
@@ -1080,7 +1077,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             try {
                 strings.insertElementAt(defStrings.elementAt(i), i + 2);
             } catch (java.lang.ArrayIndexOutOfBoundsException obe) {
-                //            strings.insertElementAt(defStrings.elementAt(i),i+2);
+                // just catch it
             }
         }
         for (int i = 0; i < strings.size(); ++i) {
@@ -1098,10 +1095,10 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     /**
-     * set the turnout's operation info based on the contents of the combo box
+     * Set the turnout's operation info based on the contents of the combo box.
      *
-     * @param t  turnout
-     * @param cb JComboBox
+     * @param t  turnout being configured
+     * @param cb JComboBox for ops for t in the TurnoutTable
      */
     protected void setTurnoutOperation(Turnout t, JComboBox<String> cb) {
         switch (cb.getSelectedIndex()) {
@@ -1127,31 +1124,37 @@ public class TurnoutTableAction extends AbstractTableAction {
         beanEdit.actionPerformed(null);
     }
 
+    private static boolean editingOps = false;
+
     /**
-     * pop up a TurnoutOperationConfig for the turnout
+     * Pop up a TurnoutOperationConfig for the turnout.
      *
      * @param t   turnout
      * @param box JComboBox that triggered the edit
      */
     protected void editTurnoutOperation(Turnout t, JComboBox<String> box) {
-        TurnoutOperation op = t.getTurnoutOperation();
-        if (op == null) {
-            TurnoutOperation proto = TurnoutOperationManager.getInstance().getMatchingOperationAlways(t);
-            if (proto != null) {
-                op = proto.makeNonce(t);
-                t.setTurnoutOperation(op);
+        if (!editingOps) { // don't open a second edit ops pane
+            editingOps = true;
+            TurnoutOperation op = t.getTurnoutOperation();
+            if (op == null) {
+                TurnoutOperation proto = TurnoutOperationManager.getInstance().getMatchingOperationAlways(t);
+                if (proto != null) {
+                    op = proto.makeNonce(t);
+                    t.setTurnoutOperation(op);
+                }
             }
-        }
-        if (op != null) {
-            if (!op.isNonce()) {
-                op = op.makeNonce(t);
+            if (op != null) {
+                if (!op.isNonce()) {
+                    op = op.makeNonce(t);
+                }
+                // make and show edit dialog
+                log.debug("TurnoutOpsEditDialog starting");
+                TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
+                dialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(f, "There is no operation type suitable for this turnout",
+                        "No operation type", JOptionPane.ERROR_MESSAGE);
             }
-            // make and show edit dialog
-            TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
-            dialog.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(f, "There is no operation type suitable for this turnout",
-                    "No operation type", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1176,7 +1179,9 @@ public class TurnoutTableAction extends AbstractTableAction {
             myTurnout = t;
             config = TurnoutOperationConfig.getConfigPanel(op);
             setTitle();
+            log.debug("TurnoutOpsEditDialog title set");
             if (config != null) {
+                log.debug("OpsEditDialog opening");
                 Box outerBox = Box.createVerticalBox();
                 outerBox.add(config);
                 Box buttonBox = Box.createHorizontalBox();
@@ -1207,6 +1212,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                             myOp = null;
                         }
                         self.setVisible(false);
+                        editingOps = false;
                     }
                 });
                 JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
@@ -1214,6 +1220,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         self.setVisible(false);
+                        editingOps = false;
                     }
                 });
                 buttonBox.add(Box.createHorizontalGlue());
@@ -1224,6 +1231,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                 buttonBox.add(cancelButton);
                 outerBox.add(buttonBox);
                 getContentPane().add(outerBox);
+                this.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        editingOps = false; // reset Editmarker
+                    }
+                });
+            } else {
+                log.error("Error opening Turnout automation edit pane");
             }
             pack();
         }

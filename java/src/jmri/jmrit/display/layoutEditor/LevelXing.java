@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -123,7 +124,6 @@ public class LevelXing extends LayoutTrack {
     /**
      * Accessor methods
      */
-
     public String getBlockNameAC() {
         return blockNameAC;
     }
@@ -711,6 +711,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * return the coordinates for a specified connection type
+     *
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
@@ -945,17 +946,18 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * return the connection type for a point
-     * @param p the point
-     * @param useRectangles use hit rectangle (false: use hit circles)
+     *
+     * @param p                  the point
+     * @param useRectangles      use hit rectangle (false: use hit circles)
      * @param requireUnconnected (only hit disconnected connections)
      * @return value representing the point connection type
      * @since 7.4.?
      */
-    public int hitTestPoint(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
         Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
-        
+
         if (!requireUnconnected) {
             //check the center point
             if (r.contains(getCoordsCenter())) {
@@ -1390,7 +1392,7 @@ public class LevelXing extends LayoutTrack {
         if (-1 != block2NameComboBox.getSelectedIndex()) {
             newName = block2NameComboBox.getSelectedDisplayName();
         } else {
-            newName = (null != newName) ? newName.trim() : "";
+            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
         }
         if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -1623,6 +1625,11 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    /**
+     * draw this level crossing
+     *
+     * @param g2 the graphics port to draw to
+     */
     public void draw(Graphics2D g2) {
         if (isMainlineBD() && (!isMainlineAC())) {
             drawXingAC(g2);
@@ -1632,7 +1639,6 @@ public class LevelXing extends LayoutTrack {
             drawXingAC(g2);
         }
     }   // drawHidden(Graphics2D g2)
-
 
     private void drawXingAC(Graphics2D g2) {
         // set color - check for an AC block
@@ -1662,5 +1668,42 @@ public class LevelXing extends LayoutTrack {
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
+    public void drawEditControls(Graphics2D g2) {
+        Point2D pt = getCoordsCenter();
+        g2.setColor(defaultTrackColor);
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsA();
+
+        if (getConnectA() == null) {
+            g2.setColor(Color.magenta);
+        } else {
+            g2.setColor(Color.blue);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsB();
+
+        if (getConnectB() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsC();
+
+        if (getConnectC() == null) {
+            g2.setColor(Color.magenta);
+        } else {
+            g2.setColor(Color.blue);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsD();
+
+        if (getConnectD() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+    }
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
 }

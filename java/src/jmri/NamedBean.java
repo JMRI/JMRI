@@ -307,8 +307,8 @@ public interface NamedBean {
     /**
      * Enforces, and as a user convenience converts to, the standard form for a user name.
      * <p>
-     * This implementation just passes the name through, but later versions might 
-     * e.g. trim leading and trailing spaces.
+     * This implementation just does a trim(), but later versions might 
+     * e.g. do more extensive things.
      *
      * @param inputName User name to be normalized
      * @throws BadUserNameException If the inputName can't be converted to normalized form
@@ -316,9 +316,7 @@ public interface NamedBean {
      */
     @CheckReturnValue
     static public @CheckForNull String normalizeUserName(@CheckForNull String inputName) throws BadUserNameException {
-        // uncomment next line to allow debugging of trimmed user names
-        // return inputName.trim();
-        return inputName;
+        return inputName.trim();
     }
     public class BadUserNameException extends IllegalArgumentException {}
     public class BadSystemNameException extends IllegalArgumentException {}
