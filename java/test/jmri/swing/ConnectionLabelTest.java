@@ -8,11 +8,13 @@ import org.junit.Before;
 import org.junit.After;
 import javax.swing.JFrame;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import jmri.jmrix.ConnectionStatus;
 
 /**
- * Tests for the jmri.jmrix.lenz.lv102.ConnectionLabel class
+ * Tests for the jmri.jmrix.ConnectionLabel class
  *
  * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author  Paul Bender Copyright (C) 2017
  */
 public class ConnectionLabelTest {
 
@@ -23,6 +25,31 @@ public class ConnectionLabelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConnectionLabel action = new ConnectionLabel(config);
         Assert.assertNotNull(action);
+    }
+
+    @Test
+    public void checkSuccessColor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UP);
+        ConnectionLabel action = new ConnectionLabel(config);
+        Assert.assertEquals("Color for Failure",java.awt.Color.BLACK,action.getForeground());
+    }
+
+    @Test
+    public void checkUnknownColor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UNKNOWN);
+        ConnectionLabel action = new ConnectionLabel(config);
+        // unknown is currently the same color as up.
+        Assert.assertEquals("Color for Failure",java.awt.Color.BLACK,action.getForeground());
+    }
+
+    @Test
+    public void checkFailColor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_DOWN);
+        ConnectionLabel action = new ConnectionLabel(config);
+        Assert.assertEquals("Color for Failure",java.awt.Color.RED,action.getForeground());
     }
 
     @Before
