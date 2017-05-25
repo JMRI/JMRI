@@ -316,7 +316,11 @@ public interface NamedBean {
      */
     @CheckReturnValue
     static public @CheckForNull String normalizeUserName(@CheckForNull String inputName) throws BadUserNameException {
-        return inputName.trim();
+        String result = inputName;
+        if (null != inputName) {
+            result = result.trim();            
+        }
+        return result;
     }
     public class BadUserNameException extends IllegalArgumentException {}
     public class BadSystemNameException extends IllegalArgumentException {}
