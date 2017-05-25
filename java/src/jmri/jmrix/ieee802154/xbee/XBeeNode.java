@@ -1,11 +1,14 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -13,9 +16,6 @@ import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
 /**
@@ -187,6 +187,7 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * XBee Nodes store an identifier. we want to be able to store and retrieve
      * this information.
+     * @param id text id for node
      */
     public void setIdentifier(String id) {
         try {
@@ -399,6 +400,8 @@ public class XBeeNode extends IEEE802154Node {
      *
      * @param pin the pin number to change.
      * @param pr a jmri.Sensor.PullResistance value used to configure the pin.
+     * @throws TimeoutException lock timed out
+     * @throws XBeeException invalid Xbee values, pins
      */
     void setPRParameter(int pin, jmri.Sensor.PullResistance pr) throws TimeoutException,XBeeException {
        // flip the bits in the PR data byte, and then send to the node.
@@ -465,6 +468,11 @@ public class XBeeNode extends IEEE802154Node {
               } else {
                 PRValue[0]=(byte) (PRValue[0] & (byte) 0x7F);
               }
+                break;
+            default:
+                log.warn("Unhandled pin value: {}", pin);
+                break;
+              
           }
           device.setParameter("PR",PRValue);
           device.applyChanges();  // force the XBee to start using the new value.
@@ -481,8 +489,10 @@ public class XBeeNode extends IEEE802154Node {
     *
     * @param pin the pin number
     * @return a jmri.Sensor.PullResistance value indicating the current state of    * the pullup resistor. 
+ * @throws TimeoutException lock timeout
+ * @throws XBeeException invalid pins or values
     */
-    jmri.Sensor.PullResistance getPRValueForPin(int pin) throws TimeoutException,XBeeException {
+    jmri.Sensor.PullResistance getPRValueForPin(int pin) throws TimeoutException, XBeeException {
        if(pin>7 || pin < 0){
           throw new IllegalArgumentException("Invalid pin specified");
        }

@@ -167,6 +167,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     /**
      * Can the port accept additional characters? Yes, always
+     * @return always true
      */
     public boolean okToSend() {
         return true;
@@ -219,6 +220,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     /**
      * Local method to do specific port configuration
+     * @throws gnu.io.UnsupportedCommOperationException if options not supported by port
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -259,18 +261,22 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     /**
      * Option 1 not used, so return a null string.
+     * @return fixed string 'Adapter'
      */
     public String option1Name() {
         return "Adapter";
     }
 
     private String[] validSpeeds = new String[]{"(automatic)"};
+    @SuppressWarnings("unused")
     private int[] validSpeedValues = new int[]{9600};
+    @SuppressWarnings("unused")
     private String selectedSpeed = validSpeeds[0];
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
      * options. May not be null, but may have zero entries
+     * @return empty string array
      */
     public String[] validOption2() {
         return new String[]{""};
@@ -279,6 +285,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Get a String that says what Option 2 represents May be an empty string,
      * but will not be null
+     * @return empty string
      */
     public String option2Name() {
         return "";

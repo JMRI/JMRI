@@ -27,12 +27,14 @@ public class JmriServer {
     protected ZeroConfService service = null;
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
-    protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<ClientListener>();
+    protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<>();
 
     private static JmriServer _instance = null;
 
-    /*
-     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
+    /**
+     * @return the default instance of a JmriServer
+     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()}
+     * instead.
      */
     @Deprecated
     public synchronized static JmriServer instance() {
@@ -101,7 +103,7 @@ public class JmriServer {
     }
 
     protected void advertise(String type) {
-        this.advertise(type, new HashMap<String, String>());
+        this.advertise(type, new HashMap<>());
     }
 
     protected void advertise(String type, HashMap<String, String> properties) {
@@ -112,9 +114,9 @@ public class JmriServer {
     }
 
     public void stop() {
-        for (ClientListener client : this.connectedClientThreads) {
+        this.connectedClientThreads.forEach((client) -> {
             client.stop(this);
-        }
+        });
         this.listenThread = null;
         this.service.stop();
         if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {

@@ -180,7 +180,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
                     popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            //Just brings up the standard allocate extra frame, this could be expanded in the future 
+                            //Just brings up the standard allocate extra frame, this could be expanded in the future
                             //As a point and click operation.
                             df.allocateExtraSection(e, at);
                         }
@@ -312,7 +312,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         int retval = JOptionPane.showOptionDialog(this,
                 Bundle.getMessage("EditCurrentBlockValue"), namedBlock.getName(),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                options, options[2]);
+                options, options[1]);
 
         if (retval != 1) {
             return;

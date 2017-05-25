@@ -318,9 +318,8 @@ public class SwitchboardEditor extends Editor {
 
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
-        super.setTargetPanelSize(300, 300);
+        super.getTargetFrame().setSize(550, 330); // width x height
         // To do: Add component listener to handle frame resizing event
-
 
         // set scrollbar initial state
         setScroll(SCROLL_NONE);

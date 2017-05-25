@@ -31,7 +31,7 @@ import purejavacomm.UnsupportedCommOperationException;
 public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     public EliteAdapter() {
-        super();
+        super(new EliteXNetSystemConnectionMemo());
         option1Name = "FlowControl";
         options.put(option1Name, new Option("Elite connection uses : ", validOption1));
         option2Name = "Buffer";

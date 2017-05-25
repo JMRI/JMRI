@@ -120,26 +120,31 @@ public class PositionablePopupUtil {
 
     public void setFixedTextMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditFixed"));
+        JMenuItem jmi = null;
         if (getFixedWidth() == 0) {
-            edit.add("Width = Auto");
+            jmi = edit.add("Width = Auto");
         } else {
-            edit.add("Width = " + _parent.maxWidth());
+            jmi = edit.add("Width = " + _parent.maxWidth());
         }
+        jmi.setEnabled(false);
 
         if (getFixedHeight() == 0) {
-            edit.add("Height = Auto");
+            jmi = edit.add("Height = Auto");
         } else {
-            edit.add("Height = " + _parent.maxHeight());
+            jmi = edit.add("Height = " + _parent.maxHeight());
         }
+        jmi.setEnabled(false);
 
         edit.add(CoordinateEdit.getFixedSizeEditAction(_parent));
+
         popup.add(edit);
     }
 
     public void setTextMarginMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditMargin"));
         if ((fixedHeight == 0) || (fixedWidth == 0)) {
-            edit.add("Margin = " + getMargin());
+            JMenuItem jmi = edit.add("Margin = " + getMargin());
+            jmi.setEnabled(false);
             edit.add(CoordinateEdit.getMarginEditAction(_parent));
         }
         popup.add(edit);
@@ -154,7 +159,8 @@ public class PositionablePopupUtil {
 
     public void setTextBorderMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(Bundle.getMessage("EditBorder"));
-        edit.add("Border Size = " + borderSize);
+        JMenuItem jmi = edit.add("Border Size = " + borderSize);
+        jmi.setEnabled(false);
         edit.add(CoordinateEdit.getBorderEditAction(_parent));
         JMenu colorMenu = new JMenu(Bundle.getMessage("BorderColorMenu"));
         makeColorMenu(colorMenu, BORDER_COLOR);
@@ -285,7 +291,7 @@ public class PositionablePopupUtil {
             _parent.setBackground(color);
         }
         if (_hasBackground) {
-            setMargin(margin);  //This rebuilds margin and sets it colour.            
+            setMargin(margin);  //This rebuilds margin and sets it colour.
         }
         _parent.updateSize();
     }
@@ -488,6 +494,9 @@ public class PositionablePopupUtil {
                     case BORDER_COLOR:
                         setBorderColor(desiredColor);
                         break;
+                    default:
+                        log.warn("Unhandled color type code: {}", colorType);
+                        break;
                 }
                 _parent.getEditor().setAttributes(_self, _parent);
             }
@@ -519,6 +528,10 @@ public class PositionablePopupUtil {
                     color = defaultBorderColor;
                 }
                 setColorButton(getBorderColor(), color, r);
+                break;
+            default:
+                log.warn("Unhandled color type code: {}", colorType);
+                break;
         }
         colorButtonGroup.add(r);
         menu.add(r);

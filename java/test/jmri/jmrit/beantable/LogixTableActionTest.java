@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.Logix;
 import jmri.Memory;
 import jmri.Route;
 import jmri.Sensor;
@@ -52,7 +53,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         });
 
         _logixTable._addUserName.setText("TestLogix");
-        _logixTable._systemName.setText("TX");
+        _logixTable._systemName.setText("IX123");
         _logixTable._autoSystemName.setSelected(false);
         ThreadingUtil.runOnGUI(() -> {
             _logixTable.createPressed(null);
@@ -112,7 +113,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             _logixTable.addVariablePressed(null);
             _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_CONDITIONAL);
             _logixTable._variableStateBox.setSelectedIndex(i);
-            _logixTable._variableNameField.setText("C" + i);
+            _logixTable._variableNameField.setText("IX01C" + i);
             ThreadingUtil.runOnGUI(() -> {
                 _logixTable.updateVariablePressed();
             });
@@ -249,6 +250,10 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         assertNotNull("LogixTableAction is null!", _logixTable);        // test has begun
         _logixTable._suppressReminder = true;
 
+        Logix x1 = new jmri.implementation.DefaultLogix("IX01");
+        assertNotNull("Logix x1 is null!", x1);
+        InstanceManager.getDefault(jmri.LogixManager.class).register(x1);
+
         for (int i = 0; i < 10; i++) {
             Sensor s = InstanceManager.sensorManagerInstance().newSensor("IS" + i, "Sensor" + i);
             assertNotNull(i + "th Sensor is null!", s);
@@ -256,7 +261,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
             assertNotNull(i + "th Turnout is null!", t);
             Light l = InstanceManager.lightManagerInstance().newLight("IL" + (i), "Light" + i);
             assertNotNull(i + "th Light is null!", l);
-            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional("C" + i, "Conditional" + i);
+            Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional("IX01C" + i, "Conditional " + i);
             assertNotNull(i + "th Conditional is null!", c);
             Memory m = InstanceManager.memoryManagerInstance().provideMemory("IMemory" + i);
             assertNotNull(i + "th Memory is null!", m);

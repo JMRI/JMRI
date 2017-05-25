@@ -636,7 +636,7 @@ public class LRouteTableAction extends AbstractTableAction {
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
                 int testState = variable.getType();
-                //boolean negated = variable.isNegated(); 
+                //boolean negated = variable.isNegated();
                 int type;
                 switch (testState) {
                     case Conditional.TYPE_SENSOR_ACTIVE:
@@ -963,7 +963,7 @@ public class LRouteTableAction extends AbstractTableAction {
             updateButton.setToolTipText(rbx.getString("UpdateHint"));
             updateButton.setName("UpdateButton");
 
-            // Cancel button  
+            // Cancel button
             pb.add(cancelButton);
             cancelButton.addActionListener(this::cancelPressed);
             cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
@@ -1435,7 +1435,7 @@ public class LRouteTableAction extends AbstractTableAction {
             if (name == null || name.length() == 0) {
                 name = elt.getSysName();
             }
-            int state = elt.getState();    // actionData 
+            int state = elt.getState();    // actionData
             int actionType = 0;
             String params = "";
             switch (elt.getType()) {
@@ -1789,7 +1789,6 @@ public class LRouteTableAction extends AbstractTableAction {
         Conditional c = _conditionalManager.getBySystemName(cSystemName);
         if (c != null) {
             logix.deleteConditional(cSystemName);
-            _conditionalManager.deleteConditional(c);
             return true;
         }
         return false;
@@ -1867,7 +1866,7 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            // throw without creating any 
+            // throw without creating any
             throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(varList);
@@ -1919,7 +1918,7 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            // throw without creating any 
+            // throw without creating any
             throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(triggerList);
@@ -2005,6 +2004,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 return INPUT_LIGHT_STATES;
             case SIGNAL_TYPE:
                 return INPUT_SIGNAL_STATES;
+            default:
+                log.warn("Unhandled object type: {}", type);
+                break;
         }
         return null;
     }
@@ -2019,6 +2021,8 @@ public class LRouteTableAction extends AbstractTableAction {
                 return OUTPUT_LIGHT_STATES;
             case SIGNAL_TYPE:
                 return OUTPUT_SIGNAL_STATES;
+            default:
+                log.warn("Unhandled type: {}", type);
         }
         return null;
     }
@@ -2100,6 +2104,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     return rbx.getString("Type");
                 case INCLUDE_COLUMN:
                     return Bundle.getMessage("Include");
+                default:
+                    log.warn("Unhandled column type: {}", c);
+                    break;
             }
             return "";
         }
@@ -2574,6 +2581,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     return VETO_ON_INACTIVE;
                 case VETO + Conditional.TYPE_SENSOR_ACTIVE:
                     return VETO_ON_ACTIVE;
+                default:
+                    log.error("Unhandled test state type: {}", _state);
+                    break;
             }
             return "";
         }
@@ -2614,6 +2624,8 @@ public class LRouteTableAction extends AbstractTableAction {
                     return VETO_ON_CLOSED;
                 case VETO + Conditional.TYPE_TURNOUT_THROWN:
                     return VETO_ON_THROWN;
+                default:
+                    log.warn("Unhandled test state type: {}", _state);
             }
             return "";
         }
@@ -2654,6 +2666,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     return VETO_ON_UNLIT;
                 case VETO + Conditional.TYPE_LIGHT_ON:
                     return VETO_ON_LIT;
+                default:
+                    log.warn("Unhandled test state: {}", _state);
+                    break;
             }
             return "";
         }
@@ -2720,6 +2735,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     return VETO_ON_SIGNAL_LIT;
                 case VETO + Conditional.TYPE_SIGNAL_HEAD_HELD:
                     return VETO_ON_SIGNAL_HELD;
+                default:
+                    log.warn("Unhandled test state: {}", _state);
+                    break;
             }
             return "";
         }
@@ -2793,6 +2811,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     return SET_TO_ACTIVE;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
+                default:
+                    log.warn("Unhandled set to state: {}", _state);
+                    break;
             }
             return "";
         }
@@ -2825,6 +2846,8 @@ public class LRouteTableAction extends AbstractTableAction {
                     return SET_TO_THROWN;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
+                default:
+                    log.warn("Unhandled set to state: {}", _state);
             }
             return "";
         }
@@ -2857,6 +2880,8 @@ public class LRouteTableAction extends AbstractTableAction {
                     return SET_TO_OFF;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
+                default:
+                    log.warn("Unhandled set to state: {}", _state);
             }
             return "";
         }
@@ -2903,6 +2928,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     return SET_TO_LIT;
                 case SET_SIGNAL_HELD:
                     return SET_TO_HELD;
+                default:
+                    log.warn("Unhandled set to state: {}", _state);
+                    break;
             }
             return "";
         }
@@ -2952,6 +2980,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     return ALIGN_SIGNAL;
                 case ALL_TYPE:
                     return ALIGN_ALL;
+                default:
+                    log.warn("Unhandled align type state: {}", _state);
+                    break;
             }
             return "";
         }

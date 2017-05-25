@@ -18,8 +18,10 @@ public class LayoutEditorToolsTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditorTools t = new LayoutEditorTools(new LayoutEditor());
+        LayoutEditor e = new LayoutEditor();
+        LayoutEditorTools t = new LayoutEditorTools(e);
         Assert.assertNotNull("exists", t);
+        e.dispose();
     }
 
     // from here down is testing infrastructure

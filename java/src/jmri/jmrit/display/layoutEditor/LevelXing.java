@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -7,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -24,6 +26,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -73,7 +76,6 @@ public class LevelXing extends LayoutTrack {
     private LayoutEditor layoutEditor = null;
 
     // persistent instances variables (saved between sessions)
-    private String ident = "";
     private String blockNameAC = "";
     private String blockNameBD = "";
 
@@ -123,10 +125,6 @@ public class LevelXing extends LayoutTrack {
     /**
      * Accessor methods
      */
-    public String getID() {
-        return ident;
-    }
-
     public String getBlockNameAC() {
         return blockNameAC;
     }
@@ -150,6 +148,9 @@ public class LevelXing extends LayoutTrack {
             case POINTD:
                 namedBean = signalDHeadNamed;
                 break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
+                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -172,6 +173,9 @@ public class LevelXing extends LayoutTrack {
             case POINTD:
                 namedBean = signalDMastNamed;
                 break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
+                break;
         }
         if (namedBean != null) {
             return namedBean.getBean();
@@ -193,6 +197,9 @@ public class LevelXing extends LayoutTrack {
                 break;
             case POINTD:
                 namedBean = sensorDNamed;
+                break;
+            default:
+                log.warn("Unhandled loc: {}", loc);
                 break;
         }
         if (namedBean != null) {
@@ -579,6 +586,9 @@ public class LevelXing extends LayoutTrack {
                 return connectC;
             case LEVEL_XING_D:
                 return connectD;
+            default:
+                log.warn("Unhandled loc: {}", location);
+                break;
         }
         log.error("Invalid Point Type " + location); //I18IN
         throw new jmri.JmriException("Invalid Point");
@@ -698,6 +708,50 @@ public class LevelXing extends LayoutTrack {
         double x = center.getX() - dispB.getX();
         double y = center.getY() - dispB.getY();
         return new Point2D.Double(x, y);
+    }
+
+    /**
+     * return the coordinates for a specified connection type
+     *
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        Point2D result = center;
+        double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
+        switch (connectionType) {
+            case LEVEL_XING_CENTER:
+                break;
+            case LEVEL_XING_A:
+                result = getCoordsA();
+                break;
+            case LEVEL_XING_B:
+                result = getCoordsB();
+                break;
+            case LEVEL_XING_C:
+                result = getCoordsC();
+                break;
+            case LEVEL_XING_D:
+                result = getCoordsD();
+                break;
+            default:
+                log.error("Invalid connection type " + connectionType); //I18IN
+        }
+        return result;
+    }
+
+    /**
+     * @return the bounds of this crossing
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        result.add(getCoordsD());
+        return result;
     }
 
     /**
@@ -905,6 +959,58 @@ public class LevelXing extends LayoutTrack {
         dispB = pt;
     }
 
+    /**
+     * return the connection type for a point
+     *
+     * @param p                  the point
+     * @param useRectangles      use hit rectangle (false: use hit circles)
+     * @param requireUnconnected (only hit disconnected connections)
+     * @return value representing the point connection type
+     * @since 7.4.?
+     */
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
+        int result = NONE;  // assume point not on connection
+
+        Rectangle2D r = layoutEditor.trackControlCircleRectAt(p);
+
+        if (!requireUnconnected) {
+            //check the center point
+            if (r.contains(getCoordsCenter())) {
+                result = LayoutTrack.LEVEL_XING_CENTER;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectA() == null)) {
+            //check the A connection point
+            if (r.contains(getCoordsA())) {
+                result = LayoutTrack.LEVEL_XING_A;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectB() == null)) {
+            //check the B connection point
+            if (r.contains(getCoordsB())) {
+                //mouse was pressed on this connection point
+                result = LayoutTrack.LEVEL_XING_B;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectC() == null)) {
+            //check the C connection point
+            if (r.contains(getCoordsC())) {
+                result = LayoutTrack.LEVEL_XING_C;
+            }
+        }
+
+        if (!requireUnconnected || (getConnectD() == null)) {
+            //check the D connection point
+            if (r.contains(getCoordsD())) {
+                result = LayoutTrack.LEVEL_XING_D;
+            }
+        }
+        return result;
+    }
+
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
     public String connectBName = "";
@@ -960,27 +1066,33 @@ public class LevelXing extends LayoutTrack {
             popup = new JPopupMenu();
         }
         if (isEditable) {
-            popup.add(rb.getString("LevelCrossing"));
+            JMenuItem jmi = popup.add(rb.getString("LevelCrossing"));
+            jmi.setEnabled(false);
+
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.equals(""))) {
-                popup.add(Bundle.getMessage("NoBlockX", 1));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
             } else {
-                popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 1) + ": " + getLayoutBlockAC().getID());
                 blockACAssigned = true;
             }
+            jmi.setEnabled(false);
+
             if ((blockNameBD == null) || (blockNameBD.equals(""))) {
-                popup.add(Bundle.getMessage("NoBlockX", 2));
+                jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
             } else {
-                popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
+                jmi = popup.add(Bundle.getMessage("Block_ID", 2) + ": " + getLayoutBlockBD().getID());
                 blockBDAssigned = true;
             }
+            jmi.setEnabled(false);
 
             if (hidden) {
-                popup.add(rb.getString("Hidden"));
+                jmi = popup.add(rb.getString("Hidden"));
             } else {
-                popup.add(rb.getString("NotHidden"));
+                jmi = popup.add(rb.getString("NotHidden"));
             }
+            jmi.setEnabled(false);
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
@@ -1176,30 +1288,20 @@ public class LevelXing extends LayoutTrack {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));
             panel1.add(block1NameLabel);
             panel1.add(block1NameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(block1NameComboBox, false, true);
-            } else {
-                block1NameComboBox.setEditable(true);
-                block1NameComboBox.getEditor().setItem("");
-                block1NameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(block1NameComboBox, false, true);
             block1NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel1);
+
             // setup block 2 name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));
             panel2.add(block2NameLabel);
             panel2.add(block2NameComboBox);
-            if (true) {
-                layoutEditor.setupComboBox(block2NameComboBox, false, true);
-            } else {
-                block2NameComboBox.setEditable(true);
-                block2NameComboBox.getEditor().setItem("");
-                block2NameComboBox.setSelectedIndex(-1);
-            }
+            layoutEditor.setupComboBox(block2NameComboBox, false, true);
             block2NameComboBox.setToolTipText(rb.getString("EditBlockNameHint"));
             contentPane.add(panel2);
+
             // set up Edit 1 Block and Edit 2 Block buttons
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
@@ -1305,7 +1407,7 @@ public class LevelXing extends LayoutTrack {
         if (-1 != block2NameComboBox.getSelectedIndex()) {
             newName = block2NameComboBox.getSelectedDisplayName();
         } else {
-            newName = (null != newName) ? newName.trim() : "";
+            newName = (null != newName) ? NamedBean.normalizeUserName(newName) : "";
         }
         if (!blockNameBD.equals(newName)) {
             // block has changed, if old block exists, decrement use
@@ -1538,6 +1640,11 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    /**
+     * draw this level crossing
+     *
+     * @param g2 the graphics port to draw to
+     */
     public void draw(Graphics2D g2) {
         if (isMainlineBD() && (!isMainlineAC())) {
             drawXingAC(g2);
@@ -1546,8 +1653,7 @@ public class LevelXing extends LayoutTrack {
             drawXingBD(g2);
             drawXingAC(g2);
         }
-    }   // draw(Graphics2D g2)
-
+    }   // drawHidden(Graphics2D g2)
 
     private void drawXingAC(Graphics2D g2) {
         // set color - check for an AC block
@@ -1559,7 +1665,7 @@ public class LevelXing extends LayoutTrack {
         }
         // set track width for AC block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineAC());
-        // draw AC segment
+        // drawHidden AC segment
         g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
     }
 
@@ -1573,9 +1679,46 @@ public class LevelXing extends LayoutTrack {
         }
         // set track width for BD block
         layoutEditor.setTrackStrokeWidth(g2, isMainlineBD());
-        // draw BD segment
+        // drawHidden BD segment
         g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
     }
 
+    public void drawEditControls(Graphics2D g2) {
+        Point2D pt = getCoordsCenter();
+        g2.setColor(defaultTrackColor);
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsA();
+
+        if (getConnectA() == null) {
+            g2.setColor(Color.magenta);
+        } else {
+            g2.setColor(Color.blue);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsB();
+
+        if (getConnectB() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsC();
+
+        if (getConnectC() == null) {
+            g2.setColor(Color.magenta);
+        } else {
+            g2.setColor(Color.blue);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+        pt = getCoordsD();
+
+        if (getConnectD() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.trackControlPointRectAt(pt));
+    }
     private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
 }

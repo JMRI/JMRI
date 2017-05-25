@@ -24,8 +24,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialAddress;
 import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -368,9 +368,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 String sName = null;
                 if (curRow != r) {
                     if (inputSelected) {
-                        sName = SerialAddress.isInputBitFree(selNodeNum, (r + 1));
+                        sName = _memo.isInputBitFree(selNodeNum, (r + 1));
                     } else {
-                        sName = SerialAddress.isOutputBitFree(selNodeNum, (r + 1));
+                        sName = _memo.isOutputBitFree(selNodeNum, (r + 1));
                     }
                     curRow = r;
                     curRowSysName = sName;
@@ -386,9 +386,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 String sName = null;
                 if (curRow != r) {
                     if (inputSelected) {
-                        sName = SerialAddress.isInputBitFree(selNodeNum, (r + 1));
+                        sName = _memo.isInputBitFree(selNodeNum, (r + 1));
                     } else {
-                        sName = SerialAddress.isOutputBitFree(selNodeNum, (r + 1));
+                        sName = _memo.isOutputBitFree(selNodeNum, (r + 1));
                     }
                     curRow = r;
                     curRowSysName = sName;
@@ -398,7 +398,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 if (sName == null) {
                     return ("");
                 } else {
-                    return (SerialAddress.getUserNameFromSystemName(sName));
+                    return (_memo.getUserNameFromSystemName(sName));
                 }
             }
             return "";

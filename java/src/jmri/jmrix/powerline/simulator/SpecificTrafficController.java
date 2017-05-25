@@ -185,6 +185,8 @@ public class SpecificTrafficController extends SerialTrafficController {
                         return true;
                     }
                     break;
+                default:
+                    break;
             }
         }
         if (logDebug) {

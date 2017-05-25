@@ -1,0 +1,52 @@
+<a href="https://github.com/patternfly/angular-patternfly/edit/master/src/form/datepicker/datepicker.directive.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/patternfly/angular-patternfly/blob/1190db1/src/form/datepicker/datepicker.directive.js#L38" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">pfDatepicker</code>
+<div><span class="hint">directive in module <code ng:non-bindable="">patternfly.form</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="patternfly-form-directive-page patternfly-form-directive-pfdatepicker-page"><p>Angular directive to wrap the bootstrap datepicker <a href="http://bootstrap-datepicker.readthedocs.org/en/latest/">http://bootstrap-datepicker.readthedocs.org/en/latest/</a></p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage">as attribute<pre class="prettyprint linenums">&lt;ANY pf-datepicker
+     date="{string}"
+     options="{string}"&gt;
+   ...
+&lt;/ANY&gt;</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>date</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfdatepicker-page"><p>the date model</p>
+</div></td></tr><tr><td>options</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="patternfly-form-directive-page patternfly-form-directive-pfdatepicker-page"><p>the configuration options for the date picker</p>
+</div></td></tr></tbody></table></div>
+<h2 id="example">Example</h2>
+<div class="example"><div class="patternfly-form-directive-page patternfly-form-directive-pfdatepicker-page"><h4 id="example_source">Source</h4>
+<div source-edit="patternfly.form" source-edit-deps="angular.js script.js" source-edit-html="index.html-25" source-edit-css="" source-edit-js="script.js-26" source-edit-json="" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-25" ng-html-wrap-loaded="patternfly.form angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-25">
+  <form class="form-horizontal" ng-controller="FormDemoCtrl">
+  <div>
+    <button ng-click=setToday()>Set Today in Angular Model</button>
+   </div>
+   Date: <span ng-bind="date | date:'MM/dd/yyyy'"></span>
+   <div pf-datepicker options="options" date="date"></div>
+  </form>
+</script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-26"></pre>
+<script type="text/ng-template" id="script.js-26">
+  angular.module( 'patternfly.form' ).controller( 'FormDemoCtrl', function( $scope ) {
+    $scope.setToday = function () {
+      $scope.date = new Date();
+    }
+
+    $scope.options = {
+      autoclose: true,
+      todayBtn: 'linked',
+      todayHighlight: true
+    };
+  });
+</script>
+</div>
+</div><h4 id="example_demo">Demo</h4>
+<div class="well doc-example-live animate-container" ng-embed-app="patternfly.form" ng-set-html="index.html-25" ng-eval-javascript="script.js-26"></div>
+</div></div>
+</div>

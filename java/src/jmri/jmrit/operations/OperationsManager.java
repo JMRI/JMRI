@@ -1,7 +1,9 @@
 package jmri.jmrit.operations;
 
 import java.io.File;
+import java.io.IOException;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -44,7 +46,7 @@ public final class OperationsManager {
             try {
                 AutoBackup backup = new AutoBackup();
                 backup.autoBackup();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 log.debug("Auto backup after enabling Auto Backup flag.", ex);
             }
         }
@@ -56,12 +58,9 @@ public final class OperationsManager {
      * @return The OperationsManager default instance.
      */
     public synchronized static OperationsManager getInstance() {
-        OperationsManager instance = jmri.InstanceManager.getNullableDefault(OperationsManager.class);
-        if (instance == null) {
-            instance = new OperationsManager();
-            jmri.InstanceManager.setDefault(OperationsManager.class,instance);
-        }
-        return instance;
+        return InstanceManager.getOptionalDefault(OperationsManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(OperationsManager.class, new OperationsManager());
+        });
     }
 
     /**
@@ -110,15 +109,15 @@ public final class OperationsManager {
      * @param shutDownTask The new ShutDownTask or null
      */
     public void setShutDownTask(ShutDownTask shutDownTask) {
-        if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((manager) -> {
             if (this.shutDownTask != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
+                manager.deregister(this.shutDownTask);
             }
             this.shutDownTask = shutDownTask;
             if (this.shutDownTask != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
+                manager.register(this.shutDownTask);
             }
-        }
+        });
     }
 
     /**

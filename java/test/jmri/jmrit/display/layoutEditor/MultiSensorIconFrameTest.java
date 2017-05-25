@@ -18,8 +18,10 @@ public class MultiSensorIconFrameTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        MultiSensorIconFrame t = new MultiSensorIconFrame(new LayoutEditor());
+        LayoutEditor e = new LayoutEditor();
+        MultiSensorIconFrame t = new MultiSensorIconFrame(e);
         Assert.assertNotNull("exists", t);
+        e.dispose();
     }
 
     // from here down is testing infrastructure

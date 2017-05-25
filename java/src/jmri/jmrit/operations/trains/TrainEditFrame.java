@@ -191,7 +191,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         hourBox.setMinimumSize(new Dimension(100, 25));
 
-        for (int i = 0; i < 60; i += 5) {
+        for (int i = 0; i < 60; i += 1) {
             if (i < 10) {
                 minuteBox.addItem("0" + Integer.toString(i));
             } else {

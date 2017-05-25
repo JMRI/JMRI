@@ -312,6 +312,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                         isDirty = true;
                     }
                     break;
+                default:
+                    log.warn("Unhandled col: {}", c);
+                    break;
             }
         }
 
@@ -392,6 +395,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                             isDirty = true;
                         }
                     }
+                    break;
+                default:
+                    log.warn("Unhandled col: {}", c);
                     break;
             }
         }

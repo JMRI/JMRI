@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
         jmri.jmrix.openlcb.swing.clockmon.PackageTest.class,
         jmri.jmrix.openlcb.swing.downloader.PackageTest.class,
         jmri.jmrix.openlcb.swing.send.PackageTest.class,
-        BundleTest.class
+        BundleTest.class,
+        OpenLcbComponentFactoryTest.class
 })
 
 /**

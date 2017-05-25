@@ -34,6 +34,7 @@ import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Logix;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -555,7 +556,7 @@ public class LayoutEditorTools {
             turnout = null;
             layoutTurnout = null;
             if (!crossover) {
-                str = turnoutNameField.getText().trim();
+                str = NamedBean.normalizeUserName(turnoutNameField.getText());
             } else {
                 str = xoverTurnoutName.trim();
             }
@@ -2363,7 +2364,7 @@ public class LayoutEditorTools {
     }
 
     private LayoutBlock getBlockFromEntry(JTextField blockNameField) {
-        String str = blockNameField.getText().trim();
+        String str = NamedBean.normalizeUserName(blockNameField.getText());
         if (str.equals("")) {
             JOptionPane.showMessageDialog(setSignalsAtBoundaryFrame, rb.getString("SignalsError9"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -9747,10 +9748,10 @@ public class LayoutEditorTools {
             TrackSegment t = (TrackSegment) obj;
             Point2D end;
             if (t.getConnect1() == layoutTurnout) {
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
+                end = layoutEditor.getCoords(t.getConnect2(), t.getType2());
 
             } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
+                end = layoutEditor.getCoords(t.getConnect1(), t.getType1());
             }
             boolean east = false;
 

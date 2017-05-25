@@ -661,9 +661,9 @@ public class PanelEditor extends Editor implements ItemListener {
 
             // Positionable items with defaults or using overrides
             boolean popupSet = false;
-            popupSet = p.setRotateOrthogonalMenu(popup);
-            popupSet = p.setRotateMenu(popup);
-            popupSet = p.setScaleMenu(popup);
+            popupSet |= p.setRotateOrthogonalMenu(popup);
+            popupSet |= p.setRotateMenu(popup);
+            popupSet |= p.setScaleMenu(popup);
             if (popupSet) {
                 popup.addSeparator();
                 popupSet = false;
@@ -908,7 +908,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
+        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")");
         if (_dragging || event.isPopupTrigger()) {
             return;
         }
@@ -1245,7 +1245,7 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     // This adds a single CheckBox in the PopupMenu to set or clear all the selected
-    // items "Lock Position" or Positionable setting, when clicked, all the items in 
+    // items "Lock Position" or Positionable setting, when clicked, all the items in
     // the selection will be changed accordingly.
     private void setMultiItemsPositionableMenu(JPopupMenu popup) {
         // This would do great with a "greyed" CheckBox if the multiple items have different states.
