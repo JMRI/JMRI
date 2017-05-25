@@ -3630,13 +3630,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
                 scrollBounds.getWidth(), scrollBounds.getHeight());
         log.warn("      scrollBounds (unscaled (" + getZoom() + ")): " + scrollBounds);
-        
+
         double scrollWidth = scrollPane.getWidth();
         double scrollHeight = scrollPane.getHeight();
-        
+
         double scaleWidth = scrollWidth / bounds.getWidth();
         double scaleHeight = scrollHeight / bounds.getHeight();
-        
+
         double newZoom = Math.min(scaleWidth, scaleHeight);
 
         result = setZoom(newZoom);
@@ -5177,7 +5177,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     delayedPopupTrigger = true;
                 } else {
                     //no possible conflict with moving, display the popup now
-                    checkPopUps(event);
+                    showEditPopUps(event);
                 }
             }
 
@@ -5363,7 +5363,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     }
                 }
 
-                //if (null == selectedObject) 
+                //if (null == selectedObject)
                 {
                     for (int k = 0; k < x.getNumberRays(); k++) {
                         if (x.getRayConnectOrdered(k) != null) {
@@ -5703,72 +5703,88 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //checkMarkers
 
     public Point2D getCoords(Object o, int type) {
+        Point2D result = MathUtil.zeroPoint2D();
         if (o != null) {
             switch (type) {
                 case LayoutTrack.POS_POINT: {
-                    return ((PositionablePoint) o).getCoords();
+                    result = ((PositionablePoint) o).getCoords();
+                    break;
                 }
 
                 case LayoutTrack.TURNOUT_A: {
-                    return ((LayoutTurnout) o).getCoordsA();
+                    result = ((LayoutTurnout) o).getCoordsA();
+                    break;
                 }
 
                 case LayoutTrack.TURNOUT_B: {
-                    return ((LayoutTurnout) o).getCoordsB();
+                    result = ((LayoutTurnout) o).getCoordsB();
+                    break;
                 }
 
                 case LayoutTrack.TURNOUT_C: {
-                    return ((LayoutTurnout) o).getCoordsC();
+                    result = ((LayoutTurnout) o).getCoordsC();
+                    break;
                 }
 
                 case LayoutTrack.TURNOUT_D: {
-                    return ((LayoutTurnout) o).getCoordsD();
+                    result = ((LayoutTurnout) o).getCoordsD();
+                    break;
                 }
 
                 case LayoutTrack.LEVEL_XING_A: {
-                    return ((LevelXing) o).getCoordsA();
+                    result = ((LevelXing) o).getCoordsA();
+                    break;
                 }
 
                 case LayoutTrack.LEVEL_XING_B: {
-                    return ((LevelXing) o).getCoordsB();
+                    result = ((LevelXing) o).getCoordsB();
+                    break;
                 }
 
                 case LayoutTrack.LEVEL_XING_C: {
-                    return ((LevelXing) o).getCoordsC();
+                    result = ((LevelXing) o).getCoordsC();
+                    break;
                 }
 
                 case LayoutTrack.LEVEL_XING_D: {
-                    return ((LevelXing) o).getCoordsD();
+                    result = ((LevelXing) o).getCoordsD();
+                    break;
                 }
 
                 case LayoutTrack.SLIP_A: {
-                    return ((LayoutSlip) o).getCoordsA();
+                    result = ((LayoutSlip) o).getCoordsA();
+                    break;
                 }
 
                 case LayoutTrack.SLIP_B: {
-                    return ((LayoutSlip) o).getCoordsB();
+                    result = ((LayoutSlip) o).getCoordsB();
+                    break;
                 }
 
                 case LayoutTrack.SLIP_C: {
-                    return ((LayoutSlip) o).getCoordsC();
+                    result = ((LayoutSlip) o).getCoordsC();
+                    break;
                 }
 
                 case LayoutTrack.SLIP_D: {
-                    return ((LayoutSlip) o).getCoordsD();
+                    result = ((LayoutSlip) o).getCoordsD();
+                    break;
                 }
 
-                default:
+                default: {
                     if ((foundPointType >= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN)
                             && (foundPointType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
-                        return ((TrackSegment) o).getBezierControlPoint(type - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN);
+                        result = ((TrackSegment) o).getBezierControlPoint(type - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN);
                     } else if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
-                        return ((LayoutTurntable) o).getRayCoordsIndexed(type - LayoutTrack.TURNTABLE_RAY_OFFSET);
+                        result = ((LayoutTurntable) o).getRayCoordsIndexed(type - LayoutTrack.TURNTABLE_RAY_OFFSET);
                     }
+                    break;
+                }
             }   //switch
         } else {
             log.error("Null connection point of type " + type + " " + getLayoutName());
         }
-        return new Point2D.Double(0.0, 0.0);
+        return result;
     }   //getCoords
 
     @Override
@@ -5849,7 +5865,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 selectedObject = null;
                 selectedPointType = LayoutTrack.NONE;
                 whenReleased = event.getWhen();
-                checkPopUps(event);
+                showEditPopUps(event);
             } //check if controlling turnouts
             else if ((selectedObject != null) && (selectedPointType == LayoutTrack.TURNOUT_CENTER)
                     && allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger())
@@ -6002,7 +6018,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         thisPanel.requestFocusInWindow();
     }   //mouseReleased
 
-    private void checkPopUps(MouseEvent event) {
+    private void showEditPopUps(MouseEvent event) {
         if (checkSelect(dLoc, false)) {
             switch (foundPointType) {
                 case LayoutTrack.POS_POINT: {
@@ -6218,7 +6234,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (isEditable()) {
                 selectedObject = null;
                 selectedPointType = LayoutTrack.NONE;
-                checkPopUps(event);
+                showEditPopUps(event);
             } else {
                 LocoIcon lo = checkMarkerPopUps(dLoc);
 
@@ -8108,7 +8124,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }   //mouseDragged
 
-    @SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
     private void updateLocation(Object o, int pointType, Point2D newPos) {
         switch (pointType) {
             case LayoutTrack.TURNOUT_A: {
@@ -8715,12 +8731,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 break;
             }
 
-            default:
-
+            default: {
                 if ((toPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (fromPointType == LayoutTrack.TRACK)) {
                     ((LayoutTurntable) toObject).setRayConnect((TrackSegment) fromObject,
                             toPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
+                break;
+            }
         }   //switch
     }       //setLink
 
@@ -9627,67 +9644,78 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 break;
             }
 
-            default:
-
+            default: {
                 if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                     ((LayoutTurntable) o).setRayConnect(null, type - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
+                break;
+            }
         }   //switch
     }       //disconnect
 
     public LayoutBlock getAffectedBlock(Object o, int type) {
-        if (o == null) {
-            return null;
+        LayoutBlock result = null;
+        if (o != null) {
+            switch (type) {
+                case LayoutTrack.TURNOUT_A: {
+                    result = ((LayoutTurnout) o).getLayoutBlock();
+                    break;
+                }
+
+                case LayoutTrack.TURNOUT_B: {
+                    result = ((LayoutTurnout) o).getLayoutBlockB();
+                    break;
+                }
+
+                case LayoutTrack.TURNOUT_C: {
+                    result = ((LayoutTurnout) o).getLayoutBlockC();
+                    break;
+                }
+
+                case LayoutTrack.TURNOUT_D: {
+                    result = ((LayoutTurnout) o).getLayoutBlockD();
+                    break;
+                }
+
+                case LayoutTrack.LEVEL_XING_A: {
+                    result = ((LevelXing) o).getLayoutBlockAC();
+                    break;
+                }
+
+                case LayoutTrack.LEVEL_XING_B: {
+                    result = ((LevelXing) o).getLayoutBlockBD();
+                    break;
+                }
+
+                case LayoutTrack.LEVEL_XING_C: {
+                    result = ((LevelXing) o).getLayoutBlockAC();
+                    break;
+                }
+
+                case LayoutTrack.LEVEL_XING_D: {
+                    result = ((LevelXing) o).getLayoutBlockBD();
+                    break;
+                }
+
+                case LayoutTrack.SLIP_A:
+                case LayoutTrack.SLIP_B:
+                case LayoutTrack.SLIP_C:
+                case LayoutTrack.SLIP_D: {
+                    result = ((LayoutSlip) o).getLayoutBlock();
+                    break;
+                }
+
+                case LayoutTrack.TRACK: {
+                    result = ((TrackSegment) o).getLayoutBlock();
+                    break;
+                }
+                default: {
+                    log.warn("Unhandled track type: {}", type);
+                    break;
+                }
+            }   //switch
         }
-
-        switch (type) {
-            case LayoutTrack.TURNOUT_A: {
-                return ((LayoutTurnout) o).getLayoutBlock();
-            }
-
-            case LayoutTrack.TURNOUT_B: {
-                return ((LayoutTurnout) o).getLayoutBlockB();
-            }
-
-            case LayoutTrack.TURNOUT_C: {
-                return ((LayoutTurnout) o).getLayoutBlockC();
-            }
-
-            case LayoutTrack.TURNOUT_D: {
-                return ((LayoutTurnout) o).getLayoutBlockD();
-            }
-
-            case LayoutTrack.LEVEL_XING_A: {
-                return ((LevelXing) o).getLayoutBlockAC();
-            }
-
-            case LayoutTrack.LEVEL_XING_B: {
-                return ((LevelXing) o).getLayoutBlockBD();
-            }
-
-            case LayoutTrack.LEVEL_XING_C: {
-                return ((LevelXing) o).getLayoutBlockAC();
-            }
-
-            case LayoutTrack.LEVEL_XING_D: {
-                return ((LevelXing) o).getLayoutBlockBD();
-            }
-
-            case LayoutTrack.SLIP_A:
-            case LayoutTrack.SLIP_B:
-            case LayoutTrack.SLIP_C:
-            case LayoutTrack.SLIP_D: {
-                return ((LayoutSlip) o).getLayoutBlock();
-            }
-
-            case LayoutTrack.TRACK:
-
-                return ((TrackSegment) o).getLayoutBlock();
-            default:
-                log.warn("Unhandled track type: {}", type);
-                break;
-        }   //switch
-        return null;
+        return result;
     }   //getAffectedBlock
 
     /**
@@ -10823,7 +10851,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             drawXingEditControls(g2);
             drawSlipEditControls(g2);
             drawTurntableEditControls(g2);
-
             drawTrackSegmentEditControls(g2);
 
             drawSelectionRect(g2);
