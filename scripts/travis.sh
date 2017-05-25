@@ -14,5 +14,5 @@ if [[ "$HEADLESS" == "true" ]] ; then
     mvn test -U -P travis-headless --batch-mode -Dsurefire.printSummary=${PRINT_SUMMARY} -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
 else
     # run full GUI test suite and fail on coverage issues
-    mvn test -U -P travis-coverage --batch-mode -Dsurefire.printSummary=${PRINT_SUMMARY} -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
+    mvn javadoc:javadoc test -U -P travis-coverage --batch-mode -Dsurefire.printSummary=${PRINT_SUMMARY} -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" -Djava.awt.headless=${HEADLESS}
 fi
