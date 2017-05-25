@@ -21,11 +21,11 @@ public class MergSD2SignalHeadTest {
     @Test
     public void testCTor() {
         Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
-        NamedBeanHandle<Turnout> green = new NamedBeanHandle("green handle",it);
+        NamedBeanHandle<Turnout> green = new NamedBeanHandle<>("green handle",it);
         Turnout it2 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT3");
-        NamedBeanHandle<Turnout> red = new NamedBeanHandle("red handle",it2);
+        NamedBeanHandle<Turnout> red = new NamedBeanHandle<>("red handle",it2);
         Turnout it3 = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT2");
-        NamedBeanHandle<Turnout> yellow = new NamedBeanHandle("yellow handle",it3);
+        NamedBeanHandle<Turnout> yellow = new NamedBeanHandle<>("yellow handle",it3);
         MergSD2SignalHead t = new MergSD2SignalHead("testsys","testuser",3,green,yellow,red,false,false);
         Assert.assertNotNull("exists",t);
     }

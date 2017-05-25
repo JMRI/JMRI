@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JDialog;
 import jmri.ConfigureManager;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -24,7 +23,7 @@ import org.junit.Assert;
  * Tests for the Warrant creation
  *
  * @author  Pete Cressman 2015
- * 
+ *
  * todo - test error conditions
  */
 public class LearnWarrantTest extends jmri.util.SwingTestCase {
@@ -33,7 +32,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 //    PortalManager _portalMgr;
     SensorManager _sensorMgr;
 //    TurnoutManager _turnoutMgr;
-    
+
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testLearnWarrant() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
@@ -60,27 +59,27 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 
         Warrant w = new Warrant("IW00", "Learning");
         WarrantFrame frame = new WarrantFrame(w, true);
-        
+
         frame._origin.blockBox.setText("OB1");
         frame._destination.blockBox.setText("OB5");
         String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
 
         pressButton(frame, Bundle.getMessage("Calculate"));
-        flushAWT();  
+        flushAWT();
         JUnitUtil.waitFor(() -> {
             return (frame.getOrders()!=null);
         }, "Found orders");
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
-        
+
         frame.setAddress("99");
-        flushAWT();  
-        
+        flushAWT();
+
         pressButton(frame, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
         confirmJOptionPane(frame, Bundle.getMessage("WarningTitle"), "OK");
 //        confirmJOptionPane(frame, Bundle.getMessage("QuestionTitle"), "Yes");
-        
+
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
@@ -90,15 +89,15 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
             return (frame._learnThrottle!=null);
         }, "Found throttle");
         Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
-        
+
         sensor = recordtimes(route, frame._learnThrottle.getThrottle());
-        
+
         pressButton(frame, Bundle.getMessage("Stop"));
-        
+
         // change address and run
         frame.setAddress("111");
         sensor.setState(Sensor.INACTIVE);
-        
+
         sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
@@ -108,16 +107,16 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #2.");
         }, "Train starts to move at 2nd command");
-        
+
         sensor = runtimes(route);
-        
+
         JUnitUtil.waitFor(() -> {
             return (warrant.getThrottle()==null);
         }, "Wait for run to end");
         String msg = w.getRunModeMessage();
         Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
 //        sensor.setState(Sensor.INACTIVE);
-        
+
         pressButton(frame, Bundle.getMessage("ButtonSave"));
         w = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
         List<ThrottleSetting> commands = w.getThrottleCommands();
@@ -126,24 +125,25 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         for (ThrottleSetting ts: commands) {
             System.out.println(ts.toString());
         }*/
-        WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();
+        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
 //        WarrantTableFrame tableFrame = (WarrantTableFrame)jmri.util.JmriJFrame.getFrame(Bundle.getMessage("WarrantTable"));
         Assert.assertNotNull("Warrant Table save", tableFrame);
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
-        TestHelper.disposeWindow(panel, this);
+        panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+//        TestHelper.disposeWindow(panel, this);
 
         // Dialog has popped up, so handle that. First, locate it.
-        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
-        TestHelper.disposeWindow(dialogList.get(0), this);
+//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
+//        TestHelper.disposeWindow(dialogList.get(0), this);
 
         flushAWT();
         // confirm one message logged
         jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
-    
+
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
         AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
         javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
@@ -162,7 +162,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(title+" JOptionPane not found", pane);
         pressButton(pane, text);
     }
-    
+
     /**
      * @param array of OBlock names
      * @param throttle
@@ -182,13 +182,13 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
             if (i<3) {
                 speed += 0.1f;
             } else {
-                speed -= 0.1f;                
+                speed -= 0.1f;
             }
             throttle.setSpeedSetting(speed);
             flushAWT();
             Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
-            flushAWT();          
+            flushAWT();
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
@@ -204,7 +204,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
             flushAWT();
             Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
-            flushAWT();          
+            flushAWT();
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
@@ -230,7 +230,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp(); 
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
          // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
@@ -254,7 +254,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

@@ -539,7 +539,12 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    // This replacement routine for findObjectByTypeAndName (above)
+    /**
+     * find object by name
+     * @param name the name of the object that you are looking for
+     * @return object the named object
+     */
+    // NOTE: This replacement routine for findObjectByTypeAndName (above)
     // uses the unique name prefixes to determine what type of item to find.
     // Currently this routine (like the one above that it replaces) is only
     // called by the setObjects routine in TrackSegment.java however in the
@@ -559,9 +564,9 @@ public class LayoutEditorFindItems {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {
                 result = findLayoutTurntableByName(name);
-            } else if (name.startsWith("T")) {
+            } else if (name.startsWith("T")) {  // (this prefix has to go after "TO" & "TUR" prefixes above)
                 result = findTrackSegmentByName(name);
-            } else if (name.endsWith("-EB")) {
+            } else if (name.endsWith("-EB")) {  //BUGFIX: a 3rd party JMRI exporter gets this one wrong.
                 result = findPositionablePointByName(name);
             } else {
                 log.warn("findObjectByName({}): unknown type name prefix", name);

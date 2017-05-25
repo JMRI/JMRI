@@ -172,19 +172,23 @@
           <strong>Disable</strong> all Logixs.
           </li><li>
           The second section lets you select a user name selection
-          method.  See the <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod">Conditional Name Selection Method</a> for details.
+          method.  See the 
+          <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod">
+          Conditional Name Selection Method</a> for details.<span class="since">since 4.7.3</span></li>
         </ul></li>
 
-        <li>The Tools menu contains four Logix maintenance tools:
-
+        <li>The Tools menu contains five Logix maintenance tools:
           <ul>
             <li>Open picklist tables</li>
-
             <li>Find orphaned items</li>
-
             <li>Find empty Conditionals</li>
-
             <li>Find Cross References</li>
+            <li>Conditional Variable References<span class="since">since 4.7.4</span><br>
+            <a href="../../package/jmri/jmrit/beantable/images/VariableReferences.png">
+            <img src="../../package/jmri/jmrit/beantable/images/VariableReferences.png"
+            alt="Variable Reference Window" height="320" width="339">
+            </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -232,9 +236,7 @@
       Name of a Conditional may be any useful text, provided it is
       not the same as the User Name of another Conditional in the
       same Logix. The User Name may be the same as the User Name of
-      a Conditional in another Logix. <strong>Note: The name must
-       be unique among all conditionals if it is going to be 
-      referred to by another Logix.</strong>  <em>When editing the User Name
+      a Conditional in another Logix.  <em>When editing the User Name
       (or any item in any JMRI table) please remember to move to
       another cell in the table so that the program is notified
       that you have finished your entry, otherwise the entry may
@@ -290,8 +292,14 @@
       menu on the Logix Table will open a window with a list showing
       the details for each conditional. It is an effective way to
       review the entire contents of a Logix. Click on the close button
-      to close the window.
-
+      to close the window.<span class="since">since 4.7.3</span><p>
+      <div style="margin-left: 2em">
+      <a href="../../package/jmri/jmrit/beantable/images/ConditionalBrowser.png">
+      <img src="../../package/jmri/jmrit/beantable/images/ConditionalBrowser.png"
+      alt="Conditional Browser Window" height="375" width="500">
+      </a>
+      </div>
+      
       <p>Selecting the <strong>Copy</strong> item from the drop down
       <strong>select</strong> menu on the Logix Table will show a series of
       dialog windows that provide a way to copy the Logix and any

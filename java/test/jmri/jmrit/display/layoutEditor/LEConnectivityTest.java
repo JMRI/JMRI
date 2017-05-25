@@ -324,6 +324,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 
         // Click to say yes, I really mean it.
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        le.dispose();
     }
 
     // from here down is testing infrastructure

@@ -18,8 +18,10 @@ public class ConnectivityUtilTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConnectivityUtil t = new ConnectivityUtil(new LayoutEditor());
+        LayoutEditor e = new LayoutEditor();
+        ConnectivityUtil t = new ConnectivityUtil(e);
         Assert.assertNotNull("exists", t);
+        e.dispose();
     }
 
     // from here down is testing infrastructure

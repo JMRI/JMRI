@@ -39,7 +39,7 @@
       you may want to jump to <a href="#finish">Putting Finishing
       Touches on your Panel</a> to see more of what's possible
       before reading the various other sections in detail.</p>
-      
+
       <p>Notice:  The signal related portions of this help file have not been updated and
       apply mainly to signal <em>heads</em>.  Those discussions predate signal masts.
       <span class="since">since 2.14</span>
@@ -328,8 +328,7 @@
         <li><b>Level Crossing</b> - selects a level crossing track
         (a diamond)</li>
 
-        <li><b>Track Segment</b> - selects a piece of straight
-        track</li>
+        <li><b>Track Segment</b> - selects a piece of connecting track</li>
 
         <li><b>End Bumper</b> - selects a connection point at the
         end of a track</li>
@@ -392,12 +391,12 @@
         <li>Release the mouse, and then release the shift key.</li>
       </ol>
 
-      <p>A Track Segment is a piece of straight track connecting
+      <p>A Track Segment is a piece of track connecting
       two connection points (red squares on a turnout, anchor
-      point, end bumper, edge connector or level crossing). Before
-      you can add a Track Segment, two red connection points must
-      be visible on the panel. To add a Track Segment connecting
-      two red connection points:</p>
+      point, end bumper, edge connector, turnout's, crossover's,
+      or level crossing). Before you can add a Track Segment,
+      two red connection points must be visible on the panel.
+      To add a Track Segment connecting two red connection points:</p>
 
       <ol>
         <li>Select the Track Segment radio button in the tool
@@ -431,6 +430,30 @@
       below, along with which created items they apply to and
       whether they are optional or required.</p>
 
+      <p>
+      <span class="since">Since 4.7.3</span>:
+      Most of the toolbar's <b>text fields</b> have now been replaced with
+      <b>combo boxes</b>. A <b>combo box</b> combines a <b>text field</b>
+      with a <b>drop down list</b>. You may ether type text into the
+      <b>text field</b> or select an item from the <b>drop down list</b>.
+      Selecting an item from the <b>drop down list</b> will copy it
+      into the <b>text field</b> where you may edit it.
+      </p>
+      <p>
+      Note: Toolbar <b>Combo boxes</b> are color coded! If you enter the name of an
+      existing item then the background color of the <b>combo box</b> will turn
+      <strong><span style="background-color: #BDECB6">green</span></strong>.
+      If the item doesn't match the name of an existing item then the
+      background will ether turn
+      <strong><span style="background-color: #FDFD96">yellow</span></strong>
+      if a new item with that name will be created or
+      <strong><span style="background-color: #FFC0C0">red</span></strong>
+      if that name can not be used.
+      </p>
+      <p>
+      <b>Combo boxes</b> that are not applicable for the currently
+      selected toolbar item are disabled.
+      </p>
       <ul>
         <li><b>Turnout: Name</b> (ComboBox) - applies to RH, LH, WYE,
         Double X-over, RH X-over, LH X-over, Single Slip, Double Slip -
@@ -531,9 +554,6 @@
       using a black background you may need to switch to white
       icons that are available in the same area, since the default
       icons have black borders.</p>
-      <p>The <b>combo</b> boxes provide a list of available items from
-      which to choose.  In some cases, as mentioned above, a new name can
-      be entered which will be used to create a new item.</p>
 
       <a name="toolbox" id="toolbox"></a>
 
@@ -542,13 +562,13 @@
       <p>The classic toolbar resides to the top or side of the panel.  The
       <b>toolbox</b> floats on the screen and can be moved around.  It provides
       all of the same functions as the toolbar.</p>
-      
+
       <p>The radio buttons, checkboxes, combo boxes and labels are grouped
       together on 4 tabs:  <b>Turnouts</b>, <b>Track</b>, <b>Labels</b> and
       <b>Icons</b>. Below the tab section is a line that displays the current
       zoom factor and cursor location.  The title bar includes the name
       of the related panel.</p>
-      
+
       <p>Since the Toolbox is a standard window, it contains the Close
 	  and Minimize buttons.  The Close button <b><em>hides</em></b> the toolbox,
       it does not delete it.  To show it again, select the toolbox name
@@ -1378,23 +1398,26 @@
 
       <h2>Track Segments and Connection Points</h2>
 
-      <p>A <b>Track Segment</b> is a piece of straight track
-      stretching between two connection points. Connection points
-      are drawn as small red or green squares. Connection points
-      are found on turnouts, anchor points, end bumpers, edge
-      connectors, and level crossings. Each turnout has three or
-      four connection points, each accepting one connection. Each
-      anchor point has one connection point that can accept two
-      connections. An end bumper is similar, but only accepts one
-      connection. An Edge Connector will only accept one
-      connection, and is used to mark the "Edge" of the current
-      panel. Level crossings have four connection points, each
-      accepting one connection. A connection point that can accept
-      a connecting track segment is drawn red. When a connection
-      point has its capacity of connections, its color is changed
-      to green. When all connection points are green, a track
-      diagram is complete, with all connections defined.</p>
-
+      <p>A <b>Track Segment</b> is a two ended piece of track between
+      two connection points. Connection points are found on anchor
+      points, end bumpers, edge connectors, turnouts, slips, cross
+      overs, level crossings and turn tables.
+      </p>
+      <p>Anchor points have one connection point that accept two
+      connections. All other connection points only accept one.
+      End bumpers have one connection point. An Edge Connector
+      only accepts one connection and is used to mark the "Edge"
+      of the current layout. Each turnout has three connection
+      points and each slip, cross over and level crossing has four.
+      </p>
+      <p>
+      A connection point that can accept a connecting track segment
+      is drawn <span style="color:red">red</span>.
+      When a connection point has its capacity of connections, its
+      color is changed to <span style="color:green">green</span>.
+      When all  connection points are green, the layout diagram is
+      complete with all connections defined.
+      </p>
       <p>Track segments are normally drawn as solid lines. but you
       can designate that a track segment be drawn <i>dashed</i> to
       show tunnels or tracks crossing at different grades. You can
@@ -1409,7 +1432,21 @@
       diagrams drawn as multiple rows where the end of one row
       connects to the beginning of the same or another row. To make
       a track segment hidden, check <b>Hide Track</b> in the Edit
-      Track Segment dialog.</p>
+      Track Segment dialog.
+      </p>
+
+      <p>The default appearance of a track segment is a straight
+      line however you may change its appearance to <b>Circle</b>,
+      <b>Ellipse</b> or <b>Bezier</b> via its popup menu (when in edit
+      mode). Circled track segments are drawn as fixed radius arc's
+      connecting the two end points. When in edit mode the radius may
+      be adjusted by dragging the center point of the circle. An
+      ellipsed track segments end points are connected with an arc
+      and a Bezier track segments end points are connected with a
+      Bezier curve. Control points are used to effect the curve of
+      Bezier track segments and may be added or deleted via the
+      track segment's popup menu (when in edit mode).
+      </p>
 
       <p>Optionally, track segments are used to designate
       <i>mainline track</i> or <i>side track</i>. The legs of
