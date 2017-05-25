@@ -368,9 +368,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
             log.debug("startHardwareClock: " + now);
         }
-        if (!internalClock.getInternalMaster() && internalClock.getMasterName().equals(getHardwareClockName())) {
-
-        }
         issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
         issueClockStart();
     }
@@ -460,11 +457,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         int sc = r.getElement(CS_CLOCK_SCALE) & 0xFF;
         if (sc > 0) {
             nceLastRatio = 250 / sc;
-        }
-        if (r.getElement(CS_CLOCK_STATUS) == 1) {
-            //nceLastRunning = false;
-        } else {
-            //nceLastRunning = true;
         }
     }
 

@@ -114,17 +114,17 @@ public class JsonClientHandler {
                 type = LIST;
             }
             JsonNode data = root.path(DATA);
-            if (data.path(METHOD).isMissingNode() && root.path(METHOD).isValueNode()) {
-                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
-            }
-            log.debug("Processing {} with {}", type, data);
-            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
+            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE) || type.equals(LIST))
                     && data.isMissingNode()) {
                 // these messages are not required to have a data payload,
                 // so create one if the message did not contain one to avoid
                 // special casing later
                 data = this.connection.getObjectMapper().createObjectNode();
             }
+            if (root.path(METHOD).isValueNode() && data.path(METHOD).isMissingNode()) {
+                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
+            }
+            log.debug("Processing {} with {}", type, data);
             if (type.equals(LIST)) {
                 String list = root.path(LIST).asText();
                 if (this.services.get(list) != null) {
@@ -142,7 +142,10 @@ public class JsonClientHandler {
                     case HELLO:
                     case LOCALE:
                         if (!data.path(LOCALE).isMissingNode()) {
-                            this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
+                            String locale = data.path(LOCALE).asText();
+                            if (!locale.isEmpty()) {
+                                this.connection.setLocale(Locale.forLanguageTag(locale));
+                            }
                         }
                     //$FALL-THROUGH$ to default action
                     default:

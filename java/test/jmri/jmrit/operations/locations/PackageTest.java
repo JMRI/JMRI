@@ -33,13 +33,12 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrit.operations.locations.tools.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.locations.schedules.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(InterchangeEditFrameTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(InterchangeEditFrameTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocationEditFrameTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(LocationTableFrameTest.class)); 
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SidingEditFrameTest.class)); 
-        suite.addTest(new junit.framework.JUnit4TestAdapter(StagingEditFrameTest.class)); 
-        suite.addTest(new junit.framework.JUnit4TestAdapter(YardEditFrameTest.class)); 
-        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterPanelTest.class)); 
+        suite.addTest(new junit.framework.JUnit4TestAdapter(SidingEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(StagingEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardEditFrameTest.class));
+        suite.addTest(new junit.framework.JUnit4TestAdapter(YardmasterPanelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(InterchangeTableModelTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocationManagerTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(LocationManagerXmlTest.class));

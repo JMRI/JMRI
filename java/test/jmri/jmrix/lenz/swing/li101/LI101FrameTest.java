@@ -24,6 +24,7 @@ public class LI101FrameTest {
 
         LI101Frame f = new LI101Frame(memo);
         Assert.assertNotNull(f);
+        f.dispose();
     }
 
     // The minimal setup for log4J

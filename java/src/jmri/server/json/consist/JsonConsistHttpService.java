@@ -152,7 +152,7 @@ public class JsonConsistHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         if (!this.manager.isConsistManager()) {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }

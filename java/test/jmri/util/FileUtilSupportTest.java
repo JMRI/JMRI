@@ -334,16 +334,28 @@ public class FileUtilSupportTest {
         this.instance = new FileUtilSupport();
         this.programTestFile = new File(UUID.randomUUID().toString());
         this.programTestFile.createNewFile();
+        JUnitUtil.waitFor(() -> {
+            return this.programTestFile.exists();
+        }, "Create program test file");
         File profile = new File(instance.getProfilePath());
         profile.mkdir();
         this.preferencesTestFile = new File(profile, UUID.randomUUID().toString());
         this.preferencesTestFile.createNewFile();
+        JUnitUtil.waitFor(() -> {
+            return this.preferencesTestFile.exists();
+        }, "Create program test file");
     }
 
     @After
     public void tearDown() {
         this.programTestFile.delete();
+        JUnitUtil.waitFor(() -> {
+            return !this.programTestFile.exists();
+        }, "Remove program test file");
         this.preferencesTestFile.delete();
+        JUnitUtil.waitFor(() -> {
+            return !this.preferencesTestFile.exists();
+        }, "Remove program test file");
         apps.tests.Log4JFixture.tearDown();
     }
 }

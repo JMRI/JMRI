@@ -940,9 +940,9 @@ public class JmriUserPreferencesManagerTest {
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals((Object) 42, m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals((Object) Math.PI, m2.getProperty(strClass, "doubleTest"));
-        Assert.assertEquals((Object) true, m2.getProperty(strClass, "booleanTest"));
+        Assert.assertEquals(42, m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals(Math.PI, m2.getProperty(strClass, "doubleTest"));
+        Assert.assertEquals(true, m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));
@@ -980,9 +980,9 @@ public class JmriUserPreferencesManagerTest {
         JmriUserPreferencesManager m2 = new JmriUserPreferencesManager();
         m2.readUserPreferences();
         Assert.assertEquals("value1", m2.getProperty(strClass, "test1"));
-        Assert.assertEquals((Object) 42, m2.getProperty(strClass, "intTest"));
-        Assert.assertEquals((Object) Math.PI, m2.getProperty(strClass, "doubleTest"));
-        Assert.assertEquals((Object) true, m2.getProperty(strClass, "booleanTest"));
+        Assert.assertEquals(42, m2.getProperty(strClass, "intTest"));
+        Assert.assertEquals(Math.PI, m2.getProperty(strClass, "doubleTest"));
+        Assert.assertEquals(true, m2.getProperty(strClass, "booleanTest"));
         Assert.assertEquals(location, m2.getWindowLocation(strClass));
         Assert.assertEquals(windowSize, m2.getWindowSize(strClass));
         Assert.assertEquals(true, m2.getPreferenceState(strClass, "test2"));

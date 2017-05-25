@@ -19,10 +19,12 @@ public class ServletUtil {
 
     public static final String UTF8 = "UTF-8"; // NOI18N
     // media types
+    public static final String APPLICATION_JAVASCRIPT = "application/javascript"; // NOI18N
     public static final String APPLICATION_JSON = "application/json"; // NOI18N
     public static final String APPLICATION_XML = "application/xml"; // NOI18N
     public static final String IMAGE_PNG = "image/png"; // NOI18N
     public static final String TEXT_HTML = "text/html"; // NOI18N
+    public static final String UTF8_APPLICATION_JAVASCRIPT = APPLICATION_JAVASCRIPT + "; charset=utf-8"; // NOI18N
     public static final String UTF8_APPLICATION_JSON = APPLICATION_JSON + "; charset=utf-8"; // NOI18N
     public static final String UTF8_APPLICATION_XML = APPLICATION_XML + "; charset=utf-8"; // NOI18N
     public static final String UTF8_TEXT_HTML = TEXT_HTML + "; charset=utf-8"; // NOI18N
@@ -101,13 +103,26 @@ public class ServletUtil {
         return navBar;
     }
 
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     * @deprecated since 4.7.4; use {@link #getDefault() } instead
+     */
+    @Deprecated
     public static ServletUtil getInstance() {
-        ServletUtil instance = InstanceManager.getNullableDefault(ServletUtil.class);
-        if (instance == null) {
-            instance = new ServletUtil();
-            InstanceManager.setDefault(ServletUtil.class, instance);
-        }
-        return instance;
+        return getDefault();
+    }
+
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     */
+    public static ServletUtil getDefault() {
+        return InstanceManager.getOptionalDefault(ServletUtil.class).orElseGet(() -> {
+            return InstanceManager.setDefault(ServletUtil.class, new ServletUtil());
+        });
     }
 
     /**

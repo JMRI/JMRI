@@ -66,8 +66,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 String sname = iter.next();
                 log.debug("system name is " + sname);
                 Turnout t = tm.getBySystemName(sname);
-                Element elem = new Element("turnout")
-                        .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                Element elem = new Element("turnout");
                 elem.addContent(new Element("systemName").addContent(sname));
                 log.debug("store turnout " + sname);
 

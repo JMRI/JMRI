@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
-public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
+public abstract class AbstractSensor extends AbstractNamedBean implements Sensor {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 

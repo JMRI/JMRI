@@ -1,55 +1,32 @@
-/////////////////////////////////////////////////////////
-//  Bare Bones Browser Launch                          //
-//  Version 1.5                                        //
-//  December 10, 2005                                  //
-//  Supports: Mac OS X, GNU/Linux, Unix, Windows XP    //
-//  Example Usage:                                     //
-//     String url = "http://www.centerkey.com/";       //
-//     BareBonesBrowserLaunch.openURL(url);            //
-//  Public Domain Software -- Free to Use as You Like  //
-// See http://www.centerkey.com/java/browser/          //
-/////////////////////////////////////////////////////////
 package jmri.util;
 
-import java.lang.reflect.Method;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.JOptionPane;
 
 /**
- * 
- * @deprecated since 4.5.2. Use {@link java.awt.Desktop#browse(java.net.URI)} instead.
+ *
+ * @deprecated since 4.5.2. Use {@link java.awt.Desktop#browse(java.net.URI)}
+ * instead.
  */
 @Deprecated
 public class BareBonesBrowserLaunch {
 
     private static final String errMsg = "Error attempting to launch web browser";
 
+    /**
+     * Wrapper around {@link java.awt.Desktop#browse(java.net.URI)}. Exceptions
+     * display a generic error message. Use Desktop#browse() directly to provide
+     * task-specific handling of the inability to open the URL.
+     *
+     * @param url web page to open
+     */
     public static void openURL(String url) {
         try {
-            if (SystemType.getOSName().startsWith("Mac OS")) {
-                Class<?> fileMgr = Class.forName("com.apple.eio.FileManager");
-                Method openURL = fileMgr.getDeclaredMethod("openURL",
-                        new Class[]{String.class});
-                openURL.invoke(null, new Object[]{url});
-            } else if (SystemType.isWindows()) {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-            } else { //assume Unix or Linux
-                String[] browsers = {
-                    "firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape"};
-                String browser = null;
-                for (int count = 0; count < browsers.length && browser == null; count++) {
-                    if (Runtime.getRuntime().exec(
-                            new String[]{"which", browsers[count]}).waitFor() == 0) {
-                        browser = browsers[count];
-                    }
-                }
-                if (browser == null) {
-                    throw new Exception("Could not find web browser");
-                } else {
-                    Runtime.getRuntime().exec(new String[]{browser, url});
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, errMsg + ":\n" + e.getLocalizedMessage());
+            java.awt.Desktop.getDesktop().browse(new URI(url));
+        } catch (URISyntaxException | IOException ex) {
+            JOptionPane.showMessageDialog(null, errMsg + ":\n" + ex.getLocalizedMessage());
         }
     }
 

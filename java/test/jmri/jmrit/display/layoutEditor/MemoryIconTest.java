@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of MemoryIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MemoryIconTest {
 
@@ -20,6 +20,7 @@ public class MemoryIconTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MemoryIcon t = new MemoryIcon("test", new LayoutEditor());
         Assert.assertNotNull("exists", t);
+        t.getEditor().dispose();
     }
 
     @Before

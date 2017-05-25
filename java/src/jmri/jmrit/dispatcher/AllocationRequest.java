@@ -1,7 +1,6 @@
 package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 /**
  * This class holds information and options for an AllocationRequestt.
@@ -30,7 +29,12 @@ import java.util.ResourceBundle;
 public class AllocationRequest {
 
     /**
-     * Main constructor method
+     * Create an AllocationRequest.
+     *
+     * @param s   the requested section
+     * @param num the sequence number for the requested section
+     * @param dir the direction the train is traveling on the section
+     * @param at  the train for which the section is requested
      */
     public AllocationRequest(jmri.Section s, int num, int dir, ActiveTrain at) {
         mSection = s;
@@ -48,9 +52,6 @@ public class AllocationRequest {
         }
     }
 
-    static final ResourceBundle rb = ResourceBundle
-            .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
-
     // instance variables
     private jmri.Section mSection = null;
     private ActiveTrain mActiveTrain = null;
@@ -61,9 +62,9 @@ public class AllocationRequest {
     private boolean mWaitingForTrain = false;
     private ArrayList<ActiveTrain> mMeetingTrainList = new ArrayList<ActiveTrain>();
 
-    /**
-     * Access methods
-     */
+    //
+    // Access methods
+    //
     public jmri.Section getSection() {
         return mSection;
     }
@@ -95,12 +96,12 @@ public class AllocationRequest {
 
     protected String getSectionDirectionName() {
         if (mSectionDirection == jmri.Section.FORWARD) {
-            return rb.getString("FORWARD");
+            return Bundle.getMessage("FORWARD");
         }
         if (mSectionDirection == jmri.Section.REVERSE) {
-            return rb.getString("REVERSE");
+            return Bundle.getMessage("REVERSE");
         }
-        return rb.getString("UNKNOWN");
+        return Bundle.getMessage("UNKNOWN");
     }
 
     protected boolean getWaitingForTrain() {
