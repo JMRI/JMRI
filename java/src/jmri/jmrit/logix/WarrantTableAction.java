@@ -82,7 +82,7 @@ public class WarrantTableAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (Bundle.getMessage("ShowWarrants").equals(command)) {
-            WarrantTableFrame.getInstance();
+            WarrantTableFrame.getDefault();
         } else if (Bundle.getMessage("CreateWarrant").equals(command)) {
             CreateWarrantFrame f = new CreateWarrantFrame();
             try {
@@ -164,7 +164,7 @@ public class WarrantTableAction extends AbstractAction {
         if (!_logging) {
             mi = new JMenuItem(Bundle.getMessage("startLog"));
             mi.addActionListener((ActionEvent e) -> {
-                if (!OpSessionLog.makeLogFile(WarrantTableFrame.getInstance())) {
+                if (!OpSessionLog.makeLogFile(WarrantTableFrame.getDefault())) {
                     return;
                 }
                 _logging = true;
@@ -276,7 +276,7 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
 
-        NXFrame nxFrame = NXFrame.getInstance();
+        NXFrame nxFrame = NXFrame.getDefault();
         if (nxFrame.isVisible()) {
             nxFrame.mouseClickedOnBlock(block);
             return;
@@ -470,9 +470,9 @@ public class WarrantTableAction extends AbstractAction {
 //                  String note = "WARNING: ";
                     if (myState != state) {
                         ret = myBlock.addSharedTurnout(myPath, block, path);
-                        /*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(), 
+                        /*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(),
                              myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
-                             path.getName(), block.getDisplayName(), to.getDisplayName(), 
+                             path.getName(), block.getDisplayName(), to.getDisplayName(),
                              (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
                       _textArea.append("\n");
                     } else {
@@ -626,7 +626,7 @@ public class WarrantTableAction extends AbstractAction {
                         w.setAvoidOrder(_endW.getAvoidOrder());
                     }
                 } else {
-                    w.addBlockOrder(bo);        // copy only                
+                    w.addBlockOrder(bo);        // copy only
                 }
                 List<ThrottleSetting> commands = _startW.getThrottleCommands();
                 for (int i = 0; i < commands.size(); i++) {

@@ -26,7 +26,9 @@ public class LV102FrameTest {
 
         LV102Frame f = new LV102Frame();
         Assert.assertNotNull(f);
+        f.dispose();
     }
+
 
     @Test
     public void testCloseButton() {

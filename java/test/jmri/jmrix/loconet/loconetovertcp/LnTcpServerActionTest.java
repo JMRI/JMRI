@@ -10,23 +10,23 @@ import org.junit.Test;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Test simple functioning of ServerAction
+ * Test simple functioning of LnTcpServerAction
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class ServerActionTest {
+public class LnTcpServerActionTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ServerAction action = new ServerAction("Loconet test Action");
+        LnTcpServerAction action = new LnTcpServerAction("Loconet test Action");
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ServerAction action = new ServerAction();
+        LnTcpServerAction action = new LnTcpServerAction();
         Assert.assertNotNull("exists", action);
     }
 

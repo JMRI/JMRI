@@ -261,6 +261,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
     /**
      * check whether the message has a valid parity IEEE 802.15.4 messages have
      * a two byte parity.
+     * @return true if parity valid
      */
     public boolean checkParity() {
         int len = getNumDataElements();

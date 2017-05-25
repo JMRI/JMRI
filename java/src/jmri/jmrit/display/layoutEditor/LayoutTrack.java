@@ -44,13 +44,20 @@ public abstract class LayoutTrack {
     public static final int SLIP_D = 24; // offset for slip connection points
     public static final int SLIP_LEFT = 25;
     public static final int SLIP_RIGHT = 26;
+    public static final int FLEX_CENTER = 27;
+    public static final int FLEX_A = 28;
+    public static final int FLEX_B = 29;
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = 30; // offset for TrackSegment Bezier control points (minimum)
+    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = 38; // offset for TrackSegment Bezier control points (maximum)
+    //NOTE: if(/when) you need another control/hit point type leave at least four (if not eight) unused here (for more Bezier control points)
     public static final int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
     protected String ident = "";
 
-    // dashed line parameters
-    //private static int minNumDashes = 3;
-    //private static double maxDashLength = 10;
+    // dashed line parameters (unused)
+    //protected static int minNumDashes = 3;
+    //protected static double maxDashLength = 10;
+
     public Point2D center = new Point2D.Double(50.0, 50.0);
 
     protected boolean hidden = false;
@@ -70,6 +77,10 @@ public abstract class LayoutTrack {
      * accessor methods
      */
     public String getID() {
+        return ident;
+    }
+
+    public String getName() {
         return ident;
     }
 
@@ -104,7 +115,6 @@ public abstract class LayoutTrack {
     /*
      * non-accessor methods
      */
-
     protected Point2D rotatePoint(Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
         double cY = center.getY();
@@ -116,22 +126,86 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * return the connection type for a point
-     * (abstract; should be overridden by sub-classes)
+     * return the connection type for a point (abstract; should be overridden by
+     * sub-classes)
      *
      * @since 7.4.?
      */
-    public int connectionTypeForPoint(Point2D p, boolean useRectangles) {
+    protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         return NONE;
     }
 
-    // optional useRectangles parameter defaults to false
-    public int connectionTypeForPoint(Point2D p) {
-        return connectionTypeForPoint(p, false);
+    // optional useRectangles & requireUnconnected parameters default to false
+    protected int findHitPointType(Point2D p) {
+        return findHitPointType(p, false, false);
+    }
+
+    // optional requireUnconnected parameter defaults to false
+    protected int findHitPointType(Point2D p, boolean useRectangles) {
+        return findHitPointType(p, useRectangles, false);
+    }
+
+    // some connection types aren't actually connections
+    // they're only used for hit testing (to determine what was clicked)
+    protected boolean isConnectionType(int connectionType) {
+        boolean result = false; // assume failure (pessimist!)
+        switch (connectionType) {
+            case POS_POINT:
+            case TURNOUT_A:
+            case TURNOUT_B:
+            case TURNOUT_C:
+            case TURNOUT_D:
+            case LEVEL_XING_A:
+            case LEVEL_XING_B:
+            case LEVEL_XING_C:
+            case LEVEL_XING_D:
+            case TRACK:
+            case SLIP_A:
+            case SLIP_B:
+            case SLIP_C:
+            case SLIP_D:
+            case FLEX_A:
+            case FLEX_B:
+                result = true;  // these are all connection types
+                break;
+            case NONE:
+            case TURNOUT_CENTER:
+            case LEVEL_XING_CENTER:
+            case TURNTABLE_CENTER:
+            case LAYOUT_POS_LABEL:
+            case LAYOUT_POS_JCOMP:
+            case MULTI_SENSOR:
+            case MARKER:
+            case TRACK_CIRCLE_CENTRE:
+            case SLIP_CENTER:
+            case SLIP_LEFT:
+            case SLIP_RIGHT:
+            case FLEX_CENTER:
+            default:
+                result = false; // these are all hit types
+                break;
+        }
+        if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+            result = false; // these are all hit types
+        } else if (TURNTABLE_RAY_OFFSET <= connectionType) {
+            result = true;  // these are all connection types
+        }
+        return result;
+    }
+
+    /**
+     * return the coordinates for a specified connection type
+     * @param connectionType the connection type
+     * @return the coordinates for the specified connection type
+     */
+    public Point2D getCoordsForConnectionType(int connectionType) {
+        log.error("virtual method: override in sub-classes and don't call super...].");
+        log.error("Invalid connection type " + connectionType); //I18IN
+        return center;
     }
 
     public void reCheckBlockBoundary() {
-        log.error("virtual method: override in sub-classes; don't call [super ...].");
+        log.error("virtual method: override in sub-classes and don't call super...].");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());

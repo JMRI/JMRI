@@ -59,7 +59,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = _memo.normalizeSystemName(systemName);
         if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid C/MRI Sensor system name - " + systemName);
@@ -72,14 +72,14 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             return null;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
+        String altName = _memo.convertSystemNameToAlternate(sName);
         s = getBySystemName(altName);
         if (s != null) {
             log.error("Sensor with name '" + systemName + "' already exists as '" + altName + "'");
             return null;
         }
         // check bit number
-        int bit = SerialAddress.getBitFromSystemName(sName);
+        int bit = _memo.getBitFromSystemName(sName);
         if ((bit <= 0) || (bit >= SENSORSPERUA)) {
             log.error("Sensor bit number, " + Integer.toString(bit)
                     + ", is outside the supported range, 1-" + Integer.toString(SENSORSPERUA - 1));
@@ -93,7 +93,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
 
         // ensure that a corresponding Serial Node exists
-        SerialNode node = (SerialNode) SerialAddress.getNodeFromSystemName(sName,_memo.getTrafficController());
+        SerialNode node = (SerialNode) _memo.getNodeFromSystemName(sName,_memo.getTrafficController());
         if (node == null) {
             log.warn("Sensor " + sName + " refers to an undefined Serial Node.");
             return s;
@@ -140,11 +140,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is " + sName);
                 if ((sName.charAt(0) == 'C') && (sName.charAt(1) == 'S')) {
                     // This is a C/MRI Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName,_memo.getTrafficController());
+                    tNode = _memo.getNodeFromSystemName(sName,_memo.getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
                         node.registerSensor(getBySystemName(sName),
-                                (SerialAddress.getBitFromSystemName(sName) - 1));
+                                (_memo.getBitFromSystemName(sName) - 1));
                     }
                 }
             }
@@ -169,7 +169,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
-            tmpSName = SerialAddress.makeSystemName("S", nAddress, bitNum);
+            tmpSName = _memo.makeSystemName("S", nAddress, bitNum);
         } else if (curAddress.contains("B") || (curAddress.contains("b"))) {
             curAddress = curAddress.toUpperCase();
             try {
@@ -182,8 +182,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix + typeLetter() + curAddress;
-            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
-            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+            bitNum = _memo.getBitFromSystemName(tmpSName);
+            nAddress = _memo.getNodeAddressFromSystemName(tmpSName);
         } else {
             try {
                 //We do this to simply check that the value passed is a number!
@@ -193,8 +193,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }
             tmpSName = prefix + typeLetter() + curAddress;
-            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
-            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+            bitNum = _memo.getBitFromSystemName(tmpSName);
+            nAddress = _memo.getNodeAddressFromSystemName(tmpSName);
         }
 
         return tmpSName;
@@ -225,7 +225,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         if (s != null) {
             for (int x = 1; x < 10; x++) {
                 bitNum++;
-                tmpSName = SerialAddress.makeSystemName("S", nAddress, bitNum);
+                tmpSName = _memo.makeSystemName("S", nAddress, bitNum);
                 s = getBySystemName(tmpSName);
                 if (s == null) {
                     int seperator = tmpSName.lastIndexOf("S") + 1;

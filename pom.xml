@@ -17,7 +17,6 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <jetty.version>9.2.21.v20170120</jetty.version>
-        <powermock.version>1.6.5</powermock.version>
         <slf4j.version>1.7.21</slf4j.version>
         <jackson.version>2.8.5</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -25,9 +24,12 @@
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
-        <ant.version>1.9.7</ant.version>
+        <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m</argLine>
+        <powermock.version>1.6.6</powermock.version>
+        <surefire.version>2.20</surefire.version>
+        <surefile.printSummary>false</surefile.printSummary>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -50,6 +52,7 @@
             </properties>
             <build>
                 <plugins>
+                    <!-- use surefire for all test
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -72,15 +75,17 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- use surefire (maven default test harness) only for line endings -->
+                    -->
+                    <!-- use surefire (maven default test harness) only for line endings
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.19.1</version>
+                        <version>${surefire.version}</version>
                         <configuration>
                             <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
                     </plugin>
+                    -->
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
@@ -93,34 +98,6 @@
                                 <File>target/generated-sources/jjtree</File>
                             </sourceDirectories>
                         </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.7.8</version>
-                        <configuration>
-                            <dataFile>jacoco.exec</dataFile>
-                            <excludes>
-                                <File>**/*Test*.class</File>
-                                <!-- Exclude testing infrastructure classes -->
-                                <File>**/*Scaffold.class"</File>
-                                <File>**/*JUnit*.class</File>
-                                <File>**/*Demo.class</File>
-                                <File>**/*Mock*.class</File>
-                                <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
-                                <File>jmri/jmrix/openlcb/SampleFactory.class</File>
-                                <File>jmri/util/swing/SamplePane.class</File>
-                                <File>apps/tests/Log4JFixture.class</File>
-                            </excludes>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>prepare-agent</id>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -154,7 +131,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.19.1</version>
+                        <version>${surefire.version}</version>
                         <configuration>
                             <test>jmri.util.FileLineEndingsTest</test>
                         </configuration>
@@ -170,7 +147,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.19.1</version>
+                        <version>${surefire.version}</version>
                         <configuration>
                             <skipTests>true</skipTests>
                         </configuration>
@@ -287,7 +264,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.6.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -324,9 +301,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>${surefire.version}</version>
                 <configuration>
                     <excludes>
+                        <!-- ignore until #3340 is merged -->
+                        <exclude>jmri.jmrix.nce.**.Nce*</exclude>
+                        <!-- ignore until #3492 is resolved -->
+                        <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore until #2601 is resolved -->
                         <exclude>jmri.jmrit.decoderdefn.DuplicateTest</exclude>
                         <!-- ignore to avoid duplicate test runs -->
@@ -346,18 +327,24 @@
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
                         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
                     </systemPropertyVariables>
+                    <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
                     <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
-                    <!-- uncomment to force each test into new context
-                        (DO NOT use on CI servers - this significantly increases run time)
                     <forkCount>1</forkCount>
+                    <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
                     <reuseForks>false</reuseForks>
                     -->
-                    <!-- uncomment to really ensure tests are independent
+                    <!-- uncomment to really ensure tests are independent -->
                     <runOrder>random</runOrder>
-                    -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.surefire</groupId>
+                            <artifactId>surefire-junit47</artifactId>
+                            <version>${surefire.version}</version>
+                        </dependency>
+                    </dependencies>
                 </configuration>
             </plugin>
             <plugin>
@@ -397,7 +384,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.12</version>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>timestamp-property</id>
@@ -499,18 +486,35 @@
                     </links>
                 </configuration>
             </plugin>
-            <!-- disable by default, enabled only in travis-coverage, for now
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.8</version>
+                <version>0.7.9</version>
                 <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
                     <execution>
                         <id>default-check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <excludes>
+                                <File>**/*Test*.class</File>
+                                <!-- Exclude testing infrastructure classes -->
+                                <File>**/*Scaffold.class"</File>
+                                <File>**/*JUnit*.class</File>
+                                <File>**/*Demo.class</File>
+                                <File>**/*Mock*.class</File>
+                                <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
+                                <File>jmri/jmrix/openlcb/SampleFactory.class</File>
+                                <File>jmri/util/swing/SamplePane.class</File>
+                                <File>apps/tests/Log4JFixture.class</File>
+                            </excludes>
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>
@@ -542,7 +546,6 @@
                     </execution>
                 </executions>
             </plugin>
-            -->
         </plugins>
     </build>
     <reporting>
@@ -550,7 +553,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>${surefire.version}</version>
                 <configuration>
                     <showSuccess>false</showSuccess>
                 </configuration>
@@ -808,6 +811,14 @@
                 <exclusion>
                     <groupId>com.digi</groupId>
                     <artifactId>android-sdk-addon</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.rxtx</groupId>
+                    <artifactId>rxtx</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.rxtx</groupId>
+                    <artifactId>rxtx-native</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

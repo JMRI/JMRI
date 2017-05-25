@@ -27,6 +27,7 @@ public class LZ100FrameTest {
 
         LZ100Frame f = new LZ100Frame(new XNetSystemConnectionMemo(tc));
         Assert.assertNotNull(f);
+        f.dispose();
     }
 
     // The minimal setup for log4J
