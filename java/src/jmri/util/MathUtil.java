@@ -2,8 +2,10 @@ package jmri.util;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
 
 /**
@@ -319,6 +321,105 @@ public final class MathUtil {
         return Math.min(Math.max(inValue, inMin), inMax);
     }
 
+    /**
+     * Convert Rectangle to Rectangle2D
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle2D Rectangle2DForRectangle(Rectangle r) {
+        return new Rectangle2D.Double(r.x, r.y, r.width, r.height);
+    }
+
+    /**
+     * Convert Rectangle to Rectangle2D
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle2D RectangleToRectangle2D(Rectangle r) {
+        return new Rectangle2D.Double(r.x, r.y, r.width, r.height);
+    }
+
+    /**
+     * Convert Rectangle2D to Rectangle
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle RectangleForRectangle2D(Rectangle2D r) {
+        return new Rectangle((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight());
+    }
+
+    /**
+     * Convert Rectangle2D to Rectangle
+     * @param r the Rectangle
+     * @return the Rectangle2D
+     */
+    public static Rectangle Rectangle2DToRectangle(Rectangle2D r) {
+        return new Rectangle((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight());
+    }
+
+    /**
+     * calculate the center of the rectangle
+     * @param r the rectangle
+     * @return the center of the rectangle
+     */
+    public static Point2D center(Rectangle2D r) {
+        return new Point2D.Double(r.getCenterX(), r.getCenterY());
+    }
+
+    /**
+     * offset a rectangle
+     * @param r the rectangle
+     * @param o the offset
+     * @return the offset rectangle
+     */
+    public static Rectangle2D offset(Rectangle2D r, Point2D o) {
+        return new Rectangle2D.Double(r.getX() + o.getX(), r.getY() + o.getY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * inset a rectangle
+     * @param r the rectangle
+     * @param i the inset (positive make it smaller, negative, bigger)
+     * @return the inset rectangle
+     */
+    public static Rectangle2D inset(Rectangle2D r, double i) {
+        return new Rectangle2D.Double(r.getX() + i, r.getY() + i, r.getWidth() - (2 * i), r.getHeight() - (2 * i));
+    }
+
+    /**
+     * scale a rectangle
+     * @param r the rectangle
+     * @param s the scale
+     * @return the scaled rectangle
+     */
+    public static Rectangle2D scale(Rectangle2D r, double s) {
+        Point2D c = center(r);
+        double w = r.getWidth() * s, h = r.getHeight() * s;
+        return new Rectangle2D.Double(c.getX() - (w / 2), c.getY() - (h / 2), w, h);
+    }
+    
+    /**
+     * center rectangle on point
+     * @param r the rectangle
+     * @param p the point
+     * @return the Point2D
+     */
+    public static Rectangle2D centerRectangleOnPoint(Rectangle2D r, Point2D p) {
+        Rectangle2D result = r.getBounds2D();
+        result = offset(r, subtract(p, center(result)));
+        return result;
+    }
+   
+    /**
+     * center rectangle on point
+     * @param r the rectangle
+     * @param p the point
+     * @return the Point2D
+     */
+    public static Rectangle2D centerRectangleOnRectangle(Rectangle2D r1, Rectangle2D r2) {
+        return offset(r1, subtract(center(r2), center(r1)));
+    }
+    
     // recursive routine to draw a cubic Bezier…
     // (also returns distance!)
     private static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3, int depth) {
