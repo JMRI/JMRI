@@ -386,6 +386,20 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
+    /**
+     * @return the bounds of this slip
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        result.add(getCoordsD());
+        return result;
+    }
+
     private void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;

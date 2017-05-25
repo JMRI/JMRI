@@ -479,6 +479,21 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
+    
+    /**
+     * @return the bounds of this track segment
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+
+        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
+        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+        result.add(ep2);
+
+        return result;
+    }
+
     JPopupMenu popup = null;
 
     /**
