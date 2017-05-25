@@ -210,13 +210,12 @@ public abstract class LayoutTrack {
     }
 
     /**
-     * return the bounds of this track
-     * @return 
+     * @return the bounds of this track
      */
     public Rectangle2D getBounds() {
         log.error("virtual method: override in sub-classes and don't call super...].");
         return new Rectangle2D.Double();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());
 }

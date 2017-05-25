@@ -397,7 +397,7 @@ public final class MathUtil {
         double w = r.getWidth() * s, h = r.getHeight() * s;
         return new Rectangle2D.Double(c.getX() - (w / 2), c.getY() - (h / 2), w, h);
     }
-    
+
     /**
      * center rectangle on point
      * @param r the rectangle
@@ -409,17 +409,17 @@ public final class MathUtil {
         result = offset(r, subtract(p, center(result)));
         return result;
     }
-   
+
     /**
-     * center rectangle on point
-     * @param r the rectangle
-     * @param p the point
-     * @return the Point2D
+     * center rectangle on rectangle
+     * @param r1 the first rectangle
+     * @param r2 the second rectangle
+     * @return the first rectangle centered on the second
      */
     public static Rectangle2D centerRectangleOnRectangle(Rectangle2D r1, Rectangle2D r2) {
         return offset(r1, subtract(center(r2), center(r1)));
     }
-    
+
     // recursive routine to draw a cubic Bezier…
     // (also returns distance!)
     private static double drawBezier(Graphics2D g2, Point2D p0, Point2D p1, Point2D p2, Point2D p3, int depth) {

@@ -438,8 +438,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private int selectedPointType = 0;                                  //connection type within the selected object
 
     @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED")  //no Serializable support at present
-    //private Object foundObject = null;                              //found object, null if nothing found
-    private LayoutTrack foundObject = null;                              //found object, null if nothing found
+    private Object foundObject = null;                              //found object, null if nothing found
 
     @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED")          //no Serializable support at present
     private transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
@@ -544,9 +543,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //zoom
     private double maxZoom = 6.0;
     private double minZoom = 0.25;
-    private double stepUnderOne = 0.25; //when the zoom is less than 1
-    private double stepOverOne = 0.5;   //when the zoom is greater than 1
-    private double stepOverTwo = 1.0;   //when the zoom is greater than 2
 
     //Special sub group for color treatment when active
     JPanel blockPropertiesPanel = null;
@@ -2007,8 +2003,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //
     //setup editable JmriBeanComboBoxes
     //
-    //note: inValidateMode if true valid text == green, invalid == red background
-    //if false valid text == green, invalid == yellow background
+    //note: inValidateMode  if true, valid text == green, invalid text == red background
+    //          "       "  if false, valid text == green, invalid text == yellow background
     //
     public void setupComboBox(JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
         inComboBox.setEditable(true);
@@ -3466,7 +3462,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private double zoomToFit() {
         double result = getZoom();
 
-        //TODO: Finish this!
         Rectangle2D bounds = new Rectangle2D.Double();
         for (PositionableLabel o : backgroundImage) {
             if (bounds.isEmpty()) {
@@ -3617,19 +3612,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 Math.max(bounds.getX(), 0), Math.max(bounds.getY(), 0),
                 bounds.getWidth(), bounds.getHeight());
 
-        log.warn("zoomToFit");
-        log.warn("      bounds: " + bounds);
-
         JScrollPane scrollPane = getPanelScrollPane();
-//        JViewport viewPort = scrollPane.getViewport();
-//        Point2D oldViewPos2D = viewPort.getViewPosition();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
-        log.warn("      scrollBounds: " + scrollBounds);
-        //scrollBounds = MathUtil.scale(scrollBounds, 1.0 / getZoom());
         scrollBounds = new Rectangle2D.Double(
                 Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
                 scrollBounds.getWidth(), scrollBounds.getHeight());
-        log.warn("      scrollBounds (unscaled (" + getZoom() + ")): " + scrollBounds);
 
         double scrollWidth = scrollPane.getWidth();
         double scrollHeight = scrollPane.getHeight();
@@ -3644,8 +3631,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         scrollBounds = new Rectangle2D.Double(
                 Math.max(scrollBounds.getX(), 0), Math.max(scrollBounds.getY(), 0),
                 scrollBounds.getWidth(), scrollBounds.getHeight());
-        log.warn("      scrollBounds (scaled (" + result + ")): " + scrollBounds);
-
         scrollPane.scrollRectToVisible(MathUtil.RectangleForRectangle2D(scrollBounds));
 
         return result;
@@ -5186,7 +5171,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 selectedObject = null;
                 selectedPointType = LayoutTrack.NONE;
 
-                if (checkSelect(dLoc, false)) {
+                if (checkSelects(dLoc)) {
                     selectedObject = foundObject;
                     selectedPointType = foundPointType;
                     startDel.setLocation(MathUtil.subtract(foundLocation, dLoc));
@@ -5262,7 +5247,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 //starting a Track Segment, check for free connection point
                 selectedObject = null;
 
-                if (checkSelect(dLoc, true)) {
+                if (checkSelects(dLoc, true)) {
                     //match to a free connection point
                     beginObject = foundObject;
                     beginPointType = foundPointType;
@@ -5384,12 +5369,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }   // checkControls
 
-    // optional parameter requireUnconnected
-    private boolean checkSelect(Point2D loc, boolean requireUnconnected) {
-        return checkSelect(loc, requireUnconnected, null);
+    // optional parameter avoid
+    private boolean checkSelects(Point2D loc, boolean requireUnconnected) {
+        return checkSelects(loc, requireUnconnected, null);
     }
 
-    private boolean checkSelect(Point2D loc, boolean requireUnconnected, Object avoid) {
+    // optional parameter requireUnconnected
+    private boolean checkSelects(Point2D loc) {
+        return checkSelects(loc, false, null);
+    }
+
+    private boolean checkSelects(Point2D loc, boolean requireUnconnected, Object avoid) {
         //check positionable points, if any
         for (PositionablePoint p : pointList) {
             if ((p != avoid) && (p != selectedObject)) {
@@ -5511,7 +5501,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return false;
     }   //checkSelect
 
-    //TODO: Should this be moved into TrackSegment.java: hit testing?
     private TrackSegment checkTrackSegmentPopUps(Point2D loc) {
         //NOTE: rather than calculate all the hit rectangles for all
         // the points below and test if this location is in any of those
@@ -5941,7 +5930,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (lo != null) {
                 showPopUp(lo, event);
             } else {
-                if (checkSelect(dLoc, false)) {
+                if (checkSelects(dLoc)) {
                     //show popup menu
                     switch (foundPointType) {
                         case LayoutTrack.TURNOUT_CENTER: {
@@ -6019,7 +6008,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //mouseReleased
 
     private void showEditPopUps(MouseEvent event) {
-        if (checkSelect(dLoc, false)) {
+        if (checkSelects(dLoc)) {
             switch (foundPointType) {
                 case LayoutTrack.POS_POINT: {
                     ((PositionablePoint) foundObject).showPopUp(event);
@@ -6117,7 +6106,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 }
             } while (false);
-        }   // if (checkSelect(dLoc, false)) {...} else
+        }   // if (checkSelects(dLoc)) {...} else
     }   //checkPopUp
 
     /**
@@ -6245,7 +6234,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
 
         if (event.isControlDown() && !event.isPopupTrigger()) {
-            if (checkSelect(dLoc, false)) {
+            if (checkSelects(dLoc)) {
                 //show popup menu
                 switch (foundPointType) {
                     case LayoutTrack.POS_POINT: {
@@ -6351,7 +6340,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         beginPointType = LayoutTrack.POS_POINT;
         Point2D loc = p.getCoords();
 
-        if (checkSelect(loc, true, p)) {
+        if (checkSelects(loc, true, p)) {
             switch (foundPointType) {
                 case LayoutTrack.POS_POINT: {
                     PositionablePoint p2 = (PositionablePoint) foundObject;
@@ -6517,7 +6506,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }   //checkPointsOfTurnout
 
     private void checkPointsOfTurnoutSub(Point2D dLoc) {
-        if (checkSelect(dLoc, true)) {
+        if (checkSelects(dLoc, true)) {
             switch (foundPointType) {
                 case LayoutTrack.POS_POINT: {
                     PositionablePoint p2 = (PositionablePoint) foundObject;
@@ -8106,7 +8095,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 currentLocation.setLocation(xLoc, yLoc);
                 boolean needResetCursor = (foundObject != null);
 
-                if (checkSelect(currentLocation, true)) {
+                if (checkSelects(currentLocation, true)) {
                     //have match to free connection point, change cursor
                     setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 } else if (needResetCursor) {
