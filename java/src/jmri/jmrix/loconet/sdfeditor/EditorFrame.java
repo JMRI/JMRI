@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.sdfeditor;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import jmri.util.JmriJFrame;
@@ -19,13 +18,8 @@ public class EditorFrame extends JmriJFrame {
     // GUI member declarations
     EditorPane pane;
 
-    ResourceBundle res;
-
     public EditorFrame(SdfBuffer buff) {
-        super(ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Editor").getString("TitleEditor"));
-
-        // Its unfortunate that we have to read that bundle twice, but it's due to Java init order
-        res = ResourceBundle.getBundle("jmri.jmrix.loconet.sdfeditor.Editor");
+        super(Bundle.getMessage("TitleEditor"));
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
