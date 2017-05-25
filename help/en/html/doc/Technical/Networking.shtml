@@ -62,15 +62,6 @@
           <ul>
             <li>
               <a href=
-              "../../hardware/loconet/LocoNetServer.shtml">LocoNet
-              RMI client server connection</a>
-
-              <p>This uses Java RMI to provide client-server access
-              to the LocoNet message stream.</p>
-            </li>
-
-            <li>
-              <a href=
               "../../hardware/loconet/LbServer.shtml">LocoNetOverTcp
               to LbServer</a>
 
@@ -191,14 +182,6 @@
         Enterprise Java Bean</a></li>
 
         <li>Via providing a <a href=
-        "../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI
-        server</a>.
-
-          <p>This is advertised on Bonjour/Zeroconf as a
-          "_jmri-locormi._tcp.local." service.</p>
-        </li>
-
-        <li>Via providing a <a href=
         "http://loconetovertcp.sourceforge.net/">LbServer</a>
         implementation.
 
@@ -229,7 +212,7 @@
       Discovery" networking.</p>
 
       <p>See also "man dns-sd" for more information on the dns-sd
-      debugging command-line tool. 
+      debugging command-line tool.
       <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

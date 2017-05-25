@@ -14,7 +14,6 @@ public class LocoNetMenu extends JMenu {
      * Create a LocoNet menu. Preloads the TrafficController to certain actions.
      * Actions will open new windows.
      */
-    // Need to Sort out the Loconet server menu items;
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
@@ -34,7 +33,6 @@ public class LocoNetMenu extends JMenu {
             }
         }
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.loconet.locormi.LnMessageServerAction(Bundle.getMessage("MenuItemStartLocoNetServer")));
         add(new jmri.jmrix.loconet.loconetovertcp.ServerAction(Bundle.getMessage("MenuItemLocoNetOverTCPServer")));
     }
 
@@ -52,7 +50,6 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemCmdStnConfig", "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"), // NOI18N
         new Item("MenuItemSetID", "jmri.jmrix.loconet.locoid.LocoIdPanel"), // NOI18N
         new Item("MenuItemDuplex", "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel"), // NOI18N
-        //new Item("MenuItemStartLocoNetServer",  "jmri.jmrix.loconet.locormi.LnMessageServerPanel"), // NOI18N
         //new Item("MenuItemLocoNetOverTCPServer","jmri.jmrix.loconet.loconetovertcp.ServerPanel"), // NOI18N
         null,
         new Item("MenuItemThrottleMessages", "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel"), // NOI18N

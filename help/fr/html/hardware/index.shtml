@@ -28,8 +28,8 @@
 		JMRI: Support Materiel
         </h1>
 
-	<p>JMRI prend en charge un large &#233;ventail de "Centrale de Commande" DCC produits par diff&#233;rents fournisseurs pour l'automatisation de 
-chemin de fer mod&#232;les. Nous prenons en charge &#233;galement la disposition non-DCC. 
+	<p>JMRI prend en charge un large &#233;ventail de "Centrale de Commande" DCC produits par diff&#233;rents fournisseurs pour l'automatisation de
+chemin de fer mod&#232;les. Nous prenons en charge &#233;galement la disposition non-DCC.
 S'il y a un moyen de faire communiquer un ordinateur avec une partie donn&#233;e d'un &#233;quipement de  chemin de fer miniature
 , il est possible de le connecter &#224; JMRI.
 <p>
@@ -39,7 +39,7 @@ de configurer JMRI pour travailler avec chaque type particulier.
      <p>
  Si vous ne voyez pas votre syst&#232;me particulier ici, s'il vous pla&#238;t demander &#224; ce sujet
 sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffusion utilisateur </a>
-	
+
 	<div class="list">
 	<dl>
 	    <dt class="im">
@@ -59,14 +59,14 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 			</dt>
 	    <dt>Bachrus</dt>
 	    <dd>
-		<p class="dl">Configurer: <a href="bachrus/index.shtml">Tachym&#232;tre Bachrus MTS-DCC pour train miniature </a></p> 
+		<p class="dl">Configurer: <a href="bachrus/index.shtml">Tachym&#232;tre Bachrus MTS-DCC pour train miniature </a></p>
 	    </dd>
 
 
 <dt class="im"><a href="http://www.jlcenterprises.net/"> C/MRI </a></dt>
 <dt>C/MRI </dt>
 <dd>
-<p class="dl"> Configurer: <A HREF="cmri/CMRI.shtml"> syst&#232;me de contr&#244;le C/MRI de Bruce Chubb</a></p> 
+<p class="dl"> Configurer: <A HREF="cmri/CMRI.shtml"> syst&#232;me de contr&#244;le C/MRI de Bruce Chubb</a></p>
 </dd>
 
 <dt class="im">
@@ -84,7 +84,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 </dt>
 <dt>Produits CVP  EasyDCC </dt>
 <dd><p class="dl"> Configurer:centrale de commande via EasyDCC
-<A HREF="easydcc/EasyDCC.shtml"> s&#233;rie </a> ou 
+<A HREF="easydcc/EasyDCC.shtml"> s&#233;rie </a> ou
 		<A HREF="TerminalServer.shtml">Serveur Terminal </a></p> ou
 		<p>&nbsp;</p>
 	    </dd>
@@ -94,7 +94,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 		<img src="http://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt="DCC Specialties"></a>
 	    </dt>
 	    <dt>DCC Sp&#233;cialities  </dt>
-	    <dd><p class="dl">Configurer:  
+	    <dd><p class="dl">Configurer:
 		<A HREF="misc/DccSpecialties.shtml">Hare, Wabbit, Block Watcher ou famille de produits PSX</a>.</p>
 		<p>&nbsp;</p>
 	    </dd>
@@ -109,16 +109,14 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 		     <ul>
  		    <li><A HREF="loconet/PR3.shtml"> Digitrax interface PR3 </a>
 		    <li><A HREF="loconet/LocoBufferUSB.shtml"> RR-CirKits LocoBuffer-USB </a>
-		    <li>Le plus vieux 
+		    <li>Le plus vieux
 	   		<A HREF="loconet/LocoBufferII.shtml"> LocoBuffer-II </a>,
- 	  		<A HREF="loconet/LocoBuffer.shtml"> LocoBuffer </a> et les interface	
+ 	  		<A HREF="loconet/LocoBuffer.shtml"> LocoBuffer </a> et les interface
 	   		<A HREF="loconet/MS100.shtml"> MS100 </a>
 	            </ul>
 		    </p>
 		<p class="dl"> Configurer:
 		<A HREF="loconet/LocoNetSim.shtml"> LocoNet Simulator pour une utilisation en cas de d&#233;connexion d'un r&#233;seau </a>. </p>
-		<p class="dl"> Configurationr: connexion &#224; distance via un LocoNet
-		<A HREF="loconet/LocoNetServer.shtml"> Serveur LocoNet JMRI </a>. </p>
 		<p class="dl"> Configuration: connexion &#224; distance via un LocoNet
 		<A HREF="loconet/LbServer.shtml">LbServer  </a>. </p>
 		<A HREF="loconet/LocoNetworking.shtml"> informations suppl&#233;mentaires sur la connexion de plusieurs ordinateurs &#224; un seul LocoNet </a>
@@ -170,8 +168,8 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt>Lenz</dt>
 	    <dd>
 	        <p class="dl">Configuration:
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, 
-		 ou un XPA et modem compatible Hayes</a></p> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface,
+		 ou un XPA et modem compatible Hayes</a></p>
 
 		<p>S'il vous pla&icirc;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter sur ce syst&#232;me sp&#233;cifique</p>
 
@@ -206,7 +204,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 		<A HREF="rps/index.shtml">Configuration de la connexion</a>
 		 &#224; un syst&#232;me de mesure de position RPS.
 		</dd>
-		
+
 	    <dt class="im"><a href="http://www.ncedcc.com/">
 	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
 	    <dt>NCE</dt>
@@ -224,9 +222,9 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt>Syst&#232;mes Oak Tree </dt>
 	    <dd>
 	        <p class="dl">Configurer une connexion &#224; une  <A href="oaktree/OakTree.shtml"> Interface de Contr&#244;le d'un Chemin de fer Oak Tree</a>, incluant
-	        les cartes d'interfaces <A HREF="http://www.oaktreesystems.com/io-24_card.htm">IO-24</A>, 
-	        <A HREF="http://www.oaktreesystems.com/HTML/io-48_card.htm">IO-48</A> 
-	        et <A HREF="http://www.oaktreesystemsor an XPA and  modem compatible Hayes.com/HTML/o-48_card.htm">O-48</a>  
+	        les cartes d'interfaces <A HREF="http://www.oaktreesystems.com/io-24_card.htm">IO-24</A>,
+	        <A HREF="http://www.oaktreesystems.com/HTML/io-48_card.htm">IO-48</A>
+	        et <A HREF="http://www.oaktreesystemsor an XPA and  modem compatible Hayes.com/HTML/o-48_card.htm">O-48</a>
 	        et <A HREF=""> 2 r&#233;gulateurs manuels HH2</A>.
 		</p>
 		</dd>
@@ -251,7 +249,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt>Roco</dt>
 	    <dd>
 	        <p class="dl">Configurer: Roco LocoMaus 2 (Roco port s&#233;rie r&#233;f: 10760), Roco MultiMaus (Roco r&#233;f: 10810), ou Roco multiZENTRAL-Pro (Roco r&#233;f: 10830) via
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un XPA et  modem compatibles Hayes</a> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un XPA et  modem compatibles Hayes</a>
 		</p>
 		<p>S'il vous pla&icirc;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
 		</dd>
@@ -269,7 +267,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
 	    <dt>Uhlenbrock</dt>
 	    <dd>Les Intellibox peuvent &#234;tre connect&#233;es au programme JMRI soit par leurs connexions Loconet, ou via leurs propres ports s&#233;rie
-	    
+
 	    <p class="dl">Configuration: Uhlenbrock Intellibox via
 		<A HREF="loconet/Digitrax.shtml">MS100  ou les interfaces  LocoBuffer LocoNet </a></p>
 		</p>
@@ -283,7 +281,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt>Viessmann</dt>
 	    <dd>
 	        <p class="dl">Configurer: Viessmann Commander via
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un  XPA et modem compatibles Hayes </a> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un  XPA et modem compatibles Hayes </a>
 		</p>
 		<p>S'il vous pla&icirc;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
             </dd>
@@ -314,7 +312,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 	    <dt>Contr&#244;les ZTC </dt>
 	    <dd>
 	    	<p class="dl">Configurer: ZTC Contr&#244;les ZTC511, ZTC Contr&#244;les ZTC521 via
-		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un XPA et modem compatibles Hayes </a> 
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, ou un XPA et modem compatibles Hayes </a>
 		(requi&#232;re le logiciel XPressNet V3.0 )
 		</p>
 		<p>S'il vous pla&icirc;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce ce syst&#232;me sp&#233;cifique</p>

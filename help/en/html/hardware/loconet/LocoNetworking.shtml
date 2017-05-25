@@ -10,7 +10,7 @@
   LocoNet&reg; Layout</title>
   <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords" content=
-  "Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
+  "Digitrax Chief DCS Command Station LocoNet LocoNetOverTCP Server LocoBuffer java model railroad JMRI install windows">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -30,40 +30,16 @@
       <h1>Hardware Support: Methods to Connect Multiple Computers
       to a LocoNet&reg; Layout</h1>
 
-      <p>JMRI currently supports two different ways to connect
-      multiple computers to your LocoNet&reg;-equipped layout using
-      a single LocoBuffer. In both methods, the computers
-      communicate using standard TCP/IP protocols, but there are
-      differences in the details.</p>
-
-      <p>One method uses the inbuilt <a href=
-      "LocoNetServer.shtml">LocoNet Client/Server capability</a> of
-      JMRI.<br>
-      The other method allows multiple JMRI nodes to connect as
-      Clients to a single <a href=
+      <p>JMRI supports the ability to connect
+      multiple computers to a LocoNet&reg;-equipped layout using
+      a single LocoBuffer using either an internal or external <a href=
       "http://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP
-      LbServer</a>, which is external to JMRI.</p>
-
-      <p>The difference between these two methods is that JMRI
-      LocoNet Client/Server uses the native Java Remote Method
-      Invocation (RMI) protocol, whereas the LocoNetOverTCP uses a
+      Server</a>. LocoNetOverTCP can use a JMRI server process or a
       separate non-Java server process, LbServer, that communicates
       using plain ASCII String messages over TCP/IP sockets,
       allowing non-Java nodes to also share the one LocoBuffer.</p>
 
-      <p>For most people who simply want to have several computers
-      share a single LocoBuffer connection, the <a href=
-      "LocoNetServer.shtml">JMRI LocoNet Client/Server option</a>
-      is probably the best choice as it is easy to configure. For
-      others wanting to provide remote access the layout over
-      Internet, the <a href="LbServer.shtml">LocoNetOverTCP
-      LbServer option</a> may be more suitable as firewall rule
-      changes to allow external access will be simpler.</p>
-
       <ul>
-        <li><a href="LocoNetServer.shtml">How to set up LocoNet
-        Client/Server</a></li>
-
         <li><a href="LbServer.shtml">How to set up LocoNetOverTCP
         LbServer</a></li>
       </ul>

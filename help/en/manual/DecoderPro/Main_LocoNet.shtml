@@ -543,17 +543,14 @@
       </div>
 
       <p><img src="images/separator.png" alt="sep" height="4"
-      width="340"></p><strong>Start LocoNet Server</strong>
-
-      <p style="margin-left: 40px;">Starts the LocoNet server.</p>
+      width="340"></p>
 
       <p><strong>Start LocoNet over TCP Server</strong></p>
 
-      <p style="margin-left: 40px;">Opens the <strong>LocoNetOver
-      Tcp Server</strong> dialog.</p>
+      <p style="margin-left: 40px;">Opens the <strong>LocoNetOverTcp Server</strong> dialog.</p>
 
       <p style="margin-left: 40px;"><img src=
-      "images/Main_Loconet09.png" alt="LocoNet server" border="4"
+      "images/Main_Loconet09.png" alt="LocoNetOverTCP server" border="4"
       height="120" width="361"></p>
       <hr>
 

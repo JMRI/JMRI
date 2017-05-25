@@ -28,7 +28,11 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>Hardware Support: Connecting Multiple Computers to
-      LocoNet&reg; via JMRI LocoNet Server</h1>This page describes
+      LocoNet&reg; via JMRI LocoNet Server</h1>
+
+        <p><strong>Only in JMRI versions 4.7.3 and earlier.</strong></p>
+      
+      This page describes
       how to use the inbuilt LocoNet&reg; Client/Server capability
       of JMRI to connect multiple computers to a single
       LocoNet-equipped layout.

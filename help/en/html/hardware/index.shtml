@@ -202,10 +202,6 @@
             when disconnected from a layout</a>.</p>
 
             <p class="dl">Configure: Remote connection to a LocoNet
-            via <a href="loconet/LocoNetServer.shtml">JMRI LocoNet
-            Server</a>.</p>
-
-            <p class="dl">Configure: Remote connection to a LocoNet
             via <a href=
             "loconet/LbServer.shtml">LbServer</a>.</p>More
             information on <a href=

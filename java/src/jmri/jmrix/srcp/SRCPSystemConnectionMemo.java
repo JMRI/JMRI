@@ -21,7 +21,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.et.setSystemConnectionMemo(this);
         register();
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -31,7 +31,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.et.setSystemConnectionMemo(this);
         register();
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -39,7 +39,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super("D", "SRCP");
         register(); // registers general type
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -60,9 +60,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Configure the common managers for Internal connections. This puts the
-     * common manager config in one place. This method is static so that it can
-     * be referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * common manager config in one place.
      */
     public void configureManagers() {
 

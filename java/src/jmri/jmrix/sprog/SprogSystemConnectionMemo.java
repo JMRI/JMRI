@@ -30,7 +30,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -40,7 +40,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -50,7 +50,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         sprogVersion = new SprogVersion(type);
         register();
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -59,14 +59,14 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         register(); // registers general type
         sprogVersion = new SprogVersion(new SprogType(SprogType.UNKNOWN));
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.sprog.swing.SprogComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
     /**
      * Set the SPROG mode for this connection
      * @param mode selected mode
-     * 
+     *
      */
     public void setSprogMode(SprogMode mode) {
         sprogMode = mode;
@@ -74,8 +74,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Return the SPROG mode for this connection
-     * 
-     * @return SprogMode 
+     *
+     * @return SprogMode
      */
     public SprogMode getSprogMode() {
         return sprogMode;
@@ -84,7 +84,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Return the SPROG version object for this connection
-     * 
+     *
      * @return SprogVersion
      */
     public SprogVersion getSprogVersion() {
@@ -103,7 +103,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Return the type of SPROG connected
-     * 
+     *
      * @return SprogType
      */
     public SprogType getSprogType() {
@@ -230,9 +230,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Configure the common managers for Sprog connections. This puts the common
-     * manager config in one place. This method is static so that it can be
-     * referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * manager config in one place.
      */
     public void configureManagers() {
 
@@ -320,7 +318,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     private SprogVersionQuery svq = null;
-   
+
     /*
      * return an SprogVersionQuery object for this connection.
      */
