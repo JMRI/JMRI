@@ -132,6 +132,17 @@ public class PositionablePoint extends LayoutTrack {
         coords = p;
     }
 
+    /**
+     * @return the bounds of this positional point
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoords();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        return result;
+    }
+
     private PositionablePoint linkedPoint;
 
     public String getLinkEditorName() {
