@@ -16,6 +16,7 @@ jmri.jmrit.withrottle.WiThrottlePrefsPanel
 jmri.profile.ProfilePreferencesPanel
 jmri.web.server.RailroadNamePreferencesPanel
 jmri.jmris.json.JsonServerPreferencesPanel
+jmri.jmrix.loconet.loconetovertcp.LnTcpPreferencesPanel
 jmri.jmris.simpleserver.SimpleServerPreferencesPanel
 jmri.jmris.srcp.JmriSRCPServerPreferencesPanel
 jmri.web.server.WebServerPreferencesPanel
