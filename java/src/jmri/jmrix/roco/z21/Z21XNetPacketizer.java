@@ -33,6 +33,9 @@ public class Z21XNetPacketizer extends XNetPacketizer {
        } catch(java.io.IOException ioe){
            log.info("Z21 XPressNet Connection Terminanted");
            ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+           // remove our reference to the xmtThread and rcvThread.
+           xmtThread = null;
+           rcvThread = null;
        }
     }
 

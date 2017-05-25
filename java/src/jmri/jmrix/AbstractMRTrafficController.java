@@ -723,8 +723,9 @@ abstract public class AbstractMRTrafficController {
      */
     public void receiveLoop() {
         log.debug("receiveLoop starts");
+        Thread thisThread = Thread.currentThread();
         int errorCount = 0;
-        while (errorCount < maxRcvExceptionCount) {   // loop permanently, stream close will exit via exception
+        while ((rcvThread == thisThread) && (errorCount < maxRcvExceptionCount)) {   // loop permanently, stream close will exit via exception
             try {
                 handleOneIncomingReply();
                 errorCount = 0;
