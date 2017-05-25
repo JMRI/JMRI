@@ -32,8 +32,8 @@
       particular Logix, for example, "Signal 5 Control".</p>
 
       <p>The system name for a Logix always must begin with the two
-      letters <code>IX</code>, usually followed by a number selected by the
-      user. For example, valid Logix system names include: IX1,
+      letters <strong>IX</strong>, usually followed by a number selected
+      by the user. For example, valid Logix system names include: IX1,
       IX34, and IX100. All letters in a system name must be in
       upper case. If the user enters lower case letters, JMRI will
       automatically convert them to upper case. Also, as a

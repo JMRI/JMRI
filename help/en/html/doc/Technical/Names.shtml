@@ -37,13 +37,10 @@
       objects (hardware and software), and how user-readable names
       are used.
 
-      <b>As of February 2017, we are considering a change to 
-        the allowable user names: They can't have leading or trailing
-        spaces.  If this change is made, the names will be "trimmed"
-        whenever entered.  If you have a copy of the code 
-        checked out, you can test this by modifying the jmri.NamedBean
-        class following the instructions in the normalizeUserName(..) routine,
-        rebuilding and running </b> 
+      <span class="since">Since JMRI 4.7.4</span>
+        <b>As of March 2017, we have changed
+        the allowable user names: They can't have leading or trailing spaces.  
+        If leading or trailing spaces are entered, they'll be "trimmed" off.</b> 
         
       <h2>What's in a name?</h2>Why do we need names at all, rather
       than just references within the code? There are several
@@ -443,8 +440,11 @@ knows to look for routes of this name.
                                                     currentSensor, 
                                                     <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.DisplayOptions.html">JmriBeanComboBox.DisplayOptions</a>.DISPLAYNAME)
         
-        // to get the selected item
-        selectComboBox.getSelectedItem()                                         
+        // to get the selected item, depending on what you want:
+        selectComboBox.getNamedBean()                                       
+        selectComboBox.getSystemName()                                       
+        selectComboBox.getUserName()                                        
+        selectComboBox.getDisplayName()                                       
             </pre></code>
 
         <li>Table format:

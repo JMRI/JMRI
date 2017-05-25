@@ -17,6 +17,7 @@ public class SerialThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param address Loco
      */
     public SerialThrottle(DccLocoAddress address) {
         //This will need to include system adapter memo once converted

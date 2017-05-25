@@ -8,9 +8,10 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.beantable.AddNewHardwareDevicePanel;
@@ -99,10 +100,10 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
      // to make location for accessibility & testing easier
      sysName.setName("sysName");
      userName.setName("userName");
-            
+
      setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
      JPanel p;
-     p = new JPanel(); 
+     p = new JPanel();
      p.setLayout(new FlowLayout());
      p.setLayout(new java.awt.GridBagLayout());
      java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
@@ -169,11 +170,11 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
 
         String sName = null;
-        String curAddress = sysName.getText();
+        String curAddress = senManager.normalizeSystemName(sysName.getText());
 
         for (int x = 0; x < numberOfSensors; x++) {
             try {
-                curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
+                curAddress = senManager.getNextValidAddress(curAddress, sensorPrefix);
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
@@ -184,23 +185,23 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
                 break;
             }
             //We have found another turnout with the same address, therefore we need to go onto the next address.
-            sName = sensorPrefix + jmri.InstanceManager.sensorManagerInstance().typeLetter() + curAddress;
+            sName = sensorPrefix + senManager.typeLetter() + curAddress;
             Sensor s = null;
             try {
-                s = jmri.InstanceManager.sensorManagerInstance().provideSensor(sName);
+                s = senManager.provideSensor(sName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                return; // without creating       
+                return; // without creating
             }
 
-            String user = userName.getText();
+            String user = NamedBean.normalizeUserName(userName.getText());
             if ((x != 0) && user != null && !user.equals("")) {
-                user = userName.getText() + ":" + x;
+                user += ":" + x;
             }
-            if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
+            if (user != null && !user.equals("") && (senManager.getByUserName(user) == null)) {
                 s.setUserName(user);
-            } else if (user != null && !user.equals("") && jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(AddSensorPanel.class.getName(), "duplicateUserName")) {
+            } else if (user != null && !user.equals("") && senManager.getByUserName(user) != null && !p.getPreferenceState(AddSensorPanel.class.getName(), "duplicateUserName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), AddSensorPanel.class.getName(), "duplicateUserName", false, true);
             }

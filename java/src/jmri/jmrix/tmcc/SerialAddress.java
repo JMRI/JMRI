@@ -28,6 +28,8 @@ public class SerialAddress {
      * Public static method to parse a C/MRI system name and return the Serial
      * Node Address Note: Returns '-1' if illegal systemName format or if the
      * node is not found. Nodes are numbered from 0 - 127.
+     * @param systemName normal sensor, light, or turnout name
+     * @return node part 0-127
      */
     public static int getNodeAddressFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -76,6 +78,8 @@ public class SerialAddress {
      * Public static method to parse a TMCC system name and return the bit
      * number Notes: Bits are numbered from 1. If an error is found, 0 is
      * returned.
+     * @param systemName normal sensor, light, or turnout name
+     * @return bit part 1-2048
      */
     public static int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -124,6 +128,9 @@ public class SerialAddress {
     /**
      * Public static method to validate system name format returns 'true' if
      * system name has a valid format, else returns 'false'
+     * @param systemName name to test
+     * @param type S, L, T sensor, light, turnout
+     * @return true if valid name
      */
     public static boolean validSystemNameFormat(String systemName, char type) {
         // validate the system Name leader characters
@@ -206,6 +213,9 @@ public class SerialAddress {
      * Public static method to validate system name for configuration returns
      * 'true' if system name has a valid meaning in current configuration, else
      * returns 'false'
+     * @param systemName name to test
+     * @param type S, L, T sensor, light, turnout
+     * @return true if valid name
      */
     public static boolean validSystemNameConfig(String systemName, char type) {
         if (!validSystemNameFormat(systemName, type)) {
@@ -222,6 +232,8 @@ public class SerialAddress {
      * format. If the supplied system name does not have a valid format, or if
      * there is no representation in the alternate naming scheme, an empty
      * string is returned.
+     * @param systemName name to convert
+     * @return alternate form if valid, empty if not
      */
     public static String convertSystemNameToAlternate(String systemName) {
         // ensure that input system name has a valid format
@@ -270,6 +282,8 @@ public class SerialAddress {
      * If the supplied system name does not have a valid format, an empty string
      * is returned. Otherwise a normalized name is returned in the same format
      * as the input name.
+     * @param systemName name to convert
+     * @return normalized form of systemName
      */
     public static String normalizeSystemName(String systemName) {
         // ensure that input system name has a valid format
@@ -317,6 +331,10 @@ public class SerialAddress {
      * If the supplied character is not valid, or the node address is out of the
      * 0 - 127 range, or the bit number is out of the 1 - 2048 range, an error
      * message is logged and the null string "" is returned.
+     * @param type S,L,T for sensor, light, turnout
+     * @param nAddress node value 0-127
+     * @param bitNum bit within node 1-2048
+     * @return formated system name or empty string when invalid
      */
     public static String makeSystemName(String type, int nAddress, int bitNum) {
         String nName = "";

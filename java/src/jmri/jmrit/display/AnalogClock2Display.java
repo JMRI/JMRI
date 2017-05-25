@@ -275,7 +275,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             }
         });
         rateButtonGroup.add(button);
-        
+
         // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (rate == newrate) {
             button.setSelected(true);
@@ -329,27 +329,20 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         // Draw hour hand rotated to appropriate angle
         // Calculation mimics the AffineTransform class calculations in Graphics2D
         // Grpahics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
+        double minuteAngleRadians = Math.toRadians(minuteAngle);
         for (int i = 0; i < scaledMinuteX.length; i++) {
-            rotatedMinuteX[i] = (int) (scaledMinuteX[i]
-                    * Math.cos(toRadians(minuteAngle))
-                    - scaledMinuteY[i]
-                    * Math.sin(toRadians(minuteAngle)));
-            rotatedMinuteY[i] = (int) (scaledMinuteX[i]
-                    * Math.sin(toRadians(minuteAngle))
-                    + scaledMinuteY[i]
-                    * Math.cos(toRadians(minuteAngle)));
+            rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(minuteAngleRadians)
+                    - scaledMinuteY[i] * Math.sin(minuteAngleRadians));
+            rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(minuteAngleRadians)
+                    + scaledMinuteY[i] * Math.cos(minuteAngleRadians));
         }
-        scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY,
-                rotatedMinuteX.length);
+        scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
+        double hourAngleRadians = Math.toRadians(hourAngle);
         for (int i = 0; i < scaledHourX.length; i++) {
-            rotatedHourX[i] = (int) (scaledHourX[i]
-                    * Math.cos(toRadians(hourAngle))
-                    - scaledHourY[i]
-                    * Math.sin(toRadians(hourAngle)));
-            rotatedHourY[i] = (int) (scaledHourX[i]
-                    * Math.sin(toRadians(hourAngle))
-                    + scaledHourY[i]
-                    * Math.cos(toRadians(hourAngle)));
+            rotatedHourX[i] = (int) (scaledHourX[i] * Math.cos(hourAngleRadians)
+                    - scaledHourY[i] * Math.sin(hourAngleRadians));
+            rotatedHourY[i] = (int) (scaledHourX[i] * Math.sin(hourAngleRadians)
+                    + scaledHourY[i] * Math.cos(hourAngleRadians));
         }
         scaledHourHand = new Polygon(rotatedHourX, rotatedHourY,
                 rotatedHourX.length);
@@ -369,23 +362,17 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         g.drawString(amPm, -amPmFontM.stringWidth(amPm) / 2, faceSize / 5);
     }
 
-    // Method to convert degrees to radians
-    // Math.toRadians was not available until Java 1.2
-    double toRadians(double degrees) {
-        return degrees / 180.0 * Math.PI;
-    }
-
     // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
     int dotX(double radius, double angle) {
         int xDist;
-        xDist = (int) Math.round(radius * Math.cos(toRadians(angle)));
+        xDist = (int) Math.round(radius * Math.cos(Math.toRadians(angle)));
         return xDist;
     }
 
     // Method to provide the cartesian y coordinate given a radius and angle (in degrees)
     int dotY(double radius, double angle) {
         int yDist;
-        yDist = (int) Math.round(radius * Math.sin(toRadians(angle)));
+        yDist = (int) Math.round(radius * Math.sin(Math.toRadians(angle)));
         return yDist;
     }
 
