@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JDialog;
 import jmri.ConfigureManager;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -133,11 +132,12 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // passed test - cleanup.  Do it here so failure leaves traces.
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
-        TestHelper.disposeWindow(panel, this);
+        panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+//        TestHelper.disposeWindow(panel, this);
 
         // Dialog has popped up, so handle that. First, locate it.
-        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
-        TestHelper.disposeWindow(dialogList.get(0), this);
+//        List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
+//        TestHelper.disposeWindow(dialogList.get(0), this);
 
         flushAWT();
         // confirm one message logged
