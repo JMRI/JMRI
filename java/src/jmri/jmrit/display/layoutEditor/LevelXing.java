@@ -26,6 +26,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -736,6 +737,20 @@ public class LevelXing extends LayoutTrack {
             default:
                 log.error("Invalid connection type " + connectionType); //I18IN
         }
+        return result;
+    }
+
+    /**
+     * @return the bounds of this crossing
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        result.add(getCoordsD());
         return result;
     }
 

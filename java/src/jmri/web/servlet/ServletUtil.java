@@ -103,13 +103,26 @@ public class ServletUtil {
         return navBar;
     }
 
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     * @deprecated since 4.7.4; use {@link #getDefault() } instead
+     */
+    @Deprecated
     public static ServletUtil getInstance() {
-        ServletUtil instance = InstanceManager.getNullableDefault(ServletUtil.class);
-        if (instance == null) {
-            instance = new ServletUtil();
-            InstanceManager.setDefault(ServletUtil.class, instance);
-        }
-        return instance;
+        return getDefault();
+    }
+
+    /**
+     * Get the default ServletUtil instance.
+     *
+     * @return the default instance of ServletUtil
+     */
+    public static ServletUtil getDefault() {
+        return InstanceManager.getOptionalDefault(ServletUtil.class).orElseGet(() -> {
+            return InstanceManager.setDefault(ServletUtil.class, new ServletUtil());
+        });
     }
 
     /**

@@ -123,6 +123,19 @@ public class LayoutTurntable extends LayoutTrack {
         radius = r;
     }
 
+    /**
+     * @return the bounds of this turntable
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        result = new Rectangle2D.Double(center.getX(), center.getY(), 0, 0);
+        for (int k = 0; k < getNumberRays(); k++) {
+            result.add(getRayCoordsOrdered(k));
+        }
+        return result;
+    }
+
     protected RayTrack addRay(double angle) {
         RayTrack rt = new RayTrack(angle, getNewIndex());
         // (ray!=null) {
