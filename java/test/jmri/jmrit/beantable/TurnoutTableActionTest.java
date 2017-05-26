@@ -2,6 +2,7 @@ package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.Turnout;
@@ -62,7 +63,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
         it1.setCommandedState(Turnout.THROWN);
-        it1.setCommandedState(Turnout.CLOSED);
+        it2.setCommandedState(Turnout.CLOSED);
 
         // set graphic state column display preference to false, read by createModel()
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(false);
@@ -95,18 +96,19 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         jbo.pushNoBlock(); // instead of .push();
 
         // Open Speed pane to test Speed menu, actually a JOptionPane (disabled for now, as is doesn't close)
-//        _t1Table.setDefaultSpeeds(null); // create dialog (bypassing menu)
-//        JDialogOperator as = new JDialogOperator(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"));
-//        Assert.assertNotNull("found Speeds menu dialog", as);
-//        log.debug("Speed pane found");
-//        // close pane
-//        JButtonOperator jbs = new JButtonOperator(as, "OK");
-//        jbs.pushNoBlock(); //instead of .push();
+        _t1Table.setDefaultSpeeds(null); // create dialog (bypassing menu)
+        // for Jemmy to work, we need the pane inside of a frame
+        JDialogOperator as = new JDialogOperator(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"));
+        Assert.assertNotNull("found Speeds menu dialog", as);
+        log.debug("Speed pane found");
+        // close pane
+        JButtonOperator jbs = new JButtonOperator(as, "OK");
+        jbs.pushNoBlock(); //instead of .push();
 
         // clean up
         af.dispose();
         am.dispose();
-        //as.dispose(); // disabled. see above
+        as.dispose();
         tof.dispose();
         _tTable.dispose();
         _t1Table.dispose();

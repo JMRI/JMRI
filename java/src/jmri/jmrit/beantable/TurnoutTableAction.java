@@ -1279,49 +1279,32 @@ public class TurnoutTableAction extends AbstractTableAction {
         closedCombo.setSelectedItem(turnManager.getDefaultClosedSpeed());
 
         // gleaned from Maintenance.makeDialog(), looks better than horizontal JOptionPane and can be accessed by Jemmy in GUI test
-        JDialog dialog = new JDialog(_who, Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), true);
-        java.awt.Container contentPane = dialog.getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(new JLabel(Bundle.getMessage("TurnoutGlobalSpeedMessage"))); // TODO align center
+        //JFrame dialog = new JFrame(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle")); // don't dispose on close like a JmriJFrame
+        // build JPanel for comboboxes
         JPanel speedspanel = new JPanel();
+        speedspanel.setLayout(new BoxLayout(speedspanel, BoxLayout.Y_AXIS));
+        speedspanel.add(new JLabel(Bundle.getMessage("TurnoutGlobalSpeedMessage")));
         speedspanel.add(thrown);
         speedspanel.add(closed);
-        contentPane.add(speedspanel, BorderLayout.CENTER);
-        contentPane.add(Box.createVerticalStrut(5));
-        contentPane.add(Box.createVerticalGlue());
-        JPanel buttonpanel = new JPanel();
-        buttonpanel.setLayout(new BoxLayout(buttonpanel, BoxLayout.X_AXIS));
-        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.setVisible(false);
-            }
-        });
-        buttonpanel.add(ok);
-        buttonpanel.add(Box.createHorizontalStrut(5));
-        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.setVisible(false);
-                return;
-            }
-        });
-        buttonpanel.add(cancel);
-        contentPane.add(buttonpanel, BorderLayout.SOUTH);
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        //dialog.setLocationRelativeTo(_who);
-        dialog.pack();
-        dialog.setVisible(true);
 
-//        int retval = JOptionPane.showOptionDialog(_who,
-//                Bundle.getMessage("TurnoutGlobalSpeedMessage"), Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"),
-//                0, JOptionPane.INFORMATION_MESSAGE, null,
-//                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), thrown, closed}, null);
-//        if (retval != 1) {
-//            return;
-//        }
+        String title = Bundle.getMessage("TurnoutGlobalSpeedMessageTitle");
+
+        JOptionPane pane = new JOptionPane(
+                speedspanel,
+                0, JOptionPane.INFORMATION_MESSAGE, null,
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+        //pane.set.Xxxx(...); // Configure more?
+        JDialog dialog = pane.createDialog(_who, title);
+        dialog.show();
+
+        Object retval = pane.getValue();
+        if(retval == null) {
+            return;
+        }
+        // only 2 buttons to choose from, OK = button 1
+        if ((Integer) retval != 1) {
+            return;
+        }
 
         String closedValue = (String) closedCombo.getSelectedItem();
         String thrownValue = (String) thrownCombo.getSelectedItem();
