@@ -8,7 +8,7 @@ package jmri.jmrix.dccpp;
  * the DCCppListener interface can register here to receive incoming DCC++
  * messages as events.
  * <P>
- * The jmri.jrmix.dccpp.DCCppTrafficControler provides the first implementation of
+ * The jmri.jmrix.dccpp.DCCppTrafficControler provides the first implementation of
  * this interface.
  * <P>
  * How do you locate an implemenation of this interface? That's an interesting

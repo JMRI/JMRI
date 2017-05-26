@@ -2,7 +2,7 @@
 #
 # Author: Dave Sand
 #
-# Requires JRMI version 3.3.5 or higher
+# Requires JMRI version 3.3.5 or higher
 #
 # This script is designed to run as a persistent listener.  It should only be called once from an initializatin Logix.
 #   Subsequent calls occur when the rAction memory variable is changed.
