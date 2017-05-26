@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -206,6 +207,14 @@ public abstract class LayoutTrack {
 
     public void reCheckBlockBoundary() {
         log.error("virtual method: override in sub-classes and don't call super...].");
+    }
+
+    /**
+     * @return the bounds of this track
+     */
+    public Rectangle2D getBounds() {
+        log.error("virtual method: override in sub-classes and don't call super...].");
+        return new Rectangle2D.Double();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutTrack.class.getName());

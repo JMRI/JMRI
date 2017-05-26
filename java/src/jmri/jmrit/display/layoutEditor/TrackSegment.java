@@ -227,8 +227,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setFlip(boolean boo) {
-        flip = boo;
-        changed = true;
+        if (flip != boo) {
+            flip = boo;
+            changed = true;
+        }
     }
 
     public boolean getBezier() {
@@ -238,7 +240,7 @@ public class TrackSegment extends LayoutTrack {
     public void setBezier(boolean boo) {
         if (bezier != boo) {
             bezier = boo;
-            if (bezier) {
+            if (getBezier()) {
                 arc = false;
                 circle = false;
             }
@@ -479,6 +481,21 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
+
+    /**
+     * @return the bounds of this track segment
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+
+        Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
+        result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
+        Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
+        result.add(ep2);
+
+        return result;
+    }
+
     JPopupMenu popup = null;
 
     /**
@@ -490,7 +507,27 @@ public class TrackSegment extends LayoutTrack {
         } else {
             popup = new JPopupMenu();
         }
-        JMenuItem jmi = null;
+
+
+        String info = rb.getString("TrackSegment");
+        if (getArc()) {
+            if (getCircle()) {
+                info = info + "( " + Bundle.getMessage("Circle") + ")";
+            } else {
+                info = info + "( " + Bundle.getMessage("Ellipse") + ")";
+            }
+        } else if (getBezier()) {
+            info = info + "( " + Bundle.getMessage("Bezier") + ")";
+        } else {
+            info = info + "( " + Bundle.getMessage("Line") + ")";
+        }
+
+        JMenuItem jmi = popup.add(info);
+        jmi.setEnabled(false);
+
+        jmi = popup.add(ident);
+        jmi.setEnabled(false);
+
         if (!dashed) {
             jmi = popup.add(rb.getString("Style") + " - " + rb.getString("Solid"));
         } else {
@@ -818,7 +855,7 @@ public class TrackSegment extends LayoutTrack {
 
             contentPane.add(panel2);
 
-            if (getArc() && getCircle()) {
+            if (getArc() && circle) {
                 JPanel panel20 = new JPanel();
                 panel20.setLayout(new FlowLayout());
                 JLabel arcLabel = new JLabel("Set Arc Angle");
@@ -1514,7 +1551,7 @@ public class TrackSegment extends LayoutTrack {
         // Draw a square at the circles centre, that then allows the
         // user to dynamically change the angle by dragging the mouse.
         g2.setColor(Color.black);
-        if (getCircle() && showConstructionLinesLE()) {
+        if (circle && showConstructionLinesLE()) {
             g2.draw(layoutEditor.trackControlCircleRectAt(getCoordsCenterCircle()));
         }
     }   // drawEditControls(Graphics2D g2)
