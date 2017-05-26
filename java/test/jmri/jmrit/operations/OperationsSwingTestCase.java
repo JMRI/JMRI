@@ -74,6 +74,7 @@ public class OperationsSwingTestCase {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
+        JUnitUtil.resetProfileManager();
 
         JUnitOperationsUtil.resetOperationsManager();
 

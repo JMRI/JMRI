@@ -1069,6 +1069,9 @@ public class LevelXing extends LayoutTrack {
             JMenuItem jmi = popup.add(rb.getString("LevelCrossing"));
             jmi.setEnabled(false);
 
+            jmi = popup.add(ident);
+            jmi.setEnabled(false);
+
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
             if ((blockNameAC == null) || (blockNameAC.equals(""))) {

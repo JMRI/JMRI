@@ -17,12 +17,8 @@ public class NamedBeanTest extends TestCase {
     public void testNormalizePassThrough() {
         String testString = "  foo ";
         String normalForm = NamedBean.normalizeUserName(testString);
-<<<<<<< HEAD
+        //note: normalizeUserName now .trim()'s;
         Assert.assertEquals("foo", normalForm);
-=======
-        //note: normalizeUserName now .trim()'s; so these should now NOT be equal.
-        Assert.assertNotEquals(testString, normalForm);
->>>>>>> JMRI/master
     }
 
 
