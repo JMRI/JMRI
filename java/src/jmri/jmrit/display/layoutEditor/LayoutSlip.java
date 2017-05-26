@@ -386,6 +386,20 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
+    /**
+     * @return the bounds of this slip
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        result.add(getCoordsD());
+        return result;
+    }
+
     private void updateBlockInfo() {
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
@@ -523,10 +537,6 @@ public class LayoutSlip extends LayoutTurnout {
     protected int findHitPointType(Point2D p, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
 
-        // TODO: A faster way to check to see if p is in the rects for
-        // all these locations is to create a rect around p and see if
-        // those locations are in that rect instead of creating rects
-        // for all those locations… Just saying… ;-)
         if (!requireUnconnected) {
             // calculate radius of turnout control circle
             double circleRadius = controlPointSize * layoutEditor.getTurnoutCircleSize();
@@ -563,42 +573,36 @@ public class LayoutSlip extends LayoutTurnout {
 
         // have we found anything yet?
         if (result == NONE) {
+            // rather than create rectangles for all the points below and
+            // see if the passed in point is in one of those rectangles
+            // we can create a rectangle for the passed in point and then
+            // test if any of the points below are in that rectangle instead.
+            Rectangle2D r = layoutEditor.trackControlPointRectAt(p);
+
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
-                Point2D pt = getCoordsA();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsA())) {
                     result = LayoutTrack.SLIP_A;
                 }
             }
 
             if (!requireUnconnected || (getConnectB() == null)) {
                 //check the B connection point
-                Point2D pt = getCoordsB();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsB())) {
                     result = LayoutTrack.SLIP_B;
                 }
             }
 
             if (!requireUnconnected || (getConnectC() == null)) {
                 //check the C connection point
-                Point2D pt = getCoordsC();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsC())) {
                     result = LayoutTrack.SLIP_C;
                 }
             }
 
             if (!requireUnconnected || (getConnectD() == null)) {
                 //check the D connection point
-                Point2D pt = getCoordsD();
-                Rectangle2D r = layoutEditor.trackControlPointRectAt(pt);
-
-                if (r.contains(p)) {
+                if (r.contains(getCoordsD())) {
                     result = LayoutTrack.SLIP_D;
                 }
             }
