@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -1253,11 +1254,11 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
-    JCheckBox showFeedbackBox = new JCheckBox(Bundle.getMessage("ShowFeedbackInfo"));
-    JCheckBox showLockBox = new JCheckBox(Bundle.getMessage("ShowLockInfo"));
-    JCheckBox showTurnoutSpeedBox = new JCheckBox(Bundle.getMessage("ShowTurnoutSpeedDetails"));
-    JCheckBox doAutomationBox = new JCheckBox(Bundle.getMessage("AutomaticRetry"));
-
+    /**
+     * Show a pane to configure closed and thrown turnout speed defaults.
+     *
+     * @param _who parent JFrame to center the pane on
+     */
     protected void setDefaultSpeeds(JFrame _who) {
         JComboBox<String> thrownCombo = new JComboBox<String>(speedListThrown);
         JComboBox<String> closedCombo = new JComboBox<String>(speedListClosed);
@@ -1278,37 +1279,40 @@ public class TurnoutTableAction extends AbstractTableAction {
         thrownCombo.setSelectedItem(turnManager.getDefaultThrownSpeed());
         closedCombo.setSelectedItem(turnManager.getDefaultClosedSpeed());
 
-        // gleaned from Maintenance.makeDialog(), looks better than horizontal JOptionPane and can be accessed by Jemmy in GUI test
-        //JFrame dialog = new JFrame(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle")); // don't dispose on close like a JmriJFrame
+        // gleaned from Maintenance.makeDialog(), looks better than a horizontal JOptionPane with options in same row as buttons
+        // and can be accessed by Jemmy in GUI test
+        String title = Bundle.getMessage("TurnoutGlobalSpeedMessageTitle");
         // build JPanel for comboboxes
         JPanel speedspanel = new JPanel();
-        speedspanel.setLayout(new BoxLayout(speedspanel, BoxLayout.Y_AXIS));
+        speedspanel.setLayout(new FlowLayout(FlowLayout.LEADING));
         speedspanel.add(new JLabel(Bundle.getMessage("TurnoutGlobalSpeedMessage")));
+        speedspanel.setLayout(new BoxLayout(speedspanel, BoxLayout.Y_AXIS));
         speedspanel.add(thrown);
         speedspanel.add(closed);
 
-        String title = Bundle.getMessage("TurnoutGlobalSpeedMessageTitle");
-
         JOptionPane pane = new JOptionPane(
                 speedspanel,
-                0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-        //pane.set.Xxxx(...); // Configure more?
+                JOptionPane.INFORMATION_MESSAGE,
+                0,
+                null,
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")});
+        //pane.setxxx(value); // Configure more?
         JDialog dialog = pane.createDialog(_who, title);
         dialog.show();
 
         Object retval = pane.getValue();
-        if(retval == null) {
+        log.debug("Retval = {}", retval.toString());
+        if(retval == null) { // pane close button clicked
             return;
         }
-        // only 2 buttons to choose from, OK = button 1
-        if ((Integer) retval != 1) {
+        // only 2 buttons to choose from, OK = button 2
+        if ( retval != Bundle.getMessage("ButtonOK")) { // Cancel button clicked
             return;
         }
-
         String closedValue = (String) closedCombo.getSelectedItem();
         String thrownValue = (String) thrownCombo.getSelectedItem();
-        //We will allow the turnout manager to handle checking if the values have changed
+
+        // We will allow the turnout manager to handle checking whether the values have changed
         try {
             turnManager.setDefaultThrownSpeed(thrownValue);
         } catch (jmri.JmriException ex) {
@@ -1322,8 +1326,13 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
+    JCheckBox showFeedbackBox = new JCheckBox(Bundle.getMessage("ShowFeedbackInfo"));
+    JCheckBox showLockBox = new JCheckBox(Bundle.getMessage("ShowLockInfo"));
+    JCheckBox showTurnoutSpeedBox = new JCheckBox(Bundle.getMessage("ShowTurnoutSpeedDetails"));
+    JCheckBox doAutomationBox = new JCheckBox(Bundle.getMessage("AutomaticRetry"));
+
     /**
-     * Add the check boxes to the table frame.
+     * Add the check boxes to the table frame to show/hide extra columns.
      *
      * @param f a Turnout table frame
      */

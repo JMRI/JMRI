@@ -4,6 +4,8 @@ import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import org.junit.After;
@@ -15,6 +17,9 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JMenuBarOperator;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +57,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
     }
 
     /**
-     * Check graphic state presentation.
+     * Check Turnout Table GUI, menus and graphic state presentation.
      * @since 4.7.4
      */
     @Test
@@ -77,7 +82,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         TurnoutTableAction _t1Table;
         _t1Table = new TurnoutTableAction();
         Assert.assertNotNull("found TurnoutTable1 frame", _t1Table);
+        JFrame t1Frame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleTurnoutTable"), true, true);
 
+        // test Add pane
         _t1Table.addPressed(null);
         JFrame af = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddTurnout"), true, true);
         Assert.assertNotNull("found Add frame", af);
@@ -85,25 +92,36 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         _t1Table.cancelPressed(null);
         // more Turnout Add pane tests are in TurnoutTableWindowTest
 
+        //System.out.println("Speed pane started at " + java.time.LocalTime.now());
         // Open Automation pane to test Automation menu
         jmri.jmrit.turnoutoperations.TurnoutOperationFrame tof = new jmri.jmrit.turnoutoperations.TurnoutOperationFrame(null);
         // create dialog (bypassing menu)
-        JDialogOperator am = new JDialogOperator("Turnout Operation Editor");
+        JDialogOperator am = new JDialogOperator("Turnout Operation Editor"); // TODO I18N using Bundle
         Assert.assertNotNull("found Automation menu dialog", am);
-        log.debug("Ops dialog found");
         // close pane
         JButtonOperator jbo = new JButtonOperator(am, "OK");
         jbo.pushNoBlock(); // instead of .push();
 
-        // Open Speed pane to test Speed menu, actually a JOptionPane (disabled for now, as is doesn't close)
-        _t1Table.setDefaultSpeeds(null); // create dialog (bypassing menu)
-        // for Jemmy to work, we need the pane inside of a frame
+        // Open Speed pane to test Speed menu, which displays a JOptionPane
+        //_t1Table.setDefaultSpeeds(t1Frame); // create dialog (bypassing menu, but is not found)
+        JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); // create dialog (through menu)
+        // pushMenuNoBlock is used, because dialog is modal
+        JMenuBarOperator mainbar = new JMenuBarOperator(main);
+        mainbar.pushMenuNoBlock("Speeds|Defaults...", "|"); // stops at top level?
+//        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+//        JPopupMenu jpm = jmo.getPopupMenu();
+//        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
+//        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+//        jmio.pushNoBlock();
+
+        // wait for Speeds dialog
+        // for Jemmy to work, we need the Turnout Speeds pane inside a JDialog
         JDialogOperator as = new JDialogOperator(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"));
         Assert.assertNotNull("found Speeds menu dialog", as);
-        log.debug("Speed pane found");
+        //System.out.println("Speed pane found at " + java.time.LocalTime.now());
         // close pane
         JButtonOperator jbs = new JButtonOperator(as, "OK");
-        jbs.pushNoBlock(); //instead of .push();
+        jbs.push();
 
         // clean up
         af.dispose();
