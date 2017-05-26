@@ -32,7 +32,7 @@ public class ConnectionLabelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UP);
         ConnectionLabel action = new ConnectionLabel(config);
-        Assert.assertEquals("Color for Failure",java.awt.Color.BLACK,action.getForeground());
+        Assert.assertEquals("Color for Success",java.awt.Color.BLACK,action.getForeground());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ConnectionLabelTest {
         ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UNKNOWN);
         ConnectionLabel action = new ConnectionLabel(config);
         // unknown is currently the same color as up.
-        Assert.assertEquals("Color for Failure",java.awt.Color.BLACK,action.getForeground());
+        Assert.assertEquals("Color for Unknown",java.awt.Color.BLACK,action.getForeground());
     }
 
     @Test
@@ -50,6 +50,24 @@ public class ConnectionLabelTest {
         ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_DOWN);
         ConnectionLabel action = new ConnectionLabel(config);
         Assert.assertEquals("Color for Failure",java.awt.Color.RED,action.getForeground());
+    }
+
+    @Test
+    public void checkColorOnChangeFromSuccess() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UP);
+        ConnectionLabel action = new ConnectionLabel(config);
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_DOWN);
+        Assert.assertEquals("Color for Failure after success",java.awt.Color.RED,action.getForeground());
+    }
+
+    @Test
+    public void checkColorOnChangeFromFailure() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_DOWN);
+        ConnectionLabel action = new ConnectionLabel(config);
+        ConnectionStatus.instance().setConnectionState(config.getConnectionName(),config.getInfo(),ConnectionStatus.CONNECTION_UP);
+        Assert.assertEquals("Color for Failure after success",java.awt.Color.BLACK,action.getForeground());
     }
 
     @Before
