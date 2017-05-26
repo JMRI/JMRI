@@ -1282,6 +1282,22 @@ public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
+    /**
+     * @return the bounds of this turnout
+     */
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+        
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        if ((type == DOUBLE_XOVER) || (type == LH_XOVER) || (type == RH_XOVER)) {
+            result.add(getCoordsD());
+        }
+        return result;
+    }
+
     // updates connectivity for blocks assigned to this turnout and connected track segments
     private void updateBlockInfo() {
         LayoutBlock bA = null;
